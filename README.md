@@ -1,6 +1,6 @@
-# Horticulture-Assistant-Assistant
+# Horticulture-Assistant
 
-The **Horticulture-Assistant-Assistant** integration is a comprehensive custom component for Home Assistant, specifically designed to manage plant care and horticultural automation. It enables sophisticated, per-plant monitoring and precise control using advanced configuration logic, AI-driven analytics, and automated processes for irrigation, fertilization, and yield optimization. The integration is **HACS-compatible**, ensuring seamless installation and regular updates via the Home Assistant Community Store.
+The **Horticulture-Assistant** integration is a comprehensive custom component for Home Assistant, specifically designed to manage plant care and horticultural automation. It enables sophisticated, per-plant monitoring and precise control using advanced configuration logic, AI-driven analytics, and automated processes for irrigation, fertilization, and yield optimization. The integration is **HACS-compatible**, ensuring seamless installation and regular updates via the Home Assistant Community Store.
 
 Currently, this repository is **private and actively under development**. A suitable license will be introduced prior to the public release.
 
