@@ -1,0 +1,24 @@
+{
+  "citrus_backyard_spring2025": {
+    "display_name": "Backyard Citrus Spring 2025",
+    "plant_type": "citrus",
+    "cultivar": "meyer_lemon",
+    "species": "Citrus × meyeri",
+    "location": "Backyard",
+    "start_date": "2025-03-15",
+    "current_lifecycle_stage": "fruiting",
+    "auto_lifecycle": true,
+    "auto_approve_actions": true,
+    "tags": [
+      "citrus",
+      "meyer_lemon",
+      "fruiting",
+      "acid-loving",
+      "zone_5b",
+      "edible",
+      "backyard",
+      "spring_2025"
+    ],
+    "profile_path": "plants/citrus_backyard_spring2025.json"
+  }
+}
