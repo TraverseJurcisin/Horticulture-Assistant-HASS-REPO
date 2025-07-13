@@ -1,0 +1,82 @@
+import json
+import os
+from typing import Dict
+
+TEMPLATE_PATH = "templates/generated/"
+DAILY_REPORT_PATH = "data/reports"
+
+def generate_template_yaml(plant_id: str):
+    with open(f"{DAILY_REPORT_PATH}/{plant_id}.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    sensors = []
+
+    # Add VGI and Transpiration
+    growth = data.get("growth", {})
+    sensors.append({
+        "name": f"{plant_id} VGI Today",
+        "unique_id": f"{plant_id}_vgi_today",
+        "state": growth.get("vgi_today", 0)
+    })
+    sensors.append({
+        "name": f"{plant_id} VGI Total",
+        "unique_id": f"{plant_id}_vgi_total",
+        "state": growth.get("vgi_total", 0)
+    })
+
+    sensors.append({
+        "name": f"{plant_id} Transpiration",
+        "unique_id": f"{plant_id}_transpiration",
+        "state": data.get("transpiration", {}).get("transpiration_ml_day", 0)
+    })
+
+    water = data.get("water_deficit", {})
+    sensors.append({
+        "name": f"{plant_id} Water Available",
+        "unique_id": f"{plant_id}_ml_available",
+        "state": water.get("ml_available", 0)
+    })
+    sensors.append({
+        "name": f"{plant_id} Depletion %",
+        "unique_id": f"{plant_id}_depletion_pct",
+        "state": round(water.get("depletion_pct", 0) * 100, 2)
+    })
+
+    sensors.append({
+        "name": f"{plant_id} MAD Crossed",
+        "unique_id": f"{plant_id}_mad_crossed",
+        "state": str(water.get("mad_crossed", False))
+    })
+
+    # NUE sensors
+    nue = data.get("nue", {}).get("nue", {})
+    for element, value in nue.items():
+        sensors.append({
+            "name": f"{plant_id} NUE {element}",
+            "unique_id": f"{plant_id}_nue_{element}",
+            "state": value
+        })
+
+    # Threshold sensors
+    thresholds = data.get("thresholds", {})
+    for element, value in thresholds.items():
+        sensors.append({
+            "name": f"{plant_id} Target {element}",
+            "unique_id": f"{plant_id}_threshold_{element}",
+            "state": value
+        })
+
+    # Write YAML
+    os.makedirs(TEMPLATE_PATH, exist_ok=True)
+    out_path = f"{TEMPLATE_PATH}/{plant_id}_sensors.yaml"
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("template:\n  - sensor:\n")
+        for s in sensors:
+            f.write(f"      - name: \"{s['name']}\"\n")
+            f.write(f"        unique_id: {s['unique_id']}\n")
+            f.write(f"        state: \"{s['state']}\"\n")
+            f.write(f"        unit_of_measurement: \"\"\n")
+            f.write(f"        device_class: \"\"\n")
+
+    print(f"✅ Generated template sensors for {plant_id} at {out_path}")
