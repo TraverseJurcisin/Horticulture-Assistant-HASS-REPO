@@ -3,6 +3,8 @@ import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any
+from water_deficit_tracker import update_water_balance
+
 
 # === CONFIGURATION ===
 
@@ -79,7 +81,18 @@ def run_daily_threshold_updates():
             continue
 
         profile = load_json(profile_path)
+        # Step 1: Generate base report
         report = generate_daily_report(plant_id, profile)
+        
+        # Step 2: Transpiration estimation
+        # (Assumes you've already run compute_transpiration.py elsewhere — otherwise simulate)
+        transpiration_ml = report.get("transpiration_ml_day", 1200.0)
+        irrigation_ml = report.get("last_irrigation_ml", 1000.0)
+        
+        # Step 3: Update water balance tracker
+        water_status = update_water_balance(plant_id, irrigation_ml, transpiration_ml)
+        report["water_deficit"] = water_status
+
 
         # Save daily report to disk
         date_str = datetime.now().strftime("%Y%m%d")
