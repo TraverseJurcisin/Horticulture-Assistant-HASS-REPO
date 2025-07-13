@@ -88,7 +88,18 @@ def run_daily_threshold_updates():
         print(f"📝 Report saved: {report_path}")
 
         # Simulate AI threshold recalculation
-        new_thresholds = mock_threshold_adjustments(profile["thresholds"])
+        from ai_model import analyze
+        from approval_queue import queue_threshold_updates
+        
+        new_thresholds = analyze(report)
+        
+        if profile.get(AUTO_APPROVE_FIELD, False):
+            update_plant_profile(profile_path, new_thresholds)
+            print("✅ Thresholds auto-updated (auto_approve_all: true)")
+        else:
+            queue_threshold_updates(plant_id, profile["thresholds"], new_thresholds)
+            print("🛑 Threshold changes queued for approval.")
+        
 
         if profile.get(AUTO_APPROVE_FIELD, False):
             update_plant_profile(profile_path, new_thresholds)
