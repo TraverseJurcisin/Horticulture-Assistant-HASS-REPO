@@ -65,34 +65,48 @@ Advanced customization is provided through:
 ## 📁 Repository Structure
 
 ```text
-Horticulture-Assistant/
-├── README.md                     # Documentation (this file)
-├── hacs.json                     # HACS metadata
+horticulture-assistant/
 ├── custom_components/
-│   └── Horticulture-Assistant/
+│   └── horticulture_assistant/
 │       ├── __init__.py
 │       ├── manifest.json
-│       ├── config_flow.py       # Optional Config Flow
-│       ├── sensor.py
-│       ├── switch.py
-│       ├── services.yaml         # Optional service definitions
+│       ├── config_flow.py           (optional)
+│       ├── const.py
+│       ├── sensor.py                (entity loader, auto-adds engine outputs)
+│       ├── engine/                  (renamed plant_engine/)
+│       │   ├── __init__.py
+│       │   ├── engine.py
+│       │   ├── growth_model.py
+│       │   ├── compute_transpiration.py
+│       │   ├── et_model.py
+│       │   ├── water_deficit_tracker.py
+│       │   ├── rootzone_model.py
+│       │   ├── nutrient_efficiency.py
+│       │   ├── ai_model.py
+│       │   ├── approval_queue.py
+│       │   ├── utils.py
+│       └── translations/
+│           └── en.json
 ├── blueprints/
-│   └── plant_monitoring.yaml     # Core automation blueprint
+│   └── automation/
+│       └── plant_monitoring.yaml
+├── templates/
+│   └── generated/
+├── data/
+│   ├── reports/
+│   ├── nutrients_applied/
+│   ├── yield/
+│   ├── lab_tests/
 ├── plants/
-│   └── citrus_backyard_spring2025.json
-├── cultivars/
-│   └── citrus.json               # Generic cultivar profiles
-├── runs/
-│   └── greenhouse_leafygreens_2025.json
-├── automations/
-│   └── citrus_backyard_spring2025.yaml
-├── input_booleans/
-│   └── mode_toggle.yaml
+│   └── <plant_id>.json
 ├── scripts/
-│   └── daily_threshold_recalc.py  # AI-based threshold recalculation script
-├── plant_registry.json          # Central registry of plant metadata
-├── .github/workflows/
-│   └── validate.yaml             # CI workflow for YAML validation
+│   ├── run_all_plants.py
+│   ├── import_lab_data.py
+│   ├── generate_plant_sensors.py
+├── hacs.json
+├── README.md
+├── .gitignore
+
 ```
 
 ---
