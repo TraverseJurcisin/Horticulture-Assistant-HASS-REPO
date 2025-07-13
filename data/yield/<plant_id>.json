@@ -1,0 +1,14 @@
+{
+  "harvests": [
+    {
+      "date": "2025-06-12",
+      "yield_grams": 1400,
+      "fruit_count": 22
+    },
+    {
+      "date": "2025-07-10",
+      "yield_grams": 1575,
+      "fruit_count": 26
+    }
+  ]
+}
