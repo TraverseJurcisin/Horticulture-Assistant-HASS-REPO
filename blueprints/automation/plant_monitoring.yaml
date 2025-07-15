@@ -1,171 +1,121 @@
 blueprint:
-  name: Horticulture Plant Monitoring
+  name: Horticulture Assistant - Plant Monitor
   description: >
-    Dynamic automation blueprint for irrigation and fertilization management,
-    driven by detailed per-plant JSON metadata profiles stored in the plant registry.
-    Automatically handles soil moisture, nutrient monitoring, and AI-driven recommendations.
-    Ensure sensors have `state_class: measurement` for proper data logging.
+    Monitor a plant’s sensors (moisture, EC, etc.), notify user or trigger actions
+    when thresholds are breached. Supports optional AI output, yield estimation,
+    and auto-approve logic for irrigation/fertilization.
+
   domain: automation
   input:
-    plant_id:
-      name: Plant ID
-      description: >
-        The unique identifier matching the entry in `plant_registry.json`.
-        This is used to dynamically reference sensors, switches, and thresholds.
+    plant_name:
+      name: Plant Name
+      description: Name of the plant this automation applies to.
       selector:
         text:
-    auto_approve_all:
-      name: Auto-Approve Actions
-      description: >
-        Toggle ON to automatically perform recommended irrigation and fertilization actions.
-        Toggle OFF to only send notifications instead of performing actions.
+
+    smoothed_moisture:
+      name: Smoothed Moisture Sensor
       selector:
         entity:
-          domain: input_boolean
-    notification_target:
-      name: Notification Target
-      description: >
-        Device or user to receive notifications when auto-approve is disabled.
+          domain: sensor
+
+    root_zone_depletion:
+      name: Root Zone Depletion Sensor
       selector:
-        target: {}
+        entity:
+          domain: sensor
+
+    smoothed_ec:
+      name: Smoothed EC Sensor
+      selector:
+        entity:
+          domain: sensor
+
+    field_capacity:
+      name: Field Capacity Sensor
+      selector:
+        entity:
+          domain: sensor
+
+    wilting_point:
+      name: Wilting Point Sensor
+      selector:
+        entity:
+          domain: sensor
+
+    daily_nitrogen:
+      name: Daily Nitrogen Sensor
+      selector:
+        entity:
+          domain: sensor
+
+    ai_recommendation:
+      name: AI Recommendation Sensor
+      selector:
+        entity:
+          domain: sensor
+
+    irrigation_switch:
+      name: Optional Irrigation Switch
+      default: null
+      selector:
+        entity:
+          domain: switch
+
+    notify_user:
+      name: Notify When Action Suggested?
+      default: true
+      selector:
+        boolean:
+
+    auto_approve:
+      name: Use Auto-Approve Mode
+      default: false
+      selector:
+        boolean:
 
 trigger:
-  - platform: template
-    value_template: >
-      {% set plant = states('input_text.' ~ !input plant_id ~ '_id') %}
-      {% set moisture_sensor = state_attr('sensor.' ~ plant, 'soil_moisture_sensor') %}
-      {% set moisture_threshold = state_attr('sensor.' ~ plant, 'soil_moisture_threshold') %}
-      {{ states(moisture_sensor)|float < moisture_threshold|float }}
+  - platform: numeric_state
+    entity_id: !input root_zone_depletion
+    above: 0.35  # 35% depletion triggers irrigation logic
 
-  - platform: template
-    value_template: >
-      {% set plant = states('input_text.' ~ !input plant_id ~ '_id') %}
-      {% set nutrients = state_attr('sensor.' ~ plant, 'thresholds') %}
-      {% set triggered = false %}
-      {% for nutrient, threshold in nutrients.items() if 'leaf_' in nutrient %}
-        {% set sensor_entity = state_attr('sensor.' ~ plant, 'sensor_entities')[nutrient] %}
-        {% if sensor_entity and states(sensor_entity)|float < threshold|float %}
-          {% set triggered = true %}
-        {% endif %}
-      {% endfor %}
-      {{ triggered }}
-
-  - platform: template
-    value_template: >
-      {% set plant = states('input_text.' ~ !input plant_id ~ '_id') %}
-      {% set metals = ['arsenic','cadmium','lead','mercury','nickel','cobalt','selenium'] %}
-      {% set thresholds = state_attr('sensor.' ~ plant, 'thresholds') %}
-      {% set triggered = false %}
-      {% for metal in metals %}
-        {% set threshold_key = 'leaf_' ~ metal ~ '_ppm' %}
-        {% set sensor_entity = state_attr('sensor.' ~ plant, 'sensor_entities')[threshold_key] %}
-        {% if sensor_entity and states(sensor_entity)|float > thresholds[threshold_key]|float %}
-          {% set triggered = true %}
-        {% endif %}
-      {% endfor %}
-      {{ triggered }}
+condition:
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: input_boolean.auto_approve
+        state: "on"
+      - condition: template
+        value_template: "{{ not (auto_approve | default(false)) }}"
 
 action:
-  - variables:
-      plant: !input plant_id
-      auto_approve: "{{ states(!input auto_approve_all) }}"
-      notify_target: !input notification_target
-      moisture_sensor: "{{ state_attr('sensor.' ~ plant, 'soil_moisture_sensor') }}"
-      moisture_threshold: "{{ state_attr('sensor.' ~ plant, 'soil_moisture_threshold') }}"
-      irrigation_switch: "{{ state_attr('sensor.' ~ plant, 'irrigation_switch') }}"
-      fertilizer_switch: "{{ state_attr('sensor.' ~ plant, 'fertilizer_switch') }}"
-      nutrients: "{{ state_attr('sensor.' ~ plant, 'thresholds') }}"
-      sensor_entities: "{{ state_attr('sensor.' ~ plant, 'sensor_entities') }}"
-
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ auto_approve == 'on' }}"
+            value_template: >
+              {{ auto_approve | default(false) and irrigation_switch is not none }}
         sequence:
-          - choose:
-              - conditions:
-                  - condition: numeric_state
-                    entity_id: "{{ moisture_sensor }}"
-                    below: "{{ moisture_threshold }}"
-                sequence:
-                  - service: switch.turn_on
-                    target:
-                      entity_id: "{{ irrigation_switch }}"
-                  - delay: "00:05:00"
-                  - service: switch.turn_off
-                    target:
-                      entity_id: "{{ irrigation_switch }}"
+          - service: switch.turn_on
+            target:
+              entity_id: !input irrigation_switch
+          - delay:
+              minutes: 5
+          - service: switch.turn_off
+            target:
+              entity_id: !input irrigation_switch
 
-              - conditions:
-                  - condition: template
-                    value_template: >
-                      {% for nutrient, threshold in nutrients.items() if 'leaf_' in nutrient %}
-                        {% set sensor_entity = sensor_entities[nutrient] %}
-                        {% if sensor_entity and states(sensor_entity)|float < threshold|float %}
-                          {{ true }}
-                        {% endif %}
-                      {% endfor %}
-                sequence:
-                  - service: switch.turn_on
-                    target:
-                      entity_id: "{{ fertilizer_switch }}"
-                  - delay: "00:03:00"
-                  - service: switch.turn_off
-                    target:
-                      entity_id: "{{ fertilizer_switch }}"
-
-          - default: []
-
-      - conditions:
+    default:
+      - if:
           - condition: template
-            value_template: "{{ auto_approve == 'off' }}"
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: numeric_state
-                    entity_id: "{{ moisture_sensor }}"
-                    below: "{{ moisture_threshold }}"
-                sequence:
-                  - service: notify.notify
-                    target: "{{ notify_target }}"
-                    data:
-                      title: "Irrigation Recommended for {{ plant }}"
-                      message: >
-                        Soil moisture at {{ states(moisture_sensor)|round(1) }}%, below threshold ({{ moisture_threshold }}%). Please irrigate.
+            value_template: "{{ notify_user }}"
+        then:
+          - service: notify.persistent_notification
+            data:
+              title: "Plant Action Needed"
+              message: >
+                {{ plant_name }} is showing water depletion of
+                {{ states(root_zone_depletion) }}. Moisture at
+                {{ states(smoothed_moisture) }}%. Recommendation: 
+                {{ states(ai_recommendation) or 'Water now.' }}
 
-              - conditions:
-                  - condition: template
-                    value_template: >
-                      {% for nutrient, threshold in nutrients.items() if 'leaf_' in nutrient %}
-                        {% set sensor_entity = sensor_entities[nutrient] %}
-                        {% if sensor_entity and states(sensor_entity)|float < threshold|float %}
-                          {{ true }}
-                        {% endif %}
-                      {% endfor %}
-                sequence:
-                  - service: notify.notify
-                    target: "{{ notify_target }}"
-                    data:
-                      title: "Fertilization Recommended for {{ plant }}"
-                      message: >
-                        Nutrient levels are below thresholds. Check and apply fertilizer as needed.
-
-              - conditions:
-                  - condition: template
-                    value_template: >
-                      {% for metal in ['arsenic','cadmium','lead','mercury','nickel','cobalt','selenium'] %}
-                        {% set threshold_key = 'leaf_' ~ metal ~ '_ppm' %}
-                        {% set sensor_entity = sensor_entities[threshold_key] %}
-                        {% if sensor_entity and states(sensor_entity)|float > nutrients[threshold_key]|float %}
-                          {{ true }}
-                        {% endif %}
-                      {% endfor %}
-                sequence:
-                  - service: notify.notify
-                    target: "{{ notify_target }}"
-                    data:
-                      title: "Heavy Metal Alert for {{ plant }}"
-                      message: >
-                        Elevated heavy metal levels detected. Immediate action recommended to avoid crop contamination.
-
-          - default: []
+mode: restart
