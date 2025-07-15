@@ -50,6 +50,12 @@ async def async_setup_entry(
         SmoothedMoistureSensor(hass, plant_name, plant_id),
         DailyETSensor(hass, plant_name, plant_id),
         RootZoneDepletionSensor(hass, plant_name, plant_id),
+        SmoothedECSensor(hass, plant_name, plant_id),
+        EstimatedFieldCapacitySensor(hass, plant_name, plant_id),
+        EstimatedWiltingPointSensor(hass, plant_name, plant_id),
+        DailyNitrogenAppliedSensor(hass, plant_name, plant_id),
+        YieldProgressSensor(hass, plant_name, plant_id),
+        AIRecommendationSensor(hass, plant_name, plant_id),
     ]
 
     async_add_entities(sensors)
