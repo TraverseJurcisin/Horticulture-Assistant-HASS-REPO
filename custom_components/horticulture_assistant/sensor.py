@@ -138,3 +138,102 @@ class RootZoneDepletionSensor(HorticultureBaseSensor):
                 self._attr_native_value = max(0, min(depletion, 100))
             except ValueError:
                 self._attr_native_value = None
+
+class SmoothedECSensor(HorticultureBaseSensor):
+    """Smoothed electrical conductivity value using rolling average."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Smoothed EC"
+        self._attr_unique_id = f"{plant_id}_smoothed_ec"
+        self._attr_native_unit_of_measurement = "mS/cm"
+        self._attr_icon = "mdi:water-outline"
+        self._attr_state_class = "measurement"
+
+    async def async_update(self):
+        try:
+            raw = self.hass.states.get(f"sensor.{self._plant_id}_raw_ec")
+            self._attr_native_value = float(raw.state) if raw else None
+        except:
+            self._attr_native_value = None
+
+
+class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
+    """Estimate of field capacity from past max moisture post-irrigation."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Estimated Field Capacity"
+        self._attr_unique_id = f"{plant_id}_field_capacity"
+        self._attr_native_unit_of_measurement = UNIT_PERCENT
+        self._attr_icon = "mdi:water"
+        self._attr_state_class = "measurement"
+
+    async def async_update(self):
+        # Placeholder: Track peak % moisture in last 3 days
+        self._attr_native_value = 60  # Stub: replace with historical Influx query
+
+
+class EstimatedWiltingPointSensor(HorticultureBaseSensor):
+    """Estimate of permanent wilting point based on dry-down observation."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Estimated Wilting Point"
+        self._attr_unique_id = f"{plant_id}_wilting_point"
+        self._attr_native_unit_of_measurement = UNIT_PERCENT
+        self._attr_icon = "mdi:water-off"
+        self._attr_state_class = "measurement"
+
+    async def async_update(self):
+        # Placeholder: Use observed dry minimum over time
+        self._attr_native_value = 15  # Stub
+
+
+class DailyNitrogenAppliedSensor(HorticultureBaseSensor):
+    """Amount of nitrogen applied to plant today."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Nitrogen Applied Today"
+        self._attr_unique_id = f"{plant_id}_daily_nitrogen"
+        self._attr_native_unit_of_measurement = "mg"
+        self._attr_icon = "mdi:chemical-weapon"
+        self._attr_state_class = "total"
+
+    async def async_update(self):
+        # Placeholder: Use fertigation tracking logic later
+        self._attr_native_value = 32  # Stub
+
+
+class YieldProgressSensor(HorticultureBaseSensor):
+    """Yield or growth progress (user updated or AI projected)."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Yield Progress"
+        self._attr_unique_id = f"{plant_id}_yield"
+        self._attr_native_unit_of_measurement = UNIT_GRAMS
+        self._attr_icon = "mdi:chart-line"
+        self._attr_state_class = "measurement"
+
+    async def async_update(self):
+        # Placeholder: Replace with user entry or AI yield model
+        self._attr_native_value = 120  # Stub (e.g. grams of fruit)
+
+
+class AIRecommendationSensor(HorticultureBaseSensor):
+    """AI-generated recommendation (shown as string message)."""
+
+    def __init__(self, hass, plant_name, plant_id):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "AI Recommendation"
+        self._attr_unique_id = f"{plant_id}_ai_recommendation"
+        self._attr_icon = "mdi:robot-outline"
+        self._attr_native_unit_of_measurement = None
+        self._attr_device_class = None
+
+    async def async_update(self):
+        # Later filled in via event or script
+        msg_entity = self.hass.states.get(f"sensor.{self._plant_id}_ai_message")
+        self._attr_native_value = msg_entity.state if msg_entity else "No suggestions."
