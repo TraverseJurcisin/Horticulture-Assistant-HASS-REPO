@@ -1,108 +1,89 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
+from decimal import Decimal
+
 
 class FertilizerProduct:
     def __init__(
         self,
         product_id: str,
         name: str,
-        is_liquid: bool,
-        density_kg_per_l: Optional[float],
-        analysis: Dict[str, float],  # element_name -> % concentration
-        ingredients: Dict[str, Dict[str, str]],  # ingredient -> {"amount": float, "unit": str}
-        derived_type: str,  # "mineral", "organic", "hybrid"
-        typical_pH: Optional[float] = None,
-        typical_EC: Optional[float] = None,
-        precipitation_risk: Optional[str] = "low",
+        form: str,  # "liquid" or "solid"
+        unit: str,  # e.g., "L", "mL", "kg", "g", "oz", "gal"
+        derived_from: Dict[str, float],
+        ph: Optional[float] = None,
+        ec: Optional[float] = None,
+        temp_sensitive_ingredients: Optional[List[str]] = None,
+        expiration: Optional[datetime] = None,
+        manufactured: Optional[datetime] = None,
     ):
         self.product_id = product_id
         self.name = name
-        self.is_liquid = is_liquid
-        self.density_kg_per_l = density_kg_per_l
-        self.analysis = analysis
-        self.ingredients = ingredients
-        self.derived_type = derived_type
-        self.typical_pH = typical_pH
-        self.typical_EC = typical_EC
-        self.precipitation_risk = precipitation_risk
-
-
-class FertilizerListing:
-    def __init__(
-        self,
-        listing_id: str,
-        product_id: str,
-        distributor: str,
-        form: str,  # "liquid" or "solid"
-        package_size: float,  # in L or kg
-        price_usd: float,
-        purchase_date: Optional[str] = None,
-        expiration_date: Optional[str] = None,
-        date_of_manufacture: Optional[str] = None,
-        storage_location: Optional[str] = None,
-        available: bool = True,
-        source_ingredients: Optional[Dict[str, str]] = None,
-    ):
-        self.listing_id = listing_id
-        self.product_id = product_id
-        self.distributor = distributor
         self.form = form
-        self.package_size = package_size
-        self.price_usd = price_usd
-        self.purchase_date = purchase_date
-        self.expiration_date = expiration_date
-        self.date_of_manufacture = date_of_manufacture
-        self.storage_location = storage_location
-        self.available = available
-        self.source_ingredients = source_ingredients or {}
+        self.unit = unit
+        self.derived_from = derived_from  # {"Ammonium Nitrate": 120.0, "Magnesium Sulfate Heptahydrate": 1000.0}
+        self.ph = ph
+        self.ec = ec
+        self.expiration = expiration
+        self.manufactured = manufactured
+        self.temp_sensitive_ingredients = temp_sensitive_ingredients or []
 
-        self.cost_per_unit = self.calculate_cost_per_unit()
-        self.expired = self.check_if_expired()
+        self.price_history: List[Dict] = []  # [{"vendor": "HydroWorld", "unit_price": 18.99, "size": "1L", "date": datetime}]
+        self.usage_log: List[Dict] = []  # [{"date": datetime, "amount_used": 200, "unit": "mL", "zone": "GH1"}]
 
-    def calculate_cost_per_unit(self) -> float:
-        if self.package_size > 0:
-            return self.price_usd / self.package_size
-        return 0.0
-
-    def check_if_expired(self) -> bool:
-        if not self.expiration_date:
-            return False
-        try:
-            exp_date = datetime.strptime(self.expiration_date, "%Y-%m-%d")
-            return exp_date < datetime.today()
-        except ValueError:
-            return False
-
-
-# Example instantiation
-magriculture = FertilizerProduct(
-    product_id="magriculture",
-    name="Magriculture",
-    is_liquid=False,
-    density_kg_per_l=None,
-    analysis={"Mg": 9.8, "S": 12.9},
-    ingredients={
-        "Magnesium Sulfate Heptahydrate": {
-            "amount": 100.0,
-            "unit": "percent_wt"
+    def add_price_entry(self, vendor: str, unit_price: float, size: str, date: Optional[datetime] = None):
+        entry = {
+            "vendor": vendor,
+            "unit_price": round(unit_price, 2),
+            "size": size,
+            "date": date or datetime.now()
         }
-    },
-    derived_type="mineral",
-    typical_pH=6.5,
-    typical_EC=2.3,
-    precipitation_risk="low"
-)
+        self.price_history.append(entry)
 
-magriculture_listing = FertilizerListing(
-    listing_id="magriculture_htg_5kg",
-    product_id="magriculture",
-    distributor="HTG Supply",
-    form="solid",
-    package_size=5.0,
-    price_usd=23.99,
-    purchase_date="2024-06-15",
-    expiration_date="2027-06-01",
-    date_of_manufacture="2024-04-01",
-    storage_location="garage_rack_2",
-    source_ingredients={"Magnesium Sulfate Heptahydrate": "K+S Germany"}
-)
+    def log_usage(self, amount_used: float, unit: str, zone: str):
+        self.usage_log.append({
+            "date": datetime.now(),
+            "amount_used": amount_used,
+            "unit": unit,
+            "zone": zone
+        })
+
+    def get_latest_price(self) -> Optional[Dict]:
+        if not self.price_history:
+            return None
+        return sorted(self.price_history, key=lambda x: x["date"], reverse=True)[0]
+
+    def is_expired(self) -> bool:
+        return self.expiration is not None and datetime.now() > self.expiration
+
+    def needs_temp_protection(self, current_temp: float) -> bool:
+        return any([
+            ingr for ingr in self.temp_sensitive_ingredients
+            if current_temp < 5 or current_temp > 30  # default temp sensitivity bounds
+        ])
+
+
+class FertilizerInventory:
+    def __init__(self):
+        self.products: Dict[str, FertilizerProduct] = {}
+
+    def add_product(self, product: FertilizerProduct):
+        self.products[product.product_id] = product
+
+    def get_product(self, product_id: str) -> Optional[FertilizerProduct]:
+        return self.products.get(product_id)
+
+    def remove_product(self, product_id: str):
+        if product_id in self.products:
+            del self.products[product_id]
+
+    def find_by_name(self, name: str) -> List[FertilizerProduct]:
+        return [prod for prod in self.products.values() if name.lower() in prod.name.lower()]
+
+    def find_expiring_products(self, days_before_expiry: int = 30) -> List[FertilizerProduct]:
+        today = datetime.now()
+        threshold = today.replace(hour=0, minute=0, second=0, microsecond=0)
+        return [
+            p for p in self.products.values()
+            if p.expiration and (p.expiration - threshold).days <= days_before_expiry
+        ]
