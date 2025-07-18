@@ -1,15 +1,26 @@
 """Constants for the Horticulture Assistant integration."""
 
-# Core Domain Identifier
+# Domain metadata
 DOMAIN = "horticulture_assistant"
+VERSION = "0.1.0"
+ISSUE_URL = "https://github.com/TraverseJurcisin/Horticulture-Assistant/issues"
 
-# Config Entry Fields
+# Platform support
+PLATFORMS = ["sensor"]
+
+# Configuration
 CONF_ENABLE_AUTO_APPROVE = "enable_auto_approve"
 CONF_DEFAULT_THRESHOLD_MODE = "default_threshold_mode"
 
-# Options
+# Threshold modes
 THRESHOLD_MODE_MANUAL = "manual"
 THRESHOLD_MODE_PROFILE = "profile"
+
+# Data keys
+DATA_KEY_COORDINATOR = "coordinator"
+
+# Default values
+DEFAULT_UPDATE_INTERVAL = 300  # seconds
 
 # Sensor types
 SENSOR_TYPE_MOISTURE = "moisture"
@@ -38,13 +49,7 @@ UNIT_GRAMS = "g"
 UNIT_LITERS = "L"
 UNIT_PPM = "ppm"
 
-# Data Coordination
-DATA_KEY_COORDINATOR = "coordinator"
-
-# Default values
-DEFAULT_UPDATE_INTERVAL = 300  # seconds
-
-# Custom Events
+# Custom events
 EVENT_AI_RECOMMENDATION = "horticulture_ai_recommendation"
 EVENT_YIELD_UPDATE = "horticulture_yield_update"
 
