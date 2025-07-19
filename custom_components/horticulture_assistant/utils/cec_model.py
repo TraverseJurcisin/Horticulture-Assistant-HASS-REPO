@@ -164,4 +164,3 @@ def categorize_cec(cec_value: float) -> str:
         return "Medium"
     else:
         return "High"
-}

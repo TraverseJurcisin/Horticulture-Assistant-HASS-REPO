@@ -1,6 +1,6 @@
 # Horticulture-Assistant
 
-The **Horticulture-Assistant** integration is a comprehensive custom component for Home Assistant, specifically designed to manage plant care and horticultural automation. It enables sophisticated, per-plant monitoring and precise control using advanced configuration logic, AI-driven analytics, and automated processes for irrigation, fertilization, and yield optimization. The integration is **HACS-compatible**, ensuring seamless installation and regular updates via the Home Assistant Community Store.
+The **Horticulture-Assistant** integration is a private Home Assistant add-on aimed at managing per‑plant care and horticultural automation.  It provides sensors, switches and helper scripts to monitor plants, track daily growth and optionally adjust nutrient thresholds using simple AI rules.  The repository is structured in a HACS-friendly way but is not yet published through the Community Store.
 
 Currently, this repository is **private and actively under development**. A suitable license will be introduced prior to the public release.
 
@@ -8,15 +8,14 @@ Currently, this repository is **private and actively under development**. A suit
 
 ## 🌱 Key Features
 
-* Individual plant automation leveraging detailed sensor inputs and comprehensive metadata profiles
-* Extensive support for monitoring soil moisture, essential nutrients, and heavy metals
-* Automated daily recalculation of optimal growth thresholds utilizing AI insights
-* Flexible auto/manual modes for AI-guided lifecycle stage detection
-* Structured YAML blueprint-based automation for simplified configuration
-* JSON-based plant profile registry supporting dynamic tagging and advanced phylogenetic groupings
-* Robust integration with InfluxDB and Grafana for deep analytics and visualization
-* Integrated GitHub Actions for continuous integration and validation
-* Organized and compliant file structure suitable for HACS
+* Individual plant automation leveraging detailed sensor inputs and dynamic JSON profiles
+* Sensors for moisture, EC, ET, nutrient levels and AI recommendations
+* Binary sensors for irrigation readiness, sensor health and fault detection
+* Switch entities to control irrigation and fertigation
+* Optional AI threshold recalculation using offline or OpenAI logic
+* YAML automation blueprint and profile generator utilities
+* Plant registry with dynamic tagging for grouped analytics
+* Repository structured for use as a custom HACS repository
 
 ---
 
@@ -24,10 +23,9 @@ Currently, this repository is **private and actively under development**. A suit
 
 ### Via HACS
 
-1. Open HACS in Home Assistant → Integrations → Custom Repositories.
-2. Enter your GitHub repository URL, select *Integration*, then click **Add**.
-3. Search for **Horticulture-Assistant**, and click **Install**.
-4. Restart Home Assistant when prompted.
+1. Open HACS in Home Assistant and go to **Integrations → Custom Repositories**.
+2. Add this repository URL as a custom integration.
+3. Install **Horticulture-Assistant** from the list and restart Home Assistant when prompted.
 
 ### Manual Installation
 
@@ -46,7 +44,7 @@ Post-installation setup:
 3. Search and select **Horticulture-Assistant**.
 4. Follow the guided prompts to configure devices and parameters.
 
-This integration uses Home Assistant’s intuitive UI-based Config Flow. Once configured, users can manage entities, set up custom automations, and monitor plant health.
+Configuration currently relies on manual setup of plant profiles and sensors. A minimal config flow is included for experimentation but is not fully enabled in the manifest.
 
 ---
 
@@ -70,40 +68,31 @@ horticulture-assistant/
 │   └── horticulture_assistant/
 │       ├── __init__.py
 │       ├── manifest.json
-│       ├── config_flow.py           (optional)
+│       ├── config_flow.py
 │       ├── const.py
-│       ├── sensor.py                (entity loader, auto-adds engine outputs)
-│       ├── engine/                  (renamed plant_engine/)
-│       │   ├── __init__.py
-│       │   ├── engine.py
-│       │   ├── growth_model.py
-│       │   ├── compute_transpiration.py
-│       │   ├── et_model.py
-│       │   ├── water_deficit_tracker.py
-│       │   ├── rootzone_model.py
-│       │   ├── nutrient_efficiency.py
-│       │   ├── ai_model.py
-│       │   ├── approval_queue.py
-│       │   ├── utils.py
-│       └── translations/
-│           └── en.json
+│       ├── sensor.py
+│       ├── binary_sensor.py
+│       ├── switch.py
+│       └── utils/
 ├── blueprints/
 │   └── automation/
 │       └── plant_monitoring.yaml
-├── templates/
-│   └── generated/
 ├── data/
-│   ├── reports/
-│   ├── nutrients_applied/
-│   ├── yield/
-│   ├── lab_tests/
-├── plants/
-│   └── <plant_id>.json
+│   └── yield/
+├── plant_engine/
+│   └── engine.py
 ├── scripts/
 │   ├── run_all_plants.py
-│   ├── import_lab_data.py
-│   ├── generate_plant_sensors.py
-├── hacs.json
+│   ├── daily_threshold_recalc.py
+│   ├── compute_transpiration.py
+│   ├── growth_model.py
+│   ├── rootzone_model.py
+│   ├── nutrient_efficiency.py
+│   └── ai_model.py
+├── plants/
+│   └── <plant_id>.json
+├── plant_registry.json
+├── tags.json
 ├── README.md
 ├── .gitignore
 
@@ -130,12 +119,9 @@ state_class: measurement
 
 This ensures correct data logging to InfluxDB and accurate historical analytics in Grafana.
 
-### CI Pipeline Details
+### CI Notes
 
-The provided GitHub Actions workflow located at `.github/workflows/validate.yaml` ensures:
-
-* YAML files are validated using `yamllint`.
-* Home Assistant configurations are verified with `hass --script check_config`.
+This repository currently does not include automated CI workflows. Validation scripts may be added in a future revision.
 
 ---
 
