@@ -1,62 +1,270 @@
-from typing import Dict, Optional
+# File: custom_components/horticulture_assistant/utils/nutrient_use_efficiency.py
+"""
+Utility for tracking nutrient usage and calculating nutrient use efficiency.
+Logs fertilizer application events and computes efficiency as yield (g) per nutrient applied (mg).
+Allows summarizing nutrient usage by time period or lifecycle stage.
+"""
+import os
+import json
+import logging
+from datetime import datetime, date
+from typing import Dict, List, Optional, Union
 
+try:
+    from homeassistant.core import HomeAssistant
+except ImportError:
+    HomeAssistant = None  # Allow usage outside Home Assistant for testing
+
+_LOGGER = logging.getLogger(__name__)
 
 class NutrientUseEfficiency:
-    def __init__(self):
-        self.application_log: Dict[str, Dict] = {}
-        self.tissue_log: Dict[str, Dict] = {}
+    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None):
+        """
+        Initialize NutrientUseEfficiency utility.
+        Loads existing nutrient usage logs from JSON file, or starts new if none.
+        :param data_file: Path to the nutrient use log JSON file. Defaults to 'data/nutrient_use.json'.
+        :param hass: HomeAssistant instance (optional) for resolving file paths.
+        """
+        # Determine the data file path
+        if data_file is None:
+            data_file = hass.config.path("data", "nutrient_use.json") if hass is not None else os.path.join("data", "nutrient_use.json")
+        self._data_file = data_file
+        self._hass = hass
+        # Internal logs
+        self._usage_logs: Dict[str, List[Dict]] = {}
+        self.application_log: Dict[str, Dict[str, float]] = {}
+        self.tissue_log: Dict[str, Dict[str, float]] = {}
         self.yield_log: Dict[str, float] = {}
+        # Load existing usage logs from file if available
+        try:
+            with open(self._data_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict):
+                for pid, entries in data.items():
+                    if isinstance(entries, list):
+                        self._usage_logs[pid] = entries
+                    else:
+                        _LOGGER.warning("Nutrient use log for plant %s is not a list; resetting to empty list.", pid)
+                        self._usage_logs[pid] = []
+            else:
+                _LOGGER.warning("Nutrient use log file format invalid (expected dict at top level); starting with empty log.")
+        except FileNotFoundError:
+            _LOGGER.info("Nutrient use log file not found at %s; starting new nutrient use log.", self._data_file)
+        except json.JSONDecodeError as e:
+            _LOGGER.error("JSON decode error reading nutrient use log from %s: %s; initializing empty log.", self._data_file, e)
+        except Exception as e:
+            _LOGGER.error("Error loading nutrient use log from %s: %s; initializing empty log.", self._data_file, e)
+        # Build application_log totals from loaded records
+        for pid, entries in self._usage_logs.items():
+            total_nutrients: Dict[str, float] = {}
+            for record in entries:
+                nutrients = record.get("nutrients", {})
+                for nutrient, amt in nutrients.items():
+                    try:
+                        amt_val = float(amt)
+                    except (ValueError, TypeError):
+                        _LOGGER.warning("Invalid nutrient amount '%s' for %s in plant %s log; skipping.", amt, nutrient, pid)
+                        continue
+                    total_nutrients[nutrient] = total_nutrients.get(nutrient, 0.0) + amt_val
+            self.application_log[pid] = total_nutrients
+        # Load existing yield totals from yield tracker logs if available
+        try:
+            yield_file = hass.config.path("data", "yield_logs.json") if hass is not None else os.path.join("data", "yield_logs.json")
+        except Exception:
+            yield_file = os.path.join("data", "yield_logs.json")
+        try:
+            with open(yield_file, "r", encoding="utf-8") as yf:
+                yield_data = json.load(yf)
+            if isinstance(yield_data, dict):
+                for pid, entries in yield_data.items():
+                    if isinstance(entries, list):
+                        total_yield = 0.0
+                        for entry in entries:
+                            if isinstance(entry, dict):
+                                try:
+                                    w = float(entry.get("weight", 0.0))
+                                except (ValueError, TypeError):
+                                    w = 0.0
+                                total_yield += w
+                        self.yield_log[pid] = total_yield
+                    else:
+                        _LOGGER.warning("Yield log for plant %s is not a list; skipping yield load for this plant.", pid)
+            else:
+                _LOGGER.warning("Yield logs file format invalid (expected dict at top level); yield data not loaded.")
+        except FileNotFoundError:
+            _LOGGER.info("Yield logs file not found at %s; proceeding without initial yield data.", yield_file)
+        except json.JSONDecodeError as e:
+            _LOGGER.error("JSON decode error reading yield logs from %s: %s; yield data not loaded.", yield_file, e)
+        except Exception as e:
+            _LOGGER.error("Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e)
 
-    def log_fertilizer_application(self, plant_id: str, nutrient_mass: Dict[str, float]):
+    def log_fertilizer_application(self, plant_id: str, nutrient_mass: Dict[str, float], 
+                                   entry_date: Optional[Union[str, date, datetime]] = None, 
+                                   stage: Optional[str] = None) -> None:
         """
-        Record the total amount of nutrients applied to a plant.
-        Example: {"N": 150, "P": 50, "K": 120}
+        Record a fertilizer application event for a plant.
+        :param plant_id: Identifier of the plant.
+        :param nutrient_mass: Dict of nutrient amounts applied (in mg), e.g. {"N": 150.0, "P": 50.0}.
+        :param entry_date: Date of application (string 'YYYY-MM-DD', datetime/date object). Defaults to today if None.
+        :param stage: Lifecycle stage of the plant at time of application (optional).
         """
+        # Determine date string
+        if entry_date is None:
+            date_str = datetime.now().strftime("%Y-%m-%d")
+        elif isinstance(entry_date, datetime):
+            date_str = entry_date.date().isoformat()
+        elif isinstance(entry_date, date):
+            date_str = entry_date.isoformat()
+        else:
+            date_str = str(entry_date)
+        # Determine stage name
+        stage_name = stage
+        if stage_name is None:
+            # Try to retrieve current stage from plant registry if available
+            reg_path = self._hass.config.path("plant_registry.json") if self._hass is not None else "plant_registry.json"
+            try:
+                with open(reg_path, "r", encoding="utf-8") as rf:
+                    reg_data = json.load(rf)
+                if plant_id in reg_data:
+                    stage_name = reg_data[plant_id].get("current_lifecycle_stage") or reg_data[plant_id].get("lifecycle_stage")
+            except Exception:
+                stage_name = None
+        if stage_name is None:
+            stage_name = "unknown"
+        # Convert nutrient amounts to float and validate
+        nutrient_mass_clean: Dict[str, float] = {}
+        for nut, amt in nutrient_mass.items():
+            try:
+                amt_val = float(amt)
+            except (ValueError, TypeError):
+                _LOGGER.error("Invalid nutrient amount for %s in plant %s: %s", nut, plant_id, amt)
+                return
+            nutrient_mass_clean[nut] = amt_val
+        # Create entry
+        entry = {"date": date_str, "nutrients": nutrient_mass_clean, "stage": stage_name}
+        # Append entry to logs and maintain chronological order
+        if plant_id not in self._usage_logs:
+            self._usage_logs[plant_id] = []
+        self._usage_logs[plant_id].append(entry)
+        try:
+            self._usage_logs[plant_id].sort(key=lambda x: x.get("date", ""))
+        except Exception as e:
+            _LOGGER.warning("Failed to sort nutrient entries for plant %s: %s", plant_id, e)
+        # Update running total for each nutrient
         if plant_id not in self.application_log:
             self.application_log[plant_id] = {}
-        for nutrient, mass in nutrient_mass.items():
-            self.application_log[plant_id][nutrient] = self.application_log[plant_id].get(nutrient, 0.0) + mass
+        for nut, amt_val in nutrient_mass_clean.items():
+            self.application_log[plant_id][nut] = self.application_log[plant_id].get(nut, 0.0) + amt_val
+        # Persist to file
+        self._save_to_file()
+        _LOGGER.info("Fertilizer application logged for plant %s: %s on %s (stage: %s)", 
+                     plant_id, nutrient_mass_clean, date_str, stage_name)
 
-    def log_tissue_test(self, plant_id: str, tissue_nutrient_mass: Dict[str, float]):
+    def log_tissue_test(self, plant_id: str, tissue_nutrient_mass: Dict[str, float]) -> None:
         """
-        Record nutrient concentrations found in tissue for a given plant.
-        Example: {"N": 9.2, "P": 2.3, "K": 7.4}
+        Record a tissue nutrient analysis result for a given plant.
+        Example: {"N": 9.2, "P": 2.3, "K": 7.4} (concentrations or content in % or mg as appropriate)
         """
         self.tissue_log[plant_id] = tissue_nutrient_mass
+        _LOGGER.info("Tissue test recorded for plant %s: %s", plant_id, tissue_nutrient_mass)
 
-    def log_yield(self, plant_id: str, yield_mass: float):
+    def log_yield(self, plant_id: str, yield_mass: Union[int, float], 
+                  entry_date: Optional[Union[str, date, datetime]] = None) -> None:
         """
-        Record the mass of yield produced for a given plant.
+        Record a yield event (harvest) for a given plant.
+        :param plant_id: Identifier of the plant.
+        :param yield_mass: Yield amount in grams.
+        :param entry_date: Date of yield (string 'YYYY-MM-DD', datetime/date object). Defaults to today if None.
         """
-        self.yield_log[plant_id] = yield_mass
+        # Determine date string
+        if entry_date is None:
+            date_str = datetime.now().strftime("%Y-%m-%d")
+        elif isinstance(entry_date, datetime):
+            date_str = entry_date.date().isoformat()
+        elif isinstance(entry_date, date):
+            date_str = entry_date.isoformat()
+        else:
+            date_str = str(entry_date)
+        # Convert yield mass to float
+        try:
+            yield_val = float(yield_mass)
+        except (ValueError, TypeError):
+            _LOGGER.error("Invalid yield mass value for plant %s: %s", plant_id, yield_mass)
+            return
+        # Update total yield for plant
+        if plant_id not in self.yield_log:
+            self.yield_log[plant_id] = 0.0
+        self.yield_log[plant_id] += yield_val
+        _LOGGER.info("Yield logged for plant %s: %.2f g on %s", plant_id, yield_val, date_str)
 
     def compute_efficiency(self, plant_id: str) -> Optional[Dict[str, float]]:
         """
-        Return nutrient use efficiency metrics, if all required data exists.
-        - Apparent Recovery Efficiency (RE)
-        - Physiological Efficiency (PE)
-        - Internal Use Efficiency (IE)
+        Calculate nutrient use efficiency for the given plant.
+        Efficiency is defined as grams of yield produced per mg of nutrient applied.
+        Returns a dict mapping each nutrient to its efficiency value, or None if data is incomplete.
         """
-        if plant_id not in self.application_log or plant_id not in self.tissue_log or plant_id not in self.yield_log:
+        if plant_id not in self.application_log or plant_id not in self.yield_log:
+            _LOGGER.warning("Cannot compute efficiency for plant %s: missing data (applied nutrients or yield).", plant_id)
             return None
-
-        applied = self.application_log[plant_id]
-        tissue = self.tissue_log[plant_id]
-        yield_mass = self.yield_log[plant_id]
-
-        results = {}
-
-        for nutrient in applied:
-            applied_mass = applied.get(nutrient, 0.0)
-            tissue_mass = tissue.get(nutrient, 0.0)
-
-            if applied_mass == 0.0:
+        total_yield_g = self.yield_log.get(plant_id, 0.0)
+        if total_yield_g <= 0:
+            _LOGGER.warning("No yield recorded for plant %s; efficiency cannot be computed.", plant_id)
+            return None
+        applied_totals = self.application_log.get(plant_id, {})
+        results: Dict[str, float] = {}
+        for nutrient, total_mg in applied_totals.items():
+            if total_mg <= 0:
                 continue
-
-            recovery_efficiency = tissue_mass / applied_mass  # Fraction taken up
-            physiological_efficiency = yield_mass / tissue_mass if tissue_mass else 0.0
-            internal_efficiency = yield_mass / applied_mass
-
-            results[nutrient] = round(internal_efficiency, 4)
-
+            # Efficiency: grams of yield per mg of this nutrient
+            efficiency_value = total_yield_g / total_mg
+            results[nutrient] = round(efficiency_value, 4)
         return results
+
+    def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
+        """
+        Summarize nutrient usage for a plant, grouped by a time period or lifecycle stage.
+        :param plant_id: Identifier of the plant.
+        :param by: Grouping method - "week", "month", or "stage".
+        :return: Dictionary where keys are period identifiers (week number, month, or stage name),
+                 and values are dicts of total nutrient applied in that period.
+        """
+        group_by = str(by).lower()
+        if plant_id not in self._usage_logs or not self._usage_logs[plant_id]:
+            return {}
+        summary: Dict[str, Dict[str, float]] = {}
+        for entry in self._usage_logs[plant_id]:
+            date_str = entry.get("date")
+            # Parse date string to date object for grouping
+            try:
+                entry_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            except Exception as e:
+                _LOGGER.warning("Invalid date format '%s' in logs for plant %s: %s", date_str, plant_id, e)
+                continue
+            if group_by == "week":
+                year, week_num, _ = entry_date.isocalendar()
+                key = f"{year}-W{week_num:02d}"
+            elif group_by == "month":
+                key = f"{entry_date.year}-{entry_date.month:02d}"
+            elif group_by == "stage":
+                key = entry.get("stage", "unknown")
+            else:
+                raise ValueError(f"Invalid summary grouping: {by}. Use 'week', 'month', or 'stage'.")
+            # Aggregate nutrient amounts
+            if key not in summary:
+                summary[key] = {}
+            for nut, amt in entry.get("nutrients", {}).items():
+                try:
+                    amt_val = float(amt)
+                except (ValueError, TypeError):
+                    amt_val = 0.0
+                summary[key][nut] = summary[key].get(nut, 0.0) + amt_val
+        return summary
+
+    def _save_to_file(self) -> None:
+        """Save the current nutrient usage logs to the JSON file."""
+        os.makedirs(os.path.dirname(self._data_file) or ".", exist_ok=True)
+        try:
+            with open(self._data_file, "w", encoding="utf-8") as f:
+                json.dump(self._usage_logs, f, indent=2)
+        except Exception as e:
+            _LOGGER.error("Failed to write nutrient use logs to %s: %s", self._data_file, e)
