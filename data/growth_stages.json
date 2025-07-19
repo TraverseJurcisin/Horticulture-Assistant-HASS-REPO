@@ -1,0 +1,13 @@
+{
+  "citrus": {
+    "seedling": {"duration_days": 60, "notes": "Keep soil moist and warm."},
+    "vegetative": {"duration_days": 120, "notes": "Apply balanced fertilizer."},
+    "fruiting": {"duration_days": 90, "notes": "Increase potassium levels."}
+  },
+  "tomato": {
+    "seedling": {"duration_days": 30, "notes": "Provide ample light."},
+    "vegetative": {"duration_days": 40, "notes": "Maintain moderate nitrogen."},
+    "flowering": {"duration_days": 20, "notes": "Reduce nitrogen, increase phosphorus."},
+    "fruiting": {"duration_days": 30, "notes": "High potassium required."}
+  }
+}

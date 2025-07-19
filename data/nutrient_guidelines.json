@@ -2,5 +2,9 @@
   "citrus": {
     "vegetative": {"N": 80, "P": 30, "K": 60, "Ca": 20, "Mg": 10},
     "fruiting": {"N": 120, "P": 40, "K": 100, "Ca": 40, "Mg": 20}
+  },
+  "tomato": {
+    "vegetative": {"N": 100, "P": 50, "K": 80, "Ca": 40, "Mg": 25},
+    "fruiting": {"N": 80, "P": 60, "K": 120, "Ca": 60, "Mg": 30}
   }
 }
