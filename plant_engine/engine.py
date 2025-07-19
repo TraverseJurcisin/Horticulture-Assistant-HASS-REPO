@@ -2,12 +2,12 @@ import os
 from typing import Dict
 from plant_engine.utils import load_json, save_json
 from plant_engine.ai_model import analyze
-from plant_engine.et_model import calculate_et0, calculate_eta
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.water_deficit_tracker import update_water_balance
 from plant_engine.growth_model import update_growth_index
 from plant_engine.nutrient_efficiency import calculate_nue
 from plant_engine.approval_queue import queue_threshold_updates
+from plant_engine.nutrient_manager import get_recommended_levels
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
@@ -43,7 +43,13 @@ def run_daily_cycle(plant_id: str):
     except FileNotFoundError:
         nue = {}
 
-    # Step 5: AI Recommendation
+    # Step 5: Recommended nutrient levels
+    guidelines = get_recommended_levels(
+        profile.get("plant_type", ""),
+        profile.get("stage", "")
+    )
+
+    # Step 6: AI Recommendation
     report = {
         "plant_id": plant_id,
         "thresholds": profile.get("thresholds", {}),
@@ -51,13 +57,14 @@ def run_daily_cycle(plant_id: str):
         "transpiration": transp,
         "water_deficit": water,
         "nue": nue,
+        "guidelines": guidelines,
         "lifecycle_stage": profile.get("stage", "unknown"),
         "tags": profile.get("tags", [])
     }
 
     recommendations = analyze(report)
 
-    # Step 6: Auto-approve or queue
+    # Step 7: Auto-approve or queue
     if profile.get("auto_approve_all", False):
         profile["thresholds"] = recommendations
         save_json(plant_file, profile)
@@ -65,7 +72,7 @@ def run_daily_cycle(plant_id: str):
     else:
         queue_threshold_updates(plant_id, profile["thresholds"], recommendations)
 
-    # Step 7: Write daily report JSON
+    # Step 8: Write daily report JSON
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     out_path = os.path.join(OUTPUT_DIR, f"{plant_id}.json")
     save_json(out_path, report)

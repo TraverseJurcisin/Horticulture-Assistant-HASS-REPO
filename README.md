@@ -10,6 +10,7 @@ Currently, this repository is **private and actively under development**. A suit
 
 * Individual plant automation leveraging detailed sensor inputs and dynamic JSON profiles
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
+* Built-in nutrient guidelines for precise fertilizer planning
 * Binary sensors for irrigation readiness, sensor health and fault detection
 * Switch entities to control irrigation and fertigation
 * Optional AI threshold recalculation using offline or OpenAI logic
@@ -78,9 +79,18 @@ horticulture-assistant/
 │   └── automation/
 │       └── plant_monitoring.yaml
 ├── data/
-│   └── yield/
+│   ├── yield/
+│   └── nutrient_guidelines.json
 ├── plant_engine/
-│   └── engine.py
+│   ├── engine.py
+│   ├── ai_model.py
+│   ├── et_model.py
+│   ├── compute_transpiration.py
+│   ├── water_deficit_tracker.py
+│   ├── growth_model.py
+│   ├── nutrient_efficiency.py
+│   ├── approval_queue.py
+│   └── nutrient_manager.py
 ├── scripts/
 │   ├── run_all_plants.py
 │   ├── daily_threshold_recalc.py
