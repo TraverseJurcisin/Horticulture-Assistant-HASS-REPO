@@ -11,6 +11,7 @@ Currently, this repository is **private and actively under development**. A suit
 * Individual plant automation leveraging detailed sensor inputs and dynamic JSON profiles
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
 * Built-in nutrient guidelines for precise fertilizer planning
+* Reference datasets for environment, pests and growth stage info
 * Binary sensors for irrigation readiness, sensor health and fault detection
 * Switch entities to control irrigation and fertigation
 * Optional AI threshold recalculation using offline or OpenAI logic

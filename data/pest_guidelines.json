@@ -2,5 +2,9 @@
   "citrus": {
     "aphids": "Apply insecticidal soap weekly until populations decline.",
     "scale": "Use horticultural oil spray at bud break."
+  },
+  "tomato": {
+    "aphids": "Use neem oil spray weekly.",
+    "blight": "Apply copper-based fungicide at first sign."
   }
 }
