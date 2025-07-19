@@ -7,7 +7,7 @@
   "codeowners": ["@TraverseJurcisin"],
   "dependencies": [],
   "requirements": [],
-  "config_flow": false,
+  "config_flow": true,
   "iot_class": "calculated",
   "integration_type": "hub",
   "quality_scale": "silver"

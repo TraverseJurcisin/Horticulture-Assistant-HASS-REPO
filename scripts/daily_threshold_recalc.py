@@ -112,13 +112,6 @@ def run_daily_threshold_updates():
         else:
             queue_threshold_updates(plant_id, profile["thresholds"], new_thresholds)
             print("🛑 Threshold changes queued for approval.")
-        
-
-        if profile.get(AUTO_APPROVE_FIELD, False):
-            update_plant_profile(profile_path, new_thresholds)
-            print("✅ Thresholds auto-updated (auto_approve_all: true)")
-        else:
-            print("🛑 Awaiting manual approval for threshold updates")
 
     print("\n✅ Daily threshold recalculation complete.")
 

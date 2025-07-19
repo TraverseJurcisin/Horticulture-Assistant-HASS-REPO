@@ -15,7 +15,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.typing import ConfigType
 
-from .const import DOMAIN
+from .const import DOMAIN, PLATFORMS
+import asyncio
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,10 +29,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a config entry."""
     _LOGGER.info("Setting up Horticulture Assistant from config entry: %s", entry.entry_id)
 
-    # Forward config entry to the platforms defined in manifest.json
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    # Forward config entry to all supported platforms
+    for platform in PLATFORMS:
+        hass.async_create_task(
+            hass.config_entries.async_forward_entry_setup(entry, platform)
+        )
 
     # Initialize storage/data if needed
     hass.data.setdefault(DOMAIN, {})
@@ -41,9 +43,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     _LOGGER.info("Unloading Horticulture Assistant config entry: %s", entry.entry_id)
-    unload_ok = await hass.config_entries.async_forward_entry_unload(entry, "sensor")
+    unload_results = await asyncio.gather(
+        *[
+            hass.config_entries.async_forward_entry_unload(entry, platform)
+            for platform in PLATFORMS
+        ]
+    )
 
-    if unload_ok:
+    if all(unload_results):
         hass.data[DOMAIN].pop(entry.entry_id, None)
 
-    return unload_ok
+    return all(unload_results)

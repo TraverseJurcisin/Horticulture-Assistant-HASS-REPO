@@ -6,7 +6,7 @@ VERSION = "0.1.0"
 ISSUE_URL = "https://github.com/TraverseJurcisin/Horticulture-Assistant/issues"
 
 # Platform support
-PLATFORMS = ["sensor"]
+PLATFORMS = ["sensor", "binary_sensor", "switch"]
 
 # Configuration
 CONF_ENABLE_AUTO_APPROVE = "enable_auto_approve"
