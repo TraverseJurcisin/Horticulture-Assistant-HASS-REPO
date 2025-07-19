@@ -1,93 +1,136 @@
-from datetime import date
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from typing import List, Dict, Optional
+import uuid
 
+@dataclass
+class InventoryLot:
+    """A single lot (batch) of a fertilizer or nutrient product."""
+    product_name: str
+    form: str           # "liquid" or "solid"
+    vendor: str
+    manufacture_date: datetime
+    expiration_date: Optional[datetime]
+    price: float        # price of this lot
+    derived_ingredients: Dict[str, float]  # composition of the product (ingredient breakdown)
+    storage_temp: Optional[float]  # recommended storage temperature (°C)
+    is_biological: bool  # True if biological (organic/microbial), False if chemical/mineral
+    initial_quantity: float        # initial quantity in this lot
+    quantity_remaining: float      # current remaining quantity
+    unit: str           # unit of measure for the quantity (e.g., "kg", "L")
+    batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
-class FertilizerLot:
-    def __init__(
-        self,
-        lot_id: str,
-        product_name: str,
-        manufacturer: str,
-        supplier: str,
-        date_of_manufacture: date,
-        date_of_purchase: date,
-        expiration_date: Optional[date],
-        batch_weight_kg: float,
-        unit_type: str,
-        base_cost: float,
-        derived_from: List[str],
-        is_biological: bool = False,
-    ):
-        self.lot_id = lot_id
-        self.product_name = product_name
-        self.manufacturer = manufacturer
-        self.supplier = supplier
-        self.date_of_manufacture = date_of_manufacture
-        self.date_of_purchase = date_of_purchase
-        self.expiration_date = expiration_date
-        self.batch_weight_kg = batch_weight_kg
-        self.unit_type = unit_type  # kg, L, etc.
-        self.base_cost = base_cost  # cost for entire lot
-        self.derived_from = derived_from
-        self.is_biological = is_biological
+class InventoryTracker:
+    """Manage inventory of fertilizer/nutrient products (multiple lots, usage logging, expiration tracking)."""
+    def __init__(self):
+        self.inventory: Dict[str, List[InventoryLot]] = {}
+        self.usage_log: List[Dict] = []
 
-        self.usage_history: List[Dict] = []  # stores when/where/how_much used
-
-    def log_use(
-        self,
-        date_applied: date,
-        amount_kg: float,
-        used_in_recipe: str,
-        zone_id: str,
-    ):
-        self.usage_history.append(
-            {
-                "date": date_applied,
-                "amount_used_kg": amount_kg,
-                "recipe": used_in_recipe,
-                "zone": zone_id,
-            }
+    def add_inventory(self, product_name: str, form: str, vendor: str,
+                      manufacture_date: datetime, expiration_date: Optional[datetime],
+                      price: float, derived_ingredients: Dict[str, float],
+                      storage_temp: Optional[float], is_biological: bool,
+                      quantity: float, unit: str):
+        """Add a new inventory lot for a product."""
+        lot = InventoryLot(
+            product_name=product_name,
+            form=form,
+            vendor=vendor,
+            manufacture_date=manufacture_date,
+            expiration_date=expiration_date,
+            price=price,
+            derived_ingredients=derived_ingredients,
+            storage_temp=storage_temp,
+            is_biological=is_biological,
+            initial_quantity=quantity,
+            quantity_remaining=quantity,
+            unit=unit
         )
+        if product_name not in self.inventory:
+            self.inventory[product_name] = []
+        self.inventory[product_name].append(lot)
 
-    def remaining_kg(self) -> float:
-        used = sum(entry["amount_used_kg"] for entry in self.usage_history)
-        return self.batch_weight_kg - used
-
-    def is_expired(self, today: Optional[date] = None) -> bool:
-        if not self.expiration_date:
+    def log_usage(self, product_name: str, amount: float, unit: str,
+                  recipe: str, plant: str, date: Optional[datetime] = None) -> bool:
+        """Deduct an amount of a product from inventory (using oldest lot(s) first) and log its usage.
+        Logs the usage event with the recipe, plant, and date.
+        Returns True if the inventory had enough product and the usage was logged, or False if insufficient quantity."""
+        if product_name not in self.inventory:
             return False
-        return (today or date.today()) > self.expiration_date
-
-    def is_precipitation_sensitive(self) -> bool:
-        sensitive_ingredients = [
-            "calcium nitrate",
-            "iron sulfate",
-            "magnesium sulfate",
-            "ammonium phosphate",
-            "potassium phosphate",
-        ]
-        return any(
-            ingr.lower() in str(self.derived_from).lower()
-            for ingr in sensitive_ingredients
-        )
-
-    def estimated_cost_per_kg(self) -> float:
-        return self.base_cost / self.batch_weight_kg if self.batch_weight_kg else 0.0
-
-    def summary(self) -> Dict:
-        return {
-            "lot_id": self.lot_id,
-            "product": self.product_name,
-            "manufacturer": self.manufacturer,
-            "supplier": self.supplier,
-            "mfg_date": self.date_of_manufacture.isoformat(),
-            "purchase_date": self.date_of_purchase.isoformat(),
-            "expiration": self.expiration_date.isoformat()
-            if self.expiration_date
-            else None,
-            "remaining_kg": self.remaining_kg(),
-            "sensitive": self.is_precipitation_sensitive(),
-            "cost_per_kg": self.estimated_cost_per_kg(),
-            "biological": self.is_biological,
-            "uses": self.usage_history,
+        if date is None:
+            date = datetime.now()
+        lots = sorted(self.inventory[product_name], key=lambda x: (x.expiration_date or datetime.max, x.manufacture_date))
+        amount_needed = amount
+        for lot in lots:
+            if lot.unit != unit:
+                continue
+            if lot.quantity_remaining <= 0:
+                continue
+            if lot.quantity_remaining >= amount_needed:
+                lot.quantity_remaining -= amount_needed
+                amount_needed = 0
+                break
+            else:
+                amount_needed -= lot.quantity_remaining
+                lot.quantity_remaining = 0.0
+        # Remove depleted lots
+        self.inventory[product_name] = [lot for lot in self.inventory[product_name] if lot.quantity_remaining > 0]
+        if amount_needed > 1e-9:
+            return False
+        usage_event = {
+            "date": date,
+            "product": product_name,
+            "recipe": recipe,
+            "plant": plant,
+            "amount": amount,
+            "unit": unit
         }
+        self.usage_log.append(usage_event)
+        return True
+
+    def get_total_quantity(self, product_name: str, unit: Optional[str] = None) -> float:
+        """Get total remaining quantity of a product in inventory.
+        If unit is specified, sums only that unit; otherwise, sums all remaining quantity (assuming uniform unit)."""
+        if product_name not in self.inventory:
+            return 0.0
+        total = 0.0
+        for lot in self.inventory[product_name]:
+            if unit is None or lot.unit == unit:
+                total += lot.quantity_remaining
+        return total
+
+    def get_expiring_lots(self, within_days: int = 30) -> List[InventoryLot]:
+        """List all lots that will expire within the given number of days."""
+        expiring = []
+        now = datetime.now()
+        threshold = now + timedelta(days=within_days)
+        for product_lots in self.inventory.values():
+            for lot in product_lots:
+                if lot.expiration_date and lot.expiration_date <= threshold:
+                    expiring.append(lot)
+        return expiring
+
+    def get_inventory_summary(self) -> List[Dict]:
+        """Get a summary of the current inventory for each product.
+        Returns a list of dicts containing product name, total remaining quantity, unit, number of lots, and nearest expiration date."""
+        summary_list = []
+        for product_name, lots in self.inventory.items():
+            if not lots:
+                continue
+            # Assuming all lots of a product share the same unit
+            unit = lots[0].unit
+            total_quantity = sum(lot.quantity_remaining for lot in lots if lot.unit == unit)
+            lot_count = len(lots)
+            nearest_exp = None
+            for lot in lots:
+                if lot.expiration_date:
+                    if nearest_exp is None or lot.expiration_date < nearest_exp:
+                        nearest_exp = lot.expiration_date
+            summary_list.append({
+                "product": product_name,
+                "total_quantity": total_quantity,
+                "unit": unit,
+                "lot_count": lot_count,
+                "nearest_expiration": nearest_exp
+            })
+        return summary_list
