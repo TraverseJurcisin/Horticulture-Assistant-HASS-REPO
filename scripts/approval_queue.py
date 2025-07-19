@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 from typing import Dict
+from plant_engine.utils import load_json, save_json
 
 PENDING_DIR = "data/pending_thresholds"
 
@@ -54,14 +55,3 @@ def apply_approved_thresholds(plant_path: str, pending_file: str):
     print(f"✅ Applied {applied} approved changes for {pending['plant_id']}")
     return applied
 
-
-# --- Utilities (copied from recalc script for independence) ---
-
-def load_json(path: str) -> Dict:
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-def save_json(path: str, data: Dict) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)

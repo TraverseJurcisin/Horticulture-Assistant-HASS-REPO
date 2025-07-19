@@ -2,8 +2,9 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 from water_deficit_tracker import update_water_balance
+from plant_engine.utils import load_json, save_json
 
 
 # === CONFIGURATION ===
@@ -15,17 +16,6 @@ AUTO_APPROVE_FIELD = "auto_approve_all"
 
 
 # === HELPER FUNCTIONS ===
-
-def load_json(path: str) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-def save_json(path: str, data: Dict[str, Any]) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
-
-
 def generate_daily_report(plant_id: str, profile: Dict[str, Any]) -> Dict[str, Any]:
     """
     Mock version of AI input data packaging.
