@@ -1,4 +1,7 @@
-from plant_engine.compute_transpiration import compute_transpiration
+from plant_engine.compute_transpiration import (
+    compute_transpiration,
+    TranspirationMetrics,
+)
 
 
 def test_compute_transpiration_basic():
@@ -14,3 +17,13 @@ def test_compute_transpiration_basic():
     assert result["et0_mm_day"] == 8.54
     assert result["eta_mm_day"] == 10.25
     assert result["transpiration_ml_day"] == 2562.5
+
+
+def test_transpiration_metrics_dataclass():
+    metrics = TranspirationMetrics(8.0, 9.0, 1000.0)
+    d = metrics.as_dict()
+    assert d == {
+        "et0_mm_day": 8.0,
+        "eta_mm_day": 9.0,
+        "transpiration_ml_day": 1000.0,
+    }

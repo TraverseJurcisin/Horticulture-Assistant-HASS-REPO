@@ -14,7 +14,7 @@ def test_recommend_irrigation_volume_basic():
     )
     # After ET, projected volume below RAW so refill to full
     vol = recommend_irrigation_volume(zone, available_ml=120.0, expected_et_ml=40.0)
-    assert vol == 120.0
+    assert vol == 80.0
 
 
 def test_irrigation_no_action_when_sufficient():
@@ -26,6 +26,19 @@ def test_irrigation_no_action_when_sufficient():
     )
     vol = recommend_irrigation_volume(zone, available_ml=150.0, expected_et_ml=30.0)
     assert vol == 0.0
+
+
+def test_irrigation_clamped_to_capacity():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    # Projected requirement exceeds physical capacity
+    vol = recommend_irrigation_volume(zone, available_ml=50.0, expected_et_ml=10.0)
+    # Only 150 ml space remains
+    assert vol == 150.0
 
 
 def test_recommend_irrigation_interval():
