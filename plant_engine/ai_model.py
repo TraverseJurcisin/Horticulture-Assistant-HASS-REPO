@@ -1,7 +1,11 @@
 import os
 import json
-import openai  # Optional, only if using OpenAI's API
 from typing import Dict
+
+try:
+    import openai  # Optional, only if using OpenAI's API
+except ModuleNotFoundError:  # pragma: no cover - optional dependency
+    openai = None
 
 # === Configuration ===
 
@@ -34,6 +38,8 @@ def mock_adjust_thresholds(data: Dict) -> Dict:
 # === OpenAI API wrapper ===
 
 def openai_adjust_thresholds(data: Dict) -> Dict:
+    if openai is None:
+        raise RuntimeError("openai package is not installed")
     if not OPENAI_API_KEY:
         raise RuntimeError("OPENAI_API_KEY not set in environment.")
 

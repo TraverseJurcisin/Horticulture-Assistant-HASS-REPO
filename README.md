@@ -12,8 +12,15 @@ Currently, this repository is **private and actively under development**. A suit
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
 * Built-in nutrient guidelines for precise fertilizer planning
 * Reference datasets for environment, pests and growth stage info
+* Automated environment adjustment and pest treatment suggestions
+* Disease treatment recommendations for common plant diseases
+* On-demand nutrient correction and fertigation calculations
+* Tracking nutrient use efficiency from yield and application logs
+* Root zone modeling utilities for irrigation planning
+* Dynamic water balance using root zone capacity estimates
 * Binary sensors for irrigation readiness, sensor health and fault detection
 * Switch entities to control irrigation and fertigation
+* Approval queue for AI threshold updates with manual review
 * Optional AI threshold recalculation using offline or OpenAI logic
 * YAML automation blueprint and profile generator utilities
 * Plant registry with dynamic tagging for grouped analytics
@@ -91,14 +98,15 @@ horticulture-assistant/
 │   ├── growth_model.py
 │   ├── nutrient_efficiency.py
 │   ├── approval_queue.py
+│   ├── disease_manager.py
 │   └── nutrient_manager.py
 ├── scripts/
 │   ├── run_all_plants.py
 │   ├── daily_threshold_recalc.py
 │   ├── compute_transpiration.py
 │   ├── growth_model.py
-│   ├── rootzone_model.py
 │   ├── nutrient_efficiency.py
+│   ├── rootzone_model.py
 │   └── ai_model.py
 ├── plants/
 │   └── <plant_id>.json

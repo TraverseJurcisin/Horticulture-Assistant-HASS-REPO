@@ -1,0 +1,10 @@
+{
+  "citrus": {
+    "citrus greening": "Remove infected branches and apply copper fungicide.",
+    "root rot": "Ensure good drainage and apply fungicide."
+  },
+  "tomato": {
+    "blight": "Apply copper-based fungicide weekly.",
+    "powdery mildew": "Use sulfur spray at first sign."
+  }
+}

@@ -1,7 +1,11 @@
-from plant_engine.et_model import calculate_et0, calculate_eta
-from typing import Dict
+"""Transpiration calculation utilities."""
+from __future__ import annotations
 
-def compute_transpiration(plant_profile: Dict, env_data: Dict) -> Dict:
+from typing import Dict, Mapping
+
+from plant_engine.et_model import calculate_et0, calculate_eta
+
+def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict:
     """
     Calculate ET₀, ETₐ, and estimated daily water use (mL/day) for a single plant.
     Returns a dictionary with values to inject into sensors.
@@ -10,7 +14,7 @@ def compute_transpiration(plant_profile: Dict, env_data: Dict) -> Dict:
     et0 = calculate_et0(
         temperature_c=env_data["temp_c"],
         rh_percent=env_data["rh_pct"],
-        solar_rad_w_m2=env_data["par"],
+        solar_rad_w_m2=env_data.get("par_w_m2", env_data.get("par", 0)),
         wind_m_s=env_data.get("wind_speed_m_s", 1.0),
         elevation_m=env_data.get("elevation_m", 200)
     )

@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from typing import Dict
+from typing import Dict, Optional
 
 STORAGE_PATH = "data/water_balance"
 MAX_LOG_DAYS = 14  # for rolling average or ET smoothing (optional)
@@ -12,11 +12,27 @@ def update_water_balance(
     irrigation_ml: float,
     transpiration_ml: float,
     storage_path: str = STORAGE_PATH,
+    *,
+    rootzone_ml: Optional[float] = None,
+    mad_pct: float = 0.5,
 ) -> Dict:
-    """
-    Update the water balance file for a plant.
-    Adds today's irrigation and ET loss to cumulative water availability.
-    Returns new status dictionary (ml_available, % depletion, etc.).
+    """Update and return the daily water balance for a plant.
+
+    Parameters
+    ----------
+    plant_id : str
+        Identifier for the plant.
+    irrigation_ml : float
+        Water applied today in milliliters.
+    transpiration_ml : float
+        Estimated transpiration loss for today in milliliters.
+    storage_path : str, optional
+        Directory for water balance logs.
+    rootzone_ml : float, optional
+        Total available water (TAW) of the root zone in milliliters.
+        If not provided a default of 3000 mL is used.
+    mad_pct : float, optional
+        Management allowed depletion as a fraction of TAW.
     """
 
     os.makedirs(storage_path, exist_ok=True)
@@ -45,8 +61,8 @@ def update_water_balance(
         cumulative_ml += entry["irrigated"] - entry["et"]
 
     # Root zone capacity from profile
-    rootzone_ml = 3000  # Example default if not dynamically loaded
-    mad_pct = 0.5       # 50% depletion allowable
+    if rootzone_ml is None:
+        rootzone_ml = 3000  # Default if not provided
     raw_ml = rootzone_ml * mad_pct
 
     available_ml = max(0, min(cumulative_ml, rootzone_ml))
@@ -59,7 +75,10 @@ def update_water_balance(
         "date": today,
         "ml_available": round(available_ml, 1),
         "depletion_pct": depletion_pct,
-        "mad_crossed": mad_crossed
+        "mad_crossed": mad_crossed,
+        "raw_ml": round(raw_ml, 1),
+        "taw_ml": rootzone_ml,
+        "mad_pct": mad_pct,
     }
 
     # Write updated history
@@ -67,3 +86,4 @@ def update_water_balance(
         json.dump(history, f, indent=2)
 
     return summary
+

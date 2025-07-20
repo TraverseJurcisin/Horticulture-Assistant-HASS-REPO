@@ -1,0 +1,50 @@
+import json
+
+from plant_engine import engine
+from plant_engine import growth_model
+
+
+def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
+    plants_dir = tmp_path / "plants"
+    plants_dir.mkdir()
+    output_dir = tmp_path / "reports"
+    growth_dir = tmp_path / "growth"
+
+    # Patch directories used by engine and growth_model
+    monkeypatch.setattr(engine, "PLANTS_DIR", str(plants_dir))
+    monkeypatch.setattr(engine, "OUTPUT_DIR", str(output_dir))
+    monkeypatch.setattr(growth_model, "GROWTH_DIR", str(growth_dir))
+
+    plant_path = plants_dir / "sample.json"
+    plant_path.write_text(
+        json.dumps(
+            {
+                "plant_type": "citrus",
+                "stage": "seedling",
+                "kc": 1.0,
+                "canopy_m2": 0.5,
+                "max_root_depth_cm": 30,
+                "last_irrigation_ml": 800,
+                "thresholds": {"soil_moisture_pct": 30},
+                "latest_env": {
+                    "temp_c": 24,
+                    "temp_c_max": 26,
+                    "temp_c_min": 20,
+                    "rh_pct": 60,
+                    "par_w_m2": 300,
+                },
+                "observed_pests": ["aphids"],
+                "observed_diseases": ["root rot"],
+            }
+        )
+    )
+
+    report = engine.run_daily_cycle("sample")
+
+    assert "rootzone" in report
+    assert report["rootzone"]["mad_pct"] == 0.5
+    assert "stage_info" in report
+    assert report["pest_actions"]["aphids"].startswith("Apply insecticidal")
+    assert report["disease_actions"]["root rot"].startswith("Ensure good drainage")
+    assert (output_dir / "sample.json").exists()
+
