@@ -12,7 +12,7 @@ Currently, this repository is **private and actively under development**. A suit
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
 * Built-in nutrient guidelines for precise fertilizer planning
 * Reference datasets for environment, pests and growth stage info
-* Expanded guidelines now include strawberry, basil and spinach profiles
+* Expanded guidelines now include strawberry, basil, spinach, cucumber and pepper profiles
 * Fertilizer purity dataset for accurate mixing calculations
 * Fertigation utilities support specifying a fertilizer product by name
 * Environment guidelines include light intensity and CO₂ ranges

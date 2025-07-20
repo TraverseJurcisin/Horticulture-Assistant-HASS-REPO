@@ -15,15 +15,21 @@ def test_list_supported_plants():
     assert "strawberry" in plants
     assert "basil" in plants
     assert "spinach" in plants
+    assert "cucumber" in plants
+    assert "pepper" in plants
 
     pest_plants = pest_manager.list_supported_plants()
     assert "lettuce" in pest_plants
+    assert "cucumber" in pest_plants
+    assert "pepper" in pest_plants
 
     disease_plants = disease_manager.list_supported_plants()
     assert "lettuce" in disease_plants
     assert "strawberry" in disease_plants
     assert "basil" in disease_plants
     assert "spinach" in disease_plants
+    assert "cucumber" in disease_plants
+    assert "pepper" in disease_plants
 
     purity = fertigation.get_fertilizer_purity("map")
     assert purity["P"] == 0.22
@@ -40,6 +46,12 @@ def test_list_supported_plants():
 
     spinach_env = environment_manager.get_environmental_targets("spinach")
     assert spinach_env["light_ppfd"] == [150, 300]
+
+    cuc_env = environment_manager.get_environmental_targets("cucumber")
+    assert cuc_env["temp_c"] == [20, 28]
+
+    pep_env = environment_manager.get_environmental_targets("pepper")
+    assert pep_env["humidity_pct"] == [60, 80]
 
 
 def test_lettuce_stage_info():
@@ -71,6 +83,12 @@ def test_nutrient_guidelines_lettuce():
     spin_levels = nutrient_manager.get_recommended_levels("spinach", "harvest")
     assert spin_levels["P"] == 25
 
+    cuc_levels = nutrient_manager.get_recommended_levels("cucumber", "vegetative")
+    assert cuc_levels["K"] == 110
+
+    pep_levels = nutrient_manager.get_recommended_levels("pepper", "fruiting")
+    assert pep_levels["N"] == 70
+
 
 def test_treatment_guidelines_lettuce():
     pests = pest_manager.recommend_treatments("lettuce", ["aphids"])
@@ -96,3 +114,15 @@ def test_treatment_guidelines_lettuce():
 
     spin_dis = disease_manager.recommend_treatments("spinach", ["leaf spot"])
     assert "spacing" in spin_dis["leaf spot"].lower()
+
+    cuc_pests = pest_manager.recommend_treatments("cucumber", ["cucumber beetle"])
+    assert cuc_pests["cucumber beetle"].startswith("Apply pyrethrin")
+
+    pep_pests = pest_manager.recommend_treatments("pepper", ["spider mites"])
+    assert "neem" in pep_pests["spider mites"].lower()
+
+    cuc_dis = disease_manager.recommend_treatments("cucumber", ["bacterial wilt"])
+    assert "beetles" in cuc_dis["bacterial wilt"].lower()
+
+    pep_dis = disease_manager.recommend_treatments("pepper", ["bacterial spot"])
+    assert "air circulation" in pep_dis["bacterial spot"].lower()

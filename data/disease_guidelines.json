@@ -22,5 +22,13 @@
   "basil": {
     "downy mildew": "Ensure good airflow and avoid overhead watering.",
     "fusarium wilt": "Use disease-free seed and remove infected plants."
+  },
+  "cucumber": {
+    "powdery mildew": "Apply sulfur spray and ensure adequate spacing.",
+    "bacterial wilt": "Remove infected plants and control beetles."
+  },
+  "pepper": {
+    "powdery mildew": "Use sulfur spray if needed.",
+    "bacterial spot": "Remove infected leaves and improve air circulation."
   }
 }

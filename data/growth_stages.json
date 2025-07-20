@@ -78,5 +78,37 @@
       "duration_days": 20,
       "notes": "Leaves are best picked before flowering."
     }
+  },
+  "cucumber": {
+    "vegetative": {
+      "duration_days": 30,
+      "notes": "Train vines and maintain nutrients."
+    },
+    "flowering": {
+      "duration_days": 10,
+      "notes": "Reduce nitrogen, increase potassium."
+    },
+    "fruiting": {
+      "duration_days": 25,
+      "notes": "Maintain consistent moisture."
+    }
+  },
+  "pepper": {
+    "seedling": {
+      "duration_days": 25,
+      "notes": "Maintain warmth and humidity."
+    },
+    "vegetative": {
+      "duration_days": 40,
+      "notes": "Provide moderate nitrogen."
+    },
+    "flowering": {
+      "duration_days": 20,
+      "notes": "Increase phosphorus."
+    },
+    "fruiting": {
+      "duration_days": 30,
+      "notes": "High potassium demand."
+    }
   }
 }

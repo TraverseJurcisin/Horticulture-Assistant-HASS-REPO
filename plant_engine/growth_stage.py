@@ -3,25 +3,25 @@
 from __future__ import annotations
 
 from typing import Dict, Any
-from functools import lru_cache
+
 from .utils import load_dataset
 
 DATA_FILE = "growth_stages.json"
 
 
-@lru_cache(maxsize=None)
-def _load_data() -> Dict[str, Dict[str, Any]]:
-    return load_dataset(DATA_FILE)
+
+# Load growth stage dataset once. ``load_dataset`` handles caching.
+_DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
 
 
 def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
     """Return information about a particular growth stage."""
-    return _load_data().get(plant_type, {}).get(stage, {})
+    return _DATA.get(plant_type, {}).get(stage, {})
 
 
 def list_growth_stages(plant_type: str) -> list[str]:
     """Return all defined growth stages for a plant type."""
-    return sorted(_load_data().get(plant_type, {}).keys())
+    return sorted(_DATA.get(plant_type, {}).keys())
 
 
 def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:
@@ -36,7 +36,7 @@ def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | Non
     if days_since_start < 0:
         raise ValueError("days_since_start must be non-negative")
 
-    stages = _load_data().get(plant_type)
+    stages = _DATA.get(plant_type)
     if not isinstance(stages, dict):
         return None
 

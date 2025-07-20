@@ -5,6 +5,7 @@ from plant_engine.environment_manager import (
     recommend_environment_adjustments,
     suggest_environment_setpoints,
     calculate_vpd,
+    optimize_environment,
 )
 
 
@@ -55,3 +56,14 @@ def test_calculate_vpd():
 def test_calculate_vpd_invalid_humidity():
     with pytest.raises(ValueError):
         calculate_vpd(25, 120)
+
+
+def test_optimize_environment():
+    result = optimize_environment(
+        {"temp_c": 18, "humidity_pct": 90},
+        "citrus",
+        "seedling",
+    )
+    assert result["setpoints"]["temp_c"] == 24
+    assert result["adjustments"]["temperature"] == "increase"
+    assert round(result["vpd"], 3) == calculate_vpd(18, 90)
