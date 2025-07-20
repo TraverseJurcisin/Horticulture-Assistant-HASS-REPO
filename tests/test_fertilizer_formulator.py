@@ -15,6 +15,7 @@ spec.loader.exec_module(fert_mod)
 calculate_fertilizer_nutrients = fert_mod.calculate_fertilizer_nutrients
 convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
+get_product_info = fert_mod.get_product_info
 
 
 def test_convert_guaranteed_analysis():
@@ -37,9 +38,14 @@ def test_list_products_contains_inventory():
     ids = list_products()
     assert "foxfarm_grow_big" in ids
 
+    info = get_product_info("foxfarm_grow_big")
+    assert round(info.density_kg_per_l, 2) == 0.96
+
 
 def test_invalid_inputs():
     with pytest.raises(ValueError):
         calculate_fertilizer_nutrients("plant", "unknown", 10)
     with pytest.raises(ValueError):
         calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 0)
+    with pytest.raises(KeyError):
+        get_product_info("unknown")

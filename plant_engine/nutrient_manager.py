@@ -3,13 +3,17 @@ from __future__ import annotations
 
 from typing import Dict
 
+"""Helpers for plant nutrient guidelines and analysis."""
+
+from typing import Dict
+
 from .utils import load_dataset
 
 DATA_FILE = "nutrient_guidelines.json"
 
 
 
-# Cache dataset via ``load_dataset`` once at import time
+# Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 
 
@@ -59,4 +63,22 @@ def calculate_nutrient_balance(
         current = current_levels.get(nutrient, 0.0)
         ratios[nutrient] = round(current / target, 2)
     return ratios
+
+
+def calculate_surplus(
+    current_levels: Dict[str, float],
+    plant_type: str,
+    stage: str,
+) -> Dict[str, float]:
+    """Return nutrient amounts exceeding recommendations."""
+
+    recommended = get_recommended_levels(plant_type, stage)
+    surplus: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        current = current_levels.get(nutrient, 0.0)
+        diff = round(current - target, 2)
+        if diff > 0:
+            surplus[nutrient] = diff
+    return surplus
+
 

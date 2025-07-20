@@ -82,9 +82,18 @@ __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
     "list_products",
+    "get_product_info",
 ]
 
 
 def list_products() -> list[str]:
     """Return available fertilizer product identifiers."""
     return sorted(_inventory().keys())
+
+
+def get_product_info(fertilizer_id: str) -> Fertilizer:
+    """Return :class:`Fertilizer` details for ``fertilizer_id``."""
+    inv = _inventory()
+    if fertilizer_id not in inv:
+        raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
+    return inv[fertilizer_id]
