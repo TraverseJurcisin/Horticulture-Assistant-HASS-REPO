@@ -1,8 +1,12 @@
+"""Utility helpers for reading data files used across the plant engine."""
+
+from __future__ import annotations
+
 import json
 import os
 from functools import lru_cache
-from typing import Any, Dict
 from pathlib import Path
+from typing import Any, Dict
 
 __all__ = ["load_json", "save_json", "load_dataset"]
 

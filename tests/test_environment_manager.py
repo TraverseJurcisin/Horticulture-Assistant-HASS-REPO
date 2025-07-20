@@ -7,6 +7,7 @@ from plant_engine.environment_manager import (
     calculate_vpd,
     calculate_dew_point,
     calculate_heat_index,
+    relative_humidity_from_dew_point,
     optimize_environment,
 )
 
@@ -75,6 +76,13 @@ def test_calculate_heat_index():
 def test_calculate_heat_index_invalid():
     with pytest.raises(ValueError):
         calculate_heat_index(25, -10)
+
+
+def test_relative_humidity_from_dew_point():
+    rh = relative_humidity_from_dew_point(25, 13.8)
+    assert round(rh) == 50
+    with pytest.raises(ValueError):
+        relative_humidity_from_dew_point(20, 30)
 
 
 def test_optimize_environment():
