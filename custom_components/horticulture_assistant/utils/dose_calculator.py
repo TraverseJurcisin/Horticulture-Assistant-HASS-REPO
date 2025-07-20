@@ -1,5 +1,4 @@
-from typing import Literal, Optional, Dict
-from decimal import Decimal
+from typing import Literal
 
 
 class DoseCalculator:

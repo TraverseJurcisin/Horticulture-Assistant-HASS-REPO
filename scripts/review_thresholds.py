@@ -1,5 +1,4 @@
 import os
-import json
 from approval_queue import apply_approved_thresholds
 from plant_engine.utils import load_json, save_json
 

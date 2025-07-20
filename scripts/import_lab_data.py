@@ -15,7 +15,6 @@ def import_lab_test(plant_id: str, lab_file_path: str, test_type: str = "tissue"
     plant_path = f"plants/{plant_id}.json"
     profile = load_json(plant_path)
     thresholds = profile.get("thresholds", {})
-    lifecycle = profile.get("stage", "unknown")
 
     with open(lab_file_path, "r", encoding="utf-8") as f:
         lab_data = load_json(f)

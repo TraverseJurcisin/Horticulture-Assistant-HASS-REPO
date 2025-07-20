@@ -16,3 +16,9 @@ def _load_data() -> Dict[str, Dict[str, Any]]:
 def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
     """Return information about a particular growth stage."""
     return _load_data().get(plant_type, {}).get(stage, {})
+
+
+def list_growth_stages(plant_type: str) -> list[str]:
+    """Return all defined growth stages for a plant type."""
+    return sorted(_load_data().get(plant_type, {}).keys())
+

@@ -42,7 +42,6 @@ def update_water_balance(plant_id: str, irrigation_ml: float, transpiration_ml: 
     # Root zone capacity from profile
     rootzone_ml = 3000  # Example default if not dynamically loaded
     mad_pct = 0.5       # 50% depletion allowable
-    raw_ml = rootzone_ml * mad_pct
 
     available_ml = max(0, min(cumulative_ml, rootzone_ml))
     depletion_pct = round(1.0 - (available_ml / rootzone_ml), 3)

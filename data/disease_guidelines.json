@@ -6,5 +6,9 @@
   "tomato": {
     "blight": "Apply copper-based fungicide weekly.",
     "powdery mildew": "Use sulfur spray at first sign."
+  },
+  "lettuce": {
+    "downy mildew": "Provide adequate air flow and apply fungicide.",
+    "lettuce drop": "Rotate crops and remove infected plants."
   }
 }

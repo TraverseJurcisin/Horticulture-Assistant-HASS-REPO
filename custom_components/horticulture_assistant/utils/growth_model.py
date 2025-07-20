@@ -318,7 +318,6 @@ def update_growth_index(hass: HomeAssistant, plant_id: str, env_data: dict, tran
         ideal_gdd = ((ideal_temp_max + ideal_temp_min) / 2) - base_temp_c
         ideal_gdd = max(ideal_gdd, 0.0)
         # Compute PAR in MJ under ideal light
-        ideal_par_mj = ideal_par_w * 0.0864
         # Use profile's Kc and canopy for ideal transpiration
         kc = profile.get("general", {}).get("kc", profile.get("kc", 1.0))
         canopy_m2 = profile.get("general", {}).get("canopy_m2", profile.get("canopy_m2", 0.25))
