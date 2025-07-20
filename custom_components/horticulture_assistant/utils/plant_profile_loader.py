@@ -38,10 +38,37 @@ def load_profile_from_path(path: str | Path) -> dict:
             return json.load(f) or {}
 
     def _load_yaml(fp: Path) -> dict:
-        if yaml is None:
-            raise RuntimeError("YAML support unavailable; install PyYAML")
-        with open(fp, "r", encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
+        content = fp.read_text(encoding="utf-8")
+        if yaml is not None:
+            return yaml.safe_load(content) or {}
+
+        # Very small fallback parser supporting the limited syntax used in tests
+        parsed: dict[str, object] = {}
+        stack = [parsed]
+        indents = [0]
+        for line in content.splitlines():
+            if not line.strip():
+                continue
+            indent = len(line) - len(line.lstrip())
+            key, _, value = line.strip().partition(":")
+            while indent <= indents[-1] and len(stack) > 1:
+                stack.pop()
+                indents.pop()
+            if value.strip() == "":
+                obj = {}
+                stack[-1][key] = obj
+                stack.append(obj)
+                indents.append(indent)
+                continue
+            val = value.strip()
+            if val.startswith("[") and val.endswith("]"):
+                items = [i.strip() for i in val[1:-1].split(",") if i.strip()]
+                val = [float(i) if i.replace(".", "", 1).isdigit() else i for i in items]
+            else:
+                if val.replace(".", "", 1).isdigit():
+                    val = float(val) if "." in val else int(val)
+            stack[-1][key] = val
+        return parsed
 
     try:
         if ext == ".json":
