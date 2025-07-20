@@ -43,6 +43,11 @@ from .yield_manager import (
     record_harvest,
     get_total_yield,
 )
+from .water_quality import (
+    list_analytes as list_water_analytes,
+    get_threshold as get_water_threshold,
+    interpret_water_profile,
+)
 from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -77,5 +82,8 @@ __all__ = [
     "record_harvest",
     "get_total_yield",
     "generate_health_report",
+    "list_water_analytes",
+    "get_water_threshold",
+    "interpret_water_profile",
     "TranspirationMetrics",
 ]
