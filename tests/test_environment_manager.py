@@ -9,6 +9,7 @@ from plant_engine.environment_manager import (
     calculate_heat_index,
     relative_humidity_from_dew_point,
     calculate_dli,
+    photoperiod_for_target_dli,
     optimize_environment,
 )
 
@@ -108,3 +109,13 @@ def test_calculate_dli():
 
     with pytest.raises(ValueError):
         calculate_dli(100, 0)
+
+
+def test_photoperiod_for_target_dli():
+    hours = photoperiod_for_target_dli(30, 500)
+    assert round(hours, 2) == 16.67
+
+    with pytest.raises(ValueError):
+        photoperiod_for_target_dli(0, 500)
+    with pytest.raises(ValueError):
+        photoperiod_for_target_dli(30, -1)
