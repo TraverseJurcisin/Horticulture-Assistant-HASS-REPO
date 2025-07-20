@@ -110,5 +110,10 @@
       "duration_days": 30,
       "notes": "High potassium demand."
     }
+  },
+  "arugula": {
+    "germination": {"duration_days": 7, "notes": "Keep moist until emergence."},
+    "vegetative": {"duration_days": 25, "notes": "Rapid leaf growth."},
+    "harvest": {"duration_days": 15, "notes": "Harvest young leaves for best flavor."}
   }
 }
