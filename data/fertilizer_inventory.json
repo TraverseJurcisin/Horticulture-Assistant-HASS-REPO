@@ -1,0 +1,23 @@
+{
+  "foxfarm_grow_big": {
+    "density_kg_per_l": 0.96,
+    "guaranteed_analysis": {
+      "N": 0.06,
+      "P2O5": 0.04,
+      "K2O": 0.04,
+      "Mg": 0.006,
+      "Fe": 0.001,
+      "Mn": 0.0005,
+      "Zn": 0.0005,
+      "Cu": 0.0005,
+      "B": 0.0002
+    }
+  },
+  "magriculture": {
+    "density_kg_per_l": 1.0,
+    "guaranteed_analysis": {
+      "Mg": 0.098,
+      "S": 0.129
+    }
+  }
+}
