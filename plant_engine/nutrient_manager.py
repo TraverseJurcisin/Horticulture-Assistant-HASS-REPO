@@ -43,3 +43,20 @@ def calculate_deficiencies(
             deficiencies[nutrient] = diff
     return deficiencies
 
+
+def calculate_nutrient_balance(
+    current_levels: Dict[str, float],
+    plant_type: str,
+    stage: str,
+) -> Dict[str, float]:
+    """Return ratio of current to recommended nutrient levels."""
+
+    recommended = get_recommended_levels(plant_type, stage)
+    ratios: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        if target <= 0:
+            continue
+        current = current_levels.get(nutrient, 0.0)
+        ratios[nutrient] = round(current / target, 2)
+    return ratios
+
