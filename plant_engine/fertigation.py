@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 from .nutrient_manager import calculate_deficiencies, get_recommended_levels
 from .utils import load_dataset
@@ -34,6 +34,7 @@ __all__ = [
     "get_fertilizer_purity",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
+    "recommend_batch_fertigation",
 ]
 
 
@@ -117,4 +118,38 @@ def recommend_correction_schedule(
             raise ValueError(f"Purity for {nutrient} must be > 0")
         corrections[nutrient] = round(grams / frac, 3)
     return corrections
+
+
+def recommend_batch_fertigation(
+    plants: Iterable[tuple[str, str]],
+    volume_l: float,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> Dict[str, Dict[str, float]]:
+    """Return fertigation schedules for multiple plants.
+
+    Parameters
+    ----------
+    plants : Iterable[tuple[str, str]]
+        Iterable of ``(plant_type, stage)`` tuples.
+    volume_l : float
+        Solution volume in liters shared by each plant.
+    purity : Mapping[str, float] | None, optional
+        Purity factors for nutrients. Overrides values from ``product``.
+    product : str, optional
+        Fertilizer product identifier used to lookup purity.
+    """
+
+    schedules: Dict[str, Dict[str, float]] = {}
+    for plant_type, stage in plants:
+        key = f"{plant_type}-{stage}"
+        schedules[key] = recommend_fertigation_schedule(
+            plant_type,
+            stage,
+            volume_l,
+            purity,
+            product=product,
+        )
+    return schedules
 

@@ -26,29 +26,38 @@ class RecommendationBundle:
 
 
 class RecommendationEngine:
-    def __init__(self):
-        self.auto_approve = False
-        self.plant_profiles = {}
-        self.sensor_data = {}
-        self.product_availability = {}
-        self.ai_feedback = {}
+    """Generate fertigation and irrigation suggestions for plants."""
 
-    def set_auto_approve(self, value: bool):
+    def __init__(self) -> None:
+        """Initialize empty state containers."""
+        self.auto_approve = False
+        self.plant_profiles: Dict[str, Dict] = {}
+        self.sensor_data: Dict[str, Dict] = {}
+        self.product_availability: Dict[str, Dict] = {}
+        self.ai_feedback: Dict[str, Dict] = {}
+
+    def set_auto_approve(self, value: bool) -> None:
+        """Enable or disable automatic approval of recommendations."""
         self.auto_approve = value
 
-    def update_plant_profile(self, plant_id: str, profile_data: Dict):
+    def update_plant_profile(self, plant_id: str, profile_data: Dict) -> None:
+        """Store profile information for ``plant_id``."""
         self.plant_profiles[plant_id] = profile_data
 
-    def update_sensor_data(self, plant_id: str, sensor_payload: Dict):
+    def update_sensor_data(self, plant_id: str, sensor_payload: Dict) -> None:
+        """Record the latest sensor payload for ``plant_id``."""
         self.sensor_data[plant_id] = sensor_payload
 
-    def update_product_availability(self, product_payload: Dict):
+    def update_product_availability(self, product_payload: Dict) -> None:
+        """Set the currently available fertilizer products."""
         self.product_availability = product_payload
 
-    def update_ai_feedback(self, plant_id: str, ai_feedback: Dict):
+    def update_ai_feedback(self, plant_id: str, ai_feedback: Dict) -> None:
+        """Cache AI feedback notes for ``plant_id``."""
         self.ai_feedback[plant_id] = ai_feedback
 
     def recommend(self, plant_id: str) -> RecommendationBundle:
+        """Return a bundle of fertilizer and irrigation suggestions."""
         profile = self.plant_profiles.get(plant_id, {})
         sensors = self.sensor_data.get(plant_id, {})
         ai_notes = self.ai_feedback.get(plant_id, {})
@@ -87,7 +96,12 @@ class RecommendationEngine:
         )
 
     def _select_best_product(self, element: str) -> Optional[str]:
-        for product in self.product_availability:
-            if element in self.product_availability[product].get("elements", []):
-                return product
-        return None
+        """Return the first product containing ``element`` if any."""
+        return next(
+            (
+                name
+                for name, data in self.product_availability.items()
+                if element in data.get("elements", [])
+            ),
+            None,
+        )
