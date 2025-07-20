@@ -34,3 +34,8 @@ def test_calculate_surplus():
     assert surplus["N"] == 70
     assert surplus["P"] == 10
     assert surplus["K"] == 10
+
+
+def test_get_recommended_levels_case_insensitive():
+    levels = get_recommended_levels("Citrus", "FRUITING")
+    assert levels["N"] == 120

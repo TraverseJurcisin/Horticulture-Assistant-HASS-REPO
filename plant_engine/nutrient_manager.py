@@ -3,18 +3,21 @@ from __future__ import annotations
 
 from typing import Dict
 
-"""Helpers for plant nutrient guidelines and analysis."""
-
-from typing import Dict
-
 from .utils import load_dataset
 
 DATA_FILE = "nutrient_guidelines.json"
 
 
-
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
+
+__all__ = [
+    "list_supported_plants",
+    "get_recommended_levels",
+    "calculate_deficiencies",
+    "calculate_nutrient_balance",
+    "calculate_surplus",
+]
 
 
 def list_supported_plants() -> list[str]:
@@ -23,8 +26,15 @@ def list_supported_plants() -> list[str]:
 
 
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
-    """Return recommended nutrient levels for the given plant type and stage."""
-    return _DATA.get(plant_type, {}).get(stage, {})
+    """Return recommended nutrient levels for ``plant_type`` and ``stage``.
+
+    Parameters are matched case-insensitively. An empty dictionary is returned
+    if no guidelines exist for the provided keys.
+    """
+    plant = _DATA.get(plant_type.lower())
+    if not plant:
+        return {}
+    return plant.get(stage.lower(), {})
 
 
 def calculate_deficiencies(

@@ -18,6 +18,20 @@ ACTION_LABELS = {
 }
 
 
+__all__ = [
+    "list_supported_plants",
+    "get_environmental_targets",
+    "recommend_environment_adjustments",
+    "suggest_environment_setpoints",
+    "calculate_vpd",
+    "calculate_dew_point",
+    "calculate_heat_index",
+    "relative_humidity_from_dew_point",
+    "calculate_dli",
+    "photoperiod_for_target_dli",
+    "optimize_environment",
+]
+
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
@@ -172,6 +186,18 @@ def calculate_dli(ppfd: float, photoperiod_hours: float) -> float:
 
     dli = ppfd * 3600 * photoperiod_hours / 1_000_000
     return round(dli, 2)
+
+
+def photoperiod_for_target_dli(target_dli: float, ppfd: float) -> float:
+    """Return photoperiod hours required to reach ``target_dli`` at ``ppfd``.
+
+    Both arguments must be positive; otherwise a ``ValueError`` is raised.
+    """
+    if target_dli <= 0 or ppfd <= 0:
+        raise ValueError("target_dli and ppfd must be positive")
+
+    hours = target_dli * 1_000_000 / (ppfd * 3600)
+    return round(hours, 2)
 
 
 def optimize_environment(
