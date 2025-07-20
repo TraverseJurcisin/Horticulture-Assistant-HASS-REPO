@@ -25,6 +25,7 @@ from .const import (
     CATEGORY_DIAGNOSTIC,
     EVENT_AI_RECOMMENDATION,
     EVENT_YIELD_UPDATE,
+    MOVING_AVERAGE_ALPHA,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,7 +85,7 @@ class HorticultureBaseSensor(SensorEntity):
             return None
 
 class SmoothedMoistureSensor(HorticultureBaseSensor):
-    """Smoothed moisture value for plant using rolling average."""
+    """Smoothed moisture value using an exponential moving average."""
     def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
         super().__init__(hass, plant_name, plant_id)
         self._attr_name = "Smoothed Moisture"
@@ -96,21 +97,21 @@ class SmoothedMoistureSensor(HorticultureBaseSensor):
         self._attr_entity_category = CATEGORY_MONITORING
 
     async def async_update(self):
-        """Update with smoothed moisture data (rolling average over last 5 values)."""
+        """Update with smoothed moisture using an exponential moving average."""
         raw_id = f"sensor.{self._plant_id}_raw_moisture"
         raw_val = self._get_state_value(raw_id)
         if raw_val is None:
             _LOGGER.debug("Raw moisture sensor not available: %s", raw_id)
             self._attr_native_value = None
             return
-        if not hasattr(self, "_moisture_values"):
-            self._moisture_values = []
-        self._moisture_values.append(raw_val)
-        # Keep only last 5 values for averaging
-        if len(self._moisture_values) > 5:
-            self._moisture_values.pop(0)
-        avg = sum(self._moisture_values) / len(self._moisture_values)
-        self._attr_native_value = round(avg, 1)
+        if not hasattr(self, "_ema"):
+            self._ema = raw_val
+        else:
+            self._ema = (
+                MOVING_AVERAGE_ALPHA * raw_val
+                + (1 - MOVING_AVERAGE_ALPHA) * self._ema
+            )
+        self._attr_native_value = round(self._ema, 1)
 
 class DailyETSensor(HorticultureBaseSensor):
     """Sensor estimating daily ET (Evapotranspiration) loss."""
@@ -166,7 +167,7 @@ class RootZoneDepletionSensor(HorticultureBaseSensor):
             self._attr_native_value = round(max(0, min(100 - current, 100)), 1)
 
 class SmoothedECSensor(HorticultureBaseSensor):
-    """Smoothed electrical conductivity value using rolling average."""
+    """Smoothed EC reading using an exponential moving average."""
     def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
         super().__init__(hass, plant_name, plant_id)
         self._attr_name = "Smoothed EC"
@@ -177,19 +178,20 @@ class SmoothedECSensor(HorticultureBaseSensor):
         self._attr_entity_category = CATEGORY_MONITORING
 
     async def async_update(self):
-        """Update with smoothed EC data using rolling average."""
+        """Update EC value using an exponential moving average."""
         raw_val = self._get_state_value(f"sensor.{self._plant_id}_raw_ec")
         if raw_val is None:
             _LOGGER.debug("Raw EC sensor not available: %s", f"sensor.{self._plant_id}_raw_ec")
             self._attr_native_value = None
             return
-        if not hasattr(self, "_ec_values"):
-            self._ec_values = []
-        self._ec_values.append(raw_val)
-        if len(self._ec_values) > 5:
-            self._ec_values.pop(0)
-        avg = sum(self._ec_values) / len(self._ec_values)
-        self._attr_native_value = round(avg, 2)
+        if not hasattr(self, "_ema"):
+            self._ema = raw_val
+        else:
+            self._ema = (
+                MOVING_AVERAGE_ALPHA * raw_val
+                + (1 - MOVING_AVERAGE_ALPHA) * self._ema
+            )
+        self._attr_native_value = round(self._ema, 2)
 
 class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
     """Estimate of field capacity from past max moisture post-irrigation."""
