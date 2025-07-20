@@ -10,5 +10,17 @@
   "lettuce": {
     "aphids": "Apply pyrethrin spray if infestations persist.",
     "leafminers": "Use sticky traps and remove affected leaves."
+  },
+  "strawberry": {
+    "spider mites": "Apply miticide when mites exceed threshold.",
+    "slugs": "Use bait or barriers to protect plants."
+  },
+  "spinach": {
+    "aphids": "Blast with water and apply insecticidal soap.",
+    "leaf miners": "Use row covers and remove damaged leaves."
+  },
+  "basil": {
+    "aphids": "Use insecticidal soap for severe infestations.",
+    "leaf miners": "Remove affected leaves and apply neem oil."
   }
 }

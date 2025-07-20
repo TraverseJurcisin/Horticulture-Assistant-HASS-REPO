@@ -10,5 +10,17 @@
   "lettuce": {
     "downy mildew": "Provide adequate air flow and apply fungicide.",
     "lettuce drop": "Rotate crops and remove infected plants."
+  },
+  "strawberry": {
+    "powdery mildew": "Apply sulfur spray or use resistant varieties.",
+    "botrytis": "Remove infected berries and ensure good airflow."
+  },
+  "spinach": {
+    "downy mildew": "Water early to allow leaves to dry.",
+    "leaf spot": "Remove affected leaves and improve spacing."
+  },
+  "basil": {
+    "downy mildew": "Ensure good airflow and avoid overhead watering.",
+    "fusarium wilt": "Use disease-free seed and remove infected plants."
   }
 }

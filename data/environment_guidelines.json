@@ -166,5 +166,65 @@
         1200
       ]
     }
+  },
+  "strawberry": {
+    "optimal": {
+      "temp_c": [
+        18,
+        26
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        250,
+        600
+      ],
+      "co2_ppm": [
+        400,
+        800
+      ]
+    }
+  },
+  "spinach": {
+    "optimal": {
+      "temp_c": [
+        15,
+        22
+      ],
+      "humidity_pct": [
+        50,
+        80
+      ],
+      "light_ppfd": [
+        150,
+        300
+      ],
+      "co2_ppm": [
+        400,
+        800
+      ]
+    }
+  },
+  "basil": {
+    "optimal": {
+      "temp_c": [
+        20,
+        28
+      ],
+      "humidity_pct": [
+        50,
+        70
+      ],
+      "light_ppfd": [
+        200,
+        600
+      ],
+      "co2_ppm": [
+        400,
+        800
+      ]
+    }
   }
 }

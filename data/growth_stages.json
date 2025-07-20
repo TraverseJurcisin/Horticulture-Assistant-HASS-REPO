@@ -44,5 +44,39 @@
       "duration_days": 30,
       "notes": "Harvest heads at full size."
     }
+  },
+  "strawberry": {
+    "vegetative": {
+      "duration_days": 60,
+      "notes": "Focus on leaf development."
+    },
+    "flowering": {
+      "duration_days": 20,
+      "notes": "Maintain moderate nitrogen."
+    },
+    "fruiting": {
+      "duration_days": 30,
+      "notes": "High potassium required."
+    }
+  },
+  "spinach": {
+    "vegetative": {
+      "duration_days": 30,
+      "notes": "Rapid leaf development phase."
+    },
+    "harvest": {
+      "duration_days": 20,
+      "notes": "Harvest leaves before bolting."
+    }
+  },
+  "basil": {
+    "vegetative": {
+      "duration_days": 40,
+      "notes": "Harvest leaves regularly to encourage growth."
+    },
+    "harvest": {
+      "duration_days": 20,
+      "notes": "Leaves are best picked before flowering."
+    }
   }
 }

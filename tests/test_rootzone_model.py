@@ -18,3 +18,16 @@ def test_estimate_water_capacity():
     assert result.total_available_water_ml == 400.0
     assert result.readily_available_water_ml == 200.0
 
+
+def test_estimate_water_capacity_custom():
+    result = estimate_water_capacity(
+        10,
+        area_cm2=100,
+        field_capacity=0.30,
+        mad_fraction=0.4,
+    )
+    assert result.total_available_water_ml == 300.0
+    assert result.readily_available_water_ml == 120.0
+    assert result.field_capacity_pct == 0.30
+    assert result.mad_pct == 0.4
+
