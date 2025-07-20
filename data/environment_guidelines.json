@@ -226,5 +226,81 @@
         800
       ]
     }
+  },
+  "cucumber": {
+    "optimal": {
+      "temp_c": [
+        20,
+        28
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        250,
+        600
+      ],
+      "co2_ppm": [
+        600,
+        1000
+      ]
+    },
+    "fruiting": {
+      "temp_c": [
+        18,
+        26
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        300,
+        600
+      ],
+      "co2_ppm": [
+        800,
+        1200
+      ]
+    }
+  },
+  "pepper": {
+    "optimal": {
+      "temp_c": [
+        20,
+        28
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        250,
+        600
+      ],
+      "co2_ppm": [
+        600,
+        1000
+      ]
+    },
+    "fruiting": {
+      "temp_c": [
+        18,
+        26
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        300,
+        600
+      ],
+      "co2_ppm": [
+        800,
+        1200
+      ]
+    }
   }
 }

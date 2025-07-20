@@ -6,8 +6,6 @@ This repository is structured as a custom HACS integration but is currently priv
 
 ---
 
-## Key Features
-
 ### Plant Monitoring
 - Sensors for moisture, EC and nutrient levels
 - Environmental data including light intensity and CO₂

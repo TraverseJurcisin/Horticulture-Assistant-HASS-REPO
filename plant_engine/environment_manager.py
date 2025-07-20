@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple
 
 from .utils import load_dataset
@@ -10,21 +9,21 @@ from .utils import load_dataset
 DATA_FILE = "environment_guidelines.json"
 
 
-@lru_cache(maxsize=None)
-def _load_data() -> Dict[str, Any]:
-    return load_dataset(DATA_FILE)
+
+# Load environment guidelines once. ``load_dataset`` already caches results
+_DATA: Dict[str, Any] = load_dataset(DATA_FILE)
 
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with available environment data."""
-    return sorted(_load_data().keys())
+    return sorted(_DATA.keys())
 
 
 def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
-    data = _load_data().get(plant_type, {})
+    data = _DATA.get(plant_type, {})
     if stage:
         stage = stage.lower()
         if stage in data:
@@ -92,3 +91,23 @@ def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
     ea = es * humidity_pct / 100
     vpd = es - ea
     return round(vpd, 3)
+
+
+def optimize_environment(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, object]:
+    """Return setpoints, adjustment suggestions and VPD for the plant.
+
+    This helper consolidates several environment utilities into a single call
+    for convenience when automating greenhouse controls.
+    """
+
+    setpoints = suggest_environment_setpoints(plant_type, stage)
+    actions = recommend_environment_adjustments(current, plant_type, stage)
+
+    if "temp_c" in current and "humidity_pct" in current:
+        vpd = calculate_vpd(current["temp_c"], current["humidity_pct"])
+    else:
+        vpd = None
+
+    return {"setpoints": setpoints, "adjustments": actions, "vpd": vpd}

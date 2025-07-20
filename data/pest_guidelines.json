@@ -22,5 +22,13 @@
   "basil": {
     "aphids": "Use insecticidal soap for severe infestations.",
     "leaf miners": "Remove affected leaves and apply neem oil."
+  },
+  "cucumber": {
+    "powdery mildew": "Use sulfur spray and improve airflow.",
+    "cucumber beetle": "Apply pyrethrin and use row covers."
+  },
+  "pepper": {
+    "aphids": "Use insecticidal soap weekly.",
+    "spider mites": "Apply neem oil as needed."
   }
 }
