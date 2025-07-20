@@ -5,6 +5,8 @@ from plant_engine.environment_manager import (
     recommend_environment_adjustments,
     suggest_environment_setpoints,
     calculate_vpd,
+    calculate_dew_point,
+    calculate_heat_index,
     optimize_environment,
 )
 
@@ -58,6 +60,23 @@ def test_calculate_vpd_invalid_humidity():
         calculate_vpd(25, 120)
 
 
+def test_calculate_dew_point():
+    dp = calculate_dew_point(25, 50)
+    # approx 13.8°C using Magnus formula
+    assert round(dp, 1) == 13.8
+
+
+def test_calculate_heat_index():
+    hi = calculate_heat_index(32, 70)
+    # approx 40.4°C for 32°C at 70% RH
+    assert round(hi, 1) == 40.4
+
+
+def test_calculate_heat_index_invalid():
+    with pytest.raises(ValueError):
+        calculate_heat_index(25, -10)
+
+
 def test_optimize_environment():
     result = optimize_environment(
         {"temp_c": 18, "humidity_pct": 90},
@@ -67,3 +86,5 @@ def test_optimize_environment():
     assert result["setpoints"]["temp_c"] == 24
     assert result["adjustments"]["temperature"] == "increase"
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
+    assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
+    assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
