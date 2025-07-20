@@ -161,6 +161,19 @@ def relative_humidity_from_dew_point(temp_c: float, dew_point_c: float) -> float
     return round(rh, 1)
 
 
+def calculate_dli(ppfd: float, photoperiod_hours: float) -> float:
+    """Return Daily Light Integral (mol m⁻² day⁻¹).
+
+    The calculation converts the given Photosynthetic Photon Flux
+    Density (PPFD) in µmol⋅m⁻²⋅s⁻¹ over a ``photoperiod_hours`` span.
+    """
+    if ppfd < 0 or photoperiod_hours <= 0:
+        raise ValueError("ppfd must be non-negative and photoperiod_hours > 0")
+
+    dli = ppfd * 3600 * photoperiod_hours / 1_000_000
+    return round(dli, 2)
+
+
 def optimize_environment(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, object]:
