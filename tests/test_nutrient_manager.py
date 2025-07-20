@@ -2,6 +2,7 @@ from plant_engine.nutrient_manager import (
     get_recommended_levels,
     calculate_deficiencies,
     calculate_nutrient_balance,
+    calculate_surplus,
 )
 
 
@@ -25,3 +26,11 @@ def test_calculate_nutrient_balance():
     assert ratios["N"] == 0.75
     assert round(ratios["P"], 2) == round(50 / 60, 2)
     assert round(ratios["K"], 2) == round(100 / 120, 2)
+
+
+def test_calculate_surplus():
+    current = {"N": 150, "P": 70, "K": 130}
+    surplus = calculate_surplus(current, "tomato", "fruiting")
+    assert surplus["N"] == 70
+    assert surplus["P"] == 10
+    assert surplus["K"] == 10
