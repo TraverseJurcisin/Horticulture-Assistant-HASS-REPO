@@ -16,7 +16,11 @@ from .disease_manager import (
     recommend_treatments as recommend_disease_treatments,
     list_supported_plants as list_disease_plants,
 )
-from .fertigation import recommend_fertigation_schedule, recommend_correction_schedule
+from .fertigation import (
+    recommend_fertigation_schedule,
+    recommend_correction_schedule,
+    get_fertilizer_purity,
+)
 from .rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
@@ -44,6 +48,7 @@ __all__ = [
     "list_disease_plants",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
+    "get_fertilizer_purity",
     "calculate_deficiencies",
     "list_nutrient_plants",
     "get_stage_info",

@@ -12,6 +12,9 @@ Currently, this repository is **private and actively under development**. A suit
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
 * Built-in nutrient guidelines for precise fertilizer planning
 * Reference datasets for environment, pests and growth stage info
+* Fertilizer purity dataset for accurate mixing calculations
+* Fertigation utilities support specifying a fertilizer product by name
+* Environment guidelines include light intensity and CO₂ ranges
 * Automated environment adjustment and pest treatment suggestions
 * Disease treatment recommendations for common plant diseases
 * On-demand nutrient correction and fertigation calculations
@@ -88,6 +91,7 @@ horticulture-assistant/
 │       └── plant_monitoring.yaml
 ├── data/
 │   ├── yield/
+│   ├── fertilizer_purity.json
 │   └── nutrient_guidelines.json
 ├── plant_engine/
 │   ├── engine.py
