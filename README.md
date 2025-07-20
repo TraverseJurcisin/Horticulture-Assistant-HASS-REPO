@@ -1,187 +1,121 @@
 # Horticulture-Assistant
 
-The **Horticulture-Assistant** integration is a private Home Assistant add-on aimed at managing per‑plant care and horticultural automation.  It provides sensors, switches and helper scripts to monitor plants, track daily growth and optionally adjust nutrient thresholds using simple AI rules.  The repository is structured in a HACS-friendly way but is not yet published through the Community Store.
+The **Horticulture-Assistant** integration provides per-plant automation and monitoring for Home Assistant. It exposes sensors, switches and scripts that help track growth, schedule irrigation and adjust nutrient programs.
 
-Currently, this repository is **private and actively under development**. A suitable license will be introduced prior to the public release.
-
----
-
-## 🌱 Key Features
-
-* Individual plant automation leveraging detailed sensor inputs and dynamic JSON profiles
-* Sensors for moisture, EC, ET, nutrient levels and AI recommendations
-* Built-in nutrient guidelines for precise fertilizer planning
-* Reference datasets for environment, pests and growth stage info
-* Expanded guidelines now include strawberry, basil, spinach, cucumber and pepper profiles
-* Fertilizer purity dataset for accurate mixing calculations
-* Fertigation utilities support specifying a fertilizer product by name
-* Environment guidelines include light intensity and CO₂ ranges
-* Automated environment adjustment and pest treatment suggestions
-* Environment setpoint recommendations with VPD calculations
-  * VPD utility validates humidity input range
-* Growth stage estimation based on days after planting
-  * Raises an error for negative day values
-* Disease treatment recommendations for common plant diseases
-* On-demand nutrient correction and fertigation calculations
-* Harvest yield tracking utilities for per-plant analytics
-* Tracking nutrient use efficiency from yield and application logs
-* Root zone modeling utilities for irrigation planning
-* Dynamic water balance using root zone capacity estimates
-* Binary sensors for irrigation readiness, sensor health and fault detection
-* Switch entities to control irrigation and fertigation
-* Approval queue for AI threshold updates with manual review
-* Optional AI threshold recalculation using offline or OpenAI logic
-* YAML automation blueprint and profile generator utilities
-* Plant registry with dynamic tagging for grouped analytics
-* Repository structured for use as a custom HACS repository
+This repository is structured as a custom HACS integration but is currently private while development continues.
 
 ---
 
-## 🧩 Installation
+### Plant Monitoring
+- Sensors for moisture, EC and nutrient levels
+- Environmental data including light intensity and CO₂
+- Binary sensors for irrigation readiness and fault detection
 
-### Via HACS
+### Automation & AI
+- Dynamic thresholds based on growth stage and sensor history
+- Optional AI models (offline or OpenAI) to refine nutrient plans
+- Irrigation and fertigation switches with approval queues
 
-1. Open HACS in Home Assistant and go to **Integrations → Custom Repositories**.
-2. Add this repository URL as a custom integration.
-3. Install **Horticulture-Assistant** from the list and restart Home Assistant when prompted.
+### Data & Analytics
+- Built-in nutrient guidelines and fertilizer purity data
+- Root zone and water balance utilities for irrigation planning
+- Yield tracking with integration to InfluxDB and Grafana
+- Tagging system to group plants for aggregated analytics
 
-### Manual Installation
+### Reference Datasets
+- Environment guidelines with VPD calculations
+- Disease and pest treatment recommendations
+- Example profiles for plants like strawberry, basil and spinach
 
-1. Clone or download this repository.
-2. Copy the contents from `custom_components/Horticulture-Assistant/` into `config/custom_components/Horticulture-Assistant/`.
+---
+
+## Installation
+
+### HACS
+1. Open HACS in Home Assistant and navigate to **Integrations → Custom Repositories**.
+2. Add this repository URL and install **Horticulture-Assistant** from the list.
+3. Restart Home Assistant when prompted.
+
+### Manual
+1. Clone this repository.
+2. Copy `custom_components/horticulture_assistant/` into your Home Assistant `config/custom_components/` folder.
 3. Restart Home Assistant.
 
 ---
 
-## ⚙️ Configuration – General Users
+## Getting Started
 
-Post-installation setup:
+1. Go to **Settings > Devices & Services** in Home Assistant.
+2. Choose **Add Integration** and search for **Horticulture-Assistant**.
+3. Follow the prompts to link sensors and configure plant profiles.
 
-1. Navigate to **Settings > Devices & Services** in Home Assistant.
-2. Click **Add Integration (+)**.
-3. Search and select **Horticulture-Assistant**.
-4. Follow the guided prompts to configure devices and parameters.
-
-Configuration currently relies on manual setup of plant profiles and sensors. A minimal config flow is included for experimentation but is not fully enabled in the manifest.
+Plant profiles and sensors are currently managed manually. A basic config flow exists but remains disabled in the manifest.
 
 ---
 
-## 🔧 Advanced Configuration – Power Users
+## Advanced Usage
 
-Advanced customization is provided through:
-
-* **YAML-based Automation**: Set up automations using blueprints in `automations/`.
-* **Individual Plant Profiles**: Define plant-specific settings in `plants/<plant_id>.json`.
-* **Automated Control**: Utilize the toggle `input_boolean.auto_approve_all` for AI-based automation approval.
-* **Data Logging**: Ensure sensors have `state_class: measurement` for consistent data capture in InfluxDB.
-* **Dynamic Tagging System**: Employ tags such as `"blueberry"`, `"acid-loving"`, or `"fruiting"` for aggregated analytics and insights.
+- **YAML Automations**: Use the blueprints in `blueprints/automation/` for quick setup.
+- **Custom Plant Profiles**: Place JSON profiles in `plants/` for per-plant settings.
+- **Auto Approval**: Toggle `input_boolean.auto_approve_all` to allow AI recommendations to apply automatically.
+- **Data Logging**: Set `state_class: measurement` on sensors to ensure proper recording in InfluxDB.
+- **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) for group analytics and dashboards.
 
 ---
 
-## 📁 Repository Structure
+## Repository Layout
 
 ```text
 horticulture-assistant/
-├── custom_components/
-│   └── horticulture_assistant/
-│       ├── __init__.py
-│       ├── manifest.json
-│       ├── config_flow.py
-│       ├── const.py
-│       ├── sensor.py
-│       ├── binary_sensor.py
-│       ├── switch.py
-│       └── utils/
+├── custom_components/horticulture_assistant/
 ├── blueprints/
-│   └── automation/
-│       └── plant_monitoring.yaml
 ├── data/
-│   ├── yield/
-│   ├── fertilizer_purity.json
-│   └── nutrient_guidelines.json
 ├── plant_engine/
-│   ├── engine.py
-│   ├── ai_model.py
-│   ├── et_model.py
-│   ├── compute_transpiration.py
-│   ├── water_deficit_tracker.py
-│   ├── growth_model.py
-│   ├── nutrient_efficiency.py
-│   ├── approval_queue.py
-│   ├── disease_manager.py
-│   └── nutrient_manager.py
 ├── scripts/
-│   ├── run_all_plants.py
-│   ├── daily_threshold_recalc.py
-│   ├── compute_transpiration.py
-│   ├── growth_model.py
-│   ├── nutrient_efficiency.py
-│   ├── rootzone_model.py
-│   └── ai_model.py
 ├── plants/
-│   └── <plant_id>.json
 ├── plant_registry.json
 ├── tags.json
-├── README.md
-├── .gitignore
-
+└── tests/
 ```
 
 ---
 
-## 🛠️ Blueprint and CI Integration
+## Blueprint & Sensor Notes
 
-### Using the Automation Blueprint
-
+To use the automation blueprint:
 1. Copy `plant_monitoring.yaml` into `<config>/blueprints/automation/`.
-2. Open Home Assistant, navigate to Automations > Create New > Use Blueprint.
-3. Select **Plant Monitoring**.
-4. Configure sensors, thresholds, and toggles (including `auto_approve_all`).
+2. In Home Assistant, create a new automation from this blueprint and configure the required entities.
 
-### Sensor Configuration Requirements
-
-All sensors referenced must include:
+All sensors referenced by automations must define:
 
 ```yaml
 state_class: measurement
 ```
 
-This ensures correct data logging to InfluxDB and accurate historical analytics in Grafana.
-
-### CI Notes
-
-This repository currently does not include automated CI workflows. Validation scripts may be added in a future revision.
+This ensures history is recorded correctly for analytics.
 
 ---
 
-## 🚀 Planned Roadmap
+## Roadmap
 
-* [x] Dynamic per-plant automation generation
-* [x] AI-based threshold recalculation
-* [x] Comprehensive tag-based plant grouping
-* [x] Integration with InfluxDB and Grafana
-* [ ] Enhanced AI inference capabilities (including offline and OpenAI support)
-* [ ] Interactive Lovelace or Grafana dashboards
-* [ ] Advanced support for CEC, media type inference, and growth modeling
-* [ ] Full yield analytics and crop steering capabilities
-* [ ] Computer vision integration for growth tracking
-* [ ] Fully autonomous headless automation mode
+- [x] Dynamic automation generation per plant
+- [x] Tag-based grouping and InfluxDB integration
+- [ ] Enhanced AI models for nutrient predictions
+- [ ] Optional dashboards and computer vision tools
+- [ ] Fully autonomous mode with headless operation
 
 ---
 
-## 🤝 Support & Contributions
+## Contributing
 
-This repository is actively developed and maintained. Upon public release, contributions and issue reporting via GitHub will be welcomed. Currently, feedback and testing issues should be directed to the repository author.
-
----
-
-## 📚 References
-
-* [Home Assistant Developer Documentation](https://developers.home-assistant.io/)
-* [HACS Integration Guidelines](https://hacs.xyz/docs/publish/start)
-* [Home Assistant Blueprints](https://www.home-assistant.io/docs/automation/using-blueprints/)
-* [YAML Lint Documentation](https://yamllint.readthedocs.io/)
+Development happens privately for now. Feedback is welcome but formal issues and pull requests will open once the repository is public.
 
 ---
 
-*This README has been comprehensively revised to reflect the latest architecture pivot, including dynamic tagging, daily AI-driven threshold recalculations, and enhanced automation capabilities.*
+## References
+
+- [Home Assistant Developer Docs](https://developers.home-assistant.io/)
+- [HACS Publishing Guide](https://hacs.xyz/docs/publish/start)
+- [Home Assistant Blueprints](https://www.home-assistant.io/docs/automation/using-blueprints/)
+- [YAML Lint Documentation](https://yamllint.readthedocs.io/)
+
