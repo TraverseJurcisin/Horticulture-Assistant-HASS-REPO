@@ -4,6 +4,7 @@ from plant_engine import (
     growth_stage,
     pest_manager,
     disease_manager,
+    fertigation,
 )
 
 
@@ -17,6 +18,13 @@ def test_list_supported_plants():
 
     disease_plants = disease_manager.list_supported_plants()
     assert "lettuce" in disease_plants
+
+    purity = fertigation.get_fertilizer_purity("map")
+    assert purity["P"] == 0.22
+
+    env_targets = environment_manager.get_environmental_targets("lettuce")
+    assert "light_ppfd" in env_targets
+    assert "co2_ppm" in env_targets
 
 
 def test_lettuce_stage_info():

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Any, Dict, Mapping
+from typing import Any, Dict, Mapping, Tuple
 
 from .utils import load_dataset
 
@@ -29,31 +29,38 @@ def get_environmental_targets(plant_type: str, stage: str | None = None) -> Dict
     return data.get("optimal", {})
 
 
+def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
+    """Return 'increase' or 'decrease' if value is outside bounds."""
+    low, high = bounds
+    if value < low:
+        return "increase"
+    if value > high:
+        return "decrease"
+    return None
+
+
 def recommend_environment_adjustments(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, str]:
-    """Return simple adjustment suggestions based on current readings."""
+    """Return adjustment suggestions for temperature, humidity, light and CO₂."""
     targets = get_environmental_targets(plant_type, stage)
     actions: Dict[str, str] = {}
 
     if not targets:
         return actions
 
-    if "temp_c" in targets and "temp_c" in current:
-        low, high = targets["temp_c"]
-        temp = current["temp_c"]
-        if temp < low:
-            actions["temperature"] = "increase"
-        elif temp > high:
-            actions["temperature"] = "decrease"
+    mappings = {
+        "temp_c": "temperature",
+        "humidity_pct": "humidity",
+        "light_ppfd": "light",
+        "co2_ppm": "co2",
+    }
 
-    if "humidity_pct" in targets and "humidity_pct" in current:
-        low, high = targets["humidity_pct"]
-        hum = current["humidity_pct"]
-        if hum < low:
-            actions["humidity"] = "increase"
-        elif hum > high:
-            actions["humidity"] = "decrease"
+    for key, label in mappings.items():
+        if key in targets and key in current:
+            suggestion = _check_range(current[key], tuple(targets[key]))
+            if suggestion:
+                actions[label] = suggestion
 
     return actions
 
