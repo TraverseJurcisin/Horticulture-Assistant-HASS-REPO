@@ -302,5 +302,13 @@
         1200
       ]
     }
+  },
+  "arugula": {
+    "optimal": {
+      "temp_c": [15, 22],
+      "humidity_pct": [40, 70],
+      "light_ppfd": [150, 250],
+      "co2_ppm": [400, 800]
+    }
   }
 }
