@@ -93,21 +93,78 @@ def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
     return round(vpd, 3)
 
 
+def calculate_dew_point(temp_c: float, humidity_pct: float) -> float:
+    """Return dew point temperature (°C) using the Magnus formula."""
+    if not 0 <= humidity_pct <= 100:
+        raise ValueError("humidity_pct must be between 0 and 100")
+
+    import math
+
+    a = 17.27
+    b = 237.7
+    alpha = ((a * temp_c) / (b + temp_c)) + math.log(humidity_pct / 100.0)
+    dew_point = (b * alpha) / (a - alpha)
+    return round(dew_point, 2)
+
+
+def calculate_heat_index(temp_c: float, humidity_pct: float) -> float:
+    """Return heat index temperature (°C) accounting for humidity.
+
+    The calculation converts to Fahrenheit, applies the NOAA heat index
+    approximation and converts back to Celsius. ``humidity_pct`` must be
+    between 0 and 100 or a ``ValueError`` is raised.
+    """
+    if not 0 <= humidity_pct <= 100:
+        raise ValueError("humidity_pct must be between 0 and 100")
+
+    temp_f = temp_c * 9 / 5 + 32
+    rh = humidity_pct
+
+    hi_f = (
+        -42.379
+        + 2.04901523 * temp_f
+        + 10.14333127 * rh
+        - 0.22475541 * temp_f * rh
+        - 0.00683783 * temp_f ** 2
+        - 0.05481717 * rh ** 2
+        + 0.00122874 * temp_f ** 2 * rh
+        + 0.00085282 * temp_f * rh ** 2
+        - 0.00000199 * temp_f ** 2 * rh ** 2
+    )
+
+    hi_c = (hi_f - 32) * 5 / 9
+    return round(hi_c, 2)
+
+
 def optimize_environment(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, object]:
-    """Return setpoints, adjustment suggestions and VPD for the plant.
+    """Return optimized environment data for a plant.
 
-    This helper consolidates several environment utilities into a single call
-    for convenience when automating greenhouse controls.
+    The result includes midpoint setpoints, adjustment suggestions, Vapor
+    Pressure Deficit (VPD), dew point and heat index when temperature and
+    humidity values are supplied. This helper consolidates several utilities for
+    convenience when automating greenhouse controls.
     """
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
     actions = recommend_environment_adjustments(current, plant_type, stage)
 
-    if "temp_c" in current and "humidity_pct" in current:
-        vpd = calculate_vpd(current["temp_c"], current["humidity_pct"])
-    else:
-        vpd = None
+    temp = current.get("temp_c")
+    humidity = current.get("humidity_pct")
 
-    return {"setpoints": setpoints, "adjustments": actions, "vpd": vpd}
+    vpd = None
+    dew_point = None
+    heat_index = None
+    if temp is not None and humidity is not None:
+        vpd = calculate_vpd(temp, humidity)
+        dew_point = calculate_dew_point(temp, humidity)
+        heat_index = calculate_heat_index(temp, humidity)
+
+    return {
+        "setpoints": setpoints,
+        "adjustments": actions,
+        "vpd": vpd,
+        "dew_point_c": dew_point,
+        "heat_index_c": heat_index,
+    }
