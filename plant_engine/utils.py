@@ -1,8 +1,9 @@
 import json
 import os
+from functools import lru_cache
 from typing import Any, Dict
 
-__all__ = ["load_json", "save_json"]
+__all__ = ["load_json", "save_json", "load_dataset"]
 
 
 def load_json(path: str) -> Dict[str, Any]:
@@ -16,3 +17,12 @@ def save_json(path: str, data: Dict[str, Any]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
+@lru_cache(maxsize=None)
+def load_dataset(filename: str) -> Dict[str, Any]:
+    """Load a JSON dataset from the data folder with caching."""
+    path = os.path.join("data", filename)
+    if not os.path.exists(path):
+        return {}
+    return load_json(path)

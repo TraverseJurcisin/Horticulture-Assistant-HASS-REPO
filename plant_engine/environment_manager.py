@@ -1,17 +1,17 @@
-"""Environment guideline utilities."""
-from typing import Dict, Any
-import os
-from functools import lru_cache
-from .utils import load_json
+"""Utilities for retrieving and acting on environmental guidelines."""
+from __future__ import annotations
 
-DATA_PATH = os.path.join("data", "environment_guidelines.json")
+from functools import lru_cache
+from typing import Any, Dict, Mapping
+
+from .utils import load_dataset
+
+DATA_FILE = "environment_guidelines.json"
 
 
 @lru_cache(maxsize=None)
 def _load_data() -> Dict[str, Any]:
-    if not os.path.exists(DATA_PATH):
-        return {}
-    return load_json(DATA_PATH)
+    return load_dataset(DATA_FILE)
 
 
 def get_environmental_targets(plant_type: str, stage: str | None = None) -> Dict[str, Any]:
@@ -22,3 +22,32 @@ def get_environmental_targets(plant_type: str, stage: str | None = None) -> Dict
         if stage in data:
             return data[stage]
     return data.get("optimal", {})
+
+
+def recommend_environment_adjustments(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, str]:
+    """Return simple adjustment suggestions based on current readings."""
+    targets = get_environmental_targets(plant_type, stage)
+    actions: Dict[str, str] = {}
+
+    if not targets:
+        return actions
+
+    if "temp_c" in targets and "temp_c" in current:
+        low, high = targets["temp_c"]
+        temp = current["temp_c"]
+        if temp < low:
+            actions["temperature"] = "increase"
+        elif temp > high:
+            actions["temperature"] = "decrease"
+
+    if "humidity_pct" in targets and "humidity_pct" in current:
+        low, high = targets["humidity_pct"]
+        hum = current["humidity_pct"]
+        if hum < low:
+            actions["humidity"] = "increase"
+        elif hum > high:
+            actions["humidity"] = "decrease"
+
+    return actions

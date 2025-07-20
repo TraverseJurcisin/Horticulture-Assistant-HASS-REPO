@@ -5,66 +5,107 @@ from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.water_deficit_tracker import update_water_balance
 from plant_engine.growth_model import update_growth_index
+from plant_engine.rootzone_model import (
+    estimate_rootzone_depth,
+    estimate_water_capacity,
+)
 from plant_engine.nutrient_efficiency import calculate_nue
 from plant_engine.approval_queue import queue_threshold_updates
+from plant_engine.environment_manager import recommend_environment_adjustments
 from plant_engine.nutrient_manager import get_recommended_levels
+from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
+from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
+from plant_engine.growth_stage import get_stage_info
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
 
-def run_daily_cycle(plant_id: str):
+def run_daily_cycle(plant_id: str) -> Dict:
+    """Run a full daily processing cycle for a plant profile."""
     plant_file = os.path.join(PLANTS_DIR, f"{plant_id}.json")
     profile = load_json(plant_file)
 
     # Environmental inputs
-    env = profile.get("latest_env", {
-        "temp_c": 26,
-        "temp_c_max": 30,
-        "temp_c_min": 22,
-        "rh_pct": 65,
-        "par": 350,
-        "wind_speed_m_s": 1.2
-    })
+    env = profile.get(
+        "latest_env",
+        {
+            "temp_c": 26,
+            "temp_c_max": 30,
+            "temp_c_min": 22,
+            "rh_pct": 65,
+            "par_w_m2": 350,
+            "wind_speed_m_s": 1.2,
+        },
+    )
 
     # Step 1: Transpiration and ET
     transp = compute_transpiration(profile, env)
     transp_ml = transp["transpiration_ml_day"]
 
-    # Step 2: Water balance
-    irrigated_ml = profile.get("last_irrigation_ml", 1000)
-    water = update_water_balance(plant_id, irrigated_ml, transp_ml)
+    # Step 2: Environmental actions
+    env_actions = recommend_environment_adjustments(
+        env, profile.get("plant_type", ""), profile.get("stage")
+    )
+    pest_actions = recommend_pest_treatments(
+        profile.get("plant_type", ""), profile.get("observed_pests", [])
+    )
+    disease_actions = recommend_disease_treatments(
+        profile.get("plant_type", ""), profile.get("observed_diseases", [])
+    )
 
     # Step 3: Growth index
     growth = update_growth_index(plant_id, env, transp_ml)
 
-    # Step 4: NUE tracking
+    root_depth = estimate_rootzone_depth(profile, growth)
+    rootzone = estimate_water_capacity(root_depth)
+
+    # Step 4: Water balance
+    irrigated_ml = profile.get("last_irrigation_ml", 1000)
+    water = update_water_balance(
+        plant_id,
+        irrigated_ml,
+        transp_ml,
+        rootzone_ml=rootzone.total_available_water_ml,
+        mad_pct=rootzone.mad_pct,
+    )
+
+    # Step 5: NUE tracking
     try:
         nue = calculate_nue(plant_id)
     except FileNotFoundError:
         nue = {}
 
-    # Step 5: Recommended nutrient levels
+    # Step 6: Recommended nutrient levels
     guidelines = get_recommended_levels(
         profile.get("plant_type", ""),
         profile.get("stage", "")
     )
 
-    # Step 6: AI Recommendation
+    stage_info = get_stage_info(
+        profile.get("plant_type", ""), profile.get("stage", "")
+    )
+
+    # Step 7: AI Recommendation
     report = {
         "plant_id": plant_id,
         "thresholds": profile.get("thresholds", {}),
         "growth": growth,
         "transpiration": transp,
         "water_deficit": water,
+        "rootzone": rootzone.to_dict(),
         "nue": nue,
         "guidelines": guidelines,
+        "environment_actions": env_actions,
+        "pest_actions": pest_actions,
+        "disease_actions": disease_actions,
         "lifecycle_stage": profile.get("stage", "unknown"),
+        "stage_info": stage_info,
         "tags": profile.get("tags", [])
     }
 
     recommendations = analyze(report)
 
-    # Step 7: Auto-approve or queue
+    # Step 8: Auto-approve or queue
     if profile.get("auto_approve_all", False):
         profile["thresholds"] = recommendations
         save_json(plant_file, profile)
@@ -72,7 +113,7 @@ def run_daily_cycle(plant_id: str):
     else:
         queue_threshold_updates(plant_id, profile["thresholds"], recommendations)
 
-    # Step 8: Write daily report JSON
+    # Step 9: Write daily report JSON
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     out_path = os.path.join(OUTPUT_DIR, f"{plant_id}.json")
     save_json(out_path, report)

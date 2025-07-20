@@ -6,7 +6,7 @@ def test_compute_transpiration_basic():
     env = {
         "temp_c": 25,
         "rh_pct": 50,
-        "par": 400,
+        "par_w_m2": 400,
         "wind_speed_m_s": 1.0,
         "elevation_m": 200,
     }

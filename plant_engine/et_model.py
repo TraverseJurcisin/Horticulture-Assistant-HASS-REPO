@@ -1,5 +1,5 @@
 import math
-from typing import Optional, Dict
+from typing import Optional
 
 def calculate_et0(
     temperature_c: float,

@@ -2,18 +2,16 @@
 from __future__ import annotations
 
 from typing import Dict
-import os
 from functools import lru_cache
-from .utils import load_json
 
-DATA_PATH = os.path.join("data", "nutrient_guidelines.json")
+from .utils import load_dataset
+
+DATA_FILE = "nutrient_guidelines.json"
 
 
 @lru_cache(maxsize=None)
 def _load_data() -> Dict[str, Dict[str, Dict[str, float]]]:
-    if not os.path.exists(DATA_PATH):
-        return {}
-    return load_json(DATA_PATH)
+    return load_dataset(DATA_FILE)
 
 
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
