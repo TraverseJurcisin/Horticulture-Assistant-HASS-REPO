@@ -12,12 +12,14 @@ Currently, this repository is **private and actively under development**. A suit
 * Sensors for moisture, EC, ET, nutrient levels and AI recommendations
 * Built-in nutrient guidelines for precise fertilizer planning
 * Reference datasets for environment, pests and growth stage info
+* Expanded guidelines now include strawberry, basil and spinach profiles
 * Fertilizer purity dataset for accurate mixing calculations
 * Fertigation utilities support specifying a fertilizer product by name
 * Environment guidelines include light intensity and CO₂ ranges
 * Automated environment adjustment and pest treatment suggestions
 * Disease treatment recommendations for common plant diseases
 * On-demand nutrient correction and fertigation calculations
+* Harvest yield tracking utilities for per-plant analytics
 * Tracking nutrient use efficiency from yield and application logs
 * Root zone modeling utilities for irrigation planning
 * Dynamic water balance using root zone capacity estimates

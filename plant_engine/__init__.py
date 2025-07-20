@@ -26,11 +26,18 @@ from .rootzone_model import (
     estimate_water_capacity,
     RootZone,
 )
+from .irrigation_manager import recommend_irrigation_volume
 from .nutrient_manager import (
     calculate_deficiencies,
     list_supported_plants as list_nutrient_plants,
 )
 from .growth_stage import get_stage_info, list_growth_stages
+from .yield_manager import (
+    HarvestRecord,
+    load_yield_history,
+    record_harvest,
+    get_total_yield,
+)
 
 # Run functions should be imported explicitly to avoid heavy imports at package
 # initialization time.
@@ -56,4 +63,9 @@ __all__ = [
     "estimate_rootzone_depth",
     "estimate_water_capacity",
     "RootZone",
+    "recommend_irrigation_volume",
+    "HarvestRecord",
+    "load_yield_history",
+    "record_harvest",
+    "get_total_yield",
 ]
