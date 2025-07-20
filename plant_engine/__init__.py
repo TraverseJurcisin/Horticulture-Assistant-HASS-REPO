@@ -43,6 +43,7 @@ from .yield_manager import (
     record_harvest,
     get_total_yield,
 )
+from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
 # initialization time.
@@ -76,4 +77,5 @@ __all__ = [
     "record_harvest",
     "get_total_yield",
     "generate_health_report",
+    "TranspirationMetrics",
 ]

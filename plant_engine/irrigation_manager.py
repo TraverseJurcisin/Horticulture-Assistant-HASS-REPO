@@ -38,6 +38,8 @@ def recommend_irrigation_volume(
 
     target = rootzone.total_available_water_ml if refill_to_full else rootzone.readily_available_water_ml
     required = target - projected
+    max_add = rootzone.total_available_water_ml - available_ml
+    required = min(required, max_add)
     return round(max(required, 0.0), 1)
 
 

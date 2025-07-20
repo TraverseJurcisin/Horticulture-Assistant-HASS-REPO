@@ -1,6 +1,7 @@
-"""Transpiration calculation utilities."""
+"""Utilities for estimating plant water use via evapotranspiration."""
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
 from plant_engine.et_model import calculate_et0, calculate_eta
@@ -8,11 +9,21 @@ from plant_engine.et_model import calculate_et0, calculate_eta
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
 MM_TO_ML_PER_M2 = 1000
 
-def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict:
-    """
-    Calculate ET₀, ETₐ, and estimated daily water use (mL/day) for a single plant.
-    Returns a dictionary with values to inject into sensors.
-    """
+
+@dataclass
+class TranspirationMetrics:
+    """Container for ET and transpiration calculations."""
+
+    et0_mm_day: float
+    eta_mm_day: float
+    transpiration_ml_day: float
+
+    def as_dict(self) -> Dict[str, float]:
+        """Return metrics as a regular dictionary."""
+        return asdict(self)
+
+def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str, float]:
+    """Return evapotranspiration metrics for a single plant profile."""
 
     et0 = calculate_et0(
         temperature_c=env_data["temp_c"],
@@ -29,9 +40,11 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict:
     mm_per_day = et_actual
     ml_per_day = mm_per_day * MM_TO_ML_PER_M2 * canopy_m2
 
-    return {
-        "et0_mm_day": et0,
-        "eta_mm_day": et_actual,
-        "transpiration_ml_day": round(ml_per_day, 1)
-    }
+    metrics = TranspirationMetrics(
+        et0_mm_day=et0,
+        eta_mm_day=et_actual,
+        transpiration_ml_day=round(ml_per_day, 1),
+    )
+
+    return metrics.as_dict()
 
