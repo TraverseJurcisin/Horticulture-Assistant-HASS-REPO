@@ -5,7 +5,10 @@ from typing import Optional
 
 from .rootzone_model import RootZone
 
-__all__ = ["recommend_irrigation_volume"]
+__all__ = [
+    "recommend_irrigation_volume",
+    "recommend_irrigation_interval",
+]
 
 
 def recommend_irrigation_volume(
@@ -36,3 +39,29 @@ def recommend_irrigation_volume(
     target = rootzone.total_available_water_ml if refill_to_full else rootzone.readily_available_water_ml
     required = target - projected
     return round(max(required, 0.0), 1)
+
+
+def recommend_irrigation_interval(
+    rootzone: RootZone,
+    available_ml: float,
+    expected_et_ml_day: float,
+) -> float:
+    """Return days until irrigation is required based on ET rate.
+
+    ``available_ml`` is the current water volume in the root zone. The function
+    estimates how many days of evapotranspiration it will take for the soil
+    moisture to drop to the readily available level. ``expected_et_ml_day`` must
+    be positive.
+    """
+
+    if expected_et_ml_day <= 0:
+        raise ValueError("expected_et_ml_day must be positive")
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
+    depletion = available_ml - rootzone.readily_available_water_ml
+    if depletion <= 0:
+        return 0.0
+
+    days = depletion / expected_et_ml_day
+    return round(max(days, 0.0), 2)
