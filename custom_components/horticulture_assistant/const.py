@@ -59,3 +59,6 @@ TAG_SPECIES = "species"
 TAG_GENUS = "genus"
 TAG_FAMILY = "family"
 TAG_CLIMATE = "climate"
+
+# Smoothing factor for exponential moving averages used by sensors
+MOVING_AVERAGE_ALPHA = 0.6
