@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, Optional, Literal
+from typing import Dict, Optional
 
 
 class ProductStorageMonitor:

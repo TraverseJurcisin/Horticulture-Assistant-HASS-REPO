@@ -12,9 +12,6 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
-    PERCENTAGE,
-    UnitOfTemperature,
-    UnitOfVolume,
     UnitOfMass,
 )
 from homeassistant.core import HomeAssistant

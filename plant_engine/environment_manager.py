@@ -14,6 +14,11 @@ def _load_data() -> Dict[str, Any]:
     return load_dataset(DATA_FILE)
 
 
+def list_supported_plants() -> list[str]:
+    """Return all plant types with available environment data."""
+    return sorted(_load_data().keys())
+
+
 def get_environmental_targets(plant_type: str, stage: str | None = None) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
     data = _load_data().get(plant_type, {})
@@ -51,3 +56,4 @@ def recommend_environment_adjustments(
             actions["humidity"] = "decrease"
 
     return actions
+

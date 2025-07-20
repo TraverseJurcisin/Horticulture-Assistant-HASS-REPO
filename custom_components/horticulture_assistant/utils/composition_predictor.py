@@ -1,5 +1,4 @@
 from typing import List, Dict
-import math
 
 # Reference database of common fertilizer salts and their elemental contributions
 # All values are percent by weight

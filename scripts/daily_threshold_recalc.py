@@ -1,7 +1,5 @@
-import json
 import os
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict
 from water_deficit_tracker import update_water_balance
 from plant_engine.utils import load_json, save_json

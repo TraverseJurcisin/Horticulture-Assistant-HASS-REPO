@@ -6,5 +6,9 @@
   "tomato": {
     "aphids": "Use neem oil spray weekly.",
     "blight": "Apply copper-based fungicide at first sign."
+  },
+  "lettuce": {
+    "aphids": "Apply pyrethrin spray if infestations persist.",
+    "leafminers": "Use sticky traps and remove affected leaves."
   }
 }

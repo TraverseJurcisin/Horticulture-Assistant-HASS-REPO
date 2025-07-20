@@ -5,6 +5,9 @@ from typing import Dict, Mapping
 
 from plant_engine.et_model import calculate_et0, calculate_eta
 
+# Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
+MM_TO_ML_PER_M2 = 1000
+
 def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict:
     """
     Calculate ET₀, ETₐ, and estimated daily water use (mL/day) for a single plant.
@@ -24,10 +27,11 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict:
 
     canopy_m2 = plant_profile.get("canopy_m2", 0.25)
     mm_per_day = et_actual
-    ml_per_day = mm_per_day * 1000 * canopy_m2  # mm * m² = L = *1000 → mL
+    ml_per_day = mm_per_day * MM_TO_ML_PER_M2 * canopy_m2
 
     return {
         "et0_mm_day": et0,
         "eta_mm_day": et_actual,
         "transpiration_ml_day": round(ml_per_day, 1)
     }
+

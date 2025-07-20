@@ -14,6 +14,11 @@ def _load_data() -> Dict[str, Dict[str, Dict[str, float]]]:
     return load_dataset(DATA_FILE)
 
 
+def list_supported_plants() -> list[str]:
+    """Return all plant types with nutrient guidelines."""
+    return sorted(_load_data().keys())
+
+
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     """Return recommended nutrient levels for the given plant type and stage."""
     return _load_data().get(plant_type, {}).get(stage, {})
@@ -38,3 +43,4 @@ def calculate_deficiencies(
         if diff > 0:
             deficiencies[nutrient] = diff
     return deficiencies
+

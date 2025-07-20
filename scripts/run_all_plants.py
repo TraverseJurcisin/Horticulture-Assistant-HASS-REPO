@@ -1,6 +1,6 @@
 import os
 from plant_engine import run_daily_cycle
-from plant_engine.utils import load_json, save_json
+from plant_engine.utils import save_json
 
 PLANT_DIR = "plants"
 SUMMARY_PATH = "data/reports/summary.json"

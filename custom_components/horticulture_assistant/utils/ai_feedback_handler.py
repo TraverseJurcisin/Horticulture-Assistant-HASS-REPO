@@ -4,7 +4,6 @@ import logging
 from datetime import datetime
 
 from ..engine import ai_model
-from ..engine import approval_queue  # In case legacy queue functions are needed
 
 _LOGGER = logging.getLogger(__name__)
 

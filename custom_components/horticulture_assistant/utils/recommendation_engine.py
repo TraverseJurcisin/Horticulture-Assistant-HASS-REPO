@@ -52,8 +52,6 @@ class RecommendationEngine:
         profile = self.plant_profiles.get(plant_id, {})
         sensors = self.sensor_data.get(plant_id, {})
         ai_notes = self.ai_feedback.get(plant_id, {})
-        available_products = self.product_availability
-
         notes = []
         fert_recs = []
 

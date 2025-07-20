@@ -14,6 +14,11 @@ def _load_data() -> Dict[str, Dict[str, str]]:
     return load_dataset(DATA_FILE)
 
 
+def list_supported_plants() -> list[str]:
+    """Return all plant types with disease guidelines."""
+    return sorted(_load_data().keys())
+
+
 def get_disease_guidelines(plant_type: str) -> Dict[str, str]:
     """Return disease management guidelines for the specified plant type."""
     return _load_data().get(plant_type, {})
