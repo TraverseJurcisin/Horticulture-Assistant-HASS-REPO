@@ -27,7 +27,10 @@ from .rootzone_model import (
     estimate_water_capacity,
     RootZone,
 )
-from .irrigation_manager import recommend_irrigation_volume
+from .irrigation_manager import (
+    recommend_irrigation_volume,
+    recommend_irrigation_interval,
+)
 from .nutrient_manager import (
     calculate_deficiencies,
     list_supported_plants as list_nutrient_plants,
@@ -66,6 +69,7 @@ __all__ = [
     "estimate_water_capacity",
     "RootZone",
     "recommend_irrigation_volume",
+    "recommend_irrigation_interval",
     "HarvestRecord",
     "load_yield_history",
     "record_harvest",
