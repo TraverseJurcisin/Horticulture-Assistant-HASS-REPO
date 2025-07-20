@@ -2,6 +2,7 @@ from plant_engine.fertigation import (
     recommend_fertigation_schedule,
     recommend_correction_schedule,
     get_fertilizer_purity,
+    recommend_batch_fertigation,
 )
 
 
@@ -56,5 +57,16 @@ def test_correction_with_product():
     )
     # deficit: N target 80 → diff 30 ppm × 5 L = 150 mg / 0.46 purity
     assert round(result["N"], 3) == round(0.15 / 0.46, 3)
+
+
+def test_recommend_batch_fertigation():
+    batches = recommend_batch_fertigation(
+        [("citrus", "vegetative"), ("tomato", "fruiting")],
+        volume_l=5.0,
+        purity={"N": 1.0},
+    )
+    assert "citrus-vegetative" in batches
+    assert "tomato-fruiting" in batches
+    assert batches["citrus-vegetative"]["N"] > 0
 
 
