@@ -1,4 +1,4 @@
-"""Utilities for retrieving environment guidelines and computing adjustments."""
+"""Utilities for environment targets and optimization helpers."""
 
 from __future__ import annotations
 
@@ -7,6 +7,15 @@ from typing import Any, Dict, Mapping, Tuple
 from .utils import load_dataset
 
 DATA_FILE = "environment_guidelines.json"
+
+# map of dataset keys to human readable labels used when recommending
+# adjustments. defined here once to avoid recreating each call.
+ACTION_LABELS = {
+    "temp_c": "temperature",
+    "humidity_pct": "humidity",
+    "light_ppfd": "light",
+    "co2_ppm": "co2",
+}
 
 
 
@@ -52,14 +61,7 @@ def recommend_environment_adjustments(
     if not targets:
         return actions
 
-    mappings = {
-        "temp_c": "temperature",
-        "humidity_pct": "humidity",
-        "light_ppfd": "light",
-        "co2_ppm": "co2",
-    }
-
-    for key, label in mappings.items():
+    for key, label in ACTION_LABELS.items():
         if key in targets and key in current:
             suggestion = _check_range(current[key], tuple(targets[key]))
             if suggestion:
