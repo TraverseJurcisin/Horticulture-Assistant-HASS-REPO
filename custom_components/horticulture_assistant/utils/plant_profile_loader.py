@@ -1,3 +1,7 @@
+"""Helpers for loading structured plant profile data."""
+
+from __future__ import annotations
+
 import json
 import logging
 from pathlib import Path
@@ -11,35 +15,44 @@ except ImportError:
 
 _LOGGER = logging.getLogger(__name__)
 
+# Default directory containing individual plant profiles
+DEFAULT_BASE_DIR = Path("plants")
+
 REQUIRED_THRESHOLD_KEYS = {"light", "temperature", "EC"}
 REQUIRED_STAGE_KEY = "stage_duration"
 
 @lru_cache(maxsize=None)
-def load_profile_from_path(path):
+def load_profile_from_path(path: str | Path) -> dict:
     """
     Load a plant profile from a file (YAML or JSON) given a filesystem path.
     Returns a structured dict with keys: general, thresholds, stages, nutrients.
     """
     path_obj = Path(path)
     if not path_obj.is_file():
-        _LOGGER.error("Profile file not found: %s", path)
+        _LOGGER.error("Profile file not found: %s", path_obj)
         return {}
     ext = path_obj.suffix.lower()
+
+    def _load_json(fp: Path) -> dict:
+        with open(fp, "r", encoding="utf-8") as f:
+            return json.load(f) or {}
+
+    def _load_yaml(fp: Path) -> dict:
+        if yaml is None:
+            raise RuntimeError("YAML support unavailable; install PyYAML")
+        with open(fp, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+
     try:
-        if ext in [".yaml", ".yml"]:
-            if yaml is None:
-                _LOGGER.error("YAML support is not available (PyYAML not installed).")
-                return {}
-            with open(path_obj, "r", encoding="utf-8") as f:
-                data = yaml.safe_load(f) or {}
-        elif ext == ".json":
-            with open(path_obj, "r", encoding="utf-8") as f:
-                data = json.load(f) or {}
+        if ext == ".json":
+            data = _load_json(path_obj)
+        elif ext in {".yaml", ".yml"}:
+            data = _load_yaml(path_obj)
         else:
             _LOGGER.error("Unsupported profile file extension: %s", ext)
             return {}
-    except Exception as e:
-        _LOGGER.error("Failed to parse profile file %s: %s", path, e)
+    except Exception as exc:
+        _LOGGER.error("Failed to parse profile file %s: %s", path_obj, exc)
         return {}
 
     if not isinstance(data, dict):
@@ -93,14 +106,11 @@ def load_profile_from_path(path):
     return profile
 
 @lru_cache(maxsize=None)
-def load_profile_by_id(plant_id, base_dir=None):
+def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dict:
     """
     Load a plant profile by plant_id. Looks for 'plant_id.json' or 'plant_id.yaml' in base_dir or current directory.
     """
-    if base_dir:
-        directory = Path(base_dir)
-    else:
-        directory = Path.cwd()
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
     json_path = directory / f"{plant_id}.json"
     yaml_path = directory / f"{plant_id}.yaml"
     yml_path = directory / f"{plant_id}.yml"
@@ -115,7 +125,11 @@ def load_profile_by_id(plant_id, base_dir=None):
     _LOGGER.error("No plant profile file found for plant_id '%s' in directory %s", plant_id, directory)
     return {}
 
-def load_profile(plant_id=None, path=None, base_dir=None):
+def load_profile(
+    plant_id: str | None = None,
+    path: str | Path | None = None,
+    base_dir: str | Path | None = None,
+) -> dict:
     """
     Load a plant profile given either a plant_id or a filesystem path.
     If 'path' is provided, load from that file directly. Otherwise, use plant_id.
