@@ -17,6 +17,10 @@ Currently, this repository is **private and actively under development**. A suit
 * Fertigation utilities support specifying a fertilizer product by name
 * Environment guidelines include light intensity and CO₂ ranges
 * Automated environment adjustment and pest treatment suggestions
+* Environment setpoint recommendations with VPD calculations
+  * VPD utility validates humidity input range
+* Growth stage estimation based on days after planting
+  * Raises an error for negative day values
 * Disease treatment recommendations for common plant diseases
 * On-demand nutrient correction and fertigation calculations
 * Harvest yield tracking utilities for per-plant analytics
