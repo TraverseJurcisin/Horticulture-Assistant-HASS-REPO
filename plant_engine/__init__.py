@@ -36,6 +36,7 @@ from .nutrient_manager import (
     list_supported_plants as list_nutrient_plants,
 )
 from .growth_stage import get_stage_info, list_growth_stages
+from .health_report import generate_health_report
 from .yield_manager import (
     HarvestRecord,
     load_yield_history,
@@ -74,4 +75,5 @@ __all__ = [
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
+    "generate_health_report",
 ]
