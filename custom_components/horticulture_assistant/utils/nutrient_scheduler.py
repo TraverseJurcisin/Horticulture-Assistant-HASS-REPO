@@ -1,3 +1,7 @@
+"""Utility to generate per-plant nutrient targets."""
+
+from __future__ import annotations
+
 import json
 import os
 import logging
@@ -9,6 +13,8 @@ except ImportError:
     HomeAssistant = None
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+from plant_engine.nutrient_manager import get_recommended_levels
+from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,6 +54,25 @@ TAG_NUTRIENT_MODIFIERS = {
     "low_potassium": {"K": 0.9},
 }
 
+PLANT_REGISTRY_FILE = "plant_registry.json"
+
+
+def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) -> str | None:
+    """Return plant type for ``plant_id`` from profile or registry."""
+    plant_type = profile.get("general", {}).get("plant_type")
+    if plant_type:
+        return str(plant_type).lower()
+
+    reg_path = hass.config.path(PLANT_REGISTRY_FILE) if hass else PLANT_REGISTRY_FILE
+    try:
+        data = load_json(reg_path)
+        plant_type = data.get(plant_id, {}).get("plant_type")
+        if plant_type:
+            return str(plant_type).lower()
+    except Exception:
+        pass
+    return None
+
 def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
     """
     Adjust nutrient targets for a given plant based on its lifecycle stage and tags.
@@ -74,16 +99,31 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
         return {}
     # Get base nutrient targets from profile
     base_targets = profile.get("nutrients") or {}
-    if not base_targets:
-        _LOGGER.warning("No nutrient targets defined in profile for plant '%s'. Skipping nutrient scheduling.", plant_id)
-        return {}
-    # Identify current lifecycle stage
-    stage = (profile.get("general", {}).get("lifecycle_stage")
-             or profile.get("general", {}).get("stage")
-             or profile.get("stage")
-             or "unknown")
+    stage = (
+        profile.get("general", {}).get("lifecycle_stage")
+        or profile.get("general", {}).get("stage")
+        or profile.get("stage")
+        or "unknown"
+    )
     stage_str = str(stage).lower()
     stage_key = STAGE_SYNONYMS.get(stage_str, stage_str)
+
+    if not base_targets:
+        plant_type = _get_plant_type(plant_id, profile, hass)
+        if plant_type:
+            base_targets = get_recommended_levels(plant_type, stage_key)
+            if base_targets:
+                _LOGGER.info(
+                    "Using nutrient guidelines for %s (%s stage)",
+                    plant_type,
+                    stage_key,
+                )
+        if not base_targets:
+            _LOGGER.warning(
+                "No nutrient targets for plant '%s' and no guidelines found. Skipping.",
+                plant_id,
+            )
+            return {}
     # Determine stage multiplier
     stage_multiplier = 1.0
     stage_data = {}
@@ -174,3 +214,6 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
     except Exception as e:
         _LOGGER.error("Failed to write nutrient targets for plant '%s': %s", plant_id, e)
     return adjusted_targets
+
+
+__all__ = ["schedule_nutrients"]
