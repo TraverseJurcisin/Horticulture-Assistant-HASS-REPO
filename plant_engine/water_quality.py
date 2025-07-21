@@ -15,6 +15,7 @@ __all__ = [
     "list_analytes",
     "get_threshold",
     "interpret_water_profile",
+    "classify_water_quality",
 ]
 
 
@@ -44,3 +45,19 @@ def interpret_water_profile(water_test: Dict[str, float]) -> Tuple[Dict[str, flo
             }
 
     return baseline, warnings
+
+
+def classify_water_quality(water_test: Dict[str, float]) -> str:
+    """Return a simple quality rating for ``water_test``.
+
+    The rating is ``"good"`` when no analyte exceeds its threshold,
+    ``"fair"`` when one or two exceed, and ``"poor"`` otherwise.
+    """
+
+    _, warnings = interpret_water_profile(water_test)
+    count = len(warnings)
+    if count == 0:
+        return "good"
+    if count <= 2:
+        return "fair"
+    return "poor"

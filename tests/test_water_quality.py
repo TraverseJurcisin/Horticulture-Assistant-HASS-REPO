@@ -18,3 +18,12 @@ def test_interpret_water_profile():
     assert "Na" in warnings
     assert warnings["Na"]["limit"] == 50
     assert "Cl" not in warnings
+
+
+def test_classify_water_quality():
+    rating_good = water_quality.classify_water_quality({"Na": 40})
+    assert rating_good == "good"
+    rating_fair = water_quality.classify_water_quality({"Na": 60, "Cl": 80})
+    assert rating_fair == "fair"
+    rating_poor = water_quality.classify_water_quality({"Na": 60, "Cl": 120, "B": 2.0})
+    assert rating_poor == "poor"
