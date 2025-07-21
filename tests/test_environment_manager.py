@@ -29,6 +29,11 @@ def test_get_environmental_targets_seedling():
     assert data["co2_ppm"] == [400, 600]
 
 
+def test_get_environmental_targets_case_insensitive():
+    data = get_environmental_targets("CITRUS", "SeEdLiNg")
+    assert data["temp_c"] == [22, 26]
+
+
 def test_recommend_environment_adjustments():
     actions = recommend_environment_adjustments(
         {
@@ -166,6 +171,10 @@ def test_score_environment():
 def test_get_target_dli():
     assert get_target_dli("lettuce", "seedling") == (10, 12)
     assert get_target_dli("unknown") is None
+
+
+def test_get_target_dli_case_insensitive():
+    assert get_target_dli("LeTtUcE", "SeEdLiNg") == (10, 12)
 
 
 def test_calculate_dli_series():

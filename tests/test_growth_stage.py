@@ -12,9 +12,18 @@ def test_get_stage_info():
     assert info["duration_days"] == 20
 
 
+def test_get_stage_info_case_insensitive():
+    info = get_stage_info("ToMaTo", "FlOwErInG")
+    assert info["duration_days"] == 20
+
+
 def test_get_stage_duration():
     assert get_stage_duration("tomato", "flowering") == 20
     assert get_stage_duration("tomato", "unknown") is None
+
+
+def test_get_stage_duration_case_insensitive():
+    assert get_stage_duration("ToMaTo", "FlOwErInG") == 20
 
 
 def test_estimate_stage_from_age():
@@ -23,6 +32,11 @@ def test_estimate_stage_from_age():
     assert estimate_stage_from_age("tomato", 150) is None
 
 
+def test_estimate_stage_from_age_case_insensitive():
+    assert estimate_stage_from_age("ToMaTo", 5) == "seedling"
+
+
 def test_estimate_stage_from_age_negative():
     with pytest.raises(ValueError):
         estimate_stage_from_age("tomato", -1)
+
