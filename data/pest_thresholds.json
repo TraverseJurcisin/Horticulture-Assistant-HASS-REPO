@@ -1,0 +1,22 @@
+{
+  "citrus": {
+    "aphids": 5,
+    "scale": 2
+  },
+  "tomato": {
+    "aphids": 10,
+    "blight": 1
+  },
+  "lettuce": {
+    "aphids": 8,
+    "leafminers": 4
+  },
+  "strawberry": {
+    "spider mites": 3,
+    "slugs": 2
+  },
+  "spinach": {
+    "aphids": 5,
+    "leaf miners": 2
+  }
+}

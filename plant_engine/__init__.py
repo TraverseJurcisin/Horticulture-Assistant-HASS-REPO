@@ -16,6 +16,11 @@ from .pest_manager import (
     recommend_treatments as recommend_pest_treatments,
     list_supported_plants as list_pest_plants,
 )
+from .pest_monitor import (
+    get_pest_thresholds,
+    assess_pest_pressure,
+    recommend_threshold_actions,
+)
 from .disease_manager import (
     get_disease_guidelines,
     recommend_treatments as recommend_disease_treatments,
@@ -75,6 +80,9 @@ __all__ = [
     "get_pest_guidelines",
     "recommend_pest_treatments",
     "list_pest_plants",
+    "get_pest_thresholds",
+    "assess_pest_pressure",
+    "recommend_threshold_actions",
     "get_disease_guidelines",
     "recommend_disease_treatments",
     "list_disease_plants",
