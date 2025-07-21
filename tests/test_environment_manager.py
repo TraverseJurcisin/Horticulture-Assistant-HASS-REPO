@@ -4,6 +4,8 @@ from plant_engine.environment_manager import (
     get_environmental_targets,
     recommend_environment_adjustments,
     suggest_environment_setpoints,
+    saturation_vapor_pressure,
+    actual_vapor_pressure,
     calculate_vpd,
     calculate_dew_point,
     calculate_heat_index,
@@ -53,6 +55,13 @@ def test_suggest_environment_setpoints():
     assert setpoints["humidity_pct"] == 70
     assert setpoints["light_ppfd"] == 225
     assert setpoints["co2_ppm"] == 500
+
+
+def test_vapor_pressure_helpers():
+    es = saturation_vapor_pressure(25)
+    ea = actual_vapor_pressure(25, 50)
+    assert round(es, 3) == 3.168
+    assert round(ea, 3) == round(es * 0.5, 3)
 
 
 def test_calculate_vpd():
