@@ -50,7 +50,7 @@ applying it to your plants.
 
 ### Data & Analytics
 - Disease and pest treatment recommendations
-- Environment optimization suggestions
+- Environment optimization suggestions with pH guidance
 - Stage-adjusted nutrient targets
 - Example crop profiles for strawberries, basil, spinach and more
 
