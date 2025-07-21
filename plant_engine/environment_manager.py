@@ -51,6 +51,11 @@ _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
 _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 
 
+def _norm(key: str) -> str:
+    """Normalize keys for case-insensitive lookups."""
+    return key.lower()
+
+
 def saturation_vapor_pressure(temp_c: float) -> float:
     """Return saturation vapor pressure (kPa) at ``temp_c``."""
     return 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
@@ -107,9 +112,9 @@ def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
-    data = _DATA.get(plant_type, {})
+    data = _DATA.get(_norm(plant_type), {})
     if stage:
-        stage = stage.lower()
+        stage = _norm(stage)
         if stage in data:
             return data[stage]
     return data.get("optimal", {})
@@ -323,9 +328,9 @@ def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1
 
 def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended DLI range for ``plant_type`` and ``stage`` if available."""
-    data = _DLI_DATA.get(plant_type, {})
+    data = _DLI_DATA.get(_norm(plant_type), {})
     if stage:
-        stage = stage.lower()
+        stage = _norm(stage)
         if stage in data:
             vals = data[stage]
             if len(vals) == 2:
