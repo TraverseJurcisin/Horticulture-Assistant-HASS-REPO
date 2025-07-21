@@ -150,6 +150,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Auto Approval**: Toggle `input_boolean.auto_approve_all` to apply AI recommendations automatically.
 - **Data Logging**: Set `state_class: measurement` on sensors for proper history recording.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
+- **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
+  fertilizer grams needed to hit N/P/K targets using the built-in purity data.
 
 ### Automation Blueprint Guide
 To start quickly, copy `plant_monitoring.yaml` from `blueprints/automation/` into `<config>/blueprints/automation/>` and create a new automation in Home Assistant.

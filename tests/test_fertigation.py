@@ -1,8 +1,10 @@
+import pytest
 from plant_engine.fertigation import (
     recommend_fertigation_schedule,
     recommend_correction_schedule,
     get_fertilizer_purity,
     recommend_batch_fertigation,
+    recommend_nutrient_mix,
 )
 
 
@@ -68,5 +70,22 @@ def test_recommend_batch_fertigation():
     assert "citrus-vegetative" in batches
     assert "tomato-fruiting" in batches
     assert batches["citrus-vegetative"]["N"] > 0
+
+
+def test_recommend_nutrient_mix_full():
+    mix = recommend_nutrient_mix("tomato", "vegetative", 10.0)
+    assert mix["urea"] == pytest.approx(2.174, rel=1e-3)
+    assert mix["map"] == pytest.approx(2.273, rel=1e-3)
+    assert mix["kcl"] == pytest.approx(1.6, rel=1e-3)
+
+
+def test_recommend_nutrient_mix_deficit():
+    current = {"N": 60, "P": 30, "K": 60}
+    mix = recommend_nutrient_mix(
+        "tomato", "vegetative", 10.0, current_levels=current
+    )
+    assert mix["urea"] == pytest.approx(0.87, rel=1e-2)
+    assert mix["map"] == pytest.approx(0.909, rel=1e-2)
+    assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
 
 
