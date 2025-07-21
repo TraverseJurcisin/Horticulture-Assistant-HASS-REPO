@@ -204,7 +204,7 @@ def recommend_nutrient_mix(
             raise ValueError(f"Purity for {nutrient} in {fert} must be > 0")
         grams_nutrient = (target_ppm * volume_l) / 1000
         grams_fert = grams_nutrient / purity
-        schedule[fert] = round(grams_fert, 3)
+        schedule[fert] = round(schedule.get(fert, 0) + grams_fert, 3)
 
     return schedule
 

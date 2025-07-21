@@ -115,5 +115,10 @@
     "germination": {"duration_days": 7, "notes": "Keep moist until emergence."},
     "vegetative": {"duration_days": 25, "notes": "Rapid leaf growth."},
     "harvest": {"duration_days": 15, "notes": "Harvest young leaves for best flavor."}
+  },
+  "beet": {
+    "germination": {"duration_days": 10, "notes": "Maintain moisture until seedlings emerge."},
+    "vegetative": {"duration_days": 30, "notes": "Focus on leaf and root growth."},
+    "harvest": {"duration_days": 20, "notes": "Harvest when roots reach desired size."}
   }
 }

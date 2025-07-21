@@ -18,12 +18,14 @@ def test_list_supported_plants():
     assert "cucumber" in plants
     assert "pepper" in plants
     assert "arugula" in plants
+    assert "beet" in plants
 
     pest_plants = pest_manager.list_supported_plants()
     assert "lettuce" in pest_plants
     assert "cucumber" in pest_plants
     assert "pepper" in pest_plants
     assert "arugula" in pest_plants
+    assert "beet" in pest_plants
 
     disease_plants = disease_manager.list_supported_plants()
     assert "lettuce" in disease_plants
@@ -33,6 +35,7 @@ def test_list_supported_plants():
     assert "cucumber" in disease_plants
     assert "pepper" in disease_plants
     assert "arugula" in disease_plants
+    assert "beet" in disease_plants
 
     purity = fertigation.get_fertilizer_purity("map")
     assert purity["P"] == 0.22
@@ -58,6 +61,9 @@ def test_list_supported_plants():
 
     aru_env = environment_manager.get_environmental_targets("arugula")
     assert aru_env["temp_c"] == [15, 22]
+
+    beet_env = environment_manager.get_environmental_targets("beet")
+    assert beet_env["temp_c"] == [15, 25]
 
 
 def test_lettuce_stage_info():
@@ -101,6 +107,9 @@ def test_nutrient_guidelines_lettuce():
     aru_levels = nutrient_manager.get_recommended_levels("arugula", "vegetative")
     assert aru_levels["K"] == 120
 
+    beet_levels = nutrient_manager.get_recommended_levels("beet", "harvest")
+    assert beet_levels["P"] == 40
+
 
 def test_treatment_guidelines_lettuce():
     pests = pest_manager.recommend_treatments("lettuce", ["aphids"])
@@ -136,6 +145,9 @@ def test_treatment_guidelines_lettuce():
     aru_pests = pest_manager.recommend_treatments("arugula", ["flea beetles"])
     assert aru_pests["flea beetles"].startswith("Use row covers")
 
+    beet_pests = pest_manager.recommend_treatments("beet", ["leaf miners"])
+    assert "row covers" in beet_pests["leaf miners"].lower()
+
     cuc_dis = disease_manager.recommend_treatments("cucumber", ["bacterial wilt"])
     assert "beetles" in cuc_dis["bacterial wilt"].lower()
 
@@ -144,3 +156,6 @@ def test_treatment_guidelines_lettuce():
 
     aru_dis = disease_manager.recommend_treatments("arugula", ["leaf spot"])
     assert "excess moisture" in aru_dis["leaf spot"].lower()
+
+    beet_dis = disease_manager.recommend_treatments("beet", ["leaf spot"])
+    assert "spacing" in beet_dis["leaf spot"].lower()

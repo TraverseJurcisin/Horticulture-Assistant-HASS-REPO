@@ -34,5 +34,9 @@
   "arugula": {
     "flea beetles": "Use row covers and apply neem if needed.",
     "aphids": "Use insecticidal soap or introduce ladybugs."
+  },
+  "beet": {
+    "leaf miners": "Use row covers and remove affected leaves.",
+    "aphids": "Apply insecticidal soap if populations are high."
   }
 }

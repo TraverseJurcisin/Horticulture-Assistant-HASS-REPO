@@ -310,5 +310,13 @@
       "light_ppfd": [150, 250],
       "co2_ppm": [400, 800]
     }
+  },
+  "beet": {
+    "optimal": {
+      "temp_c": [15, 25],
+      "humidity_pct": [50, 80],
+      "light_ppfd": [200, 400],
+      "co2_ppm": [400, 800]
+    }
   }
 }

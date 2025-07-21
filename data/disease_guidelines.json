@@ -34,5 +34,9 @@
   "arugula": {
     "downy mildew": "Ensure good air circulation and avoid overhead watering.",
     "leaf spot": "Remove affected leaves and avoid excess moisture."
+  },
+  "beet": {
+    "leaf spot": "Remove affected leaves and provide adequate spacing.",
+    "powdery mildew": "Apply sulfur spray and improve air circulation."
   }
 }

@@ -7,5 +7,6 @@
   "spinach": {"optimal": [6.0, 7.0]},
   "cucumber": {"optimal": [5.5, 6.8]},
   "pepper": {"optimal": [5.5, 6.8]},
-  "arugula": {"optimal": [6.0, 7.0]}
+  "arugula": {"optimal": [6.0, 7.0]},
+  "beet": {"optimal": [6.0, 7.0]}
 }

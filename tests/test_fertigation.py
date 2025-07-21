@@ -89,3 +89,14 @@ def test_recommend_nutrient_mix_deficit():
     assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
 
 
+def test_mix_accumulates_when_same_fertilizer():
+    mix = recommend_nutrient_mix(
+        "tomato",
+        "vegetative",
+        10.0,
+        fertilizers={"N": "npk", "P": "npk", "K": "npk"},
+        purity_overrides={"N": 0.1, "P": 0.1, "K": 0.1},
+    )
+    assert mix["npk"] == pytest.approx(23.0, rel=1e-2)
+
+
