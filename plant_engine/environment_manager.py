@@ -31,6 +31,7 @@ __all__ = [
     "relative_humidity_from_dew_point",
     "calculate_dli",
     "photoperiod_for_target_dli",
+    "humidity_for_target_vpd",
     "optimize_environment",
     "calculate_environment_metrics",
     "EnvironmentMetrics",
@@ -228,6 +229,26 @@ def photoperiod_for_target_dli(target_dli: float, ppfd: float) -> float:
 
     hours = target_dli * 1_000_000 / (ppfd * 3600)
     return round(hours, 2)
+
+
+def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
+    """Return relative humidity (%) that yields ``target_vpd`` at ``temp_c``.
+
+    ``target_vpd`` must be non-negative and may not exceed the saturation vapor
+    pressure for ``temp_c``. A ``ValueError`` is raised if the value is
+    unattainable.
+    """
+
+    if target_vpd < 0:
+        raise ValueError("target_vpd must be non-negative")
+
+    es = 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
+    if target_vpd > es:
+        raise ValueError("target_vpd exceeds saturation vapor pressure")
+
+    ea = es - target_vpd
+    rh = 100 * ea / es
+    return round(rh, 1)
 
 
 def calculate_environment_metrics(
