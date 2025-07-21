@@ -11,6 +11,7 @@ from plant_engine.environment_manager import (
     calculate_dli,
     photoperiod_for_target_dli,
     humidity_for_target_vpd,
+    score_environment,
     optimize_environment,
     calculate_environment_metrics,
 )
@@ -140,3 +141,12 @@ def test_humidity_for_target_vpd():
         humidity_for_target_vpd(25, -0.1)
     with pytest.raises(ValueError):
         humidity_for_target_vpd(20, 3.0)
+
+
+def test_score_environment():
+    current = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
+    score = score_environment(current, "citrus", "seedling")
+    assert 90 <= score <= 100
+    poor = {"temp_c": 10, "humidity_pct": 30, "light_ppfd": 50, "co2_ppm": 1500}
+    low_score = score_environment(poor, "citrus", "seedling")
+    assert low_score < score
