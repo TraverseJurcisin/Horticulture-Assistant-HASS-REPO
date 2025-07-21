@@ -4,6 +4,7 @@ from plant_engine.nutrient_manager import (
     calculate_nutrient_balance,
     calculate_surplus,
     get_npk_ratio,
+    score_nutrient_levels,
 )
 
 
@@ -48,3 +49,15 @@ def test_get_npk_ratio():
     assert ratio["N"] == 0.31
     assert ratio["P"] == 0.23
     assert ratio["K"] == 0.46
+
+
+def test_score_nutrient_levels():
+    # Perfect match yields 100
+    current = {"N": 80, "P": 60, "K": 120}
+    score = score_nutrient_levels(current, "tomato", "fruiting")
+    assert score == 100.0
+
+    # 50% deficit on all nutrients yields 50
+    deficit = {"N": 40, "P": 30, "K": 60}
+    score = score_nutrient_levels(deficit, "tomato", "fruiting")
+    assert 49.9 < score < 50.1

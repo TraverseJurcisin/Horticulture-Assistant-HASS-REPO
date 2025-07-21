@@ -18,6 +18,7 @@ __all__ = [
     "calculate_nutrient_balance",
     "calculate_surplus",
     "get_npk_ratio",
+    "score_nutrient_levels",
 ]
 
 
@@ -113,5 +114,37 @@ def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
         "P": round(p / total, 2),
         "K": round(k / total, 2),
     }
+
+
+def score_nutrient_levels(
+    current_levels: Dict[str, float], plant_type: str, stage: str
+) -> float:
+    """Return a 0-100 score for how close ``current_levels`` are to guidelines.
+
+    Each nutrient is weighted equally. A perfect match yields ``100`` while
+    values more than double or less than zero of the target contribute ``0`` to
+    the overall score.
+    """
+
+    recommended = get_recommended_levels(plant_type, stage)
+    if not recommended:
+        return 0.0
+
+    score = 0.0
+    count = 0
+    for nutrient, target in recommended.items():
+        if target <= 0:
+            continue
+        current = current_levels.get(nutrient)
+        if current is None:
+            continue
+        diff_ratio = abs(current - target) / target
+        score += max(0.0, 1 - diff_ratio)
+        count += 1
+
+    if count == 0:
+        return 0.0
+
+    return round((score / count) * 100, 1)
 
 
