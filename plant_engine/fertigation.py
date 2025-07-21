@@ -33,6 +33,7 @@ def get_fertilizer_purity(name: str) -> Dict[str, float]:
 __all__ = [
     "get_fertilizer_purity",
     "recommend_fertigation_schedule",
+    "recommend_fertigation_with_water",
     "recommend_correction_schedule",
     "recommend_batch_fertigation",
     "recommend_nutrient_mix",
@@ -91,6 +92,41 @@ def recommend_fertigation_schedule(
             raise ValueError(f"Purity for {nutrient} must be > 0")
         schedule[nutrient] = round(grams / fraction, 3)
     return schedule
+
+
+def recommend_fertigation_with_water(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float],
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
+    """Return fertigation schedule accounting for nutrient content in water.
+
+    ``water_profile`` should map nutrient codes to baseline ppm values.
+    Any analytes exceeding thresholds in :mod:`plant_engine.water_quality`
+    will appear in the second returned mapping.
+    """
+
+    from .water_quality import interpret_water_profile
+
+    baseline, warnings = interpret_water_profile(water_profile)
+    purity_map = _resolve_purity(product, purity)
+
+    targets = get_recommended_levels(plant_type, stage)
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        deficit_ppm = max(0.0, ppm - baseline.get(nutrient, 0.0))
+        mg = deficit_ppm * volume_l
+        grams = mg / 1000
+        fraction = purity_map.get(nutrient, 1.0)
+        if fraction <= 0:
+            raise ValueError(f"Purity for {nutrient} must be > 0")
+        schedule[nutrient] = round(grams / fraction, 3)
+
+    return schedule, warnings
 
 
 def recommend_correction_schedule(

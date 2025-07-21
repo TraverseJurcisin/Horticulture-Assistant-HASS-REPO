@@ -1,6 +1,7 @@
 import pytest
 from plant_engine.fertigation import (
     recommend_fertigation_schedule,
+    recommend_fertigation_with_water,
     recommend_correction_schedule,
     get_fertilizer_purity,
     recommend_batch_fertigation,
@@ -87,5 +88,19 @@ def test_recommend_nutrient_mix_deficit():
     assert mix["urea"] == pytest.approx(0.87, rel=1e-2)
     assert mix["map"] == pytest.approx(0.909, rel=1e-2)
     assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
+
+
+def test_recommend_fertigation_with_water():
+    schedule, warnings = recommend_fertigation_with_water(
+        "tomato",
+        "vegetative",
+        10.0,
+        {"N": 20, "K": 10},
+        purity={"N": 1.0, "P": 1.0, "K": 1.0},
+    )
+    assert warnings == {}
+    assert round(schedule["N"], 2) == 0.8
+    assert round(schedule["P"], 2) == 0.5
+    assert round(schedule["K"], 2) == 0.7
 
 
