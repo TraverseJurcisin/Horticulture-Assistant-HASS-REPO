@@ -24,6 +24,7 @@ from .disease_manager import (
 from .fertigation import (
     recommend_fertigation_schedule,
     recommend_correction_schedule,
+    recommend_fertigation_with_water_profile,
     get_fertilizer_purity,
 )
 from .rootzone_model import (
@@ -75,6 +76,7 @@ __all__ = [
     "list_disease_plants",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
+    "recommend_fertigation_with_water_profile",
     "get_fertilizer_purity",
     "calculate_deficiencies",
     "list_nutrient_plants",

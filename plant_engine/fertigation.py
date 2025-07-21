@@ -34,6 +34,7 @@ __all__ = [
     "get_fertilizer_purity",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
+    "recommend_fertigation_with_water_profile",
     "recommend_batch_fertigation",
 ]
 
@@ -152,4 +153,44 @@ def recommend_batch_fertigation(
             product=product,
         )
     return schedules
+
+
+def recommend_fertigation_with_water_profile(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float],
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
+    """Return fertigation schedule accounting for irrigation water nutrients.
+
+    The baseline nutrient levels present in ``water_profile`` (ppm) are
+    subtracted from the target requirements before converting to grams of
+    fertilizer. Any values exceeding toxicity thresholds return warnings via
+    :func:`plant_engine.water_quality.interpret_water_profile`.
+    """
+
+    from .water_quality import interpret_water_profile
+
+    purity_map = _resolve_purity(product, purity)
+    schedule = recommend_fertigation_schedule(
+        plant_type, stage, volume_l, purity_map, product=None
+    )
+
+    baseline, warnings = interpret_water_profile(water_profile)
+
+    for nutrient, ppm in baseline.items():
+        if nutrient not in schedule:
+            continue
+        mg = ppm * volume_l
+        grams = mg / 1000
+        frac = purity_map.get(nutrient, 1.0)
+        if frac <= 0:
+            raise ValueError(f"Purity for {nutrient} must be > 0")
+        deduction = grams / frac
+        schedule[nutrient] = round(max(schedule[nutrient] - deduction, 0.0), 3)
+
+    return schedule, warnings
 

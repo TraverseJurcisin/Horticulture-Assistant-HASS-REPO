@@ -3,6 +3,7 @@ from plant_engine.fertigation import (
     recommend_correction_schedule,
     get_fertilizer_purity,
     recommend_batch_fertigation,
+    recommend_fertigation_with_water_profile,
 )
 
 
@@ -68,5 +69,18 @@ def test_recommend_batch_fertigation():
     assert "citrus-vegetative" in batches
     assert "tomato-fruiting" in batches
     assert batches["citrus-vegetative"]["N"] > 0
+
+
+def test_fertigation_with_water_profile():
+    schedule, warnings = recommend_fertigation_with_water_profile(
+        "citrus",
+        "vegetative",
+        volume_l=1.0,
+        water_profile={"N": 10, "Na": 60},
+        product="urea",
+    )
+    assert "Na" in warnings
+    expected = round((0.08 / 0.46) - (0.01 / 0.46), 3)
+    assert round(schedule["N"], 3) == expected
 
 
