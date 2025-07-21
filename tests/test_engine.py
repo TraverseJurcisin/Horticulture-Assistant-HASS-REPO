@@ -48,3 +48,7 @@ def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
     assert report["disease_actions"]["root rot"].startswith("Ensure good drainage")
     assert (output_dir / "sample.json").exists()
 
+    assert "environment_optimization" in report
+    assert report["environment_optimization"]["setpoints"]["temp_c"] == 24
+    assert "nutrient_targets" in report
+
