@@ -11,7 +11,10 @@ from plant_engine.rootzone_model import (
 )
 from plant_engine.nutrient_efficiency import calculate_nue
 from plant_engine.approval_queue import queue_threshold_updates
-from plant_engine.environment_manager import recommend_environment_adjustments
+from plant_engine.environment_manager import (
+    recommend_environment_adjustments,
+    optimize_environment,
+)
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
@@ -19,6 +22,14 @@ from plant_engine.growth_stage import get_stage_info
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
+
+# Basic multipliers to scale nutrient recommendations by growth stage
+STAGE_MULTIPLIERS = {
+    "seedling": 0.5,
+    "vegetative": 1.0,
+    "flowering": 1.2,
+    "fruiting": 1.1,
+}
 
 def run_daily_cycle(plant_id: str) -> Dict:
     """Run a full daily processing cycle for a plant profile."""
@@ -81,6 +92,25 @@ def run_daily_cycle(plant_id: str) -> Dict:
         profile.get("stage", "")
     )
 
+    stage_name = str(profile.get("stage", "")).lower()
+    stage_mult = STAGE_MULTIPLIERS.get(stage_name, 1.0)
+    nutrient_targets = {
+        n: round(v * stage_mult, 2) for n, v in guidelines.items()
+    } if guidelines else {}
+
+    env_current = {}
+    if env.get("temp_c") is not None:
+        env_current["temp_c"] = env.get("temp_c")
+    if env.get("rh_pct") is not None:
+        env_current["humidity_pct"] = env.get("rh_pct")
+    if env.get("par_w_m2") is not None:
+        env_current["light_ppfd"] = env.get("par_w_m2")
+    if env.get("co2_ppm") is not None:
+        env_current["co2_ppm"] = env.get("co2_ppm")
+    env_opt = optimize_environment(
+        env_current, profile.get("plant_type", ""), profile.get("stage")
+    )
+
     stage_info = get_stage_info(
         profile.get("plant_type", ""), profile.get("stage", "")
     )
@@ -95,7 +125,9 @@ def run_daily_cycle(plant_id: str) -> Dict:
         "rootzone": rootzone.to_dict(),
         "nue": nue,
         "guidelines": guidelines,
+        "nutrient_targets": nutrient_targets,
         "environment_actions": env_actions,
+        "environment_optimization": env_opt,
         "pest_actions": pest_actions,
         "disease_actions": disease_actions,
         "lifecycle_stage": profile.get("stage", "unknown"),
