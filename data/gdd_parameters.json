@@ -1,0 +1,5 @@
+{
+  "citrus": {"base_temp_c": 12, "max_temp_c": 32},
+  "tomato": {"base_temp_c": 10, "max_temp_c": 30},
+  "lettuce": {"base_temp_c": 5, "max_temp_c": 25}
+}

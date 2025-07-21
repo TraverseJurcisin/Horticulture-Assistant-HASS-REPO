@@ -9,6 +9,8 @@ from typing import Any, Dict, Mapping, Tuple
 from .utils import load_dataset
 
 DATA_FILE = "environment_guidelines.json"
+# Parameters used for Growing Degree Day calculations
+GDD_DATA_FILE = "gdd_parameters.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -21,29 +23,32 @@ ACTION_LABELS = {
 
 
 __all__ = [
-    "list_supported_plants",
-    "get_environmental_targets",
-    "recommend_environment_adjustments",
-    "score_environment",
-    "suggest_environment_setpoints",
-    "saturation_vapor_pressure",
-    "actual_vapor_pressure",
-    "calculate_vpd",
-    "calculate_dew_point",
-    "calculate_heat_index",
-    "relative_humidity_from_dew_point",
-    "calculate_dli",
-    "photoperiod_for_target_dli",
-    "humidity_for_target_vpd",
-    "optimize_environment",
-    "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "actual_vapor_pressure",
+    "calculate_dew_point",
+    "calculate_dli",
+    "calculate_environment_metrics",
+    "calculate_gdd",
+    "calculate_heat_index",
+    "calculate_vpd",
+    "gdd_for_plant",
+    "get_environmental_targets",
+    "humidity_for_target_vpd",
+    "list_supported_plants",
+    "optimize_environment",
+    "photoperiod_for_target_dli",
+    "recommend_environment_adjustments",
+    "relative_humidity_from_dew_point",
+    "saturation_vapor_pressure",
+    "score_environment",
+    "suggest_environment_setpoints",
 ]
 
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
+_GDD_DATA: Dict[str, Any] = load_dataset(GDD_DATA_FILE)
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -290,6 +295,26 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     ea = es - target_vpd
     rh = 100 * ea / es
     return round(rh, 1)
+
+
+def calculate_gdd(
+    t_high_c: float, t_low_c: float, base_temp_c: float, max_temp_c: float | None = None
+) -> float:
+    """Return Growing Degree Days using the simple average method."""
+    if t_high_c < t_low_c:
+        raise ValueError("t_high_c must be >= t_low_c")
+    if max_temp_c is not None:
+        t_high_c = min(t_high_c, max_temp_c)
+    gdd = ((t_high_c + t_low_c) / 2) - base_temp_c
+    return round(max(gdd, 0.0), 2)
+
+
+def gdd_for_plant(t_high_c: float, t_low_c: float, plant_type: str) -> float:
+    """Return Growing Degree Days for ``plant_type`` using dataset parameters."""
+    params = _GDD_DATA.get(plant_type, {})
+    base = params.get("base_temp_c", 10.0)
+    max_temp = params.get("max_temp_c")
+    return calculate_gdd(t_high_c, t_low_c, base, max_temp)
 
 
 def calculate_environment_metrics(
