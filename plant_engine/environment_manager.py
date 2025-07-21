@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+from dataclasses import dataclass, asdict
 from typing import Any, Dict, Mapping, Tuple
 
 from .utils import load_dataset
@@ -30,11 +32,45 @@ __all__ = [
     "calculate_dli",
     "photoperiod_for_target_dli",
     "optimize_environment",
+    "calculate_environment_metrics",
+    "EnvironmentMetrics",
+    "EnvironmentOptimization",
 ]
 
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
+
+
+@dataclass
+class EnvironmentMetrics:
+    """Calculated environmental metrics."""
+
+    vpd: float | None
+    dew_point_c: float | None
+    heat_index_c: float | None
+
+    def as_dict(self) -> Dict[str, float | None]:
+        """Return metrics as a regular dictionary."""
+        return asdict(self)
+
+
+@dataclass
+class EnvironmentOptimization:
+    """Consolidated environment optimization result."""
+
+    setpoints: Dict[str, float]
+    adjustments: Dict[str, str]
+    metrics: EnvironmentMetrics
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "setpoints": self.setpoints,
+            "adjustments": self.adjustments,
+            "vpd": self.metrics.vpd,
+            "dew_point_c": self.metrics.dew_point_c,
+            "heat_index_c": self.metrics.heat_index_c,
+        }
 
 
 def list_supported_plants() -> list[str]:
@@ -101,8 +137,6 @@ def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
     if not 0 <= humidity_pct <= 100:
         raise ValueError("humidity_pct must be between 0 and 100")
 
-    import math
-
     es = 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
     ea = es * humidity_pct / 100
     vpd = es - ea
@@ -113,8 +147,6 @@ def calculate_dew_point(temp_c: float, humidity_pct: float) -> float:
     """Return dew point temperature (°C) using the Magnus formula."""
     if not 0 <= humidity_pct <= 100:
         raise ValueError("humidity_pct must be between 0 and 100")
-
-    import math
 
     a = 17.27
     b = 237.7
@@ -165,8 +197,6 @@ def relative_humidity_from_dew_point(temp_c: float, dew_point_c: float) -> float
     if dew_point_c > temp_c:
         raise ValueError("dew_point_c cannot exceed temp_c")
 
-    import math
-
     a = 17.27
     b = 237.7
     alpha_dp = (a * dew_point_c) / (b + dew_point_c)
@@ -200,6 +230,21 @@ def photoperiod_for_target_dli(target_dli: float, ppfd: float) -> float:
     return round(hours, 2)
 
 
+def calculate_environment_metrics(
+    temp_c: float | None, humidity_pct: float | None
+) -> EnvironmentMetrics:
+    """Return :class:`EnvironmentMetrics` if inputs are provided."""
+
+    if temp_c is None or humidity_pct is None:
+        return EnvironmentMetrics(None, None, None)
+
+    return EnvironmentMetrics(
+        vpd=calculate_vpd(temp_c, humidity_pct),
+        dew_point_c=calculate_dew_point(temp_c, humidity_pct),
+        heat_index_c=calculate_heat_index(temp_c, humidity_pct),
+    )
+
+
 def optimize_environment(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, object]:
@@ -214,21 +259,9 @@ def optimize_environment(
     setpoints = suggest_environment_setpoints(plant_type, stage)
     actions = recommend_environment_adjustments(current, plant_type, stage)
 
-    temp = current.get("temp_c")
-    humidity = current.get("humidity_pct")
+    metrics = calculate_environment_metrics(
+        current.get("temp_c"), current.get("humidity_pct")
+    )
 
-    vpd = None
-    dew_point = None
-    heat_index = None
-    if temp is not None and humidity is not None:
-        vpd = calculate_vpd(temp, humidity)
-        dew_point = calculate_dew_point(temp, humidity)
-        heat_index = calculate_heat_index(temp, humidity)
-
-    return {
-        "setpoints": setpoints,
-        "adjustments": actions,
-        "vpd": vpd,
-        "dew_point_c": dew_point,
-        "heat_index_c": heat_index,
-    }
+    result = EnvironmentOptimization(setpoints, actions, metrics)
+    return result.as_dict()
