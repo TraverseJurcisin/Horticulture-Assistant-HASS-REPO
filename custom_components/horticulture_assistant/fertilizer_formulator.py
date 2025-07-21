@@ -10,6 +10,7 @@ from typing import Dict
 from plant_engine.utils import load_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
+PRICE_FILE = "fertilizers/fertilizer_prices.json"
 
 
 @dataclass(frozen=True)
@@ -35,6 +36,12 @@ def _inventory() -> Dict[str, Fertilizer]:
             wsda_product_number=info.get("wsda_product_number"),
         )
     return inventory
+
+
+@lru_cache(maxsize=None)
+def _price_map() -> Dict[str, float]:
+    """Return fertilizer prices loaded from :mod:`data`."""
+    return load_dataset(PRICE_FILE)
 
 
 MOLAR_MASS_CONVERSIONS = {
@@ -88,9 +95,28 @@ def calculate_fertilizer_nutrients(
     }
 
 
+def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
+    """Return estimated cost for ``volume_ml`` of fertilizer.
+
+    The price data is stored in :data:`PRICE_FILE` as USD per liter.
+    A ``KeyError`` is raised if the product price is unavailable.
+    """
+
+    if volume_ml <= 0:
+        raise ValueError("volume_ml must be positive")
+
+    prices = _price_map()
+    if fertilizer_id not in prices:
+        raise KeyError(f"Price for '{fertilizer_id}' is not defined")
+
+    cost = prices[fertilizer_id] * (volume_ml / 1000)
+    return round(cost, 2)
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
+    "calculate_fertilizer_cost",
     "list_products",
     "get_product_info",
 ]

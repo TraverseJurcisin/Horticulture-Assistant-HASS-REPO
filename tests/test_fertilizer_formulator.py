@@ -16,6 +16,7 @@ calculate_fertilizer_nutrients = fert_mod.calculate_fertilizer_nutrients
 convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
+calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
 
 
 def test_convert_guaranteed_analysis():
@@ -49,3 +50,12 @@ def test_invalid_inputs():
         calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 0)
     with pytest.raises(KeyError):
         get_product_info("unknown")
+
+
+def test_calculate_fertilizer_cost():
+    cost = calculate_fertilizer_cost("foxfarm_grow_big", 10)
+    assert round(cost, 2) == 0.2
+    with pytest.raises(ValueError):
+        calculate_fertilizer_cost("foxfarm_grow_big", -1)
+    with pytest.raises(KeyError):
+        calculate_fertilizer_cost("unknown", 10)
