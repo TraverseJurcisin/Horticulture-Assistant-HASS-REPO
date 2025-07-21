@@ -3,6 +3,7 @@ from plant_engine.nutrient_manager import (
     calculate_deficiencies,
     calculate_nutrient_balance,
     calculate_surplus,
+    get_npk_ratio,
 )
 
 
@@ -39,3 +40,11 @@ def test_calculate_surplus():
 def test_get_recommended_levels_case_insensitive():
     levels = get_recommended_levels("Citrus", "FRUITING")
     assert levels["N"] == 120
+
+
+def test_get_npk_ratio():
+    ratio = get_npk_ratio("tomato", "fruiting")
+    assert round(ratio["N"] + ratio["P"] + ratio["K"], 2) == 1.0
+    assert ratio["N"] == 0.31
+    assert ratio["P"] == 0.23
+    assert ratio["K"] == 0.46

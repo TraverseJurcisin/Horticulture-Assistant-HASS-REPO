@@ -49,13 +49,6 @@ applying it to your plants.
 - Irrigation and fertigation switches with approval queues
 
 ### Data & Analytics
-- Nutrient guidelines and fertilizer purity lookups
-- Root zone utilities and ET based irrigation helpers
-- Tagging system for grouped analytics and dashboards
-- Yield tracking with InfluxDB/Grafana integrations
-
-### Reference Datasets
-- VPD, dew point and heat index calculations
 - Disease and pest treatment recommendations
 - Example crop profiles for strawberries, basil, spinach and more
 
