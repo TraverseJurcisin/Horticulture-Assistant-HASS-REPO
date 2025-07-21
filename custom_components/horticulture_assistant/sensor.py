@@ -84,26 +84,42 @@ class HorticultureBaseSensor(SensorEntity):
             _LOGGER.warning("State of %s is not a number: %s", entity_id, state.state)
             return None
 
-class SmoothedMoistureSensor(HorticultureBaseSensor):
-    """Smoothed moisture value using an exponential moving average."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+class ExponentialMovingAverageSensor(HorticultureBaseSensor):
+    """Base sensor applying an exponential moving average to another sensor."""
+
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        *,
+        source_sensor: str,
+        name: str,
+        unique_id: str,
+        unit: str,
+        icon: str,
+        precision: int,
+        device_class: SensorDeviceClass | None = None,
+    ) -> None:
         super().__init__(hass, plant_name, plant_id)
-        self._attr_name = "Smoothed Moisture"
-        self._attr_unique_id = f"{plant_id}_smoothed_moisture"
-        self._attr_native_unit_of_measurement = UNIT_PERCENT
+        self._source = source_sensor
+        self._precision = precision
+        self._attr_name = name
+        self._attr_unique_id = unique_id
+        self._attr_native_unit_of_measurement = unit
+        self._attr_icon = icon
+        self._attr_device_class = device_class
         self._attr_state_class = SensorStateClass.MEASUREMENT
-        self._attr_device_class = SensorDeviceClass.MOISTURE
-        self._attr_icon = "mdi:water-percent"
         self._attr_entity_category = CATEGORY_MONITORING
 
-    async def async_update(self):
-        """Update with smoothed moisture using an exponential moving average."""
-        raw_id = f"sensor.{self._plant_id}_raw_moisture"
-        raw_val = self._get_state_value(raw_id)
+    async def async_update(self) -> None:
+        """Apply the EMA calculation to the configured source sensor."""
+        raw_val = self._get_state_value(self._source)
         if raw_val is None:
-            _LOGGER.debug("Raw moisture sensor not available: %s", raw_id)
+            _LOGGER.debug("EMA source not available: %s", self._source)
             self._attr_native_value = None
             return
+
         if not hasattr(self, "_ema"):
             self._ema = raw_val
         else:
@@ -111,7 +127,26 @@ class SmoothedMoistureSensor(HorticultureBaseSensor):
                 MOVING_AVERAGE_ALPHA * raw_val
                 + (1 - MOVING_AVERAGE_ALPHA) * self._ema
             )
-        self._attr_native_value = round(self._ema, 1)
+
+        self._attr_native_value = round(self._ema, self._precision)
+
+
+class SmoothedMoistureSensor(ExponentialMovingAverageSensor):
+    """Smoothed moisture using an exponential moving average."""
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+        super().__init__(
+            hass,
+            plant_name,
+            plant_id,
+            source_sensor=f"sensor.{plant_id}_raw_moisture",
+            name="Smoothed Moisture",
+            unique_id=f"{plant_id}_smoothed_moisture",
+            unit=UNIT_PERCENT,
+            icon="mdi:water-percent",
+            precision=1,
+            device_class=SensorDeviceClass.MOISTURE,
+        )
 
 class DailyETSensor(HorticultureBaseSensor):
     """Sensor estimating daily ET (Evapotranspiration) loss."""
@@ -166,32 +201,21 @@ class RootZoneDepletionSensor(HorticultureBaseSensor):
             _LOGGER.debug("Using fallback depletion calculation for: %s", self._plant_id)
             self._attr_native_value = round(max(0, min(100 - current, 100)), 1)
 
-class SmoothedECSensor(HorticultureBaseSensor):
+class SmoothedECSensor(ExponentialMovingAverageSensor):
     """Smoothed EC reading using an exponential moving average."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
-        self._attr_name = "Smoothed EC"
-        self._attr_unique_id = f"{plant_id}_smoothed_ec"
-        self._attr_native_unit_of_measurement = "mS/cm"
-        self._attr_state_class = SensorStateClass.MEASUREMENT
-        self._attr_icon = "mdi:water-outline"
-        self._attr_entity_category = CATEGORY_MONITORING
 
-    async def async_update(self):
-        """Update EC value using an exponential moving average."""
-        raw_val = self._get_state_value(f"sensor.{self._plant_id}_raw_ec")
-        if raw_val is None:
-            _LOGGER.debug("Raw EC sensor not available: %s", f"sensor.{self._plant_id}_raw_ec")
-            self._attr_native_value = None
-            return
-        if not hasattr(self, "_ema"):
-            self._ema = raw_val
-        else:
-            self._ema = (
-                MOVING_AVERAGE_ALPHA * raw_val
-                + (1 - MOVING_AVERAGE_ALPHA) * self._ema
-            )
-        self._attr_native_value = round(self._ema, 2)
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+        super().__init__(
+            hass,
+            plant_name,
+            plant_id,
+            source_sensor=f"sensor.{plant_id}_raw_ec",
+            name="Smoothed EC",
+            unique_id=f"{plant_id}_smoothed_ec",
+            unit="mS/cm",
+            icon="mdi:water-outline",
+            precision=2,
+        )
 
 class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
     """Estimate of field capacity from past max moisture post-irrigation."""

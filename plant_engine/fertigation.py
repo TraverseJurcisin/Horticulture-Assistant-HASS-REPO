@@ -35,6 +35,7 @@ __all__ = [
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
     "recommend_batch_fertigation",
+    "recommend_nutrient_mix",
 ]
 
 
@@ -152,4 +153,58 @@ def recommend_batch_fertigation(
             product=product,
         )
     return schedules
+
+
+def recommend_nutrient_mix(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    current_levels: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return grams of each fertilizer required to meet N/P/K targets.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop type used to look up guidelines.
+    stage : str
+        Growth stage for nutrient targets.
+    volume_l : float
+        Total solution volume in liters.
+    current_levels : Mapping[str, float] | None
+        Current nutrient concentration (ppm). If provided, only deficits are
+        supplied. If ``None`` full guideline amounts are used.
+    fertilizers : Mapping[str, str] | None
+        Mapping of nutrient code (``"N"``, ``"P"``, ``"K"``) to fertilizer
+        product identifiers from :data:`fertilizer_purity.json`.
+    purity_overrides : Mapping[str, float] | None
+        Optional overrides for nutrient purity fractions.
+    """
+
+    if fertilizers is None:
+        fertilizers = {"N": "urea", "P": "map", "K": "kcl"}
+
+    if current_levels is None:
+        deficits = get_recommended_levels(plant_type, stage)
+    else:
+        deficits = calculate_deficiencies(current_levels, plant_type, stage)
+
+    schedule: Dict[str, float] = {}
+    for nutrient, target_ppm in deficits.items():
+        fert = fertilizers.get(nutrient)
+        if not fert:
+            continue
+        purity = get_fertilizer_purity(fert).get(nutrient, 0.0)
+        if purity_overrides and nutrient in purity_overrides:
+            purity = purity_overrides[nutrient]
+        if purity <= 0:
+            raise ValueError(f"Purity for {nutrient} in {fert} must be > 0")
+        grams_nutrient = (target_ppm * volume_l) / 1000
+        grams_fert = grams_nutrient / purity
+        schedule[fert] = round(grams_fert, 3)
+
+    return schedule
 
