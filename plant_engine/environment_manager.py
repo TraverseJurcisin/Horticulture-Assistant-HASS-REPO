@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, asdict
-from typing import Any, Dict, Mapping, Tuple
+from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset
 
 DATA_FILE = "environment_guidelines.json"
+DLI_DATA_FILE = "light_dli_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -34,6 +35,8 @@ __all__ = [
     "relative_humidity_from_dew_point",
     "calculate_dli",
     "photoperiod_for_target_dli",
+    "calculate_dli_series",
+    "get_target_dli",
     "humidity_for_target_vpd",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -44,6 +47,7 @@ __all__ = [
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
+_DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -290,6 +294,41 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     ea = es - target_vpd
     rh = 100 * ea / es
     return round(rh, 1)
+
+
+def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1.0) -> float:
+    """Return Daily Light Integral from a sequence of PPFD readings.
+
+    Parameters
+    ----------
+    ppfd_values: Iterable[float]
+        Sequence of PPFD values in µmol⋅m⁻²⋅s⁻¹.
+    interval_hours: float
+        Time between each measurement in hours. Must be positive.
+    """
+    if interval_hours <= 0:
+        raise ValueError("interval_hours must be positive")
+    total = 0.0
+    for val in ppfd_values:
+        if val < 0:
+            raise ValueError("PPFD values must be non-negative")
+        total += val * 3600 * interval_hours
+    return round(total / 1_000_000, 2)
+
+
+def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
+    """Return recommended DLI range for ``plant_type`` and ``stage`` if available."""
+    data = _DLI_DATA.get(plant_type, {})
+    if stage:
+        stage = stage.lower()
+        if stage in data:
+            vals = data[stage]
+            if len(vals) == 2:
+                return tuple(vals)
+    vals = data.get("optimal")
+    if isinstance(vals, list) and len(vals) == 2:
+        return tuple(vals)
+    return None
 
 
 def calculate_environment_metrics(
