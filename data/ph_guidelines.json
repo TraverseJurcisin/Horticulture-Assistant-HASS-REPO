@@ -1,0 +1,11 @@
+{
+  "citrus": {"optimal": [5.5, 6.5]},
+  "tomato": {"optimal": [5.5, 6.5]},
+  "lettuce": {"optimal": [5.8, 6.2]},
+  "strawberry": {"optimal": [5.5, 6.5]},
+  "basil": {"optimal": [5.5, 6.5]},
+  "spinach": {"optimal": [6.0, 7.0]},
+  "cucumber": {"optimal": [5.5, 6.8]},
+  "pepper": {"optimal": [5.5, 6.8]},
+  "arugula": {"optimal": [6.0, 7.0]}
+}

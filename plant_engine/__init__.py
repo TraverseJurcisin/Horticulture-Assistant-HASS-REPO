@@ -52,6 +52,11 @@ from .water_quality import (
     get_threshold as get_water_threshold,
     interpret_water_profile,
 )
+from .ph_manager import (
+    list_supported_plants as list_ph_plants,
+    get_ph_range,
+    recommend_ph_adjustment,
+)
 from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -93,5 +98,8 @@ __all__ = [
     "list_water_analytes",
     "get_water_threshold",
     "interpret_water_profile",
+    "list_ph_plants",
+    "get_ph_range",
+    "recommend_ph_adjustment",
     "TranspirationMetrics",
 ]
