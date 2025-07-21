@@ -1,0 +1,11 @@
+{
+  "lettuce": {
+    "seedling": [10, 12],
+    "harvest": [12, 17]
+  },
+  "tomato": {
+    "seedling": [16, 20],
+    "fruiting": [20, 30]
+  }
+}
+

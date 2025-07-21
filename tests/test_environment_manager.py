@@ -11,7 +11,9 @@ from plant_engine.environment_manager import (
     calculate_heat_index,
     relative_humidity_from_dew_point,
     calculate_dli,
+    calculate_dli_series,
     photoperiod_for_target_dli,
+    get_target_dli,
     humidity_for_target_vpd,
     score_environment,
     optimize_environment,
@@ -159,3 +161,19 @@ def test_score_environment():
     poor = {"temp_c": 10, "humidity_pct": 30, "light_ppfd": 50, "co2_ppm": 1500}
     low_score = score_environment(poor, "citrus", "seedling")
     assert low_score < score
+
+
+def test_get_target_dli():
+    assert get_target_dli("lettuce", "seedling") == (10, 12)
+    assert get_target_dli("unknown") is None
+
+
+def test_calculate_dli_series():
+    series = [100] * 12 + [200] * 12
+    dli = calculate_dli_series(series)
+    expected = ((100 * 12) + (200 * 12)) * 3600 / 1_000_000
+    assert round(dli, 2) == round(expected, 2)
+    with pytest.raises(ValueError):
+        calculate_dli_series([-1, 100])
+    with pytest.raises(ValueError):
+        calculate_dli_series([100], 0)
