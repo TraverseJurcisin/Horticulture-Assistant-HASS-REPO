@@ -25,6 +25,8 @@ __all__ = [
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "suggest_environment_setpoints",
+    "saturation_vapor_pressure",
+    "actual_vapor_pressure",
     "calculate_vpd",
     "calculate_dew_point",
     "calculate_heat_index",
@@ -41,6 +43,18 @@ __all__ = [
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
+
+
+def saturation_vapor_pressure(temp_c: float) -> float:
+    """Return saturation vapor pressure (kPa) at ``temp_c``."""
+    return 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
+
+
+def actual_vapor_pressure(temp_c: float, humidity_pct: float) -> float:
+    """Return actual vapor pressure (kPa) given temperature and relative humidity."""
+    if not 0 <= humidity_pct <= 100:
+        raise ValueError("humidity_pct must be between 0 and 100")
+    return saturation_vapor_pressure(temp_c) * humidity_pct / 100
 
 
 @dataclass
@@ -134,12 +148,9 @@ def suggest_environment_setpoints(
 
 
 def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
-    """Return Vapor Pressure Deficit (kPa) using a simple approximation."""
-    if not 0 <= humidity_pct <= 100:
-        raise ValueError("humidity_pct must be between 0 and 100")
-
-    es = 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
-    ea = es * humidity_pct / 100
+    """Return Vapor Pressure Deficit (kPa) using :func:`saturation_vapor_pressure`."""
+    ea = actual_vapor_pressure(temp_c, humidity_pct)
+    es = saturation_vapor_pressure(temp_c)
     vpd = es - ea
     return round(vpd, 3)
 
@@ -198,11 +209,9 @@ def relative_humidity_from_dew_point(temp_c: float, dew_point_c: float) -> float
     if dew_point_c > temp_c:
         raise ValueError("dew_point_c cannot exceed temp_c")
 
-    a = 17.27
-    b = 237.7
-    alpha_dp = (a * dew_point_c) / (b + dew_point_c)
-    alpha_t = (a * temp_c) / (b + temp_c)
-    rh = 100 * math.exp(alpha_dp - alpha_t)
+    es = saturation_vapor_pressure(temp_c)
+    ea = saturation_vapor_pressure(dew_point_c)
+    rh = 100 * ea / es
     return round(rh, 1)
 
 
@@ -242,7 +251,7 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     if target_vpd < 0:
         raise ValueError("target_vpd must be non-negative")
 
-    es = 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
+    es = saturation_vapor_pressure(temp_c)
     if target_vpd > es:
         raise ValueError("target_vpd exceeds saturation vapor pressure")
 
