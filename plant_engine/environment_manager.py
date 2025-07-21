@@ -9,7 +9,8 @@ from typing import Any, Dict, Mapping, Tuple
 from .utils import load_dataset
 
 DATA_FILE = "environment_guidelines.json"
-GDD_FILE = "gdd_parameters.json"
+# Parameters used for Growing Degree Day calculations
+GDD_DATA_FILE = "gdd_parameters.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -22,32 +23,32 @@ ACTION_LABELS = {
 
 
 __all__ = [
-    "list_supported_plants",
-    "get_environmental_targets",
-    "recommend_environment_adjustments",
-    "score_environment",
-    "suggest_environment_setpoints",
-    "saturation_vapor_pressure",
-    "actual_vapor_pressure",
-    "calculate_vpd",
-    "calculate_dew_point",
-    "calculate_heat_index",
-    "relative_humidity_from_dew_point",
-    "calculate_dli",
-    "photoperiod_for_target_dli",
-    "humidity_for_target_vpd",
-    "optimize_environment",
-    "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "actual_vapor_pressure",
+    "calculate_dew_point",
+    "calculate_dli",
+    "calculate_environment_metrics",
     "calculate_gdd",
+    "calculate_heat_index",
+    "calculate_vpd",
     "gdd_for_plant",
+    "get_environmental_targets",
+    "humidity_for_target_vpd",
+    "list_supported_plants",
+    "optimize_environment",
+    "photoperiod_for_target_dli",
+    "recommend_environment_adjustments",
+    "relative_humidity_from_dew_point",
+    "saturation_vapor_pressure",
+    "score_environment",
+    "suggest_environment_setpoints",
 ]
 
 
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
-_GDD_DATA: Dict[str, Any] = load_dataset(GDD_FILE)
+_GDD_DATA: Dict[str, Any] = load_dataset(GDD_DATA_FILE)
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
