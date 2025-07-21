@@ -7,6 +7,7 @@ from dataclasses import dataclass, asdict
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset
+from . import ph_manager
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
@@ -82,6 +83,7 @@ class EnvironmentOptimization:
     setpoints: Dict[str, float]
     adjustments: Dict[str, str]
     metrics: EnvironmentMetrics
+    ph_action: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -90,6 +92,7 @@ class EnvironmentOptimization:
             "vpd": self.metrics.vpd,
             "dew_point_c": self.metrics.dew_point_c,
             "heat_index_c": self.metrics.heat_index_c,
+            "ph_action": self.ph_action,
         }
 
 
@@ -364,5 +367,14 @@ def optimize_environment(
         current.get("temp_c"), current.get("humidity_pct")
     )
 
-    result = EnvironmentOptimization(setpoints, actions, metrics)
+    ph_action: str | None = None
+    if "ph" in current:
+        try:
+            ph_action = ph_manager.recommend_ph_adjustment(
+                float(current["ph"]), plant_type, stage
+            )
+        except (ValueError, TypeError):
+            ph_action = None
+
+    result = EnvironmentOptimization(setpoints, actions, metrics, ph_action)
     return result.as_dict()

@@ -114,6 +114,15 @@ def test_optimize_environment():
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
 
 
+def test_optimize_environment_ph_action():
+    result = optimize_environment(
+        {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},
+        "citrus",
+        "seedling",
+    )
+    assert result["ph_action"] == "decrease"
+
+
 def test_calculate_environment_metrics():
     metrics = calculate_environment_metrics(18, 90)
     assert metrics.vpd == calculate_vpd(18, 90)
