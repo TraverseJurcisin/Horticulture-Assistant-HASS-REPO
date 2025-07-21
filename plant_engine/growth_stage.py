@@ -13,6 +13,13 @@ DATA_FILE = "growth_stages.json"
 # Load growth stage dataset once. ``load_dataset`` handles caching.
 _DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
 
+__all__ = [
+    "get_stage_info",
+    "list_growth_stages",
+    "get_stage_duration",
+    "estimate_stage_from_age",
+]
+
 
 def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
     """Return information about a particular growth stage."""
@@ -22,6 +29,15 @@ def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
 def list_growth_stages(plant_type: str) -> list[str]:
     """Return all defined growth stages for a plant type."""
     return sorted(_DATA.get(plant_type, {}).keys())
+
+
+def get_stage_duration(plant_type: str, stage: str) -> int | None:
+    """Return the duration in days for a growth stage if known."""
+    info = get_stage_info(plant_type, stage)
+    duration = info.get("duration_days")
+    if isinstance(duration, (int, float)):
+        return int(duration)
+    return None
 
 
 def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:

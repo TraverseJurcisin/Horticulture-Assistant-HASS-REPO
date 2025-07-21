@@ -155,6 +155,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets using the built-in purity data.
+- **Nutrient Score**: Use `score_nutrient_levels` to grade solution tests on a
+  0‑100 scale for quick diagnostics.
 
 ### Automation Blueprint Guide
 To start quickly, copy `plant_monitoring.yaml` from `blueprints/automation/` into `<config>/blueprints/automation/>` and create a new automation in Home Assistant.

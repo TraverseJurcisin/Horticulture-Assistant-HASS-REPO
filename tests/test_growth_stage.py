@@ -1,11 +1,20 @@
 import pytest
 
-from plant_engine.growth_stage import get_stage_info, estimate_stage_from_age
+from plant_engine.growth_stage import (
+    get_stage_info,
+    get_stage_duration,
+    estimate_stage_from_age,
+)
 
 
 def test_get_stage_info():
     info = get_stage_info("tomato", "flowering")
     assert info["duration_days"] == 20
+
+
+def test_get_stage_duration():
+    assert get_stage_duration("tomato", "flowering") == 20
+    assert get_stage_duration("tomato", "unknown") is None
 
 
 def test_estimate_stage_from_age():
