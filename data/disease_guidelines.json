@@ -31,6 +31,10 @@
     "powdery mildew": "Use sulfur spray if needed.",
     "bacterial spot": "Remove infected leaves and improve air circulation."
   },
+  "blueberry": {
+    "mummy berry": "Apply fungicide early in the season and remove infected fruit.",
+    "botrytis": "Improve air circulation and apply appropriate fungicide."
+  },
   "arugula": {
     "downy mildew": "Ensure good air circulation and avoid overhead watering.",
     "leaf spot": "Remove affected leaves and avoid excess moisture."

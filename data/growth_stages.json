@@ -111,6 +111,12 @@
       "notes": "High potassium demand."
     }
   },
+  "blueberry": {
+    "seedling": {"duration_days": 45, "notes": "Keep soil acidic and moist."},
+    "vegetative": {"duration_days": 60, "notes": "Promote leaf development."},
+    "flowering": {"duration_days": 20, "notes": "Maintain moderate humidity."},
+    "fruiting": {"duration_days": 40, "notes": "Increase irrigation slightly."}
+  },
   "arugula": {
     "germination": {"duration_days": 7, "notes": "Keep moist until emergence."},
     "vegetative": {"duration_days": 25, "notes": "Rapid leaf growth."},

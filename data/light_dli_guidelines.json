@@ -6,6 +6,10 @@
   "tomato": {
     "seedling": [16, 20],
     "fruiting": [20, 30]
+  },
+  "blueberry": {
+    "vegetative": [15, 20],
+    "fruiting": [20, 25]
   }
 }
 

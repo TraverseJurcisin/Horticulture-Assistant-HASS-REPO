@@ -3,6 +3,7 @@ from plant_engine.nutrient_manager import (
     calculate_deficiencies,
     calculate_nutrient_balance,
     calculate_surplus,
+    calculate_adjustments,
     get_npk_ratio,
     score_nutrient_levels,
 )
@@ -61,3 +62,16 @@ def test_score_nutrient_levels():
     deficit = {"N": 40, "P": 30, "K": 60}
     score = score_nutrient_levels(deficit, "tomato", "fruiting")
     assert 49.9 < score < 50.1
+
+
+def test_blueberry_guidelines():
+    levels = get_recommended_levels("blueberry", "fruiting")
+    assert levels["K"] == 80
+
+
+def test_calculate_adjustments():
+    current = {"N": 50, "P": 15, "K": 90}
+    adj = calculate_adjustments(current, "blueberry", "vegetative")
+    assert adj["N"] == 10  # target 60
+    assert adj["P"] == 5   # target 20
+    assert adj["K"] == -30  # target 60 -> surplus

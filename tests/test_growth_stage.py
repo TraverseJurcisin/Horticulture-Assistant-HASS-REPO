@@ -26,3 +26,7 @@ def test_estimate_stage_from_age():
 def test_estimate_stage_from_age_negative():
     with pytest.raises(ValueError):
         estimate_stage_from_age("tomato", -1)
+
+
+def test_blueberry_stage_duration():
+    assert get_stage_duration("blueberry", "fruiting") == 40

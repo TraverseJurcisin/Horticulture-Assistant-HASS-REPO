@@ -22,3 +22,8 @@ def test_recommend_threshold_actions():
     actions = recommend_threshold_actions("citrus", obs)
     assert "aphids" in actions
     assert "scale" in actions
+
+
+def test_blueberry_thresholds():
+    thresh = get_pest_thresholds("blueberry")
+    assert thresh["blueberry maggot"] == 1

@@ -11,3 +11,8 @@ def test_recommend_treatments():
     actions = recommend_treatments("citrus", ["root rot", "unknown"])
     assert actions["root rot"].startswith("Ensure good drainage")
     assert actions["unknown"] == "No guideline available"
+
+
+def test_blueberry_diseases():
+    guide = get_disease_guidelines("blueberry")
+    assert "mummy berry" in guide

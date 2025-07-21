@@ -18,5 +18,9 @@
   "spinach": {
     "aphids": 5,
     "leaf miners": 2
+  },
+  "blueberry": {
+    "blueberry maggot": 1,
+    "aphids": 5
   }
 }

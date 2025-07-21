@@ -29,6 +29,11 @@ def test_get_environmental_targets_seedling():
     assert data["co2_ppm"] == [400, 600]
 
 
+def test_get_environmental_targets_blueberry():
+    data = get_environmental_targets("blueberry")
+    assert data["temp_c"] == [15, 25]
+
+
 def test_recommend_environment_adjustments():
     actions = recommend_environment_adjustments(
         {

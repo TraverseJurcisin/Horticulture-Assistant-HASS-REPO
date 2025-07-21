@@ -17,6 +17,7 @@ __all__ = [
     "calculate_deficiencies",
     "calculate_nutrient_balance",
     "calculate_surplus",
+    "calculate_adjustments",
     "get_npk_ratio",
     "score_nutrient_levels",
 ]
@@ -92,6 +93,27 @@ def calculate_surplus(
         if diff > 0:
             surplus[nutrient] = diff
     return surplus
+
+
+def calculate_adjustments(
+    current_levels: Dict[str, float],
+    plant_type: str,
+    stage: str,
+) -> Dict[str, float]:
+    """Return nutrient differences required to meet targets.
+
+    Positive values indicate deficiencies while negative values represent
+    surplus amounts that could be reduced.
+    """
+
+    recommended = get_recommended_levels(plant_type, stage)
+    adjustments: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        current = current_levels.get(nutrient, 0.0)
+        diff = round(target - current, 2)
+        if diff != 0:
+            adjustments[nutrient] = diff
+    return adjustments
 
 
 def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:

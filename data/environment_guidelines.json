@@ -303,6 +303,44 @@
       ]
     }
   },
+  "blueberry": {
+    "optimal": {
+      "temp_c": [
+        15,
+        25
+      ],
+      "humidity_pct": [
+        50,
+        80
+      ],
+      "light_ppfd": [
+        250,
+        500
+      ],
+      "co2_ppm": [
+        400,
+        800
+      ]
+    },
+    "fruiting": {
+      "temp_c": [
+        18,
+        26
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
+      "light_ppfd": [
+        300,
+        600
+      ],
+      "co2_ppm": [
+        600,
+        1000
+      ]
+    }
+  },
   "arugula": {
     "optimal": {
       "temp_c": [15, 22],
