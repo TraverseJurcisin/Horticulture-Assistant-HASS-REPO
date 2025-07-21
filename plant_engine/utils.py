@@ -24,13 +24,21 @@ def save_json(path: str, data: Dict[str, Any]) -> None:
         json.dump(data, f, indent=2)
 
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+# Default data directory is the repository "data" folder. It can be
+# overridden at runtime using the ``HORTICULTURE_DATA_DIR`` environment
+# variable which is helpful when packaging the library or running tests with
+# custom datasets.
+DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+
+def _data_dir() -> Path:
+    env = os.getenv("HORTICULTURE_DATA_DIR")
+    return Path(env) if env else DEFAULT_DATA_DIR
 
 
 @lru_cache(maxsize=None)
 def load_dataset(filename: str) -> Dict[str, Any]:
-    """Load a JSON dataset from the repository ``data`` directory with caching."""
-    path = DATA_DIR / filename
+    """Load a JSON dataset from the resolved data directory with caching."""
+    path = _data_dir() / filename
     if not path.exists():
         return {}
     return load_json(str(path))
