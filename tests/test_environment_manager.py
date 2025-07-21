@@ -16,6 +16,8 @@ from plant_engine.environment_manager import (
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
+    calculate_gdd,
+    gdd_for_plant,
 )
 
 
@@ -159,3 +161,15 @@ def test_score_environment():
     poor = {"temp_c": 10, "humidity_pct": 30, "light_ppfd": 50, "co2_ppm": 1500}
     low_score = score_environment(poor, "citrus", "seedling")
     assert low_score < score
+
+
+def test_calculate_gdd_basic():
+    gdd = calculate_gdd(30, 15, 10)
+    assert gdd == 12.5
+    with pytest.raises(ValueError):
+        calculate_gdd(10, 20, 10)
+
+
+def test_gdd_for_plant():
+    gdd = gdd_for_plant(32, 12, "tomato")
+    assert gdd == 11.0

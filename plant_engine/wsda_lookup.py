@@ -11,6 +11,7 @@ _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.jso
 __all__ = [
     "get_product_npk_by_name",
     "get_product_npk_by_number",
+    "search_products",
 ]
 
 @lru_cache(maxsize=None)
@@ -53,3 +54,14 @@ def get_product_npk_by_number(number: str) -> Dict[str, float]:
     """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
     rec = _match_record(lambda d: d.get("wsda_product_number") == number)
     return _extract_npk(rec)
+
+
+def search_products(query: str, limit: int = 10) -> List[str]:
+    """Return product names containing ``query`` (case-insensitive)."""
+    q = query.lower()
+    matches = [
+        item.get("product_name", "")
+        for item in _database()
+        if q in item.get("product_name", "").lower()
+    ]
+    return matches[:limit]

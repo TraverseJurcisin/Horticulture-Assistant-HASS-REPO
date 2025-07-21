@@ -9,6 +9,8 @@ from .environment_manager import (
     humidity_for_target_vpd,
     EnvironmentMetrics,
     EnvironmentOptimization,
+    calculate_gdd,
+    gdd_for_plant,
     list_supported_plants as list_environment_plants,
 )
 from .pest_manager import (
@@ -74,6 +76,8 @@ __all__ = [
     "optimize_environment",
     "calculate_environment_metrics",
     "humidity_for_target_vpd",
+    "calculate_gdd",
+    "gdd_for_plant",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
     "list_environment_plants",

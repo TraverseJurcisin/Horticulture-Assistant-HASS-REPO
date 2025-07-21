@@ -24,3 +24,9 @@ def test_lookup_by_number():
     assert result["N"] == 5.0
     assert result["P"] == 6.0
     assert result["K"] == 6.0
+
+search_products = wsda.search_products
+
+def test_search_products():
+    matches = search_products("earth-care", limit=2)
+    assert any("EARTH-CARE" in m.upper() for m in matches)
