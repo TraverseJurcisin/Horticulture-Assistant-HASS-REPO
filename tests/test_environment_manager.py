@@ -11,6 +11,7 @@ from plant_engine.environment_manager import (
     calculate_dli,
     photoperiod_for_target_dli,
     optimize_environment,
+    calculate_environment_metrics,
 )
 
 
@@ -98,6 +99,15 @@ def test_optimize_environment():
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
+
+
+def test_calculate_environment_metrics():
+    metrics = calculate_environment_metrics(18, 90)
+    assert metrics.vpd == calculate_vpd(18, 90)
+    assert metrics.dew_point_c == calculate_dew_point(18, 90)
+    assert metrics.heat_index_c == calculate_heat_index(18, 90)
+    empty = calculate_environment_metrics(None, None)
+    assert empty.vpd is None and empty.dew_point_c is None and empty.heat_index_c is None
 
 
 def test_calculate_dli():

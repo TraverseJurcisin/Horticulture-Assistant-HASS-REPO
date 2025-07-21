@@ -5,6 +5,9 @@ from .environment_manager import (
     get_environmental_targets,
     recommend_environment_adjustments,
     optimize_environment,
+    calculate_environment_metrics,
+    EnvironmentMetrics,
+    EnvironmentOptimization,
     list_supported_plants as list_environment_plants,
 )
 from .pest_manager import (
@@ -58,6 +61,9 @@ __all__ = [
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "optimize_environment",
+    "calculate_environment_metrics",
+    "EnvironmentMetrics",
+    "EnvironmentOptimization",
     "list_environment_plants",
     "get_pest_guidelines",
     "recommend_pest_treatments",

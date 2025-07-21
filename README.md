@@ -29,6 +29,7 @@ This repository is structured as a custom HACS integration but is currently priv
 - Environment guidelines with VPD calculations
 - Dew point and climate optimization helpers
 - Heat index computation for warm climates
+- Consolidated environment metrics helper for VPD, dew point and heat index
 - Disease and pest treatment recommendations
 - Example profiles for plants like strawberry, basil and spinach
 
