@@ -24,6 +24,7 @@ __all__ = [
     "list_supported_plants",
     "get_environmental_targets",
     "recommend_environment_adjustments",
+    "score_environment",
     "suggest_environment_setpoints",
     "calculate_vpd",
     "calculate_dew_point",
@@ -119,6 +120,37 @@ def recommend_environment_adjustments(
                 actions[label] = suggestion
 
     return actions
+
+
+def score_environment(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> float:
+    """Return a 0-100 score representing how close ``current`` is to targets."""
+    targets = get_environmental_targets(plant_type, stage)
+    if not targets:
+        return 0.0
+
+    score = 0.0
+    count = 0
+    for key, bounds in targets.items():
+        if key not in current or not isinstance(bounds, (list, tuple)):
+            continue
+        low, high = bounds
+        val = current[key]
+        width = high - low
+        if width <= 0:
+            continue
+        if low <= val <= high:
+            score += 1
+        elif val < low:
+            score += max(0.0, 1 - (low - val) / width)
+        else:
+            score += max(0.0, 1 - (val - high) / width)
+        count += 1
+
+    if count == 0:
+        return 0.0
+    return round((score / count) * 100, 1)
 
 
 def suggest_environment_setpoints(
