@@ -22,3 +22,8 @@ def test_recommend_unknown_or_invalid():
     with pytest.raises(ValueError):
         ph_manager.recommend_ph_adjustment(-1, "citrus")
 
+
+def test_recommended_ph_setpoint():
+    assert ph_manager.recommended_ph_setpoint("citrus") == 6.0
+    assert ph_manager.recommended_ph_setpoint("unknown") is None
+
