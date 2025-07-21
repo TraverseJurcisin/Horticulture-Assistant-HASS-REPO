@@ -22,6 +22,7 @@ This repository is structured as a custom HACS integration but is currently priv
 - Root zone and water balance utilities for irrigation planning
 - New helper to calculate irrigation interval based on ET rates
 - Calculate nutrient surpluses or deficits per growth stage
+- Compute balanced NPK ratios for fertilizer planning
 - Yield tracking with integration to InfluxDB and Grafana
 - Tagging system to group plants for aggregated analytics
 

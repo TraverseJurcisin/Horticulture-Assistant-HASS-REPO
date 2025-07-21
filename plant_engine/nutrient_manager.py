@@ -17,6 +17,7 @@ __all__ = [
     "calculate_deficiencies",
     "calculate_nutrient_balance",
     "calculate_surplus",
+    "get_npk_ratio",
 ]
 
 
@@ -90,5 +91,27 @@ def calculate_surplus(
         if diff > 0:
             surplus[nutrient] = diff
     return surplus
+
+
+def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return normalized N:P:K ratio for a plant stage.
+
+    The ratios sum to 1.0. If any nutrient is missing or all values are zero,
+    ``{"N": 0.0, "P": 0.0, "K": 0.0}`` is returned.
+    """
+
+    rec = get_recommended_levels(plant_type, stage)
+    n = rec.get("N", 0.0)
+    p = rec.get("P", 0.0)
+    k = rec.get("K", 0.0)
+    total = n + p + k
+    if total <= 0:
+        return {"N": 0.0, "P": 0.0, "K": 0.0}
+
+    return {
+        "N": round(n / total, 2),
+        "P": round(p / total, 2),
+        "K": round(k / total, 2),
+    }
 
 
