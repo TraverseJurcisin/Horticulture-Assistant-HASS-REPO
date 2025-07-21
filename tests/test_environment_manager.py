@@ -10,6 +10,7 @@ from plant_engine.environment_manager import (
     relative_humidity_from_dew_point,
     calculate_dli,
     photoperiod_for_target_dli,
+    humidity_for_target_vpd,
     optimize_environment,
     calculate_environment_metrics,
 )
@@ -129,3 +130,13 @@ def test_photoperiod_for_target_dli():
         photoperiod_for_target_dli(0, 500)
     with pytest.raises(ValueError):
         photoperiod_for_target_dli(30, -1)
+
+
+def test_humidity_for_target_vpd():
+    rh = humidity_for_target_vpd(25, 1.5)
+    assert round(rh, 1) == 52.6
+
+    with pytest.raises(ValueError):
+        humidity_for_target_vpd(25, -0.1)
+    with pytest.raises(ValueError):
+        humidity_for_target_vpd(20, 3.0)
