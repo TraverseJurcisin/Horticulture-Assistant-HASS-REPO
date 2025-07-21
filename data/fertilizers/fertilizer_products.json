@@ -1,6 +1,31 @@
-[
-  {
-    "wsda_product_number": "2285-0006",
+{
+  "foxfarm_grow_big": {
+    "density_kg_per_l": 0.96,
+    "guaranteed_analysis": {
+      "N": 0.06,
+      "P2O5": 0.04,
+      "K2O": 0.04,
+      "Mg": 0.006,
+      "Fe": 0.001,
+      "Mn": 0.0005,
+      "Zn": 0.0005,
+      "Cu": 0.0005,
+      "B": 0.0002
+    },
+    "product_name": "FOXFARM GROW BIG LIQUID PLANT FOOD 6-4-4",
+    "wsda_product_number": "(#3242-0006)"
+  },
+  "magriculture": {
+    "density_kg_per_l": 1.0,
+    "guaranteed_analysis": {
+      "Mg": 0.098,
+      "S": 0.129
+    },
+    "product_name": "Magriculture",
+    "wsda_product_number": null
+  },
+  "intrepid_granular_potash_0_0_60": {
+    "wsda_product_number": "(#2285-0006)",
     "product_name": "Intrepid Potash-New Mexico LLC Granular Potash 0-0-60 0-0-60",
     "guaranteed_analysis": {
       "Total Nitrogen (N)": 0.0,
@@ -32,10 +57,18 @@
     },
     "waste_derived_fertilizer": "N",
     "micronutrient_fertilizer": "N",
-    "company": "Intrepid Potash - New Mexico LLC"
+    "company_info": {
+      "company": "Intrepid Potash - New Mexico LLC"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    }
   },
-  {
-    "wsda_product_number": "4083-0001",
+  "earth_care_plus_5_6_6": {
+    "wsda_product_number": "(#4083-0001)",
     "product_name": "1st Choice Fertilizer Earth-Care Plus 5-6-6",
     "guaranteed_analysis": {
       "Total Nitrogen (N)": 5.0,
@@ -67,10 +100,18 @@
     },
     "waste_derived_fertilizer": "N",
     "micronutrient_fertilizer": "N",
-    "company": "1st Choice Fertilizer, Inc"
+    "company_info": {
+      "company": "1st Choice Fertilizer, Inc"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    }
   },
-  {
-    "wsda_product_number": "3830-0001",
+  "fertibor_15_b": {
+    "wsda_product_number": "(#3830-0001)",
     "product_name": "20 Mule Team Borax Fertibor Sodium Borate 15% B 0-0-0",
     "guaranteed_analysis": {
       "Total Nitrogen (N)": 0.0,
@@ -102,10 +143,18 @@
     },
     "waste_derived_fertilizer": "Y",
     "micronutrient_fertilizer": "N",
-    "company": "US Borax"
+    "company_info": {
+      "company": "US Borax"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    }
   },
-  {
-    "wsda_product_number": "3830-0003",
+  "granubor_15_b": {
+    "wsda_product_number": "(#3830-0003)",
     "product_name": "20 Mule Team Borax Granubor Sodium Borate 15% B 0-0-0",
     "guaranteed_analysis": {
       "Total Nitrogen (N)": 0.0,
@@ -137,10 +186,18 @@
     },
     "waste_derived_fertilizer": "N",
     "micronutrient_fertilizer": "Y",
-    "company": "US Borax"
+    "company_info": {
+      "company": "US Borax"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    }
   },
-  {
-    "wsda_product_number": "0001-0025",
+  "acadian_liquid_seaweed_0_0_5": {
+    "wsda_product_number": "(#0001-0025)",
     "product_name": "Acadian Liquid Seaweed Concentrate 0-0-5",
     "guaranteed_analysis": {
       "Total Nitrogen (N)": 0.0,
@@ -172,6 +229,14 @@
     },
     "waste_derived_fertilizer": "N",
     "micronutrient_fertilizer": "N",
-    "company": "Montana Sulphur & Chemical Co"
+    "company_info": {
+      "company": "Montana Sulphur & Chemical Co"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    }
   }
-]
+}

@@ -9,7 +9,7 @@ from typing import Dict
 
 from plant_engine.utils import load_dataset
 
-DATA_FILE = "fertilizer_inventory.json"
+DATA_FILE = "fertilizers/fertilizer_products.json"
 
 
 @dataclass(frozen=True)
@@ -18,13 +18,23 @@ class Fertilizer:
 
     density_kg_per_l: float
     guaranteed_analysis: Dict[str, float]
+    product_name: str | None = None
+    wsda_product_number: str | None = None
 
 
 @lru_cache(maxsize=None)
 def _inventory() -> Dict[str, Fertilizer]:
     """Return fertilizer inventory loaded from :mod:`data`."""
     data = load_dataset(DATA_FILE)
-    return {name: Fertilizer(**info) for name, info in data.items()}
+    inventory: Dict[str, Fertilizer] = {}
+    for name, info in data.items():
+        inventory[name] = Fertilizer(
+            density_kg_per_l=info.get("density_kg_per_l", 1.0),
+            guaranteed_analysis=info.get("guaranteed_analysis", {}),
+            product_name=info.get("product_name"),
+            wsda_product_number=info.get("wsda_product_number"),
+        )
+    return inventory
 
 
 MOLAR_MASS_CONVERSIONS = {
