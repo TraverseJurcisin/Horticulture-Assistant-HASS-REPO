@@ -135,6 +135,8 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
 - `yield/` – per‑plant yield logs created during operation
+- `wsda_fertilizer_database.json` – full fertilizer analysis database used by
+  `plant_engine.wsda_lookup` for product N‑P‑K values
 
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.
