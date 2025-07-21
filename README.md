@@ -137,6 +137,8 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
 - `pest_thresholds.json` – action thresholds for common pests
+- `water_quality_thresholds.json` – acceptable ion limits for irrigation water
+- `fertilizer_purity.json` – default purity factors for common fertilizers
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
@@ -155,6 +157,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets using the built-in purity data.
+- **Water Quality Rating**: `classify_water_quality` quickly labels irrigation
+  water as good, fair or poor based on ion thresholds.
 
 ### Automation Blueprint Guide
 To start quickly, copy `plant_monitoring.yaml` from `blueprints/automation/` into `<config>/blueprints/automation/>` and create a new automation in Home Assistant.
