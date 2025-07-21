@@ -134,6 +134,7 @@ Key reference datasets reside in the `data/` directory:
 - `environment_guidelines.json` – optimal temperature, humidity and light by crop
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
+- `pest_thresholds.json` – action thresholds for common pests
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
