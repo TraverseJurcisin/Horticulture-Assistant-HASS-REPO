@@ -24,6 +24,7 @@ from plant_engine.environment_manager import (
     calculate_environment_metrics,
     compare_environment,
     generate_environment_alerts,
+    classify_environment_quality,
 )
 
 
@@ -289,3 +290,11 @@ def test_optimize_environment_heat_stress():
 def test_optimize_environment_cold_stress():
     result = optimize_environment({"temp_c": 2, "humidity_pct": 70}, "lettuce")
     assert result["cold_stress"] is True
+
+
+def test_classify_environment_quality():
+    good = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
+    poor = {"temp_c": 10, "humidity_pct": 30, "light_ppfd": 50, "co2_ppm": 1500}
+
+    assert classify_environment_quality(good, "citrus", "seedling") == "good"
+    assert classify_environment_quality(poor, "citrus", "seedling") == "poor"
