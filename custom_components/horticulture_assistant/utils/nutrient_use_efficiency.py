@@ -1,8 +1,11 @@
 # File: custom_components/horticulture_assistant/utils/nutrient_use_efficiency.py
-"""
-Utility for tracking nutrient usage and calculating nutrient use efficiency.
-Logs fertilizer application events and computes efficiency as yield (g) per nutrient applied (mg).
-Allows summarizing nutrient usage by time period or lifecycle stage.
+"""Utility for logging fertilizer use and computing nutrient efficiency.
+
+The :class:`NutrientUseEfficiency` helper keeps track of all fertilizer
+applications for individual plants and aggregates yield data from the default
+``data/yield_logs.json`` file.  It is intentionally decoupled from Home
+Assistant so the calculations can be unit tested in isolation.  Usage logs are
+stored in JSON for easy inspection and further analysis.
 """
 import os
 import json
@@ -18,12 +21,17 @@ except ImportError:
 _LOGGER = logging.getLogger(__name__)
 
 class NutrientUseEfficiency:
-    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None):
-        """
-        Initialize NutrientUseEfficiency utility.
-        Loads existing nutrient usage logs from JSON file, or starts new if none.
-        :param data_file: Path to the nutrient use log JSON file. Defaults to 'data/nutrient_use.json'.
-        :param hass: HomeAssistant instance (optional) for resolving file paths.
+    """Track fertilizer usage and calculate nutrient use efficiency."""
+
+    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None) -> None:
+        """Load existing logs or initialize empty structures.
+
+        Parameters
+        ----------
+        data_file : str, optional
+            Path to the nutrient log file.  Defaults to ``data/nutrient_use.json``.
+        hass : HomeAssistant, optional
+            Used only for resolving paths when running inside Home Assistant.
         """
         # Determine the data file path
         if data_file is None:
@@ -98,8 +106,19 @@ class NutrientUseEfficiency:
         except Exception as e:
             _LOGGER.error("Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e)
 
-    def log_fertilizer_application(self, plant_id: str, nutrient_mass: Dict[str, float], 
-                                   entry_date: Optional[Union[str, date, datetime]] = None, 
+    @staticmethod
+    def _format_date(value: Optional[Union[str, date, datetime]]) -> str:
+        """Return ``YYYY-MM-DD`` string for ``value`` or today if ``None``."""
+        if value is None:
+            return datetime.now().strftime("%Y-%m-%d")
+        if isinstance(value, datetime):
+            return value.date().isoformat()
+        if isinstance(value, date):
+            return value.isoformat()
+        return str(value)
+
+    def log_fertilizer_application(self, plant_id: str, nutrient_mass: Dict[str, float],
+                                   entry_date: Optional[Union[str, date, datetime]] = None,
                                    stage: Optional[str] = None) -> None:
         """
         Record a fertilizer application event for a plant.
@@ -108,15 +127,7 @@ class NutrientUseEfficiency:
         :param entry_date: Date of application (string 'YYYY-MM-DD', datetime/date object). Defaults to today if None.
         :param stage: Lifecycle stage of the plant at time of application (optional).
         """
-        # Determine date string
-        if entry_date is None:
-            date_str = datetime.now().strftime("%Y-%m-%d")
-        elif isinstance(entry_date, datetime):
-            date_str = entry_date.date().isoformat()
-        elif isinstance(entry_date, date):
-            date_str = entry_date.isoformat()
-        else:
-            date_str = str(entry_date)
+        date_str = self._format_date(entry_date)
         # Determine stage name
         stage_name = stage
         if stage_name is None:
@@ -176,15 +187,7 @@ class NutrientUseEfficiency:
         :param yield_mass: Yield amount in grams.
         :param entry_date: Date of yield (string 'YYYY-MM-DD', datetime/date object). Defaults to today if None.
         """
-        # Determine date string
-        if entry_date is None:
-            date_str = datetime.now().strftime("%Y-%m-%d")
-        elif isinstance(entry_date, datetime):
-            date_str = entry_date.date().isoformat()
-        elif isinstance(entry_date, date):
-            date_str = entry_date.isoformat()
-        else:
-            date_str = str(entry_date)
+        date_str = self._format_date(entry_date)
         # Convert yield mass to float
         try:
             yield_val = float(yield_mass)
@@ -219,6 +222,19 @@ class NutrientUseEfficiency:
             efficiency_value = total_yield_g / total_mg
             results[nutrient] = round(efficiency_value, 4)
         return results
+
+    def total_nutrients_applied(self, plant_id: str) -> Dict[str, float]:
+        """Return cumulative nutrient mass (mg) applied to ``plant_id``."""
+        return self.application_log.get(plant_id, {}).copy()
+
+    def compute_overall_efficiency(self) -> Dict[str, Dict[str, float]]:
+        """Return nutrient efficiency values for all plants with data."""
+        output: Dict[str, Dict[str, float]] = {}
+        for pid in self.application_log:
+            eff = self.compute_efficiency(pid)
+            if eff:
+                output[pid] = eff
+        return output
 
     def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
         """
@@ -261,10 +277,13 @@ class NutrientUseEfficiency:
         return summary
 
     def _save_to_file(self) -> None:
-        """Save the current nutrient usage logs to the JSON file."""
+        """Persist usage logs to ``self._data_file``."""
         os.makedirs(os.path.dirname(self._data_file) or ".", exist_ok=True)
         try:
             with open(self._data_file, "w", encoding="utf-8") as f:
                 json.dump(self._usage_logs, f, indent=2)
         except Exception as e:
-            _LOGGER.error("Failed to write nutrient use logs to %s: %s", self._data_file, e)
+            _LOGGER.error(
+                "Failed to write nutrient use logs to %s: %s", self._data_file, e
+            )
+
