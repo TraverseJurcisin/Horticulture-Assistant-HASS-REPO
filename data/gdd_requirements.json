@@ -1,0 +1,17 @@
+{
+  "lettuce": {
+    "seedling": 100,
+    "vegetative": 250,
+    "harvest": 400
+  },
+  "strawberry": {
+    "vegetative": 350,
+    "flowering": 500,
+    "fruiting": 700
+  },
+  "cucumber": {
+    "vegetative": 300,
+    "flowering": 450,
+    "fruiting": 600
+  }
+}
