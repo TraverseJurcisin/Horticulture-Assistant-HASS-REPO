@@ -70,6 +70,11 @@ from .yield_manager import (
     record_harvest,
     get_total_yield,
 )
+from .yield_prediction import (
+    list_supported_plants as list_yield_plants,
+    get_estimated_yield,
+    estimate_remaining_yield,
+)
 from .pruning_manager import (
     list_supported_plants as list_pruning_plants,
     list_stages as list_pruning_stages,
@@ -145,6 +150,9 @@ __all__ = [
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
+    "list_yield_plants",
+    "get_estimated_yield",
+    "estimate_remaining_yield",
     "generate_health_report",
     "list_water_analytes",
     "get_water_threshold",

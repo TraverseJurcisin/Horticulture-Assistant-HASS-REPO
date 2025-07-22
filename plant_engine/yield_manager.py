@@ -8,7 +8,10 @@ from typing import Dict, Iterable, List, Optional
 
 from .utils import load_json, save_json
 
-YIELD_DIR = "data/yield"
+# Default yield directory. Can be overridden with the ``HORTICULTURE_YIELD_DIR``
+# environment variable to support custom data locations during testing or
+# deployment.
+YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
 
 @dataclass
