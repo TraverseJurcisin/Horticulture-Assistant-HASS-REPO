@@ -17,6 +17,8 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from plant_engine.environment_manager import score_environment
+
 from .const import (
     DOMAIN,
     UNIT_PERCENT,
@@ -51,6 +53,7 @@ async def async_setup_entry(
         DailyNitrogenAppliedSensor(hass, plant_name, plant_id),
         YieldProgressSensor(hass, plant_name, plant_id),
         AIRecommendationSensor(hass, plant_name, plant_id),
+        EnvironmentScoreSensor(hass, plant_name, plant_id),
     ]
 
     async_add_entities(sensors)
@@ -317,3 +320,30 @@ class AIRecommendationSensor(HorticultureBaseSensor):
     async def async_update(self):
         """Update AI recommendation from last event."""
         self._attr_native_value = getattr(self, "_recommendation", "No suggestions.")
+
+
+class EnvironmentScoreSensor(HorticultureBaseSensor):
+    """Sensor providing a 0-100 environment score."""
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = "Environment Score"
+        self._attr_unique_id = f"{plant_id}_env_score"
+        self._attr_native_unit_of_measurement = None
+        self._attr_icon = "mdi:gauge"
+        self._attr_entity_category = CATEGORY_DIAGNOSTIC
+
+    async def async_update(self):
+        env = {
+            "temp_c": self._get_state_value(f"sensor.{self._plant_id}_raw_temperature"),
+            "humidity_pct": self._get_state_value(f"sensor.{self._plant_id}_raw_humidity"),
+            "light_ppfd": self._get_state_value(f"sensor.{self._plant_id}_raw_light"),
+            "co2_ppm": self._get_state_value(f"sensor.{self._plant_id}_raw_co2"),
+        }
+        env = {k: v for k, v in env.items() if v is not None}
+        if len(env) < 2:
+            self._attr_native_value = None
+            return
+        score = score_environment(env, "citrus")
+        self._attr_native_value = round(score, 1)
+
