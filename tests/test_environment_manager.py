@@ -57,6 +57,18 @@ def test_recommend_environment_adjustments():
     assert actions["co2"] == "decrease"
 
 
+def test_recommend_environment_adjustments_aliases():
+    actions = recommend_environment_adjustments(
+        {"temperature": 18, "humidity": 90, "light": 100, "co2": 700},
+        "citrus",
+        "seedling",
+    )
+    assert actions["temperature"] == "increase"
+    assert actions["humidity"] == "decrease"
+    assert actions["light"] == "increase"
+    assert actions["co2"] == "decrease"
+
+
 def test_recommend_environment_adjustments_no_data():
     actions = recommend_environment_adjustments({"temp_c": 20}, "unknown")
     assert actions == {}
@@ -154,6 +166,16 @@ def test_optimize_environment_with_dli():
     mid = sum(result["target_dli"]) / 2
     expected_hours = photoperiod_for_target_dli(mid, 500)
     assert result["photoperiod_hours"] == expected_hours
+
+
+def test_optimize_environment_aliases():
+    result = optimize_environment(
+        {"temperature": 18, "humidity": 90},
+        "citrus",
+        "seedling",
+    )
+    assert result["setpoints"]["temp_c"] == 24
+    assert result["adjustments"]["temperature"] == "increase"
 
 
 def test_calculate_environment_metrics():
