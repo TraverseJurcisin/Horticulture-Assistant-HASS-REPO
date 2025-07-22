@@ -18,6 +18,7 @@ from plant_engine.environment_manager import (
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
+    compare_environment,
 )
 
 
@@ -212,3 +213,16 @@ def test_calculate_dli_series():
         calculate_dli_series([-1, 100])
     with pytest.raises(ValueError):
         calculate_dli_series([100], 0)
+
+
+def test_compare_environment():
+    targets = {"temp_c": [18, 22], "humidity_pct": [60, 80]}
+    current = {"temperature": 20, "humidity": 70}
+    result = compare_environment(current, targets)
+    assert result["temp_c"] == "within range"
+    assert result["humidity_pct"] == "within range"
+
+    off = {"temp": 30, "rh": 40}
+    result2 = compare_environment(off, targets)
+    assert result2["temp_c"] == "above range"
+    assert result2["humidity_pct"] == "below range"

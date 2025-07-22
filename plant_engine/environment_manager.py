@@ -21,6 +21,17 @@ ACTION_LABELS = {
     "co2_ppm": "co2",
 }
 
+# aliases for environment keys used when comparing readings. This allows
+# ``compare_environment`` to match sensor names like ``temperature`` or
+# ``rh`` against dataset keys such as ``temp_c`` or ``humidity_pct``.
+ENV_ALIASES = {
+    "temp_c": ["temp_c", "temperature", "temp"],
+    "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct"],
+    "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
+    "co2_ppm": ["co2_ppm", "co2"],
+    "ec": ["ec", "EC"],
+}
+
 
 __all__ = [
     "list_supported_plants",
@@ -43,6 +54,7 @@ __all__ = [
     "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "compare_environment",
 ]
 
 
@@ -134,6 +146,56 @@ def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
     if value > high:
         return "decrease"
     return None
+
+
+def compare_environment(
+    current: Mapping[str, float], targets: Mapping[str, Iterable[float]]
+) -> Dict[str, str]:
+    """Return comparison of readings to target ranges.
+
+    Parameters
+    ----------
+    current : Mapping[str, float]
+        Current environment readings. Keys may use aliases like ``temperature``
+        or ``rh`` and will be normalized using :data:`ENV_ALIASES`.
+    targets : Mapping[str, Iterable[float]]
+        Desired ranges where each value is ``[min, max]``.
+
+    Returns
+    -------
+    Dict[str, str]
+        Mapping of target keys to ``"below range"``, ``"above range"`` or
+        ``"within range"`` strings.
+    """
+
+    results: Dict[str, str] = {}
+    for key, bounds in targets.items():
+        if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
+            continue
+
+        # locate a matching reading using aliases
+        reading = None
+        for alias in ENV_ALIASES.get(key, [key]):
+            if alias in current:
+                reading = current[alias]
+                break
+        if reading is None:
+            continue
+
+        try:
+            val = float(reading)
+            low, high = float(bounds[0]), float(bounds[1])
+        except (TypeError, ValueError):
+            continue
+
+        if val < low:
+            results[key] = "below range"
+        elif val > high:
+            results[key] = "above range"
+        else:
+            results[key] = "within range"
+
+    return results
 
 
 def recommend_environment_adjustments(
