@@ -59,6 +59,7 @@ from .micro_manager import (
     calculate_surplus as calculate_micro_surplus,
 )
 from .growth_stage import get_stage_info, list_growth_stages
+from .guidelines import get_guideline_summary
 from .health_report import generate_health_report
 from .deficiency_manager import (
     get_deficiency_treatment,
@@ -163,5 +164,6 @@ __all__ = [
     "calculate_all_surplus",
     "calculate_micro_surplus",
     "analyze_nutrient_profile",
+    "get_guideline_summary",
     "TranspirationMetrics",
 ]
