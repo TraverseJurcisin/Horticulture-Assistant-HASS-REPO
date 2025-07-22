@@ -135,6 +135,7 @@ Additional data files include `product_database.json` and `wsda_fertilizer_datab
 Key reference datasets reside in the `data/` directory:
 - `environment_guidelines.json` – optimal temperature, humidity and light by crop
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
+- `micronutrient_guidelines.json` – Fe/Mn/Zn/B/Cu/Mo levels across stages
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
 - `pest_thresholds.json` – action thresholds for common pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
@@ -161,7 +162,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Data Logging**: Set `state_class: measurement` on sensors for proper history recording.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
-  fertilizer grams needed to hit N/P/K targets using the built-in purity data.
+  fertilizer grams needed to hit N/P/K targets and can optionally include
+  micronutrients using the new `micronutrient_guidelines.json` dataset.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.

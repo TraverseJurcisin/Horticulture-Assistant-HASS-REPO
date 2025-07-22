@@ -200,8 +200,10 @@ def recommend_nutrient_mix(
     *,
     fertilizers: Mapping[str, str] | None = None,
     purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
 ) -> Dict[str, float]:
-    """Return grams of each fertilizer required to meet N/P/K targets.
+    """Return grams of fertilizer required to meet nutrient targets.
 
     Parameters
     ----------
@@ -219,22 +221,50 @@ def recommend_nutrient_mix(
         product identifiers from :data:`fertilizer_purity.json`.
     purity_overrides : Mapping[str, float] | None
         Optional overrides for nutrient purity fractions.
+    include_micro : bool, optional
+        If ``True`` micronutrients are also included using
+        :mod:`plant_engine.micro_manager` guidelines.
+    micro_fertilizers : Mapping[str, str] | None, optional
+        Mapping of micronutrient code (e.g. ``"Fe"``) to fertilizer product
+        identifiers. Only used when ``include_micro`` is ``True``.
     """
 
     if fertilizers is None:
         fertilizers = {"N": "urea", "P": "map", "K": "kcl"}
+    if micro_fertilizers is None:
+        micro_fertilizers = {
+            "Fe": "chelated_fe",
+            "Mn": "chelated_mn",
+            "Zn": "chelated_zn",
+            "B": "boric_acid",
+            "Cu": "chelated_cu",
+            "Mo": "sodium_molybdate",
+        }
 
     if current_levels is None:
         deficits = get_recommended_levels(plant_type, stage)
     else:
         deficits = calculate_deficiencies(current_levels, plant_type, stage)
 
+    if include_micro:
+        from .micro_manager import (
+            get_recommended_levels as get_micro_levels,
+            calculate_deficiencies as calc_micro,
+        )
+        if current_levels is None:
+            micro_def = get_micro_levels(plant_type, stage)
+        else:
+            micro_def = calc_micro(current_levels, plant_type, stage)
+        deficits.update(micro_def)
+
     schedule: Dict[str, float] = {}
     for nutrient, target_ppm in deficits.items():
         fert = fertilizers.get(nutrient)
+        if include_micro and fert is None:
+            fert = micro_fertilizers.get(nutrient)
         if not fert:
             continue
-        purity = get_fertilizer_purity(fert).get(nutrient, 0.0)
+        purity = get_fertilizer_purity(fert).get(nutrient, 1.0)
         if purity_overrides and nutrient in purity_overrides:
             purity = purity_overrides[nutrient]
         if purity <= 0:

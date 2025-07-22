@@ -44,6 +44,11 @@ from .nutrient_manager import (
     calculate_deficiencies,
     list_supported_plants as list_nutrient_plants,
 )
+from .micro_manager import (
+    list_supported_plants as list_micro_plants,
+    get_recommended_levels as get_micro_levels,
+    calculate_deficiencies as calculate_micro_deficiencies,
+)
 from .growth_stage import get_stage_info, list_growth_stages
 from .health_report import generate_health_report
 from .deficiency_manager import (
@@ -94,9 +99,12 @@ __all__ = [
     "recommend_correction_schedule",
     "get_fertilizer_purity",
     "calculate_deficiencies",
+    "calculate_micro_deficiencies",
     "get_deficiency_treatment",
     "recommend_deficiency_treatments",
     "list_nutrient_plants",
+    "list_micro_plants",
+    "get_micro_levels",
     "get_stage_info",
     "list_growth_stages",
     "estimate_rootzone_depth",
