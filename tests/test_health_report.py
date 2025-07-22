@@ -14,6 +14,7 @@ def test_generate_health_report():
     )
     assert "environment" in report
     assert report["deficiencies"]
+    assert report["deficiency_treatments"]
     assert report["pest_actions"]["aphids"].startswith("Apply")
     assert report["disease_actions"]["root rot"].startswith("Ensure")
 

@@ -34,6 +34,9 @@ def generate_health_report(
     symptoms = deficiency_manager.diagnose_deficiencies(
         nutrient_levels, plant_type, stage
     )
+    treatments = deficiency_manager.recommend_deficiency_treatments(
+        nutrient_levels, plant_type, stage
+    )
     pest_actions = pest_manager.recommend_treatments(plant_type, pests)
     disease_actions = disease_manager.recommend_treatments(plant_type, diseases)
     stage_info = growth_stage.get_stage_info(plant_type, stage)
@@ -42,6 +45,7 @@ def generate_health_report(
         "environment": env_opt,
         "deficiencies": deficits,
         "symptoms": symptoms,
+        "deficiency_treatments": treatments,
         "pest_actions": pest_actions,
         "disease_actions": disease_actions,
         "stage_info": stage_info,

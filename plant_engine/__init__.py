@@ -46,6 +46,10 @@ from .nutrient_manager import (
 )
 from .growth_stage import get_stage_info, list_growth_stages
 from .health_report import generate_health_report
+from .deficiency_manager import (
+    get_deficiency_treatment,
+    recommend_deficiency_treatments,
+)
 from .yield_manager import (
     HarvestRecord,
     load_yield_history,
@@ -90,6 +94,8 @@ __all__ = [
     "recommend_correction_schedule",
     "get_fertilizer_purity",
     "calculate_deficiencies",
+    "get_deficiency_treatment",
+    "recommend_deficiency_treatments",
     "list_nutrient_plants",
     "get_stage_info",
     "list_growth_stages",

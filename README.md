@@ -139,6 +139,7 @@ Key reference datasets reside in the `data/` directory:
 - `pest_thresholds.json` – action thresholds for common pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `fertilizer_purity.json` – default purity factors for common fertilizers
+- `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
