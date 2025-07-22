@@ -15,6 +15,8 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
     load_profile_by_id,
 )
 from plant_engine.environment_manager import compare_environment
+from plant_engine.growth_stage import predict_harvest_date
+from plant_engine.pest_manager import recommend_beneficials
 from plant_engine.utils import load_dataset
 from plant_engine.rootzone_model import estimate_water_capacity
 
@@ -159,6 +161,20 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
         disease_actions[disease] = action
     report["pest_actions"] = pest_actions
     report["disease_actions"] = disease_actions
+    # Suggest beneficial insects for observed pests
+    if observed_pests:
+        report["beneficial_insects"] = recommend_beneficials(observed_pests)
+
+    # Predict harvest date if a start date is provided
+    start_date_str = general.get("start_date")
+    if start_date_str:
+        try:
+            start_date = datetime.fromisoformat(start_date_str).date()
+            harvest = predict_harvest_date(general.get("plant_type", ""), start_date)
+            if harvest:
+                report["predicted_harvest_date"] = harvest.isoformat()
+        except Exception:  # noqa: broad-except -- ignore parse errors
+            pass
     # Calculate root zone water metrics (TAW, MAD, current moisture)
     root_depth_cm = general.get("max_root_depth_cm", 30.0)
     try:
