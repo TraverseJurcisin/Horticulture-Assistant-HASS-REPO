@@ -53,6 +53,7 @@ __all__ = [
     "get_target_dli",
     "get_target_vpd",
     "humidity_for_target_vpd",
+    "get_environment_profile",
     "optimize_environment",
     "calculate_environment_metrics",
     "EnvironmentMetrics",
@@ -440,6 +441,28 @@ def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, fl
     if isinstance(vals, list) and len(vals) == 2:
         return tuple(vals)
     return None
+
+
+def get_environment_profile(plant_type: str, stage: str | None = None) -> Dict[str, object]:
+    """Return consolidated environment guidelines for a plant stage."""
+
+    profile: Dict[str, object] = {
+        "targets": get_environmental_targets(plant_type, stage)
+    }
+
+    ph_range = ph_manager.get_ph_range(plant_type, stage)
+    if ph_range:
+        profile["ph_range"] = ph_range
+
+    dli = get_target_dli(plant_type, stage)
+    if dli:
+        profile["dli"] = dli
+
+    vpd = get_target_vpd(plant_type, stage)
+    if vpd:
+        profile["vpd"] = vpd
+
+    return profile
 
 
 def calculate_environment_metrics(

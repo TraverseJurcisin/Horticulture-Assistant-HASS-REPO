@@ -17,6 +17,7 @@ from plant_engine.environment_manager import (
     get_target_dli,
     get_target_vpd,
     humidity_for_target_vpd,
+    get_environment_profile,
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
@@ -247,3 +248,11 @@ def test_compare_environment():
     result2 = compare_environment(off, targets)
     assert result2["temp_c"] == "above range"
     assert result2["humidity_pct"] == "below range"
+
+
+def test_get_environment_profile():
+    prof = get_environment_profile("tomato", "seedling")
+    assert prof["targets"]["temp_c"] == [20, 28]
+    assert prof["dli"] == (16, 20)
+    assert prof["vpd"] == (0.6, 0.9)
+    assert prof["ph_range"] == [5.5, 6.5]
