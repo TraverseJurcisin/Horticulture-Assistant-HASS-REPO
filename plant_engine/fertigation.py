@@ -4,7 +4,12 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Mapping, Iterable
 
-from .nutrient_manager import calculate_deficiencies, get_recommended_levels
+from .nutrient_manager import (
+    calculate_deficiencies,
+    get_recommended_levels,
+    calculate_all_deficiencies,
+    get_all_recommended_levels,
+)
 from .utils import load_dataset
 
 PURITY_DATA = "fertilizer_purity.json"
@@ -243,21 +248,16 @@ def recommend_nutrient_mix(
             "Mo": "sodium_molybdate",
         }
 
-    if current_levels is None:
-        deficits = get_recommended_levels(plant_type, stage)
-    else:
-        deficits = calculate_deficiencies(current_levels, plant_type, stage)
-
     if include_micro:
-        from .micro_manager import (
-            get_recommended_levels as get_micro_levels,
-            calculate_deficiencies as calc_micro,
-        )
         if current_levels is None:
-            micro_def = get_micro_levels(plant_type, stage)
+            deficits = get_all_recommended_levels(plant_type, stage)
         else:
-            micro_def = calc_micro(current_levels, plant_type, stage)
-        deficits.update(micro_def)
+            deficits = calculate_all_deficiencies(current_levels, plant_type, stage)
+    else:
+        if current_levels is None:
+            deficits = get_recommended_levels(plant_type, stage)
+        else:
+            deficits = calculate_deficiencies(current_levels, plant_type, stage)
 
     schedule: Dict[str, float] = {}
     for nutrient, target_ppm in deficits.items():
