@@ -35,17 +35,20 @@ ENV_ALIASES = {
     "ec": ["ec", "EC"],
 }
 
+# reverse mapping for constant time alias lookups
+_ALIAS_MAP: Dict[str, str] = {
+    alias: canonical
+    for canonical, aliases in ENV_ALIASES.items()
+    for alias in aliases
+}
+
 
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
-    """Return a copy of ``readings`` with keys normalized using ``ENV_ALIASES``."""
+    """Return ``readings`` with keys mapped to canonical environment names."""
 
     normalized: Dict[str, float] = {}
     for key, value in readings.items():
-        canonical = key
-        for target, aliases in ENV_ALIASES.items():
-            if key in aliases:
-                canonical = target
-                break
+        canonical = _ALIAS_MAP.get(key, key)
         try:
             normalized[canonical] = float(value)
         except (TypeError, ValueError):
