@@ -18,6 +18,7 @@ from plant_engine.environment_manager import (
     get_target_vpd,
     humidity_for_target_vpd,
     evaluate_heat_stress,
+    evaluate_cold_stress,
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
@@ -275,6 +276,16 @@ def test_evaluate_heat_stress():
     assert not evaluate_heat_stress(26, 70, "citrus")
 
 
+def test_evaluate_cold_stress():
+    assert evaluate_cold_stress(2, "lettuce")
+    assert not evaluate_cold_stress(10, "lettuce")
+
+
 def test_optimize_environment_heat_stress():
     result = optimize_environment({"temp_c": 32, "humidity_pct": 70}, "citrus")
     assert result["heat_stress"] is True
+
+
+def test_optimize_environment_cold_stress():
+    result = optimize_environment({"temp_c": 2, "humidity_pct": 70}, "lettuce")
+    assert result["cold_stress"] is True
