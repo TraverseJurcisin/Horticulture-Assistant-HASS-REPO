@@ -142,11 +142,51 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
+def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
+    """Return estimated cost contribution per nutrient in ``schedule``.
+
+    Each entry in ``schedule`` maps a fertilizer ID to the grams of product
+    used. Prices and densities are loaded from the built-in datasets and the
+    guaranteed analysis is used to apportion the cost of each fertilizer across
+    its nutrients. The returned mapping contains nutrient codes with dollar
+    amounts rounded to two decimals.
+    """
+
+    prices = _price_map()
+    inventory = _inventory()
+
+    breakdown: Dict[str, float] = {}
+    for fert_id, grams in schedule.items():
+        if grams <= 0:
+            continue
+        if fert_id not in prices:
+            raise KeyError(f"Price for '{fert_id}' is not defined")
+        if fert_id not in inventory:
+            raise KeyError(f"Density for '{fert_id}' is not defined")
+
+        density = inventory[fert_id].density_kg_per_l
+        grams_per_liter = density * 1000
+        volume_l = grams / grams_per_liter
+        cost = prices[fert_id] * volume_l
+
+        ga = convert_guaranteed_analysis(inventory[fert_id].guaranteed_analysis)
+        total_pct = sum(ga.values())
+        if total_pct <= 0:
+            continue
+
+        for nutrient, pct in ga.items():
+            share = cost * (pct / total_pct)
+            breakdown[nutrient] = round(breakdown.get(nutrient, 0.0) + share, 2)
+
+    return breakdown
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
     "calculate_fertilizer_cost",
     "estimate_mix_cost",
+    "estimate_cost_breakdown",
     "list_products",
     "get_product_info",
 ]
@@ -163,3 +203,4 @@ def get_product_info(fertilizer_id: str) -> Fertilizer:
     if fertilizer_id not in inv:
         raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
     return inv[fertilizer_id]
+
