@@ -1,9 +1,11 @@
 import pytest
 
+from datetime import date
 from plant_engine.growth_stage import (
     get_stage_info,
     get_stage_duration,
     estimate_stage_from_age,
+    predict_harvest_date,
 )
 
 
@@ -39,4 +41,12 @@ def test_estimate_stage_from_age_case_insensitive():
 def test_estimate_stage_from_age_negative():
     with pytest.raises(ValueError):
         estimate_stage_from_age("tomato", -1)
+
+
+def test_predict_harvest_date():
+    start = date(2025, 1, 1)
+    expected = date(2025, 5, 1)  # 120 days from dataset
+    assert predict_harvest_date("tomato", start) == expected
+
+    assert predict_harvest_date("unknown", start) is None
 

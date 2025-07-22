@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Any
+from datetime import date, timedelta
 
 from .utils import load_dataset
 
@@ -23,6 +24,7 @@ __all__ = [
     "list_growth_stages",
     "get_stage_duration",
     "estimate_stage_from_age",
+    "predict_harvest_date",
 ]
 
 
@@ -70,3 +72,18 @@ def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | Non
                 return stage_name
 
     return None
+
+
+def predict_harvest_date(plant_type: str, start_date: date) -> date | None:
+    """Return estimated harvest date based on growth stage durations."""
+    stages = _DATA.get(_norm(plant_type))
+    if not isinstance(stages, dict):
+        return None
+
+    total_days = 0
+    for info in stages.values():
+        days = info.get("duration_days")
+        if isinstance(days, (int, float)):
+            total_days += int(days)
+
+    return start_date + timedelta(days=total_days)
