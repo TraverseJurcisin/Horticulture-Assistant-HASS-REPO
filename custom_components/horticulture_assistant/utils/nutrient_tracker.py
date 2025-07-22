@@ -62,3 +62,19 @@ class NutrientTracker:
             for element, ppm in record.ppm_delivered.items():
                 summary[element] = summary.get(element, 0) + ppm
         return summary
+
+    def summarize_mg_for_day(
+        self, date: datetime, plant_id: Optional[str] = None
+    ) -> Dict[str, float]:
+        """Return total milligrams delivered on ``date``."""
+
+        summary: Dict[str, float] = {}
+        for record in self.delivery_log:
+            if plant_id and record.plant_id != plant_id:
+                continue
+            if record.timestamp.date() != date.date():
+                continue
+            for element, ppm in record.ppm_delivered.items():
+                mg = ppm * record.volume_l
+                summary[element] = summary.get(element, 0.0) + mg
+        return summary
