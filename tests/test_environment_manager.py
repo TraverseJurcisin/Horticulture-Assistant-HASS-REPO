@@ -25,6 +25,7 @@ from plant_engine.environment_manager import (
     compare_environment,
     generate_environment_alerts,
     classify_environment_quality,
+    normalize_environment_readings,
 )
 
 
@@ -320,3 +321,19 @@ def test_classify_environment_quality():
 
     assert classify_environment_quality(good, "citrus", "seedling") == "good"
     assert classify_environment_quality(poor, "citrus", "seedling") == "poor"
+
+
+def test_normalize_environment_readings_aliases():
+    data = {"temperature": 25, "humidity": 70, "co2": "700", "ec": 1.2}
+    result = normalize_environment_readings(data)
+    assert result == {
+        "temp_c": 25.0,
+        "humidity_pct": 70.0,
+        "co2_ppm": 700.0,
+        "ec": 1.2,
+    }
+
+
+def test_normalize_environment_readings_unknown_key():
+    result = normalize_environment_readings({"foo": 1})
+    assert result == {"foo": 1.0}
