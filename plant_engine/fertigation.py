@@ -8,6 +8,7 @@ from .nutrient_manager import calculate_deficiencies, get_recommended_levels
 from .utils import load_dataset
 
 PURITY_DATA = "fertilizer_purity.json"
+PRICE_DATA = "fertilizers/fertilizer_prices.json"
 
 
 @lru_cache(maxsize=None)
@@ -37,6 +38,7 @@ __all__ = [
     "recommend_correction_schedule",
     "recommend_batch_fertigation",
     "recommend_nutrient_mix",
+    "estimate_fertilizer_cost",
     "estimate_daily_nutrient_uptake",
 ]
 
@@ -266,4 +268,21 @@ def estimate_daily_nutrient_uptake(
     for nutrient, ppm in targets.items():
         uptake[nutrient] = round(ppm * liters, 2)
     return uptake
+
+
+def estimate_fertilizer_cost(schedule: Mapping[str, float]) -> float:
+    """Return estimated cost for a fertigation schedule.
+
+    The ``schedule`` should map fertilizer identifiers to grams of product.
+    Prices are loaded from :data:`PRICE_DATA` and assumed to be in currency
+    units per kilogram. Unknown products contribute no cost.
+    """
+
+    prices = load_dataset(PRICE_DATA)
+    total = 0.0
+    for product, grams in schedule.items():
+        kg = grams / 1000
+        price_per_kg = prices.get(product, 0.0)
+        total += kg * price_per_kg
+    return round(total, 2)
 

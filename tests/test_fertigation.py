@@ -7,6 +7,7 @@ from plant_engine.fertigation import (
     recommend_batch_fertigation,
     recommend_nutrient_mix,
     estimate_daily_nutrient_uptake,
+    estimate_fertilizer_cost,
 )
 
 
@@ -111,5 +112,13 @@ def test_estimate_daily_nutrient_uptake():
     )
     assert uptake["N"] == pytest.approx(200.0)
     assert uptake["P"] == pytest.approx(100.0)
+
+
+def test_estimate_fertilizer_cost():
+    schedule = {"foxfarm_grow_big": 250.0, "magriculture": 500.0}
+    cost = estimate_fertilizer_cost(schedule)
+    # cost should account for prices defined in fertilizer_prices.json
+    expected = (250.0 / 1000) * 20 + (500.0 / 1000) * 10
+    assert cost == pytest.approx(expected, rel=1e-3)
 
 
