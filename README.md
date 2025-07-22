@@ -197,6 +197,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Environment Quality Rating**: `classify_environment_quality` converts the
   numeric score from `score_environment` into `good`, `fair` or `poor` for
   quick evaluation.
+- **Guideline Summary**: `get_guideline_summary` consolidates environment,
+  nutrient and pest guidance for quick reference.
 
 
 ### Automation Blueprint Guide
