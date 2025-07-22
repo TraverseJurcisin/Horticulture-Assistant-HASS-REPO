@@ -17,6 +17,7 @@ convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
+estimate_mix_cost = fert_mod.estimate_mix_cost
 
 
 def test_convert_guaranteed_analysis():
@@ -59,3 +60,11 @@ def test_calculate_fertilizer_cost():
         calculate_fertilizer_cost("foxfarm_grow_big", -1)
     with pytest.raises(KeyError):
         calculate_fertilizer_cost("unknown", 10)
+
+
+def test_estimate_mix_cost():
+    mix = {"foxfarm_grow_big": 20}
+    cost = estimate_mix_cost(mix)
+    assert round(cost, 2) == 0.42
+    with pytest.raises(KeyError):
+        estimate_mix_cost({"unknown": 10})
