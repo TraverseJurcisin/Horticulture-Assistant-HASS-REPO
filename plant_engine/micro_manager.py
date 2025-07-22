@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict, Mapping
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 DATA_FILE = "micronutrient_guidelines.json"
 
@@ -17,11 +17,6 @@ __all__ = [
 ]
 
 
-def _norm(key: str) -> str:
-    """Normalize a key for case-insensitive lookup."""
-    return key.lower()
-
-
 def list_supported_plants() -> list[str]:
     """Return plants with micronutrient guidelines."""
     return sorted(_DATA.keys())
@@ -29,10 +24,10 @@ def list_supported_plants() -> list[str]:
 
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     """Return recommended micronutrient levels."""
-    plant = _DATA.get(_norm(plant_type))
+    plant = _DATA.get(normalize_key(plant_type))
     if not plant:
         return {}
-    return plant.get(_norm(stage), {})
+    return plant.get(normalize_key(stage), {})
 
 
 def calculate_deficiencies(
