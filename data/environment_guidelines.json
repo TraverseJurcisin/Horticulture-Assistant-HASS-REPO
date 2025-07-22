@@ -310,5 +310,13 @@
       "light_ppfd": [150, 250],
       "co2_ppm": [400, 800]
     }
+  },
+  "blueberry": {
+    "optimal": {
+      "temp_c": [18, 26],
+      "humidity_pct": [60, 80],
+      "light_ppfd": [200, 400],
+      "co2_ppm": [500, 900]
+    }
   }
 }

@@ -34,5 +34,9 @@
   "arugula": {
     "flea beetles": "Use row covers and apply neem if needed.",
     "aphids": "Use insecticidal soap or introduce ladybugs."
+  },
+  "blueberry": {
+    "fruitworms": "Apply Bacillus thuringiensis when larvae appear.",
+    "spotted wing drosophila": "Use traps and pick fruit frequently."
   }
 }

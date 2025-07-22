@@ -18,12 +18,14 @@ def test_list_supported_plants():
     assert "cucumber" in plants
     assert "pepper" in plants
     assert "arugula" in plants
+    assert "blueberry" in plants
 
     pest_plants = pest_manager.list_supported_plants()
     assert "lettuce" in pest_plants
     assert "cucumber" in pest_plants
     assert "pepper" in pest_plants
     assert "arugula" in pest_plants
+    assert "blueberry" in pest_plants
 
     disease_plants = disease_manager.list_supported_plants()
     assert "lettuce" in disease_plants
@@ -33,6 +35,7 @@ def test_list_supported_plants():
     assert "cucumber" in disease_plants
     assert "pepper" in disease_plants
     assert "arugula" in disease_plants
+    assert "blueberry" in disease_plants
 
     purity = fertigation.get_fertilizer_purity("map")
     assert purity["P"] == 0.22
@@ -59,6 +62,9 @@ def test_list_supported_plants():
     aru_env = environment_manager.get_environmental_targets("arugula")
     assert aru_env["temp_c"] == [15, 22]
 
+    blue_env = environment_manager.get_environmental_targets("blueberry")
+    assert blue_env["humidity_pct"] == [60, 80]
+
 
 def test_lettuce_stage_info():
     stages = growth_stage.list_growth_stages("lettuce")
@@ -77,6 +83,9 @@ def test_lettuce_stage_info():
 
     aru_info = growth_stage.get_stage_info("arugula", "vegetative")
     assert aru_info["duration_days"] == 25
+
+    blue_info = growth_stage.get_stage_info("blueberry", "fruiting")
+    assert blue_info["duration_days"] == 40
 
 
 def test_nutrient_guidelines_lettuce():
@@ -100,6 +109,9 @@ def test_nutrient_guidelines_lettuce():
 
     aru_levels = nutrient_manager.get_recommended_levels("arugula", "vegetative")
     assert aru_levels["K"] == 120
+
+    blue_levels = nutrient_manager.get_recommended_levels("blueberry", "vegetative")
+    assert blue_levels["N"] == 60
 
 
 def test_treatment_guidelines_lettuce():
@@ -136,6 +148,9 @@ def test_treatment_guidelines_lettuce():
     aru_pests = pest_manager.recommend_treatments("arugula", ["flea beetles"])
     assert aru_pests["flea beetles"].startswith("Use row covers")
 
+    blue_pests = pest_manager.recommend_treatments("blueberry", ["fruitworms"])
+    assert "bacillus" in blue_pests["fruitworms"].lower()
+
     cuc_dis = disease_manager.recommend_treatments("cucumber", ["bacterial wilt"])
     assert "beetles" in cuc_dis["bacterial wilt"].lower()
 
@@ -144,3 +159,6 @@ def test_treatment_guidelines_lettuce():
 
     aru_dis = disease_manager.recommend_treatments("arugula", ["leaf spot"])
     assert "excess moisture" in aru_dis["leaf spot"].lower()
+
+    blue_dis = disease_manager.recommend_treatments("blueberry", ["mummy berry"])
+    assert "mummified" in blue_dis["mummy berry"].lower()

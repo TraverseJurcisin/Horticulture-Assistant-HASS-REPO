@@ -18,5 +18,9 @@
   "spinach": {
     "aphids": 5,
     "leaf miners": 2
+  },
+  "blueberry": {
+    "fruitworms": 2,
+    "spotted wing drosophila": 1
   }
 }

@@ -34,5 +34,9 @@
   "arugula": {
     "downy mildew": "Ensure good air circulation and avoid overhead watering.",
     "leaf spot": "Remove affected leaves and avoid excess moisture."
+  },
+  "blueberry": {
+    "mummy berry": "Remove mummified fruit and apply fungicide early.",
+    "botrytis": "Prune for airflow and remove infected berries."
   }
 }

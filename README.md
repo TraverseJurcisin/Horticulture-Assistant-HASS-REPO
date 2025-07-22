@@ -161,6 +161,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets using the built-in purity data.
+- **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
+  ppm guidelines and irrigation volume into milligrams of nutrients consumed
+  each day.
 
 
 ### Automation Blueprint Guide
