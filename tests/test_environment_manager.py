@@ -21,6 +21,7 @@ from plant_engine.environment_manager import (
     optimize_environment,
     calculate_environment_metrics,
     compare_environment,
+    detect_environment_anomalies,
 )
 
 
@@ -247,3 +248,13 @@ def test_compare_environment():
     result2 = compare_environment(off, targets)
     assert result2["temp_c"] == "above range"
     assert result2["humidity_pct"] == "below range"
+
+
+def test_detect_environment_anomalies():
+    readings = {"temperature": 21.7, "humidity_pct": 50}
+    res = detect_environment_anomalies(readings, "citrus", "seedling")
+    assert res["temp_c"] == "low"
+    assert res["humidity_pct"] == "high"
+
+    # within range returns empty mapping
+    assert detect_environment_anomalies({"temp_c": 24}, "citrus", "seedling") == {}

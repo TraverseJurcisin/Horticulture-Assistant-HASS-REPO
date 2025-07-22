@@ -58,6 +58,7 @@ __all__ = [
     "EnvironmentMetrics",
     "EnvironmentOptimization",
     "compare_environment",
+    "detect_environment_anomalies",
 ]
 
 
@@ -204,6 +205,76 @@ def compare_environment(
             results[key] = "within range"
 
     return results
+
+
+def detect_environment_anomalies(
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    *,
+    low: float = 0.1,
+    moderate: float = 0.25,
+) -> Dict[str, str]:
+    """Return severity levels for readings far outside target ranges.
+
+    Parameters
+    ----------
+    current : Mapping[str, float]
+        Current environment readings using keys from :data:`ENV_ALIASES`.
+    plant_type : str
+        Plant type used to look up guideline ranges.
+    stage : str | None
+        Optional growth stage for stage-specific guidelines.
+    low : float, optional
+        Fraction of the range width considered a low severity deviation.
+    moderate : float, optional
+        Fraction of the range width considered a moderate deviation. Anything
+        larger is classified as high severity.
+    """
+
+    targets = get_environmental_targets(plant_type, stage)
+    anomalies: Dict[str, str] = {}
+
+    for key, bounds in targets.items():
+        if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
+            continue
+
+        reading = None
+        for alias in ENV_ALIASES.get(key, [key]):
+            if alias in current:
+                reading = current[alias]
+                break
+        if reading is None:
+            continue
+
+        try:
+            value = float(reading)
+            low_b, high_b = float(bounds[0]), float(bounds[1])
+        except (TypeError, ValueError):
+            continue
+
+        width = high_b - low_b
+        if width <= 0:
+            continue
+
+        diff = 0.0
+        if value < low_b:
+            diff = (low_b - value) / width
+        elif value > high_b:
+            diff = (value - high_b) / width
+        else:
+            continue  # within range
+
+        if diff <= low:
+            sev = "low"
+        elif diff <= moderate:
+            sev = "moderate"
+        else:
+            sev = "high"
+
+        anomalies[key] = sev
+
+    return anomalies
 
 
 def recommend_environment_adjustments(
