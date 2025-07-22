@@ -1,6 +1,8 @@
 from plant_engine.nutrient_manager import (
     get_recommended_levels,
+    get_all_recommended_levels,
     calculate_deficiencies,
+    calculate_all_deficiencies,
     calculate_nutrient_balance,
     calculate_surplus,
     get_npk_ratio,
@@ -61,3 +63,15 @@ def test_score_nutrient_levels():
     deficit = {"N": 40, "P": 30, "K": 60}
     score = score_nutrient_levels(deficit, "tomato", "fruiting")
     assert 49.9 < score < 50.1
+
+
+def test_get_all_recommended_levels():
+    levels = get_all_recommended_levels("lettuce", "seedling")
+    assert "N" in levels and "Fe" in levels
+
+
+def test_calculate_all_deficiencies():
+    current = {"N": 0.0, "Fe": 0.0}
+    defs = calculate_all_deficiencies(current, "lettuce", "seedling")
+    assert defs["N"] > 0
+    assert defs["Fe"] > 0

@@ -14,7 +14,9 @@ _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 __all__ = [
     "list_supported_plants",
     "get_recommended_levels",
+    "get_all_recommended_levels",
     "calculate_deficiencies",
+    "calculate_all_deficiencies",
     "calculate_nutrient_balance",
     "calculate_surplus",
     "get_npk_ratio",
@@ -146,5 +148,27 @@ def score_nutrient_levels(
         return 0.0
 
     return round((score / count) * 100, 1)
+
+
+def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return combined macro and micro nutrient guidelines."""
+
+    levels = get_recommended_levels(plant_type, stage)
+    from .micro_manager import get_recommended_levels as _micro
+
+    levels.update(_micro(plant_type, stage))
+    return levels
+
+
+def calculate_all_deficiencies(
+    current_levels: Dict[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return overall nutrient deficiencies including micronutrients."""
+
+    deficits = calculate_deficiencies(current_levels, plant_type, stage)
+    from .micro_manager import calculate_deficiencies as _micro_def
+
+    deficits.update(_micro_def(current_levels, plant_type, stage))
+    return deficits
 
 
