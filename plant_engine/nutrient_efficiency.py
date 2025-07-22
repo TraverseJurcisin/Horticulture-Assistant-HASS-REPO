@@ -1,9 +1,14 @@
+"""Calculate nutrient use efficiency from application and yield logs."""
+
 import os
 import json
 from typing import Dict
 
-NUTRIENT_DIR = "data/nutrients_applied"
-YIELD_DIR = "data/yield"
+# Default storage locations can be overridden with environment variables. This
+# makes the module more flexible for testing and deployment scenarios where the
+# repository's ``data`` directory is not writable.
+NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
+YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
 def calculate_nue(plant_id: str) -> Dict:
     """
