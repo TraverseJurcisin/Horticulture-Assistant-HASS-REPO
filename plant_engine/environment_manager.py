@@ -11,6 +11,7 @@ from . import ph_manager
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
+VPD_DATA_FILE = "vpd_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -45,10 +46,12 @@ __all__ = [
     "calculate_dew_point",
     "calculate_heat_index",
     "relative_humidity_from_dew_point",
+    "calculate_absolute_humidity",
     "calculate_dli",
     "photoperiod_for_target_dli",
     "calculate_dli_series",
     "get_target_dli",
+    "get_target_vpd",
     "humidity_for_target_vpd",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -61,6 +64,7 @@ __all__ = [
 # Load environment guidelines once. ``load_dataset`` already caches results
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
 _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
+_VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 
 
 def _norm(key: str) -> str:
@@ -87,6 +91,7 @@ class EnvironmentMetrics:
     vpd: float | None
     dew_point_c: float | None
     heat_index_c: float | None
+    absolute_humidity_g_m3: float | None
 
     def as_dict(self) -> Dict[str, float | None]:
         """Return metrics as a regular dictionary."""
@@ -103,6 +108,7 @@ class EnvironmentOptimization:
     ph_setpoint: float | None = None
     ph_action: str | None = None
     target_dli: tuple[float, float] | None = None
+    target_vpd: tuple[float, float] | None = None
     photoperiod_hours: float | None = None
 
     def as_dict(self) -> Dict[str, Any]:
@@ -113,9 +119,11 @@ class EnvironmentOptimization:
             "vpd": self.metrics.vpd,
             "dew_point_c": self.metrics.dew_point_c,
             "heat_index_c": self.metrics.heat_index_c,
+            "absolute_humidity_g_m3": self.metrics.absolute_humidity_g_m3,
             "ph_setpoint": self.ph_setpoint,
             "ph_action": self.ph_action,
             "target_dli": self.target_dli,
+            "target_vpd": self.target_vpd,
             "photoperiod_hours": self.photoperiod_hours,
         }
 
@@ -328,6 +336,17 @@ def relative_humidity_from_dew_point(temp_c: float, dew_point_c: float) -> float
     return round(rh, 1)
 
 
+def calculate_absolute_humidity(temp_c: float, humidity_pct: float) -> float:
+    """Return absolute humidity (g/m³) for given temperature and RH."""
+    if not 0 <= humidity_pct <= 100:
+        raise ValueError("humidity_pct must be between 0 and 100")
+    # vapor pressure in hPa using Magnus formula
+    svp = 6.112 * math.exp((17.67 * temp_c) / (temp_c + 243.5))
+    vap_pressure = humidity_pct / 100 * svp
+    ah = 2.1674 * (vap_pressure * 100) / (273.15 + temp_c)
+    return round(ah, 2)
+
+
 def calculate_dli(ppfd: float, photoperiod_hours: float) -> float:
     """Return Daily Light Integral (mol m⁻² day⁻¹).
 
@@ -408,18 +427,34 @@ def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, fl
     return None
 
 
+def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
+    """Return recommended VPD range for ``plant_type`` and ``stage`` if available."""
+    data = _VPD_DATA.get(_norm(plant_type), {})
+    if stage:
+        stage = _norm(stage)
+        if stage in data:
+            vals = data[stage]
+            if len(vals) == 2:
+                return tuple(vals)
+    vals = data.get("optimal")
+    if isinstance(vals, list) and len(vals) == 2:
+        return tuple(vals)
+    return None
+
+
 def calculate_environment_metrics(
     temp_c: float | None, humidity_pct: float | None
 ) -> EnvironmentMetrics:
     """Return :class:`EnvironmentMetrics` if inputs are provided."""
 
     if temp_c is None or humidity_pct is None:
-        return EnvironmentMetrics(None, None, None)
+        return EnvironmentMetrics(None, None, None, None)
 
     return EnvironmentMetrics(
         vpd=calculate_vpd(temp_c, humidity_pct),
         dew_point_c=calculate_dew_point(temp_c, humidity_pct),
         heat_index_c=calculate_heat_index(temp_c, humidity_pct),
+        absolute_humidity_g_m3=calculate_absolute_humidity(temp_c, humidity_pct),
     )
 
 
@@ -428,10 +463,12 @@ def optimize_environment(
 ) -> Dict[str, object]:
     """Return optimized environment data for a plant.
 
-    The result includes midpoint setpoints, adjustment suggestions, Vapor
-    Pressure Deficit (VPD), dew point and heat index when temperature and
-    humidity values are supplied. This helper consolidates several utilities for
-    convenience when automating greenhouse controls.
+    The result includes midpoint setpoints, adjustment suggestions and key
+    environmental metrics such as Vapor Pressure Deficit (VPD), dew point,
+    heat index and absolute humidity when temperature and humidity readings are
+    available. If target DLI or VPD ranges are defined in the datasets they are
+    also included. This helper consolidates several utilities for convenience
+    when automating greenhouse controls.
     """
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
@@ -447,6 +484,7 @@ def optimize_environment(
         ph_act = ph_manager.recommend_ph_adjustment(current["ph"], plant_type, stage)
 
     target_dli = get_target_dli(plant_type, stage)
+    target_vpd = get_target_vpd(plant_type, stage)
     photoperiod_hours = None
     if target_dli and "light_ppfd" in current:
         mid_target = sum(target_dli) / 2
@@ -459,6 +497,7 @@ def optimize_environment(
         ph_setpoint=ph_set,
         ph_action=ph_act,
         target_dli=target_dli,
+        target_vpd=target_vpd,
         photoperiod_hours=photoperiod_hours,
     )
     return result.as_dict()
