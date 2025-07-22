@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key
-from .pest_manager import recommend_treatments
+from .pest_manager import recommend_treatments, recommend_beneficials
 
 DATA_FILE = "pest_thresholds.json"
 
@@ -17,6 +17,7 @@ __all__ = [
     "get_pest_thresholds",
     "assess_pest_pressure",
     "recommend_threshold_actions",
+    "recommend_biological_controls",
 ]
 
 
@@ -58,3 +59,15 @@ def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]
     if not exceeded:
         return {}
     return recommend_treatments(plant_type, exceeded)
+
+
+def recommend_biological_controls(
+    plant_type: str, observations: Mapping[str, int]
+) -> Dict[str, list[str]]:
+    """Return beneficial insects for pests exceeding thresholds."""
+
+    pressure = assess_pest_pressure(plant_type, observations)
+    exceeded = [p for p, flag in pressure.items() if flag]
+    if not exceeded:
+        return {}
+    return recommend_beneficials(exceeded)

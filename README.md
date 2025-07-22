@@ -187,6 +187,8 @@ or incomplete and should only be used as a starting point for your own research.
   pruning tips loaded from `pruning_guidelines.json`.
 - **Beneficial Insect Suggestions**: Daily reports list natural predators for
   observed pests using `beneficial_insects.json`.
+- **Biological Control Helper**: `recommend_biological_controls` suggests
+  beneficial insects to deploy when pest thresholds are exceeded.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
   reports provide an estimated harvest date based on `growth_stages.json`.
 
