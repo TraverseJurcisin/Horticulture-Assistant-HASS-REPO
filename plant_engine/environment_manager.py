@@ -13,6 +13,7 @@ DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
 VPD_DATA_FILE = "vpd_guidelines.json"
 HEAT_DATA_FILE = "heat_stress_thresholds.json"
+COLD_DATA_FILE = "cold_stress_thresholds.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -55,6 +56,7 @@ __all__ = [
     "get_target_vpd",
     "humidity_for_target_vpd",
     "evaluate_heat_stress",
+    "evaluate_cold_stress",
     "optimize_environment",
     "calculate_environment_metrics",
     "EnvironmentMetrics",
@@ -69,6 +71,7 @@ _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
 _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 _HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
+_COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 
 
 def _lookup_stage_data(
@@ -144,6 +147,7 @@ class EnvironmentOptimization:
     target_vpd: tuple[float, float] | None = None
     photoperiod_hours: float | None = None
     heat_stress: bool | None = None
+    cold_stress: bool | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -160,6 +164,7 @@ class EnvironmentOptimization:
             "target_vpd": self.target_vpd,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
+            "cold_stress": self.cold_stress,
         }
 
 
@@ -476,6 +481,24 @@ def evaluate_heat_stress(
     return hi >= float(threshold)
 
 
+def evaluate_cold_stress(
+    temp_c: float | None,
+    plant_type: str,
+) -> bool | None:
+    """Return ``True`` if temperature is below the plant cold threshold."""
+
+    if temp_c is None:
+        return None
+
+    threshold = _COLD_THRESHOLDS.get(
+        normalize_key(plant_type), _COLD_THRESHOLDS.get("default")
+    )
+    if threshold is None:
+        return None
+
+    return temp_c <= float(threshold)
+
+
 def calculate_dli_series(
     ppfd_values: Iterable[float], interval_hours: float = 1.0
 ) -> float:
@@ -552,6 +575,7 @@ def optimize_environment(
     heat_stress = evaluate_heat_stress(
         current.get("temp_c"), current.get("humidity_pct"), plant_type
     )
+    cold_stress = evaluate_cold_stress(current.get("temp_c"), plant_type)
     # pH integration
     ph_set = ph_manager.recommended_ph_setpoint(plant_type, stage)
     ph_act = None
@@ -577,5 +601,6 @@ def optimize_environment(
         target_vpd=target_vpd,
         photoperiod_hours=photoperiod_hours,
         heat_stress=heat_stress,
+        cold_stress=cold_stress,
     )
     return result.as_dict()

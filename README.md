@@ -143,6 +143,7 @@ Key reference datasets reside in the `data/` directory:
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
+- `cold_stress_thresholds.json` – minimum temperature limits for cold stress
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `growth_stages.json` – lifecycle stage durations and notes by crop
