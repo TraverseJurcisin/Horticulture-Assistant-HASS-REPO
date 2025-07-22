@@ -172,6 +172,10 @@ or incomplete and should only be used as a starting point for your own research.
   each day.
 - **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific
   pruning tips loaded from `pruning_guidelines.json`.
+- **Beneficial Insect Suggestions**: Daily reports list natural predators for
+  observed pests using `beneficial_insects.json`.
+- **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
+  reports provide an estimated harvest date based on `growth_stages.json`.
 
 
 ### Automation Blueprint Guide
