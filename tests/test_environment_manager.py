@@ -10,10 +10,12 @@ from plant_engine.environment_manager import (
     calculate_dew_point,
     calculate_heat_index,
     relative_humidity_from_dew_point,
+    calculate_absolute_humidity,
     calculate_dli,
     calculate_dli_series,
     photoperiod_for_target_dli,
     get_target_dli,
+    get_target_vpd,
     humidity_for_target_vpd,
     score_environment,
     optimize_environment,
@@ -118,6 +120,8 @@ def test_optimize_environment():
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
+    assert round(result["absolute_humidity_g_m3"], 1) == round(calculate_absolute_humidity(18, 90), 1)
+    assert result["target_vpd"] == (0.6, 0.8)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
     assert result["target_dli"] is None
@@ -132,6 +136,7 @@ def test_optimize_environment():
     assert result2["ph_action"] == "decrease"
     assert result2["target_dli"] is None
     assert result2["photoperiod_hours"] is None
+    assert result2["target_vpd"] == (0.6, 0.8)
 
 
 def test_optimize_environment_with_dli():
@@ -151,8 +156,12 @@ def test_calculate_environment_metrics():
     assert metrics.vpd == calculate_vpd(18, 90)
     assert metrics.dew_point_c == calculate_dew_point(18, 90)
     assert metrics.heat_index_c == calculate_heat_index(18, 90)
+    assert metrics.absolute_humidity_g_m3 == calculate_absolute_humidity(18, 90)
     empty = calculate_environment_metrics(None, None)
-    assert empty.vpd is None and empty.dew_point_c is None and empty.heat_index_c is None
+    assert all(
+        getattr(empty, field) is None
+        for field in ["vpd", "dew_point_c", "heat_index_c", "absolute_humidity_g_m3"]
+    )
 
 
 def test_calculate_dli():
@@ -202,6 +211,18 @@ def test_get_target_dli():
 
 def test_get_target_dli_case_insensitive():
     assert get_target_dli("LeTtUcE", "SeEdLiNg") == (10, 12)
+
+
+def test_get_target_vpd():
+    assert get_target_vpd("citrus", "seedling") == (0.6, 0.8)
+    assert get_target_vpd("unknown") is None
+
+
+def test_calculate_absolute_humidity():
+    ah = calculate_absolute_humidity(25, 50)
+    assert round(ah, 1) == 11.5
+    with pytest.raises(ValueError):
+        calculate_absolute_humidity(25, -10)
 
 
 def test_calculate_dli_series():
