@@ -51,6 +51,7 @@ applying it to your plants.
 ### Data & Analytics
 - Disease and pest treatment recommendations
 - Environment optimization suggestions with pH guidance
+- Heat stress warnings using heat index thresholds
 - Stage-adjusted nutrient targets
 - Example crop profiles for strawberries, basil, spinach and more
 
@@ -141,6 +142,7 @@ Key reference datasets reside in the `data/` directory:
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `fertilizer_purity.json` – default purity factors for common fertilizers
+- `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `growth_stages.json` – lifecycle stage durations and notes by crop
