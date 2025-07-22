@@ -142,6 +142,7 @@ Key reference datasets reside in the `data/` directory:
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
+- `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `yield/` – per‑plant yield logs created during operation

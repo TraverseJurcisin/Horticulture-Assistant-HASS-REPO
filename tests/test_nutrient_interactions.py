@@ -1,0 +1,22 @@
+from plant_engine.nutrient_interactions import (
+    list_interactions,
+    get_interaction_info,
+    check_imbalances,
+)
+
+
+def test_list_interactions():
+    pairs = list_interactions()
+    assert "K_Mg" in pairs
+
+
+def test_get_interaction_info():
+    info = get_interaction_info("K_Mg")
+    assert info["max_ratio"] == 3
+
+
+def test_check_imbalances():
+    levels = {"K": 150, "Mg": 20, "Ca": 50, "N": 90, "P": 10}
+    warnings = check_imbalances(levels)
+    assert "K/Mg" in warnings
+    assert "N/P" in warnings
