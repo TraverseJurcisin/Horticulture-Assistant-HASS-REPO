@@ -21,6 +21,7 @@ from plant_engine.environment_manager import (
     optimize_environment,
     calculate_environment_metrics,
     compare_environment,
+    generate_environment_alerts,
 )
 
 
@@ -247,3 +248,15 @@ def test_compare_environment():
     result2 = compare_environment(off, targets)
     assert result2["temp_c"] == "above range"
     assert result2["humidity_pct"] == "below range"
+
+
+def test_generate_environment_alerts():
+    alerts = generate_environment_alerts(
+        {"temp_c": 30, "humidity_pct": 40},
+        "citrus",
+        "seedling",
+    )
+    assert "temperature" in alerts
+    assert alerts["temperature"].startswith("temperature above")
+    assert "humidity" in alerts
+    assert alerts["humidity"].startswith("humidity below")

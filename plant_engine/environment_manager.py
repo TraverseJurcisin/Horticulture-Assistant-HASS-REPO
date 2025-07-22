@@ -58,6 +58,7 @@ __all__ = [
     "EnvironmentMetrics",
     "EnvironmentOptimization",
     "compare_environment",
+    "generate_environment_alerts",
 ]
 
 
@@ -223,6 +224,40 @@ def recommend_environment_adjustments(
                 actions[label] = suggestion
 
     return actions
+
+
+def generate_environment_alerts(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, str]:
+    """Return human readable alerts for readings outside recommended ranges.
+
+    Parameters
+    ----------
+    current : Mapping[str, float]
+        Current environment readings using the same keys as
+        :data:`ACTION_LABELS` or their aliases.
+    plant_type : str
+        Plant type used to look up guideline ranges.
+    stage : str, optional
+        Growth stage for stage specific guidelines.
+    """
+
+    targets = get_environmental_targets(plant_type, stage)
+    if not targets:
+        return {}
+
+    alerts: Dict[str, str] = {}
+    comparison = compare_environment(current, targets)
+    for key, status in comparison.items():
+        if status == "within range":
+            continue
+        label = ACTION_LABELS.get(key, key)
+        low, high = targets[key]
+        if status == "below range":
+            alerts[label] = f"{label} below {low}-{high}"
+        else:
+            alerts[label] = f"{label} above {low}-{high}"
+    return alerts
 
 
 def score_environment(
