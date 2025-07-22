@@ -145,6 +145,7 @@ Key reference datasets reside in the `data/` directory:
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
+- `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
