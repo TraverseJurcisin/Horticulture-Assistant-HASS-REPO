@@ -63,6 +63,7 @@ __all__ = [
     "EnvironmentOptimization",
     "compare_environment",
     "generate_environment_alerts",
+    "classify_environment_quality",
 ]
 
 
@@ -323,6 +324,19 @@ def score_environment(
     if count == 0:
         return 0.0
     return round((score / count) * 100, 1)
+
+
+def classify_environment_quality(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> str:
+    """Return ``good``, ``fair`` or ``poor`` based on environment score."""
+
+    score = score_environment(current, plant_type, stage)
+    if score >= 75:
+        return "good"
+    if score >= 50:
+        return "fair"
+    return "poor"
 
 
 def suggest_environment_setpoints(
