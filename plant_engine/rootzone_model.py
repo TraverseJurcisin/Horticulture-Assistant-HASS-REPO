@@ -4,9 +4,28 @@ from __future__ import annotations
 import math
 
 from dataclasses import dataclass, asdict
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Any
+
+from .utils import load_dataset, normalize_key
 
 DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
+
+SOIL_DATA_FILE = "soil_texture_parameters.json"
+
+# cached dataset for soil parameters
+_SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
+
+__all__ = [
+    "estimate_rootzone_depth",
+    "estimate_water_capacity",
+    "get_soil_parameters",
+    "RootZone",
+]
+
+
+def get_soil_parameters(texture: str) -> Dict[str, float]:
+    """Return soil parameters for ``texture`` if available."""
+    return _SOIL_DATA.get(normalize_key(texture), {})
 
 
 def estimate_rootzone_depth(
@@ -42,8 +61,9 @@ def estimate_water_capacity(
     root_depth_cm: float,
     area_cm2: float = DEFAULT_AREA_CM2,
     *,
-    field_capacity: float = 0.20,
-    mad_fraction: float = 0.5,
+    field_capacity: float | None = None,
+    mad_fraction: float | None = None,
+    texture: str | None = None,
 ) -> RootZone:
     """Return root zone water capacity estimates.
 
@@ -57,7 +77,23 @@ def estimate_water_capacity(
         Fractional water content at field capacity (0-1).
     mad_fraction : float, optional
         Fractional management allowed depletion (0-1).
+    texture : str, optional
+        Soil texture key used to look up defaults from
+        :data:`soil_texture_parameters.json` when ``field_capacity`` or
+        ``mad_fraction`` are omitted.
     """
+    if field_capacity is None or mad_fraction is None:
+        if texture:
+            params = get_soil_parameters(texture)
+            if field_capacity is None:
+                field_capacity = params.get("field_capacity", 0.20)
+            if mad_fraction is None:
+                mad_fraction = params.get("mad_fraction", 0.5)
+        if field_capacity is None:
+            field_capacity = 0.20
+        if mad_fraction is None:
+            mad_fraction = 0.5
+
     volume_cm3 = root_depth_cm * area_cm2
     water_capacity_ml = volume_cm3 * field_capacity
     taw = water_capacity_ml

@@ -68,7 +68,10 @@ def run_daily_cycle(plant_id: str) -> Dict:
     growth = update_growth_index(plant_id, env, transp_ml)
 
     root_depth = estimate_rootzone_depth(profile, growth)
-    rootzone = estimate_water_capacity(root_depth)
+    rootzone = estimate_water_capacity(
+        root_depth,
+        texture=profile.get("soil_texture"),
+    )
 
     # Step 4: Water balance
     irrigated_ml = profile.get("last_irrigation_ml", 1000)

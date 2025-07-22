@@ -40,6 +40,7 @@ from .fertigation import (
 from .rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
+    get_soil_parameters,
     RootZone,
 )
 from .irrigation_manager import (
@@ -126,6 +127,7 @@ __all__ = [
     "list_growth_stages",
     "estimate_rootzone_depth",
     "estimate_water_capacity",
+    "get_soil_parameters",
     "RootZone",
     "recommend_irrigation_volume",
     "recommend_irrigation_interval",
