@@ -86,6 +86,13 @@ from .ph_manager import (
     get_ph_range,
     recommend_ph_adjustment,
 )
+from .thermal_time import (
+    calculate_gdd,
+    list_supported_plants as list_gdd_plants,
+    get_stage_gdd_requirement,
+    predict_stage_completion,
+    accumulate_gdd_series,
+)
 from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -148,6 +155,11 @@ __all__ = [
     "list_pruning_plants",
     "list_pruning_stages",
     "get_pruning_instructions",
+    "calculate_gdd",
+    "list_gdd_plants",
+    "get_stage_gdd_requirement",
+    "predict_stage_completion",
+    "accumulate_gdd_series",
     "calculate_all_surplus",
     "calculate_micro_surplus",
     "analyze_nutrient_profile",
