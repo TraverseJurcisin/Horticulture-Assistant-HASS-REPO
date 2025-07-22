@@ -62,6 +62,12 @@ from .ph_manager import (
     get_ph_range,
     recommend_ph_adjustment,
 )
+from .ec_manager import (
+    list_supported_plants as list_ec_plants,
+    get_ec_range,
+    recommend_ec_adjustment,
+    recommended_ec_setpoint,
+)
 from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -109,5 +115,9 @@ __all__ = [
     "list_ph_plants",
     "get_ph_range",
     "recommend_ph_adjustment",
+    "list_ec_plants",
+    "get_ec_range",
+    "recommend_ec_adjustment",
+    "recommended_ec_setpoint",
     "TranspirationMetrics",
 ]

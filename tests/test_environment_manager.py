@@ -108,7 +108,7 @@ def test_relative_humidity_from_dew_point():
 
 def test_optimize_environment():
     result = optimize_environment(
-        {"temp_c": 18, "humidity_pct": 90},
+        {"temp_c": 18, "humidity_pct": 90, "ec": 2.5},
         "citrus",
         "seedling",
     )
@@ -119,14 +119,17 @@ def test_optimize_environment():
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
+    assert result["ec_setpoint"] == 1.1
+    assert result["ec_action"] == "decrease"
 
     result2 = optimize_environment(
-        {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},
+        {"temp_c": 18, "humidity_pct": 90, "ph": 7.2, "ec": 1.1},
         "citrus",
         "seedling",
     )
     assert result2["ph_setpoint"] == 6.0
     assert result2["ph_action"] == "decrease"
+    assert result2["ec_action"] is None
 
 
 def test_calculate_environment_metrics():

@@ -1,0 +1,14 @@
+{
+  "citrus": {
+    "seedling": [1.0, 1.2],
+    "vegetative": [1.2, 1.8],
+    "fruiting": [1.8, 2.2],
+    "optimal": [1.5, 2.0]
+  },
+  "tomato": {
+    "seedling": [1.0, 1.4],
+    "vegetative": [2.0, 2.5],
+    "fruiting": [2.5, 3.5],
+    "optimal": [2.0, 3.0]
+  }
+}
