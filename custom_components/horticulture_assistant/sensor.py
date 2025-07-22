@@ -2,7 +2,7 @@
 """Sensor platform for Horticulture Assistant."""
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 import logging
 
 from homeassistant.components.sensor import (
@@ -231,8 +231,13 @@ class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
     async def async_update(self):
         """Estimate field capacity (peak moisture over recent period)."""
         _LOGGER.debug("Estimating field capacity for plant: %s", self._plant_id)
-        # TODO: Query InfluxDB or history for past peak moisture values
-        self._attr_native_value = None  # Placeholder until implemented
+        current = self._get_state_value(f"sensor.{self._plant_id}_raw_moisture")
+        if current is not None:
+            max_val = getattr(self, "_max_moisture", None)
+            self._max_moisture = current if max_val is None else max(max_val, current)
+            self._attr_native_value = self._max_moisture
+        else:
+            self._attr_native_value = getattr(self, "_max_moisture", None)
 
 class EstimatedWiltingPointSensor(HorticultureBaseSensor):
     """Estimate of permanent wilting point based on dry-down observation."""
@@ -248,8 +253,13 @@ class EstimatedWiltingPointSensor(HorticultureBaseSensor):
     async def async_update(self):
         """Estimate wilting point (minimum moisture over recent period)."""
         _LOGGER.debug("Estimating wilting point for plant: %s", self._plant_id)
-        # TODO: Query InfluxDB or history for past minimum moisture values
-        self._attr_native_value = None  # Placeholder until implemented
+        current = self._get_state_value(f"sensor.{self._plant_id}_raw_moisture")
+        if current is not None:
+            min_val = getattr(self, "_min_moisture", None)
+            self._min_moisture = current if min_val is None else min(min_val, current)
+            self._attr_native_value = self._min_moisture
+        else:
+            self._attr_native_value = getattr(self, "_min_moisture", None)
 
 class DailyNitrogenAppliedSensor(HorticultureBaseSensor):
     """Amount of nitrogen applied to plant today."""
@@ -265,8 +275,14 @@ class DailyNitrogenAppliedSensor(HorticultureBaseSensor):
     async def async_update(self):
         """Calculate daily nitrogen applied."""
         _LOGGER.debug("Calculating daily nitrogen for plant: %s", self._plant_id)
-        # TODO: Implement fertigation/dosing tracking logic
-        self._attr_native_value = None  # Placeholder
+        tracker = self.hass.data.get(DOMAIN, {}).get("nutrient_tracker")
+        if tracker is None:
+            self._attr_native_value = None
+            return
+
+        today = datetime.now()
+        summary = tracker.summarize_mg_for_day(today, self._plant_id)
+        self._attr_native_value = round(summary.get("N", 0.0), 2)
 
 class YieldProgressSensor(HorticultureBaseSensor):
     """Yield or growth progress (user updated or AI projected)."""
