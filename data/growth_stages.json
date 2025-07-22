@@ -115,5 +115,10 @@
     "germination": {"duration_days": 7, "notes": "Keep moist until emergence."},
     "vegetative": {"duration_days": 25, "notes": "Rapid leaf growth."},
     "harvest": {"duration_days": 15, "notes": "Harvest young leaves for best flavor."}
+  },
+  "blueberry": {
+    "vegetative": {"duration_days": 60, "notes": "Focus on cane development."},
+    "flowering": {"duration_days": 20, "notes": "Monitor for frost damage."},
+    "fruiting": {"duration_days": 40, "notes": "Maintain soil acidity."}
   }
 }

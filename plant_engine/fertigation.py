@@ -37,6 +37,7 @@ __all__ = [
     "recommend_correction_schedule",
     "recommend_batch_fertigation",
     "recommend_nutrient_mix",
+    "estimate_daily_nutrient_uptake",
 ]
 
 
@@ -243,4 +244,26 @@ def recommend_nutrient_mix(
         schedule[fert] = round(grams_fert, 3)
 
     return schedule
+
+
+def estimate_daily_nutrient_uptake(
+    plant_type: str,
+    stage: str,
+    daily_water_ml: float,
+) -> Dict[str, float]:
+    """Return estimated nutrient uptake per day in milligrams.
+
+    The calculation multiplies recommended ppm values by the amount of
+    irrigation water used each day (in milliliters).
+    """
+
+    if daily_water_ml < 0:
+        raise ValueError("daily_water_ml must be non-negative")
+
+    targets = get_recommended_levels(plant_type, stage)
+    liters = daily_water_ml / 1000
+    uptake: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        uptake[nutrient] = round(ppm * liters, 2)
+    return uptake
 

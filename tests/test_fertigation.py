@@ -6,6 +6,7 @@ from plant_engine.fertigation import (
     get_fertilizer_purity,
     recommend_batch_fertigation,
     recommend_nutrient_mix,
+    estimate_daily_nutrient_uptake,
 )
 
 
@@ -102,5 +103,13 @@ def test_recommend_fertigation_with_water():
     assert round(schedule["N"], 2) == 0.8
     assert round(schedule["P"], 2) == 0.5
     assert round(schedule["K"], 2) == 0.7
+
+
+def test_estimate_daily_nutrient_uptake():
+    uptake = estimate_daily_nutrient_uptake(
+        "tomato", "vegetative", daily_water_ml=2000.0
+    )
+    assert uptake["N"] == pytest.approx(200.0)
+    assert uptake["P"] == pytest.approx(100.0)
 
 
