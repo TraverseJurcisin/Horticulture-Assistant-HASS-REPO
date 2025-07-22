@@ -90,8 +90,11 @@ class EnvironmentOptimization:
     metrics: EnvironmentMetrics
     ph_setpoint: float | None = None
     ph_action: str | None = None
+    target_dli: tuple[float, float] | None = None
+    photoperiod_hours: float | None = None
 
     def as_dict(self) -> Dict[str, Any]:
+        """Return the optimization result as a serializable dictionary."""
         return {
             "setpoints": self.setpoints,
             "adjustments": self.adjustments,
@@ -100,6 +103,8 @@ class EnvironmentOptimization:
             "heat_index_c": self.metrics.heat_index_c,
             "ph_setpoint": self.ph_setpoint,
             "ph_action": self.ph_action,
+            "target_dli": self.target_dli,
+            "photoperiod_hours": self.photoperiod_hours,
         }
 
 
@@ -379,11 +384,19 @@ def optimize_environment(
     if "ph" in current and ph_set is not None:
         ph_act = ph_manager.recommend_ph_adjustment(current["ph"], plant_type, stage)
 
+    target_dli = get_target_dli(plant_type, stage)
+    photoperiod_hours = None
+    if target_dli and "light_ppfd" in current:
+        mid_target = sum(target_dli) / 2
+        photoperiod_hours = photoperiod_for_target_dli(mid_target, current["light_ppfd"])
+
     result = EnvironmentOptimization(
         setpoints,
         actions,
         metrics,
         ph_setpoint=ph_set,
         ph_action=ph_act,
+        target_dli=target_dli,
+        photoperiod_hours=photoperiod_hours,
     )
     return result.as_dict()
