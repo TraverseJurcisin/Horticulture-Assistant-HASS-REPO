@@ -150,6 +150,10 @@ Key reference datasets reside in the `data/` directory:
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
 
+All dataset lookups are case-insensitive and ignore spaces thanks to the
+`normalize_key` helper, so references such as `"Citrus"` and `"citrus"` map to
+the same entries.
+
 You can override the default `data/` directory by setting the environment
 variable `HORTICULTURE_DATA_DIR` when running scripts or tests.
 

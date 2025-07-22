@@ -7,6 +7,11 @@ def test_get_disease_guidelines():
     assert guide["citrus greening"].startswith("Remove infected")
 
 
+def test_get_disease_guidelines_case_insensitive():
+    guide = get_disease_guidelines("CiTrUs")
+    assert "root rot" in guide
+
+
 def test_recommend_treatments():
     actions = recommend_treatments("citrus", ["root rot", "unknown"])
     assert actions["root rot"].startswith("Ensure good drainage")

@@ -33,3 +33,8 @@ def test_transpiration_metrics_dataclass():
 def test_lookup_crop_coefficient():
     kc = lookup_crop_coefficient("lettuce", "vegetative")
     assert kc == 1.0
+
+
+def test_lookup_crop_coefficient_case_insensitive():
+    kc = lookup_crop_coefficient("LeTtuce", "VeGeTaTiVe")
+    assert kc == 1.0

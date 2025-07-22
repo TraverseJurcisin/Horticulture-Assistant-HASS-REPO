@@ -12,6 +12,11 @@ def test_get_pest_guidelines():
     assert guide["scale"].startswith("Use horticultural oil")
 
 
+def test_get_pest_guidelines_case_insensitive():
+    guide = get_pest_guidelines("CiTrUs")
+    assert "aphids" in guide
+
+
 def test_recommend_treatments():
     actions = recommend_treatments("citrus", ["aphids", "unknown"])
     assert actions["aphids"].startswith("Apply insecticidal soap")
