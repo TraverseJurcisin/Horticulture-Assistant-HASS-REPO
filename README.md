@@ -191,6 +191,8 @@ or incomplete and should only be used as a starting point for your own research.
   beneficial insects to deploy when pest thresholds are exceeded.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
   reports provide an estimated harvest date based on `growth_stages.json`.
+- **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
+  expected totals from `yield_estimates.json`.
 - **Environment Quality Rating**: `classify_environment_quality` converts the
   numeric score from `score_environment` into `good`, `fair` or `poor` for
   quick evaluation.
