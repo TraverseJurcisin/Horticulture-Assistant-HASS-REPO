@@ -39,6 +39,7 @@ __all__ = [
     "recommend_nutrient_mix",
     "estimate_daily_nutrient_uptake",
     "recommend_uptake_fertigation",
+    "recommend_nutrient_mix_with_cost",
 ]
 
 
@@ -335,4 +336,36 @@ def recommend_uptake_fertigation(
         schedule[fert] = round(schedule.get(fert, 0.0) + grams, 3)
 
     return schedule
+
+
+def recommend_nutrient_mix_with_cost(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    current_levels: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> tuple[Dict[str, float], float]:
+    """Return fertigation mix and estimated cost for a plant stage."""
+
+    schedule = recommend_nutrient_mix(
+        plant_type,
+        stage,
+        volume_l,
+        current_levels,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_mix_cost,
+    )
+
+    cost = estimate_mix_cost(schedule)
+    return schedule, cost
 

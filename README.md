@@ -167,6 +167,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets and can optionally include
   micronutrients using the new `micronutrient_guidelines.json` dataset.
+- **Mix Cost Estimation**: `recommend_nutrient_mix_with_cost` returns the same
+  schedule along with an estimated dollar cost based on fertilizer prices.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
