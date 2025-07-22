@@ -1,16 +1,18 @@
 """Pest management guideline utilities."""
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from typing import Dict, Iterable, List
 
 from .utils import load_dataset
 
 DATA_FILE = "pest_guidelines.json"
+BENEFICIAL_FILE = "beneficial_insects.json"
 
 
 
-# Dataset is cached by ``load_dataset`` so load once at import time
+# Datasets are cached by ``load_dataset`` so loaded once at import time
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
+_BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -30,3 +32,22 @@ def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str
     for pest in pests:
         actions[pest] = guide.get(pest, "No guideline available")
     return actions
+
+
+def get_beneficial_insects(pest: str) -> List[str]:
+    """Return a list of beneficial insects that prey on ``pest``."""
+    return _BENEFICIALS.get(pest.lower(), [])
+
+
+def recommend_beneficials(pests: Iterable[str]) -> Dict[str, List[str]]:
+    """Return beneficial insect suggestions for observed ``pests``."""
+    return {p: get_beneficial_insects(p) for p in pests}
+
+
+__all__ = [
+    "list_supported_plants",
+    "get_pest_guidelines",
+    "recommend_treatments",
+    "get_beneficial_insects",
+    "recommend_beneficials",
+]
