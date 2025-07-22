@@ -7,6 +7,7 @@ from . import (
     environment_manager,
     nutrient_manager,
     deficiency_manager,
+    nutrient_interactions,
     pest_manager,
     disease_manager,
     growth_stage,
@@ -37,6 +38,7 @@ def generate_health_report(
     treatments = deficiency_manager.recommend_deficiency_treatments(
         nutrient_levels, plant_type, stage
     )
+    imbalances = nutrient_interactions.check_imbalances(nutrient_levels)
     pest_actions = pest_manager.recommend_treatments(plant_type, pests)
     disease_actions = disease_manager.recommend_treatments(plant_type, diseases)
     stage_info = growth_stage.get_stage_info(plant_type, stage)
@@ -46,6 +48,7 @@ def generate_health_report(
         "deficiencies": deficits,
         "symptoms": symptoms,
         "deficiency_treatments": treatments,
+        "nutrient_imbalances": imbalances,
         "pest_actions": pest_actions,
         "disease_actions": disease_actions,
         "stage_info": stage_info,
