@@ -68,6 +68,38 @@ _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 
 
+def _lookup_stage_data(
+    dataset: Mapping[str, Any], plant_type: str, stage: str | None
+) -> Dict[str, Any]:
+    """Return stage specific data for ``plant_type`` or the ``optimal`` entry."""
+    plant = dataset.get(normalize_key(plant_type), {})
+    if stage:
+        stage_key = normalize_key(stage)
+        if stage_key in plant:
+            entry = plant.get(stage_key)
+            if isinstance(entry, dict):
+                return entry
+    entry = plant.get("optimal")
+    return entry if isinstance(entry, dict) else {}
+
+
+def _lookup_range(
+    dataset: Mapping[str, Any], plant_type: str, stage: str | None
+) -> tuple[float, float] | None:
+    """Return (min, max) tuple for stage specific range datasets."""
+    plant = dataset.get(normalize_key(plant_type), {})
+    vals = None
+    if stage:
+        stage_key = normalize_key(stage)
+        vals = plant.get(stage_key)
+    if vals is None:
+        vals = plant.get("optimal")
+    if isinstance(vals, (list, tuple)) and len(vals) == 2:
+        try:
+            return float(vals[0]), float(vals[1])
+        except (TypeError, ValueError):
+            return None
+    return None
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -135,12 +167,7 @@ def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
-    data = _DATA.get(normalize_key(plant_type), {})
-    if stage:
-        stage = normalize_key(stage)
-        if stage in data:
-            return data[stage]
-    return data.get("optimal", {})
+    return _lookup_stage_data(_DATA, plant_type, stage)
 
 
 def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
@@ -338,11 +365,11 @@ def calculate_heat_index(temp_c: float, humidity_pct: float) -> float:
         + 2.04901523 * temp_f
         + 10.14333127 * rh
         - 0.22475541 * temp_f * rh
-        - 0.00683783 * temp_f ** 2
-        - 0.05481717 * rh ** 2
-        + 0.00122874 * temp_f ** 2 * rh
-        + 0.00085282 * temp_f * rh ** 2
-        - 0.00000199 * temp_f ** 2 * rh ** 2
+        - 0.00683783 * temp_f**2
+        - 0.05481717 * rh**2
+        + 0.00122874 * temp_f**2 * rh
+        + 0.00085282 * temp_f * rh**2
+        - 0.00000199 * temp_f**2 * rh**2
     )
 
     hi_c = (hi_f - 32) * 5 / 9
@@ -424,7 +451,9 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     return round(rh, 1)
 
 
-def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1.0) -> float:
+def calculate_dli_series(
+    ppfd_values: Iterable[float], interval_hours: float = 1.0
+) -> float:
     """Return Daily Light Integral from a sequence of PPFD readings.
 
     Parameters
@@ -444,34 +473,18 @@ def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1
     return round(total / 1_000_000, 2)
 
 
-def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
-    """Return recommended DLI range for ``plant_type`` and ``stage`` if available."""
-    data = _DLI_DATA.get(normalize_key(plant_type), {})
-    if stage:
-        stage = normalize_key(stage)
-        if stage in data:
-            vals = data[stage]
-            if len(vals) == 2:
-                return tuple(vals)
-    vals = data.get("optimal")
-    if isinstance(vals, list) and len(vals) == 2:
-        return tuple(vals)
-    return None
+def get_target_dli(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended DLI range for a plant type and stage."""
+    return _lookup_range(_DLI_DATA, plant_type, stage)
 
 
-def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
-    """Return recommended VPD range for ``plant_type`` and ``stage`` if available."""
-    data = _VPD_DATA.get(normalize_key(plant_type), {})
-    if stage:
-        stage = normalize_key(stage)
-        if stage in data:
-            vals = data[stage]
-            if len(vals) == 2:
-                return tuple(vals)
-    vals = data.get("optimal")
-    if isinstance(vals, list) and len(vals) == 2:
-        return tuple(vals)
-    return None
+def get_target_vpd(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended VPD range for a plant type and stage."""
+    return _lookup_range(_VPD_DATA, plant_type, stage)
 
 
 def calculate_environment_metrics(
@@ -520,7 +533,9 @@ def optimize_environment(
     photoperiod_hours = None
     if target_dli and "light_ppfd" in current:
         mid_target = sum(target_dli) / 2
-        photoperiod_hours = photoperiod_for_target_dli(mid_target, current["light_ppfd"])
+        photoperiod_hours = photoperiod_for_target_dli(
+            mid_target, current["light_ppfd"]
+        )
 
     result = EnvironmentOptimization(
         setpoints,

@@ -121,7 +121,9 @@ def test_optimize_environment():
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
-    assert round(result["absolute_humidity_g_m3"], 1) == round(calculate_absolute_humidity(18, 90), 1)
+    assert round(result["absolute_humidity_g_m3"], 1) == round(
+        calculate_absolute_humidity(18, 90), 1
+    )
     assert result["target_vpd"] == (0.6, 0.8)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
@@ -212,6 +214,11 @@ def test_get_target_dli():
 
 def test_get_target_dli_case_insensitive():
     assert get_target_dli("LeTtUcE", "SeEdLiNg") == (10, 12)
+
+
+def test_get_environmental_targets_invalid_stage():
+    default = get_environmental_targets("citrus")
+    assert get_environmental_targets("citrus", "badstage") == default
 
 
 def test_get_target_vpd():
