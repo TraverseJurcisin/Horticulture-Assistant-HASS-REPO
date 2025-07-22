@@ -168,6 +168,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Total Uptake Estimation**: `estimate_total_uptake` multiplies daily uptake
+  by growth stage durations from `growth_stages.json` to calculate nutrients
+  required for an entire crop cycle.
 
 
 ### Automation Blueprint Guide

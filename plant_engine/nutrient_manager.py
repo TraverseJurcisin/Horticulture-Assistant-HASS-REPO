@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrient_guidelines.json"
 
@@ -33,10 +33,10 @@ def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     Parameters are matched case-insensitively. An empty dictionary is returned
     if no guidelines exist for the provided keys.
     """
-    plant = _DATA.get(plant_type.lower())
+    plant = _DATA.get(normalize_key(plant_type))
     if not plant:
         return {}
-    return plant.get(stage.lower(), {})
+    return plant.get(normalize_key(stage), {})
 
 
 def calculate_deficiencies(

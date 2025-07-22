@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, Mapping
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 from .pest_manager import recommend_treatments
 
 DATA_FILE = "pest_thresholds.json"
@@ -21,7 +21,7 @@ __all__ = [
 
 def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
     """Return pest count thresholds for ``plant_type``."""
-    return _THRESHOLDS.get(plant_type, {})
+    return _THRESHOLDS.get(normalize_key(plant_type), {})
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
@@ -29,7 +29,7 @@ def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Di
     thresholds = get_pest_thresholds(plant_type)
     pressure: Dict[str, bool] = {}
     for pest, count in observations.items():
-        thresh = thresholds.get(pest)
+        thresh = thresholds.get(normalize_key(pest))
         if thresh is None:
             continue
         pressure[pest] = count >= thresh
