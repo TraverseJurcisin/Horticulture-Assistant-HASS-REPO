@@ -1,10 +1,21 @@
+"""Daily report generation for plant profiles.
+
+This module summarizes the previous day's irrigation, nutrient applications,
+sensor readings and growth metrics into a JSON report that can be consumed by
+other automations or dashboards.
+"""
+
 import json
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile_by_id
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_profile_by_id,
+)
+from plant_engine.environment_manager import compare_environment
+from plant_engine.utils import load_dataset
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -104,67 +115,18 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
         sensor_data.setdefault(stype, []).append(val)
     sensor_avg = {stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals}
     report["sensor_summary"] = sensor_avg
-    # Compare environment readings vs target thresholds
-    env_compare = {}
+    # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
-    for param, target in thresholds.items():
-        if not isinstance(target, (list, tuple)) or len(target) < 2:
-            # Only process threshold ranges [min, max]
-            continue
-        actual = None
-        # Use sensor average if available
-        if param in sensor_avg:
-            actual = sensor_avg[param]
-        else:
-            # Try matching keys from latest environment data
-            key_variants = [param]
-            param_lower = param.lower()
-            if param_lower in ["temperature", "temp", "temp_c"]:
-                key_variants += ["temp_c", "temperature", "temp"]
-            if param_lower in ["humidity", "humidity_pct", "rh", "rh_pct"]:
-                key_variants += ["rh_pct", "humidity", "humidity_pct"]
-            if param_lower in ["light", "par", "par_w_m2", "light_ppfd"]:
-                key_variants += ["par", "par_w_m2", "light", "light_ppfd"]
-            if param_lower in ["co2", "co2_ppm"]:
-                key_variants += ["co2", "co2_ppm"]
-            if param_lower == "ec":
-                key_variants += ["EC", "ec"]
-            for k in key_variants:
-                if k in latest_env:
-                    actual = latest_env[k]
-                    break
-        if actual is None:
-            continue
-        try:
-            actual_val = float(actual)
-        except Exception:
-            continue
-        try:
-            low, high = float(target[0]), float(target[1])
-        except Exception:
-            continue
-        if actual_val < low:
-            env_compare[param] = "below range"
-        elif actual_val > high:
-            env_compare[param] = "above range"
-        else:
-            env_compare[param] = "within range"
+    current_env = {**latest_env, **sensor_avg}
+    env_compare = compare_environment(current_env, thresholds)
     report["environment_comparison"] = env_compare
     # Pest and disease alerts (if any observed in profile)
     pest_actions = {}
     disease_actions = {}
     observed_pests = general.get("observed_pests", [])
     observed_diseases = general.get("observed_diseases", [])
-    # Load pest treatment guidelines from data if available
-    pest_guidelines = {}
-    guidelines_path = Path("data") / "pest_guidelines.json"
-    if guidelines_path.is_file():
-        try:
-            with open(guidelines_path, "r", encoding="utf-8") as f:
-                pest_guidelines = json.load(f)
-        except Exception as e:
-            _LOGGER.warning("Failed to load pest guidelines: %s", e)
-            pest_guidelines = {}
+    # Load pest treatment guidelines from the bundled dataset
+    pest_guidelines = load_dataset("pest_guidelines.json")
     plant_type = general.get("plant_type", "").lower()
     for pest in observed_pests:
         pest_key = str(pest).lower()
