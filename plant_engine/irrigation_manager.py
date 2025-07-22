@@ -3,12 +3,20 @@ from __future__ import annotations
 
 from typing import Optional
 
+from .utils import load_dataset, normalize_key
+from .et_model import calculate_eta
+
 from .rootzone_model import RootZone
 
 __all__ = [
     "recommend_irrigation_volume",
     "recommend_irrigation_interval",
+    "get_crop_coefficient",
+    "estimate_irrigation_demand",
 ]
+
+_KC_DATA_FILE = "crop_coefficients.json"
+_KC_DATA = load_dataset(_KC_DATA_FILE)
 
 
 def recommend_irrigation_volume(
@@ -67,3 +75,39 @@ def recommend_irrigation_interval(
 
     days = depletion / expected_et_ml_day
     return round(max(days, 0.0), 2)
+
+
+def get_crop_coefficient(plant_type: str, stage: str) -> float:
+    """Return crop coefficient for ``plant_type`` and ``stage``."""
+    coeffs = _KC_DATA.get(normalize_key(plant_type), {})
+    return coeffs.get(normalize_key(stage), 1.0)
+
+
+def estimate_irrigation_demand(
+    plant_type: str,
+    stage: str,
+    et0_mm_day: float,
+    area_m2: float = 1.0,
+) -> float:
+    """Return daily irrigation volume in liters.
+
+    Parameters
+    ----------
+    plant_type : str
+        Plant type used to look up the crop coefficient.
+    stage : str
+        Growth stage for the coefficient lookup.
+    et0_mm_day : float
+        Reference ET in millimeters per day.
+    area_m2 : float, optional
+        Plant canopy area in square meters. 1 mm over 1 m² equals 1 L.
+    """
+    if et0_mm_day < 0:
+        raise ValueError("et0_mm_day must be non-negative")
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+
+    kc = get_crop_coefficient(plant_type, stage)
+    eta_mm = calculate_eta(et0_mm_day, kc)
+    liters = eta_mm * area_m2
+    return round(liters, 2)

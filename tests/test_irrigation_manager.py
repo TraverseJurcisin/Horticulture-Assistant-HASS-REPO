@@ -1,6 +1,10 @@
+import pytest
+
 from plant_engine.irrigation_manager import (
     recommend_irrigation_volume,
     recommend_irrigation_interval,
+    get_crop_coefficient,
+    estimate_irrigation_demand,
 )
 from plant_engine.rootzone_model import RootZone
 
@@ -54,4 +58,17 @@ def test_recommend_irrigation_interval():
 
     # When already below RAW, interval is zero
     assert recommend_irrigation_interval(zone, available_ml=150.0, expected_et_ml_day=50.0) == 0.0
+
+
+def test_get_crop_coefficient():
+    assert get_crop_coefficient("tomato", "vegetative") == 1.05
+    assert get_crop_coefficient("unknown", "stage") == 1.0
+
+
+def test_estimate_irrigation_demand():
+    # ET0 5 mm/day, Kc 1.05 -> 5.25 mm/day * 2 m^2 = 10.5 L
+    demand = estimate_irrigation_demand("tomato", "vegetative", 5.0, area_m2=2)
+    assert demand == 10.5
+    with pytest.raises(ValueError):
+        estimate_irrigation_demand("tomato", "vegetative", -1.0)
 
