@@ -6,6 +6,8 @@ from plant_engine.growth_stage import (
     get_stage_duration,
     estimate_stage_from_age,
     predict_harvest_date,
+    stage_progress,
+    days_until_harvest,
 )
 
 
@@ -49,4 +51,19 @@ def test_predict_harvest_date():
     assert predict_harvest_date("tomato", start) == expected
 
     assert predict_harvest_date("unknown", start) is None
+
+
+def test_stage_progress():
+    assert stage_progress("tomato", "seedling", 5) == 16.7
+    assert stage_progress("tomato", "seedling", 30) == 100.0
+    assert stage_progress("tomato", "unknown", 10) is None
+    with pytest.raises(ValueError):
+        stage_progress("tomato", "seedling", -1)
+
+
+def test_days_until_harvest():
+    start = date(2025, 1, 1)
+    today = date(2025, 2, 1)
+    assert days_until_harvest("tomato", start, today) == 89
+    assert days_until_harvest("unknown", start, today) is None
 
