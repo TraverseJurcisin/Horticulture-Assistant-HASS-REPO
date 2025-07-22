@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrient_guidelines.json"
 
@@ -33,13 +33,15 @@ def list_supported_plants() -> list[str]:
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     """Return recommended nutrient levels for ``plant_type`` and ``stage``.
 
-    Parameters are matched case-insensitively. An empty dictionary is returned
-    if no guidelines exist for the provided keys.
+    Parameters are normalized using :func:`normalize_key` so lookups are
+    case-insensitive and spaces are ignored. If no guidelines exist the
+    function returns an empty dictionary.
     """
-    plant = _DATA.get(plant_type.lower())
+
+    plant = _DATA.get(normalize_key(plant_type))
     if not plant:
         return {}
-    return plant.get(stage.lower(), {})
+    return plant.get(normalize_key(stage), {})
 
 
 def calculate_deficiencies(

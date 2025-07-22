@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict, Iterable
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 DATA_FILE = "disease_guidelines.json"
 
@@ -20,7 +20,7 @@ def list_supported_plants() -> list[str]:
 
 def get_disease_guidelines(plant_type: str) -> Dict[str, str]:
     """Return disease management guidelines for the specified plant type."""
-    return _DATA.get(plant_type, {})
+    return _DATA.get(normalize_key(plant_type), {})
 
 
 def recommend_treatments(plant_type: str, diseases: Iterable[str]) -> Dict[str, str]:

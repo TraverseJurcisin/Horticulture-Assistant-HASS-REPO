@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 from plant_engine.et_model import calculate_et0, calculate_eta
 
@@ -37,11 +37,11 @@ class TranspirationMetrics:
 
 def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
     """Return Kc value from :data:`crop_coefficients.json` or ``1.0``."""
-    plant = _KC_DATA.get(plant_type.lower())
+    plant = _KC_DATA.get(normalize_key(plant_type))
     if not plant:
         return 1.0
     if stage:
-        kc = plant.get(stage.lower())
+        kc = plant.get(normalize_key(stage))
         if kc is not None:
             return float(kc)
     return float(plant.get("default", 1.0))
