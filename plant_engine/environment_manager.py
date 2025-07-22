@@ -36,6 +36,23 @@ ENV_ALIASES = {
 }
 
 
+def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
+    """Return a copy of ``readings`` with keys normalized using ``ENV_ALIASES``."""
+
+    normalized: Dict[str, float] = {}
+    for key, value in readings.items():
+        canonical = key
+        for target, aliases in ENV_ALIASES.items():
+            if key in aliases:
+                canonical = target
+                break
+        try:
+            normalized[canonical] = float(value)
+        except (TypeError, ValueError):
+            continue
+    return normalized
+
+
 __all__ = [
     "list_supported_plants",
     "get_environmental_targets",
@@ -61,6 +78,7 @@ __all__ = [
     "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "normalize_environment_readings",
     "compare_environment",
     "generate_environment_alerts",
     "classify_environment_quality",
@@ -212,22 +230,18 @@ def compare_environment(
         ``"within range"`` strings.
     """
 
+    normalized = normalize_environment_readings(current)
     results: Dict[str, str] = {}
     for key, bounds in targets.items():
-        if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
-            continue
-
-        # locate a matching reading using aliases
-        reading = None
-        for alias in ENV_ALIASES.get(key, [key]):
-            if alias in current:
-                reading = current[alias]
-                break
-        if reading is None:
+        if (
+            not isinstance(bounds, (list, tuple))
+            or len(bounds) != 2
+            or key not in normalized
+        ):
             continue
 
         try:
-            val = float(reading)
+            val = float(normalized[key])
             low, high = float(bounds[0]), float(bounds[1])
         except (TypeError, ValueError):
             continue
@@ -252,9 +266,10 @@ def recommend_environment_adjustments(
     if not targets:
         return actions
 
+    readings = normalize_environment_readings(current)
     for key, label in ACTION_LABELS.items():
-        if key in targets and key in current:
-            suggestion = _check_range(current[key], tuple(targets[key]))
+        if key in targets and key in readings:
+            suggestion = _check_range(readings[key], tuple(targets[key]))
             if suggestion:
                 actions[label] = suggestion
 
@@ -303,13 +318,14 @@ def score_environment(
     if not targets:
         return 0.0
 
+    readings = normalize_environment_readings(current)
     score = 0.0
     count = 0
     for key, bounds in targets.items():
-        if key not in current or not isinstance(bounds, (list, tuple)):
+        if key not in readings or not isinstance(bounds, (list, tuple)):
             continue
         low, high = bounds
-        val = current[key]
+        val = readings[key]
         width = high - low
         if width <= 0:
             continue
@@ -579,30 +595,32 @@ def optimize_environment(
     several utilities for convenience when automating greenhouse controls.
     """
 
+    readings = normalize_environment_readings(current)
+
     setpoints = suggest_environment_setpoints(plant_type, stage)
-    actions = recommend_environment_adjustments(current, plant_type, stage)
+    actions = recommend_environment_adjustments(readings, plant_type, stage)
 
     metrics = calculate_environment_metrics(
-        current.get("temp_c"), current.get("humidity_pct")
+        readings.get("temp_c"), readings.get("humidity_pct")
     )
 
     heat_stress = evaluate_heat_stress(
-        current.get("temp_c"), current.get("humidity_pct"), plant_type
+        readings.get("temp_c"), readings.get("humidity_pct"), plant_type
     )
-    cold_stress = evaluate_cold_stress(current.get("temp_c"), plant_type)
+    cold_stress = evaluate_cold_stress(readings.get("temp_c"), plant_type)
     # pH integration
     ph_set = ph_manager.recommended_ph_setpoint(plant_type, stage)
     ph_act = None
-    if "ph" in current and ph_set is not None:
-        ph_act = ph_manager.recommend_ph_adjustment(current["ph"], plant_type, stage)
+    if "ph" in readings and ph_set is not None:
+        ph_act = ph_manager.recommend_ph_adjustment(readings["ph"], plant_type, stage)
 
     target_dli = get_target_dli(plant_type, stage)
     target_vpd = get_target_vpd(plant_type, stage)
     photoperiod_hours = None
-    if target_dli and "light_ppfd" in current:
+    if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
         photoperiod_hours = photoperiod_for_target_dli(
-            mid_target, current["light_ppfd"]
+            mid_target, readings["light_ppfd"]
         )
 
     result = EnvironmentOptimization(
