@@ -1,29 +1,26 @@
-from et_model import calculate_et0, calculate_eta
-from typing import Dict
+"""CLI for :func:`plant_engine.compute_transpiration.compute_transpiration`."""
 
-def compute_transpiration(plant_profile: Dict, env_data: Dict) -> Dict:
-    """
-    Calculate ET₀, ETₐ, and estimated daily water use (mL/day) for a single plant.
-    Returns a dictionary with values to inject into sensors.
-    """
+from __future__ import annotations
 
-    et0 = calculate_et0(
-        temperature_c=env_data["temp_c"],
-        rh_percent=env_data["rh_pct"],
-        solar_rad_w_m2=env_data["par"],
-        wind_m_s=env_data.get("wind_speed_m_s", 1.0),
-        elevation_m=env_data.get("elevation_m", 200)
-    )
+import argparse
+import json
+from plant_engine.compute_transpiration import compute_transpiration
 
-    kc = plant_profile.get("kc", 1.0)
-    et_actual = calculate_eta(et0, kc)
 
-    canopy_m2 = plant_profile.get("canopy_m2", 0.25)
-    mm_per_day = et_actual
-    ml_per_day = mm_per_day * 1000 * canopy_m2  # mm * m² = L = *1000 → mL
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Compute transpiration metrics")
+    parser.add_argument("profile", help="Path to plant profile JSON")
+    parser.add_argument("environment", help="Path to environment data JSON")
+    args = parser.parse_args()
 
-    return {
-        "et0_mm_day": et0,
-        "eta_mm_day": et_actual,
-        "transpiration_ml_day": round(ml_per_day, 1)
-    }
+    with open(args.profile, "r", encoding="utf-8") as f:
+        profile = json.load(f)
+    with open(args.environment, "r", encoding="utf-8") as f:
+        env = json.load(f)
+
+    result = compute_transpiration(profile, env)
+    print(json.dumps(result, indent=2))
+
+
+if __name__ == "__main__":
+    main()

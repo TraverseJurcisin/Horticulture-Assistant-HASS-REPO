@@ -1,57 +1,40 @@
-import os
-import json
-from datetime import datetime
-from typing import Dict
-from plant_engine.utils import load_json, save_json
+"""CLI utilities for managing threshold approval records."""
 
-PENDING_DIR = "data/pending_thresholds"
+from __future__ import annotations
 
-def queue_threshold_updates(plant_id: str, old: Dict, new: Dict):
-    """
-    Save proposed threshold changes to a file awaiting manual approval.
-    """
-    os.makedirs(PENDING_DIR, exist_ok=True)
-    pending_file = os.path.join(PENDING_DIR, f"{plant_id}.json")
+import argparse
 
-    record = {
-        "plant_id": plant_id,
-        "timestamp": datetime.now().isoformat(),
-        "changes": {}
-    }
-
-    for k in new:
-        if k not in old or old[k] != new[k]:
-            record["changes"][k] = {
-                "previous_value": old.get(k),
-                "proposed_value": new[k],
-                "status": "pending"
-            }
-
-    with open(pending_file, "w", encoding="utf-8") as f:
-        json.dump(record, f, indent=2)
-
-    print(f"📝 Queued {len(record['changes'])} threshold changes for {plant_id}")
+from plant_engine.approval_queue import (
+    apply_approved_thresholds,
+    queue_threshold_updates,
+)
 
 
-def apply_approved_thresholds(plant_path: str, pending_file: str):
-    """
-    Apply approved threshold changes to plant profile.
-    """
-    with open(pending_file, "r", encoding="utf-8") as f:
-        pending = json.load(f)
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    sub = parser.add_subparsers(dest="cmd", required=True)
 
-    plant = load_json(plant_path)
-    updated = plant["thresholds"]
+    q = sub.add_parser("queue", help="queue threshold changes")
+    q.add_argument("plant_id")
+    q.add_argument("current", help="Path to current thresholds JSON")
+    q.add_argument("proposed", help="Path to proposed thresholds JSON")
 
-    applied = 0
-    for k, change in pending["changes"].items():
-        if change.get("status") == "approved":
-            updated[k] = change["proposed_value"]
-            applied += 1
+    a = sub.add_parser("apply", help="apply approved changes")
+    a.add_argument("profile", help="Path to plant profile JSON")
+    a.add_argument("pending", help="Path to pending changes JSON")
 
-    plant["thresholds"] = updated
-    save_json(plant_path, plant)
+    args = parser.parse_args()
 
-    print(f"✅ Applied {applied} approved changes for {pending['plant_id']}")
-    return applied
+    if args.cmd == "queue":
+        import json
+        with open(args.current, "r", encoding="utf-8") as f:
+            current = json.load(f)
+        with open(args.proposed, "r", encoding="utf-8") as f:
+            proposed = json.load(f)
+        queue_threshold_updates(args.plant_id, current, proposed)
+    else:  # apply
+        apply_approved_thresholds(args.profile, args.pending)
 
+
+if __name__ == "__main__":
+    main()
