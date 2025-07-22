@@ -260,3 +260,11 @@ def test_generate_environment_alerts():
     assert alerts["temperature"].startswith("temperature above")
     assert "humidity" in alerts
     assert alerts["humidity"].startswith("humidity below")
+
+
+def test_normalize_environment_readings():
+    from plant_engine.environment_manager import normalize_environment_readings
+
+    readings = normalize_environment_readings({"temperature": 21, "rh": 65})
+    assert readings["temp_c"] == 21
+    assert readings["humidity_pct"] == 65

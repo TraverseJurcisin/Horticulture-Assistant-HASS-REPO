@@ -34,6 +34,21 @@ ENV_ALIASES = {
 }
 
 
+def normalize_environment_readings(current: Mapping[str, float]) -> Dict[str, float]:
+    """Return ``current`` with keys normalized using :data:`ENV_ALIASES`."""
+
+    normalized: Dict[str, float] = {}
+    for key, aliases in ENV_ALIASES.items():
+        for alias in aliases:
+            if alias in current:
+                try:
+                    normalized[key] = float(current[alias])
+                except (TypeError, ValueError):
+                    pass
+                break
+    return normalized
+
+
 __all__ = [
     "list_supported_plants",
     "get_environmental_targets",
@@ -57,6 +72,7 @@ __all__ = [
     "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "normalize_environment_readings",
     "compare_environment",
     "generate_environment_alerts",
 ]
@@ -174,17 +190,13 @@ def compare_environment(
         ``"within range"`` strings.
     """
 
+    readings = normalize_environment_readings(current)
     results: Dict[str, str] = {}
     for key, bounds in targets.items():
         if not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
             continue
 
-        # locate a matching reading using aliases
-        reading = None
-        for alias in ENV_ALIASES.get(key, [key]):
-            if alias in current:
-                reading = current[alias]
-                break
+        reading = readings.get(key)
         if reading is None:
             continue
 
@@ -214,9 +226,10 @@ def recommend_environment_adjustments(
     if not targets:
         return actions
 
+    readings = normalize_environment_readings(current)
     for key, label in ACTION_LABELS.items():
-        if key in targets and key in current:
-            suggestion = _check_range(current[key], tuple(targets[key]))
+        if key in targets and key in readings:
+            suggestion = _check_range(readings[key], tuple(targets[key]))
             if suggestion:
                 actions[label] = suggestion
 
@@ -506,8 +519,10 @@ def optimize_environment(
     setpoints = suggest_environment_setpoints(plant_type, stage)
     actions = recommend_environment_adjustments(current, plant_type, stage)
 
+    readings = normalize_environment_readings(current)
+
     metrics = calculate_environment_metrics(
-        current.get("temp_c"), current.get("humidity_pct")
+        readings.get("temp_c"), readings.get("humidity_pct")
     )
     # pH integration
     ph_set = ph_manager.recommended_ph_setpoint(plant_type, stage)
@@ -518,9 +533,9 @@ def optimize_environment(
     target_dli = get_target_dli(plant_type, stage)
     target_vpd = get_target_vpd(plant_type, stage)
     photoperiod_hours = None
-    if target_dli and "light_ppfd" in current:
+    if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
-        photoperiod_hours = photoperiod_for_target_dli(mid_target, current["light_ppfd"])
+        photoperiod_hours = photoperiod_for_target_dli(mid_target, readings["light_ppfd"])
 
     result = EnvironmentOptimization(
         setpoints,
