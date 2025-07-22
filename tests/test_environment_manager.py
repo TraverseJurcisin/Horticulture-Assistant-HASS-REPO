@@ -17,6 +17,7 @@ from plant_engine.environment_manager import (
     get_target_dli,
     get_target_vpd,
     humidity_for_target_vpd,
+    evaluate_heat_stress,
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
@@ -267,3 +268,13 @@ def test_generate_environment_alerts():
     assert alerts["temperature"].startswith("temperature above")
     assert "humidity" in alerts
     assert alerts["humidity"].startswith("humidity below")
+
+
+def test_evaluate_heat_stress():
+    assert evaluate_heat_stress(32, 70, "citrus")
+    assert not evaluate_heat_stress(26, 70, "citrus")
+
+
+def test_optimize_environment_heat_stress():
+    result = optimize_environment({"temp_c": 32, "humidity_pct": 70}, "citrus")
+    assert result["heat_stress"] is True
