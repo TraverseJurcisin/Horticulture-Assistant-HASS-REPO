@@ -1,0 +1,12 @@
+{
+  "tomato": {
+    "vegetative": "Remove side shoots (suckers) weekly to promote strong stems and airflow.",
+    "fruiting": "Prune lower leaves and excess foliage to improve light penetration."
+  },
+  "citrus": {
+    "dormant": "Remove dead or crossing branches and shape the canopy."
+  },
+  "strawberry": {
+    "post-harvest": "Trim runners and old leaves to encourage new growth."
+  }
+}

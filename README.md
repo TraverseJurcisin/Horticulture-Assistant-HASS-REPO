@@ -143,6 +143,7 @@ Key reference datasets reside in the `data/` directory:
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
 - `growth_stages.json` – lifecycle stage durations and notes by crop
+- `pruning_guidelines.json` – stage-specific pruning recommendations
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
@@ -168,6 +169,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific
+  pruning tips loaded from `pruning_guidelines.json`.
 
 
 ### Automation Blueprint Guide

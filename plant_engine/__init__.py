@@ -67,6 +67,11 @@ from .yield_manager import (
     record_harvest,
     get_total_yield,
 )
+from .pruning_manager import (
+    list_supported_plants as list_pruning_plants,
+    list_stages as list_pruning_stages,
+    get_pruning_instructions,
+)
 from .water_quality import (
     list_analytes as list_water_analytes,
     get_threshold as get_water_threshold,
@@ -135,5 +140,8 @@ __all__ = [
     "list_ph_plants",
     "get_ph_range",
     "recommend_ph_adjustment",
+    "list_pruning_plants",
+    "list_pruning_stages",
+    "get_pruning_instructions",
     "TranspirationMetrics",
 ]
