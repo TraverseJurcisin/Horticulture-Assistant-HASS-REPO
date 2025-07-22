@@ -20,7 +20,6 @@ spec = importlib.util.spec_from_file_location(f"{PACKAGE}.sensor", MODULE_PATH)
 sensor = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = sensor
 
-# minimal stubs for Home Assistant imports used in sensor.py
 ha = types.ModuleType("homeassistant")
 ha.components = types.ModuleType("homeassistant.components")
 ha_sensor_mod = types.ModuleType("homeassistant.components.sensor")
@@ -59,9 +58,7 @@ sys.modules.setdefault("homeassistant.helpers.entity_platform", ha.helpers.entit
 sys.modules.setdefault("homeassistant.const", ha.const)
 
 spec.loader.exec_module(sensor)
-
-SmoothedMoistureSensor = sensor.SmoothedMoistureSensor
-ALPHA = sensor.MOVING_AVERAGE_ALPHA
+EnvironmentScoreSensor = sensor.EnvironmentScoreSensor
 
 class DummyStates:
     def __init__(self):
@@ -76,13 +73,14 @@ class DummyHass:
         self.bus = types.SimpleNamespace(async_listen=lambda *a, **k: None)
 
 
-def test_exponential_moving_average():
+def test_environment_score_sensor():
     hass = DummyHass()
-    sensor_entity = SmoothedMoistureSensor(hass, "Plant", "pid")
-    hass.states._data["sensor.pid_raw_moisture"] = "10"
+    sensor_entity = EnvironmentScoreSensor(hass, "Plant", "pid")
+    hass.states._data = {
+        "sensor.pid_raw_temperature": "24",
+        "sensor.pid_raw_humidity": "60",
+        "sensor.pid_raw_light": "400",
+        "sensor.pid_raw_co2": "800",
+    }
     asyncio.run(sensor_entity.async_update())
-    assert sensor_entity.native_value == 10
-    hass.states._data["sensor.pid_raw_moisture"] = "14"
-    asyncio.run(sensor_entity.async_update())
-    expected = round(ALPHA * 14 + (1 - ALPHA) * 10, 1)
-    assert sensor_entity.native_value == expected
+    assert sensor_entity.native_value >= 90

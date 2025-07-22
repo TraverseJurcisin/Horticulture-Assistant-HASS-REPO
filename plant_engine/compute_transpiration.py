@@ -4,8 +4,20 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
+from .utils import load_dataset
+
 from plant_engine.et_model import calculate_et0, calculate_eta
 
+DATA_FILE = "crop_coefficients.json"
+# cached via load_dataset
+_KC_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+
+# Public API
+__all__ = [
+    "TranspirationMetrics",
+    "lookup_crop_coefficient",
+    "compute_transpiration",
+]
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
 MM_TO_ML_PER_M2 = 1000
 
@@ -22,6 +34,18 @@ class TranspirationMetrics:
         """Return metrics as a regular dictionary."""
         return asdict(self)
 
+
+def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
+    """Return Kc value from :data:`crop_coefficients.json` or ``1.0``."""
+    plant = _KC_DATA.get(plant_type.lower())
+    if not plant:
+        return 1.0
+    if stage:
+        kc = plant.get(stage.lower())
+        if kc is not None:
+            return float(kc)
+    return float(plant.get("default", 1.0))
+
 def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str, float]:
     """Return evapotranspiration metrics for a single plant profile."""
 
@@ -33,7 +57,14 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
         elevation_m=env_data.get("elevation_m", 200)
     )
 
-    kc = plant_profile.get("kc", 1.0)
+    kc = plant_profile.get("kc")
+    if kc is None:
+        plant_type = plant_profile.get("plant_type")
+        stage = plant_profile.get("stage")
+        if plant_type:
+            kc = lookup_crop_coefficient(plant_type, stage)
+        else:
+            kc = 1.0
     et_actual = calculate_eta(et0, kc)
 
     canopy_m2 = plant_profile.get("canopy_m2", 0.25)

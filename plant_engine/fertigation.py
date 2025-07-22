@@ -38,6 +38,7 @@ __all__ = [
     "recommend_batch_fertigation",
     "recommend_nutrient_mix",
     "estimate_daily_nutrient_uptake",
+    "recommend_uptake_fertigation",
 ]
 
 
@@ -266,4 +267,42 @@ def estimate_daily_nutrient_uptake(
     for nutrient, ppm in targets.items():
         uptake[nutrient] = round(ppm * liters, 2)
     return uptake
+
+
+def recommend_uptake_fertigation(
+    plant_type: str,
+    stage: str,
+    *,
+    num_plants: int = 1,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return grams of fertilizer for daily nutrient uptake targets."""
+
+    from .nutrient_uptake import get_daily_uptake
+
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+
+    uptake = get_daily_uptake(plant_type, stage)
+    if not uptake:
+        return {}
+
+    if fertilizers is None:
+        fertilizers = {"N": "urea", "P": "map", "K": "kcl"}
+
+    schedule: Dict[str, float] = {}
+    for nutrient, mg_per_day in uptake.items():
+        fert = fertilizers.get(nutrient)
+        if not fert:
+            continue
+        purity = get_fertilizer_purity(fert).get(nutrient, 0.0)
+        if purity_overrides and nutrient in purity_overrides:
+            purity = purity_overrides[nutrient]
+        if purity <= 0:
+            raise ValueError(f"Purity for {nutrient} in {fert} must be > 0")
+        grams = (mg_per_day * num_plants) / 1000 / purity
+        schedule[fert] = round(schedule.get(fert, 0.0) + grams, 3)
+
+    return schedule
 
