@@ -16,6 +16,7 @@ from plant_engine.environment_manager import (
     photoperiod_for_target_dli,
     get_target_dli,
     get_target_vpd,
+    get_target_photoperiod,
     humidity_for_target_vpd,
     score_environment,
     optimize_environment,
@@ -121,7 +122,9 @@ def test_optimize_environment():
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
-    assert round(result["absolute_humidity_g_m3"], 1) == round(calculate_absolute_humidity(18, 90), 1)
+    assert round(result["absolute_humidity_g_m3"], 1) == round(
+        calculate_absolute_humidity(18, 90), 1
+    )
     assert result["target_vpd"] == (0.6, 0.8)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
@@ -260,3 +263,15 @@ def test_generate_environment_alerts():
     assert alerts["temperature"].startswith("temperature above")
     assert "humidity" in alerts
     assert alerts["humidity"].startswith("humidity below")
+
+
+def test_get_target_photoperiod():
+    assert get_target_photoperiod("tomato", "seedling") == (14, 16)
+    assert get_target_photoperiod("unknown") is None
+
+
+def test_optimize_environment_with_photoperiod():
+    result = optimize_environment(
+        {"temp_c": 20, "humidity_pct": 70}, "tomato", "seedling"
+    )
+    assert result["target_photoperiod"] == (14, 16)

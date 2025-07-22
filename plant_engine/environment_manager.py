@@ -12,6 +12,7 @@ from . import ph_manager
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
 VPD_DATA_FILE = "vpd_guidelines.json"
+PHOTO_DATA_FILE = "photoperiod_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -52,6 +53,7 @@ __all__ = [
     "calculate_dli_series",
     "get_target_dli",
     "get_target_vpd",
+    "get_target_photoperiod",
     "humidity_for_target_vpd",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -66,8 +68,7 @@ __all__ = [
 _DATA: Dict[str, Any] = load_dataset(DATA_FILE)
 _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
-
-
+_PHOTO_DATA: Dict[str, Any] = load_dataset(PHOTO_DATA_FILE)
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -107,6 +108,7 @@ class EnvironmentOptimization:
     ph_action: str | None = None
     target_dli: tuple[float, float] | None = None
     target_vpd: tuple[float, float] | None = None
+    target_photoperiod: tuple[float, float] | None = None
     photoperiod_hours: float | None = None
 
     def as_dict(self) -> Dict[str, Any]:
@@ -122,6 +124,7 @@ class EnvironmentOptimization:
             "ph_action": self.ph_action,
             "target_dli": self.target_dli,
             "target_vpd": self.target_vpd,
+            "target_photoperiod": self.target_photoperiod,
             "photoperiod_hours": self.photoperiod_hours,
         }
 
@@ -338,11 +341,11 @@ def calculate_heat_index(temp_c: float, humidity_pct: float) -> float:
         + 2.04901523 * temp_f
         + 10.14333127 * rh
         - 0.22475541 * temp_f * rh
-        - 0.00683783 * temp_f ** 2
-        - 0.05481717 * rh ** 2
-        + 0.00122874 * temp_f ** 2 * rh
-        + 0.00085282 * temp_f * rh ** 2
-        - 0.00000199 * temp_f ** 2 * rh ** 2
+        - 0.00683783 * temp_f**2
+        - 0.05481717 * rh**2
+        + 0.00122874 * temp_f**2 * rh
+        + 0.00085282 * temp_f * rh**2
+        - 0.00000199 * temp_f**2 * rh**2
     )
 
     hi_c = (hi_f - 32) * 5 / 9
@@ -424,7 +427,9 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     return round(rh, 1)
 
 
-def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1.0) -> float:
+def calculate_dli_series(
+    ppfd_values: Iterable[float], interval_hours: float = 1.0
+) -> float:
     """Return Daily Light Integral from a sequence of PPFD readings.
 
     Parameters
@@ -444,7 +449,9 @@ def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1
     return round(total / 1_000_000, 2)
 
 
-def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
+def get_target_dli(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
     """Return recommended DLI range for ``plant_type`` and ``stage`` if available."""
     data = _DLI_DATA.get(normalize_key(plant_type), {})
     if stage:
@@ -459,9 +466,28 @@ def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, fl
     return None
 
 
-def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
+def get_target_vpd(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
     """Return recommended VPD range for ``plant_type`` and ``stage`` if available."""
     data = _VPD_DATA.get(normalize_key(plant_type), {})
+    if stage:
+        stage = normalize_key(stage)
+        if stage in data:
+            vals = data[stage]
+            if len(vals) == 2:
+                return tuple(vals)
+    vals = data.get("optimal")
+    if isinstance(vals, list) and len(vals) == 2:
+        return tuple(vals)
+    return None
+
+
+def get_target_photoperiod(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended photoperiod (hours) range for a plant stage."""
+    data = _PHOTO_DATA.get(normalize_key(plant_type), {})
     if stage:
         stage = normalize_key(stage)
         if stage in data:
@@ -517,10 +543,13 @@ def optimize_environment(
 
     target_dli = get_target_dli(plant_type, stage)
     target_vpd = get_target_vpd(plant_type, stage)
+    target_photo = get_target_photoperiod(plant_type, stage)
     photoperiod_hours = None
     if target_dli and "light_ppfd" in current:
         mid_target = sum(target_dli) / 2
-        photoperiod_hours = photoperiod_for_target_dli(mid_target, current["light_ppfd"])
+        photoperiod_hours = photoperiod_for_target_dli(
+            mid_target, current["light_ppfd"]
+        )
 
     result = EnvironmentOptimization(
         setpoints,
@@ -530,6 +559,7 @@ def optimize_environment(
         ph_action=ph_act,
         target_dli=target_dli,
         target_vpd=target_vpd,
+        target_photoperiod=target_photo,
         photoperiod_hours=photoperiod_hours,
     )
     return result.as_dict()

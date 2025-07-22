@@ -1,0 +1,14 @@
+{
+  "citrus": {
+    "optimal": [14, 16],
+    "fruiting": [12, 14]
+  },
+  "tomato": {
+    "seedling": [14, 16],
+    "fruiting": [12, 14]
+  },
+  "lettuce": {
+    "seedling": [16, 18],
+    "harvest": [12, 14]
+  }
+}
