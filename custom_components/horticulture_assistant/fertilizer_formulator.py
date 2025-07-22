@@ -113,10 +113,40 @@ def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
     return round(cost, 2)
 
 
+def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
+    """Return estimated USD cost for a fertilizer mix.
+
+    ``schedule`` maps fertilizer identifiers to grams of product. Prices are
+    stored in :data:`PRICE_FILE` as USD per liter and densities are read from
+    :data:`DATA_FILE` to convert grams to liters. A ``KeyError`` is raised if
+    any product lacks price or density information.
+    """
+
+    prices = _price_map()
+    inventory = _inventory()
+
+    total = 0.0
+    for fert_id, grams in schedule.items():
+        if grams <= 0:
+            continue
+        if fert_id not in prices:
+            raise KeyError(f"Price for '{fert_id}' is not defined")
+        if fert_id not in inventory:
+            raise KeyError(f"Density for '{fert_id}' is not defined")
+
+        density = inventory[fert_id].density_kg_per_l  # kg/L
+        grams_per_liter = density * 1000
+        volume_l = grams / grams_per_liter
+        total += prices[fert_id] * volume_l
+
+    return round(total, 2)
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
     "calculate_fertilizer_cost",
+    "estimate_mix_cost",
     "list_products",
     "get_product_info",
 ]
