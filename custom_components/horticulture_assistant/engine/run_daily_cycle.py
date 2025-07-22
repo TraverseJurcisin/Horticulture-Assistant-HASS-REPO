@@ -16,35 +16,40 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
 )
 from plant_engine.environment_manager import compare_environment
 from plant_engine.utils import load_dataset
+from plant_engine.rootzone_model import estimate_water_capacity
 
 _LOGGER = logging.getLogger(__name__)
 
-def _load_log(log_path):
+
+def _load_log(log_path: Path) -> list[dict]:
+    """Return parsed JSON from ``log_path`` or an empty list."""
+
     try:
-        with open(log_path, 'r', encoding='utf-8') as f:
+        with open(log_path, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
-        _LOGGER.info(f"Log file not found: {log_path}")
+        _LOGGER.info("Log file not found: %s", log_path)
         return []
-    except Exception as e:
-        _LOGGER.warning(f"Failed to read {log_path}: {e}")
+    except Exception as exc:  # noqa: broad-except -- log any failure
+        _LOGGER.warning("Failed to read %s: %s", log_path, exc)
         return []
 
-def _filter_last_24h(entries):
-    now = datetime.utcnow()
-    cutoff = now - timedelta(days=1)
+def _filter_last_24h(entries: list[dict]) -> list[dict]:
+    """Return entries from the last 24 hours based on ``timestamp``."""
+
+    cutoff = datetime.utcnow() - timedelta(days=1)
     recent = []
-    for e in entries:
-        ts = e.get('timestamp')
+    for entry in entries:
+        ts = entry.get("timestamp")
         if not ts:
             continue
         try:
-            t = datetime.fromisoformat(ts)
-        except Exception:
-            # If timestamp format is not ISO, skip this entry
+            tstamp = datetime.fromisoformat(ts)
+        except Exception:  # noqa: broad-except -- skip malformed entry
             continue
-        if t >= cutoff:
-            recent.append(e)
+        if tstamp >= cutoff:
+            recent.append(entry)
+
     return recent
 
 def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports") -> dict:
@@ -155,23 +160,16 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
     report["pest_actions"] = pest_actions
     report["disease_actions"] = disease_actions
     # Calculate root zone water metrics (TAW, MAD, current moisture)
-    root_depth_cm = general.get("max_root_depth_cm")
-    if root_depth_cm is None:
-        root_depth_cm = 30.0  # default max root depth (cm)
+    root_depth_cm = general.get("max_root_depth_cm", 30.0)
     try:
         root_depth_cm = float(root_depth_cm)
     except Exception:
         root_depth_cm = 30.0
-    # Use default field capacity (20%) and MAD fraction (50%)
-    field_capacity = 0.20
-    mad_fraction = 0.5
-    soil_area_cm2 = 30.0 * 30.0  # assume 30x30 cm surface area
-    root_volume_cm3 = root_depth_cm * soil_area_cm2
-    total_water_ml = root_volume_cm3 * field_capacity
-    readily_avail_ml = total_water_ml * mad_fraction
+
+    rootzone = estimate_water_capacity(root_depth_cm)
     root_zone_info = {
-        "taw_ml": round(total_water_ml, 1),
-        "mad_pct": mad_fraction
+        "taw_ml": rootzone.total_available_water_ml,
+        "mad_pct": rootzone.mad_pct,
     }
     # Include current moisture percentage if a sensor provides it
     moisture_value = None
