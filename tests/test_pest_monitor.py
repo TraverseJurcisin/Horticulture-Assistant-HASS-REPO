@@ -3,6 +3,7 @@ from plant_engine.pest_monitor import (
     get_pest_thresholds,
     assess_pest_pressure,
     recommend_threshold_actions,
+    recommend_biological_controls,
 )
 
 
@@ -37,3 +38,10 @@ def test_list_supported_plants():
 def test_recommend_threshold_actions_case_insensitive():
     actions = recommend_threshold_actions("Citrus", {"APHIDS": 6})
     assert "aphids" in actions
+
+
+def test_recommend_biological_controls():
+    obs = {"aphids": 6, "scale": 3}
+    bio = recommend_biological_controls("citrus", obs)
+    assert "aphids" in bio
+    assert isinstance(bio["aphids"], list)

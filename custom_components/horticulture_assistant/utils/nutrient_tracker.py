@@ -78,3 +78,26 @@ class NutrientTracker:
                 mg = ppm * record.volume_l
                 summary[element] = summary.get(element, 0.0) + mg
         return summary
+
+    def summarize_mg_for_period(
+        self,
+        start: datetime,
+        end: datetime,
+        plant_id: Optional[str] = None,
+    ) -> Dict[str, float]:
+        """Return milligrams delivered between ``start`` and ``end`` (inclusive)."""
+
+        if start > end:
+            raise ValueError("start must not be after end")
+
+        summary: Dict[str, float] = {}
+        for record in self.delivery_log:
+            if plant_id and record.plant_id != plant_id:
+                continue
+            date_val = record.timestamp
+            if date_val < start or date_val > end:
+                continue
+            for element, ppm in record.ppm_delivered.items():
+                mg = ppm * record.volume_l
+                summary[element] = summary.get(element, 0.0) + mg
+        return summary
