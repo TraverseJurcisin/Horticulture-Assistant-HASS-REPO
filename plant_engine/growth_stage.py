@@ -22,6 +22,8 @@ __all__ = [
     "get_stage_duration",
     "estimate_stage_from_age",
     "predict_harvest_date",
+    "stage_progress",
+    "days_until_harvest",
 ]
 
 
@@ -84,3 +86,31 @@ def predict_harvest_date(plant_type: str, start_date: date) -> date | None:
             total_days += int(days)
 
     return start_date + timedelta(days=total_days)
+
+
+def stage_progress(plant_type: str, stage: str, days_elapsed: int) -> float | None:
+    """Return percentage completion of ``stage`` based on ``days_elapsed``.
+
+    The returned value is clipped to the range 0-100. ``None`` is returned when
+    the stage duration is unknown.
+    """
+
+    duration = get_stage_duration(plant_type, stage)
+    if duration is None:
+        return None
+    if days_elapsed < 0:
+        raise ValueError("days_elapsed must be non-negative")
+    progress = min(max(days_elapsed / duration, 0.0), 1.0)
+    return round(progress * 100, 1)
+
+
+def days_until_harvest(
+    plant_type: str, start_date: date, current_date: date
+) -> int | None:
+    """Return the number of days until the estimated harvest date."""
+
+    harvest = predict_harvest_date(plant_type, start_date)
+    if harvest is None:
+        return None
+    remaining = (harvest - current_date).days
+    return max(0, remaining)
