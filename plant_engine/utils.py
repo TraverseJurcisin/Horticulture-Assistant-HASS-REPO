@@ -8,7 +8,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict
 
-__all__ = ["load_json", "save_json", "load_dataset"]
+__all__ = ["load_json", "save_json", "load_dataset", "normalize_key"]
 
 
 def load_json(path: str) -> Dict[str, Any]:
@@ -42,3 +42,8 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     if not path.exists():
         return {}
     return load_json(str(path))
+
+
+def normalize_key(key: str) -> str:
+    """Return ``key`` normalized for case-insensitive dataset lookups."""
+    return str(key).lower().replace(" ", "_")

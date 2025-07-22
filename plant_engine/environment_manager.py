@@ -6,7 +6,7 @@ import math
 from dataclasses import dataclass, asdict
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 from . import ph_manager
 
 DATA_FILE = "environment_guidelines.json"
@@ -67,9 +67,6 @@ _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 
 
-def _norm(key: str) -> str:
-    """Normalize keys for case-insensitive lookups."""
-    return key.lower()
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -137,9 +134,9 @@ def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
-    data = _DATA.get(_norm(plant_type), {})
+    data = _DATA.get(normalize_key(plant_type), {})
     if stage:
-        stage = _norm(stage)
+        stage = normalize_key(stage)
         if stage in data:
             return data[stage]
     return data.get("optimal", {})
@@ -414,9 +411,9 @@ def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1
 
 def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended DLI range for ``plant_type`` and ``stage`` if available."""
-    data = _DLI_DATA.get(_norm(plant_type), {})
+    data = _DLI_DATA.get(normalize_key(plant_type), {})
     if stage:
-        stage = _norm(stage)
+        stage = normalize_key(stage)
         if stage in data:
             vals = data[stage]
             if len(vals) == 2:
@@ -429,9 +426,9 @@ def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, fl
 
 def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended VPD range for ``plant_type`` and ``stage`` if available."""
-    data = _VPD_DATA.get(_norm(plant_type), {})
+    data = _VPD_DATA.get(normalize_key(plant_type), {})
     if stage:
-        stage = _norm(stage)
+        stage = normalize_key(stage)
         if stage in data:
             vals = data[stage]
             if len(vals) == 2:
