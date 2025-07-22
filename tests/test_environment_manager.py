@@ -119,6 +119,8 @@ def test_optimize_environment():
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
+    assert result["target_dli"] is None
+    assert result["photoperiod_hours"] is None
 
     result2 = optimize_environment(
         {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},
@@ -127,6 +129,20 @@ def test_optimize_environment():
     )
     assert result2["ph_setpoint"] == 6.0
     assert result2["ph_action"] == "decrease"
+    assert result2["target_dli"] is None
+    assert result2["photoperiod_hours"] is None
+
+
+def test_optimize_environment_with_dli():
+    result = optimize_environment(
+        {"temp_c": 20, "humidity_pct": 70, "light_ppfd": 500},
+        "tomato",
+        "seedling",
+    )
+    assert result["target_dli"] == (16, 20)
+    mid = sum(result["target_dli"]) / 2
+    expected_hours = photoperiod_for_target_dli(mid, 500)
+    assert result["photoperiod_hours"] == expected_hours
 
 
 def test_calculate_environment_metrics():
