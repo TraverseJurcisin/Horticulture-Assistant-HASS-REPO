@@ -1,6 +1,7 @@
 from plant_engine.rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
+    get_soil_parameters,
     RootZone,
 )
 
@@ -30,4 +31,16 @@ def test_estimate_water_capacity_custom():
     assert result.readily_available_water_ml == 120.0
     assert result.field_capacity_pct == 0.30
     assert result.mad_pct == 0.4
+
+
+def test_get_soil_parameters():
+    params = get_soil_parameters("loam")
+    assert params["field_capacity"] == 0.25
+    assert params["mad_fraction"] == 0.45
+
+
+def test_estimate_water_capacity_texture():
+    result = estimate_water_capacity(10, area_cm2=100, texture="loam")
+    assert result.total_available_water_ml == 250.0
+    assert result.mad_pct == 0.45
 

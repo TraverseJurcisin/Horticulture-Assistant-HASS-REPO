@@ -145,6 +145,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
+- `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
