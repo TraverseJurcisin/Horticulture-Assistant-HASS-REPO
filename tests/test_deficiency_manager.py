@@ -2,6 +2,8 @@ from plant_engine.deficiency_manager import (
     list_known_nutrients,
     get_deficiency_symptom,
     diagnose_deficiencies,
+    get_deficiency_treatment,
+    recommend_deficiency_treatments,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
 
@@ -25,4 +27,17 @@ def test_diagnose_deficiencies():
     symptoms = diagnose_deficiencies(current, "spinach", "harvest")
     assert "N" in symptoms
     assert "Mg" in symptoms
+
+
+def test_get_deficiency_treatment():
+    treat = get_deficiency_treatment("N")
+    assert "nitrogen" in treat.lower() or "compost" in treat.lower()
+    assert get_deficiency_treatment("unknown") == ""
+
+
+def test_recommend_deficiency_treatments():
+    guidelines = get_recommended_levels("spinach", "harvest")
+    current = {key: 0 for key in guidelines}
+    actions = recommend_deficiency_treatments(current, "spinach", "harvest")
+    assert "N" in actions and actions["N"]
 
