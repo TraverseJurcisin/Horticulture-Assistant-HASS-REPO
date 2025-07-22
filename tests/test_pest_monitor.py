@@ -2,6 +2,7 @@ from plant_engine.pest_monitor import (
     get_pest_thresholds,
     assess_pest_pressure,
     recommend_threshold_actions,
+    recommend_ipm_plan,
 )
 
 
@@ -22,3 +23,11 @@ def test_recommend_threshold_actions():
     actions = recommend_threshold_actions("citrus", obs)
     assert "aphids" in actions
     assert "scale" in actions
+
+
+def test_recommend_ipm_plan():
+    obs = {"aphids": 6, "scale": 3}
+    plan = recommend_ipm_plan("citrus", obs)
+    assert "aphids" in plan
+    assert "beneficials" in plan["aphids"]
+    assert plan["aphids"]["treatment"]

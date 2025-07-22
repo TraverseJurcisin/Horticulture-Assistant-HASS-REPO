@@ -168,6 +168,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Pest Management Plans**: The `recommend_ipm_plan` helper provides
+  threshold-aware treatment suggestions along with beneficial insects to deploy
+  for common pests.
 
 
 ### Automation Blueprint Guide
