@@ -1,6 +1,7 @@
 from plant_engine.compute_transpiration import (
     compute_transpiration,
     TranspirationMetrics,
+    lookup_crop_coefficient,
 )
 
 
@@ -27,3 +28,8 @@ def test_transpiration_metrics_dataclass():
         "eta_mm_day": 9.0,
         "transpiration_ml_day": 1000.0,
     }
+
+
+def test_lookup_crop_coefficient():
+    kc = lookup_crop_coefficient("lettuce", "vegetative")
+    assert kc == 1.0

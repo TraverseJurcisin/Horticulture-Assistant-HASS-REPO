@@ -1,0 +1,10 @@
+{
+  "lettuce": {
+    "vegetative": {"N": 60, "P": 20, "K": 80},
+    "harvest": {"N": 50, "P": 15, "K": 70}
+  },
+  "tomato": {
+    "vegetative": {"N": 80, "P": 25, "K": 90},
+    "fruiting": {"N": 100, "P": 30, "K": 120}
+  }
+}

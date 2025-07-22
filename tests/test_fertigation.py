@@ -113,7 +113,6 @@ def test_estimate_daily_nutrient_uptake():
     assert uptake["N"] == pytest.approx(200.0)
     assert uptake["P"] == pytest.approx(100.0)
 
-
 def test_estimate_fertilizer_cost():
     schedule = {"foxfarm_grow_big": 250.0, "magriculture": 500.0}
     cost = estimate_fertilizer_cost(schedule)
@@ -122,3 +121,13 @@ def test_estimate_fertilizer_cost():
     assert cost == pytest.approx(expected, rel=1e-3)
 
 
+def test_recommend_nutrient_mix_with_micro():
+    mix = recommend_nutrient_mix(
+        "lettuce",
+        "seedling",
+        5.0,
+        include_micro=True,
+        purity_overrides={"Fe": 1.0},
+    )
+    assert "chelated_fe" in mix
+    assert mix["chelated_fe"] > 0
