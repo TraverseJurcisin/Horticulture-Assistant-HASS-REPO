@@ -173,6 +173,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
+  micro guidelines with interaction checks to summarize deficiencies and
+  surpluses at once.
 - **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific
   pruning tips loaded from `pruning_guidelines.json`.
 - **Beneficial Insect Suggestions**: Daily reports list natural predators for

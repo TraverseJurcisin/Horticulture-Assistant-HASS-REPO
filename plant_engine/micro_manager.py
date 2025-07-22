@@ -14,6 +14,7 @@ __all__ = [
     "list_supported_plants",
     "get_recommended_levels",
     "calculate_deficiencies",
+    "calculate_surplus",
 ]
 
 
@@ -43,3 +44,19 @@ def calculate_deficiencies(
         if diff > 0:
             deficits[nutrient] = diff
     return deficits
+
+
+def calculate_surplus(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+) -> Dict[str, float]:
+    """Return micronutrient surpluses above recommended levels."""
+
+    target = get_recommended_levels(plant_type, stage)
+    surplus: Dict[str, float] = {}
+    for nutrient, rec in target.items():
+        diff = round(current_levels.get(nutrient, 0.0) - rec, 2)
+        if diff > 0:
+            surplus[nutrient] = diff
+    return surplus

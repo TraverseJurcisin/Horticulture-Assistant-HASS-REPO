@@ -5,6 +5,7 @@ from plant_engine.nutrient_manager import (
     calculate_all_deficiencies,
     calculate_nutrient_balance,
     calculate_surplus,
+    calculate_all_surplus,
     get_npk_ratio,
     score_nutrient_levels,
 )
@@ -75,3 +76,10 @@ def test_calculate_all_deficiencies():
     defs = calculate_all_deficiencies(current, "lettuce", "seedling")
     assert defs["N"] > 0
     assert defs["Fe"] > 0
+
+
+def test_calculate_all_surplus():
+    current = {"N": 200, "Fe": 5.0}
+    surplus = calculate_all_surplus(current, "lettuce", "seedling")
+    assert surplus["N"] > 0
+    assert surplus["Fe"] > 0

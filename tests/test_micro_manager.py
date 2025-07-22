@@ -12,3 +12,10 @@ def test_micro_deficiencies():
     defs = micro.calculate_deficiencies(current, "lettuce", "seedling")
     assert defs["Fe"] == 1.0
     assert defs["Mn"] == 0.3
+
+
+def test_micro_surplus():
+    current = {"Fe": 5.0, "Mn": 1.0}
+    surplus = micro.calculate_surplus(current, "lettuce", "seedling")
+    assert surplus["Fe"] == 3.0
+    assert surplus["Mn"] == 0.5

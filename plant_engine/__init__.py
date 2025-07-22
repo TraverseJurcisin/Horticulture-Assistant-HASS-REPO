@@ -49,12 +49,14 @@ from .irrigation_manager import (
 )
 from .nutrient_manager import (
     calculate_deficiencies,
+    calculate_all_surplus,
     list_supported_plants as list_nutrient_plants,
 )
 from .micro_manager import (
     list_supported_plants as list_micro_plants,
     get_recommended_levels as get_micro_levels,
     calculate_deficiencies as calculate_micro_deficiencies,
+    calculate_surplus as calculate_micro_surplus,
 )
 from .growth_stage import get_stage_info, list_growth_stages
 from .health_report import generate_health_report
@@ -73,6 +75,7 @@ from .pruning_manager import (
     list_stages as list_pruning_stages,
     get_pruning_instructions,
 )
+from .nutrient_analysis import analyze_nutrient_profile
 from .water_quality import (
     list_analytes as list_water_analytes,
     get_threshold as get_water_threshold,
@@ -145,5 +148,8 @@ __all__ = [
     "list_pruning_plants",
     "list_pruning_stages",
     "get_pruning_instructions",
+    "calculate_all_surplus",
+    "calculate_micro_surplus",
+    "analyze_nutrient_profile",
     "TranspirationMetrics",
 ]

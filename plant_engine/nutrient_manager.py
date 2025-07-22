@@ -19,6 +19,7 @@ __all__ = [
     "calculate_all_deficiencies",
     "calculate_nutrient_balance",
     "calculate_surplus",
+    "calculate_all_surplus",
     "get_npk_ratio",
     "score_nutrient_levels",
 ]
@@ -170,5 +171,17 @@ def calculate_all_deficiencies(
 
     deficits.update(_micro_def(current_levels, plant_type, stage))
     return deficits
+
+
+def calculate_all_surplus(
+    current_levels: Dict[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return overall nutrient surplus including micronutrients."""
+
+    surplus = calculate_surplus(current_levels, plant_type, stage)
+    from .micro_manager import calculate_surplus as _micro_surplus
+
+    surplus.update(_micro_surplus(current_levels, plant_type, stage))
+    return surplus
 
 
