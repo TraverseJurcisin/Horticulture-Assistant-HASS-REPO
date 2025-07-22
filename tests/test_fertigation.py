@@ -7,6 +7,7 @@ from plant_engine.fertigation import (
     recommend_batch_fertigation,
     recommend_nutrient_mix,
     estimate_daily_nutrient_uptake,
+    recommend_nutrient_mix_with_cost,
 )
 
 
@@ -124,3 +125,18 @@ def test_recommend_nutrient_mix_with_micro():
     )
     assert "chelated_fe" in mix
     assert mix["chelated_fe"] > 0
+
+
+def test_recommend_nutrient_mix_with_cost():
+    schedule, cost = recommend_nutrient_mix_with_cost(
+        "citrus",
+        "vegetative",
+        1.0,
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+    )
+    assert schedule
+    assert cost >= 0
