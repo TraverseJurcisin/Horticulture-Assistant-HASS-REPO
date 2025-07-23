@@ -85,6 +85,8 @@ __all__ = [
     "compare_environment",
     "generate_environment_alerts",
     "classify_environment_quality",
+    "summarize_environment",
+    "EnvironmentSummary",
 ]
 
 
@@ -186,7 +188,23 @@ class EnvironmentOptimization:
             "target_vpd": self.target_vpd,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
-            "cold_stress": self.cold_stress,
+        "cold_stress": self.cold_stress,
+        }
+
+
+@dataclass
+class EnvironmentSummary:
+    """High level summary of current environmental conditions."""
+
+    quality: str
+    adjustments: Dict[str, str]
+    metrics: EnvironmentMetrics
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "quality": self.quality,
+            "adjustments": self.adjustments,
+            "metrics": self.metrics.as_dict(),
         }
 
 
@@ -639,3 +657,20 @@ def optimize_environment(
         cold_stress=cold_stress,
     )
     return result.as_dict()
+
+
+def summarize_environment(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, Any]:
+    """Return combined quality rating, adjustments and metrics."""
+
+    readings = normalize_environment_readings(current)
+
+    summary = EnvironmentSummary(
+        quality=classify_environment_quality(readings, plant_type, stage),
+        adjustments=recommend_environment_adjustments(readings, plant_type, stage),
+        metrics=calculate_environment_metrics(
+            readings.get("temp_c"), readings.get("humidity_pct")
+        ),
+    )
+    return summary.as_dict()
