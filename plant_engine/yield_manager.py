@@ -4,7 +4,7 @@ from __future__ import annotations
 import os
 from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, List
 
 from .utils import load_json, save_json
 

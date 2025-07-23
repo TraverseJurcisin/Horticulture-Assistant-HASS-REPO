@@ -67,7 +67,7 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
     except FileNotFoundError:
         _LOGGER.info("Log file not found: %s", log_path)
         return []
-    except Exception as exc:  # noqa: broad-except -- log any failure
+    except Exception as exc:  # noqa: BLE001 -- log any failure
         _LOGGER.warning("Failed to read %s: %s", log_path, exc)
         return []
 
@@ -80,7 +80,7 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
         try:
             if datetime.fromisoformat(ts) >= cutoff:
                 recent.append(entry)
-        except Exception:  # noqa: broad-except -- skip malformed entry
+        except Exception:  # noqa: BLE001 -- skip malformed entry
             continue
 
     return recent
@@ -136,7 +136,7 @@ def run_daily_cycle(
             report.nutrient_analysis = analyze_nutrient_profile(
                 nutrient_totals, plant_type, stage_name or ""
             )
-        except Exception:
+        except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
             _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
     # Summarize sensor readings (24h average per sensor type)
     sensor_data = {}
@@ -201,7 +201,7 @@ def run_daily_cycle(
     if isinstance(observed_counts, dict):
         try:
             report.pest_severity = classify_pest_severity(plant_type, observed_counts)
-        except Exception:
+        except Exception:  # noqa: BLE001 -- classification failure not critical
             _LOGGER.debug("Failed to classify pest severity", exc_info=True)
 
     # Predict harvest date if a start date is provided
@@ -212,13 +212,13 @@ def run_daily_cycle(
             harvest = predict_harvest_date(general.get("plant_type", ""), start_date)
             if harvest:
                 report.predicted_harvest_date = harvest.isoformat()
-        except Exception:  # noqa: broad-except -- ignore parse errors
+        except Exception:  # noqa: BLE001 -- ignore parse errors
             pass
     # Calculate root zone water metrics (TAW, MAD, current moisture)
     root_depth_cm = general.get("max_root_depth_cm", 30.0)
     try:
         root_depth_cm = float(root_depth_cm)
-    except Exception:
+    except Exception:  # noqa: BLE001 -- default on parse failure
         root_depth_cm = 30.0
 
     rootzone = estimate_water_capacity(root_depth_cm)
@@ -268,6 +268,6 @@ def run_daily_cycle(
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)
         _LOGGER.info("Saved daily report for %s to %s", plant_id, out_file)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 -- log write failures
         _LOGGER.error("Failed to write report for %s: %s", plant_id, e)
     return report.as_dict()

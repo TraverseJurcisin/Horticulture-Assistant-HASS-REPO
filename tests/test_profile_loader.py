@@ -1,8 +1,5 @@
 import json
-import os
-from pathlib import Path
 
-import pytest
 
 from custom_components.horticulture_assistant.utils import plant_profile_loader as loader
 

@@ -9,7 +9,7 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils import daily_report_builder as drb
+from custom_components.horticulture_assistant.utils import daily_report_builder as drb  # noqa: E402
 
 class DummyConfig:
     def __init__(self, base: Path):

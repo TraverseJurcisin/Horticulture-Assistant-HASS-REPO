@@ -1,5 +1,3 @@
-import pytest
-
 from plant_engine.utils import normalize_key
 
 
