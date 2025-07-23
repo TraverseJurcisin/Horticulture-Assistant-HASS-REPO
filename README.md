@@ -197,8 +197,9 @@ or incomplete and should only be used as a starting point for your own research.
   the entire crop cycle.
 - **Irrigation Targets**: `get_daily_irrigation_target` returns default
   milliliters per plant based on `irrigation_guidelines.json`.
-- **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
-  fertilizer schedule using those irrigation targets.
+- **Fertigation Planning**: `generate_fertigation_plan` now returns a
+  `FertigationPlan` dataclass providing a day-by-day fertilizer schedule via
+  `plan.as_dict()` and the per-day irrigation target.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.

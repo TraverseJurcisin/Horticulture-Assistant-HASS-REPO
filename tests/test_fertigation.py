@@ -11,6 +11,7 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_cost,
     recommend_nutrient_mix_with_cost_breakdown,
     generate_fertigation_plan,
+    FertigationDay,
 )
 
 
@@ -177,7 +178,16 @@ def test_recommend_nutrient_mix_with_cost_breakdown():
 
 def test_generate_fertigation_plan():
     plan = generate_fertigation_plan("lettuce", "seedling", 3)
-    assert len(plan) == 3
-    day1 = plan[1]
+    plan_dict = plan.as_dict()
+    assert len(plan_dict) == 3
+    day1 = plan_dict[1]
     assert day1["N"] > 0
-    assert day1 == plan[2] == plan[3]
+    assert day1 == plan_dict[2] == plan_dict[3]
+
+
+def test_fertigation_plan_dataclass():
+    plan = generate_fertigation_plan("citrus", "seedling", 2)
+    assert plan.plant_type == "citrus"
+    assert plan.stage == "seedling"
+    assert len(plan.days) == 2
+    assert all(isinstance(day, FertigationDay) for day in plan.days)

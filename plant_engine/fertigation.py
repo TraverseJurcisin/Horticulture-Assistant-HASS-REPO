@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Dict, Mapping, Iterable
+from dataclasses import dataclass
+from typing import Dict, Mapping, Iterable, List
 
 from .nutrient_manager import (
     calculate_deficiencies,
@@ -37,6 +38,8 @@ def get_fertilizer_purity(name: str) -> Dict[str, float]:
 
 __all__ = [
     "get_fertilizer_purity",
+    "FertigationDay",
+    "FertigationPlan",
     "recommend_fertigation_schedule",
     "recommend_fertigation_with_water",
     "recommend_correction_schedule",
@@ -49,6 +52,28 @@ __all__ = [
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
 ]
+
+
+@dataclass
+class FertigationDay:
+    """Daily fertilizer schedule entry."""
+
+    day: int
+    fertilizers: Dict[str, float]
+
+
+@dataclass
+class FertigationPlan:
+    """Container for a multi-day fertigation plan."""
+
+    plant_type: str
+    stage: str
+    volume_l: float
+    days: List[FertigationDay]
+
+    def as_dict(self) -> Dict[int, Dict[str, float]]:
+        """Return the plan as a dictionary keyed by day."""
+        return {d.day: d.fertilizers for d in self.days}
 
 
 def _resolve_purity(
@@ -442,13 +467,14 @@ def generate_fertigation_plan(
     purity: Mapping[str, float] | None = None,
     *,
     product: str | None = None,
-) -> Dict[int, Dict[str, float]]:
-    """Return daily fertigation schedules for ``days`` days.
+) -> FertigationPlan:
+    """Return a multi-day fertigation plan for a plant stage.
 
-    This convenience helper pulls the recommended daily irrigation volume from
-    :func:`irrigation_manager.get_daily_irrigation_target` and generates a
-    fertilizer schedule for each day using
-    :func:`recommend_fertigation_schedule`.
+    The plan encapsulates the recommended daily irrigation volume and the
+    fertilizer grams required for each day. The helper relies on
+    :func:`irrigation_manager.get_daily_irrigation_target` to obtain the
+    irrigation volume and :func:`recommend_fertigation_schedule` to build the
+    per-day schedule.
     """
 
     from .irrigation_manager import get_daily_irrigation_target
@@ -458,17 +484,24 @@ def generate_fertigation_plan(
 
     daily_ml = get_daily_irrigation_target(plant_type, stage)
     if daily_ml <= 0:
-        return {}
+        return FertigationPlan(plant_type, stage, 0.0, [])
 
     volume_l = daily_ml / 1000
-    plan: Dict[int, Dict[str, float]] = {}
+    days_list: List[FertigationDay] = []
     for day in range(1, days + 1):
-        plan[day] = recommend_fertigation_schedule(
+        schedule = recommend_fertigation_schedule(
             plant_type,
             stage,
             volume_l,
             purity,
             product=product,
         )
-    return plan
+        days_list.append(FertigationDay(day=day, fertilizers=schedule))
+
+    return FertigationPlan(
+        plant_type=plant_type,
+        stage=stage,
+        volume_l=volume_l,
+        days=days_list,
+    )
 
