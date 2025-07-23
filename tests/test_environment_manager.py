@@ -283,6 +283,15 @@ def test_score_environment():
     assert low_score < score
 
 
+def test_weighted_score_environment():
+    base = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
+    bad_temp = {**base, "temp_c": 10}
+    bad_hum = {**base, "humidity_pct": 40}
+    score_temp = score_environment(bad_temp, "citrus", "seedling")
+    score_hum = score_environment(bad_hum, "citrus", "seedling")
+    assert score_temp < score_hum
+
+
 def test_get_target_dli():
     assert get_target_dli("lettuce", "seedling") == (10, 12)
     assert get_target_dli("unknown") is None

@@ -18,6 +18,7 @@ HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
+SCORE_WEIGHT_FILE = "environment_score_weights.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -142,6 +143,7 @@ __all__ = [
     "recommend_co2_injection",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
+    "get_score_weight",
     "recommend_light_intensity",
     "recommend_photoperiod",
     "evaluate_heat_stress",
@@ -178,6 +180,15 @@ _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
+_SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
+
+
+def get_score_weight(metric: str) -> float:
+    """Return weighting factor for an environment metric."""
+    try:
+        return float(_SCORE_WEIGHTS.get(metric, 1.0))
+    except (TypeError, ValueError):
+        return 1.0
 
 
 def _lookup_stage_data(
@@ -507,8 +518,17 @@ def score_environment(
     if not components:
         return 0.0
 
-    avg = sum(components.values()) / len(components)
-    return round(avg, 1)
+    total = 0.0
+    total_weight = 0.0
+    for key, value in components.items():
+        weight = get_score_weight(key)
+        total += value * weight
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round(total / total_weight, 1)
 
 
 def score_environment_series(
