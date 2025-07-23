@@ -20,7 +20,10 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
 from plant_engine.environment_manager import compare_environment, optimize_environment
 from plant_engine.growth_stage import predict_harvest_date
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
-from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
+from plant_engine.disease_manager import (
+    recommend_treatments as recommend_disease_treatments,
+)
+from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.utils import load_dataset
 from plant_engine.fertigation import (
@@ -47,6 +50,7 @@ class DailyReport:
     environment_optimization: dict[str, object] = field(default_factory=dict)
     pest_actions: dict[str, str] = field(default_factory=dict)
     disease_actions: dict[str, str] = field(default_factory=dict)
+    deficiency_actions: dict[str, dict[str, str]] = field(default_factory=dict)
     beneficial_insects: dict[str, list[str]] = field(default_factory=dict)
     pest_severity: dict[str, str] = field(default_factory=dict)
     root_zone: dict[str, object] = field(default_factory=dict)
@@ -141,7 +145,14 @@ def run_daily_cycle(
         report.nutrient_summary = nutrient_totals
         try:
             report.nutrient_analysis = analyze_nutrient_profile(
-                nutrient_totals, plant_type, stage_name or ""
+                nutrient_totals,
+                plant_type,
+                stage_name or "",
+            )
+            report.deficiency_actions = diagnose_deficiency_actions(
+                nutrient_totals,
+                plant_type,
+                stage_name or "",
             )
         except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
             _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)

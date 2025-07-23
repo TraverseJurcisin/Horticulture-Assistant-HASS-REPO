@@ -23,3 +23,6 @@ def test_run_daily_cycle_nutrient_analysis(tmp_path):
 
     assert "nutrient_analysis" in report
     assert report["nutrient_analysis"]["recommended"]["N"] == 80
+    # verify nutrient deficiency detection
+    assert "deficiency_actions" in report
+    assert report["deficiency_actions"]["Ca"]["severity"] == "severe"
