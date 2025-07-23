@@ -35,6 +35,7 @@ class RecommendationEngine:
         self.sensor_data: Dict[str, Dict] = {}
         self.product_availability: Dict[str, Dict] = {}
         self.ai_feedback: Dict[str, Dict] = {}
+        self.environment_data: Dict[str, Dict] = {}
 
     def set_auto_approve(self, value: bool) -> None:
         """Enable or disable automatic approval of recommendations."""
@@ -55,6 +56,10 @@ class RecommendationEngine:
     def update_ai_feedback(self, plant_id: str, ai_feedback: Dict) -> None:
         """Cache AI feedback notes for ``plant_id``."""
         self.ai_feedback[plant_id] = ai_feedback
+
+    def update_environment_data(self, plant_id: str, env_payload: Dict) -> None:
+        """Record latest environmental readings for ``plant_id``."""
+        self.environment_data[plant_id] = env_payload
 
     def recommend(self, plant_id: str) -> RecommendationBundle:
         """Return a bundle of fertilizer and irrigation suggestions."""
@@ -83,6 +88,19 @@ class RecommendationEngine:
                 zones=profile.get("zones", []),
                 justification="Soil moisture below threshold"
             )
+
+        # Environment adjustment notes
+        env = self.environment_data.get(plant_id)
+        if env:
+            from plant_engine.environment_manager import recommend_environment_adjustments
+
+            adjustments = recommend_environment_adjustments(
+                env,
+                profile.get("plant_type", ""),
+                profile.get("lifecycle_stage"),
+            )
+            for label, action in adjustments.items():
+                notes.append(f"{label}: {action}")
 
         requires_approval = not self.auto_approve
         if requires_approval:
