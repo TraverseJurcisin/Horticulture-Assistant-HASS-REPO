@@ -130,12 +130,14 @@ __all__ = [
     "calculate_absolute_humidity",
     "calculate_dli",
     "photoperiod_for_target_dli",
+    "ppfd_for_target_dli",
     "calculate_dli_series",
     "calculate_vpd_series",
     "get_target_dli",
     "get_target_vpd",
     "get_target_photoperiod",
     "humidity_for_target_vpd",
+    "recommend_light_intensity",
     "recommend_photoperiod",
     "evaluate_heat_stress",
     "evaluate_cold_stress",
@@ -616,6 +618,18 @@ def photoperiod_for_target_dli(target_dli: float, ppfd: float) -> float:
     return round(hours, 2)
 
 
+def ppfd_for_target_dli(target_dli: float, photoperiod_hours: float) -> float:
+    """Return PPFD required to reach ``target_dli`` over ``photoperiod_hours``.
+
+    Both arguments must be positive or a ``ValueError`` is raised.
+    """
+    if target_dli <= 0 or photoperiod_hours <= 0:
+        raise ValueError("target_dli and photoperiod_hours must be positive")
+
+    ppfd = target_dli * 1_000_000 / (photoperiod_hours * 3600)
+    return round(ppfd, 2)
+
+
 def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     """Return relative humidity (%) that yields ``target_vpd`` at ``temp_c``.
 
@@ -653,6 +667,25 @@ def recommend_photoperiod(
 
     mid_target = sum(target) / 2
     return photoperiod_for_target_dli(mid_target, ppfd)
+
+
+def recommend_light_intensity(
+    photoperiod_hours: float, plant_type: str, stage: str | None = None
+) -> float | None:
+    """Return PPFD required for the midpoint DLI target.
+
+    If the plant has no DLI data or ``photoperiod_hours`` is non-positive,
+    ``None`` is returned.
+    """
+    if photoperiod_hours <= 0:
+        return None
+
+    target = get_target_dli(plant_type, stage)
+    if not target:
+        return None
+
+    mid_target = sum(target) / 2
+    return ppfd_for_target_dli(mid_target, photoperiod_hours)
 
 
 def evaluate_heat_stress(

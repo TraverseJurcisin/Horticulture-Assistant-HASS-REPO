@@ -15,11 +15,13 @@ from plant_engine.environment_manager import (
     calculate_dli_series,
     calculate_vpd_series,
     photoperiod_for_target_dli,
+    ppfd_for_target_dli,
     get_target_dli,
     get_target_vpd,
     get_target_photoperiod,
     humidity_for_target_vpd,
     recommend_photoperiod,
+    recommend_light_intensity,
     evaluate_heat_stress,
     evaluate_cold_stress,
     evaluate_light_stress,
@@ -232,6 +234,23 @@ def test_recommend_photoperiod():
 
     assert recommend_photoperiod(0, "lettuce") is None
     assert recommend_photoperiod(500, "unknown") is None
+
+
+def test_ppfd_for_target_dli():
+    ppfd = ppfd_for_target_dli(30, 15)
+    assert round(ppfd, 2) == 555.56
+    with pytest.raises(ValueError):
+        ppfd_for_target_dli(-1, 15)
+    with pytest.raises(ValueError):
+        ppfd_for_target_dli(30, 0)
+
+
+def test_recommend_light_intensity():
+    ppfd = recommend_light_intensity(16, "lettuce", "seedling")
+    expected = ppfd_for_target_dli(11, 16)
+    assert round(ppfd, 2) == round(expected, 2)
+    assert recommend_light_intensity(0, "lettuce") is None
+    assert recommend_light_intensity(16, "unknown") is None
 
 
 def test_humidity_for_target_vpd():
