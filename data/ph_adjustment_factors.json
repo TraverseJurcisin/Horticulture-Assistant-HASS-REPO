@@ -1,0 +1,4 @@
+{
+  "ph_down": {"effect_per_ml_per_l": -0.1},
+  "ph_up": {"effect_per_ml_per_l": 0.1}
+}

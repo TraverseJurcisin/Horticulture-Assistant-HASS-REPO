@@ -27,3 +27,18 @@ def test_recommended_ph_setpoint():
     assert ph_manager.recommended_ph_setpoint("citrus") == 6.0
     assert ph_manager.recommended_ph_setpoint("unknown") is None
 
+
+def test_estimate_ph_adjustment_volume():
+    # 10 L solution from pH 7.0 to 6.0 using acid with -0.1 per ml/L
+    ml = ph_manager.estimate_ph_adjustment_volume(7.0, 6.0, 10, "ph_down")
+    assert ml == 100.0
+
+    # Unknown product returns None
+    assert ph_manager.estimate_ph_adjustment_volume(6.0, 6.5, 5, "foo") is None
+
+    # Zero delta requires no adjustment
+    assert ph_manager.estimate_ph_adjustment_volume(6.5, 6.5, 5, "ph_up") == 0.0
+
+    with pytest.raises(ValueError):
+        ph_manager.estimate_ph_adjustment_volume(6.0, 6.5, 0, "ph_up")
+
