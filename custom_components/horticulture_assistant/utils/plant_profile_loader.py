@@ -7,7 +7,8 @@ import logging
 from pathlib import Path
 from functools import lru_cache
 
-# Attempt to import yaml for YAML support
+# Attempt to import PyYAML for optional YAML support. Tests fall back to a very
+# small parser that understands the limited subset of YAML used in fixtures.
 try:
     import yaml
 except ImportError:
@@ -37,12 +38,9 @@ def load_profile_from_path(path: str | Path) -> dict:
         with open(fp, "r", encoding="utf-8") as f:
             return json.load(f) or {}
 
-    def _load_yaml(fp: Path) -> dict:
-        content = fp.read_text(encoding="utf-8")
-        if yaml is not None:
-            return yaml.safe_load(content) or {}
+    def _basic_yaml_parse(content: str) -> dict:
+        """Parse a tiny subset of YAML used in tests when PyYAML is missing."""
 
-        # Very small fallback parser supporting the limited syntax used in tests
         parsed: dict[str, object] = {}
         stack = [parsed]
         indents = [0]
@@ -69,6 +67,12 @@ def load_profile_from_path(path: str | Path) -> dict:
                     val = float(val) if "." in val else int(val)
             stack[-1][key] = val
         return parsed
+
+    def _load_yaml(fp: Path) -> dict:
+        content = fp.read_text(encoding="utf-8")
+        if yaml is not None:
+            return yaml.safe_load(content) or {}
+        return _basic_yaml_parse(content)
 
     try:
         if ext == ".json":
