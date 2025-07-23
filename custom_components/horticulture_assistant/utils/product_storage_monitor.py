@@ -1,18 +1,19 @@
+"""Helpers for validating fertilizer storage conditions."""
+
 from datetime import datetime
 from typing import Dict, Optional
 
 
 class ProductStorageMonitor:
+    """Utility class for common storage safety checks."""
+
     @staticmethod
     def is_expired(
         expiration_date: Optional[str],
-        ignore_expiry: bool = False
+        ignore_expiry: bool = False,
     ) -> bool:
-        """
-        Checks if the product is expired.
-        :param expiration_date: ISO format string (e.g., '2025-06-30')
-        :param ignore_expiry: Whether to skip expiration check (for mineral products)
-        """
+        """Return ``True`` if ``expiration_date`` has passed."""
+
         if ignore_expiry or not expiration_date:
             return False
 
@@ -25,16 +26,10 @@ class ProductStorageMonitor:
     @staticmethod
     def flag_temperature_risk(
         temperature_c: float,
-        ingredient_profile: Dict[str, Dict[str, float]]
+        ingredient_profile: Dict[str, Dict[str, float]],
     ) -> Optional[str]:
-        """
-        Checks if current temperature may compromise ingredients.
-        Example ingredient_profile:
-        {
-            "Magnesium Sulfate": {"precip_temp": 10.0},
-            "Urea": {"volatilize_temp": 30.0}
-        }
-        """
+        """Return a warning string if ``temperature_c`` jeopardizes ingredients."""
+
         for name, limits in ingredient_profile.items():
             if "precip_temp" in limits and temperature_c < limits["precip_temp"]:
                 return f"{name} may precipitate at {temperature_c}°C"
@@ -45,11 +40,10 @@ class ProductStorageMonitor:
     @staticmethod
     def check_manufacturing_date(
         mfg_date: Optional[str],
-        shelf_life_months: Optional[int] = None
+        shelf_life_months: Optional[int] = None,
     ) -> bool:
-        """
-        Checks if product is potentially outdated based on manufacturing date + shelf life.
-        """
+        """Return ``True`` if ``mfg_date`` is older than ``shelf_life_months``."""
+
         if not mfg_date or not shelf_life_months:
             return False
         try:
@@ -58,3 +52,8 @@ class ProductStorageMonitor:
             return delta.days > (shelf_life_months * 30)
         except ValueError:
             return False
+
+
+__all__ = [
+    "ProductStorageMonitor",
+]
