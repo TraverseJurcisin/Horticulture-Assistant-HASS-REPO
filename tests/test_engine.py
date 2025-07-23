@@ -89,3 +89,23 @@ def test_daily_report_as_dict():
     assert d["plant_id"] == "x"
     assert d["lifecycle_stage"] == "seedling"
 
+
+def test_normalize_env_aliases():
+    env = {
+        "temperature": 25,
+        "humidity": 55,
+        "light": 400,
+        "co2": 800,
+        "dli": 20,
+        "photoperiod_hours": 16,
+    }
+    result = engine._normalize_env(env)
+    assert result == {
+        "temp_c": 25,
+        "humidity_pct": 55,
+        "light_ppfd": 400,
+        "co2_ppm": 800,
+        "dli": 20,
+        "photoperiod_hours": 16,
+    }
+

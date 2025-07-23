@@ -16,6 +16,7 @@ from plant_engine.approval_queue import queue_threshold_updates
 from plant_engine.environment_manager import (
     recommend_environment_adjustments,
     optimize_environment,
+    normalize_environment_readings,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.pest_manager import (
@@ -41,21 +42,27 @@ def load_profile(plant_id: str) -> Dict[str, Any]:
 
 
 def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
-    """Map raw environment fields to keys expected by optimizers."""
-    mapped: Dict[str, float] = {}
-    if env.get("temp_c") is not None:
-        mapped["temp_c"] = env["temp_c"]
-    if env.get("rh_pct") is not None:
-        mapped["humidity_pct"] = env["rh_pct"]
-    if env.get("par_w_m2") is not None:
-        mapped["light_ppfd"] = env["par_w_m2"]
-    if env.get("co2_ppm") is not None:
-        mapped["co2_ppm"] = env["co2_ppm"]
-    if env.get("dli") is not None:
-        mapped["dli"] = env["dli"]
-    if env.get("photoperiod_hours") is not None:
-        mapped["photoperiod_hours"] = env["photoperiod_hours"]
-    return mapped
+    """Return ``env`` values normalized using environment alias mapping."""
+
+    allowed = {
+        "temp_c",
+        "rh_pct",
+        "par_w_m2",
+        "co2_ppm",
+        "dli",
+        "photoperiod_hours",
+        "temperature",
+        "humidity",
+        "light",
+        "co2",
+    }
+
+    filtered = {k: env[k] for k in allowed if k in env and env[k] is not None}
+    normalized = normalize_environment_readings(filtered)
+
+    # keep only fields used by environment optimizers
+    keys = {"temp_c", "humidity_pct", "light_ppfd", "co2_ppm", "dli", "photoperiod_hours"}
+    return {k: v for k, v in normalized.items() if k in keys}
 
 
 def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
