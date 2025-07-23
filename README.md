@@ -196,6 +196,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Total Uptake Estimation**: `estimate_stage_totals` multiplies daily uptake by
   growth stage duration while `estimate_total_uptake` sums these values across
   the entire crop cycle.
+- **Uptake Cost Estimation**: `estimate_stage_cost` and `estimate_cycle_cost`
+  convert those totals into fertilizer costs using price data.
 - **Irrigation Targets**: `get_daily_irrigation_target` returns default
   milliliters per plant based on `irrigation_guidelines.json`.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day

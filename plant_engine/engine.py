@@ -1,4 +1,5 @@
 import os
+import logging
 from typing import Dict, Mapping, Any
 from plant_engine.utils import load_json, save_json
 from plant_engine.ai_model import analyze
@@ -33,6 +34,8 @@ DEFAULT_ENV = {
     "par_w_m2": 350,
     "wind_speed_m_s": 1.2,
 }
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def load_profile(plant_id: str) -> Dict[str, Any]:
@@ -162,7 +165,9 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     if profile.get("auto_approve_all", False):
         profile["thresholds"] = recommendations
         save_json(plant_file, profile)
-        print(f"✅ Auto-applied AI threshold updates for {plant_id}")
+        _LOGGER.info(
+            "Auto-applied AI threshold updates for %s", plant_id
+        )
     else:
         queue_threshold_updates(plant_id, profile["thresholds"], recommendations)
 
@@ -170,6 +175,6 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     out_path = os.path.join(OUTPUT_DIR, f"{plant_id}.json")
     save_json(out_path, report)
-    print(f"📄 Daily report saved for {plant_id}")
+    _LOGGER.info("Daily report saved for %s", plant_id)
 
     return report
