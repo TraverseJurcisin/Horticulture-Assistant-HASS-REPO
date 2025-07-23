@@ -194,6 +194,9 @@ variable `HORTICULTURE_DATA_DIR` when running scripts or tests. An additional
 datasets without copying the entire directory. Overlay files are merged
 recursively so nested keys can be customized without redefining the entire
 structure.
+Call `plant_engine.utils.clear_dataset_cache()` if you modify these
+environment variables while the application is running so changes are
+immediately reflected.
 
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.
@@ -208,6 +211,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Data Logging**: Set `state_class: measurement` on sensors for proper history recording.
 - **Customization**: Edit `plant_engine/constants.py` to tweak default environment
   readings or nutrient multipliers when profiles omit them.
+- **Dataset Cache**: Call `plant_engine.utils.clear_dataset_cache()` after
+  adjusting dataset environment variables to refresh cached lookups.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets and can optionally include
