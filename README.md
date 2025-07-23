@@ -235,6 +235,8 @@ or incomplete and should only be used as a starting point for your own research.
   schedule along with an estimated dollar cost based on fertilizer prices.
 - **Per-Plant Cost**: `estimate_mix_cost_per_plant` divides the total mix cost
   by plant count for precise budgeting.
+- **Cost Per Liter**: `estimate_mix_cost_per_liter` helps compare fertilizer
+  schedules by normalizing cost to the total solution volume.
 - **Mix Nutrient Totals**: `calculate_mix_nutrients` reports the elemental
   nutrient amounts contributed by each fertilizer mix in milligrams.
 - **Solution Weight Estimate**: `estimate_solution_mass` adds fertilizer mass to

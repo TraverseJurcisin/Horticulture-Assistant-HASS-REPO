@@ -398,6 +398,23 @@ def estimate_solution_mass(schedule: Mapping[str, float], volume_l: float) -> fl
     return round(volume_l + fertilizer_mass_kg, 3)
 
 
+def estimate_mix_cost_per_liter(
+    schedule: Mapping[str, float], volume_l: float
+) -> float:
+    """Return cost per liter of solution for ``schedule`` and ``volume_l``.
+
+    This helper builds on :func:`estimate_mix_cost` to expose the relative cost
+    of a fertilizer schedule for the given solution volume. ``volume_l`` must be
+    positive.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    total = estimate_mix_cost(schedule)
+    return round(total / volume_l, 4)
+
+
 def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
@@ -468,6 +485,7 @@ __all__ = [
     "calculate_fertilizer_ppm",
     "estimate_mix_cost",
     "estimate_mix_cost_per_plant",
+    "estimate_mix_cost_per_liter",
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
     "calculate_mix_density",
