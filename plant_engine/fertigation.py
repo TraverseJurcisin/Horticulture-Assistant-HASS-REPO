@@ -51,6 +51,7 @@ __all__ = [
     "calculate_mix_nutrients",
     "estimate_stage_cost",
     "estimate_cycle_cost",
+    "recommend_precise_fertigation",
 ]
 
 
@@ -484,6 +485,54 @@ def generate_fertigation_plan(
             product=product,
         )
     return plan
+
+
+def recommend_precise_fertigation(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> tuple[Dict[str, float], float, Dict[str, float], Dict[str, Dict[str, float]]]:
+    """Return fertigation schedule with cost and optional water adjustments."""
+
+    if water_profile is not None:
+        schedule, warnings = recommend_nutrient_mix_with_water(
+            plant_type,
+            stage,
+            volume_l,
+            water_profile,
+            fertilizers=fertilizers,
+            purity_overrides=purity_overrides,
+            include_micro=include_micro,
+            micro_fertilizers=micro_fertilizers,
+        )
+    else:
+        schedule = recommend_nutrient_mix(
+            plant_type,
+            stage,
+            volume_l,
+            current_levels=None,
+            fertilizers=fertilizers,
+            purity_overrides=purity_overrides,
+            include_micro=include_micro,
+            micro_fertilizers=micro_fertilizers,
+        )
+        warnings = {}
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_mix_cost,
+        estimate_cost_breakdown,
+    )
+
+    total = estimate_mix_cost(schedule)
+    breakdown = estimate_cost_breakdown(schedule)
+
+    return schedule, total, breakdown, warnings
 
 
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:

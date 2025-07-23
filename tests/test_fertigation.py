@@ -224,3 +224,25 @@ def test_estimate_stage_and_cycle_cost():
     )
     assert stage_cost >= 0
     assert cycle_cost >= stage_cost
+
+
+def test_recommend_precise_fertigation():
+    from plant_engine.fertigation import recommend_precise_fertigation
+
+    schedule, total, breakdown, warnings = recommend_precise_fertigation(
+        "tomato",
+        "vegetative",
+        volume_l=10.0,
+        water_profile={"N": 20},
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+        include_micro=False,
+    )
+
+    assert schedule
+    assert total >= 0
+    assert breakdown
+    assert warnings == {}
