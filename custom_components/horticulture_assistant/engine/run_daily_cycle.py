@@ -18,7 +18,7 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
     load_profile_by_id,
 )
 from plant_engine.environment_manager import compare_environment, optimize_environment
-from plant_engine.growth_stage import predict_harvest_date
+from plant_engine.growth_stage import predict_harvest_date, stage_progress
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
 from plant_engine.disease_manager import (
     recommend_treatments as recommend_disease_treatments,
@@ -57,6 +57,7 @@ class DailyReport:
     root_zone: dict[str, object] = field(default_factory=dict)
     transpiration: dict[str, float] = field(default_factory=dict)
     stage_info: dict[str, object] = field(default_factory=dict)
+    stage_progress_pct: float | None = None
     fertigation_schedule: dict[str, float] = field(default_factory=dict)
     fertigation_cost: float | None = None
     irrigation_target_ml: float | None = None
@@ -78,7 +79,7 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
     """Return log entries from ``log_path`` within the last ``hours``."""
 
     try:
-        with open(log_path, "r", encoding="utf-8") as f:
+        with log_path.open("r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
         _LOGGER.info("Log file not found: %s", log_path)
@@ -88,18 +89,17 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
         return []
 
     cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
-    recent: list[dict] = []
-    for entry in data:
+
+    def in_range(entry: dict) -> bool:
         ts = entry.get("timestamp")
         if not ts:
-            continue
+            return False
         try:
-            if datetime.fromisoformat(ts) >= cutoff:
-                recent.append(entry)
-        except Exception:  # noqa: BLE001 -- skip malformed entry
-            continue
+            return datetime.fromisoformat(ts) >= cutoff
+        except Exception:
+            return False
 
-    return recent
+    return [e for e in data if in_range(e)]
 
 
 def run_daily_cycle(
@@ -271,13 +271,21 @@ def run_daily_cycle(
             cost = None
         report.fertigation_schedule = schedule
         report.fertigation_cost = cost
-    # Include stage details if available in profile
+    # Include stage details and progress if available in profile
     if stage_name:
         stages = profile.get("stages", {})
-        # Check for exact or lowercase match in stage definitions
         stage_key = stage_name if stage_name in stages else stage_name.lower()
         if stage_key in stages and isinstance(stages[stage_key], dict):
             report.stage_info = stages[stage_key]
+        if start_date_str:
+            try:
+                start_date = datetime.fromisoformat(start_date_str).date()
+                days = (datetime.now(timezone.utc).date() - start_date).days
+                progress = stage_progress(plant_type, stage_name, days)
+                if progress is not None:
+                    report.stage_progress_pct = progress
+            except Exception:  # noqa: BLE001 -- optional
+                pass
     # Include latest yield measurement (if any in last 24h)
     if yield_entries:
         last_yield = yield_entries[-1].get("yield_quantity")

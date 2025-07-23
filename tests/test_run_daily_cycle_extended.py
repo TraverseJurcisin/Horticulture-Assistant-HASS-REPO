@@ -28,6 +28,7 @@ def test_run_daily_cycle_extended(tmp_path):
     assert report["beneficial_insects"]["aphids"][0] == "ladybugs"
     assert report["pest_severity"]["aphids"] == "moderate"
     assert report["predicted_harvest_date"] == "2025-05-01"
+    assert report["stage_progress_pct"] is not None
     assert "environment_optimization" in report
     assert "fertigation_schedule" in report
     assert "fertigation_cost" in report
