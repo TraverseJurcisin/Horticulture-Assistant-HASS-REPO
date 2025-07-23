@@ -256,6 +256,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Light Intensity Suggestions**: `recommend_light_intensity` calculates the
   PPFD needed to achieve midpoint DLI targets for a given photoperiod.
 - **Photoperiod Guidelines**: `get_target_photoperiod` looks up recommended day lengths from `photoperiod_guidelines.json`.
+- **CO₂ Guidelines**: `get_target_co2` returns recommended enrichment ranges for each stage.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
 - **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
