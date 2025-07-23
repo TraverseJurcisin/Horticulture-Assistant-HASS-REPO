@@ -25,6 +25,7 @@ from plant_engine.environment_manager import (
     get_co2_price,
     estimate_co2_cost,
     recommend_co2_injection_with_cost,
+    calculate_co2_injection_series,
     humidity_for_target_vpd,
     recommend_photoperiod,
     recommend_light_intensity,
@@ -687,3 +688,11 @@ def test_co2_price_and_cost():
 def test_estimate_co2_cost_negative():
     with pytest.raises(ValueError):
         estimate_co2_cost(-5, "bulk_tank")
+
+
+def test_calculate_co2_injection_series():
+    series = [300, 500, 700]
+    grams = calculate_co2_injection_series(series, "citrus", "seedling", 50.0)
+    assert len(grams) == 3
+    assert grams[0] > grams[1] >= 0
+    assert grams[2] == 0.0

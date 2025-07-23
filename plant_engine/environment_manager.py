@@ -158,6 +158,7 @@ __all__ = [
     "get_co2_price",
     "estimate_co2_cost",
     "recommend_co2_injection_with_cost",
+    "calculate_co2_injection_series",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "get_score_weight",
@@ -1196,6 +1197,36 @@ def recommend_co2_injection_with_cost(
     grams = recommend_co2_injection(current_ppm, plant_type, stage, volume_m3)
     cost = estimate_co2_cost(grams, method)
     return grams, cost
+
+
+def calculate_co2_injection_series(
+    ppm_series: Iterable[float],
+    plant_type: str,
+    stage: str | None,
+    volume_m3: float,
+) -> list[float]:
+    """Return CO₂ grams required for each reading in ``ppm_series``.
+
+    The function looks up the recommended range via :func:`get_target_co2` and
+    applies :func:`calculate_co2_injection` to each reading. ``volume_m3`` must
+    be positive. Unknown guidelines yield a list of zeros matching the input
+    length.
+    """
+
+    if volume_m3 <= 0:
+        raise ValueError("volume_m3 must be positive")
+
+    target = get_target_co2(plant_type, stage)
+    if not target:
+        return [0.0 for _ in ppm_series]
+
+    injections: list[float] = []
+    for ppm in ppm_series:
+        injections.append(
+            calculate_co2_injection(float(ppm), target, volume_m3)
+        )
+
+    return injections
 
 
 def calculate_environment_metrics(
