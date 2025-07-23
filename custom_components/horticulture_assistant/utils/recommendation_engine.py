@@ -1,5 +1,11 @@
+"""Simple engine for fertilizer and irrigation suggestions."""
+
 from dataclasses import dataclass
-from typing import List, Dict, Optional
+from functools import lru_cache
+from typing import Dict, List, Optional
+
+from plant_engine.irrigation_manager import get_daily_irrigation_target
+from plant_engine.environment_manager import generate_environment_alerts
 
 
 @dataclass
@@ -74,6 +80,13 @@ class RecommendationEngine:
     # Recommendation logic
     # ------------------------------------------------------------------
 
+    @lru_cache(maxsize=None)
+    def _get_irrigation_target(self, plant_type: str, stage: str) -> float:
+        """Return daily irrigation volume (mL) for a plant stage."""
+        if not plant_type or not stage:
+            return 0.0
+        return get_daily_irrigation_target(plant_type, stage)
+
     def _calculate_nutrient_deficits(self, plant_id: str) -> Dict[str, float]:
         """Return ppm deficits using dataset guidelines."""
         profile = self.plant_profiles.get(plant_id, {})
@@ -88,10 +101,10 @@ class RecommendationEngine:
             "K": sensors.get("potassium_ppm"),
         }
         try:
-            from plant_engine.nutrient_manager import calculate_deficiencies
+            from plant_engine.nutrient_manager import calculate_all_deficiencies
         except Exception:
             return {}
-        return calculate_deficiencies(current, plant_type, stage)
+        return calculate_all_deficiencies(current, plant_type, stage)
 
     def _generate_fertilizer_recs(self, plant_id: str) -> List[FertilizerRecommendation]:
         """Return fertilizer recommendations based on deficiencies."""
@@ -122,8 +135,12 @@ class RecommendationEngine:
         # Basic irrigation recommendation
         irrigation = None
         if sensors.get("vwc", 100) < profile.get("min_vwc", 30):
+            target_ml = self._get_irrigation_target(
+                profile.get("plant_type", ""),
+                profile.get("lifecycle_stage", ""),
+            )
             irrigation = IrrigationRecommendation(
-                volume_liters=2.0,
+                volume_liters=target_ml / 1000.0,
                 zones=profile.get("zones", []),
                 justification="Soil moisture below threshold"
             )
@@ -131,15 +148,13 @@ class RecommendationEngine:
         # Environment adjustment notes
         env = self.environment_data.get(plant_id)
         if env:
-            from plant_engine.environment_manager import recommend_environment_adjustments
-
-            adjustments = recommend_environment_adjustments(
+            alerts = generate_environment_alerts(
                 env,
                 profile.get("plant_type", ""),
                 profile.get("lifecycle_stage"),
             )
-            for label, action in adjustments.items():
-                notes.append(f"{label}: {action}")
+            for msg in alerts.values():
+                notes.append(msg)
 
         requires_approval = not self.auto_approve
         if requires_approval:
