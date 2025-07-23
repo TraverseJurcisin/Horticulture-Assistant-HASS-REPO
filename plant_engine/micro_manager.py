@@ -13,6 +13,7 @@ _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 __all__ = [
     "list_supported_plants",
     "get_recommended_levels",
+    "get_stage_guidelines",
     "calculate_deficiencies",
     "calculate_surplus",
 ]
@@ -21,6 +22,12 @@ __all__ = [
 def list_supported_plants() -> list[str]:
     """Return plants with micronutrient guidelines."""
     return sorted(_DATA.keys())
+
+
+def get_stage_guidelines(plant_type: str) -> Dict[str, Dict[str, float]]:
+    """Return micronutrient guidelines for all stages of ``plant_type``."""
+
+    return _DATA.get(normalize_key(plant_type), {})
 
 
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:

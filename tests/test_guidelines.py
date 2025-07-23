@@ -13,4 +13,5 @@ def test_get_guideline_summary():
 def test_guideline_summary_no_stage():
     data = get_guideline_summary("citrus")
     assert "stages" in data and "vegetative" in data["stages"]
+    assert data["nutrients"]["vegetative"]["N"] == 80
 

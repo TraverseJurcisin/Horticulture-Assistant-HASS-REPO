@@ -53,11 +53,13 @@ from .irrigation_manager import (
 from .nutrient_manager import (
     calculate_deficiencies,
     calculate_all_surplus,
+    get_stage_guidelines as get_nutrient_stage_guidelines,
     list_supported_plants as list_nutrient_plants,
 )
 from .micro_manager import (
     list_supported_plants as list_micro_plants,
     get_recommended_levels as get_micro_levels,
+    get_stage_guidelines as get_micro_stage_guidelines,
     calculate_deficiencies as calculate_micro_deficiencies,
     calculate_surplus as calculate_micro_surplus,
 )
@@ -150,6 +152,8 @@ __all__ = [
     "get_fertilizer_purity",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
+    "get_nutrient_stage_guidelines",
+    "get_micro_stage_guidelines",
     "get_deficiency_treatment",
     "recommend_deficiency_treatments",
     "list_surplus_nutrients",

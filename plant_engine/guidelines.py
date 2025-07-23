@@ -29,14 +29,16 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     summary: Dict[str, Any] = {
         "environment": environment_manager.get_environmental_targets(plant_type, stage),
-        "nutrients": nutrient_manager.get_recommended_levels(plant_type, stage) if stage else {},
-        "micronutrients": micro_manager.get_recommended_levels(plant_type, stage) if stage else {},
         "pest_guidelines": pest_manager.get_pest_guidelines(plant_type),
     }
 
     if stage:
+        summary["nutrients"] = nutrient_manager.get_recommended_levels(plant_type, stage)
+        summary["micronutrients"] = micro_manager.get_recommended_levels(plant_type, stage)
         summary["stage_info"] = growth_stage.get_stage_info(plant_type, stage)
     else:
+        summary["nutrients"] = nutrient_manager.get_stage_guidelines(plant_type)
+        summary["micronutrients"] = micro_manager.get_stage_guidelines(plant_type)
         summary["stages"] = growth_stage.list_growth_stages(plant_type)
 
     return summary

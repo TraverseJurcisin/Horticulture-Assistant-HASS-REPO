@@ -204,7 +204,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,
-  nutrient and pest guidance for quick reference.
+  nutrient and pest guidance for quick reference. When called without a
+  specific stage it now returns the full set of nutrient guidelines for all
+  stages.
 
 
 ### Automation Blueprint Guide
