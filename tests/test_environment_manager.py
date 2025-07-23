@@ -17,6 +17,7 @@ from plant_engine.environment_manager import (
     get_target_dli,
     get_target_vpd,
     humidity_for_target_vpd,
+    recommend_photoperiod,
     evaluate_heat_stress,
     evaluate_cold_stress,
     score_environment,
@@ -213,6 +214,15 @@ def test_photoperiod_for_target_dli():
         photoperiod_for_target_dli(0, 500)
     with pytest.raises(ValueError):
         photoperiod_for_target_dli(30, -1)
+
+
+def test_recommend_photoperiod():
+    hours = recommend_photoperiod(500, "lettuce", "seedling")
+    expected = photoperiod_for_target_dli(11, 500)
+    assert hours == expected
+
+    assert recommend_photoperiod(0, "lettuce") is None
+    assert recommend_photoperiod(500, "unknown") is None
 
 
 def test_humidity_for_target_vpd():
