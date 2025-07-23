@@ -23,6 +23,7 @@ from plant_engine.environment_manager import (
     score_environment,
     classify_environment_quality,
 )
+from .utils.plant_registry import get_plant_type
 
 from .const import (
     DOMAIN,
@@ -359,7 +360,8 @@ class EnvironmentScoreSensor(HorticultureBaseSensor):
         if len(env) < 2:
             self._attr_native_value = None
             return
-        score = score_environment(env, "citrus")
+        plant_type = get_plant_type(self._plant_id, self.hass) or "citrus"
+        score = score_environment(env, plant_type)
         self._attr_native_value = round(score, 1)
 
 
@@ -384,6 +386,7 @@ class EnvironmentQualitySensor(HorticultureBaseSensor):
         if len(env) < 2:
             self._attr_native_value = None
             return
-        rating = classify_environment_quality(env, "citrus")
+        plant_type = get_plant_type(self._plant_id, self.hass) or "citrus"
+        rating = classify_environment_quality(env, plant_type)
         self._attr_native_value = rating
 

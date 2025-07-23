@@ -3,6 +3,7 @@ import importlib.util
 import sys
 import types
 from pathlib import Path
+import json
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/sensor.py"
 PACKAGE = "custom_components.horticulture_assistant"
@@ -68,14 +69,24 @@ class DummyStates:
         val = self._data.get(eid)
         return types.SimpleNamespace(state=val) if val is not None else None
 
+class DummyConfig:
+    def __init__(self, base: Path):
+        self._base = Path(base)
+
+    def path(self, name: str) -> str:
+        return str(self._base / name)
+
+
 class DummyHass:
-    def __init__(self):
+    def __init__(self, base: Path):
         self.states = DummyStates()
         self.bus = types.SimpleNamespace(async_listen=lambda *a, **k: None)
+        self.config = DummyConfig(base)
 
 
-def test_environment_score_sensor():
-    hass = DummyHass()
+def test_environment_score_sensor(tmp_path: Path):
+    (tmp_path / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
+    hass = DummyHass(tmp_path)
     sensor_entity = EnvironmentScoreSensor(hass, "Plant", "pid")
     hass.states._data = {
         "sensor.pid_raw_temperature": "24",
@@ -87,8 +98,9 @@ def test_environment_score_sensor():
     assert sensor_entity.native_value >= 90
 
 
-def test_environment_quality_sensor():
-    hass = DummyHass()
+def test_environment_quality_sensor(tmp_path: Path):
+    (tmp_path / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
+    hass = DummyHass(tmp_path)
     sensor_entity = EnvironmentQualitySensor(hass, "Plant", "pid")
     hass.states._data = {
         "sensor.pid_raw_temperature": "24",
