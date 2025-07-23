@@ -16,6 +16,7 @@ __all__ = [
     "list_supported_plants",
     "get_pest_thresholds",
     "assess_pest_pressure",
+    "classify_pest_severity",
     "recommend_threshold_actions",
     "recommend_biological_controls",
 ]
@@ -71,3 +72,30 @@ def recommend_biological_controls(
     if not exceeded:
         return {}
     return recommend_beneficials(exceeded)
+
+
+def classify_pest_severity(
+    plant_type: str, observations: Mapping[str, int]
+) -> Dict[str, str]:
+    """Return ``low``, ``moderate`` or ``severe`` for each observed pest.
+
+    The classification uses :data:`pest_thresholds.json` values where counts
+    below the threshold are ``"low"``, counts up to double the threshold are
+    ``"moderate"`` and anything higher is ``"severe"``.
+    """
+
+    thresholds = get_pest_thresholds(plant_type)
+    severity: Dict[str, str] = {}
+    for pest, count in observations.items():
+        key = normalize_key(pest)
+        thresh = thresholds.get(key)
+        if thresh is None:
+            continue
+        if count < thresh:
+            level = "low"
+        elif count < thresh * 2:
+            level = "moderate"
+        else:
+            level = "severe"
+        severity[key] = level
+    return severity
