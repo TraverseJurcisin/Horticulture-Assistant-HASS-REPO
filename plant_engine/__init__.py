@@ -143,6 +143,7 @@ from .thermal_time import (
     accumulate_gdd_series,
 )
 from .compute_transpiration import TranspirationMetrics
+from .nutrient_efficiency import calculate_nue, NUEReport
 
 # Run functions should be imported explicitly to avoid heavy imports at package
 # initialization time.
@@ -252,4 +253,6 @@ __all__ = [
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
+    "calculate_nue",
+    "NUEReport",
 ]

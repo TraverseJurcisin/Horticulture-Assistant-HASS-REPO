@@ -18,5 +18,5 @@ def test_env_overrides(tmp_path, monkeypatch):
     monkeypatch.setenv("HORTICULTURE_YIELD_DIR", str(yield_dir))
     importlib.reload(ne)
 
-    assert ne.NUTRIENT_DIR == str(nutrient_dir)
-    assert ne.YIELD_DIR == str(yield_dir)
+    assert ne.NUTRIENT_DIR == nutrient_dir
+    assert ne.YIELD_DIR == yield_dir
