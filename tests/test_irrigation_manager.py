@@ -10,6 +10,7 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     adjust_irrigation_for_efficiency,
+    IrrigationRecommendation,
 )
 from plant_engine.rootzone_model import RootZone
 from plant_engine.compute_transpiration import compute_transpiration
@@ -108,6 +109,12 @@ def test_recommend_irrigation_from_environment():
     )
     assert result["volume_ml"] == expected
     assert result["metrics"] == metrics
+
+
+def test_irrigation_recommendation_dataclass():
+    metrics = {"et0_mm_day": 5.0, "eta_mm_day": 6.0, "transpiration_ml_day": 500.0}
+    rec = IrrigationRecommendation(100.0, metrics)
+    assert rec.as_dict() == {"volume_ml": 100.0, "metrics": metrics}
 
 
 def test_daily_irrigation_target_lookup():

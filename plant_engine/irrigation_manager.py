@@ -1,7 +1,8 @@
 """Helpers for irrigation scheduling."""
 from __future__ import annotations
 
-from typing import Mapping, Dict
+from dataclasses import dataclass, asdict
+from typing import Mapping, Dict, Any
 
 from .utils import load_dataset, normalize_key
 from .et_model import calculate_eta
@@ -18,6 +19,7 @@ __all__ = [
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
     "adjust_irrigation_for_efficiency",
+    "IrrigationRecommendation",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -28,6 +30,20 @@ _IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
 
 _EFFICIENCY_FILE = "irrigation_efficiency.json"
 _EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
+
+
+@dataclass(frozen=True)
+class IrrigationRecommendation:
+    """Recommended irrigation volume with ET metrics."""
+
+    volume_ml: float
+    metrics: Mapping[str, float]
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "volume_ml": self.volume_ml,
+            "metrics": dict(self.metrics),
+        }
 
 
 def recommend_irrigation_volume(
@@ -155,25 +171,20 @@ def recommend_irrigation_from_environment(
     *,
     refill_to_full: bool = True,
 ) -> Dict[str, object]:
-    """Return irrigation volume using transpiration estimated from ``env_data``.
-
-    This helper bridges :func:`compute_transpiration` and
-    :func:`recommend_irrigation_volume` so automations can directly pass current
-    environment readings and receive both the evapotranspiration metrics and the
-    irrigation volume recommendation in one call.
-    """
+    """Return irrigation recommendation using environment readings."""
 
     from .compute_transpiration import compute_transpiration
 
     metrics = compute_transpiration(plant_profile, env_data)
     volume = recommend_irrigation_volume(
-        rootzone, available_ml, metrics["transpiration_ml_day"], refill_to_full=refill_to_full
+        rootzone,
+        available_ml,
+        metrics["transpiration_ml_day"],
+        refill_to_full=refill_to_full,
     )
 
-    return {
-        "volume_ml": volume,
-        "metrics": metrics,
-    }
+    rec = IrrigationRecommendation(volume_ml=volume, metrics=metrics)
+    return rec.as_dict()
 
 
 def list_supported_plants() -> list[str]:
