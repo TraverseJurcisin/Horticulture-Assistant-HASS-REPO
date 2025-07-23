@@ -160,6 +160,12 @@ from .thermal_time import (
     predict_stage_completion,
     accumulate_gdd_series,
 )
+from .nutrient_budget import (
+    list_supported_plants as list_budget_plants,
+    get_removal_rates,
+    estimate_total_removal,
+    estimate_required_nutrients,
+)
 from .compute_transpiration import TranspirationMetrics
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -253,6 +259,10 @@ __all__ = [
     "list_yield_plants",
     "get_estimated_yield",
     "estimate_remaining_yield",
+    "list_budget_plants",
+    "get_removal_rates",
+    "estimate_total_removal",
+    "estimate_required_nutrients",
     "generate_health_report",
     "list_water_analytes",
     "get_water_threshold",

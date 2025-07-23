@@ -47,6 +47,7 @@
   "nutrient_toxicity_thresholds.json": "Maximum safe ppm before toxicity occurs.",
   "nutrient_toxicity_treatments.json": "Actions for nutrient toxicity issues.",
   "nutrient_uptake.json": "Estimated daily uptake rates for nutrients.",
+  "nutrient_removal_rates.json": "Nutrient removal from harvested biomass per kg yield.",
   "pest_prevention.json": "Cultural practices to reduce pest pressure.",
   "pest_risk_factors.json": "Environmental factors increasing pest risk.",
   "pest_severity_actions.json": "Actions to take based on pest severity level.",
