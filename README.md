@@ -152,6 +152,7 @@ Key reference datasets reside in the `data/` directory:
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
+- `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `yield/` – per‑plant yield logs created during operation
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
@@ -183,6 +184,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Irrigation Targets**: `get_daily_irrigation_target` returns default
+  milliliters per plant based on `irrigation_guidelines.json`.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.

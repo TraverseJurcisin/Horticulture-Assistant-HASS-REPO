@@ -14,10 +14,15 @@ __all__ = [
     "get_crop_coefficient",
     "estimate_irrigation_demand",
     "recommend_irrigation_from_environment",
+    "list_supported_plants",
+    "get_daily_irrigation_target",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
 _KC_DATA = load_dataset(_KC_DATA_FILE)
+
+_IRRIGATION_FILE = "irrigation_guidelines.json"
+_IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
 
 
 def recommend_irrigation_volume(
@@ -141,3 +146,17 @@ def recommend_irrigation_from_environment(
         "volume_ml": volume,
         "metrics": metrics,
     }
+
+
+def list_supported_plants() -> list[str]:
+    """Return plant types with irrigation guidelines."""
+
+    return sorted(_IRRIGATION_DATA.keys())
+
+
+def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
+    """Return recommended daily irrigation volume in milliliters."""
+
+    plant = _IRRIGATION_DATA.get(normalize_key(plant_type), {})
+    value = plant.get(normalize_key(stage))
+    return float(value) if isinstance(value, (int, float)) else 0.0
