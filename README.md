@@ -313,6 +313,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **CO₂ Injection Calculator**: `calculate_co2_injection` estimates the grams of CO₂ needed to hit the target range based on greenhouse volume.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
+- **Advanced Setpoints**: `suggest_environment_setpoints_advanced` derives
+  humidity targets from VPD guidelines when direct values are unavailable.
 - **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
   returns a 0‑100 rating based on toxicity thresholds.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,

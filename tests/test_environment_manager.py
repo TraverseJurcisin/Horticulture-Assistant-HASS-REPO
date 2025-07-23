@@ -4,6 +4,7 @@ from plant_engine.environment_manager import (
     get_environmental_targets,
     recommend_environment_adjustments,
     suggest_environment_setpoints,
+    suggest_environment_setpoints_advanced,
     saturation_vapor_pressure,
     actual_vapor_pressure,
     calculate_vpd,
@@ -109,6 +110,21 @@ def test_suggest_environment_setpoints():
     assert setpoints["humidity_pct"] == 70
     assert setpoints["light_ppfd"] == 225
     assert setpoints["co2_ppm"] == 500
+
+
+def test_suggest_environment_setpoints_advanced_vpd_fallback(monkeypatch):
+    import plant_engine.environment_manager as em
+
+    monkeypatch.setattr(
+        em,
+        "get_environmental_targets",
+        lambda *a, **k: {"temp_c": [20, 24]},
+    )
+    monkeypatch.setattr(em, "get_target_vpd", lambda *a, **k: (0.8, 1.2))
+
+    result = suggest_environment_setpoints_advanced("foo", "bar")
+    expected = em.humidity_for_target_vpd(22.0, 1.0)
+    assert result["humidity_pct"] == expected
 
 
 def test_vapor_pressure_helpers():
