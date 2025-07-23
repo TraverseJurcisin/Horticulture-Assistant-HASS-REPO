@@ -626,6 +626,17 @@ def test_summarize_environment_series():
     assert summary["metrics"]["vpd"] == avg["metrics"]["vpd"]
 
 
+def test_summarize_environment_series_generator():
+    records = [
+        {"temp_c": 20, "humidity_pct": 70},
+        {"temp_c": 22, "humidity_pct": 74},
+    ]
+    gen = (r for r in records)
+    gen_summary = summarize_environment_series(gen, "citrus", "seedling")
+    list_summary = summarize_environment_series(records, "citrus", "seedling")
+    assert gen_summary == list_summary
+
+
 def test_score_overall_environment():
     env = {
         "temp_c": 22,
