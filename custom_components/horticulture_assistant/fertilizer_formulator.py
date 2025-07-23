@@ -1,4 +1,10 @@
-"""Helpers for calculating nutrients from fertilizer products."""
+"""Fertilizer formulation helpers.
+
+This module provides utilities for converting guaranteed analysis values,
+estimating nutrient masses, computing mix concentrations and costs.  The new
+``estimate_cost_per_nutrient`` helper exposes the cost efficiency of a product
+for each nutrient based on the inventory and price datasets.
+"""
 
 from __future__ import annotations
 
@@ -334,6 +340,34 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
     return warnings
 
 
+def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
+    """Return cost per gram of each nutrient in a fertilizer product."""
+
+    inventory = _inventory()
+    prices = _price_map()
+
+    if fertilizer_id not in inventory:
+        raise KeyError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
+    if fertilizer_id not in prices:
+        raise KeyError(f"Price for '{fertilizer_id}' is not defined")
+
+    info = inventory[fertilizer_id]
+    density = info.density_kg_per_l
+    if density <= 0:
+        raise ValueError("density must be positive")
+
+    cost_per_gram = prices[fertilizer_id] / (density * 1000)
+    ga = convert_guaranteed_analysis(info.guaranteed_analysis)
+
+    costs: Dict[str, float] = {}
+    for nutrient, fraction in ga.items():
+        if fraction <= 0:
+            continue
+        costs[nutrient] = round(cost_per_gram / fraction, 4)
+
+    return costs
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -345,6 +379,7 @@ __all__ = [
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "check_solubility_limits",
+    "estimate_cost_per_nutrient",
     "list_products",
     "get_product_info",
     "find_products",
