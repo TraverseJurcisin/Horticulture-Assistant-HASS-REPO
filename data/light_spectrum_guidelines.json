@@ -1,0 +1,14 @@
+{
+  "lettuce": {
+    "seedling": {"red": 0.4, "blue": 0.6},
+    "vegetative": {"red": 0.45, "blue": 0.55}
+  },
+  "basil": {
+    "vegetative": {"red": 0.5, "blue": 0.5},
+    "harvest": {"red": 0.45, "blue": 0.55}
+  },
+  "citrus": {
+    "vegetative": {"red": 0.5, "blue": 0.5},
+    "fruiting": {"red": 0.55, "blue": 0.45}
+  }
+}

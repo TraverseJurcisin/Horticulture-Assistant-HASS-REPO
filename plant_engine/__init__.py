@@ -146,6 +146,11 @@ from .ph_manager import (
     recommend_ph_adjustment,
     estimate_ph_adjustment_volume,
 )
+from .light_spectrum import (
+    list_supported_plants as list_spectrum_plants,
+    get_spectrum as get_light_spectrum,
+    get_red_blue_ratio,
+)
 from .thermal_time import (
     calculate_gdd,
     list_supported_plants as list_gdd_plants,
@@ -256,6 +261,9 @@ __all__ = [
     "get_ph_range",
     "recommend_ph_adjustment",
     "estimate_ph_adjustment_volume",
+    "list_spectrum_plants",
+    "get_light_spectrum",
+    "get_red_blue_ratio",
     "list_pruning_plants",
     "list_pruning_stages",
     "get_pruning_instructions",
