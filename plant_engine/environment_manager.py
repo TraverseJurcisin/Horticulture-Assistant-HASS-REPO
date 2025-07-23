@@ -78,6 +78,7 @@ __all__ = [
     "recommend_photoperiod",
     "evaluate_heat_stress",
     "evaluate_cold_stress",
+    "evaluate_light_stress",
     "optimize_environment",
     "calculate_environment_metrics",
     "EnvironmentMetrics",
@@ -173,6 +174,7 @@ class EnvironmentOptimization:
     photoperiod_hours: float | None = None
     heat_stress: bool | None = None
     cold_stress: bool | None = None
+    light_stress: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -189,7 +191,8 @@ class EnvironmentOptimization:
             "target_vpd": self.target_vpd,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
-        "cold_stress": self.cold_stress,
+            "cold_stress": self.cold_stress,
+            "light_stress": self.light_stress,
         }
 
 
@@ -570,6 +573,26 @@ def evaluate_cold_stress(
     return temp_c <= float(threshold)
 
 
+def evaluate_light_stress(
+    dli: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
+    """Return 'low' or 'high' if DLI is outside the recommended range."""
+
+    if dli is None:
+        return None
+
+    target = get_target_dli(plant_type, stage)
+    if not target:
+        return None
+
+    low, high = target
+    if dli < low:
+        return "low"
+    if dli > high:
+        return "high"
+    return None
+
+
 def calculate_dli_series(
     ppfd_values: Iterable[float], interval_hours: float = 1.0
 ) -> float:
@@ -664,6 +687,20 @@ def optimize_environment(
             mid_target, readings["light_ppfd"]
         )
 
+    current_dli = readings.get("dli")
+    if current_dli is None and {
+        "light_ppfd",
+        "photoperiod_hours",
+    }.issubset(readings):
+        try:
+            current_dli = calculate_dli(
+                readings["light_ppfd"], readings["photoperiod_hours"]
+            )
+        except ValueError:
+            current_dli = None
+
+    light_stress = evaluate_light_stress(current_dli, plant_type, stage)
+
     result = EnvironmentOptimization(
         setpoints,
         actions,
@@ -675,6 +712,7 @@ def optimize_environment(
         photoperiod_hours=photoperiod_hours,
         heat_stress=heat_stress,
         cold_stress=cold_stress,
+        light_stress=light_stress,
     )
     return result.as_dict()
 
