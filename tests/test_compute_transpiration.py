@@ -52,6 +52,16 @@ def test_compute_transpiration_series():
     assert result["transpiration_ml_day"] > 0
 
 
+def test_compute_transpiration_series_weighted():
+    profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
+    env1 = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    env2 = {"temp_c": 20, "rh_pct": 60, "par_w_m2": 350}
+    series = [env1, env2]
+    weighted = compute_transpiration_series(profile, series, weights=[2, 1])
+    unweighted = compute_transpiration_series(profile, series)
+    assert weighted["transpiration_ml_day"] != unweighted["transpiration_ml_day"]
+
+
 def test_compute_transpiration_missing_env_defaults():
     profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
     # Only provide temperature; other values should use DEFAULT_ENV

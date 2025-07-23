@@ -94,28 +94,51 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
 
 
 def compute_transpiration_series(
-    plant_profile: Mapping, env_series: Iterable[Mapping]
+    plant_profile: Mapping,
+    env_series: Iterable[Mapping],
+    weights: Iterable[float] | None = None,
 ) -> Dict[str, float]:
-    """Return averaged transpiration metrics for a sequence of readings."""
+    """Return weighted average transpiration metrics for ``env_series``.
 
+    Parameters
+    ----------
+    plant_profile : Mapping
+        Plant profile dictionary used for each reading.
+    env_series : Iterable[Mapping]
+        Sequence of environment readings.
+    weights : Iterable[float] | None, optional
+        Weights applied to each reading when averaging. If provided, the
+        length must match ``env_series``. Non-positive weights are ignored.
+    """
+
+    env_list = list(env_series)
+    if weights is None:
+        weight_list = [1.0] * len(env_list)
+    else:
+        weight_list = list(weights)
+        if len(weight_list) != len(env_list):
+            raise ValueError("weights length must match env_series length")
+
+    total_w = 0.0
     total_et0 = 0.0
     total_eta = 0.0
     total_ml = 0.0
-    count = 0
 
-    for env in env_series:
+    for env, w in zip(env_list, weight_list):
+        if w <= 0:
+            continue
         metrics = compute_transpiration(plant_profile, env)
-        total_et0 += metrics["et0_mm_day"]
-        total_eta += metrics["eta_mm_day"]
-        total_ml += metrics["transpiration_ml_day"]
-        count += 1
+        total_et0 += metrics["et0_mm_day"] * w
+        total_eta += metrics["eta_mm_day"] * w
+        total_ml += metrics["transpiration_ml_day"] * w
+        total_w += w
 
-    if count == 0:
+    if total_w == 0:
         return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
 
     return TranspirationMetrics(
-        round(total_et0 / count, 2),
-        round(total_eta / count, 2),
-        round(total_ml / count, 1),
+        round(total_et0 / total_w, 2),
+        round(total_eta / total_w, 2),
+        round(total_ml / total_w, 1),
     ).as_dict()
 
