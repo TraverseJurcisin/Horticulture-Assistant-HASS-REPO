@@ -137,6 +137,7 @@ __all__ = [
     "get_target_dli",
     "get_target_vpd",
     "get_target_photoperiod",
+    "get_target_co2",
     "humidity_for_target_vpd",
     "recommend_light_intensity",
     "recommend_photoperiod",
@@ -245,6 +246,7 @@ class EnvironmentOptimization:
     target_dli: tuple[float, float] | None = None
     target_vpd: tuple[float, float] | None = None
     target_photoperiod: tuple[float, float] | None = None
+    target_co2: tuple[float, float] | None = None
     photoperiod_hours: float | None = None
     heat_stress: bool | None = None
     cold_stress: bool | None = None
@@ -266,6 +268,7 @@ class EnvironmentOptimization:
             "target_dli": self.target_dli,
             "target_vpd": self.target_vpd,
             "target_photoperiod": self.target_photoperiod,
+            "target_co2": self.target_co2,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
             "cold_stress": self.cold_stress,
@@ -885,6 +888,14 @@ def get_target_photoperiod(
     return _lookup_range(_PHOTOPERIOD_DATA, plant_type, stage)
 
 
+def get_target_co2(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended CO₂ range in ppm for a plant stage."""
+    guide = get_environment_guidelines(plant_type, stage)
+    return guide.co2_ppm
+
+
 def calculate_environment_metrics(
     temp_c: float | None, humidity_pct: float | None
 ) -> EnvironmentMetrics:
@@ -934,6 +945,7 @@ def optimize_environment(
     target_dli = get_target_dli(plant_type, stage)
     target_vpd = get_target_vpd(plant_type, stage)
     target_photoperiod = get_target_photoperiod(plant_type, stage)
+    target_co2 = get_target_co2(plant_type, stage)
     photoperiod_hours = None
     if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
@@ -971,6 +983,7 @@ def optimize_environment(
         target_dli=target_dli,
         target_vpd=target_vpd,
         target_photoperiod=target_photoperiod,
+        target_co2=target_co2,
         photoperiod_hours=photoperiod_hours,
         heat_stress=stress.heat,
         cold_stress=stress.cold,

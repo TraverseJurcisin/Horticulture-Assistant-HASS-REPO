@@ -19,6 +19,7 @@ from plant_engine.environment_manager import (
     get_target_dli,
     get_target_vpd,
     get_target_photoperiod,
+    get_target_co2,
     humidity_for_target_vpd,
     recommend_photoperiod,
     recommend_light_intensity,
@@ -158,6 +159,7 @@ def test_optimize_environment():
     assert result["target_dli"] is None
     assert result["photoperiod_hours"] is None
     assert result["target_photoperiod"] == (16, 18)
+    assert result["target_co2"] == (400, 600)
 
     result2 = optimize_environment(
         {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},
@@ -169,6 +171,7 @@ def test_optimize_environment():
     assert result2["target_dli"] is None
     assert result2["photoperiod_hours"] is None
     assert result2["target_vpd"] == (0.6, 0.8)
+    assert result2["target_co2"] == (400, 600)
 
 
 def test_optimize_environment_with_dli():
@@ -182,6 +185,7 @@ def test_optimize_environment_with_dli():
     expected_hours = photoperiod_for_target_dli(mid, 500)
     assert result["photoperiod_hours"] == expected_hours
     assert result["target_photoperiod"] == (18, 20)
+    assert result["target_co2"] == (400, 600)
 
 
 def test_optimize_environment_aliases():
@@ -295,6 +299,11 @@ def test_get_target_vpd():
 def test_get_target_photoperiod():
     assert get_target_photoperiod("lettuce", "seedling") == (16, 18)
     assert get_target_photoperiod("unknown") is None
+
+
+def test_get_target_co2():
+    assert get_target_co2("citrus", "seedling") == (400, 600)
+    assert get_target_co2("unknown") is None
 
 
 def test_calculate_absolute_humidity():
