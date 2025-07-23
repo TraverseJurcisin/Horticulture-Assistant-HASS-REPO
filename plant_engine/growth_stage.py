@@ -34,7 +34,8 @@ def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
 
 def list_growth_stages(plant_type: str) -> list[str]:
     """Return all defined growth stages for a plant type."""
-    return sorted(_DATA.get(normalize_key(plant_type), {}).keys())
+    stages = _DATA.get(normalize_key(plant_type), {})
+    return list(stages.keys())
 
 
 def get_stage_duration(plant_type: str, stage: str) -> int | None:
