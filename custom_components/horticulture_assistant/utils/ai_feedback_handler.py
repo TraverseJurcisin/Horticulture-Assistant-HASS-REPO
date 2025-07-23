@@ -7,6 +7,9 @@ from ..engine import ai_model
 
 _LOGGER = logging.getLogger(__name__)
 
+
+"""Utility for applying AI generated threshold feedback to plant profiles."""
+
 def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
     """
     Process a plant's daily report with AI to get new threshold recommendations and advice.
