@@ -159,6 +159,37 @@ def predict_next_stage_date(
     return stage_start + timedelta(days=duration)
 
 
+def days_until_next_stage(
+    plant_type: str, current_stage: str, days_elapsed: int
+) -> int | None:
+    """Return days remaining in ``current_stage`` for ``plant_type``.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop identifier for growth stage lookup.
+    current_stage : str
+        Name of the current stage.
+    days_elapsed : int
+        Days spent in the current stage so far.
+
+    Returns
+    -------
+    int | None
+        Number of days until the next stage begins or ``None`` if the
+        duration is unknown.
+    """
+
+    if days_elapsed < 0:
+        raise ValueError("days_elapsed must be non-negative")
+
+    duration = get_stage_duration(plant_type, current_stage)
+    if duration is None:
+        return None
+    remaining = duration - days_elapsed
+    return max(0, remaining)
+
+
 def get_germination_duration(plant_type: str) -> int | None:
     """Return default days to germination for ``plant_type`` if known."""
 

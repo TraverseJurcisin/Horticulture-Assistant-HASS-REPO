@@ -296,6 +296,8 @@ or incomplete and should only be used as a starting point for your own research.
   reports provide an estimated harvest date based on `growth_stages.json`.
 - **Stage Schedule Planner**: `build_stage_schedule` returns the expected start
   and end date of each growth stage when given a planting date.
+- **Stage Progress Remaining**: `days_until_next_stage` reports how many days
+  remain in the current stage based on `growth_stages.json`.
 - **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
   expected totals from `yield_estimates.json`.
   Daily reports now expose this value under `remaining_yield_g` for quick
