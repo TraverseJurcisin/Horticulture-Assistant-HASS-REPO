@@ -2,6 +2,7 @@ import json
 
 from plant_engine import engine
 from plant_engine import growth_model
+from custom_components.horticulture_assistant.utils import plant_profile_loader
 
 
 def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
@@ -72,12 +73,12 @@ def test_load_profile_cached(tmp_path, monkeypatch):
 
     calls = 0
 
-    def fake_load(path):
+    def fake_load(pid, base_dir):
         nonlocal calls
         calls += 1
         return {"a": 1}
 
-    monkeypatch.setattr(engine, "load_json", fake_load)
+    monkeypatch.setattr(engine, "load_profile_by_id", fake_load)
     engine.load_profile.cache_clear()
 
     engine.load_profile("demo")
