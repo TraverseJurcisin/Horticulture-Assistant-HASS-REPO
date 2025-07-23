@@ -8,6 +8,7 @@ from plant_engine.approval_queue import (
     apply_approved_thresholds,
     queue_threshold_updates,
 )
+from plant_engine.utils import load_json
 
 
 def main() -> None:
@@ -26,11 +27,8 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.cmd == "queue":
-        import json
-        with open(args.current, "r", encoding="utf-8") as f:
-            current = json.load(f)
-        with open(args.proposed, "r", encoding="utf-8") as f:
-            proposed = json.load(f)
+        current = load_json(args.current)
+        proposed = load_json(args.proposed)
         queue_threshold_updates(args.plant_id, current, proposed)
     else:  # apply
         apply_approved_thresholds(args.profile, args.pending)

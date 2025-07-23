@@ -2,9 +2,9 @@
 from __future__ import annotations
 
 import argparse
-import json
 
 from plant_engine.ai_model import analyze
+from plant_engine.utils import load_json
 
 
 def main() -> None:
@@ -12,10 +12,10 @@ def main() -> None:
     parser.add_argument("data", help="Path to JSON data for analysis")
     args = parser.parse_args()
 
-    with open(args.data, "r", encoding="utf-8") as fh:
-        payload = json.load(fh)
+    payload = load_json(args.data)
 
     result = analyze(payload)
+    import json
     print(json.dumps(result, indent=2))
 
 
