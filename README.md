@@ -233,6 +233,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.
+- **Deficit-Based Fertilizer Suggestions**: `RecommendationEngine` now recommends products using nutrient guidelines when sensor readings fall short.
 - **Daily Nutrient Report**: `run_daily_cycle` now embeds this analysis under
   `nutrient_analysis` to highlight imbalances in recent applications.
 - **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific

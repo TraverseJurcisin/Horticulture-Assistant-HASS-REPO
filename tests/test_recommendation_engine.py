@@ -14,7 +14,10 @@ def _setup_engine(auto=False):
             "lifecycle_stage": "seedling",
         },
     )
-    eng.update_sensor_data("p1", {"nitrate_ppm": 20, "vwc": 25})
+    eng.update_sensor_data(
+        "p1",
+        {"nitrate_ppm": 20, "phosphate_ppm": 10, "potassium_ppm": 70, "vwc": 25},
+    )
     eng.update_product_availability({"n_fert": {"elements": ["N"]}})
     eng.update_ai_feedback("p1", {"alerts": ["check drainage"]})
     eng.update_environment_data("p1", {"temp_c": 30, "humidity_pct": 40, "light_ppfd": 100})
@@ -26,6 +29,7 @@ def test_recommendation_engine_requires_approval():
     rec = eng.recommend("p1")
     assert rec.requires_approval is True
     assert rec.fertilizers[0].product_name == "n_fert"
+    assert rec.fertilizers[0].reason == "N deficit"
     assert rec.irrigation.volume_liters == 2.0
     assert "check drainage" in rec.notes
 

@@ -26,7 +26,12 @@ class RecommendationBundle:
 
 
 class RecommendationEngine:
-    """Generate fertigation and irrigation suggestions for plants."""
+    """Generate fertigation and irrigation suggestions for plants.
+
+    The engine stores sensor readings and plant profiles then produces
+    recommendations for irrigation volume and fertilizer dosing.  Product
+    availability can be provided so that only stocked items are suggested.
+    """
 
     def __init__(self) -> None:
         """Initialize empty state containers."""
@@ -36,6 +41,10 @@ class RecommendationEngine:
         self.product_availability: Dict[str, Dict] = {}
         self.ai_feedback: Dict[str, Dict] = {}
         self.environment_data: Dict[str, Dict] = {}
+
+    # ------------------------------------------------------------------
+    # Update helpers
+    # ------------------------------------------------------------------
 
     def set_auto_approve(self, value: bool) -> None:
         """Enable or disable automatic approval of recommendations."""
@@ -61,26 +70,56 @@ class RecommendationEngine:
         """Record latest environmental readings for ``plant_id``."""
         self.environment_data[plant_id] = env_payload
 
+    # ------------------------------------------------------------------
+    # Recommendation logic
+    # ------------------------------------------------------------------
+
+    def _calculate_nutrient_deficits(self, plant_id: str) -> Dict[str, float]:
+        """Return ppm deficits using dataset guidelines."""
+        profile = self.plant_profiles.get(plant_id, {})
+        plant_type = profile.get("plant_type")
+        stage = profile.get("lifecycle_stage")
+        if not plant_type or not stage:
+            return {}
+        sensors = self.sensor_data.get(plant_id, {})
+        current = {
+            "N": sensors.get("nitrate_ppm"),
+            "P": sensors.get("phosphate_ppm"),
+            "K": sensors.get("potassium_ppm"),
+        }
+        try:
+            from plant_engine.nutrient_manager import calculate_deficiencies
+        except Exception:
+            return {}
+        return calculate_deficiencies(current, plant_type, stage)
+
+    def _generate_fertilizer_recs(self, plant_id: str) -> List[FertilizerRecommendation]:
+        """Return fertilizer recommendations based on deficiencies."""
+        deficits = self._calculate_nutrient_deficits(plant_id)
+        recommendations: List[FertilizerRecommendation] = []
+        for nutrient, deficit in deficits.items():
+            product = self._select_best_product(nutrient)
+            if not product:
+                continue
+            recommendations.append(
+                FertilizerRecommendation(
+                    product_name=product,
+                    dose_rate=deficit,
+                    dose_unit="ppm",
+                    reason=f"{nutrient} deficit",
+                )
+            )
+        return recommendations
+
     def recommend(self, plant_id: str) -> RecommendationBundle:
         """Return a bundle of fertilizer and irrigation suggestions."""
         profile = self.plant_profiles.get(plant_id, {})
         sensors = self.sensor_data.get(plant_id, {})
         ai_notes = self.ai_feedback.get(plant_id, {})
-        notes = []
-        fert_recs = []
+        notes: List[str] = []
+        fert_recs = self._generate_fertilizer_recs(plant_id)
 
-        # Example fertilizer recommendation
-        if sensors.get("nitrate_ppm", 0) < profile.get("n_required_ppm", 0):
-            best_nitrogen = self._select_best_product("N")
-            if best_nitrogen:
-                fert_recs.append(FertilizerRecommendation(
-                    product_name=best_nitrogen,
-                    dose_rate=5.0,
-                    dose_unit="ml/L",
-                    reason="Low nitrate level"
-                ))
-
-        # Example irrigation recommendation
+        # Basic irrigation recommendation
         irrigation = None
         if sensors.get("vwc", 100) < profile.get("min_vwc", 30):
             irrigation = IrrigationRecommendation(
