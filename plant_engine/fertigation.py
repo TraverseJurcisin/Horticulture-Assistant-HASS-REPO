@@ -47,6 +47,7 @@ __all__ = [
     "recommend_uptake_fertigation",
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
+    "generate_fertigation_plan",
 ]
 
 
@@ -432,4 +433,42 @@ def recommend_nutrient_mix_with_cost_breakdown(
 
     breakdown = estimate_cost_breakdown(schedule)
     return schedule, total, breakdown
+
+
+def generate_fertigation_plan(
+    plant_type: str,
+    stage: str,
+    days: int,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> Dict[int, Dict[str, float]]:
+    """Return daily fertigation schedules for ``days`` days.
+
+    This convenience helper pulls the recommended daily irrigation volume from
+    :func:`irrigation_manager.get_daily_irrigation_target` and generates a
+    fertilizer schedule for each day using
+    :func:`recommend_fertigation_schedule`.
+    """
+
+    from .irrigation_manager import get_daily_irrigation_target
+
+    if days <= 0:
+        raise ValueError("days must be positive")
+
+    daily_ml = get_daily_irrigation_target(plant_type, stage)
+    if daily_ml <= 0:
+        return {}
+
+    volume_l = daily_ml / 1000
+    plan: Dict[int, Dict[str, float]] = {}
+    for day in range(1, days + 1):
+        plan[day] = recommend_fertigation_schedule(
+            plant_type,
+            stage,
+            volume_l,
+            purity,
+            product=product,
+        )
+    return plan
 
