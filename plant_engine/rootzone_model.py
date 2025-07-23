@@ -11,12 +11,15 @@ from .utils import load_dataset, normalize_key
 DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 
 SOIL_DATA_FILE = "soil_texture_parameters.json"
+ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
+_ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
+    "get_default_root_depth",
     "estimate_water_capacity",
     "calculate_remaining_water",
     "get_soil_parameters",
@@ -29,12 +32,27 @@ def get_soil_parameters(texture: str) -> Dict[str, float]:
     return _SOIL_DATA.get(normalize_key(texture), {})
 
 
+def get_default_root_depth(plant_type: str) -> float:
+    """Return default maximum root depth for ``plant_type`` in centimeters."""
+
+    depth = _ROOT_DEPTH_DATA.get(normalize_key(plant_type))
+    if depth is None:
+        return 30.0
+    try:
+        return float(depth)
+    except (TypeError, ValueError):
+        return 30.0
+
+
 def estimate_rootzone_depth(
     plant_profile: Mapping[str, float],
     growth: Mapping[str, float],
 ) -> float:
     """Estimate root depth (cm) using a logistic growth curve."""
-    max_depth_cm = plant_profile.get("max_root_depth_cm", 30)
+    max_depth_cm = plant_profile.get("max_root_depth_cm")
+    if max_depth_cm is None:
+        plant_type = plant_profile.get("plant_type", "")
+        max_depth_cm = get_default_root_depth(plant_type)
     growth_index = growth.get("vgi_total", 0)
 
     midpoint = 60

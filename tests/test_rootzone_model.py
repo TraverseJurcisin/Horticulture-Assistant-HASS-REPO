@@ -1,5 +1,6 @@
 from plant_engine.rootzone_model import (
     estimate_rootzone_depth,
+    get_default_root_depth,
     estimate_water_capacity,
     calculate_remaining_water,
     get_soil_parameters,
@@ -39,6 +40,11 @@ def test_get_soil_parameters():
     params = get_soil_parameters("loam")
     assert params["field_capacity"] == 0.25
     assert params["mad_fraction"] == 0.45
+
+
+def test_get_default_root_depth():
+    assert get_default_root_depth("tomato") == 60
+    assert get_default_root_depth("unknown") == 30.0
 
 
 def test_estimate_water_capacity_texture():
