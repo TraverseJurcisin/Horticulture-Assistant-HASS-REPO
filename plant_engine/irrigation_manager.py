@@ -20,6 +20,8 @@ __all__ = [
     "generate_irrigation_schedule",
     "adjust_irrigation_for_efficiency",
     "generate_env_irrigation_schedule",
+    "generate_precipitation_schedule",
+    "get_rain_capture_efficiency",
     "IrrigationRecommendation",
 ]
 
@@ -31,6 +33,9 @@ _IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
 
 _EFFICIENCY_FILE = "irrigation_efficiency.json"
 _EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
+
+_RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
+_RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
 
 
 @dataclass(frozen=True)
@@ -164,6 +169,16 @@ def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
     return volume_ml
 
 
+def get_rain_capture_efficiency(surface: str) -> float:
+    """Return fraction of rainfall captured for ``surface``."""
+    value = _RAIN_EFFICIENCY_DATA.get(normalize_key(surface), 1.0)
+    try:
+        eff = float(value)
+    except (TypeError, ValueError):
+        eff = 1.0
+    return max(0.0, min(eff, 1.0))
+
+
 def recommend_irrigation_from_environment(
     plant_profile: Mapping[str, float],
     env_data: Mapping[str, float],
@@ -272,6 +287,40 @@ def generate_env_irrigation_schedule(
         schedule[day] = {"volume_ml": volume, "metrics": metrics}
         remaining = calculate_remaining_water(
             rootzone, remaining, irrigation_ml=volume, et_ml=et_ml
+        )
+
+    return schedule
+
+
+def generate_precipitation_schedule(
+    rootzone: RootZone,
+    available_ml: float,
+    et_ml_series: Iterable[float],
+    precipitation_ml: Iterable[float],
+    *,
+    refill_to_full: bool = True,
+    method: str | None = None,
+    surface: str = "bare_soil",
+) -> Dict[int, float]:
+    """Return irrigation schedule adjusted for rainfall."""
+
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
+    rain_eff = get_rain_capture_efficiency(surface)
+    schedule: Dict[int, float] = {}
+    remaining = float(available_ml)
+
+    for day, (et_ml, rain_ml) in enumerate(zip(et_ml_series, precipitation_ml), start=1):
+        net_et = max(0.0, et_ml - rain_ml * rain_eff)
+        volume = recommend_irrigation_volume(
+            rootzone, remaining, net_et, refill_to_full=refill_to_full
+        )
+        if method:
+            volume = adjust_irrigation_for_efficiency(volume, method)
+        schedule[day] = volume
+        remaining = calculate_remaining_water(
+            rootzone, remaining, irrigation_ml=volume, et_ml=net_et
         )
 
     return schedule
