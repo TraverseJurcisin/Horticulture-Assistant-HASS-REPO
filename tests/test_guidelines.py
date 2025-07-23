@@ -13,6 +13,8 @@ def test_get_guideline_summary():
     assert data["micronutrients"] == {}
     assert data["pest_thresholds"]["aphids"] == 5
     assert "ladybugs" in data["beneficial_insects"]["aphids"]
+    assert data["irrigation_volume_ml"] == 300
+    assert "irrigation_interval_days" in data
 
 
 def test_guideline_summary_no_stage():

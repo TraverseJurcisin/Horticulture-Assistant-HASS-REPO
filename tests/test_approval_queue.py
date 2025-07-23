@@ -10,7 +10,7 @@ def test_queue_and_apply(tmp_path, monkeypatch):
     plant_data = {"thresholds": {"soil_moisture_pct": 30}}
     plant_path.write_text(json.dumps(plant_data))
 
-    monkeypatch.setattr(approval_queue, "PENDING_DIR", str(pending_dir))
+    monkeypatch.setattr(approval_queue, "PENDING_DIR", pending_dir)
 
     # Queue change
     approval_queue.queue_threshold_updates(
@@ -21,6 +21,8 @@ def test_queue_and_apply(tmp_path, monkeypatch):
 
     pending_file = pending_dir / "test.json"
     assert pending_file.exists()
+    pending_data = approval_queue.list_pending_changes("test", pending_dir)
+    assert pending_data["changes"]["soil_moisture_pct"]["proposed_value"] == 35
 
     # Approve one change
     pending = load_json(str(pending_file))

@@ -14,6 +14,7 @@ from . import (
     disease_manager,
     ph_manager,
     ec_manager,
+    irrigation_manager,
     growth_stage,
 )
 
@@ -34,6 +35,8 @@ class GuidelineSummary:
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
     ph_range: List[float] = dataclass_field(default_factory=list)
     ec_range: List[float] = dataclass_field(default_factory=list)
+    irrigation_volume_ml: float | None = None
+    irrigation_interval_days: float | None = None
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
 
@@ -64,6 +67,16 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         beneficial_insects=beneficial,
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
+        irrigation_volume_ml=(
+            irrigation_manager.get_daily_irrigation_target(plant_type, stage)
+            if stage
+            else None
+        ),
+        irrigation_interval_days=(
+            irrigation_manager.get_recommended_interval(plant_type, stage)
+            if stage
+            else None
+        ),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
     )
