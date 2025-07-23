@@ -328,3 +328,15 @@ def test_recommend_stock_solution_injection():
     assert result["stock_a"] == pytest.approx(25.0, rel=1e-3)
     assert result["stock_b"] == pytest.approx(10.0, rel=1e-3)
 
+
+def test_check_solubility_limits():
+    from plant_engine.fertigation import check_solubility_limits
+
+    schedule = {
+        "foxfarm_grow_big": 400.0,  # 300 g/L limit in dataset
+        "magriculture": 500.0,      # 800 g/L limit in dataset
+    }
+    warnings = check_solubility_limits(schedule, 1.0)
+    assert "foxfarm_grow_big" in warnings
+    assert "magriculture" not in warnings
+

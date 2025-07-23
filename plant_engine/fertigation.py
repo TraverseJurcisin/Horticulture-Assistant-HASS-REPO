@@ -20,6 +20,7 @@ FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
 STOCK_DATA = "stock_solution_concentrations.json"
+SOLUBILITY_DATA = "fertilizer_solubility.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
@@ -29,6 +30,7 @@ _NUTRIENT_STOCK_MAP = {
     for sid, nutrients in _STOCK_SOLUTIONS.items()
     for nutrient in nutrients
 }
+_SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -55,6 +57,16 @@ def get_fertilizer_purity(name: str) -> Dict[str, float]:
 def get_ec_factors() -> Dict[str, float]:
     """Return EC contribution factors for nutrient ions."""
     return load_dataset(EC_FACTOR_DATA)
+
+
+@lru_cache(maxsize=None)
+def get_solubility_limits() -> Dict[str, float]:
+    """Return maximum solubility in g/L for fertilizers."""
+    return {
+        normalize_key(k): float(v)
+        for k, v in _SOLUBILITY_LIMITS.items()
+        if isinstance(v, (int, float))
+    }
 
 
 @lru_cache(maxsize=None)
@@ -140,6 +152,7 @@ def next_fertigation_date(
 
 __all__ = [
     "get_fertilizer_purity",
+    "get_solubility_limits",
     "get_foliar_guidelines",
     "recommend_foliar_feed",
     "get_foliar_feed_interval",
@@ -165,6 +178,7 @@ __all__ = [
     "generate_cycle_fertigation_plan_with_cost",
     "recommend_precise_fertigation",
     "grams_to_ppm",
+    "check_solubility_limits",
     "recommend_stock_solution_injection",
 ]
 
@@ -222,6 +236,27 @@ def grams_to_ppm(grams: float, volume_l: float, purity: float) -> float:
 
     mg = grams * 1000 * purity
     return round(mg / volume_l, 2)
+
+
+def check_solubility_limits(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
+    """Return grams per liter exceeding solubility limits for each fertilizer."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be > 0")
+
+    limits = get_solubility_limits()
+    excess: Dict[str, float] = {}
+    for fert, grams in schedule.items():
+        key = normalize_key(fert)
+        limit = limits.get(key)
+        if limit is None:
+            continue
+        g_per_l = grams / volume_l
+        if g_per_l > limit:
+            excess[fert] = round(g_per_l - limit, 2)
+    return excess
 
 
 def recommend_fertigation_schedule(
