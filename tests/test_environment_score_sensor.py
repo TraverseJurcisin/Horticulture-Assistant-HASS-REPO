@@ -59,6 +59,7 @@ sys.modules.setdefault("homeassistant.const", ha.const)
 
 spec.loader.exec_module(sensor)
 EnvironmentScoreSensor = sensor.EnvironmentScoreSensor
+EnvironmentQualitySensor = sensor.EnvironmentQualitySensor
 
 class DummyStates:
     def __init__(self):
@@ -84,3 +85,16 @@ def test_environment_score_sensor():
     }
     asyncio.run(sensor_entity.async_update())
     assert sensor_entity.native_value >= 90
+
+
+def test_environment_quality_sensor():
+    hass = DummyHass()
+    sensor_entity = EnvironmentQualitySensor(hass, "Plant", "pid")
+    hass.states._data = {
+        "sensor.pid_raw_temperature": "24",
+        "sensor.pid_raw_humidity": "60",
+        "sensor.pid_raw_light": "400",
+        "sensor.pid_raw_co2": "800",
+    }
+    asyncio.run(sensor_entity.async_update())
+    assert sensor_entity.native_value in {"good", "fair", "poor"}
