@@ -75,6 +75,7 @@
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "co2_prices.json": "Cost per kg of CO₂ for enrichment.",
+  "climate_zone_guidelines.json": "Temperature and humidity targets for common climate zones.",
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",

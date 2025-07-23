@@ -1,0 +1,20 @@
+{
+  "tropical": {
+    "temp_c": [22, 32],
+    "humidity_pct": [70, 90],
+    "light_ppfd": [300, 600],
+    "co2_ppm": [800, 1200]
+  },
+  "temperate": {
+    "temp_c": [18, 28],
+    "humidity_pct": [60, 80],
+    "light_ppfd": [250, 500],
+    "co2_ppm": [600, 1000]
+  },
+  "arid": {
+    "temp_c": [15, 25],
+    "humidity_pct": [40, 60],
+    "light_ppfd": [200, 450],
+    "co2_ppm": [600, 1000]
+  }
+}
