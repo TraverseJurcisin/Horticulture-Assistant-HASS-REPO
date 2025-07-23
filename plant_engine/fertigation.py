@@ -211,6 +211,7 @@ __all__ = [
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
+    "optimize_fertigation_schedule",
     "recommend_precise_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
@@ -859,6 +860,42 @@ def estimate_cycle_cost(
         totals, num_plants, fertilizers, purity_overrides
     )
     return estimate_mix_cost(schedule)
+
+
+def optimize_fertigation_schedule(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    include_micro: bool = False,
+) -> tuple[Dict[str, float], float]:
+    """Return lowest cost fertilizer mix for a plant stage."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        get_cheapest_product,
+        estimate_mix_cost,
+    )
+
+    if include_micro:
+        targets = get_all_recommended_levels(plant_type, stage)
+    else:
+        targets = get_recommended_levels(plant_type, stage)
+
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        try:
+            product, _ = get_cheapest_product(nutrient)
+        except KeyError:
+            continue
+        purity = get_fertilizer_purity(product).get(nutrient, 1.0)
+        grams = _ppm_to_grams(ppm, volume_l, purity)
+        schedule[product] = round(schedule.get(product, 0.0) + grams, 3)
+
+    cost = estimate_mix_cost(schedule) if schedule else 0.0
+    return schedule, cost
 
 
 def generate_cycle_fertigation_plan(

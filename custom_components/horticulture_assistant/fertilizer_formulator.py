@@ -459,6 +459,38 @@ def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
     return costs
 
 
+def get_cheapest_product(nutrient: str) -> tuple[str, float]:
+    """Return product ID and cost per gram for the cheapest source of ``nutrient``.
+
+    The search is limited to products with defined prices. A ``KeyError`` is
+    raised when no product contains the requested nutrient.
+    """
+
+    nutrient = nutrient.strip()
+    if not nutrient:
+        raise ValueError("nutrient must be non-empty")
+
+    best_id: str | None = None
+    best_cost: float | None = None
+
+    for pid in list_products():
+        try:
+            costs = estimate_cost_per_nutrient(pid)
+        except Exception:
+            continue
+        cost = costs.get(nutrient)
+        if cost is None:
+            continue
+        if best_cost is None or cost < best_cost:
+            best_id = pid
+            best_cost = cost
+
+    if best_id is None or best_cost is None:
+        raise KeyError(f"No priced product contains nutrient '{nutrient}'")
+
+    return best_id, best_cost
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -469,6 +501,7 @@ __all__ = [
     "estimate_mix_cost",
     "estimate_mix_cost_per_plant",
     "estimate_cost_breakdown",
+    "get_cheapest_product",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",

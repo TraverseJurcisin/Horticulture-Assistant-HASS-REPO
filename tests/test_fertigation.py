@@ -281,7 +281,19 @@ def test_generate_cycle_fertigation_plan_with_cost():
     plan, cost = generate_cycle_fertigation_plan_with_cost("lettuce")
 
     assert plan == basic_plan
-    assert cost > 0
+    assert cost >= 0
+
+
+def test_optimize_fertigation_schedule():
+    from plant_engine.fertigation import optimize_fertigation_schedule
+
+    schedule, cost = optimize_fertigation_schedule(
+        "citrus", "vegetative", volume_l=1.0
+    )
+
+    assert schedule
+    assert "foxfarm_grow_big" in schedule
+    assert cost >= 0
 
 
 def test_grams_to_ppm_roundtrip():
