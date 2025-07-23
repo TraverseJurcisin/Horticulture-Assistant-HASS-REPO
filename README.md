@@ -160,6 +160,7 @@ Key reference datasets reside in the `data/` directory:
 - `photoperiod_guidelines.json` – recommended day length by crop stage
 - `nutrient_toxicity_symptoms.json` – visual cues indicating nutrient excess
 - `nutrient_toxicity_treatments.json` – suggested mitigation steps for toxicity
+- `environment_weights.json` – weighting factors used when scoring environment quality
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
@@ -258,6 +259,7 @@ or incomplete and should only be used as a starting point for your own research.
   quick evaluation.
 - **Environment Score Breakdown**: `score_environment_components` returns
   per-parameter scores so problem areas are easy to identify.
+- **Environment Weighting**: adjust parameter influence using `environment_weights.json`.
 - **Photoperiod Suggestions**: `recommend_photoperiod` returns the daily light
   hours required to hit midpoint DLI targets at the current PPFD.
 - **Light Intensity Suggestions**: `recommend_light_intensity` calculates the

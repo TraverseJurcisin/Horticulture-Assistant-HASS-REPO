@@ -117,6 +117,7 @@ __all__ = [
     "list_supported_plants",
     "get_environment_guidelines",
     "get_environmental_targets",
+    "get_environment_weight",
     "recommend_environment_adjustments",
     "score_environment",
     "score_environment_series",
@@ -175,6 +176,17 @@ _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
+WEIGHT_DATA_FILE = "environment_weights.json"
+_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
+
+
+def get_environment_weight(param: str) -> float:
+    """Return weighting factor for an environment parameter."""
+
+    try:
+        return float(_WEIGHTS.get(param, 1.0))
+    except (TypeError, ValueError):
+        return 1.0
 
 
 def _lookup_stage_data(
@@ -501,8 +513,17 @@ def score_environment(
     if not components:
         return 0.0
 
-    avg = sum(components.values()) / len(components)
-    return round(avg, 1)
+    total = 0.0
+    weight_sum = 0.0
+    for key, value in components.items():
+        weight = get_environment_weight(key)
+        total += value * weight
+        weight_sum += weight
+
+    if weight_sum == 0:
+        return 0.0
+
+    return round(total / weight_sum, 1)
 
 
 def score_environment_series(
