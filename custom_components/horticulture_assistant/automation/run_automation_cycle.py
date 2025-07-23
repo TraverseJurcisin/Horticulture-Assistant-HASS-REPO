@@ -1,7 +1,8 @@
 import logging
-import json
 from pathlib import Path
 from datetime import datetime
+
+from .helpers import iter_profiles, append_json_log
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
@@ -24,22 +25,12 @@ def run_automation_cycle(base_path: str = "plants") -> None:
         _LOGGER.error("Plants directory not found: %s", plants_dir)
         return
 
-    profile_files = list(plants_dir.glob("*.json"))
-    if not profile_files:
+    profiles = list(iter_profiles(base_path))
+    if not profiles:
         _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)
         return
 
-    for profile_path in profile_files:
-        # Load the plant profile JSON data
-        try:
-            with open(profile_path, "r", encoding="utf-8") as f:
-                profile_data = json.load(f)
-        except Exception as e:
-            _LOGGER.error("Failed to load profile %s: %s", profile_path, e)
-            continue
-
-        # Determine plant_id (use file name stem as fallback if not present)
-        plant_id = profile_data.get("plant_id") or profile_path.stem
+    for plant_id, profile_data in profiles:
 
         # Check if irrigation is enabled for this plant
         irrigation_enabled = True
@@ -105,9 +96,8 @@ def run_automation_cycle(base_path: str = "plants") -> None:
             _LOGGER.info("Soil moisture below threshold for plant %s (%.2f < %.2f). Triggering irrigation.", plant_id, current_val, threshold_val)
             try:
                 # Trigger the irrigation actuator for this plant
-                # Assuming irrigation_actuator module provides the trigger function
                 import custom_components.horticulture_assistant.automation.irrigation_actuator as irrigation_actuator
-                irrigation_actuator.trigger_irrigation_actuator(trigger=True)
+                irrigation_actuator.trigger_irrigation_actuator(plant_id=plant_id, trigger=True, base_path=base_path)
             except Exception as e:
                 _LOGGER.error("Failed to trigger irrigation actuator for plant %s: %s", plant_id, e)
             else:
@@ -117,28 +107,14 @@ def run_automation_cycle(base_path: str = "plants") -> None:
             triggered = False
 
         # Log the outcome to irrigation_log.json for the plant (append entry with timestamp)
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "soil_moisture": current_val,
+            "threshold": threshold_val,
+            "triggered": triggered,
+        }
+        log_file = plants_dir / str(plant_id) / "irrigation_log.json"
         try:
-            # Ensure a directory exists for this plant's logs
-            plant_dir = plants_dir / str(plant_id)
-            plant_dir.mkdir(exist_ok=True)
-            log_file = plant_dir / "irrigation_log.json"
-            log_entries = []
-            if log_file.is_file():
-                with open(log_file, "r", encoding="utf-8") as lf:
-                    try:
-                        data = json.load(lf)
-                        if isinstance(data, list):
-                            log_entries = data
-                    except json.JSONDecodeError:
-                        _LOGGER.warning("Irrigation log file for plant %s is not valid JSON. Overwriting it.", plant_id)
-            entry = {
-                "timestamp": datetime.now().isoformat(),
-                "soil_moisture": current_val,
-                "threshold": threshold_val,
-                "triggered": triggered
-            }
-            log_entries.append(entry)
-            with open(log_file, "w", encoding="utf-8") as lf:
-                json.dump(log_entries, lf, indent=2)
+            append_json_log(log_file, entry)
         except Exception as e:
             _LOGGER.error("Failed to write irrigation log for plant %s: %s", plant_id, e)

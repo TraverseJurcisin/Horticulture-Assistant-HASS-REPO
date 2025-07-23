@@ -1,7 +1,8 @@
 import logging
-import json
 from pathlib import Path
 from datetime import datetime
+
+from .helpers import iter_profiles, append_json_log
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
@@ -24,22 +25,12 @@ def run_fertilizer_cycle(base_path: str = "plants") -> None:
         _LOGGER.error("Plants directory not found: %s", plants_dir)
         return
 
-    profile_files = list(plants_dir.glob("*.json"))
-    if not profile_files:
+    profiles = list(iter_profiles(base_path))
+    if not profiles:
         _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)
         return
 
-    for profile_path in profile_files:
-        # Load the plant profile JSON data
-        try:
-            with open(profile_path, "r", encoding="utf-8") as f:
-                profile_data = json.load(f)
-        except Exception as e:
-            _LOGGER.error("Failed to load profile %s: %s", profile_path, e)
-            continue
-
-        # Determine plant_id (use file name stem as fallback if not present)
-        plant_id = profile_data.get("plant_id") or profile_path.stem
+    for plant_id, profile_data in profiles:
 
         # Check if fertilization is enabled for this plant
         fertilizer_enabled = True
@@ -143,27 +134,14 @@ def run_fertilizer_cycle(base_path: str = "plants") -> None:
                     _LOGGER.error("Failed to trigger fertilizer actuator for plant %s: %s", plant_id, e)
                 # Append a log entry to nutrient_application_log.json
                 try:
-                    plant_dir = plants_dir / str(plant_id)
-                    plant_dir.mkdir(exist_ok=True)
-                    log_file = plant_dir / "nutrient_application_log.json"
-                    log_entries = []
-                    if log_file.is_file():
-                        with open(log_file, "r", encoding="utf-8") as lf:
-                            try:
-                                data = json.load(lf)
-                                if isinstance(data, list):
-                                    log_entries = data
-                            except json.JSONDecodeError:
-                                _LOGGER.warning("Nutrient log file for plant %s is not valid JSON. Overwriting it.", plant_id)
+                    log_file = plants_dir / str(plant_id) / "nutrient_application_log.json"
                     entry = {
                         "timestamp": datetime.now().isoformat(),
                         "reason": reason_str,
                         "triggered": True,
-                        "source": "automation"
+                        "source": "automation",
                     }
-                    log_entries.append(entry)
-                    with open(log_file, "w", encoding="utf-8") as lf:
-                        json.dump(log_entries, lf, indent=2)
+                    append_json_log(log_file, entry)
                 except Exception as e:
                     _LOGGER.error("Failed to write nutrient application log for plant %s: %s", plant_id, e)
                 # Only trigger once per cycle per plant (stop checking other nutrients after triggering)
