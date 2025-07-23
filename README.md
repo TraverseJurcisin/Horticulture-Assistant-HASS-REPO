@@ -178,6 +178,7 @@ Key reference datasets reside in the `data/` directory:
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `water_usage_guidelines.json` – estimated daily water use by crop stage
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
+- `emitter_flow_rates.json` – typical emitter flow rates (L/h) for irrigation time estimates
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `foliar_feed_intervals.json` – suggested days between foliar applications
 - `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
@@ -244,6 +245,7 @@ or incomplete and should only be used as a starting point for your own research.
   milliliters per plant based on `irrigation_guidelines.json`. The `get_daily_water_use` helper provides similar estimates from `water_usage_guidelines.json`.
 - **Irrigation Efficiency**: `adjust_irrigation_for_efficiency` scales volumes
   based on delivery method using `irrigation_efficiency.json`.
+- **Irrigation Duration Estimate**: `estimate_irrigation_time` uses `emitter_flow_rates.json` to predict how long a watering event will take.
 - **Irrigation Schedule Efficiency**: `generate_irrigation_schedule` accepts a
   `method` parameter to automatically apply those efficiency factors.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
