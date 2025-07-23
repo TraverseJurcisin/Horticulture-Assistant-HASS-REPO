@@ -10,6 +10,8 @@ spec.loader.exec_module(wsda)
 
 get_product_npk_by_name = wsda.get_product_npk_by_name
 get_product_npk_by_number = wsda.get_product_npk_by_number
+get_product_analysis_by_name = wsda.get_product_analysis_by_name
+get_product_analysis_by_number = wsda.get_product_analysis_by_number
 search_products = wsda.search_products
 list_product_names = wsda.list_product_names
 list_product_numbers = wsda.list_product_numbers
@@ -27,6 +29,13 @@ def test_lookup_by_number():
     assert result["N"] == 5.0
     assert result["P"] == 6.0
     assert result["K"] == 6.0
+
+
+def test_full_analysis_lookup():
+    by_name = get_product_analysis_by_name("1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6")
+    by_number = get_product_analysis_by_number("(#4083-0001)")
+    assert by_name["N"] == 5.0
+    assert by_number["K"] == 6.0
 
 
 def test_search_products():

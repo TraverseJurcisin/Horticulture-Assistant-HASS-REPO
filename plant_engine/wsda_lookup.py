@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-"""Helpers for looking up fertilizer NPK values from the WSDA database."""
+"""Utilities for looking up fertilizer analysis data from the WSDA database."""
 
 import json
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Mapping
 
 # Path to the WSDA fertilizer database packaged with the repository
 _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
@@ -14,6 +14,8 @@ _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.jso
 __all__ = [
     "get_product_npk_by_name",
     "get_product_npk_by_number",
+    "get_product_analysis_by_name",
+    "get_product_analysis_by_number",
     "search_products",
     "list_product_names",
     "list_product_numbers",
@@ -21,8 +23,32 @@ __all__ = [
 
 @dataclass(frozen=True)
 class _Product:
+    """Normalized fertilizer entry."""
+
     name: str
     npk: Tuple[float, float, float]
+    analysis: Dict[str, float]
+
+
+def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
+    """Return numeric nutrient analysis from a raw WSDA mapping."""
+
+    parsed: Dict[str, float] = {}
+    for key, value in raw.items():
+        try:
+            val = float(value)
+        except (TypeError, ValueError):
+            continue
+        if key.startswith("Total Nitrogen"):
+            parsed["N"] = val
+        elif "Phosphoric" in key:
+            parsed["P"] = val
+        elif "Potash" in key:
+            parsed["K"] = val
+        else:
+            abbrev = key.split(" ")[0].replace("(", "").replace(")", "")
+            parsed[abbrev] = val
+    return parsed
 
 
 @lru_cache(maxsize=None)
@@ -37,18 +63,19 @@ def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
     names: Dict[str, _Product] = {}
     numbers: Dict[str, _Product] = {}
     for rec in records:
-        ga = rec.get("guaranteed_analysis", {})
+        ga_raw = rec.get("guaranteed_analysis", {})
+        analysis = _parse_analysis(ga_raw)
         npk = (
-            float(ga.get("Total Nitrogen (N)") or 0),
-            float(ga.get("Available Phosphoric Acid (P2O5)") or 0),
-            float(ga.get("Soluble Potash (K2O)") or 0),
+            analysis.get("N", 0.0),
+            analysis.get("P", 0.0),
+            analysis.get("K", 0.0),
         )
         name = str(rec.get("product_name", "")).strip()
         number = rec.get("wsda_product_number")
         if name:
-            names[name.lower()] = _Product(name=name, npk=npk)
+            names[name.lower()] = _Product(name=name, npk=npk, analysis=analysis)
         if number:
-            numbers[str(number)] = _Product(name=name, npk=npk)
+            numbers[str(number)] = _Product(name=name, npk=npk, analysis=analysis)
 
     return names, numbers
 
@@ -58,6 +85,11 @@ def _extract_npk(prod: _Product | None) -> Dict[str, float]:
         return {}
     n, p, k = prod.npk
     return {"N": n, "P": p, "K": k}
+
+
+def _extract_analysis(prod: _Product | None) -> Dict[str, float]:
+    """Return the full nutrient analysis for ``prod`` if available."""
+    return dict(prod.analysis) if prod else {}
 
 
 def get_product_npk_by_name(name: str) -> Dict[str, float]:
@@ -75,6 +107,19 @@ def get_product_npk_by_number(number: str) -> Dict[str, float]:
     """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
     _, numbers = _build_indexes()
     return _extract_npk(numbers.get(number))
+
+
+def get_product_analysis_by_name(name: str) -> Dict[str, float]:
+    """Return the complete guaranteed analysis for ``name``."""
+    name_l = name.lower()
+    names, _ = _build_indexes()
+    return _extract_analysis(names.get(name_l))
+
+
+def get_product_analysis_by_number(number: str) -> Dict[str, float]:
+    """Return guaranteed analysis for a WSDA ``number``."""
+    _, numbers = _build_indexes()
+    return _extract_analysis(numbers.get(number))
 
 
 def search_products(query: str, limit: int = 10) -> List[str]:
