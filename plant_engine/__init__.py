@@ -34,6 +34,13 @@ from .pest_monitor import (
     assess_pest_pressure,
     recommend_threshold_actions,
 )
+from .disease_monitor import (
+    get_disease_thresholds,
+    assess_disease_pressure,
+    classify_disease_severity,
+    recommend_threshold_actions as recommend_disease_threshold_actions,
+    generate_disease_report,
+)
 from .disease_manager import (
     get_disease_guidelines,
     recommend_treatments as recommend_disease_treatments,
@@ -172,6 +179,11 @@ __all__ = [
     "get_disease_prevention",
     "recommend_disease_prevention",
     "list_disease_plants",
+    "get_disease_thresholds",
+    "assess_disease_pressure",
+    "classify_disease_severity",
+    "recommend_disease_threshold_actions",
+    "generate_disease_report",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
     "get_fertilizer_purity",
