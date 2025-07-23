@@ -120,6 +120,34 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
     return normalized
 
 
+@dataclass
+class EnvironmentReadings:
+    """Normalized environment readings container."""
+
+    values: Dict[str, float]
+
+    def __init__(self, data: Mapping[str, float]):
+        self.values = normalize_environment_readings(data)
+
+    def get(self, key: str, default: float | None = None) -> float | None:
+        return self.values.get(key, default)
+
+    def __getitem__(self, key: str) -> float:
+        return self.values[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.values
+
+    def items(self):
+        return self.values.items()
+
+    def __iter__(self):
+        return iter(self.values)
+
+    def as_dict(self) -> Dict[str, float]:
+        return dict(self.values)
+
+
 __all__ = [
     "list_supported_plants",
     "get_environment_guidelines",
@@ -173,6 +201,7 @@ __all__ = [
     "StressFlags",
     "WaterQualityInfo",
     "normalize_environment_readings",
+    "EnvironmentReadings",
     "classify_value_range",
     "compare_environment",
     "generate_environment_alerts",
@@ -1163,7 +1192,7 @@ def calculate_environment_metrics(
 
 
 def optimize_environment(
-    current: Mapping[str, float],
+    current: Mapping[str, float] | EnvironmentReadings,
     plant_type: str,
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
@@ -1179,7 +1208,9 @@ def optimize_environment(
     several utilities for convenience when automating greenhouse controls.
     """
 
-    readings = normalize_environment_readings(current)
+    readings = (
+        current if isinstance(current, EnvironmentReadings) else EnvironmentReadings(current)
+    )
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
     actions = recommend_environment_adjustments(readings, plant_type, stage)
@@ -1266,7 +1297,7 @@ def optimize_environment(
 
 
 def summarize_environment(
-    current: Mapping[str, float],
+    current: Mapping[str, float] | EnvironmentReadings,
     plant_type: str,
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
@@ -1291,7 +1322,9 @@ def summarize_environment(
         ranges under the ``"targets"`` key.
     """
 
-    readings = normalize_environment_readings(current)
+    readings = (
+        current if isinstance(current, EnvironmentReadings) else EnvironmentReadings(current)
+    )
 
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
@@ -1346,15 +1379,15 @@ def summarize_environment_series(
 
     iterator = list(series)
     if not iterator:
-        avg = {}
+        avg = EnvironmentReadings({})
     else:
         totals: Dict[str, float] = {}
         count = 0
         for reading in iterator:
-            for key, value in normalize_environment_readings(reading).items():
+            for key, value in EnvironmentReadings(reading).items():
                 totals[key] = totals.get(key, 0.0) + float(value)
             count += 1
-        avg = {k: v / count for k, v in totals.items()}
+        avg = EnvironmentReadings({k: v / count for k, v in totals.items()})
 
     return summarize_environment(
         avg,

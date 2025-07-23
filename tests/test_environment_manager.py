@@ -50,6 +50,7 @@ from plant_engine.environment_manager import (
     summarize_environment,
     summarize_environment_series,
     clear_environment_cache,
+    EnvironmentReadings,
 )
 
 
@@ -656,3 +657,9 @@ def test_co2_price_and_cost():
     grams, cost = recommend_co2_injection_with_cost(300, "citrus", "seedling", 100.0, "cartridge")
     assert grams > 0
     assert cost == estimate_co2_cost(grams, "cartridge")
+
+
+def test_environment_readings_alias_normalization():
+    data = EnvironmentReadings({"temp_f": 68, "rh": 55})
+    assert round(data["temp_c"], 1) == 20.0
+    assert data["humidity_pct"] == 55
