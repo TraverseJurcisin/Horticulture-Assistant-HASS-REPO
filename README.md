@@ -176,6 +176,7 @@ Key reference datasets reside in the `data/` directory:
 - `water_usage_guidelines.json` – estimated daily water use by crop stage
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
+- `foliar_feed_intervals.json` – suggested days between foliar applications
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
