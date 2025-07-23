@@ -158,6 +158,7 @@ Key reference datasets reside in the `data/` directory:
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
+- `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
