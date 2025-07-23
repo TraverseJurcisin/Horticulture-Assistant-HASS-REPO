@@ -127,6 +127,7 @@ __all__ = [
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
     "recommend_precise_fertigation",
+    "grams_to_ppm",
 ]
 
 
@@ -161,6 +162,28 @@ def _ppm_to_grams(ppm: float, volume_l: float, purity: float) -> float:
         raise ValueError("purity must be > 0")
     mg = ppm * volume_l
     return round((mg / 1000) / purity, 3)
+
+
+def grams_to_ppm(grams: float, volume_l: float, purity: float) -> float:
+    """Return nutrient ppm for ``grams`` dissolved in ``volume_l`` solution.
+
+    Parameters
+    ----------
+    grams : float
+        Fertilizer mass in grams.
+    volume_l : float
+        Final solution volume in liters. Must be greater than zero.
+    purity : float
+        Fractional nutrient purity (0-1). Must be greater than zero.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be > 0")
+    if purity <= 0:
+        raise ValueError("purity must be > 0")
+
+    mg = grams * 1000 * purity
+    return round(mg / volume_l, 2)
 
 
 def recommend_fertigation_schedule(

@@ -280,3 +280,26 @@ def test_generate_cycle_fertigation_plan_with_cost():
     assert plan == basic_plan
     assert cost > 0
 
+
+def test_grams_to_ppm_roundtrip():
+    from plant_engine.fertigation import grams_to_ppm
+
+    schedule = recommend_fertigation_schedule(
+        "tomato",
+        "vegetative",
+        volume_l=10.0,
+        purity={"N": 0.5},
+    )
+    grams = schedule["N"]
+    ppm = grams_to_ppm(grams, 10.0, 0.5)
+    assert ppm == pytest.approx(100.0)
+
+
+def test_grams_to_ppm_invalid():
+    from plant_engine.fertigation import grams_to_ppm
+
+    with pytest.raises(ValueError):
+        grams_to_ppm(1.0, 0.0, 1.0)
+    with pytest.raises(ValueError):
+        grams_to_ppm(1.0, 1.0, 0.0)
+
