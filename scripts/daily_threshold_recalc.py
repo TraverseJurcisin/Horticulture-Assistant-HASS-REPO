@@ -79,7 +79,7 @@ def run_daily_threshold_updates():
         
         # Step 3: Update water balance tracker
         water_status = update_water_balance(plant_id, irrigation_ml, transpiration_ml)
-        report["water_deficit"] = water_status
+        report["water_deficit"] = water_status.as_dict()
 
 
         # Save daily report to disk

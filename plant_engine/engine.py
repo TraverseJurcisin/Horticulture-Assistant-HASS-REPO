@@ -81,7 +81,7 @@ def run_daily_cycle(plant_id: str) -> Dict:
         transp_ml,
         rootzone_ml=rootzone.total_available_water_ml,
         mad_pct=rootzone.mad_pct,
-    )
+    ).as_dict()
 
     # Step 5: NUE tracking
     try:
