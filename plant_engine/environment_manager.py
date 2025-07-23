@@ -162,6 +162,7 @@ __all__ = [
     "generate_environment_alerts",
     "classify_environment_quality",
     "summarize_environment",
+    "summarize_environment_series",
     "EnvironmentSummary",
 ]
 
@@ -1086,3 +1087,38 @@ def summarize_environment(
     if include_targets:
         data["targets"] = get_environmental_targets(plant_type, stage)
     return data
+
+
+def summarize_environment_series(
+    series: Iterable[Mapping[str, float]],
+    plant_type: str,
+    stage: str | None = None,
+    water_test: Mapping[str, float] | None = None,
+    *,
+    include_targets: bool = False,
+) -> Dict[str, Any]:
+    """Return summary for averaged environment readings.
+
+    When multiple readings are provided they are normalized, averaged and then
+    passed to :func:`summarize_environment`.
+    """
+
+    iterator = list(series)
+    if not iterator:
+        avg = {}
+    else:
+        totals: Dict[str, float] = {}
+        count = 0
+        for reading in iterator:
+            for key, value in normalize_environment_readings(reading).items():
+                totals[key] = totals.get(key, 0.0) + float(value)
+            count += 1
+        avg = {k: v / count for k, v in totals.items()}
+
+    return summarize_environment(
+        avg,
+        plant_type,
+        stage,
+        water_test,
+        include_targets=include_targets,
+    )
