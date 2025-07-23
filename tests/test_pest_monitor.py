@@ -5,6 +5,7 @@ from plant_engine.pest_monitor import (
     recommend_threshold_actions,
     recommend_biological_controls,
     classify_pest_severity,
+    generate_pest_report,
 )
 
 
@@ -53,3 +54,12 @@ def test_classify_pest_severity():
     severity = classify_pest_severity("citrus", obs)
     assert severity["aphids"] == "low"
     assert severity["scale"] == "severe"
+
+
+def test_generate_pest_report():
+    obs = {"aphids": 6, "scale": 3}
+    report = generate_pest_report("citrus", obs)
+    assert report["severity"]["scale"] == "moderate" or report["severity"]["scale"] == "severe"
+    assert report["thresholds_exceeded"]["aphids"] is True
+    assert "aphids" in report["treatments"]
+    assert "aphids" in report["beneficial_insects"]

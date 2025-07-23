@@ -210,6 +210,8 @@ or incomplete and should only be used as a starting point for your own research.
   observed pests using `beneficial_insects.json`.
 - **Biological Control Helper**: `recommend_biological_controls` suggests
   beneficial insects to deploy when pest thresholds are exceeded.
+- **Pest Monitoring Report**: `generate_pest_report` combines severity,
+  treatment, biological control and prevention advice for observed pests.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
   reports provide an estimated harvest date based on `growth_stages.json`.
 - **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
