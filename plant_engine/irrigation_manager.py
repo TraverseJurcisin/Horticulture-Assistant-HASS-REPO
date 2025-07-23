@@ -1,7 +1,7 @@
 """Helpers for irrigation scheduling."""
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Mapping, Dict
 
 from .utils import load_dataset, normalize_key
 from .et_model import calculate_eta
@@ -13,6 +13,7 @@ __all__ = [
     "recommend_irrigation_interval",
     "get_crop_coefficient",
     "estimate_irrigation_demand",
+    "recommend_irrigation_from_environment",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -111,3 +112,32 @@ def estimate_irrigation_demand(
     eta_mm = calculate_eta(et0_mm_day, kc)
     liters = eta_mm * area_m2
     return round(liters, 2)
+
+
+def recommend_irrigation_from_environment(
+    plant_profile: Mapping[str, float],
+    env_data: Mapping[str, float],
+    rootzone: RootZone,
+    available_ml: float,
+    *,
+    refill_to_full: bool = True,
+) -> Dict[str, object]:
+    """Return irrigation volume using transpiration estimated from ``env_data``.
+
+    This helper bridges :func:`compute_transpiration` and
+    :func:`recommend_irrigation_volume` so automations can directly pass current
+    environment readings and receive both the evapotranspiration metrics and the
+    irrigation volume recommendation in one call.
+    """
+
+    from .compute_transpiration import compute_transpiration
+
+    metrics = compute_transpiration(plant_profile, env_data)
+    volume = recommend_irrigation_volume(
+        rootzone, available_ml, metrics["transpiration_ml_day"], refill_to_full=refill_to_full
+    )
+
+    return {
+        "volume_ml": volume,
+        "metrics": metrics,
+    }
