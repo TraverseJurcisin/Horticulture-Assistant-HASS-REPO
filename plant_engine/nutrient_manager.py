@@ -1,7 +1,7 @@
 """Utility helpers for nutrient recommendation and analysis."""
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -29,6 +29,7 @@ __all__ = [
     "get_stage_ratio",
     "get_nutrient_weight",
     "score_nutrient_levels",
+    "score_nutrient_series",
     "recommend_ratio_adjustments",
 ]
 
@@ -186,6 +187,17 @@ def score_nutrient_levels(
         return 0.0
 
     return round((score / total_weight) * 100, 1)
+
+
+def score_nutrient_series(
+    series: Iterable[Mapping[str, float]], plant_type: str, stage: str
+) -> float:
+    """Return the average nutrient score for a sequence of readings."""
+
+    scores = [score_nutrient_levels(s, plant_type, stage) for s in series]
+    if not scores:
+        return 0.0
+    return round(sum(scores) / len(scores), 1)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:

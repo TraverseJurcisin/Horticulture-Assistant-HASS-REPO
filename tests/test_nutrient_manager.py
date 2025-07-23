@@ -11,6 +11,7 @@ from plant_engine.nutrient_manager import (
     get_npk_ratio,
     get_stage_ratio,
     score_nutrient_levels,
+    score_nutrient_series,
 )
 
 
@@ -118,3 +119,10 @@ def test_calculate_all_nutrient_balance():
     assert "N" in ratios and "Fe" in ratios
     assert ratios["N"] > 0
     assert ratios["Fe"] > 0
+
+
+def test_score_nutrient_series():
+    s1 = {"N": 80, "P": 60, "K": 120}
+    s2 = {"N": 60, "P": 50, "K": 100}
+    score = score_nutrient_series([s1, s2], "tomato", "fruiting")
+    assert score == (100.0 + score_nutrient_levels(s2, "tomato", "fruiting")) / 2
