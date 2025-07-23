@@ -7,11 +7,13 @@ from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
+WEIGHT_DATA_FILE = "nutrient_weights.json"
 
 
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
+_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -25,8 +27,21 @@ __all__ = [
     "calculate_all_nutrient_balance",
     "get_npk_ratio",
     "get_stage_ratio",
+    "get_nutrient_weight",
     "score_nutrient_levels",
 ]
+
+
+def get_nutrient_weight(nutrient: str) -> float:
+    """Return importance weight for a nutrient.
+
+    If no weight is defined the default ``1.0`` is returned.
+    """
+
+    try:
+        return float(_WEIGHTS.get(nutrient, 1.0))
+    except (TypeError, ValueError):
+        return 1.0
 
 
 def list_supported_plants() -> list[str]:
@@ -143,9 +158,10 @@ def score_nutrient_levels(
 ) -> float:
     """Return a 0-100 score for how close ``current_levels`` are to guidelines.
 
-    Each nutrient is weighted equally. A perfect match yields ``100`` while
-    values more than double or less than zero of the target contribute ``0`` to
-    the overall score.
+    Nutrients can be assigned importance weights in
+    :data:`nutrient_weights.json`. Unknown nutrients default to ``1.0``.
+    A perfect match yields ``100`` while values more than double or less than
+    zero of the target contribute ``0`` to the overall score.
     """
 
     recommended = get_recommended_levels(plant_type, stage)
@@ -153,7 +169,7 @@ def score_nutrient_levels(
         return 0.0
 
     score = 0.0
-    count = 0
+    total_weight = 0.0
     for nutrient, target in recommended.items():
         if target <= 0:
             continue
@@ -161,13 +177,14 @@ def score_nutrient_levels(
         if current is None:
             continue
         diff_ratio = abs(current - target) / target
-        score += max(0.0, 1 - diff_ratio)
-        count += 1
+        weight = get_nutrient_weight(nutrient)
+        score += weight * max(0.0, 1 - diff_ratio)
+        total_weight += weight
 
-    if count == 0:
+    if total_weight == 0:
         return 0.0
 
-    return round((score / count) * 100, 1)
+    return round((score / total_weight) * 100, 1)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:

@@ -1,3 +1,4 @@
+import json
 from plant_engine.nutrient_manager import (
     get_recommended_levels,
     get_all_recommended_levels,
@@ -76,6 +77,20 @@ def test_score_nutrient_levels():
     deficit = {"N": 40, "P": 30, "K": 60}
     score = score_nutrient_levels(deficit, "tomato", "fruiting")
     assert 49.9 < score < 50.1
+
+
+def test_score_nutrient_levels_weighted(tmp_path, monkeypatch):
+    overlay = tmp_path / "overlay"
+    overlay.mkdir()
+    weights = {"N": 2.0, "P": 0.5, "K": 0.5}
+    (overlay / "nutrient_weights.json").write_text(json.dumps(weights))
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    import importlib
+    import plant_engine.nutrient_manager as nm
+    importlib.reload(nm)
+    current = {"N": 80, "P": 30, "K": 60}
+    score = nm.score_nutrient_levels(current, "tomato", "fruiting")
+    assert 80 < score < 90
 
 
 def test_get_all_recommended_levels():
