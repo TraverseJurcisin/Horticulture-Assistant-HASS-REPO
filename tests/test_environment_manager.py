@@ -36,6 +36,8 @@ from plant_engine.environment_manager import (
     optimize_environment,
     calculate_environment_metrics,
     compare_environment,
+    classify_value_range,
+    _check_range,
     generate_environment_alerts,
     classify_environment_quality,
     normalize_environment_readings,
@@ -345,6 +347,16 @@ def test_compare_environment():
     result2 = compare_environment(off, targets)
     assert result2["temp_c"] == "above range"
     assert result2["humidity_pct"] == "below range"
+
+
+def test_classify_value_range_and_check_range():
+    assert classify_value_range(10, (5, 15)) == "within range"
+    assert classify_value_range(2, (5, 15)) == "below range"
+    assert classify_value_range(20, (5, 15)) == "above range"
+
+    assert _check_range(10, (5, 15)) is None
+    assert _check_range(2, (5, 15)) == "increase"
+    assert _check_range(20, (5, 15)) == "decrease"
 
 
 def test_generate_environment_alerts():
