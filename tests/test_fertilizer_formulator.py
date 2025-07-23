@@ -29,6 +29,13 @@ def test_convert_guaranteed_analysis():
     assert round(result["K"], 3) == 0.166
 
 
+def test_convert_guaranteed_analysis_skips_none():
+    ga = {"N": 0.1, "B": None}
+    result = convert_guaranteed_analysis(ga)
+    assert result["N"] == 0.1
+    assert "B" not in result
+
+
 def test_calculate_fertilizer_nutrients():
     payload = calculate_fertilizer_nutrients("plant1", "foxfarm_grow_big", 10)
     nutrients = payload["nutrients"]

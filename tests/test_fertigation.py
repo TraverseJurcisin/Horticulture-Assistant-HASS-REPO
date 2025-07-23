@@ -9,6 +9,7 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_water,
     estimate_daily_nutrient_uptake,
     recommend_nutrient_mix_with_cost,
+    recommend_nutrient_mix_with_cost_breakdown,
 )
 
 
@@ -154,3 +155,20 @@ def test_recommend_nutrient_mix_with_cost():
     )
     assert schedule
     assert cost >= 0
+
+
+def test_recommend_nutrient_mix_with_cost_breakdown():
+    schedule, total, breakdown = recommend_nutrient_mix_with_cost_breakdown(
+        "citrus",
+        "vegetative",
+        1.0,
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+    )
+    assert schedule
+    assert total >= 0
+    assert isinstance(breakdown, dict)
+    assert sum(breakdown.values()) == pytest.approx(total, rel=0.1)

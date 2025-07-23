@@ -39,6 +39,7 @@ from .fertigation import (
     recommend_fertigation_schedule,
     recommend_correction_schedule,
     get_fertilizer_purity,
+    recommend_nutrient_mix_with_cost_breakdown,
 )
 from .rootzone_model import (
     estimate_rootzone_depth,
@@ -148,6 +149,7 @@ __all__ = [
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
     "get_fertilizer_purity",
+    "recommend_nutrient_mix_with_cost_breakdown",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",

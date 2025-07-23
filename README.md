@@ -227,12 +227,12 @@ Select the corresponding sensors and plant profile when prompted. Ensure each se
 Development is private for now. Feedback is welcome, but pull requests will open once the repository becomes public. Please open discussions or issues for questions or suggestions.
 
 ## Command Line Utilities
-This repository ships with a few helper scripts under the root directory. The
-`Template Sensor Generator (generate_plant_sensors.py)` script converts daily
-JSON reports into Home Assistant template sensor YAML. Run it with:
+This repository ships with a few helper scripts in the `scripts/` directory. The
+`generate_plant_sensors.py` utility converts daily JSON reports into Home
+Assistant template sensor YAML. Run it with:
 
 ```bash
-python "Template Sensor Generator (generate_plant_sensors.py)" <plant_id>
+python scripts/generate_plant_sensors.py <plant_id>
 ```
 The generated YAML is written to `templates/generated/` for easy import.
 
