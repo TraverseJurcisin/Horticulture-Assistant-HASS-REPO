@@ -16,8 +16,7 @@ def import_lab_test(plant_id: str, lab_file_path: str, test_type: str = "tissue"
     profile = load_json(plant_path)
     thresholds = profile.get("thresholds", {})
 
-    with open(lab_file_path, "r", encoding="utf-8") as f:
-        lab_data = load_json(f)
+    lab_data = load_json(lab_file_path)
 
     proposed = {}
     for nutrient, value in lab_data.items():

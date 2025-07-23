@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import json
 from plant_engine.rootzone_model import estimate_rootzone_depth, estimate_water_capacity
+from plant_engine.utils import load_json
 
 
 def main() -> None:
@@ -13,14 +13,13 @@ def main() -> None:
     parser.add_argument("growth", help="Growth stats JSON")
     args = parser.parse_args()
 
-    with open(args.profile, "r", encoding="utf-8") as f:
-        profile = json.load(f)
-    with open(args.growth, "r", encoding="utf-8") as f:
-        growth = json.load(f)
+    profile = load_json(args.profile)
+    growth = load_json(args.growth)
 
     depth = estimate_rootzone_depth(profile, growth)
     zone = estimate_water_capacity(depth)
     result = zone.to_dict()
+    import json
     print(json.dumps(result, indent=2))
 
 

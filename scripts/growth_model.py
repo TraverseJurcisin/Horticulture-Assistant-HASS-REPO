@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import json
 from plant_engine.growth_model import update_growth_index
+from plant_engine.utils import load_json
 
 
 def main() -> None:
@@ -14,10 +14,10 @@ def main() -> None:
     parser.add_argument("transpiration_ml", type=float)
     args = parser.parse_args()
 
-    with open(args.environment, "r", encoding="utf-8") as f:
-        env = json.load(f)
+    env = load_json(args.environment)
 
     result = update_growth_index(args.plant_id, env, args.transpiration_ml)
+    import json
     print(json.dumps(result, indent=2))
 
 
