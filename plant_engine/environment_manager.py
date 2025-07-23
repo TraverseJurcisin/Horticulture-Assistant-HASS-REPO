@@ -138,6 +138,8 @@ __all__ = [
     "get_target_vpd",
     "get_target_photoperiod",
     "get_target_co2",
+    "calculate_co2_injection",
+    "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "recommend_light_intensity",
     "recommend_photoperiod",
@@ -894,6 +896,28 @@ def get_target_co2(
     """Return recommended CO₂ range in ppm for a plant stage."""
     guide = get_environment_guidelines(plant_type, stage)
     return guide.co2_ppm
+
+
+# Approximate mass of CO₂ in milligrams required per m³ to raise
+# concentration by 1 ppm at 25°C. Used for enrichment calculations.
+CO2_MG_PER_M3_PER_PPM = 1.98
+
+
+def calculate_co2_injection(
+    current_ppm: float, target_ppm: tuple[float, float], volume_m3: float
+) -> float:
+    """Return grams of CO₂ needed to reach the midpoint of ``target_ppm``.
+
+    If ``current_ppm`` is already above the midpoint, ``0.0`` is returned.
+    ``volume_m3`` must be positive.
+    """
+
+    if volume_m3 <= 0:
+        raise ValueError("volume_m3 must be positive")
+    midpoint = (target_ppm[0] + target_ppm[1]) / 2
+    delta = max(0.0, midpoint - current_ppm)
+    grams = delta * CO2_MG_PER_M3_PER_PPM * volume_m3 / 1000
+    return round(grams, 2)
 
 
 def calculate_environment_metrics(
