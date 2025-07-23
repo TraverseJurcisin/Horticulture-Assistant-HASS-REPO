@@ -126,6 +126,41 @@ def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
     return round(cost, 2)
 
 
+def calculate_fertilizer_nutrients_from_mass(
+    fertilizer_id: str, grams: float
+) -> Dict[str, float]:
+    """Return nutrient mass (mg) for ``grams`` of fertilizer product."""
+
+    if grams <= 0:
+        raise ValueError("grams must be positive")
+
+    inventory = _inventory()
+    if fertilizer_id not in inventory:
+        raise ValueError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
+
+    ga = convert_guaranteed_analysis(inventory[fertilizer_id].guaranteed_analysis)
+    return {element: round(grams * pct * 1000, 2) for element, pct in ga.items()}
+
+
+def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> float:
+    """Return estimated cost for ``grams`` of fertilizer product."""
+
+    if grams <= 0:
+        raise ValueError("grams must be positive")
+
+    prices = _price_map()
+    inventory = _inventory()
+
+    if fertilizer_id not in prices:
+        raise KeyError(f"Price for '{fertilizer_id}' is not defined")
+    if fertilizer_id not in inventory:
+        raise KeyError(f"Density for '{fertilizer_id}' is not defined")
+
+    density = inventory[fertilizer_id].density_kg_per_l
+    volume_l = grams / (density * 1000)
+    return round(prices[fertilizer_id] * volume_l, 2)
+
+
 def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     """Return estimated USD cost for a fertilizer mix.
 
@@ -301,8 +336,10 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
 
 __all__ = [
     "calculate_fertilizer_nutrients",
+    "calculate_fertilizer_nutrients_from_mass",
     "convert_guaranteed_analysis",
     "calculate_fertilizer_cost",
+    "calculate_fertilizer_cost_from_mass",
     "estimate_mix_cost",
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
