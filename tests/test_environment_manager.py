@@ -21,6 +21,7 @@ from plant_engine.environment_manager import (
     get_target_photoperiod,
     get_target_co2,
     calculate_co2_injection,
+    recommend_co2_injection,
     humidity_for_target_vpd,
     recommend_photoperiod,
     recommend_light_intensity,
@@ -316,6 +317,13 @@ def test_calculate_co2_injection():
     assert calculate_co2_injection(700, target, 100.0) == 0.0
     with pytest.raises(ValueError):
         calculate_co2_injection(300, target, -1)
+
+
+def test_recommend_co2_injection():
+    grams = recommend_co2_injection(300, "citrus", "seedling", 100.0)
+    assert grams > 0
+    assert recommend_co2_injection(700, "citrus", "seedling", 100.0) == 0.0
+    assert recommend_co2_injection(300, "unknown", None, 100.0) == 0.0
 
 
 def test_calculate_absolute_humidity():

@@ -1,7 +1,22 @@
 {
   "environment_guidelines.json": "Temperature, humidity, light and CO2 ranges for each plant stage.",
   "nutrient_guidelines.json": "Recommended macronutrient ppm levels for each plant stage.",
+  "micronutrient_guidelines.json": "Recommended micronutrient ppm levels for each plant stage.",
+  "nutrient_ratio_guidelines.json": "Optimal NPK ratios by stage for balanced fertilization.",
+  "nutrient_weights.json": "Relative importance weighting for nutrient scoring.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
+  "pest_thresholds.json": "Economic threshold counts for triggering actions.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
-  "growth_stages.json": "Expected duration and notes for each growth stage."
+  "disease_prevention.json": "Preventative measures to reduce disease incidence.",
+  "growth_stages.json": "Expected duration and notes for each growth stage.",
+  "light_dli_guidelines.json": "Daily Light Integral targets for growth stages.",
+  "vpd_guidelines.json": "Vapor pressure deficit targets for growth stages.",
+  "photoperiod_guidelines.json": "Recommended photoperiod ranges for growth stages.",
+  "irrigation_guidelines.json": "Daily irrigation volume guidelines by stage.",
+  "irrigation_efficiency.json": "Efficiency factors for irrigation methods.",
+  "water_quality_thresholds.json": "Maximum safe levels of common water analytes.",
+  "water_quality_actions.json": "Recommended remediation steps for poor water quality.",
+  "leaf_tissue_targets.json": "Optimal nutrient ranges for leaf tissue analysis.",
+  "root_depth_guidelines.json": "Typical maximum root depth per crop.",
+  "plant_density_guidelines.json": "Recommended plant spacing for common crops."
 }

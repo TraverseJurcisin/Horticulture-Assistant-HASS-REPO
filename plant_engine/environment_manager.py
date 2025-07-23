@@ -139,6 +139,7 @@ __all__ = [
     "get_target_photoperiod",
     "get_target_co2",
     "calculate_co2_injection",
+    "recommend_co2_injection",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "recommend_light_intensity",
@@ -928,6 +929,26 @@ def calculate_co2_injection(
     delta = max(0.0, midpoint - current_ppm)
     grams = delta * CO2_MG_PER_M3_PER_PPM * volume_m3 / 1000
     return round(grams, 2)
+
+
+def recommend_co2_injection(
+    current_ppm: float,
+    plant_type: str,
+    stage: str | None,
+    volume_m3: float,
+) -> float:
+    """Return grams of CO₂ to inject for the given plant stage.
+
+    The helper looks up target ranges via :func:`get_target_co2` and uses
+    :func:`calculate_co2_injection` to determine the mass of CO₂ required to
+    reach the midpoint of the recommended range. ``0.0`` is returned when no
+    guidelines exist or ``current_ppm`` already exceeds the target.
+    """
+
+    target = get_target_co2(plant_type, stage)
+    if not target:
+        return 0.0
+    return calculate_co2_injection(current_ppm, target, volume_m3)
 
 
 def calculate_environment_metrics(
