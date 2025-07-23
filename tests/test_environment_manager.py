@@ -24,6 +24,7 @@ from plant_engine.environment_manager import (
     evaluate_cold_stress,
     evaluate_light_stress,
     evaluate_wind_stress,
+    evaluate_humidity_stress,
     evaluate_stress_conditions,
     score_environment,
     optimize_environment,
@@ -406,9 +407,20 @@ def test_evaluate_wind_stress():
     assert evaluate_wind_stress(None, "citrus") is None
 
 
+def test_evaluate_humidity_stress():
+    assert evaluate_humidity_stress(30, "citrus") == "low"
+    assert evaluate_humidity_stress(90, "citrus") == "high"
+    assert evaluate_humidity_stress(60, "citrus") is None
+
+
 def test_optimize_environment_wind_stress():
     result = optimize_environment({"wind": 16}, "citrus")
     assert result["wind_stress"] is True
+
+
+def test_optimize_environment_humidity_stress():
+    result = optimize_environment({"humidity_pct": 96}, "lettuce")
+    assert result["humidity_stress"] == "high"
 
 
 def test_evaluate_stress_conditions():
@@ -417,9 +429,11 @@ def test_evaluate_stress_conditions():
     assert stress.cold is False
     assert stress.light == "low"
     assert stress.wind is True
+    assert stress.humidity is None
 
     stress_none = evaluate_stress_conditions(None, None, None, None, "citrus")
     assert stress_none.heat is None
+    assert stress_none.humidity is None
 
 
 def test_calculate_vpd_series():

@@ -52,6 +52,7 @@ applying it to your plants.
 - Disease and pest treatment recommendations
 - Environment optimization suggestions with pH guidance
 - Heat stress warnings using heat index thresholds
+- Humidity stress warnings when humidity is outside safe ranges
 - Light stress detection using DLI ranges
 - Stage-adjusted nutrient targets
 - Example crop profiles for strawberries, basil, spinach and more
