@@ -150,6 +150,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `nutrient_toxicity_thresholds.json` – upper limits to flag potential toxicity
+- `photoperiod_guidelines.json` – recommended day length by crop stage
 - `nutrient_toxicity_symptoms.json` – visual cues indicating nutrient excess
 - `nutrient_toxicity_treatments.json` – suggested mitigation steps for toxicity
 - `growth_stages.json` – lifecycle stage durations and notes by crop
@@ -217,6 +218,7 @@ or incomplete and should only be used as a starting point for your own research.
   quick evaluation.
 - **Photoperiod Suggestions**: `recommend_photoperiod` returns the daily light
   hours required to hit midpoint DLI targets at the current PPFD.
+- **Photoperiod Guidelines**: `get_target_photoperiod` looks up recommended day lengths from `photoperiod_guidelines.json`.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
 - **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
