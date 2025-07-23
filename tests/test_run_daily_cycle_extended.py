@@ -16,7 +16,8 @@ def test_run_daily_cycle_extended(tmp_path):
                     "lifecycle_stage": "vegetative",
                     "start_date": "2025-01-01",
                     "observed_pests": ["aphids"],
-                    "observed_diseases": []
+                    "observed_diseases": [],
+                    "observed_pest_counts": {"aphids": 12}
                 }
             }
         )
@@ -25,6 +26,7 @@ def test_run_daily_cycle_extended(tmp_path):
     report = run_daily_cycle("sample", base_path=str(plants_dir), output_path=str(out_dir))
 
     assert report["beneficial_insects"]["aphids"][0] == "ladybugs"
+    assert report["pest_severity"]["aphids"] == "moderate"
     assert report["predicted_harvest_date"] == "2025-05-01"
     assert "environment_optimization" in report
     assert "fertigation_schedule" in report
