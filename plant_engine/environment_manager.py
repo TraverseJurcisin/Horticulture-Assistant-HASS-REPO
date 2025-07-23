@@ -543,14 +543,18 @@ def score_environment_series(
     plant_type: str,
     stage: str | None = None,
 ) -> float:
-    """Return the average environment score for a sequence of readings."""
+    """Return the average environment score for ``series``."""
 
-    scores = [
-        score_environment(reading, plant_type, stage) for reading in series
-    ]
-    if not scores:
+    total = 0.0
+    count = 0
+    for reading in series:
+        total += score_environment(reading, plant_type, stage)
+        count += 1
+
+    if count == 0:
         return 0.0
-    return round(sum(scores) / len(scores), 1)
+
+    return round(total / count, 1)
 
 
 def classify_environment_quality(
