@@ -7,6 +7,7 @@ from plant_engine.nutrient_manager import (
     calculate_surplus,
     calculate_all_surplus,
     get_npk_ratio,
+    get_stage_ratio,
     score_nutrient_levels,
 )
 
@@ -52,6 +53,16 @@ def test_get_npk_ratio():
     assert ratio["N"] == 0.31
     assert ratio["P"] == 0.23
     assert ratio["K"] == 0.46
+
+
+def test_get_stage_ratio_from_dataset():
+    ratio = get_stage_ratio("tomato", "fruiting")
+    assert ratio == {"N": 0.27, "P": 0.33, "K": 0.4}
+
+
+def test_get_stage_ratio_fallback():
+    ratio = get_stage_ratio("citrus", "unknown")
+    assert ratio == get_npk_ratio("citrus", "unknown")
 
 
 def test_score_nutrient_levels():
