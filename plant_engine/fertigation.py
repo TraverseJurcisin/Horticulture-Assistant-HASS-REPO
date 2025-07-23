@@ -48,6 +48,7 @@ __all__ = [
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
+    "calculate_mix_nutrients",
 ]
 
 
@@ -63,6 +64,25 @@ def _resolve_purity(
     if purity:
         merged.update(purity)
     return merged
+
+
+def _ppm_to_grams(ppm: float, volume_l: float, purity: float) -> float:
+    """Return grams of fertilizer for ``ppm`` target in ``volume_l``.
+
+    Parameters
+    ----------
+    ppm : float
+        Parts per million nutrient concentration.
+    volume_l : float
+        Solution volume in liters.
+    purity : float
+        Fractional nutrient purity (0-1). Must be greater than zero.
+    """
+
+    if purity <= 0:
+        raise ValueError("purity must be > 0")
+    mg = ppm * volume_l
+    return round((mg / 1000) / purity, 3)
 
 
 def recommend_fertigation_schedule(
@@ -96,12 +116,9 @@ def recommend_fertigation_schedule(
     targets = get_recommended_levels(plant_type, stage)
     schedule: Dict[str, float] = {}
     for nutrient, ppm in targets.items():
-        mg = ppm * volume_l
-        grams = mg / 1000
-        fraction = purity_map.get(nutrient, 1.0)
-        if fraction <= 0:
-            raise ValueError(f"Purity for {nutrient} must be > 0")
-        schedule[nutrient] = round(grams / fraction, 3)
+        schedule[nutrient] = _ppm_to_grams(
+            ppm, volume_l, purity_map.get(nutrient, 1.0)
+        )
     return schedule
 
 
@@ -130,12 +147,9 @@ def recommend_fertigation_with_water(
     schedule: Dict[str, float] = {}
     for nutrient, ppm in targets.items():
         deficit_ppm = max(0.0, ppm - baseline.get(nutrient, 0.0))
-        mg = deficit_ppm * volume_l
-        grams = mg / 1000
-        fraction = purity_map.get(nutrient, 1.0)
-        if fraction <= 0:
-            raise ValueError(f"Purity for {nutrient} must be > 0")
-        schedule[nutrient] = round(grams / fraction, 3)
+        schedule[nutrient] = _ppm_to_grams(
+            deficit_ppm, volume_l, purity_map.get(nutrient, 1.0)
+        )
 
     return schedule, warnings
 
@@ -159,12 +173,9 @@ def recommend_correction_schedule(
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     corrections: Dict[str, float] = {}
     for nutrient, ppm in deficits.items():
-        mg = ppm * volume_l
-        grams = mg / 1000
-        frac = purity_map.get(nutrient, 1.0)
-        if frac <= 0:
-            raise ValueError(f"Purity for {nutrient} must be > 0")
-        corrections[nutrient] = round(grams / frac, 3)
+        corrections[nutrient] = _ppm_to_grams(
+            ppm, volume_l, purity_map.get(nutrient, 1.0)
+        )
     return corrections
 
 
@@ -471,4 +482,15 @@ def generate_fertigation_plan(
             product=product,
         )
     return plan
+
+
+def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
+    """Return elemental nutrient totals for a fertilizer mix."""
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        calculate_mix_nutrients as _calc,
+    )
+
+    return _calc(schedule)
+
 
