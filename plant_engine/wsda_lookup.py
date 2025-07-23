@@ -1,62 +1,57 @@
 from __future__ import annotations
 
+"""Helpers for looking up fertilizer NPK values from the WSDA database."""
+
 import json
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 # Path to the WSDA fertilizer database packaged with the repository
 _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
 
-__all__ = [
-    "get_product_npk_by_name",
-    "get_product_npk_by_number",
-    "search_products",
-]
+__all__ = ["get_product_npk_by_name", "get_product_npk_by_number", "search_products"]
+
+@dataclass(frozen=True)
+class _Product:
+    name: str
+    npk: Tuple[float, float, float]
+
 
 @lru_cache(maxsize=None)
-def _database() -> List[Dict[str, object]]:
-    """Return parsed WSDA database records."""
+def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
+    """Return lookup tables keyed by name and product number."""
     if not _WSDA_PATH.exists():
-        return []
+        return {}, {}
+
     with open(_WSDA_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+        records = json.load(f)
+
+    names: Dict[str, _Product] = {}
+    numbers: Dict[str, _Product] = {}
+    for rec in records:
+        ga = rec.get("guaranteed_analysis", {})
+        npk = (
+            float(ga.get("Total Nitrogen (N)") or 0),
+            float(ga.get("Available Phosphoric Acid (P2O5)") or 0),
+            float(ga.get("Soluble Potash (K2O)") or 0),
+        )
+        name = str(rec.get("product_name", "")).strip()
+        number = rec.get("wsda_product_number")
+        if name:
+            names[name.lower()] = _Product(name=name, npk=npk)
+        if number:
+            numbers[str(number)] = _Product(name=name, npk=npk)
+
+    return names, numbers
 
 
-@lru_cache(maxsize=None)
-def _name_index() -> Dict[str, Dict[str, object]]:
-    """Return mapping of lowercase product names to records."""
-    return {
-        str(rec.get("product_name", "")).lower(): rec
-        for rec in _database()
-        if rec.get("product_name")
-    }
-
-
-@lru_cache(maxsize=None)
-def _number_index() -> Dict[str, Dict[str, object]]:
-    """Return mapping of WSDA product numbers to records."""
-    return {
-        rec.get("wsda_product_number", ""): rec
-        for rec in _database()
-        if rec.get("wsda_product_number")
-    }
-
-
-def _match_record(predicate) -> Dict[str, object] | None:
-    for item in _database():
-        if predicate(item):
-            return item
-    return None
-
-
-def _extract_npk(record: Dict[str, object]) -> Dict[str, float]:
-    ga = record.get("guaranteed_analysis", {}) if record else {}
-    return {
-        "N": float(ga.get("Total Nitrogen (N)") or 0),
-        "P": float(ga.get("Available Phosphoric Acid (P2O5)") or 0),
-        "K": float(ga.get("Soluble Potash (K2O)") or 0),
-    }
+def _extract_npk(prod: _Product | None) -> Dict[str, float]:
+    if not prod:
+        return {}
+    n, p, k = prod.npk
+    return {"N": n, "P": p, "K": k}
 
 
 def get_product_npk_by_name(name: str) -> Dict[str, float]:
@@ -66,25 +61,20 @@ def get_product_npk_by_name(name: str) -> Dict[str, float]:
     An empty dictionary is returned if the product cannot be found.
     """
     name_l = name.lower()
-    rec = _name_index().get(name_l)
-    if not rec:
-        rec = _match_record(lambda d: str(d.get("product_name", "")).lower() == name_l)
-    return _extract_npk(rec)
+    names, _ = _build_indexes()
+    return _extract_npk(names.get(name_l))
 
 
 def get_product_npk_by_number(number: str) -> Dict[str, float]:
     """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
-    rec = _number_index().get(number)
-    if not rec:
-        rec = _match_record(lambda d: d.get("wsda_product_number") == number)
-    return _extract_npk(rec)
+    _, numbers = _build_indexes()
+    return _extract_npk(numbers.get(number))
 
 
 def search_products(query: str, limit: int = 10) -> List[str]:
     """Return product names containing ``query`` case-insensitively."""
     q = query.lower()
-    matches = [name for name in _name_index() if q in name]
+    names, _ = _build_indexes()
+    matches = [prod.name for key, prod in names.items() if q in key]
     matches.sort()
-    return [
-        _name_index()[name]["product_name"] for name in matches[: max(limit, 0)]
-    ]
+    return matches[: max(limit, 0)]

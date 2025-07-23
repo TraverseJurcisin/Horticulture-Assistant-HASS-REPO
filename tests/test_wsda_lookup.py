@@ -30,3 +30,13 @@ def test_lookup_by_number():
 def test_search_products():
     results = search_products("EARTH-CARE")
     assert any("EARTH-CARE" in name for name in results)
+
+
+def test_lookup_unknown_product():
+    assert get_product_npk_by_name("nonexistent") == {}
+    assert get_product_npk_by_number("(#0000-0000)") == {}
+
+
+def test_search_limit():
+    results = search_products("CARE", limit=1)
+    assert len(results) == 1
