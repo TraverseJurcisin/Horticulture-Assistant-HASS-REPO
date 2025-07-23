@@ -4,12 +4,18 @@ from pathlib import Path
 
 _LOGGER = logging.getLogger(__name__)
 
-def load_plant_profile(plant_id: str, base_path: str = None) -> dict:
+def load_plant_profile(
+    plant_id: str,
+    base_path: str | None = None,
+    *,
+    include_validation_files: bool = False,
+) -> dict:
     """
     Load a plant's profile by reading all JSON files in the plant's directory.
 
     Scans the directory `plants/<plant_id>/` (or under the given base_path) for JSON files,
-    except for 'profile_index.json' and any files intended for validation only.
+    except for ``profile_index.json`` and, by default, any files intended for
+    validation only.
     Parses each JSON file into a dictionary and aggregates them into a single profile structure.
 
     Returns a dictionary with the structure:
@@ -25,7 +31,10 @@ def load_plant_profile(plant_id: str, base_path: str = None) -> dict:
     Logs an info-level summary with the total number of profile modules successfully loaded.
 
     :param plant_id: Identifier for the plant (also the directory name under the base path).
-    :param base_path: Optional base directory for plant profiles (defaults to "plants/" in current working directory).
+    :param base_path: Optional base directory for plant profiles (defaults to
+        ``plants/`` in the current working directory).
+    :param include_validation_files: If ``True``, also load files whose name
+        contains ``validate`` or ``validation``.
     :return: A dictionary containing the plant_id and loaded profile_data sections, or an empty dict on error.
     """
     # Determine the base directory and plant profile directory
@@ -49,7 +58,9 @@ def load_plant_profile(plant_id: str, base_path: str = None) -> dict:
             # Skip the profile index file and any validation-only JSON files
             if filename == "profile_index.json":
                 continue
-            if "validation" in filename.lower() or "validate" in filename.lower():
+            if not include_validation_files and (
+                "validation" in filename.lower() or "validate" in filename.lower()
+            ):
                 _LOGGER.debug("Skipping validation-only file: %s", file_path)
                 continue
             # Attempt to load and parse the JSON file
