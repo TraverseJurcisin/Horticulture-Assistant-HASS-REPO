@@ -134,6 +134,20 @@ def test_generate_irrigation_schedule():
     assert schedule == {1: 0.0, 2: 80.0, 3: 0.0}
 
 
+def test_generate_irrigation_schedule_with_method():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_irrigation_schedule(
+        zone, 150.0, [30.0, 30.0, 30.0], method="drip"
+    )
+    assert schedule[1] == 0.0
+    assert schedule[2] == pytest.approx(88.9, rel=1e-2)
+
+
 def test_adjust_irrigation_for_efficiency():
     # Drip at 90% efficiency should scale volume up
     assert adjust_irrigation_for_efficiency(100.0, "drip") == 111.1

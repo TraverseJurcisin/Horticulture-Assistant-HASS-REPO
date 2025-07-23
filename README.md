@@ -218,6 +218,8 @@ or incomplete and should only be used as a starting point for your own research.
   milliliters per plant based on `irrigation_guidelines.json`.
 - **Irrigation Efficiency**: `adjust_irrigation_for_efficiency` scales volumes
   based on delivery method using `irrigation_efficiency.json`.
+- **Irrigation Schedule Efficiency**: `generate_irrigation_schedule` accepts a
+  `method` parameter to automatically apply those efficiency factors.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
   fertilizer schedule using those irrigation targets.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for

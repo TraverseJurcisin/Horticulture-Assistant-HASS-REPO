@@ -207,8 +207,12 @@ def generate_irrigation_schedule(
     et_ml_series: Mapping[int, float] | list[float],
     *,
     refill_to_full: bool = True,
+    method: str | None = None,
 ) -> Dict[int, float]:
     """Return daily irrigation volumes to maintain root zone moisture.
+
+    If ``method`` is provided the returned volumes are adjusted for the
+    irrigation efficiency defined in :data:`irrigation_efficiency.json`.
 
     ``et_ml_series`` should contain expected evapotranspiration loss for each
     day in milliliters. The function simulates soil moisture over the period and
@@ -227,6 +231,8 @@ def generate_irrigation_schedule(
         volume = recommend_irrigation_volume(
             rootzone, remaining, et_ml, refill_to_full=refill_to_full
         )
+        if method:
+            volume = adjust_irrigation_for_efficiency(volume, method)
         schedule[day] = volume
         remaining = calculate_remaining_water(
             rootzone, remaining, irrigation_ml=volume, et_ml=et_ml
