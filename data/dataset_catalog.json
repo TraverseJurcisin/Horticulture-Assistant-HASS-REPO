@@ -34,6 +34,7 @@
   "humidity_stress_thresholds.json": "Relative humidity levels causing stress.",
   "nutrient_deficiency_symptoms.json": "Visual cues for nutrient deficiencies.",
   "nutrient_deficiency_treatments.json": "Corrective actions for deficiencies.",
+  "nutrient_deficiency_thresholds.json": "Deficiency ppm thresholds for severity classification.",
   "nutrient_interactions.json": "Synergies and antagonisms between nutrients.",
   "nutrient_mobility.json": "Classification of mobile versus immobile nutrients.",
   "nutrient_surplus_actions.json": "Remediation steps when nutrients are high.",
