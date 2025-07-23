@@ -19,6 +19,7 @@ __all__ = [
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
     "adjust_irrigation_for_efficiency",
+    "estimate_irrigation_duration",
     "IrrigationRecommendation",
 ]
 
@@ -161,6 +162,16 @@ def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
     if isinstance(eff, (int, float)) and 0 < eff <= 1:
         return round(volume_ml / eff, 1)
     return volume_ml
+
+
+def estimate_irrigation_duration(
+    volume_ml: float, texture: str, area_cm2: float = 900
+) -> float:
+    """Return irrigation duration in hours accounting for soil infiltration."""
+
+    from .rootzone_model import estimate_infiltration_time
+
+    return estimate_infiltration_time(volume_ml, texture, area_cm2)
 
 
 def recommend_irrigation_from_environment(

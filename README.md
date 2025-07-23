@@ -162,6 +162,7 @@ Key reference datasets reside in the `data/` directory:
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
+- `infiltration_rates.json` – typical water infiltration rates by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
@@ -220,6 +221,7 @@ or incomplete and should only be used as a starting point for your own research.
   based on delivery method using `irrigation_efficiency.json`.
 - **Irrigation Schedule Efficiency**: `generate_irrigation_schedule` accepts a
   `method` parameter to automatically apply those efficiency factors.
+- **Infiltration Timing**: `estimate_irrigation_duration` converts volume and soil texture into the hours needed for application.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
   fertilizer schedule using those irrigation targets.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for

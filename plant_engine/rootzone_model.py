@@ -12,10 +12,12 @@ DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 
 SOIL_DATA_FILE = "soil_texture_parameters.json"
 ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
+INFILTRATION_FILE = "infiltration_rates.json"  # mm/h infiltration capacity by soil
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
 _ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
+_INFILTRATION_DATA: Dict[str, float] = load_dataset(INFILTRATION_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
@@ -23,6 +25,8 @@ __all__ = [
     "estimate_water_capacity",
     "calculate_remaining_water",
     "get_soil_parameters",
+    "get_infiltration_rate",
+    "estimate_infiltration_time",
     "RootZone",
 ]
 
@@ -30,6 +34,15 @@ __all__ = [
 def get_soil_parameters(texture: str) -> Dict[str, float]:
     """Return soil parameters for ``texture`` if available."""
     return _SOIL_DATA.get(normalize_key(texture), {})
+
+
+def get_infiltration_rate(texture: str) -> float:
+    """Return infiltration rate in mm/h for ``texture`` if defined."""
+    rate = _INFILTRATION_DATA.get(normalize_key(texture))
+    try:
+        return float(rate)
+    except (TypeError, ValueError):
+        return 0.0
 
 
 def get_default_root_depth(plant_type: str) -> float:
@@ -125,6 +138,24 @@ def estimate_water_capacity(
         field_capacity_pct=field_capacity,
         mad_pct=mad_fraction,
     )
+
+
+def estimate_infiltration_time(
+    volume_ml: float, texture: str, area_cm2: float = DEFAULT_AREA_CM2
+) -> float:
+    """Return hours required for ``volume_ml`` to infiltrate given soil."""
+
+    if volume_ml <= 0:
+        raise ValueError("volume_ml must be positive")
+
+    rate = get_infiltration_rate(texture)
+    if rate <= 0:
+        return 0.0
+
+    area_m2 = area_cm2 / 10000.0
+    capacity_ml_per_hour = rate * area_m2 * 1000
+    hours = volume_ml / capacity_ml_per_hour
+    return round(hours, 2)
 
 
 def calculate_remaining_water(

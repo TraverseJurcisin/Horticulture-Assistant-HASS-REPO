@@ -10,6 +10,7 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     adjust_irrigation_for_efficiency,
+    estimate_irrigation_duration,
     IrrigationRecommendation,
 )
 from plant_engine.rootzone_model import RootZone
@@ -155,4 +156,9 @@ def test_adjust_irrigation_for_efficiency():
     assert adjust_irrigation_for_efficiency(50.0, "unknown") == 50.0
     with pytest.raises(ValueError):
         adjust_irrigation_for_efficiency(-1.0, "drip")
+
+
+def test_estimate_irrigation_duration():
+    hours = estimate_irrigation_duration(1000, "loam", area_cm2=10000)
+    assert 0 < hours < 1
 
