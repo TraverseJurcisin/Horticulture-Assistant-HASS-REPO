@@ -26,6 +26,7 @@ calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
 check_solubility_limits = fert_mod.check_solubility_limits
+search_products_by_nutrient = fert_mod.search_products_by_nutrient
 
 
 def test_convert_guaranteed_analysis():
@@ -168,4 +169,12 @@ def test_check_solubility_limits():
 
     with pytest.raises(ValueError):
         check_solubility_limits(schedule, 0)
+
+
+def test_search_products_by_nutrient():
+    results = search_products_by_nutrient("N", min_pct=0.05)
+    assert "foxfarm_grow_big" in results
+
+    # Should return empty list for unknown nutrient
+    assert search_products_by_nutrient("X") == []
 

@@ -348,6 +348,7 @@ __all__ = [
     "list_products",
     "get_product_info",
     "find_products",
+    "search_products_by_nutrient",
     "calculate_mix_ppm",
 ]
 
@@ -377,4 +378,26 @@ def find_products(term: str) -> list[str]:
         if term in pid.lower() or term in name:
             results.append(pid)
     return sorted(results)
+
+
+def search_products_by_nutrient(nutrient: str, min_pct: float = 0.0) -> list[str]:
+    """Return product IDs with at least ``min_pct`` of ``nutrient``.
+
+    Parameters
+    ----------
+    nutrient : str
+        Nutrient element symbol, e.g. ``"N"`` or ``"K"``.
+    min_pct : float, optional
+        Minimum guaranteed analysis percentage as a decimal fraction.
+    """
+
+    nutrient_key = nutrient.strip()
+    inventory = _inventory()
+    matches: list[str] = []
+    for pid, info in inventory.items():
+        ga = convert_guaranteed_analysis(info.guaranteed_analysis)
+        pct = ga.get(nutrient_key)
+        if pct is not None and pct >= min_pct:
+            matches.append(pid)
+    return sorted(matches, key=lambda pid: inventory[pid].product_name or pid)
 
