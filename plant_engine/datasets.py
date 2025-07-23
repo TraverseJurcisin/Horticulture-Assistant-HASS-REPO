@@ -9,7 +9,12 @@ from typing import Dict, List
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
 
-__all__ = ["list_datasets", "get_dataset_description", "list_dataset_info"]
+__all__ = [
+    "list_datasets",
+    "get_dataset_description",
+    "list_dataset_info",
+    "search_datasets",
+]
 
 
 @lru_cache(maxsize=None)
@@ -51,4 +56,19 @@ def list_dataset_info() -> Dict[str, str]:
     names = list_datasets()
     catalog = _load_catalog()
     return {n: catalog.get(n, "") for n in names}
+
+
+def search_datasets(term: str) -> Dict[str, str]:
+    """Return datasets matching ``term`` in the name or description."""
+
+    if not term:
+        return {}
+
+    term = term.lower()
+    info = list_dataset_info()
+    result: Dict[str, str] = {}
+    for name, desc in info.items():
+        if term in name.lower() or term in desc.lower():
+            result[name] = desc
+    return result
 

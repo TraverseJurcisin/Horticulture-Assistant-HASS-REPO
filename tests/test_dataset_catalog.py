@@ -1,4 +1,8 @@
-from plant_engine.datasets import list_datasets, get_dataset_description
+from plant_engine.datasets import (
+    list_datasets,
+    get_dataset_description,
+    search_datasets,
+)
 
 
 def test_list_datasets_contains_known():
@@ -32,3 +36,16 @@ def test_get_dataset_description():
 
     desc6 = get_dataset_description("soil_moisture_guidelines.json")
     assert "moisture" in desc6
+
+
+def test_search_datasets():
+    results = search_datasets("irrigation")
+    assert "irrigation_guidelines.json" in results
+    assert "irrigation_intervals.json" in results
+    assert all(
+        "irrigation" in name or "irrigation" in desc.lower()
+        for name, desc in results.items()
+    )
+
+    empty = search_datasets("does-not-exist")
+    assert empty == {}
