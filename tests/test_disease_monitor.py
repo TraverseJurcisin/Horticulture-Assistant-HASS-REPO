@@ -1,5 +1,4 @@
 from plant_engine.disease_monitor import (
-    list_supported_plants,
     get_disease_thresholds,
     assess_disease_pressure,
     classify_disease_severity,

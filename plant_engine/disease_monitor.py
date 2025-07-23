@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, asdict
-from typing import Dict, Iterable, Mapping
+from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .disease_manager import recommend_treatments, recommend_prevention
