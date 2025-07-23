@@ -5,6 +5,7 @@ from dataclasses import asdict, dataclass
 from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
+from .constants import DEFAULT_ENV
 
 from plant_engine.et_model import calculate_et0, calculate_eta
 
@@ -48,14 +49,20 @@ def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
     return float(plant.get("default", 1.0))
 
 def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str, float]:
-    """Return evapotranspiration metrics for a single plant profile."""
+    """Return evapotranspiration metrics for a single plant profile.
+
+    Missing environment values fall back to :data:`DEFAULT_ENV` so callers can
+    provide partial readings without raising ``KeyError``.
+    """
+
+    env = {**DEFAULT_ENV, **env_data}
 
     et0 = calculate_et0(
-        temperature_c=env_data["temp_c"],
-        rh_percent=env_data["rh_pct"],
-        solar_rad_w_m2=env_data.get("par_w_m2", env_data.get("par", 0)),
-        wind_m_s=env_data.get("wind_speed_m_s", 1.0),
-        elevation_m=env_data.get("elevation_m", 200)
+        temperature_c=env["temp_c"],
+        rh_percent=env["rh_pct"],
+        solar_rad_w_m2=env.get("par_w_m2", env.get("par", 0)),
+        wind_m_s=env.get("wind_speed_m_s", 1.0),
+        elevation_m=env.get("elevation_m", 200),
     )
 
     kc = plant_profile.get("kc")
