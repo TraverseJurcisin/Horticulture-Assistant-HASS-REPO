@@ -1,17 +1,52 @@
-# File: custom_components/horticulture_assistant/utils/daily_report_builder.py
+"""Helpers for generating simple daily plant reports from sensor data."""
 
-import logging
+from __future__ import annotations
+
 import json
+import logging
 import os
+from dataclasses import dataclass, asdict
 from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
 from homeassistant.core import HomeAssistant
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_profile,
+)
+from plant_engine import environment_manager
 
 _LOGGER = logging.getLogger(__name__)
 
+
+@dataclass
+class DailyReport:
+    """Lightweight representation of a daily plant report."""
+
+    plant_id: str
+    timestamp: str
+    lifecycle_stage: str
+    moisture: float | None
+    ec: float | None
+    temperature: float | None
+    humidity: float | None
+    light: float | None
+    yield_amount: float | None
+    thresholds: dict
+    nutrients: dict
+    tags: list[str]
+    environment_targets: dict
+    ai_feedback_required: bool
+
+    def as_dict(self) -> dict:
+        return asdict(self)
+
+
+__all__ = ["DailyReport", "build_daily_report", "get_state_value"]
+
 def get_state_value(hass: HomeAssistant, entity_id: str) -> float | None:
-    """Retrieve the state of a Home Assistant entity as a float, or None if unavailable/invalid."""
+    """Return the numeric state of ``entity_id`` or ``None`` if missing."""
     state = hass.states.get(entity_id)
     if not state or state.state in ("unknown", "unavailable"):
         _LOGGER.debug("Sensor %s is unavailable or unknown; skipping.", entity_id)
@@ -22,6 +57,26 @@ def get_state_value(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.warning("State of %s is not a numeric value: %s", entity_id, state.state)
         return None
 
+
+def _resolve_plant_type(hass: HomeAssistant, plant_id: str, profile: dict) -> Optional[str]:
+    """Return plant type from profile or plant registry if available."""
+    ptype = profile.get("general", {}).get("plant_type")
+    if ptype:
+        return str(ptype)
+    reg_path = hass.config.path("plant_registry.json")
+    try:
+        with open(reg_path, "r", encoding="utf-8") as fh:
+            reg = json.load(fh)
+        return reg.get(plant_id, {}).get("plant_type")
+    except Exception:
+        return None
+
+
+def _report_path(base: Path, plant_id: str) -> Path:
+    """Return file path for today's report under ``base``."""
+    date_str = datetime.now().strftime("%Y%m%d")
+    return base / f"{plant_id}-{date_str}.json"
+
 def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     """Collect current sensor data and profile info for a plant and compile a daily report."""
     # Load plant profile (JSON or YAML) by plant_id
@@ -31,9 +86,17 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         return {}
 
     # Determine current lifecycle stage from profile (if available)
-    stage = (profile.get("general", {}).get("lifecycle_stage")
-             or profile.get("general", {}).get("stage")
-             or "unknown")
+    stage = (
+        profile.get("general", {}).get("lifecycle_stage")
+        or profile.get("general", {}).get("stage")
+        or "unknown"
+    )
+    plant_type = _resolve_plant_type(hass, plant_id, profile)
+    env_targets = (
+        environment_manager.get_environmental_targets(plant_type, stage)
+        if plant_type
+        else {}
+    )
 
     # Static thresholds and nutrient targets from profile
     thresholds = profile.get("thresholds", {})  # environmental or nutrient thresholds
@@ -44,7 +107,11 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         tags = []
 
     # Collect current sensor readings (moisture, EC, temperature, humidity, light)
-    sensor_map = profile.get("sensor_entities") or {}
+    sensor_map = (
+        profile.get("sensor_entities")
+        or profile.get("general", {}).get("sensor_entities")
+        or {}
+    )
     moisture = get_state_value(hass, sensor_map.get("moisture") or f"sensor.{plant_id}_raw_moisture")
     ec = get_state_value(hass, sensor_map.get("ec") or f"sensor.{plant_id}_raw_ec")
     temperature = get_state_value(hass, sensor_map.get("temperature") or f"sensor.{plant_id}_raw_temperature")
@@ -67,21 +134,22 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
                 break
 
     # Compile the daily report structure
-    report = {
-        "plant_id": plant_id,
-        "timestamp": datetime.now().isoformat(),
-        "lifecycle_stage": stage,
-        "moisture": moisture,
-        "ec": ec,
-        "temperature": temperature,
-        "humidity": humidity,
-        "light": light,
-        "yield": yield_val,
-        "thresholds": thresholds,
-        "nutrients": nutrient_targets,
-        "tags": tags,
-        "ai_feedback_required": not profile.get("auto_approve_all", False)
-    }
+    report = DailyReport(
+        plant_id=plant_id,
+        timestamp=datetime.now().isoformat(),
+        lifecycle_stage=stage,
+        moisture=moisture,
+        ec=ec,
+        temperature=temperature,
+        humidity=humidity,
+        light=light,
+        yield_amount=yield_val,
+        thresholds=thresholds,
+        nutrients=nutrient_targets,
+        tags=tags,
+        environment_targets=env_targets,
+        ai_feedback_required=not profile.get("auto_approve_all", False),
+    )
 
     # Save report to disk (under data/daily_reports/<plant_id>-YYYYMMDD.json)
     report_dir = hass.config.path("data", "daily_reports")
@@ -90,7 +158,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     file_path = os.path.join(report_dir, f"{plant_id}-{date_str}.json")
     try:
         with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2)
+            json.dump(report.as_dict(), f, indent=2)
         _LOGGER.info("Daily report saved for plant %s at %s", plant_id, file_path)
     except Exception as e:
         _LOGGER.error("Failed to save daily report for %s: %s", plant_id, e)
