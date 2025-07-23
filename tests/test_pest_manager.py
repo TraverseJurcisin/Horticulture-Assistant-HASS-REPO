@@ -3,6 +3,8 @@ from plant_engine.pest_manager import (
     recommend_treatments,
     get_beneficial_insects,
     recommend_beneficials,
+    get_pest_prevention,
+    recommend_prevention,
 )
 
 
@@ -33,3 +35,15 @@ def test_recommend_beneficials():
     rec = recommend_beneficials(["aphids", "scale"])
     assert "ladybugs" in rec["aphids"]
     assert "parasitic wasps" in rec["scale"]
+
+
+def test_get_pest_prevention():
+    guide = get_pest_prevention("citrus")
+    assert "aphids" in guide
+    assert guide["scale"].startswith("Inspect")
+
+
+def test_recommend_prevention():
+    rec = recommend_prevention("citrus", ["aphids", "unknown"])
+    assert rec["aphids"].startswith("Encourage")
+    assert rec["unknown"] == "No guideline available"

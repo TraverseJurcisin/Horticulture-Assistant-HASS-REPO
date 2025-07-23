@@ -24,6 +24,8 @@ from .pest_manager import (
     get_pest_guidelines,
     recommend_treatments as recommend_pest_treatments,
     list_supported_plants as list_pest_plants,
+    get_pest_prevention,
+    recommend_prevention as recommend_pest_prevention,
 )
 from .pest_monitor import (
     get_pest_thresholds,
@@ -147,6 +149,8 @@ __all__ = [
     "list_environment_plants",
     "get_pest_guidelines",
     "recommend_pest_treatments",
+    "get_pest_prevention",
+    "recommend_pest_prevention",
     "list_pest_plants",
     "get_pest_thresholds",
     "assess_pest_pressure",
