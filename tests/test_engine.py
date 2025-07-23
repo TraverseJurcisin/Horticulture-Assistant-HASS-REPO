@@ -63,6 +63,28 @@ def test_load_profile(tmp_path, monkeypatch):
     assert data["a"] == 1
 
 
+def test_load_profile_cached(tmp_path, monkeypatch):
+    plants_dir = tmp_path / "plants"
+    plants_dir.mkdir()
+    monkeypatch.setattr(engine, "PLANTS_DIR", str(plants_dir))
+    path = plants_dir / "demo.json"
+    path.write_text('{"a":1}')
+
+    calls = 0
+
+    def fake_load(path):
+        nonlocal calls
+        calls += 1
+        return {"a": 1}
+
+    monkeypatch.setattr(engine, "load_json", fake_load)
+    engine.load_profile.cache_clear()
+
+    engine.load_profile("demo")
+    engine.load_profile("demo")
+    assert calls == 1
+
+
 def test_daily_report_as_dict():
     from plant_engine.report import DailyReport
 

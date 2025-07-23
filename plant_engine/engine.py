@@ -2,6 +2,8 @@ import os
 import logging
 from typing import Dict, Mapping, Any
 
+from functools import lru_cache
+
 from plant_engine.utils import load_json, save_json
 from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
@@ -35,34 +37,26 @@ OUTPUT_DIR = "data/reports"
 _LOGGER = logging.getLogger(__name__)
 
 
+@lru_cache(maxsize=None)
 def load_profile(plant_id: str) -> Dict[str, Any]:
-    """Return the plant profile for ``plant_id``."""
+    """Return the plant profile for ``plant_id`` loaded from disk."""
     path = os.path.join(PLANTS_DIR, f"{plant_id}.json")
     return load_json(path)
 
 
 def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
-    """Return ``env`` values normalized using environment alias mapping."""
+    """Return ``env`` values normalized and filtered for optimization."""
 
-    allowed = {
+    normalized = normalize_environment_readings(env)
+    keys = {
         "temp_c",
-        "rh_pct",
-        "par_w_m2",
+        "humidity_pct",
+        "light_ppfd",
         "co2_ppm",
         "dli",
         "photoperiod_hours",
-        "temperature",
-        "humidity",
-        "light",
-        "co2",
     }
-
-    filtered = {k: env[k] for k in allowed if k in env and env[k] is not None}
-    normalized = normalize_environment_readings(filtered)
-
-    # keep only fields used by environment optimizers
-    keys = {"temp_c", "humidity_pct", "light_ppfd", "co2_ppm", "dli", "photoperiod_hours"}
-    return {k: v for k, v in normalized.items() if k in keys}
+    return {k: float(v) for k, v in normalized.items() if k in keys}
 
 
 def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
