@@ -172,6 +172,9 @@ Key reference datasets reside in the `data/` directory:
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
+- `dataset_catalog.json` – short descriptions of the bundled datasets for quick reference
+  Use `plant_engine.datasets.list_datasets()` to list available files and
+  `get_dataset_description()` to read these summaries programmatically.
 
 All dataset lookups are case-insensitive and ignore spaces thanks to the
 `normalize_key` helper, so references such as `"Citrus"` and `"citrus"` map to
