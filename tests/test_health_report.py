@@ -17,6 +17,7 @@ def test_generate_health_report():
     assert report["deficiency_treatments"]
     assert report["pest_actions"]["aphids"].startswith("Apply")
     assert report["disease_actions"]["root rot"].startswith("Ensure")
+    assert isinstance(report["stage_tasks"], list)
 
 
 def test_generate_health_report_with_water():

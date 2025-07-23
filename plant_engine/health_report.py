@@ -11,6 +11,7 @@ from . import (
     pest_manager,
     disease_manager,
     growth_stage,
+    stage_tasks,
 )
 
 
@@ -46,6 +47,7 @@ def generate_health_report(
     pest_actions = pest_manager.recommend_treatments(plant_type, pests)
     disease_actions = disease_manager.recommend_treatments(plant_type, diseases)
     stage_info = growth_stage.get_stage_info(plant_type, stage)
+    tasks = stage_tasks.get_stage_tasks(plant_type, stage)
 
     return {
         "environment": env_opt,
@@ -56,6 +58,7 @@ def generate_health_report(
         "pest_actions": pest_actions,
         "disease_actions": disease_actions,
         "stage_info": stage_info,
+        "stage_tasks": tasks,
     }
 
 __all__ = ["generate_health_report"]

@@ -128,6 +128,11 @@ from .growth_stage import (
     list_growth_stages,
     days_until_next_stage,
 )
+from .stage_tasks import (
+    list_supported_plants as list_task_plants,
+    get_stage_tasks,
+    generate_task_schedule,
+)
 from .harvest_planner import build_stage_schedule
 from .guidelines import get_guideline_summary
 from .report import DailyReport
@@ -309,6 +314,9 @@ __all__ = [
     "get_stage_info",
     "list_growth_stages",
     "days_until_next_stage",
+    "list_task_plants",
+    "get_stage_tasks",
+    "generate_task_schedule",
     "build_stage_schedule",
     "estimate_rootzone_depth",
     "estimate_water_capacity",
