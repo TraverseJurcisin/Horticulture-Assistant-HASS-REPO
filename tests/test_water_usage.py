@@ -25,3 +25,12 @@ def test_estimate_area_use():
 
     with pytest.raises(ValueError):
         water_usage.estimate_area_use("lettuce", "vegetative", -1)
+
+
+def test_estimate_total_use():
+    daily = water_usage.estimate_area_use("lettuce", "vegetative", 2.0)
+    total = water_usage.estimate_total_use("lettuce", "vegetative", 2.0, 5)
+    assert total == round(daily * 5, 1)
+
+    with pytest.raises(ValueError):
+        water_usage.estimate_total_use("lettuce", "vegetative", 1.0, 0)
