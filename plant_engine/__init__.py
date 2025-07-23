@@ -51,6 +51,12 @@ from .disease_manager import (
     get_disease_prevention,
     recommend_prevention as recommend_disease_prevention,
 )
+from .companion_manager import (
+    list_supported_plants as list_companion_plants,
+    list_companions,
+    list_antagonists,
+    get_companion_guidelines,
+)
 from .fertigation import (
     recommend_fertigation_schedule,
     recommend_correction_schedule,
@@ -283,6 +289,10 @@ __all__ = [
     "get_toxicity_thresholds",
     "check_toxicities",
     "get_guideline_summary",
+    "list_companion_plants",
+    "list_companions",
+    "list_antagonists",
+    "get_companion_guidelines",
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
