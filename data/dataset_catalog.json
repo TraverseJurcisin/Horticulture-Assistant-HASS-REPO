@@ -54,6 +54,7 @@
   "nutrient_removal_rates.json": "Nutrient removal from harvested biomass per kg yield.",
   "pest_prevention.json": "Cultural practices to reduce pest pressure.",
   "pest_risk_factors.json": "Environmental factors increasing pest risk.",
+  "disease_risk_factors.json": "Environmental factors increasing disease risk.",
   "pest_severity_actions.json": "Actions to take based on pest severity level.",
   "ph_adjustment_factors.json": "Acid/base amounts for pH corrections.",
   "ph_guidelines.json": "Optimal pH ranges for nutrient uptake.",

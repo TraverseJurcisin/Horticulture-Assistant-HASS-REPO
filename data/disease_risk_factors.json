@@ -1,0 +1,9 @@
+{
+  "citrus": {
+    "greasy_spot": {"humidity_pct": [60, 100], "temp_c": [20, 30]},
+    "powdery_mildew": {"humidity_pct": [70, 100], "temp_c": [15, 30]}
+  },
+  "tomato": {
+    "blight": {"humidity_pct": [80, 100], "temp_c": [15, 25]}
+  }
+}

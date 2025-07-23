@@ -49,6 +49,7 @@ from .disease_monitor import (
     assess_disease_pressure,
     classify_disease_severity,
     recommend_threshold_actions as recommend_disease_threshold_actions,
+    estimate_disease_risk,
     generate_disease_report,
 )
 from .disease_manager import (
@@ -242,6 +243,7 @@ __all__ = [
     "assess_disease_pressure",
     "classify_disease_severity",
     "recommend_disease_threshold_actions",
+    "estimate_disease_risk",
     "generate_disease_report",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
