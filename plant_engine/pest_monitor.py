@@ -12,10 +12,12 @@ from .pest_manager import recommend_treatments, recommend_beneficials
 
 DATA_FILE = "pest_thresholds.json"
 RISK_DATA_FILE = "pest_risk_factors.json"
+SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
+_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -26,6 +28,7 @@ __all__ = [
     "recommend_biological_controls",
     "estimate_pest_risk",
     "generate_pest_report",
+    "get_severity_action",
     "PestReport",
 ]
 
@@ -44,6 +47,12 @@ def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
     return list_dataset_entries(_THRESHOLDS)
+
+
+def get_severity_action(level: str) -> str:
+    """Return recommended action for a severity ``level``."""
+
+    return _SEVERITY_ACTIONS.get(level.lower(), "")
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
@@ -151,6 +160,7 @@ class PestReport:
     treatments: Dict[str, str]
     beneficial_insects: Dict[str, list[str]]
     prevention: Dict[str, str]
+    severity_actions: Dict[str, str]
 
     def as_dict(self) -> Dict[str, object]:
         """Return report as a regular dictionary."""
@@ -171,11 +181,14 @@ def generate_pest_report(
 
     prevention = recommend_prevention(plant_type, observations.keys())
 
+    severity_actions = {s: get_severity_action(lvl) for s, lvl in severity.items()}
+
     report = PestReport(
         severity=severity,
         thresholds_exceeded=thresholds,
         treatments=treatments,
         beneficial_insects=beneficials,
         prevention=prevention,
+        severity_actions=severity_actions,
     )
     return report.as_dict()

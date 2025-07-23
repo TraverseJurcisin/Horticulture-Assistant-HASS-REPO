@@ -225,7 +225,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Biological Control Helper**: `recommend_biological_controls` suggests
   beneficial insects to deploy when pest thresholds are exceeded.
 - **Pest Monitoring Report**: `generate_pest_report` combines severity,
-  treatment, biological control and prevention advice for observed pests.
+  treatment, biological control, severity actions and prevention advice for observed pests using `pest_severity_actions.json`.
 - **Disease Monitoring Report**: `generate_disease_report` now provides
   severity and treatment guidance based on new `disease_thresholds.json`.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily

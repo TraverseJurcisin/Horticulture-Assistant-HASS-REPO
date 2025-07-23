@@ -63,3 +63,5 @@ def test_generate_pest_report():
     assert report["thresholds_exceeded"]["aphids"] is True
     assert "aphids" in report["treatments"]
     assert "aphids" in report["beneficial_insects"]
+    assert report["severity_actions"]["aphids"]
+
