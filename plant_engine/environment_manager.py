@@ -24,6 +24,7 @@ HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
+CO2_PRICE_FILE = "co2_prices.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -146,6 +147,9 @@ __all__ = [
     "get_target_co2",
     "calculate_co2_injection",
     "recommend_co2_injection",
+    "get_co2_price",
+    "estimate_co2_cost",
+    "recommend_co2_injection_with_cost",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "get_score_weight",
@@ -193,6 +197,7 @@ _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
+_CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -1080,6 +1085,36 @@ def recommend_co2_injection(
     if not target:
         return 0.0
     return calculate_co2_injection(current_ppm, target, volume_m3)
+
+
+def get_co2_price(method: str) -> float:
+    """Return price per kg of CO₂ for ``method``."""
+    try:
+        return float(_CO2_PRICES.get(normalize_key(method), 0.0))
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def estimate_co2_cost(grams: float, method: str) -> float:
+    """Return estimated CO₂ cost in dollars."""
+    if grams < 0:
+        raise ValueError("grams must be non-negative")
+    price = get_co2_price(method)
+    return round((grams / 1000) * price, 2)
+
+
+def recommend_co2_injection_with_cost(
+    current_ppm: float,
+    plant_type: str,
+    stage: str | None,
+    volume_m3: float,
+    method: str = "bulk_tank",
+) -> tuple[float, float]:
+    """Return grams of CO₂ to inject and estimated cost."""
+
+    grams = recommend_co2_injection(current_ppm, plant_type, stage, volume_m3)
+    cost = estimate_co2_cost(grams, method)
+    return grams, cost
 
 
 def calculate_environment_metrics(
