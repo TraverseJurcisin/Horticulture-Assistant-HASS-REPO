@@ -54,11 +54,17 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
     """Return GA with P₂O₅/K₂O converted to elemental P and K."""
     result: dict[str, float] = {}
     for k, v in ga.items():
+        if v is None:
+            continue
+        try:
+            val = float(v)
+        except (TypeError, ValueError):
+            continue
         if k in MOLAR_MASS_CONVERSIONS:
             element, factor = MOLAR_MASS_CONVERSIONS[k]
-            result[element] = result.get(element, 0) + v * factor
+            result[element] = result.get(element, 0) + val * factor
         else:
-            result[k] = result.get(k, 0) + v
+            result[k] = result.get(k, 0) + val
     return result
 
 
