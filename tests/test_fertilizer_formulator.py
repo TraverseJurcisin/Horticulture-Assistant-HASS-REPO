@@ -30,6 +30,7 @@ estimate_solution_mass = fert_mod.estimate_solution_mass
 check_solubility_limits = fert_mod.check_solubility_limits
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
+calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
 
 
 def test_convert_guaranteed_analysis():
@@ -211,4 +212,18 @@ def test_estimate_solution_mass():
 
     with pytest.raises(ValueError):
         estimate_solution_mass(schedule, -1)
+
+
+def test_calculate_mass_for_target_ppm():
+    grams = calculate_mass_for_target_ppm("foxfarm_grow_big", "N", 100, 1)
+    assert round(grams, 3) == round(100 / (0.06 * 1000), 3)
+
+    with pytest.raises(ValueError):
+        calculate_mass_for_target_ppm("foxfarm_grow_big", "N", -1, 1)
+    with pytest.raises(ValueError):
+        calculate_mass_for_target_ppm("foxfarm_grow_big", "N", 10, 0)
+    with pytest.raises(KeyError):
+        calculate_mass_for_target_ppm("unknown", "N", 10, 1)
+    with pytest.raises(KeyError):
+        calculate_mass_for_target_ppm("foxfarm_grow_big", "X", 10, 1)
 

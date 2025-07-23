@@ -160,6 +160,56 @@ def calculate_fertilizer_ppm(
     return {n: round(mg / volume_l, 2) for n, mg in nutrients.items()}
 
 
+def calculate_mass_for_target_ppm(
+    fertilizer_id: str,
+    nutrient: str,
+    target_ppm: float,
+    volume_l: float,
+) -> float:
+    """Return grams of ``fertilizer_id`` required for ``target_ppm`` of ``nutrient``.
+
+    Parameters
+    ----------
+    fertilizer_id : str
+        Inventory identifier for the fertilizer product.
+    nutrient : str
+        Nutrient code present in the product guaranteed analysis.
+    target_ppm : float
+        Desired concentration in parts per million.
+    volume_l : float
+        Final solution volume in liters.
+
+    Returns
+    -------
+    float
+        Grams of fertilizer product needed.
+
+    Raises
+    ------
+    KeyError
+        If ``fertilizer_id`` or ``nutrient`` is not found.
+    ValueError
+        If ``target_ppm`` or ``volume_l`` is not positive.
+    """
+
+    if target_ppm <= 0:
+        raise ValueError("target_ppm must be positive")
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    inventory = _inventory()
+    if fertilizer_id not in inventory:
+        raise KeyError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
+
+    ga = convert_guaranteed_analysis(inventory[fertilizer_id].guaranteed_analysis)
+    if nutrient not in ga or ga[nutrient] <= 0:
+        raise KeyError(f"Nutrient '{nutrient}' not found in guaranteed analysis")
+
+    fraction = ga[nutrient]
+    grams = (target_ppm * volume_l) / (fraction * 1000)
+    return round(grams, 3)
+
+
 def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> float:
     """Return estimated cost for ``grams`` of fertilizer product."""
 
@@ -424,6 +474,7 @@ __all__ = [
     "estimate_solution_mass",
     "check_solubility_limits",
     "estimate_cost_per_nutrient",
+    "calculate_mass_for_target_ppm",
     "list_products",
     "get_product_info",
     "find_products",
