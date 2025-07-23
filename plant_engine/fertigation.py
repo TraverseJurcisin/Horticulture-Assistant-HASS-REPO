@@ -19,9 +19,16 @@ FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
+STOCK_DATA = "stock_solution_concentrations.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
+_STOCK_SOLUTIONS: Dict[str, Dict[str, float]] = load_dataset(STOCK_DATA)
+_NUTRIENT_STOCK_MAP = {
+    nutrient: sid
+    for sid, nutrients in _STOCK_SOLUTIONS.items()
+    for nutrient in nutrients
+}
 
 
 @lru_cache(maxsize=None)
@@ -158,6 +165,7 @@ __all__ = [
     "generate_cycle_fertigation_plan_with_cost",
     "recommend_precise_fertigation",
     "grams_to_ppm",
+    "recommend_stock_solution_injection",
 ]
 
 
@@ -846,6 +854,28 @@ def generate_cycle_fertigation_plan_with_cost(
             total = 0.0
 
     return plan, round(total, 2)
+
+
+def recommend_stock_solution_injection(
+    targets: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
+    """Return stock solution volumes (mL) for the given nutrient targets."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    volumes: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        solution = _NUTRIENT_STOCK_MAP.get(nutrient)
+        if not solution:
+            continue
+        conc = _STOCK_SOLUTIONS[solution].get(nutrient, 0.0)
+        if conc <= 0:
+            continue
+        ml = ppm * volume_l / conc
+        volumes[solution] = round(volumes.get(solution, 0.0) + ml, 2)
+
+    return volumes
 
 
 
