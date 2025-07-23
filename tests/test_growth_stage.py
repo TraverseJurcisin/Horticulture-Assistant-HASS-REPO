@@ -11,6 +11,7 @@ from plant_engine.growth_stage import (
     days_until_harvest,
     predict_next_stage_date,
     get_germination_duration,
+    days_until_next_stage,
 )
 
 
@@ -94,5 +95,15 @@ def test_get_germination_duration():
     assert get_germination_duration("tomato") == 5
     assert get_germination_duration("lettuce") == 7
     assert get_germination_duration("unknown") is None
+
+
+def test_days_until_next_stage():
+    # stage duration for tomato seedling is 30 days
+    assert days_until_next_stage("tomato", "seedling", 10) == 20
+    # when elapsed exceeds duration the remaining time is zero
+    assert days_until_next_stage("tomato", "seedling", 40) == 0
+    assert days_until_next_stage("unknown", "seedling", 5) is None
+    with pytest.raises(ValueError):
+        days_until_next_stage("tomato", "seedling", -1)
 
 
