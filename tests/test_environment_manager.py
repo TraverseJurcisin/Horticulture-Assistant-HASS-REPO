@@ -36,6 +36,7 @@ from plant_engine.environment_manager import (
     evaluate_ph_stress,
     evaluate_stress_conditions,
     evaluate_soil_temperature_stress,
+    evaluate_soil_ec_stress,
     score_environment,
     score_environment_series,
     score_environment_components,
@@ -52,6 +53,7 @@ from plant_engine.environment_manager import (
     summarize_environment_series,
     clear_environment_cache,
     get_target_soil_temperature,
+    get_target_soil_ec,
 )
 
 
@@ -573,6 +575,16 @@ def test_evaluate_soil_temperature_stress():
     assert evaluate_soil_temperature_stress(18, "citrus") == "cold"
     assert evaluate_soil_temperature_stress(30, "citrus") == "hot"
     assert evaluate_soil_temperature_stress(35, "citrus") == "hot"
+
+
+def test_get_target_soil_ec():
+    assert get_target_soil_ec("lettuce", "seedling") == (0.6, 1.0)
+
+
+def test_evaluate_soil_ec_stress():
+    assert evaluate_soil_ec_stress(0.5, "lettuce", "seedling") == "low"
+    assert evaluate_soil_ec_stress(1.1, "lettuce", "seedling") == "high"
+    assert evaluate_soil_ec_stress(0.8, "lettuce", "seedling") is None
 
 
 def test_evaluate_stress_conditions():
