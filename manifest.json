@@ -1,7 +1,7 @@
 {
   "domain": "horticulture_assistant",
   "name": "Horticulture Assistant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant",
   "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant/issues",
   "codeowners": ["@TraverseJurcisin"],
