@@ -8,12 +8,14 @@ from .utils import load_dataset, normalize_key, list_dataset_entries
 DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
 WEIGHT_DATA_FILE = "nutrient_weights.json"
+TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
 
 
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
 _WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
+_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -31,6 +33,8 @@ __all__ = [
     "score_nutrient_levels",
     "score_nutrient_series",
     "recommend_ratio_adjustments",
+    "get_tag_modifier",
+    "apply_tag_modifiers",
 ]
 
 
@@ -301,5 +305,30 @@ def recommend_ratio_adjustments(
             adjustments[nutrient] = round(delta, 2)
 
     return adjustments
+
+
+def get_tag_modifier(tag: str) -> Dict[str, float]:
+    """Return nutrient multipliers for ``tag`` if defined."""
+    return _TAG_MODIFIERS.get(normalize_key(tag), {})
+
+
+def apply_tag_modifiers(
+    targets: Mapping[str, float], tags: Iterable[str]
+) -> Dict[str, float]:
+    """Return ``targets`` adjusted by modifiers for each tag."""
+
+    adjusted = {k: float(v) for k, v in targets.items()}
+    for tag in tags:
+        mods = get_tag_modifier(tag)
+        if not mods:
+            continue
+        for nutrient, factor in mods.items():
+            if nutrient not in adjusted:
+                continue
+            try:
+                adjusted[nutrient] = round(adjusted[nutrient] * float(factor), 2)
+            except (TypeError, ValueError):
+                continue
+    return adjusted
 
 

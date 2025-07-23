@@ -126,3 +126,15 @@ def test_score_nutrient_series():
     s2 = {"N": 60, "P": 50, "K": 100}
     score = score_nutrient_series([s1, s2], "tomato", "fruiting")
     assert score == (100.0 + score_nutrient_levels(s2, "tomato", "fruiting")) / 2
+
+
+def test_apply_tag_modifiers():
+    from plant_engine import nutrient_manager as nm
+
+    base = {"N": 100, "K": 100}
+    adjusted = nm.apply_tag_modifiers(base, ["high-nitrogen", "potassium-sensitive"])
+    assert adjusted["N"] == 120.0
+    assert adjusted["K"] == 80.0
+
+    unchanged = nm.apply_tag_modifiers(base, ["unknown-tag"])
+    assert unchanged == base
