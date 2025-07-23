@@ -14,3 +14,19 @@ def test_dataset_env_override(tmp_path, monkeypatch):
     importlib.reload(utils)
     result = utils.load_dataset("sample.json")
     assert result == test_data
+
+
+def test_dataset_overlay(tmp_path, monkeypatch):
+    base = tmp_path / "base"
+    overlay = tmp_path / "overlay"
+    base.mkdir()
+    overlay.mkdir()
+    (base / "sample.json").write_text(json.dumps({"foo": 1, "bar": 2}))
+    (overlay / "sample.json").write_text(json.dumps({"bar": 5, "baz": 7}))
+
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    importlib.reload(utils)
+
+    result = utils.load_dataset("sample.json")
+    assert result == {"foo": 1, "bar": 5, "baz": 7}
