@@ -1,7 +1,11 @@
-import json
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
+
+from custom_components.horticulture_assistant.utils.json_io import (
+    load_json,
+    save_json,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -32,15 +36,13 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
     # Load yield tracking log
     yield_entries = []
     if yield_log_file.is_file():
-        try:
-            with open(yield_log_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            if isinstance(data, list):
-                yield_entries = data
-            else:
-                _LOGGER.warning("Yield log for plant %s is not a list; ignoring content.", plant_id)
-        except Exception as e:
-            _LOGGER.error("Failed to read yield log for plant %s: %s", plant_id, e)
+        data = load_json(yield_log_file)
+        if isinstance(data, list):
+            yield_entries = data
+        elif data is not None:
+            _LOGGER.warning(
+                "Yield log for plant %s is not a list; ignoring content.", plant_id
+            )
     else:
         _LOGGER.warning("Yield tracking log not found for plant %s at %s", plant_id, yield_log_file)
     
@@ -74,12 +76,7 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
     growth_by_date = {}
     growth_trends_file = Path("data") / "growth_trends.json"
     if growth_trends_file.is_file():
-        try:
-            with open(growth_trends_file, "r", encoding="utf-8") as f:
-                growth_trends = json.load(f)
-        except Exception as e:
-            _LOGGER.error("Failed to read growth trends file: %s", e)
-            growth_trends = {}
+        growth_trends = load_json(growth_trends_file, default={})
         if isinstance(growth_trends, dict) and plant_id in growth_trends:
             plant_growth = growth_trends.get(plant_id)
             if isinstance(plant_growth, dict):
@@ -170,10 +167,8 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
     out_file = output_dir / f"{plant_id}_growth_yield.json"
-    try:
-        with open(out_file, "w", encoding="utf-8") as f:
-            json.dump(series, f, indent=2)
-        _LOGGER.info("Exported growth & yield series for plant %s to %s", plant_id, out_file)
-    except Exception as e:
-        _LOGGER.error("Failed to write growth_yield series for plant %s: %s", plant_id, e)
+    if save_json(out_file, series):
+        _LOGGER.info(
+            "Exported growth & yield series for plant %s to %s", plant_id, out_file
+        )
     return series
