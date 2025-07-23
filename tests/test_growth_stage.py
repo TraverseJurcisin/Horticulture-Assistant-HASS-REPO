@@ -8,6 +8,7 @@ from plant_engine.growth_stage import (
     predict_harvest_date,
     stage_progress,
     days_until_harvest,
+    predict_next_stage_date,
 )
 
 
@@ -66,4 +67,14 @@ def test_days_until_harvest():
     today = date(2025, 2, 1)
     assert days_until_harvest("tomato", start, today) == 89
     assert days_until_harvest("unknown", start, today) is None
+
+
+def test_predict_next_stage_date():
+    stage_start = date(2025, 1, 1)
+    next_date = predict_next_stage_date("tomato", "seedling", stage_start)
+    assert next_date == date(2025, 1, 31)
+
+    assert (
+        predict_next_stage_date("unknown", "seedling", stage_start) is None
+    )
 
