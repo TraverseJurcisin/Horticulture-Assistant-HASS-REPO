@@ -320,6 +320,17 @@ The generated YAML is written to `templates/generated/` for easy import.
 python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
 ```
 
+The `load_all_profiles` helper can validate and aggregate every profile in the
+`plants/` directory. It returns a mapping of plant IDs to structured results:
+
+```python
+from custom_components.horticulture_assistant.utils.load_all_profiles import load_all_profiles
+
+profiles = load_all_profiles(validate=True)
+for pid, result in profiles.items():
+    print(pid, result.loaded, result.issues)
+```
+
 ## Troubleshooting
 - **Sensors show `unavailable`**: verify the entity IDs and that the devices are reporting to Home Assistant.
 - **Config flow fails**: check the logs for JSON errors in your plant profiles or missing permissions.

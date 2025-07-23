@@ -1,28 +1,53 @@
 """Utilities for loading and validating multiple plant profiles."""
 
-import os
 import json
 import logging
+import os
+from dataclasses import dataclass, asdict
 from pathlib import Path
-from custom_components.horticulture_assistant.utils.validate_profile_structure import validate_profile_structure
+
+from custom_components.horticulture_assistant.utils.validate_profile_structure import (
+    validate_profile_structure,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
-def load_all_profiles(base_path: str = None, validate: bool = False, verbose: bool = False):
+
+@dataclass
+class ProfileLoadResult:
+    """Result container for :func:`load_all_profiles`."""
+
+    loaded: bool
+    profile_data: dict
+    issues: dict
+
+    def as_dict(self) -> dict:
+        """Return result as a plain dictionary."""
+        return asdict(self)
+
+def load_all_profiles(
+    base_path: str | None = None,
+    validate: bool = False,
+    verbose: bool = False,
+    *,
+    pattern: str = "*.json",
+) -> dict[str, ProfileLoadResult]:
     """
-    Load all plant profiles from JSON files in each subdirectory of the plants directory.
-    Each plant profile is expected to be a folder under the base path (default "./plants").
-    For each plant folder, all JSON files are read and combined into a profile data structure.
-    Optionally, validate each profile's structure using validate_profile_structure and collect issues.
+    Load plant profiles from JSON files under ``base_path``.
+
+    Each plant should have its own folder under ``base_path`` containing one or
+    more JSON files. All matching files are loaded and merged into a single
+    profile structure. If ``validate`` is ``True`` the profile is checked using
+    :func:`validate_profile_structure` and any issues are collected.
     
     :param base_path: Base directory containing plant profile folders (defaults to "./plants").
     :param validate: Whether to perform structural validation on each profile using validate_profile_structure.
     :param verbose: If True, pass verbose=True to the validation for detailed logging of issues.
-    :return: Dictionary mapping plant_id to a dict with keys:
-             "loaded" (bool), "profile_data" (dict), and "issues" (dict of any problems found).
+    :param pattern: Glob pattern of files to load from each plant directory.
+    :return: Mapping of plant_id to :class:`ProfileLoadResult` objects.
     """
     base_dir = Path(base_path) if base_path else Path(os.getcwd()) / "plants"
-    profiles = {}
+    profiles: dict[str, ProfileLoadResult] = {}
     if not base_dir.is_dir():
         _LOGGER.error("Base directory for plant profiles not found: %s", base_dir)
         return {}
@@ -31,31 +56,27 @@ def load_all_profiles(base_path: str = None, validate: bool = False, verbose: bo
         if not plant_dir.is_dir():
             continue  # skip any files in the base directory
         plant_id = plant_dir.name
-        json_files = list(plant_dir.glob("*.json"))
+        json_files = list(plant_dir.glob(pattern))
         if not json_files:
             # skip this directory if it contains no JSON files
             continue
-        profile_data = {}
-        issues = {}
+        profile_data: dict[str, dict] = {}
+        issues: dict[str, object] = {}
         loaded_flag = False
         # Load each JSON file in the plant directory
         for file_path in json_files:
             file_name = file_path.name
             try:
-                with open(file_path, 'r', encoding='utf-8') as f:
+                with open(file_path, "r", encoding="utf-8") as f:
                     content = json.load(f)
-            except Exception as e:
-                # Log parse errors unless validation will handle it
+                if not isinstance(content, dict):
+                    raise ValueError("Content is not a dict")
+            except Exception as exc:
                 if not validate:
-                    _LOGGER.error("Failed to read/parse JSON file %s: %s", file_path, e)
-                issues[file_name] = {"error": f"JSON parse error: {e}"}
+                    _LOGGER.error("Failed to load %s: %s", file_path, exc)
+                issues[file_name] = {"error": str(exc)}
                 continue
-            if not isinstance(content, dict):
-                if not validate:
-                    _LOGGER.warning("Profile file %s is not a JSON object (dict).", file_path)
-                issues[file_name] = {"error": "Content is not a dict"}
-                continue
-            # If loaded successfully, add to profile_data under a key based on the file name (without extension)
+
             loaded_flag = True
             profile_data[file_path.stem] = content
         # If requested, validate the profile structure and use the results
@@ -65,14 +86,14 @@ def load_all_profiles(base_path: str = None, validate: bool = False, verbose: bo
             if validation_issues:
                 issues = validation_issues
         # Store the results for this plant
-        profiles[plant_id] = {
-            "loaded": loaded_flag,
-            "profile_data": profile_data,
-            "issues": issues
-        }
+        profiles[plant_id] = ProfileLoadResult(
+            loaded=loaded_flag,
+            profile_data=profile_data,
+            issues=issues,
+        )
     # Summary logging
     total_profiles = len(profiles)
-    profiles_with_issues = sum(1 for data in profiles.values() if data["issues"])
+    profiles_with_issues = sum(1 for data in profiles.values() if data.issues)
     if validate:
         _LOGGER.info("Loaded %d profiles, %d with validation issues.", total_profiles, profiles_with_issues)
     else:
