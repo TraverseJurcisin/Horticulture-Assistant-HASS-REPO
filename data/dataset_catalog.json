@@ -57,6 +57,7 @@
   "growth_medium_ph_ranges.json": "Recommended pH ranges for common growing media.",
   "planting_depth_guidelines.json": "Recommended seeding or transplant depths.",
   "pruning_guidelines.json": "Stage-specific pruning recommendations.",
+  "pruning_intervals.json": "Days between pruning events for each plant stage.",
   "soil_nutrient_guidelines.json": "Target soil nutrient levels by crop.",
   "soil_texture_parameters.json": "Typical sand, silt and clay percentages.",
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
