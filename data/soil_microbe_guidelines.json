@@ -1,0 +1,6 @@
+{
+  "citrus": ["Trichoderma harzianum", "Bacillus subtilis"],
+  "lettuce": ["Bacillus amyloliquefaciens", "Azotobacter chroococcum"],
+  "strawberry": ["Trichoderma harzianum", "Pseudomonas fluorescens"],
+  "tomato": ["Azospirillum brasilense", "Bacillus megaterium"]
+}

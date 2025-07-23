@@ -16,6 +16,7 @@ from . import (
     ec_manager,
     irrigation_manager,
     growth_stage,
+    soil_microbe_manager,
 )
 
 __all__ = ["GuidelineSummary", "get_guideline_summary"]
@@ -33,6 +34,7 @@ class GuidelineSummary:
     disease_prevention: Dict[str, str]
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
+    beneficial_microbes: List[str] = dataclass_field(default_factory=list)
     ph_range: List[float] = dataclass_field(default_factory=list)
     ec_range: List[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
@@ -55,6 +57,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     thresholds = pest_monitor.get_pest_thresholds(plant_type)
     beneficial = {p: pest_manager.get_beneficial_insects(p) for p in thresholds}
+    microbes = soil_microbe_manager.get_recommended_microbes(plant_type)
 
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
@@ -65,6 +68,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
         pest_thresholds=thresholds,
         beneficial_insects=beneficial,
+        beneficial_microbes=microbes,
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
         irrigation_volume_ml=(

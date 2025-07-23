@@ -75,5 +75,6 @@
   "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
   "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
-  "fertigation_intervals.json": "Recommended days between fertigation events per stage."
+  "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
+  "soil_microbe_guidelines.json": "Beneficial soil microorganisms for each crop."
 }
