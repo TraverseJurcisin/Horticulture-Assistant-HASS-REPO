@@ -668,3 +668,8 @@ def test_co2_price_and_cost():
     grams, cost = recommend_co2_injection_with_cost(300, "citrus", "seedling", 100.0, "cartridge")
     assert grams > 0
     assert cost == estimate_co2_cost(grams, "cartridge")
+
+
+def test_estimate_co2_cost_negative():
+    with pytest.raises(ValueError):
+        estimate_co2_cost(-5, "bulk_tank")

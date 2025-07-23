@@ -1,4 +1,5 @@
 from datetime import date
+import pytest
 from plant_engine.pest_monitor import (
     list_supported_plants,
     get_pest_thresholds,
@@ -58,6 +59,13 @@ def test_classify_pest_severity():
     severity = classify_pest_severity("citrus", obs)
     assert severity["aphids"] == "low"
     assert severity["scale"] == "severe"
+
+
+def test_negative_counts_raise():
+    with pytest.raises(ValueError):
+        assess_pest_pressure("citrus", {"aphids": -1})
+    with pytest.raises(ValueError):
+        classify_pest_severity("citrus", {"aphids": -2})
 
 
 def test_generate_pest_report():

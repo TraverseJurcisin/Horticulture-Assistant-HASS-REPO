@@ -109,6 +109,8 @@ def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Di
     thresholds = get_pest_thresholds(plant_type)
     pressure: Dict[str, bool] = {}
     for pest, count in observations.items():
+        if count < 0:
+            raise ValueError("pest counts must be non-negative")
         key = normalize_key(pest)
         thresh = thresholds.get(key)
         if thresh is None:
@@ -185,6 +187,8 @@ def classify_pest_severity(
     thresholds = get_pest_thresholds(plant_type)
     severity: Dict[str, str] = {}
     for pest, count in observations.items():
+        if count < 0:
+            raise ValueError("pest counts must be non-negative")
         key = normalize_key(pest)
         thresh = thresholds.get(key)
         if thresh is None:
