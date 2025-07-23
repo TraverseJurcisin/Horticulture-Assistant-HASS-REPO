@@ -93,6 +93,7 @@ __all__ = [
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
+    "recommend_yield_based_fertigation",
     "recommend_precise_fertigation",
 ]
 
@@ -722,4 +723,54 @@ def generate_cycle_fertigation_plan(
     return cycle_plan
 
 
+def recommend_yield_based_fertigation(
+    plant_type: str,
+    yield_kg: float | None = None,
+    *,
+    num_plants: int = 1,
+    efficiency: float = 0.85,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return grams of fertilizer needed for a target yield.
+
+    If ``yield_kg`` is ``None`` the expected crop yield from
+    :func:`plant_engine.yield_prediction.get_estimated_yield` is used. The
+    function combines removal rates from :mod:`plant_engine.nutrient_budget`
+    with fertilizer purity data to produce a fertigation schedule.
+    """
+
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+    if efficiency <= 0:
+        raise ValueError("efficiency must be > 0")
+
+    from .yield_prediction import get_estimated_yield
+    from .nutrient_budget import estimate_required_nutrients
+
+    if yield_kg is None:
+        est = get_estimated_yield(plant_type)
+        if est is None:
+            return {}
+        yield_kg = est / 1000
+
+    removal = estimate_required_nutrients(
+        plant_type,
+        yield_kg,
+        efficiency=efficiency,
+    ).nutrients_g
+
+    totals = {nut: grams * 1000 for nut, grams in removal.items()}
+
+    if fertilizers is None:
+        fertilizers = {"N": "urea", "P": "map", "K": "kcl"}
+
+    schedule = _schedule_from_totals(
+        totals,
+        num_plants,
+        fertilizers,
+        purity_overrides,
+    )
+
+    return schedule
 

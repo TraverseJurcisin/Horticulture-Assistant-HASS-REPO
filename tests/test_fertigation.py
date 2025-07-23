@@ -266,3 +266,19 @@ def test_estimate_solution_ec():
     schedule = {"N": 100, "K": 150}
     ec = estimate_solution_ec(schedule)
     assert ec == pytest.approx(0.465, rel=1e-3)
+
+
+def test_recommend_yield_based_fertigation():
+    from plant_engine.fertigation import recommend_yield_based_fertigation
+
+    schedule = recommend_yield_based_fertigation(
+        "tomato",
+        yield_kg=2.0,
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+    )
+    assert schedule["foxfarm_grow_big"] > 0
+    assert schedule["intrepid_granular_potash_0_0_60"] > 0

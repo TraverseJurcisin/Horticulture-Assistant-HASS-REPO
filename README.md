@@ -237,6 +237,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for
   existing water nutrient levels, can include micronutrients, and returns cost
   estimates along with any water quality warnings.
+- **Yield-Based Fertigation**: `recommend_yield_based_fertigation` converts
+  nutrient removal rates and fertilizer purity data into a complete schedule to
+  meet a desired crop yield.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.
