@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
@@ -61,7 +61,7 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -82,7 +82,7 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
         _LOGGER.warning("Failed to read %s: %s", log_path, exc)
         return []
 
-    cutoff = datetime.utcnow() - timedelta(hours=hours)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
     recent: list[dict] = []
     for entry in data:
         ts = entry.get("timestamp")
@@ -272,7 +272,7 @@ def run_daily_cycle(
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
-    out_file = output_dir / f"{plant_id}_{datetime.utcnow().date()}.json"
+    out_file = output_dir / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
     try:
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)
