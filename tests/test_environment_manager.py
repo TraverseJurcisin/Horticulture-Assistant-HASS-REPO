@@ -363,6 +363,17 @@ def test_summarize_environment():
     assert "stress" in summary
 
 
+def test_summarize_environment_with_water_quality():
+    summary = summarize_environment(
+        {"temperature": 22, "humidity": 70},
+        "citrus",
+        "vegetative",
+        water_test={"Na": 60, "Cl": 50},
+    )
+    assert summary["water_quality"]["rating"] == "fair"
+    assert "score" in summary["water_quality"]
+
+
 def test_evaluate_light_stress():
     assert evaluate_light_stress(8, "lettuce", "seedling") == "low"
     assert evaluate_light_stress(14, "lettuce", "seedling") == "high"
