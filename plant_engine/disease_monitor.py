@@ -2,15 +2,19 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, asdict
+from datetime import date, timedelta
 from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .disease_manager import recommend_treatments, recommend_prevention
 
 DATA_FILE = "disease_thresholds.json"
+MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
+# Recommended days between scouting events per plant stage
+_MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -18,6 +22,8 @@ __all__ = [
     "assess_disease_pressure",
     "classify_disease_severity",
     "recommend_threshold_actions",
+    "get_monitoring_interval",
+    "next_monitor_date",
     "generate_disease_report",
     "DiseaseReport",
 ]
@@ -73,6 +79,31 @@ def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]
     if not exceeded:
         return {}
     return recommend_treatments(plant_type, exceeded)
+
+
+def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
+    """Return recommended days between disease scouting events."""
+
+    data = _MONITOR_INTERVALS.get(normalize_key(plant_type), {})
+    if stage:
+        value = data.get(normalize_key(stage))
+        if isinstance(value, (int, float)):
+            return int(value)
+    value = data.get("optimal")
+    if isinstance(value, (int, float)):
+        return int(value)
+    return None
+
+
+def next_monitor_date(
+    plant_type: str, stage: str | None, last_date: date
+) -> date | None:
+    """Return the next disease scouting date based on guidelines."""
+
+    interval = get_monitoring_interval(plant_type, stage)
+    if interval is None:
+        return None
+    return last_date + timedelta(days=interval)
 
 
 @dataclass
