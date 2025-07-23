@@ -5,6 +5,7 @@ def test_list_datasets_contains_known():
     datasets = list_datasets()
     assert "nutrient_guidelines.json" in datasets
     assert "irrigation_intervals.json" in datasets
+    assert "soil_moisture_guidelines.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -28,3 +29,6 @@ def test_get_dataset_description():
 
     desc5 = get_dataset_description("wsda_fertilizer_database.json")
     assert "WSDA" in desc5
+
+    desc6 = get_dataset_description("soil_moisture_guidelines.json")
+    assert "moisture" in desc6

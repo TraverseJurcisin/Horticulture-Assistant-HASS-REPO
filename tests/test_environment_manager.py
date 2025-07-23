@@ -563,14 +563,14 @@ def test_optimize_environment_humidity_stress():
 
 
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, "lettuce", "seedling")
+    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, "lettuce", "seedling")
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
     assert stress.wind is True
     assert stress.humidity is None
 
-    stress_none = evaluate_stress_conditions(None, None, None, None, None, "citrus")
+    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, "citrus")
     assert stress_none.heat is None
     assert stress_none.humidity is None
 
