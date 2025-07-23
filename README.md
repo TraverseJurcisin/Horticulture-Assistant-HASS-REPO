@@ -227,6 +227,8 @@ or incomplete and should only be used as a starting point for your own research.
   quick evaluation.
 - **Photoperiod Suggestions**: `recommend_photoperiod` returns the daily light
   hours required to hit midpoint DLI targets at the current PPFD.
+- **Light Intensity Suggestions**: `recommend_light_intensity` calculates the
+  PPFD needed to achieve midpoint DLI targets for a given photoperiod.
 - **Photoperiod Guidelines**: `get_target_photoperiod` looks up recommended day lengths from `photoperiod_guidelines.json`.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
