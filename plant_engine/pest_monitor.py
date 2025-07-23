@@ -35,6 +35,7 @@ __all__ = [
     "get_severity_action",
     "get_monitoring_interval",
     "next_monitor_date",
+    "generate_monitoring_schedule",
     "PestReport",
 ]
 
@@ -78,6 +79,22 @@ def next_monitor_date(
     if interval is None:
         return None
     return last_date + timedelta(days=interval)
+
+
+def generate_monitoring_schedule(
+    plant_type: str,
+    stage: str | None,
+    start: date,
+    events: int,
+) -> list[date]:
+    """Return list of upcoming monitoring dates.
+
+    If ``events`` is 0 or no interval is defined, an empty list is returned.
+    """
+    interval = get_monitoring_interval(plant_type, stage)
+    if interval is None or events <= 0:
+        return []
+    return [start + timedelta(days=interval * i) for i in range(1, events + 1)]
 
 
 def get_severity_action(level: str) -> str:

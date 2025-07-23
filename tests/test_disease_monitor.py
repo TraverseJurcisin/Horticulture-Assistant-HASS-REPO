@@ -7,6 +7,7 @@ from plant_engine.disease_monitor import (
     generate_disease_report,
     get_monitoring_interval,
     next_monitor_date,
+    generate_monitoring_schedule,
 )
 
 
@@ -55,3 +56,10 @@ def test_next_monitor_date():
     expected = date(2023, 1, 5)
     assert next_monitor_date("citrus", "fruiting", last) == expected
     assert next_monitor_date("unknown", None, last) is None
+
+
+def test_generate_monitoring_schedule():
+    start = date(2023, 1, 1)
+    sched = generate_monitoring_schedule("citrus", "fruiting", start, 2)
+    assert sched == [date(2023, 1, 5), date(2023, 1, 9)]
+    assert generate_monitoring_schedule("unknown", None, start, 1) == []
