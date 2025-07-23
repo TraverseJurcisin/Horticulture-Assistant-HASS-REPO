@@ -5,6 +5,8 @@ from plant_engine.rootzone_model import (
     calculate_remaining_water,
     get_soil_parameters,
     soil_moisture_pct,
+    get_soil_moisture_range,
+    evaluate_soil_moisture,
     RootZone,
 )
 import pytest
@@ -77,4 +79,15 @@ def test_soil_moisture_pct():
     assert soil_moisture_pct(rz, 100.0) == 50.0
     with pytest.raises(ValueError):
         soil_moisture_pct(rz, -1)
+
+
+def test_get_soil_moisture_range():
+    assert get_soil_moisture_range("citrus") == (50.0, 80.0)
+    assert get_soil_moisture_range("unknown") == (40.0, 80.0)
+
+
+def test_evaluate_soil_moisture():
+    assert evaluate_soil_moisture(30, "citrus") == "dry"
+    assert evaluate_soil_moisture(55, "citrus") == "optimal"
+    assert evaluate_soil_moisture(90, "citrus") == "wet"
 

@@ -18,5 +18,6 @@
   "water_quality_actions.json": "Recommended remediation steps for poor water quality.",
   "leaf_tissue_targets.json": "Optimal nutrient ranges for leaf tissue analysis.",
   "root_depth_guidelines.json": "Typical maximum root depth per crop.",
-  "plant_density_guidelines.json": "Recommended plant spacing for common crops."
+  "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
+  "soil_moisture_thresholds.json": "Optimal soil moisture percent ranges by crop."
 }

@@ -4,7 +4,7 @@ from __future__ import annotations
 import math
 
 from dataclasses import dataclass, asdict
-from typing import Dict, Mapping, Any
+from typing import Any, Dict, Mapping, Tuple
 
 from .utils import load_dataset, normalize_key
 
@@ -12,10 +12,12 @@ DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 
 SOIL_DATA_FILE = "soil_texture_parameters.json"
 ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
+MOISTURE_THRESHOLDS_FILE = "soil_moisture_thresholds.json"
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
 _ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
+_MOISTURE_THRESHOLDS: Dict[str, Tuple[float, float]] = load_dataset(MOISTURE_THRESHOLDS_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
@@ -23,6 +25,8 @@ __all__ = [
     "estimate_water_capacity",
     "calculate_remaining_water",
     "soil_moisture_pct",
+    "get_soil_moisture_range",
+    "evaluate_soil_moisture",
     "get_soil_parameters",
     "RootZone",
 ]
@@ -160,4 +164,34 @@ def soil_moisture_pct(rootzone: RootZone, available_ml: float) -> float:
 
     pct = (available_ml / rootzone.total_available_water_ml) * 100
     return round(min(max(pct, 0.0), 100.0), 1)
+
+
+def get_soil_moisture_range(plant_type: str) -> Tuple[float, float] | None:
+    """Return the acceptable soil moisture percentage range for ``plant_type``."""
+
+    rng = _MOISTURE_THRESHOLDS.get(normalize_key(plant_type))
+    if rng is None:
+        rng = _MOISTURE_THRESHOLDS.get("default")
+    if isinstance(rng, (list, tuple)) and len(rng) == 2:
+        try:
+            return float(rng[0]), float(rng[1])
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
+def evaluate_soil_moisture(pct: float | None, plant_type: str) -> str | None:
+    """Return 'dry', 'wet' or 'optimal' for soil moisture percentage."""
+
+    if pct is None:
+        return None
+    rng = get_soil_moisture_range(plant_type)
+    if not rng:
+        return None
+    low, high = rng
+    if pct < low:
+        return "dry"
+    if pct > high:
+        return "wet"
+    return "optimal"
 
