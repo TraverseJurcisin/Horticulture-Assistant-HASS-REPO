@@ -79,10 +79,12 @@ __all__ = [
     "evaluate_heat_stress",
     "evaluate_cold_stress",
     "evaluate_light_stress",
+    "evaluate_stress_conditions",
     "optimize_environment",
     "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "StressFlags",
     "normalize_environment_readings",
     "compare_environment",
     "generate_environment_alerts",
@@ -194,6 +196,18 @@ class EnvironmentOptimization:
             "cold_stress": self.cold_stress,
             "light_stress": self.light_stress,
         }
+
+
+@dataclass
+class StressFlags:
+    """Combined abiotic stress indicators."""
+
+    heat: bool | None
+    cold: bool | None
+    light: str | None
+
+    def as_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
 
 @dataclass
@@ -593,6 +607,22 @@ def evaluate_light_stress(
     return None
 
 
+def evaluate_stress_conditions(
+    temp_c: float | None,
+    humidity_pct: float | None,
+    dli: float | None,
+    plant_type: str,
+    stage: str | None = None,
+) -> StressFlags:
+    """Return consolidated stress flags for current conditions."""
+
+    return StressFlags(
+        heat=evaluate_heat_stress(temp_c, humidity_pct, plant_type),
+        cold=evaluate_cold_stress(temp_c, plant_type),
+        light=evaluate_light_stress(dli, plant_type, stage),
+    )
+
+
 def calculate_dli_series(
     ppfd_values: Iterable[float], interval_hours: float = 1.0
 ) -> float:
@@ -668,10 +698,7 @@ def optimize_environment(
         readings.get("temp_c"), readings.get("humidity_pct")
     )
 
-    heat_stress = evaluate_heat_stress(
-        readings.get("temp_c"), readings.get("humidity_pct"), plant_type
-    )
-    cold_stress = evaluate_cold_stress(readings.get("temp_c"), plant_type)
+    # Defer stress calculations until DLI is available
     # pH integration
     ph_set = ph_manager.recommended_ph_setpoint(plant_type, stage)
     ph_act = None
@@ -699,7 +726,13 @@ def optimize_environment(
         except ValueError:
             current_dli = None
 
-    light_stress = evaluate_light_stress(current_dli, plant_type, stage)
+    stress = evaluate_stress_conditions(
+        readings.get("temp_c"),
+        readings.get("humidity_pct"),
+        current_dli,
+        plant_type,
+        stage,
+    )
 
     result = EnvironmentOptimization(
         setpoints,
@@ -710,9 +743,9 @@ def optimize_environment(
         target_dli=target_dli,
         target_vpd=target_vpd,
         photoperiod_hours=photoperiod_hours,
-        heat_stress=heat_stress,
-        cold_stress=cold_stress,
-        light_stress=light_stress,
+        heat_stress=stress.heat,
+        cold_stress=stress.cold,
+        light_stress=stress.light,
     )
     return result.as_dict()
 
