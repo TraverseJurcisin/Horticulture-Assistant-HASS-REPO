@@ -490,6 +490,11 @@ def test_normalize_environment_readings_temp_fahrenheit():
     result = normalize_environment_readings(data)
     assert result == {"temp_c": 30.0}
 
+def test_normalize_environment_readings_soil_temp_fahrenheit():
+    data = {"soil_temp_f": 77}
+    result = normalize_environment_readings(data)
+    assert result == {"soil_temp_c": 25.0}
+
 
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})

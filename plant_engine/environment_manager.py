@@ -120,9 +120,9 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             val = float(value)
         except (TypeError, ValueError):
             continue
-        if canonical == "temp_f":
+        if canonical in {"temp_f", "soil_temp_f"}:
             val = (val - 32) * 5 / 9
-            canonical = "temp_c"
+            canonical = canonical.replace("_f", "_c")
         normalized[canonical] = val
     return normalized
 
