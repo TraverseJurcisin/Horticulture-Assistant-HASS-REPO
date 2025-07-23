@@ -136,6 +136,7 @@ __all__ = [
     "score_environment_series",
     "score_environment_components",
     "suggest_environment_setpoints",
+    "suggest_environment_setpoints_advanced",
     "saturation_vapor_pressure",
     "actual_vapor_pressure",
     "calculate_vpd",
@@ -676,6 +677,32 @@ def suggest_environment_setpoints(
     for key, bounds in targets.items():
         if isinstance(bounds, (list, tuple)) and len(bounds) == 2:
             setpoints[key] = round((bounds[0] + bounds[1]) / 2, 2)
+    return setpoints
+
+
+def suggest_environment_setpoints_advanced(
+    plant_type: str, stage: str | None = None
+) -> Dict[str, float]:
+    """Return midpoint setpoints with VPD fallback for humidity."""
+
+    setpoints = suggest_environment_setpoints(plant_type, stage)
+    if "humidity_pct" not in setpoints:
+        targets = get_environmental_targets(plant_type, stage)
+        temp = targets.get("temp_c")
+        vpd = get_target_vpd(plant_type, stage)
+        if (
+            isinstance(temp, (list, tuple))
+            and len(temp) == 2
+            and vpd is not None
+        ):
+            temp_mid = (float(temp[0]) + float(temp[1])) / 2
+            vpd_mid = (vpd[0] + vpd[1]) / 2
+            try:
+                setpoints["humidity_pct"] = humidity_for_target_vpd(
+                    temp_mid, vpd_mid
+                )
+            except ValueError:
+                pass
     return setpoints
 
 
