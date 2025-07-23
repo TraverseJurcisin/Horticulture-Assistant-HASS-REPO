@@ -109,6 +109,12 @@ from .bioinoculant_manager import (
     list_supported_plants as list_bio_plants,
     get_recommended_inoculants,
 )
+from .companion_manager import (
+    list_supported_plants as list_companion_plants,
+    get_companion_info,
+    recommend_companions,
+    recommend_antagonists,
+)
 from .growth_stage import get_stage_info, list_growth_stages
 from .harvest_planner import build_stage_schedule
 from .guidelines import get_guideline_summary
@@ -276,6 +282,10 @@ __all__ = [
     "get_micro_levels",
     "list_bio_plants",
     "get_recommended_inoculants",
+    "list_companion_plants",
+    "get_companion_info",
+    "recommend_companions",
+    "recommend_antagonists",
     "get_stage_info",
     "list_growth_stages",
     "build_stage_schedule",

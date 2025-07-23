@@ -1,0 +1,10 @@
+{
+  "tomato": {
+    "companions": ["basil", "marigold"],
+    "antagonists": ["fennel", "corn"]
+  },
+  "cucumber": {
+    "companions": ["nasturtium", "radish"],
+    "antagonists": ["sage", "potato"]
+  }
+}
