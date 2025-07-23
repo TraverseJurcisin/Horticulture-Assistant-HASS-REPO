@@ -14,6 +14,7 @@ from plant_engine.irrigation_manager import (
     generate_env_irrigation_schedule,
     generate_precipitation_schedule,
     get_rain_capture_efficiency,
+    get_recommended_interval,
     IrrigationRecommendation,
 )
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
@@ -149,6 +150,11 @@ def test_daily_irrigation_target_lookup():
     assert get_daily_irrigation_target("citrus", "vegetative") == 250
     assert "citrus" in list_supported_plants()
     assert get_daily_irrigation_target("unknown", "stage") == 0.0
+
+
+def test_get_recommended_interval():
+    assert get_recommended_interval("citrus", "seedling") == 2
+    assert get_recommended_interval("citrus", "unknown") is None
 
 
 def test_generate_irrigation_schedule():

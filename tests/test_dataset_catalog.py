@@ -4,6 +4,7 @@ from plant_engine.datasets import list_datasets, get_dataset_description
 def test_list_datasets_contains_known():
     datasets = list_datasets()
     assert "nutrient_guidelines.json" in datasets
+    assert "irrigation_intervals.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -21,3 +22,6 @@ def test_get_dataset_description():
 
     desc3 = get_dataset_description("fertilizer_purity.json")
     assert "purity" in desc3
+
+    desc4 = get_dataset_description("irrigation_intervals.json")
+    assert "irrigation" in desc4

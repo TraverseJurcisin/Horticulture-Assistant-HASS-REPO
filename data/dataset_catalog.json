@@ -17,6 +17,7 @@
   "vpd_guidelines.json": "Vapor pressure deficit targets for growth stages.",
   "photoperiod_guidelines.json": "Recommended photoperiod ranges for growth stages.",
   "irrigation_guidelines.json": "Daily irrigation volume guidelines by stage.",
+  "irrigation_intervals.json": "Recommended days between irrigation events for each plant stage.",
   "irrigation_efficiency.json": "Efficiency factors for irrigation methods.",
   "rain_capture_efficiency.json": "Fraction of rainfall captured by different ground covers.",
   "water_quality_thresholds.json": "Maximum safe levels of common water analytes.",
