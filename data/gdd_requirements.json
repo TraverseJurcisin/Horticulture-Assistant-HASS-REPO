@@ -13,5 +13,23 @@
     "vegetative": 300,
     "flowering": 450,
     "fruiting": 600
+  },
+  "tomato": {
+    "vegetative": 300,
+    "flowering": 450,
+    "fruiting": 700
+  },
+  "pepper": {
+    "vegetative": 350,
+    "flowering": 500,
+    "fruiting": 700
+  },
+  "basil": {
+    "vegetative": 200,
+    "harvest": 300
+  },
+  "spinach": {
+    "vegetative": 150,
+    "harvest": 250
   }
 }

@@ -16,6 +16,7 @@ __all__ = [
     "get_stage_gdd_requirement",
     "predict_stage_completion",
     "accumulate_gdd_series",
+    "estimate_days_to_stage",
 ]
 
 
@@ -56,3 +57,29 @@ def accumulate_gdd_series(temps: Iterable[tuple[float, float]], base_temp_c: flo
     for t_min, t_max in temps:
         total += calculate_gdd(t_min, t_max, base_temp_c)
     return round(total, 1)
+
+
+def estimate_days_to_stage(
+    plant_type: str,
+    stage: str,
+    temps: Iterable[tuple[float, float]],
+    base_temp_c: float = 10.0,
+) -> int | None:
+    """Return estimated days needed to reach ``stage`` using ``temps``.
+
+    ``temps`` should be an iterable of (min_c, max_c) pairs ordered by day.
+    The function returns ``None`` if the GDD requirement is unknown or the
+    provided series is insufficient to reach the target.
+    """
+
+    requirement = get_stage_gdd_requirement(plant_type, stage)
+    if requirement is None:
+        return None
+
+    accumulated = 0.0
+    for day, (t_min, t_max) in enumerate(temps, start=1):
+        accumulated += calculate_gdd(t_min, t_max, base_temp_c)
+        if accumulated >= requirement:
+            return day
+
+    return None

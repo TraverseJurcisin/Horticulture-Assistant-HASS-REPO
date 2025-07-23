@@ -1,63 +1,76 @@
 # File: custom_components/horticulture_assistant/utils/threshold_approval_manager.py
 
-import logging
+"""Helpers for applying approved threshold changes to plant profiles."""
+
+from __future__ import annotations
+
 import json
+import logging
 import os
+from typing import Any, Dict, Tuple
+
 from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
+_LOGGER = logging.getLogger(__name__)
+
+
+def _load_json(path: str) -> Any:
+    if not os.path.exists(path):
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError as exc:
+            _LOGGER.error("Invalid JSON in %s: %s", path, exc)
+            return None
+
+
+def _load_pending(path: str) -> Tuple[Dict[str, Any], Any]:
+    data = _load_json(path)
+    if not data:
+        return {}, data
+    if isinstance(data, list):
+        out: Dict[str, Any] = {}
+        for entry in data:
+            pid = entry.get("plant_id")
+            if pid:
+                out[pid] = entry
+        return out, data
+    if isinstance(data, dict) and any(k in data for k in ("plant_id", "changes", "timestamp")):
+        pid = data.get("plant_id", "unknown")
+        return {pid: data}, data
+    if isinstance(data, dict):
+        return data, data
+    _LOGGER.error("Unexpected format in pending approvals: %s", type(data))
+    return {}, data
+
+
+def _save_json(path: str, data: Any) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
+    if isinstance(original, list):
+        data = list(pending.values())
+    elif isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
+        data = next(iter(pending.values()), {})
+    else:
+        data = pending
+    _save_json(path, data)
+
+
 def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
     """Apply approved threshold changes from pending approvals to plant profiles."""
-    # Determine file paths for pending approvals and plant profiles
     base_data_dir = hass.config.path("data") if hass else "data"
     base_plants_dir = hass.config.path("plants") if hass else "plants"
     pending_file_path = os.path.join(base_data_dir, "pending_approvals.json")
-    # Load pending approvals data
-    try:
-        with open(pending_file_path, "r", encoding="utf-8") as f:
-            pending_data = json.load(f)
-    except FileNotFoundError:
-        _LOGGER.info("No pending approvals file found at %s; nothing to apply.", pending_file_path)
-        return
-    except json.JSONDecodeError as e:
-        _LOGGER.error("Failed to parse pending approvals file: %s", e)
-        return
-
-    if not pending_data:
-        _LOGGER.info("Pending approvals file is empty; no changes to apply.")
-        return
-
-    # Normalize data structure to dict of plant_id -> entry
-    if isinstance(pending_data, list):
-        pending_entries = {}
-        for entry in pending_data:
-            pid = entry.get("plant_id")
-            if not pid:
-                _LOGGER.warning("Skipping malformed pending entry without plant_id: %s", entry)
-                continue
-            # Merge changes if multiple entries exist for the same plant
-            if pid not in pending_entries:
-                pending_entries[pid] = entry
-            else:
-                # Merge change records for duplicate plant entries
-                existing = pending_entries[pid]
-                if "changes" not in existing:
-                    existing["changes"] = {}
-                for nutrient, change in entry.get("changes", {}).items():
-                    if nutrient in existing["changes"]:
-                        _LOGGER.warning("Overwriting duplicate pending change for '%s' in plant %s.", nutrient, pid)
-                    existing["changes"][nutrient] = change
-        pending_dict = pending_entries
-    elif isinstance(pending_data, dict) and any(k in ("plant_id", "changes", "timestamp") for k in pending_data.keys()):
-        # Single entry (one plant) in dict form
-        pid = pending_data.get("plant_id", "unknown")
-        pending_dict = {pid: pending_data}
-    elif isinstance(pending_data, dict):
-        # Already in dict form with plant IDs as keys
-        pending_dict = pending_data
-    else:
-        _LOGGER.error("Unexpected format in pending approvals data: %s", type(pending_data))
+    pending_dict, pending_data = _load_pending(pending_file_path)
+    if not pending_dict:
+        _LOGGER.info("No pending approvals found at %s", pending_file_path)
         return
 
     changes_applied = 0
