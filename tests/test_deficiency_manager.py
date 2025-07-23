@@ -7,6 +7,7 @@ from plant_engine.deficiency_manager import (
     get_nutrient_mobility,
     assess_deficiency_severity,
     recommend_deficiency_treatments,
+    diagnose_deficiency_actions,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
 
@@ -64,4 +65,12 @@ def test_assess_deficiency_severity():
     severity = assess_deficiency_severity(current, "lettuce", "seedling")
     assert severity.get("N") == "severe"
     assert severity.get("P") == "severe"
+
+
+def test_diagnose_deficiency_actions():
+    guidelines = get_recommended_levels("lettuce", "seedling")
+    current = {n: 0 for n in guidelines}
+    actions = diagnose_deficiency_actions(current, "lettuce", "seedling")
+    assert actions["N"]["severity"] == "severe"
+    assert "nitrogen" in actions["N"]["treatment"].lower()
 
