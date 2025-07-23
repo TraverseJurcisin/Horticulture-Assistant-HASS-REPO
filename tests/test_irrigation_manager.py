@@ -6,6 +6,8 @@ from plant_engine.irrigation_manager import (
     get_crop_coefficient,
     estimate_irrigation_demand,
     recommend_irrigation_from_environment,
+    get_daily_irrigation_target,
+    list_supported_plants,
 )
 from plant_engine.rootzone_model import RootZone
 from plant_engine.compute_transpiration import compute_transpiration
@@ -104,4 +106,10 @@ def test_recommend_irrigation_from_environment():
     )
     assert result["volume_ml"] == expected
     assert result["metrics"] == metrics
+
+
+def test_daily_irrigation_target_lookup():
+    assert get_daily_irrigation_target("citrus", "vegetative") == 250
+    assert "citrus" in list_supported_plants()
+    assert get_daily_irrigation_target("unknown", "stage") == 0.0
 
