@@ -299,7 +299,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
   returns a 0‑100 rating based on toxicity thresholds.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,
-  nutrient and pest guidance for quick reference.
+  nutrient, irrigation and pest guidance for quick reference.
 - **Nutrient Score Trend**: `score_nutrient_series` averages multiple nutrient
   samples to quickly gauge overall balance over time.
 - **Environment Targets in Reports**: Daily report files now include the

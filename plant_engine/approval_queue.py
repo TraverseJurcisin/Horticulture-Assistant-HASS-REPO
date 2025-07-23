@@ -1,48 +1,92 @@
+"""Utilities for managing pending threshold updates."""
+
+from __future__ import annotations
+
 import logging
-import os
+from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Dict
+from pathlib import Path
+from typing import Any, Dict, Mapping
 
 from .utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
-PENDING_DIR = "data/pending_thresholds"
+PENDING_DIR = Path("data/pending_thresholds")
 
-def queue_threshold_updates(plant_id: str, old: Dict, new: Dict) -> str:
-    """Write pending threshold updates for ``plant_id`` and return file path."""
+__all__ = [
+    "queue_threshold_updates",
+    "apply_approved_thresholds",
+    "list_pending_changes",
+    "ThresholdChange",
+    "ThresholdUpdateRecord",
+]
 
-    os.makedirs(PENDING_DIR, exist_ok=True)
-    pending_file = os.path.join(PENDING_DIR, f"{plant_id}.json")
 
-    record = {
-        "plant_id": plant_id,
-        "timestamp": datetime.now().isoformat(),
-        "changes": {}
-    }
+@dataclass
+class ThresholdChange:
+    """Single threshold change proposal."""
 
-    for k in new:
-        if k not in old or old[k] != new[k]:
-            record["changes"][k] = {
-                "previous_value": old.get(k),
-                "proposed_value": new[k],
-                "status": "pending"
-            }
+    previous_value: Any
+    proposed_value: Any
+    status: str = "pending"
 
-    save_json(pending_file, record)
+    def as_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
-    _LOGGER.info(
-        "Queued %d threshold changes for %s", len(record["changes"]), plant_id
+
+@dataclass
+class ThresholdUpdateRecord:
+    """Container for pending threshold updates."""
+
+    plant_id: str
+    timestamp: str
+    changes: Dict[str, ThresholdChange]
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "plant_id": self.plant_id,
+            "timestamp": self.timestamp,
+            "changes": {k: c.as_dict() for k, c in self.changes.items()},
+        }
+
+def queue_threshold_updates(
+    plant_id: str,
+    old: Mapping[str, Any],
+    new: Mapping[str, Any],
+    base_dir: Path | None = None,
+) -> Path:
+    """Write pending threshold updates and return the file path."""
+
+    directory = base_dir or PENDING_DIR
+    directory.mkdir(parents=True, exist_ok=True)
+    pending_file = directory / f"{plant_id}.json"
+
+    changes: Dict[str, ThresholdChange] = {}
+    for key, value in new.items():
+        if key not in old or old[key] != value:
+            changes[key] = ThresholdChange(
+                previous_value=old.get(key), proposed_value=value
+            )
+
+    record = ThresholdUpdateRecord(
+        plant_id=plant_id,
+        timestamp=datetime.now().isoformat(),
+        changes=changes,
     )
+
+    save_json(str(pending_file), record.as_dict())
+
+    _LOGGER.info("Queued %d threshold changes for %s", len(changes), plant_id)
     return pending_file
 
-def apply_approved_thresholds(plant_path: str, pending_file: str) -> int:
+def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) -> int:
     """Apply approved threshold changes to ``plant_path`` and return count."""
 
-    pending = load_json(pending_file)
+    pending = load_json(str(pending_file))
 
-    plant = load_json(plant_path)
-    updated = plant["thresholds"]
+    plant = load_json(str(plant_path))
+    updated = plant.get("thresholds", {})
 
     applied = 0
     for k, change in pending["changes"].items():
@@ -51,10 +95,20 @@ def apply_approved_thresholds(plant_path: str, pending_file: str) -> int:
             applied += 1
 
     plant["thresholds"] = updated
-    save_json(plant_path, plant)
+    save_json(str(plant_path), plant)
 
     _LOGGER.info(
         "Applied %d approved changes for %s", applied, pending.get("plant_id")
     )
     return applied
+
+
+def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[str, Any] | None:
+    """Return pending changes for ``plant_id`` if a record exists."""
+
+    directory = base_dir or PENDING_DIR
+    path = directory / f"{plant_id}.json"
+    if not path.exists():
+        return None
+    return load_json(str(path))
 
