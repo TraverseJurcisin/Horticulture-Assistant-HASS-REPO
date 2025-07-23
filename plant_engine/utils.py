@@ -19,9 +19,21 @@ __all__ = [
 
 
 def load_json(path: str) -> Dict[str, Any]:
-    """Load a JSON file and return its contents."""
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    """Return the parsed JSON contents of ``path``.
+
+    A :class:`FileNotFoundError` is raised if the file does not exist and a
+    :class:`ValueError` is raised when the contents cannot be decoded as JSON.
+    The error message always includes the file path to aid debugging.
+    """
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(path)
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
 
 
 def save_json(path: str, data: Dict[str, Any]) -> None:

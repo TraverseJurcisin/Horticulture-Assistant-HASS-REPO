@@ -574,6 +574,17 @@ def test_score_environment_series_empty():
     assert score_environment_series([], "citrus") == 0.0
 
 
+def test_score_environment_series_generator():
+    records = [
+        {"temp_c": 22, "humidity_pct": 70},
+        {"temp_c": 24, "humidity_pct": 75},
+    ]
+    gen = (r for r in records)
+    list_score = score_environment_series(records, "citrus")
+    gen_score = score_environment_series(gen, "citrus")
+    assert list_score == gen_score
+
+
 def test_summarize_environment_series():
     series = [
         {"temp_c": 20, "humidity_pct": 70},
