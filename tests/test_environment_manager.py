@@ -23,6 +23,7 @@ from plant_engine.environment_manager import (
     evaluate_heat_stress,
     evaluate_cold_stress,
     evaluate_light_stress,
+    evaluate_wind_stress,
     evaluate_stress_conditions,
     score_environment,
     optimize_environment,
@@ -399,13 +400,25 @@ def test_optimize_environment_light_stress():
     assert result["light_stress"] == "low"
 
 
+def test_evaluate_wind_stress():
+    assert evaluate_wind_stress(16, "citrus") is True
+    assert evaluate_wind_stress(5, "lettuce") is False
+    assert evaluate_wind_stress(None, "citrus") is None
+
+
+def test_optimize_environment_wind_stress():
+    result = optimize_environment({"wind": 16}, "citrus")
+    assert result["wind_stress"] is True
+
+
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, "lettuce", "seedling")
+    stress = evaluate_stress_conditions(32, 70, 8, 16, "lettuce", "seedling")
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
+    assert stress.wind is True
 
-    stress_none = evaluate_stress_conditions(None, None, None, "citrus")
+    stress_none = evaluate_stress_conditions(None, None, None, None, "citrus")
     assert stress_none.heat is None
 
 

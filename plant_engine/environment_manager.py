@@ -16,6 +16,7 @@ VPD_DATA_FILE = "vpd_guidelines.json"
 PHOTOPERIOD_DATA_FILE = "photoperiod_guidelines.json"
 HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
+WIND_DATA_FILE = "wind_stress_thresholds.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -37,6 +38,7 @@ ENV_ALIASES = {
     "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
     "co2_ppm": ["co2_ppm", "co2"],
     "ec": ["ec", "EC"],
+    "wind_m_s": ["wind_m_s", "wind", "wind_speed"],
 }
 
 # reverse mapping for constant time alias lookups
@@ -136,6 +138,7 @@ __all__ = [
     "evaluate_heat_stress",
     "evaluate_cold_stress",
     "evaluate_light_stress",
+    "evaluate_wind_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -160,6 +163,7 @@ _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 _HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
 _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
+_WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 
 
 def _lookup_stage_data(
@@ -238,6 +242,7 @@ class EnvironmentOptimization:
     heat_stress: bool | None = None
     cold_stress: bool | None = None
     light_stress: str | None = None
+    wind_stress: bool | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -257,6 +262,7 @@ class EnvironmentOptimization:
             "heat_stress": self.heat_stress,
             "cold_stress": self.cold_stress,
             "light_stress": self.light_stress,
+            "wind_stress": self.wind_stress,
         }
 
 
@@ -267,6 +273,7 @@ class StressFlags:
     heat: bool | None
     cold: bool | None
     light: str | None
+    wind: bool | None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -666,6 +673,24 @@ def evaluate_cold_stress(
     return temp_c <= float(threshold)
 
 
+def evaluate_wind_stress(
+    wind_m_s: float | None,
+    plant_type: str,
+) -> bool | None:
+    """Return ``True`` if wind speed exceeds the plant threshold."""
+
+    if wind_m_s is None:
+        return None
+
+    threshold = _WIND_THRESHOLDS.get(
+        normalize_key(plant_type), _WIND_THRESHOLDS.get("default")
+    )
+    if threshold is None:
+        return None
+
+    return wind_m_s >= float(threshold)
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -690,6 +715,7 @@ def evaluate_stress_conditions(
     temp_c: float | None,
     humidity_pct: float | None,
     dli: float | None,
+    wind_m_s: float | None,
     plant_type: str,
     stage: str | None = None,
 ) -> StressFlags:
@@ -699,6 +725,7 @@ def evaluate_stress_conditions(
         heat=evaluate_heat_stress(temp_c, humidity_pct, plant_type),
         cold=evaluate_cold_stress(temp_c, plant_type),
         light=evaluate_light_stress(dli, plant_type, stage),
+        wind=evaluate_wind_stress(wind_m_s, plant_type),
     )
 
 
@@ -837,6 +864,7 @@ def optimize_environment(
         readings.get("temp_c"),
         readings.get("humidity_pct"),
         current_dli,
+        readings.get("wind_m_s"),
         plant_type,
         stage,
     )
@@ -854,6 +882,7 @@ def optimize_environment(
         heat_stress=stress.heat,
         cold_stress=stress.cold,
         light_stress=stress.light,
+        wind_stress=stress.wind,
     )
     return result.as_dict()
 
@@ -875,6 +904,7 @@ def summarize_environment(
         readings.get("temp_c"),
         readings.get("humidity_pct"),
         readings.get("dli"),
+        readings.get("wind_m_s"),
         plant_type,
         stage,
     )
