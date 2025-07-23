@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import date, timedelta
+from datetime import date
 from typing import Dict, Mapping
 
 from . import environment_manager
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
+from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
 from .pest_manager import recommend_treatments, recommend_beneficials
 
 DATA_FILE = "pest_thresholds.json"
@@ -59,15 +60,7 @@ def list_supported_plants() -> list[str]:
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between scouting events for a plant stage."""
 
-    data = _MONITOR_INTERVALS.get(normalize_key(plant_type), {})
-    if stage:
-        value = data.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
-            return int(value)
-    value = data.get("optimal")
-    if isinstance(value, (int, float)):
-        return int(value)
-    return None
+    return _get_interval(_MONITOR_INTERVALS, plant_type, stage)
 
 
 def next_monitor_date(
@@ -75,10 +68,7 @@ def next_monitor_date(
 ) -> date | None:
     """Return the next pest scouting date based on interval guidelines."""
 
-    interval = get_monitoring_interval(plant_type, stage)
-    if interval is None:
-        return None
-    return last_date + timedelta(days=interval)
+    return _next_date(_MONITOR_INTERVALS, plant_type, stage, last_date)
 
 
 def generate_monitoring_schedule(
@@ -87,14 +77,9 @@ def generate_monitoring_schedule(
     start: date,
     events: int,
 ) -> list[date]:
-    """Return list of upcoming monitoring dates.
+    """Return list of upcoming monitoring dates."""
 
-    If ``events`` is 0 or no interval is defined, an empty list is returned.
-    """
-    interval = get_monitoring_interval(plant_type, stage)
-    if interval is None or events <= 0:
-        return []
-    return [start + timedelta(days=interval * i) for i in range(1, events + 1)]
+    return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
 
 
 def get_severity_action(level: str) -> str:
