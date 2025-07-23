@@ -390,13 +390,14 @@ def test_normalize_environment_readings_unknown_key():
 
 
 def test_summarize_environment():
-    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling")
+    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True)
     assert summary["quality"] == "poor"
     assert summary["adjustments"]["temperature"] == "increase"
     assert summary["adjustments"]["humidity"] == "decrease"
     assert "vpd" in summary["metrics"]
     assert "score" in summary
     assert "stress" in summary
+    assert "targets" in summary
 
 
 def test_summarize_environment_with_water_quality():
@@ -405,6 +406,7 @@ def test_summarize_environment_with_water_quality():
         "citrus",
         "vegetative",
         water_test={"Na": 60, "Cl": 50},
+        include_targets=True,
     )
     assert summary["water_quality"]["rating"] == "fair"
     assert "score" in summary["water_quality"]
