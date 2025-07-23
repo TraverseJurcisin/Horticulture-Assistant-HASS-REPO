@@ -1,0 +1,42 @@
+{
+  "citrus": {
+    "aphids": "Encourage beneficial insects and avoid excess nitrogen.",
+    "scale": "Inspect regularly and prune infested branches."
+  },
+  "tomato": {
+    "aphids": "Use row covers early in the season.",
+    "blight": "Provide drip irrigation and avoid overhead watering."
+  },
+  "lettuce": {
+    "aphids": "Use reflective mulch to deter pests.",
+    "leafminers": "Introduce parasitic wasps early."
+  },
+  "strawberry": {
+    "spider mites": "Keep plants hydrated and mulch well.",
+    "slugs": "Remove hiding spots and use copper barriers."
+  },
+  "spinach": {
+    "aphids": "Encourage ladybugs and maintain vigor.",
+    "leaf miners": "Install row covers to exclude flies."
+  },
+  "basil": {
+    "aphids": "Pinch infested tips and attract lacewings.",
+    "leaf miners": "Remove affected foliage promptly."
+  },
+  "cucumber": {
+    "powdery mildew": "Space plants for airflow and avoid wet foliage.",
+    "cucumber beetle": "Use floating row covers until flowering."
+  },
+  "pepper": {
+    "aphids": "Introduce beneficial insects and avoid over fertilization.",
+    "spider mites": "Mist plants to increase humidity and hose off mites."
+  },
+  "arugula": {
+    "flea beetles": "Use row covers and remove nearby weeds.",
+    "aphids": "Encourage predators and avoid water stress."
+  },
+  "blueberry": {
+    "fruitworms": "Prune to improve airflow and remove weeds.",
+    "spotted wing drosophila": "Pick fruit promptly and use traps."
+  }
+}

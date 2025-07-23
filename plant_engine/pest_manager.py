@@ -7,12 +7,14 @@ from .utils import load_dataset, normalize_key
 
 DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
+PREVENTION_FILE = "pest_prevention.json"
 
 
 
 # Datasets are cached by ``load_dataset`` so loaded once at import time
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
+_PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -44,10 +46,26 @@ def recommend_beneficials(pests: Iterable[str]) -> Dict[str, List[str]]:
     return {p: get_beneficial_insects(p) for p in pests}
 
 
+def get_pest_prevention(plant_type: str) -> Dict[str, str]:
+    """Return pest prevention guidelines for ``plant_type``."""
+    return _PREVENTION.get(normalize_key(plant_type), {})
+
+
+def recommend_prevention(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
+    """Return preventative actions for each observed pest."""
+    guide = get_pest_prevention(plant_type)
+    actions: Dict[str, str] = {}
+    for pest in pests:
+        actions[pest] = guide.get(pest, "No guideline available")
+    return actions
+
+
 __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
     "recommend_treatments",
     "get_beneficial_insects",
     "recommend_beneficials",
+    "get_pest_prevention",
+    "recommend_prevention",
 ]
