@@ -1,0 +1,9 @@
+{
+  "citrus": {
+    "aphids": {"humidity_pct": [60, 100], "temp_c": [15, 30]},
+    "mites": {"humidity_pct": [0, 50], "temp_c": [20, 40]}
+  },
+  "tomato": {
+    "whiteflies": {"humidity_pct": [60, 100], "temp_c": [18, 30]}
+  }
+}
