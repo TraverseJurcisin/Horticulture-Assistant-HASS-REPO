@@ -210,6 +210,21 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     return totals
 
 
+def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+    """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
+
+    ``volume_l`` is the final solution volume in liters. The returned mapping
+    contains nutrient codes mapped to parts per million. A ``ValueError`` is
+    raised if ``volume_l`` is not positive.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    totals = calculate_mix_nutrients(schedule)
+    return {nutrient: round(mg / volume_l, 2) for nutrient, mg in totals.items()}
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
@@ -220,6 +235,7 @@ __all__ = [
     "list_products",
     "get_product_info",
     "find_products",
+    "calculate_mix_ppm",
 ]
 
 

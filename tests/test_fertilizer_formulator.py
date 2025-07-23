@@ -21,6 +21,7 @@ estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
 find_products = fert_mod.find_products
 calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
+calculate_mix_ppm = fert_mod.calculate_mix_ppm
 
 
 def test_convert_guaranteed_analysis():
@@ -107,4 +108,17 @@ def test_calculate_mix_nutrients():
     )["nutrients"]
 
     assert totals == reference
+
+
+def test_calculate_mix_ppm():
+    mix = {"foxfarm_grow_big": 9.6}
+    ppm = calculate_mix_ppm(mix, 10)
+
+    reference = calculate_mix_nutrients(mix)
+    expected = {k: round(v / 10, 2) for k, v in reference.items()}
+
+    assert ppm == expected
+
+    with pytest.raises(ValueError):
+        calculate_mix_ppm(mix, 0)
 
