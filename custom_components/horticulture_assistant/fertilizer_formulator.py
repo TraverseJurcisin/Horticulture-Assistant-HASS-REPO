@@ -18,6 +18,7 @@ from plant_engine.utils import load_dataset
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
 SOLUBILITY_FILE = "fertilizer_solubility.json"
+APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,12 @@ def _price_map() -> Dict[str, float]:
 def _solubility_map() -> Dict[str, float]:
     """Return maximum solubility (g/L) for each fertilizer."""
     return load_dataset(SOLUBILITY_FILE)
+
+
+@lru_cache(maxsize=None)
+def _application_method_map() -> Dict[str, str]:
+    """Return recommended application method for each fertilizer."""
+    return load_dataset(APPLICATION_FILE)
 
 
 MOLAR_MASS_CONVERSIONS = {
@@ -479,6 +486,7 @@ __all__ = [
     "get_product_info",
     "find_products",
     "calculate_mix_ppm",
+    "get_application_method",
 ]
 
 
@@ -507,4 +515,10 @@ def find_products(term: str) -> list[str]:
         if term in pid.lower() or term in name:
             results.append(pid)
     return sorted(results)
+
+
+def get_application_method(fertilizer_id: str) -> str | None:
+    """Return recommended application method for ``fertilizer_id``."""
+
+    return _application_method_map().get(fertilizer_id)
 
