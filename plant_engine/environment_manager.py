@@ -30,7 +30,9 @@ ACTION_LABELS = {
 # ``compare_environment`` to match sensor names like ``temperature`` or
 # ``rh`` against dataset keys such as ``temp_c`` or ``humidity_pct``.
 ENV_ALIASES = {
-    "temp_c": ["temp_c", "temperature", "temp"],
+    "temp_c": ["temp_c", "temperature", "temp", "temperature_c"],
+    # Fahrenheit readings are converted to Celsius during normalization
+    "temp_f": ["temp_f", "temperature_f", "temp_fahrenheit"],
     "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct"],
     "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
     "co2_ppm": ["co2_ppm", "co2"],
@@ -98,9 +100,13 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
     for key, value in readings.items():
         canonical = _ALIAS_MAP.get(key, key)
         try:
-            normalized[canonical] = float(value)
+            val = float(value)
         except (TypeError, ValueError):
             continue
+        if canonical == "temp_f":
+            val = (val - 32) * 5 / 9
+            canonical = "temp_c"
+        normalized[canonical] = val
     return normalized
 
 
