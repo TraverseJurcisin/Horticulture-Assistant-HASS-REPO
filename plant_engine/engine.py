@@ -1,5 +1,5 @@
 import os
-from typing import Dict
+from typing import Dict, Mapping, Any
 from plant_engine.utils import load_json, save_json
 from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
@@ -19,9 +19,44 @@ from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
 from plant_engine.growth_stage import get_stage_info
+from plant_engine.report import DailyReport
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
+
+# Default environment readings used when a profile lacks recent data
+DEFAULT_ENV = {
+    "temp_c": 26,
+    "temp_c_max": 30,
+    "temp_c_min": 22,
+    "rh_pct": 65,
+    "par_w_m2": 350,
+    "wind_speed_m_s": 1.2,
+}
+
+
+def load_profile(plant_id: str) -> Dict[str, Any]:
+    """Return the plant profile for ``plant_id``."""
+    path = os.path.join(PLANTS_DIR, f"{plant_id}.json")
+    return load_json(path)
+
+
+def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
+    """Map raw environment fields to keys expected by optimizers."""
+    mapped: Dict[str, float] = {}
+    if env.get("temp_c") is not None:
+        mapped["temp_c"] = env["temp_c"]
+    if env.get("rh_pct") is not None:
+        mapped["humidity_pct"] = env["rh_pct"]
+    if env.get("par_w_m2") is not None:
+        mapped["light_ppfd"] = env["par_w_m2"]
+    if env.get("co2_ppm") is not None:
+        mapped["co2_ppm"] = env["co2_ppm"]
+    if env.get("dli") is not None:
+        mapped["dli"] = env["dli"]
+    if env.get("photoperiod_hours") is not None:
+        mapped["photoperiod_hours"] = env["photoperiod_hours"]
+    return mapped
 
 # Basic multipliers to scale nutrient recommendations by growth stage
 STAGE_MULTIPLIERS = {
@@ -31,23 +66,13 @@ STAGE_MULTIPLIERS = {
     "fruiting": 1.1,
 }
 
-def run_daily_cycle(plant_id: str) -> Dict:
+def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     """Run a full daily processing cycle for a plant profile."""
+    profile = load_profile(plant_id)
     plant_file = os.path.join(PLANTS_DIR, f"{plant_id}.json")
-    profile = load_json(plant_file)
 
     # Environmental inputs
-    env = profile.get(
-        "latest_env",
-        {
-            "temp_c": 26,
-            "temp_c_max": 30,
-            "temp_c_min": 22,
-            "rh_pct": 65,
-            "par_w_m2": 350,
-            "wind_speed_m_s": 1.2,
-        },
-    )
+    env = {**DEFAULT_ENV, **profile.get("latest_env", {})}
 
     # Step 1: Transpiration and ET
     transp = compute_transpiration(profile, env)
@@ -101,15 +126,7 @@ def run_daily_cycle(plant_id: str) -> Dict:
         n: round(v * stage_mult, 2) for n, v in guidelines.items()
     } if guidelines else {}
 
-    env_current = {}
-    if env.get("temp_c") is not None:
-        env_current["temp_c"] = env.get("temp_c")
-    if env.get("rh_pct") is not None:
-        env_current["humidity_pct"] = env.get("rh_pct")
-    if env.get("par_w_m2") is not None:
-        env_current["light_ppfd"] = env.get("par_w_m2")
-    if env.get("co2_ppm") is not None:
-        env_current["co2_ppm"] = env.get("co2_ppm")
+    env_current = _normalize_env(env)
     env_opt = optimize_environment(
         env_current, profile.get("plant_type", ""), profile.get("stage")
     )
@@ -119,24 +136,25 @@ def run_daily_cycle(plant_id: str) -> Dict:
     )
 
     # Step 7: AI Recommendation
-    report = {
-        "plant_id": plant_id,
-        "thresholds": profile.get("thresholds", {}),
-        "growth": growth,
-        "transpiration": transp,
-        "water_deficit": water,
-        "rootzone": rootzone.to_dict(),
-        "nue": nue,
-        "guidelines": guidelines,
-        "nutrient_targets": nutrient_targets,
-        "environment_actions": env_actions,
-        "environment_optimization": env_opt,
-        "pest_actions": pest_actions,
-        "disease_actions": disease_actions,
-        "lifecycle_stage": profile.get("stage", "unknown"),
-        "stage_info": stage_info,
-        "tags": profile.get("tags", [])
-    }
+    report_obj = DailyReport(
+        plant_id=plant_id,
+        thresholds=profile.get("thresholds", {}),
+        growth=growth,
+        transpiration=transp,
+        water_deficit=water,
+        rootzone=rootzone.to_dict(),
+        nue=nue,
+        guidelines=guidelines,
+        nutrient_targets=nutrient_targets,
+        environment_actions=env_actions,
+        environment_optimization=env_opt,
+        pest_actions=pest_actions,
+        disease_actions=disease_actions,
+        lifecycle_stage=profile.get("stage", "unknown"),
+        stage_info=stage_info,
+        tags=profile.get("tags", []),
+    )
+    report = report_obj.as_dict()
 
     recommendations = analyze(report)
 
