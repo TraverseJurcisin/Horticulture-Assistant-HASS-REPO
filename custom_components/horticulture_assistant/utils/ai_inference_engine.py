@@ -1,66 +1,117 @@
+"""Lightweight rule based inference engine used by tests.
+
+This module simulates an ML driven recommendation system so the rest of the
+project can be exercised without pulling in any heavy dependencies.  It
+examines daily plant data and emits simple suggestions.
+"""
+
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Any
-import datetime
+from typing import Any, Dict, List, Mapping, Optional
+
+import datetime as _dt
 import json
+
 
 @dataclass
 class InferenceResult:
+    """Result of :class:`AIInferenceEngine.analyze`."""
+
     plant_id: str
     recommendations: List[str]
     confidence: float
     flagged_issues: List[str]
     notes: Optional[str] = None
 
+
 @dataclass
 class DailyPackage:
+    """Container for daily inference inputs."""
+
     date: str
     plant_data: Dict[str, Any]
     environment_data: Dict[str, Any]
     fertigation_data: Dict[str, Any]
     notes: Optional[str] = None
 
+
 class AIInferenceEngine:
-    def __init__(self, auto_approve: bool = False):
+    """Very small rule based inference engine."""
+
+    #: EC value considered problematic when exceeded.
+    HIGH_EC_THRESHOLD = 2.5
+
+    def __init__(self, auto_approve: bool = False) -> None:
         self.auto_approve = auto_approve
         self.history: List[InferenceResult] = []
 
+    # ------------------------------------------------------------------
+    # Core analysis
+    # ------------------------------------------------------------------
+
     def analyze(self, package: DailyPackage) -> List[InferenceResult]:
-        results = []
-        for plant_id, data in package.plant_data.items():
-            recs = []
-            issues = []
+        """Return inference results for all plants in ``package``."""
 
-            growth_rate = data.get("growth_rate")
-            expected_growth = data.get("expected_growth")
-            yield_obs = data.get("yield")
-            yield_exp = data.get("expected_yield")
+        results: List[InferenceResult] = []
+        for plant_id, pdata in package.plant_data.items():
+            recs: List[str] = []
+            issues: List[str] = []
 
-            if growth_rate is not None and expected_growth is not None:
-                if growth_rate < 0.75 * expected_growth:
-                    issues.append("Low growth rate detected")
-                    recs.append("Evaluate nutrient delivery and light levels")
+            self._check_growth(pdata, issues, recs)
+            self._check_yield(pdata, issues, recs)
+            self._check_ec(pdata, issues, recs)
 
-            if yield_obs is not None and yield_exp is not None:
-                if yield_obs < 0.8 * yield_exp:
-                    issues.append("Yield below expected threshold")
-                    recs.append("Check fertigation accuracy and media saturation")
-
-            ec = data.get("ec")
-            if ec is not None and ec > 2.5:
-                issues.append("High EC detected")
-                recs.append("Consider flushing media")
-
-            confidence = 1.0 - len(issues) * 0.1
-            result = InferenceResult(
-                plant_id=plant_id,
-                recommendations=recs,
-                confidence=max(confidence, 0.1),
-                flagged_issues=issues,
-                notes=f"Processed {datetime.datetime.now()}"
+            confidence = max(0.1, 1.0 - len(issues) * 0.1)
+            results.append(
+                InferenceResult(
+                    plant_id=plant_id,
+                    recommendations=recs,
+                    confidence=confidence,
+                    flagged_issues=issues,
+                    notes=f"Processed {_dt.datetime.now().isoformat()}",
+                )
             )
-            results.append(result)
-            self.history.append(result)
+            self.history.append(results[-1])
         return results
 
+    # ------------------------------------------------------------------
+    # Individual checks
+    # ------------------------------------------------------------------
+
+    def _check_growth(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+        growth = data.get("growth_rate")
+        expected = data.get("expected_growth")
+        if growth is not None and expected is not None:
+            if growth < 0.75 * expected:
+                issues.append("Low growth rate detected")
+                recs.append("Evaluate nutrient delivery and light levels")
+
+    def _check_yield(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+        observed = data.get("yield")
+        expected = data.get("expected_yield")
+        if observed is not None and expected is not None:
+            if observed < 0.8 * expected:
+                issues.append("Yield below expected threshold")
+                recs.append("Check fertigation accuracy and media saturation")
+
+    def _check_ec(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+        ec = data.get("ec")
+        if ec is not None and ec > self.HIGH_EC_THRESHOLD:
+            issues.append("High EC detected")
+            recs.append("Consider flushing media")
+
+    # ------------------------------------------------------------------
+    # Utilities
+    # ------------------------------------------------------------------
+
     def export_results(self) -> str:
+        """Return the stored inference results as a JSON string."""
+
         return json.dumps([r.__dict__ for r in self.history], indent=2)
+
+    def reset_history(self) -> None:
+        """Clear stored inference results."""
+
+        self.history.clear()
+
