@@ -124,6 +124,7 @@ from .yield_manager import (
     load_yield_history,
     record_harvest,
     get_total_yield,
+    get_total_nutrient_removal,
 )
 from .yield_prediction import (
     list_supported_plants as list_yield_plants,
@@ -288,6 +289,7 @@ __all__ = [
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
+    "get_total_nutrient_removal",
     "list_yield_plants",
     "get_estimated_yield",
     "estimate_remaining_yield",

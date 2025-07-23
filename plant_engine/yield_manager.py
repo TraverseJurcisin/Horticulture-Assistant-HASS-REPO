@@ -6,6 +6,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Dict, List
 
+from . import nutrient_budget
+
 from .utils import load_json, save_json
 
 # Default yield directory. Can be overridden with the ``HORTICULTURE_YIELD_DIR``
@@ -69,9 +71,21 @@ def get_total_yield(plant_id: str) -> float:
     return sum(record.yield_grams for record in history)
 
 
+def get_total_nutrient_removal(plant_id: str, plant_type: str) -> nutrient_budget.RemovalEstimate:
+    """Return cumulative nutrient removal for ``plant_id``.
+
+    The function sums all recorded harvest weights and multiplies by the
+    per-kilogram removal rates defined in :data:`nutrient_removal_rates.json`.
+    """
+
+    total_yield_kg = get_total_yield(plant_id) / 1000
+    return nutrient_budget.estimate_total_removal(plant_type, total_yield_kg)
+
+
 __all__ = [
     "HarvestRecord",
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
+    "get_total_nutrient_removal",
 ]
