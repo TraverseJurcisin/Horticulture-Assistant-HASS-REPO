@@ -1,4 +1,5 @@
 """Utility functions for fertigation calculations."""
+
 from __future__ import annotations
 
 from functools import lru_cache
@@ -10,9 +11,12 @@ from .nutrient_manager import (
     calculate_all_deficiencies,
     get_all_recommended_levels,
 )
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 PURITY_DATA = "fertilizer_purity.json"
+UTILIZATION_FILE = "nutrient_utilization.json"
+
+_UTILIZATION_DATA: Dict[str, Dict[str, float]] = load_dataset(UTILIZATION_FILE)
 
 
 @lru_cache(maxsize=None)
@@ -49,6 +53,8 @@ __all__ = [
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
+    "get_utilization_factor",
+    "recommend_adjusted_nutrient_mix",
 ]
 
 
@@ -85,6 +91,60 @@ def _ppm_to_grams(ppm: float, volume_l: float, purity: float) -> float:
     return round((mg / 1000) / purity, 3)
 
 
+def get_utilization_factor(plant_type: str, stage: str) -> float:
+    """Return nutrient utilization fraction for a plant stage.
+
+    Values are loaded from :data:`nutrient_utilization.json`. ``1.0`` is
+    returned when no entry is defined or the value is invalid.
+    """
+
+    plant = _UTILIZATION_DATA.get(normalize_key(plant_type), {})
+    value = plant.get(normalize_key(stage))
+    try:
+        factor = float(value)
+        if factor > 0:
+            return factor
+    except (TypeError, ValueError):
+        pass
+    return 1.0
+
+
+def recommend_adjusted_nutrient_mix(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    current_levels: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+    utilize: bool = True,
+) -> Dict[str, float]:
+    """Return fertigation mix adjusted for nutrient utilization rates."""
+
+    schedule = recommend_nutrient_mix(
+        plant_type,
+        stage,
+        volume_l,
+        current_levels,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
+
+    if not utilize:
+        return schedule
+
+    factor = get_utilization_factor(plant_type, stage)
+    if factor != 1.0:
+        for fert_id in schedule:
+            schedule[fert_id] = round(schedule[fert_id] / factor, 3)
+
+    return schedule
+
+
 def recommend_fertigation_schedule(
     plant_type: str,
     stage: str,
@@ -116,9 +176,7 @@ def recommend_fertigation_schedule(
     targets = get_recommended_levels(plant_type, stage)
     schedule: Dict[str, float] = {}
     for nutrient, ppm in targets.items():
-        schedule[nutrient] = _ppm_to_grams(
-            ppm, volume_l, purity_map.get(nutrient, 1.0)
-        )
+        schedule[nutrient] = _ppm_to_grams(ppm, volume_l, purity_map.get(nutrient, 1.0))
     return schedule
 
 
@@ -492,5 +550,3 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     )
 
     return _calc(schedule)
-
-

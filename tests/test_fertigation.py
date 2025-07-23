@@ -12,6 +12,8 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_cost_breakdown,
     generate_fertigation_plan,
     calculate_mix_nutrients,
+    get_utilization_factor,
+    recommend_adjusted_nutrient_mix,
 )
 
 
@@ -88,9 +90,7 @@ def test_recommend_nutrient_mix_full():
 
 def test_recommend_nutrient_mix_deficit():
     current = {"N": 60, "P": 30, "K": 60}
-    mix = recommend_nutrient_mix(
-        "tomato", "vegetative", 10.0, current_levels=current
-    )
+    mix = recommend_nutrient_mix("tomato", "vegetative", 10.0, current_levels=current)
     assert mix["urea"] == pytest.approx(0.87, rel=1e-2)
     assert mix["map"] == pytest.approx(0.909, rel=1e-2)
     assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
@@ -129,7 +129,6 @@ def test_estimate_daily_nutrient_uptake():
     )
     assert uptake["N"] == pytest.approx(200.0)
     assert uptake["P"] == pytest.approx(100.0)
-
 
 
 def test_recommend_nutrient_mix_with_micro():
@@ -200,3 +199,19 @@ def test_recommend_uptake_fertigation_invalid():
 
     with pytest.raises(ValueError):
         recommend_uptake_fertigation("lettuce", "vegetative", num_plants=0)
+
+
+def test_recommend_adjusted_nutrient_mix():
+    base = recommend_nutrient_mix("tomato", "vegetative", 10.0)
+    adjusted = recommend_adjusted_nutrient_mix("tomato", "vegetative", 10.0)
+    factor = get_utilization_factor("tomato", "vegetative")
+    for fert, grams in base.items():
+        assert adjusted[fert] == pytest.approx(grams / factor, rel=1e-3)
+
+
+def test_adjusted_mix_no_utilization_flag():
+    base = recommend_nutrient_mix("tomato", "vegetative", 10.0)
+    adjusted = recommend_adjusted_nutrient_mix(
+        "tomato", "vegetative", 10.0, utilize=False
+    )
+    assert adjusted == base
