@@ -1,3 +1,4 @@
+from datetime import date
 from plant_engine.pest_monitor import (
     list_supported_plants,
     get_pest_thresholds,
@@ -7,6 +8,7 @@ from plant_engine.pest_monitor import (
     classify_pest_severity,
     generate_pest_report,
     get_monitoring_interval,
+    next_monitor_date,
 )
 
 
@@ -71,4 +73,11 @@ def test_get_monitoring_interval():
     assert get_monitoring_interval("citrus", "fruiting") == 3
     assert get_monitoring_interval("CITRUS") == 5
     assert get_monitoring_interval("unknown") is None
+
+
+def test_next_monitor_date():
+    last = date(2023, 1, 1)
+    expected = date(2023, 1, 4)
+    assert next_monitor_date("tomato", "fruiting", last) == expected
+    assert next_monitor_date("unknown", None, last) is None
 

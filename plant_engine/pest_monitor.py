@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from datetime import date, timedelta
 from typing import Dict, Mapping
 
 from . import environment_manager
@@ -33,6 +34,7 @@ __all__ = [
     "generate_pest_report",
     "get_severity_action",
     "get_monitoring_interval",
+    "next_monitor_date",
     "PestReport",
 ]
 
@@ -65,6 +67,17 @@ def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | 
     if isinstance(value, (int, float)):
         return int(value)
     return None
+
+
+def next_monitor_date(
+    plant_type: str, stage: str | None, last_date: date
+) -> date | None:
+    """Return the next pest scouting date based on interval guidelines."""
+
+    interval = get_monitoring_interval(plant_type, stage)
+    if interval is None:
+        return None
+    return last_date + timedelta(days=interval)
 
 
 def get_severity_action(level: str) -> str:
@@ -210,3 +223,4 @@ def generate_pest_report(
         severity_actions=severity_actions,
     )
     return report.as_dict()
+
