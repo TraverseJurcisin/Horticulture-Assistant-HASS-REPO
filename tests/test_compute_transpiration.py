@@ -50,3 +50,11 @@ def test_compute_transpiration_series():
     assert result["et0_mm_day"] > 0
     assert result["eta_mm_day"] > 0
     assert result["transpiration_ml_day"] > 0
+
+
+def test_compute_transpiration_missing_env_defaults():
+    profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
+    # Only provide temperature; other values should use DEFAULT_ENV
+    result = compute_transpiration(profile, {"temp_c": 25})
+    # Ensure calculation succeeded and returned positive transpiration
+    assert result["transpiration_ml_day"] > 0
