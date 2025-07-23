@@ -20,6 +20,7 @@ from plant_engine.environment_manager import (
     recommend_photoperiod,
     evaluate_heat_stress,
     evaluate_cold_stress,
+    evaluate_light_stress,
     score_environment,
     optimize_environment,
     calculate_environment_metrics,
@@ -356,3 +357,15 @@ def test_summarize_environment():
     assert summary["adjustments"]["temperature"] == "increase"
     assert summary["adjustments"]["humidity"] == "decrease"
     assert "vpd" in summary["metrics"]
+
+
+def test_evaluate_light_stress():
+    assert evaluate_light_stress(8, "lettuce", "seedling") == "low"
+    assert evaluate_light_stress(14, "lettuce", "seedling") == "high"
+    assert evaluate_light_stress(11, "lettuce", "seedling") is None
+    assert evaluate_light_stress(10, "unknown") is None
+
+
+def test_optimize_environment_light_stress():
+    result = optimize_environment({"dli": 8}, "lettuce", "seedling")
+    assert result["light_stress"] == "low"
