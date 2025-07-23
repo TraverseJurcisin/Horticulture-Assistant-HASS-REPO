@@ -1,0 +1,6 @@
+{
+  "drip": 0.9,
+  "sprinkler": 0.7,
+  "flood": 0.6,
+  "ebb_and_flow": 0.8
+}

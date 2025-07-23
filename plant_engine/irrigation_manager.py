@@ -17,6 +17,7 @@ __all__ = [
     "list_supported_plants",
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
+    "adjust_irrigation_for_efficiency",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -24,6 +25,9 @@ _KC_DATA = load_dataset(_KC_DATA_FILE)
 
 _IRRIGATION_FILE = "irrigation_guidelines.json"
 _IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
+
+_EFFICIENCY_FILE = "irrigation_efficiency.json"
+_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
 
 
 def recommend_irrigation_volume(
@@ -123,6 +127,24 @@ def estimate_irrigation_demand(
     eta_mm = calculate_eta(et0_mm_day, kc)
     liters = eta_mm * area_m2
     return round(liters, 2)
+
+
+def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
+    """Return volume adjusted for irrigation system efficiency.
+
+    ``method`` is matched against :data:`irrigation_efficiency.json`.
+    The stored value represents the fraction of water that actually
+    reaches the root zone. If the method is unknown or invalid the
+    input volume is returned unchanged.
+    """
+
+    if volume_ml < 0:
+        raise ValueError("volume_ml must be non-negative")
+
+    eff = _EFFICIENCY_DATA.get(normalize_key(method))
+    if isinstance(eff, (int, float)) and 0 < eff <= 1:
+        return round(volume_ml / eff, 1)
+    return volume_ml
 
 
 def recommend_irrigation_from_environment(

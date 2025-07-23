@@ -9,6 +9,7 @@ from plant_engine.irrigation_manager import (
     get_daily_irrigation_target,
     list_supported_plants,
     generate_irrigation_schedule,
+    adjust_irrigation_for_efficiency,
 )
 from plant_engine.rootzone_model import RootZone
 from plant_engine.compute_transpiration import compute_transpiration
@@ -124,4 +125,13 @@ def test_generate_irrigation_schedule():
     )
     schedule = generate_irrigation_schedule(zone, 150.0, [30.0, 30.0, 30.0])
     assert schedule == {1: 0.0, 2: 80.0, 3: 0.0}
+
+
+def test_adjust_irrigation_for_efficiency():
+    # Drip at 90% efficiency should scale volume up
+    assert adjust_irrigation_for_efficiency(100.0, "drip") == 111.1
+    # Unknown method returns original volume
+    assert adjust_irrigation_for_efficiency(50.0, "unknown") == 50.0
+    with pytest.raises(ValueError):
+        adjust_irrigation_for_efficiency(-1.0, "drip")
 
