@@ -84,32 +84,66 @@ def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) ->
         pass
     return None
 
-def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTargets:
-    """Return adjusted nutrient targets for ``plant_id``.
 
-    The plant profile is loaded (from ``hass`` config if provided) and the base
-    nutrient recommendations are modified based on lifecycle stage and any
-    tags. Results are persisted to ``nutrient_targets.json`` and also returned as
-    a :class:`NutrientTargets` instance for further use.
-    
-    Logging is performed for each adjustment and any missing data.
-    """
-    # Determine profile directory and load profile
+def _load_profile(plant_id: str, hass: HomeAssistant | None) -> dict:
+    """Return loaded profile for ``plant_id`` using Home Assistant if provided."""
+
     base_dir = None
     if hass is not None:
         try:
             base_dir = hass.config.path("plants")
-        except Exception as e:
-            _LOGGER.warning("Could not determine plants directory from Home Assistant: %s", e)
+        except Exception as exc:  # pragma: no cover - HA may not provide path
+            _LOGGER.warning("Could not determine plants directory: %s", exc)
             base_dir = None
-    profile = load_profile(plant_id=plant_id, base_dir=base_dir)
+    return load_profile(plant_id=plant_id, base_dir=base_dir)
+
+
+def _stage_multiplier(profile: dict, stage_key: str) -> float:
+    """Return multiplier for the given stage from profile or defaults."""
+
+    mult = 1.0
+    stages = profile.get("stages")
+    if isinstance(stages, dict):
+        data = stages.get(stage_key) or stages.get(stage_key.lower())
+        if isinstance(data, dict):
+            for key in ("nutrient_factor", "nutrient_modifier", "nutrient_multiplier"):
+                if key in data:
+                    try:
+                        mult = float(data[key])
+                    except (ValueError, TypeError):
+                        _LOGGER.warning("Invalid nutrient factor for stage '%s'", stage_key)
+                        mult = 1.0
+                    break
+    if mult == 1.0:
+        mult = STAGE_MULTIPLIERS.get(stage_key, 1.0)
+    return mult
+
+
+def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
+    """Modify ``targets`` in place using tag multipliers."""
+
+    for tag in tags:
+        mods = TAG_NUTRIENT_MODIFIERS.get(tag)
+        if not mods:
+            continue
+        for nut, factor in mods.items():
+            if nut not in targets:
+                continue
+            targets[nut] = round(targets[nut] * factor, 2)
+
+def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTargets:
+    """Return adjusted nutrient targets for ``plant_id``.
+
+    Targets are loaded from the plant profile and adjusted using stage
+    multipliers and tag-based modifiers. Final values are persisted to
+    ``nutrient_targets.json`` for later use.
+    """
+
+    profile = _load_profile(plant_id, hass)
     if not profile:
-        _LOGGER.error(
-            "Plant profile for '%s' not found or empty. Cannot schedule nutrients.",
-            plant_id,
-        )
+        _LOGGER.error("Plant profile for '%s' not found or empty", plant_id)
         return NutrientTargets({})
-    # Get base nutrient targets from profile
+
     base_targets = profile.get("nutrients") or {}
     stage = (
         profile.get("general", {}).get("lifecycle_stage")
@@ -117,116 +151,47 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTar
         or profile.get("stage")
         or "unknown"
     )
-    stage_str = str(stage).lower()
-    stage_key = STAGE_SYNONYMS.get(stage_str, stage_str)
+    stage_key = STAGE_SYNONYMS.get(str(stage).lower(), str(stage).lower())
 
     if not base_targets:
         plant_type = _get_plant_type(plant_id, profile, hass)
         if plant_type:
             base_targets = get_recommended_levels(plant_type, stage_key)
             if base_targets:
-                _LOGGER.info(
-                    "Using nutrient guidelines for %s (%s stage)",
-                    plant_type,
-                    stage_key,
-                )
+                _LOGGER.info("Using nutrient guidelines for %s (%s stage)", plant_type, stage_key)
         if not base_targets:
-            _LOGGER.warning(
-                "No nutrient targets for plant '%s' and no guidelines found. Skipping.",
-                plant_id,
-            )
+            _LOGGER.warning("No nutrient targets for '%s' and no guidelines found", plant_id)
             return NutrientTargets({})
-    # Determine stage multiplier
-    stage_multiplier = 1.0
-    stage_data = {}
-    if isinstance(profile.get("stages"), dict):
-        stage_data = profile["stages"].get(stage_key) or profile["stages"].get(stage_str) or {}
-        if isinstance(stage_data, dict):
-            # Check for a stage-specific nutrient factor in profile
-            for key in ("nutrient_factor", "nutrient_modifier", "nutrient_multiplier"):
-                if key in stage_data:
-                    try:
-                        stage_multiplier = float(stage_data[key])
-                        _LOGGER.info("Profile-defined nutrient factor for stage '%s': %sx", stage_key, stage_multiplier)
-                    except (ValueError, TypeError):
-                        stage_multiplier = 1.0
-                        _LOGGER.warning("Invalid nutrient factor in profile for stage '%s'; defaulting to 1.0", stage_key)
-                    break
-    if stage_multiplier == 1.0:
-        if stage_key in STAGE_MULTIPLIERS:
-            stage_multiplier = STAGE_MULTIPLIERS[stage_key]
-        else:
-            if stage_key not in ("unknown", ""):
-                _LOGGER.info("No predefined nutrient multiplier for stage '%s'; using 1.0", stage_key)
-    # Log stage-based adjustment
-    if stage_multiplier != 1.0:
-        _LOGGER.info("Applying stage multiplier for '%s': %sx to all nutrient targets", stage_key, stage_multiplier)
-    else:
-        if stage_key in ("unknown", ""):
-            _LOGGER.info("Lifecycle stage for plant '%s' is unknown; no stage-based adjustments applied.", plant_id)
-        else:
-            _LOGGER.debug("Stage '%s' uses default nutrient multiplier 1.0 (no change to base targets)", stage_key)
-    # Apply stage multiplier to base targets
-    adjusted_targets = {}
-    for nutrient, base_value in base_targets.items():
+
+    mult = _stage_multiplier(profile, stage_key)
+    adjusted: dict[str, float] = {}
+    for nut, val in base_targets.items():
         try:
-            base_val = float(base_value)
+            adjusted[nut] = round(float(val) * mult, 2)
         except (ValueError, TypeError):
-            _LOGGER.warning("Non-numeric base nutrient target for %s: %s; skipping this nutrient.", nutrient, base_value)
-            continue
-        adjusted_value = base_val * stage_multiplier
-        adjusted_targets[nutrient] = round(adjusted_value, 2)
-    # Apply tag-specific nutrient modifiers
-    tags = profile.get("general", {}).get("tags") or profile.get("tags") or []
-    if tags is None:
-        tags = []
-    tags_lower = [str(t).lower() for t in tags]
-    if tags_lower:
-        for tag in tags_lower:
-            if tag in TAG_NUTRIENT_MODIFIERS:
-                modifiers = TAG_NUTRIENT_MODIFIERS[tag]
-                for nut, factor in modifiers.items():
-                    if nut in adjusted_targets:
-                        old_val = adjusted_targets[nut]
-                        new_val = round(old_val * factor, 2)
-                        adjusted_targets[nut] = new_val
-                        _LOGGER.info("Applying tag modifier '%s': %s target %sx (%.2f -> %.2f)",
-                                     tag, nut, factor, old_val, new_val)
-                    else:
-                        _LOGGER.warning("Tag '%s' indicates adjusting %s, but no base target for %s", tag, nut, nut)
-            else:
-                _LOGGER.debug("No nutrient adjustment defined for tag '%s'; skipping", tag)
-    else:
-        _LOGGER.debug("No tags specified for plant '%s'; no tag-based adjustments", plant_id)
-    # Save adjusted targets to data/nutrient_targets.json
+            _LOGGER.warning("Invalid base nutrient value for %s: %s", nut, val)
+
+    tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
+    _apply_tag_modifiers(adjusted, tags)
+
     data_dir = hass.config.path("data") if hass else os.path.join(os.getcwd(), "data")
     os.makedirs(data_dir, exist_ok=True)
-    targets_path = os.path.join(data_dir, "nutrient_targets.json")
-    nutrient_targets_data = {}
-    if os.path.exists(targets_path):
+    path = os.path.join(data_dir, "nutrient_targets.json")
+    existing = {}
+    if os.path.exists(path):
         try:
-            nutrient_targets_data = load_json(targets_path)
-            if not isinstance(nutrient_targets_data, dict):
-                _LOGGER.warning(
-                    "nutrient_targets.json content was not a dict; resetting file."
-                )
-                nutrient_targets_data = {}
-        except Exception as e:
-            _LOGGER.error("Failed to read nutrient targets file: %s", e)
-            nutrient_targets_data = {}
-    # Update this plant's entry
-    nutrient_targets_data[plant_id] = adjusted_targets
-    # Write back to JSON file
+            existing = load_json(path)
+        except Exception:
+            existing = {}
+    if not isinstance(existing, dict):
+        existing = {}
+    existing[plant_id] = adjusted
     try:
-        save_json(targets_path, nutrient_targets_data)
-        _LOGGER.info(
-            "Adjusted nutrient targets for plant '%s' saved to %s",
-            plant_id,
-            targets_path,
-        )
-    except Exception as e:
-        _LOGGER.error("Failed to write nutrient targets for plant '%s': %s", plant_id, e)
-    return NutrientTargets(adjusted_targets)
+        save_json(path, existing)
+    except Exception as exc:  # pragma: no cover - write errors are unlikely
+        _LOGGER.error("Failed to write nutrient targets: %s", exc)
+
+    return NutrientTargets(adjusted)
 
 
 __all__ = ["schedule_nutrients"]

@@ -5,13 +5,17 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
+from . import environment_manager
+
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .pest_manager import recommend_treatments, recommend_beneficials
 
 DATA_FILE = "pest_thresholds.json"
+RISK_DATA_FILE = "pest_risk_factors.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
+_RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -20,6 +24,7 @@ __all__ = [
     "classify_pest_severity",
     "recommend_threshold_actions",
     "recommend_biological_controls",
+    "estimate_pest_risk",
     "generate_pest_report",
     "PestReport",
 ]
@@ -75,6 +80,39 @@ def recommend_biological_controls(
     if not exceeded:
         return {}
     return recommend_beneficials(exceeded)
+
+
+def estimate_pest_risk(
+    plant_type: str, environment: Mapping[str, float]
+) -> Dict[str, str]:
+    """Return pest risk level based on environmental conditions."""
+
+    factors = _RISK_FACTORS.get(normalize_key(plant_type), {})
+    if not factors:
+        return {}
+
+    readings = environment_manager.normalize_environment_readings(environment)
+    risks: Dict[str, str] = {}
+    for pest, reqs in factors.items():
+        matches = 0
+        total = 0
+        for key, (low, high) in reqs.items():
+            total += 1
+            value = readings.get(key)
+            if value is None:
+                continue
+            if low <= value <= high:
+                matches += 1
+        if total == 0:
+            continue
+        if matches == 0:
+            level = "low"
+        elif matches < total:
+            level = "moderate"
+        else:
+            level = "high"
+        risks[pest] = level
+    return risks
 
 
 def classify_pest_severity(
