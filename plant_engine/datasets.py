@@ -13,10 +13,19 @@ __all__ = ["list_datasets", "get_dataset_description", "list_dataset_info"]
 
 
 def list_datasets() -> List[str]:
-    """Return the names of available JSON datasets."""
-    return sorted(
-        p.name for p in DATA_DIR.glob("*.json") if p.name != CATALOG_FILE.name
-    )
+    """Return relative paths of available JSON datasets.
+
+    Files within subdirectories of :data:`DATA_DIR` are included so long as
+    they end with ``.json``. The catalog file itself is excluded.
+    """
+
+    datasets: List[str] = []
+    for path in DATA_DIR.rglob("*.json"):
+        if path.name == CATALOG_FILE.name:
+            continue
+        datasets.append(path.relative_to(DATA_DIR).as_posix())
+
+    return sorted(datasets)
 
 
 @lru_cache(maxsize=None)
