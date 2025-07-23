@@ -10,6 +10,7 @@ from .nutrient_manager import (
     calculate_nutrient_balance,
 )
 from .nutrient_interactions import check_imbalances
+from .toxicity_manager import check_toxicities
 
 __all__ = ["analyze_nutrient_profile"]
 
@@ -24,6 +25,7 @@ def analyze_nutrient_profile(
     surplus = calculate_all_surplus(current_levels, plant_type, stage)
     balance = calculate_nutrient_balance(current_levels, plant_type, stage)
     interactions = check_imbalances(current_levels)
+    toxicity = check_toxicities(current_levels, plant_type)
 
     return {
         "recommended": recommended,
@@ -31,5 +33,6 @@ def analyze_nutrient_profile(
         "surplus": surplus,
         "balance": balance,
         "interaction_warnings": interactions,
+        "toxicities": toxicity,
     }
 
