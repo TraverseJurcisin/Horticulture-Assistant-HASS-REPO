@@ -36,3 +36,9 @@ def test_score_water_quality():
     assert 94.0 <= score <= 95.0
     low_score = water_quality.score_water_quality({"Na": 120, "Cl": 120})
     assert low_score < score
+
+
+def test_recommend_treatments():
+    recs = water_quality.recommend_treatments({"Na": 60, "Cl": 50})
+    assert "Na" in recs
+    assert "Cl" not in recs
