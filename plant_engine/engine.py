@@ -32,7 +32,7 @@ from plant_engine.disease_manager import (
 )
 from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
-from plant_engine.constants import STAGE_MULTIPLIERS, DEFAULT_ENV
+from plant_engine.constants import get_stage_multiplier, DEFAULT_ENV
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
@@ -126,8 +126,8 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
         profile.get("stage", "")
     )
 
-    stage_name = str(profile.get("stage", "")).lower()
-    stage_mult = STAGE_MULTIPLIERS.get(stage_name, 1.0)
+    stage_name = str(profile.get("stage", ""))
+    stage_mult = get_stage_multiplier(stage_name)
     nutrient_targets = {
         n: round(v * stage_mult, 2) for n, v in guidelines.items()
     } if guidelines else {}
