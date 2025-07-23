@@ -7,7 +7,7 @@ from dataclasses import dataclass, asdict
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset, normalize_key
-from . import ph_manager
+from . import ph_manager, water_quality
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
@@ -88,6 +88,7 @@ __all__ = [
     "EnvironmentMetrics",
     "EnvironmentOptimization",
     "StressFlags",
+    "WaterQualityInfo",
     "normalize_environment_readings",
     "compare_environment",
     "generate_environment_alerts",
@@ -217,6 +218,17 @@ class StressFlags:
 
 
 @dataclass
+class WaterQualityInfo:
+    """Simple rating and score for irrigation water."""
+
+    rating: str
+    score: float
+
+    def as_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
 class EnvironmentSummary:
     """High level summary of current environmental conditions."""
 
@@ -225,6 +237,7 @@ class EnvironmentSummary:
     metrics: EnvironmentMetrics
     score: float
     stress: StressFlags
+    water_quality: WaterQualityInfo | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -233,6 +246,7 @@ class EnvironmentSummary:
             "metrics": self.metrics.as_dict(),
             "score": self.score,
             "stress": self.stress.as_dict(),
+            "water_quality": self.water_quality.as_dict() if self.water_quality else None,
         }
 
 
@@ -790,9 +804,12 @@ def optimize_environment(
 
 
 def summarize_environment(
-    current: Mapping[str, float], plant_type: str, stage: str | None = None
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    water_test: Mapping[str, float] | None = None,
 ) -> Dict[str, Any]:
-    """Return combined quality rating, adjustments, metrics and stress."""
+    """Return combined quality rating, adjustments, metrics, stress and water quality."""
 
     readings = normalize_environment_readings(current)
 
@@ -807,11 +824,18 @@ def summarize_environment(
         stage,
     )
 
+    water_info = None
+    if water_test is not None:
+        rating = water_quality.classify_water_quality(water_test)
+        score = water_quality.score_water_quality(water_test)
+        water_info = WaterQualityInfo(rating=rating, score=score)
+
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
         adjustments=recommend_environment_adjustments(readings, plant_type, stage),
         metrics=metrics,
         score=score_environment(readings, plant_type, stage),
         stress=stress,
+        water_quality=water_info,
     )
     return summary.as_dict()
