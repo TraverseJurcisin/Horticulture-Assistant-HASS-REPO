@@ -9,7 +9,7 @@ from typing import Dict, List
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
 
-__all__ = ["list_datasets", "get_dataset_description"]
+__all__ = ["list_datasets", "get_dataset_description", "list_dataset_info"]
 
 
 def list_datasets() -> List[str]:
@@ -32,3 +32,12 @@ def _load_catalog() -> Dict[str, str]:
 def get_dataset_description(name: str) -> str | None:
     """Return the human readable description for ``name`` if known."""
     return _load_catalog().get(name)
+
+
+def list_dataset_info() -> Dict[str, str]:
+    """Return mapping of dataset names to descriptions."""
+
+    names = list_datasets()
+    catalog = _load_catalog()
+    return {n: catalog.get(n, "") for n in names}
+
