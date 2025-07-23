@@ -218,6 +218,7 @@ __all__ = [
     "list_nutrient_plants",
     "get_nutrient_weight",
     "score_nutrient_levels",
+    "calculate_deficiency_index",
     "list_micro_plants",
     "get_micro_levels",
     "get_stage_info",

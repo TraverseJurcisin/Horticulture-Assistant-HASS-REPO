@@ -30,6 +30,7 @@ __all__ = [
     "get_nutrient_weight",
     "score_nutrient_levels",
     "recommend_ratio_adjustments",
+    "calculate_deficiency_index",
 ]
 
 
@@ -186,6 +187,37 @@ def score_nutrient_levels(
         return 0.0
 
     return round((score / total_weight) * 100, 1)
+
+
+def calculate_deficiency_index(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> float:
+    """Return overall deficiency severity on a 0-100 scale.
+
+    ``0`` means nutrient levels meet or exceed all guidelines while
+    ``100`` represents complete absence of required nutrients. The
+    calculation is weighted using :func:`get_nutrient_weight` values.
+    """
+
+    recommended = get_recommended_levels(plant_type, stage)
+    if not recommended:
+        return 0.0
+
+    total = 0.0
+    total_weight = 0.0
+    for nutrient, target in recommended.items():
+        if target <= 0:
+            continue
+        current = float(current_levels.get(nutrient, 0.0))
+        deficit = max(0.0, (target - current) / target)
+        weight = get_nutrient_weight(nutrient)
+        total += deficit * weight
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((total / total_weight) * 100, 1)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:

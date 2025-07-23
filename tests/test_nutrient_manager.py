@@ -11,6 +11,7 @@ from plant_engine.nutrient_manager import (
     get_npk_ratio,
     get_stage_ratio,
     score_nutrient_levels,
+    calculate_deficiency_index,
 )
 
 
@@ -118,3 +119,12 @@ def test_calculate_all_nutrient_balance():
     assert "N" in ratios and "Fe" in ratios
     assert ratios["N"] > 0
     assert ratios["Fe"] > 0
+
+
+def test_calculate_deficiency_index():
+    guidelines = get_recommended_levels("tomato", "fruiting")
+    current = {key: 0 for key in guidelines}
+    idx = calculate_deficiency_index(current, "tomato", "fruiting")
+    assert idx == 100.0
+    perfect = calculate_deficiency_index(guidelines, "tomato", "fruiting")
+    assert perfect == 0.0

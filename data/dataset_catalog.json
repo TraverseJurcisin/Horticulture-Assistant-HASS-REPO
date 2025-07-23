@@ -3,5 +3,11 @@
   "nutrient_guidelines.json": "Recommended macronutrient ppm levels for each plant stage.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
-  "growth_stages.json": "Expected duration and notes for each growth stage."
+  "growth_stages.json": "Expected duration and notes for each growth stage.",
+  "beneficial_insects.json": "Natural predators for common pests.",
+  "nutrient_deficiency_symptoms.json": "Visual indicators of nutrient deficiencies.",
+  "nutrient_deficiency_treatments.json": "Suggested remedies for nutrient deficiencies.",
+  "nutrient_mobility.json": "Mobile vs immobile nutrient classification.",
+  "pest_prevention.json": "Preventative measures for common pests.",
+  "pest_thresholds.json": "Population thresholds for pest severity."
 }
