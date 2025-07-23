@@ -21,6 +21,7 @@ HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
+HUMIDITY_ACTION_FILE = "humidity_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 
 # map of dataset keys to human readable labels used when recommending
@@ -154,6 +155,8 @@ __all__ = [
     "evaluate_light_stress",
     "evaluate_wind_stress",
     "evaluate_humidity_stress",
+    "get_humidity_action",
+    "recommend_humidity_action",
     "evaluate_ph_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
@@ -185,6 +188,7 @@ _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
+_HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 
 
@@ -877,6 +881,22 @@ def evaluate_humidity_stress(
     if humidity_pct > high:
         return "high"
     return None
+
+
+def get_humidity_action(level: str) -> str:
+    """Return recommended action for a humidity stress level."""
+
+    return _HUMIDITY_ACTIONS.get(level.lower(), "")
+
+
+def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> str | None:
+    """Return humidity adjustment recommendation if outside thresholds."""
+
+    level = evaluate_humidity_stress(humidity_pct, plant_type)
+    if level is None:
+        return None
+    action = get_humidity_action(level)
+    return action or None
 
 
 def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:

@@ -154,6 +154,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_uptake.json` – typical daily N‑P‑K demand per plant stage
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
+- `humidity_actions.json` – actions to correct low or high humidity levels
 - `wind_stress_thresholds.json` – maximum safe wind speed before damage
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
 - `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
