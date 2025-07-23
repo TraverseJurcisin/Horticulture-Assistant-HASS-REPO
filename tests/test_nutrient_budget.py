@@ -23,3 +23,13 @@ def test_estimate_required_nutrients():
     assert data["P"] == 0.37  # 0.3 / 0.8 -> ~0.375
     assert data["K"] == 2.5
 
+
+def test_estimate_fertilizer_requirements():
+    ferts = {"N": "urea", "P": "map", "K": "kcl"}
+    masses = nutrient_budget.estimate_fertilizer_requirements(
+        "lettuce", 1.0, ferts, efficiency=1.0
+    )
+    assert round(masses["urea"], 2) == round(1.2 / 0.46, 2)
+    assert round(masses["map"], 2) == round(0.2 / 0.22, 2)
+    assert round(masses["kcl"], 2) == round(1.5 / 0.5, 2)
+

@@ -3,12 +3,15 @@
 This module provides helpers for calculating total nutrient removal from
 harvested biomass and the corresponding fertilizer requirements. Removal
 rates are specified in :data:`nutrient_removal_rates.json` as grams of each
-nutrient removed per kilogram of yield.
+nutrient removed per kilogram of yield. The new
+:func:`estimate_fertilizer_requirements` helper converts these requirements
+into grams of fertilizer product using purity factors from
+``fertilizer_purity.json``.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -22,6 +25,7 @@ __all__ = [
     "get_removal_rates",
     "estimate_total_removal",
     "estimate_required_nutrients",
+    "estimate_fertilizer_requirements",
     "RemovalEstimate",
 ]
 
@@ -74,3 +78,44 @@ def estimate_required_nutrients(
     removal = estimate_total_removal(plant_type, yield_kg).nutrients_g
     required = {n: round(val / efficiency, 2) for n, val in removal.items()}
     return RemovalEstimate(required)
+
+
+def estimate_fertilizer_requirements(
+    plant_type: str,
+    yield_kg: float,
+    fertilizers: Mapping[str, str],
+    *,
+    efficiency: float = 0.85,
+) -> Dict[str, float]:
+    """Return grams of each fertilizer needed for the expected yield.
+
+    The calculation uses :func:`estimate_required_nutrients` to determine the
+    nutrient demand and divides by product purity values loaded from
+    ``fertilizer_purity.json``. Any nutrient without a matching product or
+    purity factor is skipped.
+    """
+
+    required = estimate_required_nutrients(
+        plant_type, yield_kg, efficiency=efficiency
+    ).nutrients_g
+
+    purity_data = load_dataset("fertilizer_purity.json")
+
+    totals: Dict[str, float] = {}
+    for nutrient, grams in required.items():
+        fert_id = fertilizers.get(nutrient)
+        if not fert_id:
+            continue
+        purity_info = purity_data.get(fert_id)
+        if not isinstance(purity_info, Mapping):
+            continue
+        purity = purity_info.get(nutrient)
+        try:
+            purity_val = float(purity)
+        except (TypeError, ValueError):
+            continue
+        if purity_val <= 0:
+            continue
+        totals[fert_id] = round(totals.get(fert_id, 0.0) + grams / purity_val, 2)
+
+    return totals
