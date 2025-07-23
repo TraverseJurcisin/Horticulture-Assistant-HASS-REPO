@@ -359,6 +359,8 @@ def test_summarize_environment():
     assert summary["adjustments"]["temperature"] == "increase"
     assert summary["adjustments"]["humidity"] == "decrease"
     assert "vpd" in summary["metrics"]
+    assert "score" in summary
+    assert "stress" in summary
 
 
 def test_evaluate_light_stress():
