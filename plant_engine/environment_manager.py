@@ -72,6 +72,7 @@ __all__ = [
     "calculate_dli",
     "photoperiod_for_target_dli",
     "calculate_dli_series",
+    "calculate_vpd_series",
     "get_target_dli",
     "get_target_vpd",
     "humidity_for_target_vpd",
@@ -643,6 +644,24 @@ def calculate_dli_series(
             raise ValueError("PPFD values must be non-negative")
         total += val * 3600 * interval_hours
     return round(total / 1_000_000, 2)
+
+
+def calculate_vpd_series(
+    temp_values: Iterable[float], humidity_values: Iterable[float]
+) -> float:
+    """Return average VPD from paired temperature and humidity readings."""
+
+    temps = list(temp_values)
+    hums = list(humidity_values)
+    if len(temps) != len(hums):
+        raise ValueError("temperature and humidity readings must have the same length")
+    if not temps:
+        return 0.0
+
+    total = 0.0
+    for t, h in zip(temps, hums):
+        total += calculate_vpd(t, h)
+    return round(total / len(temps), 3)
 
 
 def get_target_dli(
