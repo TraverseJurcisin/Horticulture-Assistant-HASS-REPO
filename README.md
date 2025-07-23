@@ -150,6 +150,8 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `nutrient_toxicity_thresholds.json` – upper limits to flag potential toxicity
+- `nutrient_toxicity_symptoms.json` – visual cues indicating nutrient excess
+- `nutrient_toxicity_treatments.json` – suggested mitigation steps for toxicity
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture

@@ -1,4 +1,9 @@
-"""Nutrient toxicity threshold helpers."""
+"""Nutrient toxicity management utilities.
+
+This module exposes helper functions for checking nutrient levels against
+toxicity thresholds and suggesting mitigation actions.  Datasets of toxicity
+symptoms and treatments are loaded at import time for fast access.
+"""
 from __future__ import annotations
 
 from typing import Dict, Mapping
@@ -6,14 +11,23 @@ from typing import Dict, Mapping
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrient_toxicity_thresholds.json"
+SYMPTOMS_FILE = "nutrient_toxicity_symptoms.json"
+TREATMENTS_FILE = "nutrient_toxicity_treatments.json"
 
 # Loaded once using cached loader
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_SYMPTOMS: Dict[str, str] = load_dataset(SYMPTOMS_FILE)
+_TREATMENTS: Dict[str, str] = load_dataset(TREATMENTS_FILE)
 
 __all__ = [
     "list_supported_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
+    "list_known_nutrients",
+    "get_toxicity_symptom",
+    "diagnose_toxicities",
+    "get_toxicity_treatment",
+    "recommend_toxicity_treatments",
 ]
 
 
@@ -43,3 +57,34 @@ def check_toxicities(current_levels: Mapping[str, float], plant_type: str) -> Di
         if excess > 0:
             toxic[nutrient] = round(excess, 2)
     return toxic
+
+
+def list_known_nutrients() -> list[str]:
+    """Return nutrients with recorded toxicity symptoms."""
+    return sorted(_SYMPTOMS.keys())
+
+
+def get_toxicity_symptom(nutrient: str) -> str:
+    """Return the symptom description for ``nutrient`` or an empty string."""
+    return _SYMPTOMS.get(nutrient, "")
+
+
+def diagnose_toxicities(
+    current_levels: Mapping[str, float], plant_type: str
+) -> Dict[str, str]:
+    """Return toxicity symptoms for nutrients exceeding thresholds."""
+    excess = check_toxicities(current_levels, plant_type)
+    return {n: get_toxicity_symptom(n) for n in excess}
+
+
+def get_toxicity_treatment(nutrient: str) -> str:
+    """Return recommended mitigation for a nutrient toxicity."""
+    return _TREATMENTS.get(nutrient, "")
+
+
+def recommend_toxicity_treatments(
+    current_levels: Mapping[str, float], plant_type: str
+) -> Dict[str, str]:
+    """Return treatments for diagnosed nutrient toxicities."""
+    excess = check_toxicities(current_levels, plant_type)
+    return {n: get_toxicity_treatment(n) for n in excess}
