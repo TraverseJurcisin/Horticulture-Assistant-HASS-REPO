@@ -217,6 +217,8 @@ or incomplete and should only be used as a starting point for your own research.
   reports provide an estimated harvest date based on `growth_stages.json`.
 - **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
   expected totals from `yield_estimates.json`.
+  Daily reports now expose this value under `remaining_yield_g` for quick
+  tracking.
 - **Environment Quality Rating**: `classify_environment_quality` converts the
   numeric score from `score_environment` into `good`, `fair` or `poor` for
   quick evaluation.

@@ -25,6 +25,7 @@ from plant_engine.utils import load_dataset
 from plant_engine.fertigation import recommend_nutrient_mix
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.rootzone_model import estimate_water_capacity
+from plant_engine.yield_prediction import estimate_remaining_yield
 
 
 @dataclass
@@ -50,6 +51,7 @@ class DailyReport:
     irrigation_target_ml: float | None = None
     predicted_harvest_date: str | None = None
     yield_: float | None = None
+    remaining_yield_g: float | None = None
     timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
 
     def as_dict(self) -> dict:
@@ -260,6 +262,10 @@ def run_daily_cycle(
     if yield_entries:
         last_yield = yield_entries[-1].get("yield_quantity")
         report.yield_ = last_yield
+    # Estimate remaining yield from logged harvests and expectations
+    remaining = estimate_remaining_yield(plant_id, plant_type)
+    if remaining is not None:
+        report.remaining_yield_g = remaining
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
