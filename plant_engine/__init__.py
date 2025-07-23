@@ -48,6 +48,8 @@ from .fertigation import (
     recommend_nutrient_mix_with_cost_breakdown,
     generate_fertigation_plan,
     calculate_mix_nutrients,
+    estimate_stage_cost,
+    estimate_cycle_cost,
 )
 from .rootzone_model import (
     estimate_rootzone_depth,
@@ -172,6 +174,8 @@ __all__ = [
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
+    "estimate_stage_cost",
+    "estimate_cycle_cost",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",

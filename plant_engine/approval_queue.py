@@ -1,8 +1,11 @@
+import logging
 import os
 from datetime import datetime
 from typing import Dict
 
 from .utils import load_json, save_json
+
+_LOGGER = logging.getLogger(__name__)
 
 PENDING_DIR = "data/pending_thresholds"
 
@@ -28,7 +31,9 @@ def queue_threshold_updates(plant_id: str, old: Dict, new: Dict) -> str:
 
     save_json(pending_file, record)
 
-    print(f"📝 Queued {len(record['changes'])} threshold changes for {plant_id}")
+    _LOGGER.info(
+        "Queued %d threshold changes for %s", len(record["changes"]), plant_id
+    )
     return pending_file
 
 def apply_approved_thresholds(plant_path: str, pending_file: str) -> int:
@@ -48,6 +53,8 @@ def apply_approved_thresholds(plant_path: str, pending_file: str) -> int:
     plant["thresholds"] = updated
     save_json(plant_path, plant)
 
-    print(f"✅ Applied {applied} approved changes for {pending['plant_id']}")
+    _LOGGER.info(
+        "Applied %d approved changes for %s", applied, pending.get("plant_id")
+    )
     return applied
 
