@@ -4,6 +4,7 @@
   "micronutrient_guidelines.json": "Recommended micronutrient ppm levels for each plant stage.",
   "nutrient_ratio_guidelines.json": "Optimal NPK ratios by stage for balanced fertilization.",
   "nutrient_weights.json": "Relative importance weighting for nutrient scoring.",
+  "nutrient_tag_modifiers.json": "Tag-based multipliers for nutrient targets.",
   "environment_score_weights.json": "Weights for environment quality metrics.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "pest_thresholds.json": "Economic threshold counts for triggering actions.",

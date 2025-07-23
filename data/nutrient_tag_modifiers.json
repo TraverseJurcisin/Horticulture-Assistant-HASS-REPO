@@ -1,0 +1,7 @@
+{
+  "high-nitrogen": {"N": 1.2},
+  "low-nitrogen": {"N": 0.8},
+  "potassium-sensitive": {"K": 0.8},
+  "high-potassium": {"K": 1.2},
+  "low-potassium": {"K": 0.9}
+}
