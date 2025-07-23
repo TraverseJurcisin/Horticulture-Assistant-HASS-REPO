@@ -2,6 +2,7 @@ import pytest
 
 from plant_engine.irrigation_manager import (
     recommend_irrigation_volume,
+    recommend_irrigation_with_rainfall,
     recommend_irrigation_interval,
     get_crop_coefficient,
     estimate_irrigation_demand,
@@ -66,6 +67,30 @@ def test_irrigation_volume_invalid_inputs():
         recommend_irrigation_volume(zone, available_ml=-1.0, expected_et_ml=10.0)
     with pytest.raises(ValueError):
         recommend_irrigation_volume(zone, available_ml=50.0, expected_et_ml=-5.0)
+
+
+def test_recommend_irrigation_with_rainfall():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    result = recommend_irrigation_with_rainfall(
+        zone,
+        available_ml=120.0,
+        expected_et_ml=40.0,
+        rainfall_ml=10.0,
+    )
+    expected = recommend_irrigation_volume(
+        zone, 120.0, expected_et_ml=31.0
+    )
+    assert result == expected
+
+    with pytest.raises(ValueError):
+        recommend_irrigation_with_rainfall(
+            zone, 120.0, expected_et_ml=40.0, rainfall_ml=-5.0
+        )
 
 
 def test_recommend_irrigation_interval():
