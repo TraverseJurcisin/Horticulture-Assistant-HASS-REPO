@@ -20,6 +20,7 @@ __all__ = [
     "list_supported_plants",
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
+    "generate_irrigation_schedule_with_runtime",
     "adjust_irrigation_for_efficiency",
     "generate_env_irrigation_schedule",
     "generate_precipitation_schedule",
@@ -418,3 +419,34 @@ def generate_precipitation_schedule(
         )
 
     return schedule
+
+
+def generate_irrigation_schedule_with_runtime(
+    rootzone: RootZone,
+    available_ml: float,
+    et_ml_series: Mapping[int, float] | list[float],
+    *,
+    refill_to_full: bool = True,
+    method: str | None = None,
+    emitter_type: str | None = None,
+    emitters: int = 1,
+) -> Dict[int, Dict[str, float | None]]:
+    """Return daily irrigation volumes and runtime estimates."""
+
+    schedule = generate_irrigation_schedule(
+        rootzone,
+        available_ml,
+        et_ml_series,
+        refill_to_full=refill_to_full,
+        method=method,
+    )
+
+    result: Dict[int, Dict[str, float | None]] = {}
+    for day, volume in schedule.items():
+        if emitter_type and volume > 0:
+            runtime = estimate_irrigation_time(volume, emitter_type, emitters)
+        else:
+            runtime = None
+        result[day] = {"volume_ml": volume, "runtime_h": runtime}
+
+    return result
