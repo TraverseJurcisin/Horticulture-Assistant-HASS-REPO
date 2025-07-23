@@ -1,8 +1,9 @@
+"""Utilities for loading and validating multiple plant profiles."""
+
 import os
 import json
 import logging
 from pathlib import Path
-# from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from custom_components.horticulture_assistant.utils.validate_profile_structure import validate_profile_structure
 
 _LOGGER = logging.getLogger(__name__)

@@ -2,6 +2,8 @@ from typing import Literal
 
 
 class DoseCalculator:
+    """Utility helpers for nutrient dosing calculations."""
+
     @staticmethod
     def calculate_mass_dose(
         concentration: float,
@@ -64,9 +66,7 @@ class DoseCalculator:
         from_unit: str,
         to_unit: str
     ) -> float:
-        """
-        Generic unit conversion (basic for now)
-        """
+        """Return ``value`` converted from ``from_unit`` to ``to_unit``."""
         conversions = {
             ("oz", "g"): 28.3495,
             ("g", "oz"): 1 / 28.3495,

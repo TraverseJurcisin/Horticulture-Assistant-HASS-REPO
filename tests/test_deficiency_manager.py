@@ -2,7 +2,9 @@ from plant_engine.deficiency_manager import (
     list_known_nutrients,
     get_deficiency_symptom,
     diagnose_deficiencies,
+    diagnose_deficiencies_detailed,
     get_deficiency_treatment,
+    get_nutrient_mobility,
     recommend_deficiency_treatments,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
@@ -40,4 +42,17 @@ def test_recommend_deficiency_treatments():
     current = {key: 0 for key in guidelines}
     actions = recommend_deficiency_treatments(current, "spinach", "harvest")
     assert "N" in actions and actions["N"]
+
+
+def test_get_nutrient_mobility():
+    assert get_nutrient_mobility("Ca") == "immobile"
+    assert get_nutrient_mobility("N") == "mobile"
+
+
+def test_diagnose_deficiencies_detailed():
+    guidelines = get_recommended_levels("spinach", "harvest")
+    current = {key: 0 for key in guidelines}
+    details = diagnose_deficiencies_detailed(current, "spinach", "harvest")
+    assert details["N"]["mobility"] == "mobile"
+    assert "symptom" in details["N"]
 
