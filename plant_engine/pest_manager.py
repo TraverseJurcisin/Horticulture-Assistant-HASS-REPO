@@ -1,7 +1,7 @@
 """Pest management guideline utilities."""
 from __future__ import annotations
 
-from typing import Dict, Iterable, List
+from typing import Any, Dict, Iterable, List
 
 from .utils import load_dataset, normalize_key
 
@@ -89,6 +89,41 @@ def recommend_ipm_actions(plant_type: str, pests: Iterable[str] | None = None) -
     return actions
 
 
+def build_pest_management_plan(
+    plant_type: str, pests: Iterable[str]
+) -> Dict[str, Any]:
+    """Return a consolidated IPM plan for ``plant_type`` and ``pests``.
+
+    The returned mapping contains a ``"general"`` entry when overall IPM
+    guidance is available. Each pest key maps to a dictionary with keys
+    ``treatment``, ``prevention``, ``beneficials`` and ``ipm``.
+    """
+
+    pest_list = [normalize_key(p) for p in pests]
+
+    plan: Dict[str, Any] = {}
+
+    # IPM actions may include a general recommendation in addition to per pest
+    ipm_actions = recommend_ipm_actions(plant_type, pest_list)
+    general = ipm_actions.pop("general", None)
+    if general:
+        plan["general"] = general
+
+    treatments = recommend_treatments(plant_type, pest_list)
+    prevention = recommend_prevention(plant_type, pest_list)
+    beneficials = recommend_beneficials(pest_list)
+
+    for pest in pest_list:
+        plan[pest] = {
+            "treatment": treatments.get(pest, "No guideline available"),
+            "prevention": prevention.get(pest, "No guideline available"),
+            "beneficials": beneficials.get(pest, []),
+            "ipm": ipm_actions.get(pest),
+        }
+
+    return plan
+
+
 __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
@@ -100,4 +135,5 @@ __all__ = [
     "recommend_prevention",
     "get_ipm_guidelines",
     "recommend_ipm_actions",
+    "build_pest_management_plan",
 ]
