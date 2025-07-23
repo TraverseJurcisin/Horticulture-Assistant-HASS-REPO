@@ -31,6 +31,7 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_cost,
 )
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
+from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.rootzone_model import estimate_water_capacity
 from plant_engine.yield_prediction import estimate_remaining_yield
 
@@ -54,6 +55,7 @@ class DailyReport:
     beneficial_insects: dict[str, list[str]] = field(default_factory=dict)
     pest_severity: dict[str, str] = field(default_factory=dict)
     root_zone: dict[str, object] = field(default_factory=dict)
+    transpiration: dict[str, float] = field(default_factory=dict)
     stage_info: dict[str, object] = field(default_factory=dict)
     fertigation_schedule: dict[str, float] = field(default_factory=dict)
     fertigation_cost: float | None = None
@@ -61,10 +63,13 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    timestamp: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
 
     def as_dict(self) -> dict:
         return asdict(self)
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -95,6 +100,7 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
             continue
 
     return recent
+
 
 def run_daily_cycle(
     plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
@@ -133,7 +139,7 @@ def run_daily_cycle(
         report.irrigation_summary = {
             "events": len(irrigation_entries),
             "total_volume_ml": total_volume,
-            "methods": list(methods)
+            "methods": list(methods),
         }
     # Summarize nutrient applications (aggregate nutrients applied in 24h)
     if nutrient_entries:
@@ -168,7 +174,9 @@ def run_daily_cycle(
         except (ValueError, TypeError):
             continue
         sensor_data.setdefault(stype, []).append(val)
-    sensor_avg = {stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals}
+    sensor_avg = {
+        stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals
+    }
     report.sensor_summary = sensor_avg
     # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
@@ -230,10 +238,19 @@ def run_daily_cycle(
         root_zone_info["current_moisture_pct"] = moisture_value
     report.root_zone = root_zone_info
 
+    # Estimate plant transpiration based on latest environment readings
+    canopy_m2 = general.get("canopy_m2", 0.25)
+    try:
+        canopy_m2 = float(canopy_m2)
+    except Exception:
+        canopy_m2 = 0.25
+    plant_info = {"plant_type": plant_type, "stage": stage_name, "canopy_m2": canopy_m2}
+    report.transpiration = compute_transpiration(plant_info, current_env)
+
     # Irrigation and fertigation targets
     irrigation_data = load_dataset("irrigation_guidelines.json")
-    report.irrigation_target_ml = (
-        irrigation_data.get(plant_type, {}).get(stage_name or "")
+    report.irrigation_target_ml = irrigation_data.get(plant_type, {}).get(
+        stage_name or ""
     )
     if report.irrigation_target_ml:
         vol_l = report.irrigation_target_ml / 1000
