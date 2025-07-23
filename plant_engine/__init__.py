@@ -75,6 +75,8 @@ from .fertigation import (
     generate_cycle_fertigation_plan,
     generate_cycle_fertigation_plan_with_cost,
     recommend_stock_solution_injection,
+    get_foliar_spray_volume,
+    estimate_spray_solution_volume,
 )
 from .rootzone_model import (
     estimate_rootzone_depth,
@@ -274,6 +276,8 @@ __all__ = [
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
     "recommend_stock_solution_injection",
+    "get_foliar_spray_volume",
+    "estimate_spray_solution_volume",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",
