@@ -113,6 +113,12 @@ from .micro_manager import (
     calculate_deficiencies as calculate_micro_deficiencies,
     calculate_surplus as calculate_micro_surplus,
 )
+from .silicon_manager import (
+    list_supported_plants as list_silicon_plants,
+    get_recommended_levels as get_silicon_levels,
+    calculate_deficiencies as calculate_silicon_deficiencies,
+    calculate_surplus as calculate_silicon_surplus,
+)
 from .bioinoculant_manager import (
     list_supported_plants as list_bio_plants,
     get_recommended_inoculants,
@@ -300,6 +306,10 @@ __all__ = [
     "score_nutrient_levels",
     "list_micro_plants",
     "get_micro_levels",
+    "list_silicon_plants",
+    "get_silicon_levels",
+    "calculate_silicon_deficiencies",
+    "calculate_silicon_surplus",
     "list_bio_plants",
     "get_recommended_inoculants",
     "list_companion_plants",
