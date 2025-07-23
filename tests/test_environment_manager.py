@@ -520,6 +520,15 @@ def test_evaluate_humidity_stress():
     assert evaluate_humidity_stress(60, "citrus") is None
 
 
+def test_humidity_actions():
+    from plant_engine import environment_manager as em
+
+    assert em.get_humidity_action("low").startswith("Increase")
+    assert em.get_humidity_action("HIGH").startswith("Ventilate")
+    assert em.recommend_humidity_action(30, "citrus").startswith("Increase")
+    assert em.recommend_humidity_action(60, "citrus") is None
+
+
 def test_evaluate_ph_stress():
     assert evaluate_ph_stress(5.0, "citrus") == "low"
     assert evaluate_ph_stress(7.0, "citrus") == "high"
