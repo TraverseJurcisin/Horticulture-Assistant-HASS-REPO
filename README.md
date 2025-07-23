@@ -146,6 +146,7 @@ Key reference datasets reside in the `data/` directory:
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
+- `water_quality_actions.json` – recommended treatments when limits are exceeded
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
