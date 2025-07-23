@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
@@ -30,7 +30,7 @@ __all__ = [
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with nutrient guidelines."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
