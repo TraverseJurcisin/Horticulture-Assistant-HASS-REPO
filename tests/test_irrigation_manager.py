@@ -5,6 +5,7 @@ from plant_engine.irrigation_manager import (
     recommend_irrigation_interval,
     get_crop_coefficient,
     estimate_irrigation_demand,
+    plan_irrigation,
 )
 from plant_engine.rootzone_model import RootZone
 
@@ -71,4 +72,24 @@ def test_estimate_irrigation_demand():
     assert demand == 10.5
     with pytest.raises(ValueError):
         estimate_irrigation_demand("tomato", "vegetative", -1.0)
+
+
+def test_plan_irrigation():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    plan = plan_irrigation(
+        "tomato",
+        "vegetative",
+        et0_mm_day=5.0,
+        rootzone=zone,
+        available_ml=80.0,
+        area_m2=0.1,
+    )
+    assert plan["volume_ml"] > 0
+    assert plan["interval_days"] >= 0
+
 

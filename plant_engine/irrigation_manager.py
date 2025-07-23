@@ -13,6 +13,7 @@ __all__ = [
     "recommend_irrigation_interval",
     "get_crop_coefficient",
     "estimate_irrigation_demand",
+    "plan_irrigation",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -111,3 +112,60 @@ def estimate_irrigation_demand(
     eta_mm = calculate_eta(et0_mm_day, kc)
     liters = eta_mm * area_m2
     return round(liters, 2)
+
+
+def plan_irrigation(
+    plant_type: str,
+    stage: str,
+    et0_mm_day: float,
+    rootzone: RootZone,
+    available_ml: float,
+    *,
+    area_m2: Optional[float] = None,
+    days: int = 1,
+) -> dict:
+    """Return recommended irrigation volume and interval.
+
+    Parameters
+    ----------
+    plant_type : str
+        Plant type for crop coefficient lookup.
+    stage : str
+        Growth stage for the coefficient lookup.
+    et0_mm_day : float
+        Reference ET in millimeters per day.
+    rootzone : RootZone
+        Root zone model for the plant.
+    available_ml : float
+        Current available water volume in the root zone.
+    area_m2 : float, optional
+        Canopy area in square meters. Defaults to the area derived from
+        ``rootzone`` when omitted.
+    days : int, optional
+        Number of days to plan for when refilling to field capacity.
+    """
+
+    if days <= 0:
+        raise ValueError("days must be positive")
+
+    if area_m2 is None:
+        if rootzone.root_depth_cm <= 0:
+            area_m2 = 1.0
+        else:
+            area_m2 = rootzone.root_volume_cm3 / rootzone.root_depth_cm / 10000
+
+    daily_liters = estimate_irrigation_demand(plant_type, stage, et0_mm_day, area_m2)
+    expected_et_ml = daily_liters * 1000 * days
+
+    volume_ml = recommend_irrigation_volume(
+        rootzone, available_ml, expected_et_ml, refill_to_full=True
+    )
+
+    interval_days = recommend_irrigation_interval(
+        rootzone, available_ml, daily_liters * 1000
+    )
+
+    return {
+        "volume_ml": volume_ml,
+        "interval_days": interval_days,
+    }
