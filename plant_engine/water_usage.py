@@ -9,7 +9,9 @@ DATA_FILE = "water_usage_guidelines.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 
-__all__ = ["list_supported_plants", "get_daily_use"]
+from .plant_density import get_spacing_cm
+
+__all__ = ["list_supported_plants", "get_daily_use", "estimate_area_use"]
 
 
 def list_supported_plants() -> list[str]:
@@ -26,3 +28,23 @@ def get_daily_use(plant_type: str, stage: str) -> float:
         return float(plant.get(normalize_key(stage), 0.0))
     except (TypeError, ValueError):
         return 0.0
+
+
+def estimate_area_use(plant_type: str, stage: str, area_m2: float) -> float:
+    """Return daily water requirement for ``area_m2`` of crop.
+
+    The calculation multiplies per-plant usage by the estimated plant count
+    based on recommended spacing from :mod:`plant_engine.plant_density`.
+    ``area_m2`` must be positive or a ``ValueError`` is raised.
+    """
+
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+
+    spacing_cm = get_spacing_cm(plant_type)
+    if spacing_cm is None or spacing_cm <= 0:
+        return 0.0
+
+    plants = area_m2 / ((spacing_cm / 100) ** 2)
+    per_plant = get_daily_use(plant_type, stage)
+    return round(plants * per_plant, 1)
