@@ -103,6 +103,10 @@ from .micro_manager import (
     calculate_deficiencies as calculate_micro_deficiencies,
     calculate_surplus as calculate_micro_surplus,
 )
+from .bioinoculant_manager import (
+    list_supported_plants as list_bio_plants,
+    get_recommended_inoculants,
+)
 from .growth_stage import get_stage_info, list_growth_stages
 from .harvest_planner import build_stage_schedule
 from .guidelines import get_guideline_summary
@@ -266,6 +270,8 @@ __all__ = [
     "score_nutrient_levels",
     "list_micro_plants",
     "get_micro_levels",
+    "list_bio_plants",
+    "get_recommended_inoculants",
     "get_stage_info",
     "list_growth_stages",
     "build_stage_schedule",

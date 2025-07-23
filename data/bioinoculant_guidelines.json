@@ -1,0 +1,13 @@
+{
+  "tomato": [
+    "Trichoderma harzianum",
+    "Bacillus subtilis"
+  ],
+  "lettuce": [
+    "Azospirillum brasilense"
+  ],
+  "cucumber": [
+    "Pseudomonas fluorescens",
+    "Trichoderma viride"
+  ]
+}

@@ -147,6 +147,7 @@ Key reference datasets reside in the `data/` directory:
 - `disease_prevention.json` – cultural practices to prevent common diseases
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
+- `bioinoculant_guidelines.json` – microbial inoculant suggestions by crop
 - `pest_monitoring_intervals.json` – recommended scouting frequency by stage
 - `ipm_guidelines.json` – integrated pest management practices by crop
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
@@ -269,6 +270,9 @@ or incomplete and should only be used as a starting point for your own research.
   provide recommended application spacing using `fertigation_intervals.json`.
 - **Beneficial Insect Suggestions**: Daily reports list natural predators for
   observed pests using `beneficial_insects.json`.
+- **Bioinoculant Recommendations**: `get_recommended_inoculants` returns
+  microbial products that enhance nutrient uptake based on
+  `bioinoculant_guidelines.json`.
 - **Biological Control Helper**: `recommend_biological_controls` suggests
   beneficial insects to deploy when pest thresholds are exceeded.
 - **IPM Guidance**: `recommend_ipm_actions` returns cultural practices and
