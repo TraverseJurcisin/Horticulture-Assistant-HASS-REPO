@@ -210,11 +210,33 @@ def test_calculate_environment_metrics():
     assert metrics.dew_point_c == calculate_dew_point(18, 90)
     assert metrics.heat_index_c == calculate_heat_index(18, 90)
     assert metrics.absolute_humidity_g_m3 == calculate_absolute_humidity(18, 90)
+    assert metrics.et0_mm_day is None
+    assert metrics.eta_mm_day is None
+    assert metrics.transpiration_ml_day is None
     empty = calculate_environment_metrics(None, None)
     assert all(
         getattr(empty, field) is None
         for field in ["vpd", "dew_point_c", "heat_index_c", "absolute_humidity_g_m3"]
     )
+
+
+def test_environment_metrics_with_transpiration():
+    env = {
+        "temp_c": 25,
+        "humidity_pct": 50,
+        "par_w_m2": 400,
+        "wind_speed_m_s": 1.0,
+    }
+    metrics = calculate_environment_metrics(
+        25,
+        50,
+        env=env,
+        plant_type="tomato",
+        stage="vegetative",
+    )
+    assert metrics.et0_mm_day == 8.54
+    assert metrics.eta_mm_day == 8.97
+    assert metrics.transpiration_ml_day == 2242.5
 
 
 def test_calculate_dli():

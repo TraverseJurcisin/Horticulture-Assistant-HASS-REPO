@@ -9,6 +9,7 @@ from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from . import ph_manager, water_quality
+from .compute_transpiration import compute_transpiration
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
@@ -234,6 +235,9 @@ class EnvironmentMetrics:
     dew_point_c: float | None
     heat_index_c: float | None
     absolute_humidity_g_m3: float | None
+    et0_mm_day: float | None = None
+    eta_mm_day: float | None = None
+    transpiration_ml_day: float | None = None
 
     def as_dict(self) -> Dict[str, float | None]:
         """Return metrics as a regular dictionary."""
@@ -270,6 +274,9 @@ class EnvironmentOptimization:
             "dew_point_c": self.metrics.dew_point_c,
             "heat_index_c": self.metrics.heat_index_c,
             "absolute_humidity_g_m3": self.metrics.absolute_humidity_g_m3,
+            "et0_mm_day": self.metrics.et0_mm_day,
+            "eta_mm_day": self.metrics.eta_mm_day,
+            "transpiration_ml_day": self.metrics.transpiration_ml_day,
             "ph_setpoint": self.ph_setpoint,
             "ph_action": self.ph_action,
             "target_dli": self.target_dli,
@@ -977,19 +984,48 @@ def recommend_co2_injection(
 
 
 def calculate_environment_metrics(
-    temp_c: float | None, humidity_pct: float | None
+    temp_c: float | None,
+    humidity_pct: float | None,
+    *,
+    env: Mapping[str, float] | None = None,
+    plant_type: str | None = None,
+    stage: str | None = None,
 ) -> EnvironmentMetrics:
-    """Return :class:`EnvironmentMetrics` if inputs are provided."""
+    """Return :class:`EnvironmentMetrics` including transpiration when possible."""
 
     if temp_c is None or humidity_pct is None:
         return EnvironmentMetrics(None, None, None, None)
 
-    return EnvironmentMetrics(
+    metrics = EnvironmentMetrics(
         vpd=calculate_vpd(temp_c, humidity_pct),
         dew_point_c=calculate_dew_point(temp_c, humidity_pct),
         heat_index_c=calculate_heat_index(temp_c, humidity_pct),
         absolute_humidity_g_m3=calculate_absolute_humidity(temp_c, humidity_pct),
     )
+
+    if env is not None and plant_type is not None:
+        profile = {
+            "plant_type": plant_type,
+            "stage": stage,
+            "canopy_m2": env.get("canopy_m2", 0.25),
+        }
+        et_env = {
+            "temp_c": temp_c,
+            "rh_pct": humidity_pct,
+            "par_w_m2": env.get("par_w_m2") or env.get("par") or env.get("light_ppfd", 0),
+            "wind_speed_m_s": env.get("wind_speed_m_s") or env.get("wind_m_s") or env.get("wind", 1.0),
+            "elevation_m": env.get("elevation_m", 200),
+        }
+        try:
+            transp = compute_transpiration(profile, et_env)
+        except Exception:
+            transp = None
+        if transp:
+            metrics.et0_mm_day = transp.get("et0_mm_day")
+            metrics.eta_mm_day = transp.get("eta_mm_day")
+            metrics.transpiration_ml_day = transp.get("transpiration_ml_day")
+
+    return metrics
 
 
 def optimize_environment(
@@ -1012,7 +1048,11 @@ def optimize_environment(
     actions = recommend_environment_adjustments(readings, plant_type, stage)
 
     metrics = calculate_environment_metrics(
-        readings.get("temp_c"), readings.get("humidity_pct")
+        readings.get("temp_c"),
+        readings.get("humidity_pct"),
+        env=readings,
+        plant_type=plant_type,
+        stage=stage,
     )
 
     # Defer stress calculations until DLI is available
@@ -1105,7 +1145,11 @@ def summarize_environment(
     readings = normalize_environment_readings(current)
 
     metrics = calculate_environment_metrics(
-        readings.get("temp_c"), readings.get("humidity_pct")
+        readings.get("temp_c"),
+        readings.get("humidity_pct"),
+        env=readings,
+        plant_type=plant_type,
+        stage=stage,
     )
     stress = evaluate_stress_conditions(
         readings.get("temp_c"),
