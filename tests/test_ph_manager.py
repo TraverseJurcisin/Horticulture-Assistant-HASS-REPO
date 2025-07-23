@@ -42,3 +42,13 @@ def test_estimate_ph_adjustment_volume():
     with pytest.raises(ValueError):
         ph_manager.estimate_ph_adjustment_volume(6.0, 6.5, 0, "ph_up")
 
+
+def test_medium_ph_functions():
+    soil = ph_manager.get_medium_ph_range("soil")
+    assert soil == [6.2, 7.0]
+    assert ph_manager.recommend_medium_ph_adjustment(5.5, "soil") == "increase"
+    assert ph_manager.recommend_medium_ph_adjustment(7.5, "soil") == "decrease"
+    assert ph_manager.recommend_medium_ph_adjustment(6.5, "soil") is None
+    assert ph_manager.recommended_ph_for_medium("coco") == 6.0
+    assert ph_manager.get_medium_ph_range("unknown") == []
+

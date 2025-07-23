@@ -7,10 +7,12 @@ from .utils import load_dataset
 
 DATA_FILE = "ph_guidelines.json"
 ADJUST_FILE = "ph_adjustment_factors.json"
+MEDIUM_FILE = "growth_medium_ph_ranges.json"
 
 # Cached dataset loaded once
 _DATA: Dict[str, Dict[str, Iterable[float]]] = load_dataset(DATA_FILE)
 _ADJUST: Dict[str, Dict[str, float]] = load_dataset(ADJUST_FILE)
+_MEDIUM: Dict[str, Iterable[float]] = load_dataset(MEDIUM_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -18,6 +20,9 @@ __all__ = [
     "recommend_ph_adjustment",
     "recommended_ph_setpoint",
     "estimate_ph_adjustment_volume",
+    "get_medium_ph_range",
+    "recommend_medium_ph_adjustment",
+    "recommended_ph_for_medium",
 ]
 
 
@@ -100,3 +105,37 @@ def estimate_ph_adjustment_volume(
     effect_total = effect / volume_l
     ml_needed = delta / effect_total
     return round(abs(ml_needed), 2)
+
+
+def get_medium_ph_range(medium: str) -> list[float]:
+    """Return optimal pH range for a growing medium."""
+
+    rng = _MEDIUM.get(medium.lower())
+    if isinstance(rng, Iterable):
+        vals = list(rng)
+        if len(vals) == 2:
+            return [float(vals[0]), float(vals[1])]
+    return []
+
+
+def recommend_medium_ph_adjustment(current_ph: float, medium: str) -> str | None:
+    """Return pH adjustment guidance based on growing medium."""
+
+    target = get_medium_ph_range(medium)
+    if not target:
+        return None
+    low, high = target
+    if current_ph < low:
+        return "increase"
+    if current_ph > high:
+        return "decrease"
+    return None
+
+
+def recommended_ph_for_medium(medium: str) -> float | None:
+    """Return midpoint pH setpoint for the medium if available."""
+
+    rng = get_medium_ph_range(medium)
+    if not rng:
+        return None
+    return round((rng[0] + rng[1]) / 2, 2)
