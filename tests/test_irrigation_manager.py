@@ -8,6 +8,7 @@ from plant_engine.irrigation_manager import (
     recommend_irrigation_from_environment,
     get_daily_irrigation_target,
     list_supported_plants,
+    generate_irrigation_schedule,
 )
 from plant_engine.rootzone_model import RootZone
 from plant_engine.compute_transpiration import compute_transpiration
@@ -112,4 +113,15 @@ def test_daily_irrigation_target_lookup():
     assert get_daily_irrigation_target("citrus", "vegetative") == 250
     assert "citrus" in list_supported_plants()
     assert get_daily_irrigation_target("unknown", "stage") == 0.0
+
+
+def test_generate_irrigation_schedule():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_irrigation_schedule(zone, 150.0, [30.0, 30.0, 30.0])
+    assert schedule == {1: 0.0, 2: 80.0, 3: 0.0}
 
