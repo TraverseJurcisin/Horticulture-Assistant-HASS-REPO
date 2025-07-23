@@ -5,8 +5,10 @@ from plant_engine.irrigation_manager import (
     recommend_irrigation_interval,
     get_crop_coefficient,
     estimate_irrigation_demand,
+    recommend_irrigation_from_environment,
 )
 from plant_engine.rootzone_model import RootZone
+from plant_engine.compute_transpiration import compute_transpiration
 
 
 def test_recommend_irrigation_volume_basic():
@@ -71,4 +73,22 @@ def test_estimate_irrigation_demand():
     assert demand == 10.5
     with pytest.raises(ValueError):
         estimate_irrigation_demand("tomato", "vegetative", -1.0)
+
+
+def test_recommend_irrigation_from_environment():
+    profile = {"kc": 1.2, "canopy_m2": 0.25}
+    env = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    result = recommend_irrigation_from_environment(profile, env, zone, 120.0)
+    metrics = compute_transpiration(profile, env)
+    expected = recommend_irrigation_volume(
+        zone, available_ml=120.0, expected_et_ml=metrics["transpiration_ml_day"]
+    )
+    assert result["volume_ml"] == expected
+    assert result["metrics"] == metrics
 
