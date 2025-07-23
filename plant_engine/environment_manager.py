@@ -155,6 +155,7 @@ __all__ = [
     "StressFlags",
     "WaterQualityInfo",
     "normalize_environment_readings",
+    "classify_value_range",
     "compare_environment",
     "generate_environment_alerts",
     "classify_environment_quality",
@@ -337,13 +338,27 @@ def get_environmental_targets(
     return get_environment_guidelines(plant_type, stage).as_dict()
 
 
-def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
-    """Return 'increase' or 'decrease' if value is outside ``bounds``."""
+def classify_value_range(value: float, bounds: Tuple[float, float]) -> str:
+    """Return classification of ``value`` relative to ``bounds``.
 
+    The return value is one of ``"below range"``, ``"above range"`` or
+    ``"within range"``. No validation is performed on ``bounds``.
+    """
     low, high = bounds
     if value < low:
-        return "increase"
+        return "below range"
     if value > high:
+        return "above range"
+    return "within range"
+
+
+def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
+    """Return adjustment suggestion for ``value`` relative to ``bounds``."""
+
+    status = classify_value_range(value, bounds)
+    if status == "below range":
+        return "increase"
+    if status == "above range":
         return "decrease"
     return None
 
@@ -384,12 +399,7 @@ def compare_environment(
         except (TypeError, ValueError):
             continue
 
-        if val < low:
-            results[key] = "below range"
-        elif val > high:
-            results[key] = "above range"
-        else:
-            results[key] = "within range"
+        results[key] = classify_value_range(val, (low, high))
 
     return results
 
