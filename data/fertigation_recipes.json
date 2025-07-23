@@ -1,0 +1,21 @@
+{
+  "citrus": {
+    "seedling": {
+      "urea": 0.5,
+      "map": 0.2,
+      "kcl": 0.3
+    },
+    "vegetative": {
+      "urea": 0.8,
+      "map": 0.3,
+      "kcl": 0.5
+    }
+  },
+  "lettuce": {
+    "seedling": {
+      "urea": 0.3,
+      "map": 0.15,
+      "kcl": 0.2
+    }
+  }
+}

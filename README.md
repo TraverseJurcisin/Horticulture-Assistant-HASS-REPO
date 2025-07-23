@@ -155,6 +155,7 @@ Key reference datasets reside in the `data/` directory:
 - `water_quality_actions.json` – recommended treatments when limits are exceeded
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
+- `fertigation_recipes.json` – grams per liter of each product for standard mixes
 - `light_spectrum_guidelines.json` – optimal red/blue light ratios by stage
 - `nutrient_uptake.json` – typical daily N‑P‑K demand per plant stage
 - `nutrient_tag_modifiers.json` – per-tag multipliers for nutrient scheduling
