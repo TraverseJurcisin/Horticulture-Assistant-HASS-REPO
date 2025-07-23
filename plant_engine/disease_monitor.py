@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, asdict
-from datetime import date, timedelta
+from datetime import date
 from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
+from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
 from .disease_manager import recommend_treatments, recommend_prevention
 from . import environment_manager
 
@@ -122,15 +123,7 @@ def estimate_disease_risk(
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between disease scouting events."""
 
-    data = _MONITOR_INTERVALS.get(normalize_key(plant_type), {})
-    if stage:
-        value = data.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
-            return int(value)
-    value = data.get("optimal")
-    if isinstance(value, (int, float)):
-        return int(value)
-    return None
+    return _get_interval(_MONITOR_INTERVALS, plant_type, stage)
 
 
 def next_monitor_date(
@@ -138,10 +131,7 @@ def next_monitor_date(
 ) -> date | None:
     """Return the next disease scouting date based on guidelines."""
 
-    interval = get_monitoring_interval(plant_type, stage)
-    if interval is None:
-        return None
-    return last_date + timedelta(days=interval)
+    return _next_date(_MONITOR_INTERVALS, plant_type, stage, last_date)
 
 
 def generate_monitoring_schedule(
@@ -151,10 +141,7 @@ def generate_monitoring_schedule(
     events: int,
 ) -> list[date]:
     """Return list of upcoming disease monitoring dates."""
-    interval = get_monitoring_interval(plant_type, stage)
-    if interval is None or events <= 0:
-        return []
-    return [start + timedelta(days=interval * i) for i in range(1, events + 1)]
+    return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
 
 
 @dataclass
