@@ -416,18 +416,18 @@ def recommend_environment_adjustments(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, str]:
     """Return adjustment suggestions for temperature, humidity, light and CO₂."""
+
     targets = get_environmental_targets(plant_type, stage)
-    actions: Dict[str, str] = {}
-
     if not targets:
-        return actions
+        return {}
 
-    readings = normalize_environment_readings(current)
-    for key, label in ACTION_LABELS.items():
-        if key in targets and key in readings:
-            suggestion = _check_range(readings[key], tuple(targets[key]))
-            if suggestion:
-                actions[label] = suggestion
+    comparison = compare_environment(current, targets)
+    actions: Dict[str, str] = {}
+    for key, status in comparison.items():
+        if status == "within range":
+            continue
+        label = ACTION_LABELS.get(key, key)
+        actions[label] = "increase" if status == "below range" else "decrease"
 
     return actions
 
