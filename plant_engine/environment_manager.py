@@ -148,6 +148,7 @@ __all__ = [
     "evaluate_light_stress",
     "evaluate_wind_stress",
     "evaluate_humidity_stress",
+    "evaluate_ph_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -256,6 +257,7 @@ class EnvironmentOptimization:
     light_stress: str | None = None
     wind_stress: bool | None = None
     humidity_stress: str | None = None
+    ph_stress: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -278,6 +280,7 @@ class EnvironmentOptimization:
             "light_stress": self.light_stress,
             "wind_stress": self.wind_stress,
             "humidity_stress": self.humidity_stress,
+            "ph_stress": self.ph_stress,
         }
 
 
@@ -290,6 +293,7 @@ class StressFlags:
     light: str | None
     wind: bool | None
     humidity: str | None
+    ph: str | None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -798,6 +802,24 @@ def evaluate_humidity_stress(
     return None
 
 
+def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:
+    """Return 'low' or 'high' if pH is outside the recommended range."""
+
+    if ph is None:
+        return None
+
+    rng = ph_manager.get_ph_range(plant_type, stage)
+    if not rng:
+        return None
+
+    low, high = rng
+    if ph < low:
+        return "low"
+    if ph > high:
+        return "high"
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -822,6 +844,7 @@ def evaluate_stress_conditions(
     temp_c: float | None,
     humidity_pct: float | None,
     dli: float | None,
+    ph: float | None,
     wind_m_s: float | None,
     plant_type: str,
     stage: str | None = None,
@@ -834,6 +857,7 @@ def evaluate_stress_conditions(
         light=evaluate_light_stress(dli, plant_type, stage),
         wind=evaluate_wind_stress(wind_m_s, plant_type),
         humidity=evaluate_humidity_stress(humidity_pct, plant_type),
+        ph=evaluate_ph_stress(ph, plant_type, stage),
     )
 
 
@@ -1003,6 +1027,7 @@ def optimize_environment(
         readings.get("temp_c"),
         readings.get("humidity_pct"),
         current_dli,
+        readings.get("ph"),
         readings.get("wind_m_s"),
         plant_type,
         stage,
@@ -1024,6 +1049,7 @@ def optimize_environment(
         light_stress=stress.light,
         wind_stress=stress.wind,
         humidity_stress=stress.humidity,
+        ph_stress=stress.ph,
     )
     return result.as_dict()
 
@@ -1063,6 +1089,7 @@ def summarize_environment(
         readings.get("temp_c"),
         readings.get("humidity_pct"),
         readings.get("dli"),
+        readings.get("ph"),
         readings.get("wind_m_s"),
         plant_type,
         stage,

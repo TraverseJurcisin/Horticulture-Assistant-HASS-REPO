@@ -29,6 +29,7 @@ from plant_engine.environment_manager import (
     evaluate_light_stress,
     evaluate_wind_stress,
     evaluate_humidity_stress,
+    evaluate_ph_stress,
     evaluate_stress_conditions,
     score_environment,
     score_environment_series,
@@ -467,6 +468,17 @@ def test_evaluate_humidity_stress():
     assert evaluate_humidity_stress(60, "citrus") is None
 
 
+def test_evaluate_ph_stress():
+    assert evaluate_ph_stress(5.0, "citrus") == "low"
+    assert evaluate_ph_stress(7.0, "citrus") == "high"
+    assert evaluate_ph_stress(6.0, "citrus") is None
+
+
+def test_optimize_environment_ph_stress():
+    result = optimize_environment({"ph": 7.2}, "citrus")
+    assert result["ph_stress"] == "high"
+
+
 def test_optimize_environment_wind_stress():
     result = optimize_environment({"wind": 16}, "citrus")
     assert result["wind_stress"] is True
@@ -478,14 +490,14 @@ def test_optimize_environment_humidity_stress():
 
 
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, 16, "lettuce", "seedling")
+    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, "lettuce", "seedling")
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
     assert stress.wind is True
     assert stress.humidity is None
 
-    stress_none = evaluate_stress_conditions(None, None, None, None, "citrus")
+    stress_none = evaluate_stress_conditions(None, None, None, None, None, "citrus")
     assert stress_none.heat is None
     assert stress_none.humidity is None
 
