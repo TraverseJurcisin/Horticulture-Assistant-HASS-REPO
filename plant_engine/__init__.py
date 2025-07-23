@@ -122,7 +122,7 @@ from .companion_manager import (
     recommend_companions,
     recommend_antagonists,
 )
-from .growth_stage import get_stage_info, list_growth_stages
+from .growth_stage import get_stage_info, get_stage_notes, list_growth_stages
 from .harvest_planner import build_stage_schedule
 from .guidelines import get_guideline_summary
 from .report import DailyReport
@@ -300,6 +300,7 @@ __all__ = [
     "recommend_companions",
     "recommend_antagonists",
     "get_stage_info",
+    "get_stage_notes",
     "list_growth_stages",
     "build_stage_schedule",
     "estimate_rootzone_depth",

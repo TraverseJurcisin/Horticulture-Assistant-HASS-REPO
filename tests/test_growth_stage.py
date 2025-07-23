@@ -11,6 +11,7 @@ from plant_engine.growth_stage import (
     days_until_harvest,
     predict_next_stage_date,
     get_germination_duration,
+    get_stage_notes,
 )
 
 
@@ -94,5 +95,10 @@ def test_get_germination_duration():
     assert get_germination_duration("tomato") == 5
     assert get_germination_duration("lettuce") == 7
     assert get_germination_duration("unknown") is None
+
+
+def test_get_stage_notes():
+    assert get_stage_notes("tomato", "flowering") == "Reduce nitrogen, increase phosphorus."
+    assert get_stage_notes("tomato", "unknown") is None
 
 

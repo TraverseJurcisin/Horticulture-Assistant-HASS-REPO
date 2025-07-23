@@ -29,6 +29,7 @@ __all__ = [
     "days_until_harvest",
     "predict_next_stage_date",
     "get_germination_duration",
+    "get_stage_notes",
 ]
 
 
@@ -50,6 +51,14 @@ def get_stage_duration(plant_type: str, stage: str) -> int | None:
     if isinstance(duration, (int, float)):
         return int(duration)
     return None
+
+
+def get_stage_notes(plant_type: str, stage: str) -> str | None:
+    """Return optional notes for ``plant_type`` and ``stage``."""
+
+    info = get_stage_info(plant_type, stage)
+    notes = info.get("notes")
+    return str(notes) if isinstance(notes, str) else None
 
 
 def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:
