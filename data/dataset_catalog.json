@@ -62,6 +62,7 @@
   "pruning_intervals.json": "Days between pruning events for each plant stage.",
   "soil_nutrient_guidelines.json": "Target soil nutrient levels by crop.",
   "soil_texture_parameters.json": "Typical sand, silt and clay percentages.",
+  "soil_infiltration_rates.json": "Infiltration rates (mm/hr) by soil texture.",
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "co2_prices.json": "Cost per kg of CO₂ for enrichment.",
