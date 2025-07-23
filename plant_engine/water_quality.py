@@ -7,9 +7,11 @@ from typing import Dict, Tuple
 from .utils import load_dataset
 
 DATA_FILE = "water_quality_thresholds.json"
+ACTION_FILE = "water_quality_actions.json"
 
 # Cached thresholds loaded once via :func:`load_dataset`
 _THRESHOLDS: Dict[str, float] = load_dataset(DATA_FILE)
+_ACTIONS: Dict[str, str] = load_dataset(ACTION_FILE)
 
 __all__ = [
     "list_analytes",
@@ -17,6 +19,7 @@ __all__ = [
     "interpret_water_profile",
     "classify_water_quality",
     "score_water_quality",
+    "recommend_treatments",
 ]
 
 
@@ -77,3 +80,13 @@ def score_water_quality(water_test: Dict[str, float]) -> float:
         penalty = min(exceed_ratio, 1.0) * 25
         score -= penalty
     return round(max(score, 0.0), 1)
+
+def recommend_treatments(water_test: Dict[str, float]) -> Dict[str, str]:
+    """Return recommended remediation steps for analytes exceeding thresholds."""
+    _, warnings = interpret_water_profile(water_test)
+    recommendations: Dict[str, str] = {}
+    for analyte in warnings:
+        action = _ACTIONS.get(analyte)
+        if action:
+            recommendations[analyte] = action
+    return recommendations
