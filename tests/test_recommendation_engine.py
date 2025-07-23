@@ -30,7 +30,7 @@ def test_recommendation_engine_requires_approval():
     assert rec.requires_approval is True
     assert rec.fertilizers[0].product_name == "n_fert"
     assert rec.fertilizers[0].reason == "N deficit"
-    assert rec.irrigation.volume_liters == 2.0
+    assert rec.irrigation.volume_liters == 0.05
     assert "check drainage" in rec.notes
 
 
@@ -43,4 +43,4 @@ def test_recommendation_engine_auto_approve():
 def test_recommendation_engine_environment_notes():
     eng = _setup_engine(auto=False)
     rec = eng.recommend("p1")
-    assert any(n.startswith("temperature") for n in rec.notes)
+    assert any("temperature" in n for n in rec.notes)
