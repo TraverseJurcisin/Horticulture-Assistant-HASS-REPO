@@ -84,5 +84,7 @@
   "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
   "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
   "companion_plants.json": "Companion planting recommendations.",
+  "sap_analysis_targets.json": "Optimal sap nutrient ranges for growth stages.",
+  "sap_analysis_score_weights.json": "Scoring weights for sap nutrient analysis.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day"
 }
