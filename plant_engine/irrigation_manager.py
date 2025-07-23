@@ -41,6 +41,11 @@ def recommend_irrigation_volume(
         When ``True`` the zone is filled back to field capacity; otherwise only
         enough water to reach the readily available level is recommended.
     """
+    if expected_et_ml < 0:
+        raise ValueError("expected_et_ml must be non-negative")
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
     projected = available_ml - expected_et_ml
     if projected >= rootzone.readily_available_water_ml:
         return 0.0

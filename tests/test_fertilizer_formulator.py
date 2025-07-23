@@ -19,6 +19,7 @@ get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
+find_products = fert_mod.find_products
 
 
 def test_convert_guaranteed_analysis():
@@ -83,4 +84,15 @@ def test_estimate_cost_breakdown():
     breakdown = estimate_cost_breakdown(mix)
     assert breakdown["N"] > 0
     assert round(sum(breakdown.values()), 2) == 0.41
+
+
+def test_find_products_matches_id_and_name():
+    assert "foxfarm_grow_big" in find_products("grow big")
+    assert "foxfarm_grow_big" in find_products("foxfarm_grow_big")
+
+
+def test_list_products_sorted_by_name():
+    ids = list_products()
+    names = [get_product_info(pid).product_name or pid for pid in ids]
+    assert names == sorted(names)
 

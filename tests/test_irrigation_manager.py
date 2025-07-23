@@ -47,6 +47,19 @@ def test_irrigation_clamped_to_capacity():
     assert vol == 150.0
 
 
+def test_irrigation_volume_invalid_inputs():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    with pytest.raises(ValueError):
+        recommend_irrigation_volume(zone, available_ml=-1.0, expected_et_ml=10.0)
+    with pytest.raises(ValueError):
+        recommend_irrigation_volume(zone, available_ml=50.0, expected_et_ml=-5.0)
+
+
 def test_recommend_irrigation_interval():
     zone = RootZone(
         root_depth_cm=20,
