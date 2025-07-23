@@ -15,6 +15,7 @@ get_product_analysis_by_number = wsda.get_product_analysis_by_number
 search_products = wsda.search_products
 list_product_names = wsda.list_product_names
 list_product_numbers = wsda.list_product_numbers
+recommend_products_for_nutrient = wsda.recommend_products_for_nutrient
 
 
 def test_lookup_by_name():
@@ -61,3 +62,11 @@ def test_list_product_names_contains_known():
 def test_list_product_numbers_contains_known():
     numbers = list_product_numbers()
     assert "(#4083-0001)" in numbers
+
+
+def test_recommend_products_for_nutrient():
+    top = recommend_products_for_nutrient("K", limit=3)
+    assert len(top) == 3
+    first = get_product_analysis_by_name(top[0]).get("K")
+    second = get_product_analysis_by_name(top[1]).get("K")
+    assert first >= second
