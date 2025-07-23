@@ -1,6 +1,11 @@
+"""Logging helpers for recording fertilizer application events."""
+
 import uuid
 from datetime import datetime
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
+
+__all__ = ["log_product_usage"]
 
 
 def log_product_usage(
@@ -13,22 +18,7 @@ def log_product_usage(
     user_notes: Optional[str] = None,
     metadata: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """
-    Creates a structured usage log record for a fertilizer product.
-
-    Args:
-        product_id: internal UUID of the fertilizer product
-        batch_id: internal UUID of the batch it was added to
-        zone_ids: list of zones this batch was applied to
-        volume_liters: amount used in liters (or converted equivalent)
-        application_time: ISO 8601 timestamp (optional, defaults to now)
-        recipe_id: optional reference to the recipe used
-        user_notes: any user-entered text
-        metadata: optional dict of advanced metadata (e.g., EC, pH, density)
-
-    Returns:
-        Dictionary representing the log record
-    """
+    """Return a structured usage log entry."""
     usage_record = {
         "usage_id": str(uuid.uuid4()),
         "product_id": product_id,

@@ -1,10 +1,14 @@
+"""Minimal inventory tracker for fertilizer products."""
+
 from dataclasses import dataclass, field
-from typing import Optional, List
+from typing import List, Optional
 import datetime
 import json
 
 @dataclass
 class ProductInstance:
+    """Single product container used by :class:`ProductTracker`."""
+
     product_name: str
     vendor: str
     size: float
@@ -21,13 +25,19 @@ class ProductInstance:
     derived_from: List[str] = field(default_factory=list)
 
 class ProductTracker:
-    def __init__(self):
+    """Simple manager for a collection of :class:`ProductInstance`."""
+
+    def __init__(self) -> None:
         self.inventory: List[ProductInstance] = []
 
-    def add_product(self, instance: ProductInstance):
+    def add_product(self, instance: ProductInstance) -> None:
+        """Add a :class:`ProductInstance` to the tracker."""
+
         self.inventory.append(instance)
 
-    def get_valid_products(self, product_name: str, as_of_date: Optional[str] = None) -> List[ProductInstance]:
+    def get_valid_products(
+        self, product_name: str, as_of_date: Optional[str] = None
+    ) -> List[ProductInstance]:
         if as_of_date is None:
             as_of_date = datetime.date.today().isoformat()
 
@@ -42,8 +52,19 @@ class ProductTracker:
         valid = self.get_valid_products(product_name)
         return sum(p.size for p in valid if p.size_unit == unit)
 
-    def get_product_by_vendor(self, product_name: str, vendor: str) -> List[ProductInstance]:
-        return [p for p in self.inventory if p.product_name == product_name and p.vendor == vendor]
+    def get_product_by_vendor(
+        self, product_name: str, vendor: str
+    ) -> List[ProductInstance]:
+        return [
+            p
+            for p in self.inventory
+            if p.product_name == product_name and p.vendor == vendor
+        ]
 
     def export_json(self) -> str:
+        """Return the tracker contents as a JSON string."""
+
         return json.dumps([p.__dict__ for p in self.inventory], indent=2)
+
+
+__all__ = ["ProductInstance", "ProductTracker"]
