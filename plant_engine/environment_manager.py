@@ -9,7 +9,7 @@ from typing import Any, Dict, Mapping, Tuple, Iterable
 
 RangeTuple = Tuple[float, float]
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import load_dataset, normalize_key, list_dataset_entries, parse_range
 from . import ph_manager, water_quality
 from .compute_transpiration import compute_transpiration
 
@@ -65,15 +65,6 @@ _ALIAS_MAP: Dict[str, str] = {
 }
 
 
-def _parse_range(value: Iterable[float]) -> RangeTuple | None:
-    """Return a normalized (min, max) tuple or ``None`` if invalid."""
-    try:
-        low, high = value
-        low = float(low)
-        high = float(high)
-    except (TypeError, ValueError, Exception):
-        return None
-    return (low, high)
 
 
 @dataclass(slots=True, frozen=True)
@@ -104,10 +95,10 @@ def get_environment_guidelines(
     if not isinstance(data, Mapping):
         data = {}
     return EnvironmentGuidelines(
-        temp_c=_parse_range(data.get("temp_c")),
-        humidity_pct=_parse_range(data.get("humidity_pct")),
-        light_ppfd=_parse_range(data.get("light_ppfd")),
-        co2_ppm=_parse_range(data.get("co2_ppm")),
+        temp_c=parse_range(data.get("temp_c")),
+        humidity_pct=parse_range(data.get("humidity_pct")),
+        light_ppfd=parse_range(data.get("light_ppfd")),
+        co2_ppm=parse_range(data.get("co2_ppm")),
     )
 
 
@@ -119,10 +110,10 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     if not isinstance(data, Mapping):
         data = {}
     return EnvironmentGuidelines(
-        temp_c=_parse_range(data.get("temp_c")),
-        humidity_pct=_parse_range(data.get("humidity_pct")),
-        light_ppfd=_parse_range(data.get("light_ppfd")),
-        co2_ppm=_parse_range(data.get("co2_ppm")),
+        temp_c=parse_range(data.get("temp_c")),
+        humidity_pct=parse_range(data.get("humidity_pct")),
+        light_ppfd=parse_range(data.get("light_ppfd")),
+        co2_ppm=parse_range(data.get("co2_ppm")),
     )
 
 

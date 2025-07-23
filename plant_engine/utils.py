@@ -15,6 +15,7 @@ __all__ = [
     "clear_dataset_cache",
     "normalize_key",
     "list_dataset_entries",
+    "parse_range",
     "deep_update",
 ]
 
@@ -137,3 +138,13 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
     """Return sorted top-level keys from a dataset mapping."""
 
     return sorted(str(k) for k in dataset.keys())
+
+
+def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
+    """Return a normalized ``(min, max)`` tuple or ``None`` if invalid."""
+
+    try:
+        low, high = value
+        return float(low), float(high)
+    except (TypeError, ValueError, Exception):
+        return None
