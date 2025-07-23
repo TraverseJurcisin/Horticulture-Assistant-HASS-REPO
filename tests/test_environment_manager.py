@@ -26,6 +26,7 @@ from plant_engine.environment_manager import (
     generate_environment_alerts,
     classify_environment_quality,
     normalize_environment_readings,
+    summarize_environment,
 )
 
 
@@ -337,3 +338,11 @@ def test_normalize_environment_readings_aliases():
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})
     assert result == {"foo": 1.0}
+
+
+def test_summarize_environment():
+    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling")
+    assert summary["quality"] == "poor"
+    assert summary["adjustments"]["temperature"] == "increase"
+    assert summary["adjustments"]["humidity"] == "decrease"
+    assert "vpd" in summary["metrics"]
