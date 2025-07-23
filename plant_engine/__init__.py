@@ -64,6 +64,13 @@ from .rootzone_model import (
     get_soil_parameters,
     RootZone,
 )
+from .soil_manager import (
+    list_supported_plants as list_soil_plants,
+    get_soil_targets,
+    calculate_soil_deficiencies,
+    calculate_soil_surplus,
+    score_soil_nutrients,
+)
 from .irrigation_manager import (
     recommend_irrigation_volume,
     recommend_irrigation_interval,
@@ -213,6 +220,11 @@ __all__ = [
     "estimate_water_capacity",
     "get_soil_parameters",
     "RootZone",
+    "list_soil_plants",
+    "get_soil_targets",
+    "calculate_soil_deficiencies",
+    "calculate_soil_surplus",
+    "score_soil_nutrients",
     "recommend_irrigation_volume",
     "recommend_irrigation_interval",
     "list_irrigation_plants",

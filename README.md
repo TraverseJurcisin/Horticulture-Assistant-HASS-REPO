@@ -163,6 +163,7 @@ Key reference datasets reside in the `data/` directory:
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
+- `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
