@@ -112,6 +112,9 @@ def test_suggest_environment_setpoints():
     assert setpoints["humidity_pct"] == 70
     assert setpoints["light_ppfd"] == 225
     assert setpoints["co2_ppm"] == 500
+    assert setpoints["soil_moisture_pct"] == 40
+    assert setpoints["soil_temp_c"] == 24
+    assert setpoints["soil_ec"] == 1.15
 
 
 def test_suggest_environment_setpoints_advanced_vpd_fallback(monkeypatch):

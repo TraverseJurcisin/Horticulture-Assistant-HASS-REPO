@@ -338,55 +338,64 @@ class AIRecommendationSensor(HorticultureBaseSensor):
         self._attr_native_value = getattr(self, "_recommendation", "No suggestions.")
 
 
-class EnvironmentScoreSensor(HorticultureBaseSensor):
+class _EnvironmentEvaluationSensor(HorticultureBaseSensor):
+    """Base helper for sensors evaluating environment data."""
+
+    NAME: str = ""
+    UNIQUE_KEY: str = ""
+    ICON: str = "mdi:leaf"
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+        super().__init__(hass, plant_name, plant_id)
+        self._attr_name = self.NAME
+        self._attr_unique_id = f"{plant_id}_{self.UNIQUE_KEY}"
+        self._attr_icon = self.ICON
+        self._attr_entity_category = CATEGORY_DIAGNOSTIC
+
+    def _gather_environment(self) -> dict[str, float]:
+        """Return available raw environment readings for this plant."""
+        sensors = {
+            "temp_c": f"sensor.{self._plant_id}_raw_temperature",
+            "humidity_pct": f"sensor.{self._plant_id}_raw_humidity",
+            "light_ppfd": f"sensor.{self._plant_id}_raw_light",
+            "co2_ppm": f"sensor.{self._plant_id}_raw_co2",
+        }
+        return {
+            key: val
+            for key in sensors
+            if (val := self._get_state_value(sensors[key])) is not None
+        }
+
+    def _compute(self, env: dict[str, float], plant_type: str):
+        raise NotImplementedError
+
+    async def async_update(self) -> None:
+        env = self._gather_environment()
+        if len(env) < 2:
+            self._attr_native_value = None
+            return
+        plant_type = get_plant_type(self._plant_id, self.hass) or "citrus"
+        self._attr_native_value = self._compute(env, plant_type)
+
+
+class EnvironmentScoreSensor(_EnvironmentEvaluationSensor):
     """Sensor providing a 0-100 environment score."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
-        self._attr_name = "Environment Score"
-        self._attr_unique_id = f"{plant_id}_env_score"
-        self._attr_native_unit_of_measurement = None
-        self._attr_icon = "mdi:gauge"
-        self._attr_entity_category = CATEGORY_DIAGNOSTIC
+    NAME = "Environment Score"
+    UNIQUE_KEY = "env_score"
+    ICON = "mdi:gauge"
 
-    async def async_update(self):
-        env = {
-            "temp_c": self._get_state_value(f"sensor.{self._plant_id}_raw_temperature"),
-            "humidity_pct": self._get_state_value(f"sensor.{self._plant_id}_raw_humidity"),
-            "light_ppfd": self._get_state_value(f"sensor.{self._plant_id}_raw_light"),
-            "co2_ppm": self._get_state_value(f"sensor.{self._plant_id}_raw_co2"),
-        }
-        env = {k: v for k, v in env.items() if v is not None}
-        if len(env) < 2:
-            self._attr_native_value = None
-            return
-        plant_type = get_plant_type(self._plant_id, self.hass) or "citrus"
+    def _compute(self, env: dict[str, float], plant_type: str):
         score = score_environment(env, plant_type)
-        self._attr_native_value = round(score, 1)
+        return round(score, 1)
 
 
-class EnvironmentQualitySensor(HorticultureBaseSensor):
+class EnvironmentQualitySensor(_EnvironmentEvaluationSensor):
     """Sensor providing a ``good``/``fair``/``poor`` quality rating."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
-        self._attr_name = "Environment Quality"
-        self._attr_unique_id = f"{plant_id}_env_quality"
-        self._attr_icon = "mdi:leaf"
-        self._attr_entity_category = CATEGORY_DIAGNOSTIC
+    NAME = "Environment Quality"
+    UNIQUE_KEY = "env_quality"
 
-    async def async_update(self):
-        env = {
-            "temp_c": self._get_state_value(f"sensor.{self._plant_id}_raw_temperature"),
-            "humidity_pct": self._get_state_value(f"sensor.{self._plant_id}_raw_humidity"),
-            "light_ppfd": self._get_state_value(f"sensor.{self._plant_id}_raw_light"),
-            "co2_ppm": self._get_state_value(f"sensor.{self._plant_id}_raw_co2"),
-        }
-        env = {k: v for k, v in env.items() if v is not None}
-        if len(env) < 2:
-            self._attr_native_value = None
-            return
-        plant_type = get_plant_type(self._plant_id, self.hass) or "citrus"
-        rating = classify_environment_quality(env, plant_type)
-        self._attr_native_value = rating
+    def _compute(self, env: dict[str, float], plant_type: str):
+        return classify_environment_quality(env, plant_type)
 
