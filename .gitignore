@@ -4,3 +4,4 @@ __pycache__/
 data/pending_thresholds/
 data/water_balance/
 data/reports/
+custom_components/horticulture_assistant/analytics/all_plants_growth_yield.json
