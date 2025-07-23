@@ -4,6 +4,7 @@ from plant_engine.rootzone_model import (
     estimate_water_capacity,
     calculate_remaining_water,
     get_soil_parameters,
+    soil_moisture_pct,
     RootZone,
 )
 import pytest
@@ -69,4 +70,11 @@ def test_calculate_remaining_water_negative():
     rz = estimate_water_capacity(10, area_cm2=100)
     with pytest.raises(ValueError):
         calculate_remaining_water(rz, -1.0)
+
+
+def test_soil_moisture_pct():
+    rz = estimate_water_capacity(10, area_cm2=100)
+    assert soil_moisture_pct(rz, 100.0) == 50.0
+    with pytest.raises(ValueError):
+        soil_moisture_pct(rz, -1)
 

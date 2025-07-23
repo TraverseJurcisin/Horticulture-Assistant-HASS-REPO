@@ -22,6 +22,7 @@ __all__ = [
     "get_default_root_depth",
     "estimate_water_capacity",
     "calculate_remaining_water",
+    "soil_moisture_pct",
     "get_soil_parameters",
     "RootZone",
 ]
@@ -146,4 +147,17 @@ def calculate_remaining_water(
     new_vol = available_ml + irrigation_ml - et_ml
     new_vol = min(new_vol, rootzone.total_available_water_ml)
     return round(max(new_vol, 0.0), 1)
+
+
+def soil_moisture_pct(rootzone: RootZone, available_ml: float) -> float:
+    """Return current soil moisture as a percentage of capacity."""
+
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
+    if rootzone.total_available_water_ml <= 0:
+        return 0.0
+
+    pct = (available_ml / rootzone.total_available_water_ml) * 100
+    return round(min(max(pct, 0.0), 100.0), 1)
 
