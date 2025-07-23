@@ -195,12 +195,14 @@ __all__ = [
     "estimate_cost_breakdown",
     "list_products",
     "get_product_info",
+    "find_products",
 ]
 
 
 def list_products() -> list[str]:
-    """Return available fertilizer product identifiers."""
-    return sorted(_inventory().keys())
+    """Return available fertilizer product identifiers sorted by name."""
+    inv = _inventory()
+    return sorted(inv.keys(), key=lambda pid: inv[pid].product_name or pid)
 
 
 def get_product_info(fertilizer_id: str) -> Fertilizer:
@@ -209,4 +211,17 @@ def get_product_info(fertilizer_id: str) -> Fertilizer:
     if fertilizer_id not in inv:
         raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
     return inv[fertilizer_id]
+
+
+def find_products(term: str) -> list[str]:
+    """Return product IDs matching ``term`` in the ID or product name."""
+    if not term:
+        return []
+    term = term.lower()
+    results: list[str] = []
+    for pid, info in _inventory().items():
+        name = (info.product_name or "").lower()
+        if term in pid.lower() or term in name:
+            results.append(pid)
+    return sorted(results)
 
