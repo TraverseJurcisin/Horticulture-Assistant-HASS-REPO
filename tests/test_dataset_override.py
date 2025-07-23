@@ -29,3 +29,23 @@ def test_dataset_overlay(tmp_path, monkeypatch):
 
     result = utils.load_dataset("sample.json")
     assert result == {"foo": 1, "bar": 5, "baz": 7}
+
+
+def test_dataset_overlay_deep(tmp_path, monkeypatch):
+    base = tmp_path / "base"
+    overlay = tmp_path / "overlay"
+    base.mkdir()
+    overlay.mkdir()
+    (base / "sample.json").write_text(
+        json.dumps({"foo": {"a": 1, "b": 2}, "bar": 2})
+    )
+    (overlay / "sample.json").write_text(
+        json.dumps({"foo": {"b": 5, "c": 9}})
+    )
+
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    importlib.reload(utils)
+
+    result = utils.load_dataset("sample.json")
+    assert result == {"foo": {"a": 1, "b": 5, "c": 9}, "bar": 2}

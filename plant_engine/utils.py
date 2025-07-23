@@ -14,6 +14,7 @@ __all__ = [
     "load_dataset",
     "normalize_key",
     "list_dataset_entries",
+    "deep_update",
 ]
 
 
@@ -28,6 +29,21 @@ def save_json(path: str, data: Dict[str, Any]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
+def deep_update(base: Dict[str, Any], other: Mapping[str, Any]) -> Dict[str, Any]:
+    """Recursively merge ``other`` into ``base`` and return ``base``."""
+
+    for key, value in other.items():
+        if (
+            key in base
+            and isinstance(base[key], dict)
+            and isinstance(value, Mapping)
+        ):
+            deep_update(base[key], value)
+        else:
+            base[key] = value
+    return base
 
 
 # Default data directory is the repository ``data`` folder. It can be
@@ -63,7 +79,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
         if overlay_path.exists():
             extra = load_json(str(overlay_path))
             if isinstance(extra, dict) and isinstance(data, dict):
-                data.update(extra)
+                deep_update(data, extra)
             else:
                 data = extra
 
