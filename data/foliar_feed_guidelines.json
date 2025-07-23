@@ -1,0 +1,4 @@
+{
+  "tomato": {"vegetative": {"N": 300, "K": 400}, "flowering": {"N": 250, "K": 350}},
+  "lettuce": {"vegetative": {"N": 150, "K": 200}}
+}

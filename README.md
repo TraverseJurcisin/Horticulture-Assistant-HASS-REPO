@@ -162,6 +162,7 @@ Key reference datasets reside in the `data/` directory:
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
+- `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by

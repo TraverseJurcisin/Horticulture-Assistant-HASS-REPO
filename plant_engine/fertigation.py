@@ -10,7 +10,9 @@ from .nutrient_manager import (
     calculate_all_deficiencies,
     get_all_recommended_levels,
 )
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
+
+FOLIAR_DATA = "foliar_feed_guidelines.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 
@@ -35,8 +37,39 @@ def get_fertilizer_purity(name: str) -> Dict[str, float]:
     return data.get(name.lower(), {})
 
 
+@lru_cache(maxsize=None)
+def get_foliar_guidelines(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return recommended foliar feed ppm for a plant stage."""
+    data = load_dataset(FOLIAR_DATA)
+    plant = data.get(normalize_key(plant_type))
+    if not plant:
+        return {}
+    return plant.get(normalize_key(stage), {})
+
+
+def recommend_foliar_feed(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> Dict[str, float]:
+    """Return grams of fertilizer for foliar spray solution."""
+    purity_map = _resolve_purity(product, purity)
+    targets = get_foliar_guidelines(plant_type, stage)
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        schedule[nutrient] = _ppm_to_grams(
+            float(ppm), volume_l, purity_map.get(nutrient, 1.0)
+        )
+    return schedule
+
+
 __all__ = [
     "get_fertilizer_purity",
+    "get_foliar_guidelines",
+    "recommend_foliar_feed",
     "recommend_fertigation_schedule",
     "recommend_fertigation_with_water",
     "recommend_correction_schedule",
