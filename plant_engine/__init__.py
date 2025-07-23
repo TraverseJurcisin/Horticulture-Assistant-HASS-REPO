@@ -69,6 +69,10 @@ from .fertigation import (
     estimate_cycle_cost,
     generate_cycle_fertigation_plan,
 )
+from .fertigation_recipes import (
+    list_supported_plants as list_recipe_plants,
+    get_recipe as get_fertigation_recipe,
+)
 from .rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
@@ -242,6 +246,8 @@ __all__ = [
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
+    "list_recipe_plants",
+    "get_fertigation_recipe",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",
