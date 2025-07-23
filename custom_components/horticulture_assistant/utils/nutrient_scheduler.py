@@ -1,10 +1,11 @@
-"""Utility to generate per-plant nutrient targets."""
+"""Generate per-plant nutrient targets based on stage and tags."""
 
 from __future__ import annotations
 
 import json
 import os
 import logging
+from dataclasses import dataclass, asdict
 
 try:
     # If running within Home Assistant, this will be available
@@ -14,7 +15,7 @@ except ImportError:
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.utils import load_json
+from plant_engine.utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +34,6 @@ STAGE_SYNONYMS = {
     "veg": "vegetative",
     "vegetative": "vegetative",
     "flower": "flowering",
-    "flowering": "flowering",
     "flowering": "flowering",
     "bloom": "flowering",
     "fruit": "fruiting",
@@ -57,6 +57,17 @@ TAG_NUTRIENT_MODIFIERS = {
 PLANT_REGISTRY_FILE = "plant_registry.json"
 
 
+@dataclass
+class NutrientTargets:
+    """Structured nutrient targets returned by :func:`schedule_nutrients`."""
+
+    values: dict[str, float]
+
+    def as_dict(self) -> dict[str, float]:
+        """Return the targets as a plain dictionary."""
+        return asdict(self)["values"]
+
+
 def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) -> str | None:
     """Return plant type for ``plant_id`` from profile or registry."""
     plant_type = profile.get("general", {}).get("plant_type")
@@ -73,16 +84,14 @@ def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) ->
         pass
     return None
 
-def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
-    """
-    Adjust nutrient targets for a given plant based on its lifecycle stage and tags.
+def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTargets:
+    """Return adjusted nutrient targets for ``plant_id``.
+
+    The plant profile is loaded (from ``hass`` config if provided) and the base
+    nutrient recommendations are modified based on lifecycle stage and any
+    tags. Results are persisted to ``nutrient_targets.json`` and also returned as
+    a :class:`NutrientTargets` instance for further use.
     
-    Loads the plant's profile (JSON/YAML) and applies adjustments:
-      - Stage-based multiplier (e.g., lower nutrients for seedling, higher for flowering).
-      - Tag-specific modifiers (e.g., increase N for "high-nitrogen" tag).
-    
-    The base nutrient targets are taken from the profile's "nutrients" section.
-    Adjusted targets are saved to data/nutrient_targets.json and returned as a dict.
     Logging is performed for each adjustment and any missing data.
     """
     # Determine profile directory and load profile
@@ -95,8 +104,11 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
             base_dir = None
     profile = load_profile(plant_id=plant_id, base_dir=base_dir)
     if not profile:
-        _LOGGER.error("Plant profile for '%s' not found or empty. Cannot schedule nutrients.", plant_id)
-        return {}
+        _LOGGER.error(
+            "Plant profile for '%s' not found or empty. Cannot schedule nutrients.",
+            plant_id,
+        )
+        return NutrientTargets({})
     # Get base nutrient targets from profile
     base_targets = profile.get("nutrients") or {}
     stage = (
@@ -123,7 +135,7 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
                 "No nutrient targets for plant '%s' and no guidelines found. Skipping.",
                 plant_id,
             )
-            return {}
+            return NutrientTargets({})
     # Determine stage multiplier
     stage_multiplier = 1.0
     stage_data = {}
@@ -191,29 +203,30 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
     os.makedirs(data_dir, exist_ok=True)
     targets_path = os.path.join(data_dir, "nutrient_targets.json")
     nutrient_targets_data = {}
-    try:
-        if os.path.exists(targets_path):
-            with open(targets_path, "r", encoding="utf-8") as f:
-                nutrient_targets_data = json.load(f)
-                if not isinstance(nutrient_targets_data, dict):
-                    _LOGGER.warning("nutrient_targets.json content was not a dict; resetting file.")
-                    nutrient_targets_data = {}
-    except json.JSONDecodeError:
-        _LOGGER.warning("nutrient_targets.json found but invalid JSON; resetting file.")
-        nutrient_targets_data = {}
-    except Exception as e:
-        _LOGGER.error("Failed to read nutrient targets file: %s", e)
-        nutrient_targets_data = {}
+    if os.path.exists(targets_path):
+        try:
+            nutrient_targets_data = load_json(targets_path)
+            if not isinstance(nutrient_targets_data, dict):
+                _LOGGER.warning(
+                    "nutrient_targets.json content was not a dict; resetting file."
+                )
+                nutrient_targets_data = {}
+        except Exception as e:
+            _LOGGER.error("Failed to read nutrient targets file: %s", e)
+            nutrient_targets_data = {}
     # Update this plant's entry
     nutrient_targets_data[plant_id] = adjusted_targets
     # Write back to JSON file
     try:
-        with open(targets_path, "w", encoding="utf-8") as f:
-            json.dump(nutrient_targets_data, f, indent=2)
-        _LOGGER.info("Adjusted nutrient targets for plant '%s' saved to %s", plant_id, targets_path)
+        save_json(targets_path, nutrient_targets_data)
+        _LOGGER.info(
+            "Adjusted nutrient targets for plant '%s' saved to %s",
+            plant_id,
+            targets_path,
+        )
     except Exception as e:
         _LOGGER.error("Failed to write nutrient targets for plant '%s': %s", plant_id, e)
-    return adjusted_targets
+    return NutrientTargets(adjusted_targets)
 
 
 __all__ = ["schedule_nutrients"]
