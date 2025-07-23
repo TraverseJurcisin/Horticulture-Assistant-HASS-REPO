@@ -266,3 +266,17 @@ def test_estimate_solution_ec():
     schedule = {"N": 100, "K": 150}
     ec = estimate_solution_ec(schedule)
     assert ec == pytest.approx(0.465, rel=1e-3)
+
+
+def test_generate_cycle_fertigation_plan_with_cost():
+    from plant_engine.fertigation import (
+        generate_cycle_fertigation_plan,
+        generate_cycle_fertigation_plan_with_cost,
+    )
+
+    basic_plan = generate_cycle_fertigation_plan("lettuce")
+    plan, cost = generate_cycle_fertigation_plan_with_cost("lettuce")
+
+    assert plan == basic_plan
+    assert cost > 0
+

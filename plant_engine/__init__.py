@@ -68,6 +68,7 @@ from .fertigation import (
     estimate_stage_cost,
     estimate_cycle_cost,
     generate_cycle_fertigation_plan,
+    generate_cycle_fertigation_plan_with_cost,
 )
 from .rootzone_model import (
     estimate_rootzone_depth,
@@ -242,6 +243,7 @@ __all__ = [
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
+    "generate_cycle_fertigation_plan_with_cost",
     "calculate_deficiencies",
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",

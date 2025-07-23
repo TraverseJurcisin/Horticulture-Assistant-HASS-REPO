@@ -125,6 +125,7 @@ __all__ = [
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
+    "generate_cycle_fertigation_plan_with_cost",
     "recommend_precise_fertigation",
 ]
 
@@ -752,6 +753,46 @@ def generate_cycle_fertigation_plan(
             product=product,
         )
     return cycle_plan
+
+
+def generate_cycle_fertigation_plan_with_cost(
+    plant_type: str,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> tuple[Dict[str, Dict[int, Dict[str, float]]], float]:
+    """Return cycle fertigation plan and estimated total cost."""
+
+    plan = generate_cycle_fertigation_plan(
+        plant_type, purity, product=product
+    )
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_mix_cost,
+    )
+
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+
+    totals: Dict[str, float] = {}
+    for stage_plan in plan.values():
+        for day_schedule in stage_plan.values():
+            for nutrient, grams in day_schedule.items():
+                fert = fert_map.get(nutrient)
+                if fert:
+                    totals[fert] = totals.get(fert, 0.0) + grams
+
+    total = 0.0
+    if totals:
+        try:
+            total = estimate_mix_cost(totals)
+        except KeyError:
+            total = 0.0
+
+    return plan, round(total, 2)
 
 
 
