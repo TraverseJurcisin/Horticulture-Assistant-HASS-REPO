@@ -1,0 +1,12 @@
+{
+  "citrus": {
+    "general": "Prune regularly and monitor weekly for pests.",
+    "aphids": "Introduce ladybugs when counts exceed threshold; avoid broad-spectrum insecticides.",
+    "scale": "Apply horticultural oil and encourage parasitic wasps."
+  },
+  "lettuce": {
+    "general": "Rotate crops and maintain good airflow to reduce disease pressure.",
+    "aphids": "Release lacewings and use reflective mulches.",
+    "slugs": "Use shallow beer traps and nighttime scouting."
+  }
+}

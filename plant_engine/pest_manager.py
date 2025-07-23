@@ -8,6 +8,7 @@ from .utils import load_dataset, normalize_key
 DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
 PREVENTION_FILE = "pest_prevention.json"
+IPM_FILE = "ipm_guidelines.json"
 
 
 
@@ -15,6 +16,7 @@ PREVENTION_FILE = "pest_prevention.json"
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
+_IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -65,6 +67,28 @@ def recommend_prevention(plant_type: str, pests: Iterable[str]) -> Dict[str, str
     return actions
 
 
+def get_ipm_guidelines(plant_type: str) -> Dict[str, str]:
+    """Return integrated pest management guidance for a crop."""
+    return _IPM.get(normalize_key(plant_type), {})
+
+
+def recommend_ipm_actions(plant_type: str, pests: Iterable[str] | None = None) -> Dict[str, str]:
+    """Return IPM actions for the crop and specific pests if provided."""
+    data = get_ipm_guidelines(plant_type)
+    if not data:
+        return {}
+    actions: Dict[str, str] = {}
+    general = data.get("general")
+    if general:
+        actions["general"] = general
+    if pests:
+        for pest in pests:
+            action = data.get(normalize_key(pest))
+            if action:
+                actions[pest] = action
+    return actions
+
+
 __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
@@ -74,4 +98,6 @@ __all__ = [
     "recommend_beneficials",
     "get_pest_prevention",
     "recommend_prevention",
+    "get_ipm_guidelines",
+    "recommend_ipm_actions",
 ]
