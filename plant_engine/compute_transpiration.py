@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from functools import lru_cache
 from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
@@ -24,7 +25,7 @@ __all__ = [
 MM_TO_ML_PER_M2 = 1000
 
 
-@dataclass
+@dataclass(slots=True)
 class TranspirationMetrics:
     """Container for ET and transpiration calculations."""
 
@@ -37,8 +38,12 @@ class TranspirationMetrics:
         return asdict(self)
 
 
+@lru_cache(maxsize=None)
 def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
-    """Return Kc value from :data:`crop_coefficients.json` or ``1.0``."""
+    """Return crop coefficient for ``plant_type`` and ``stage``.
+
+    Results are cached to avoid repeated dataset lookups.
+    """
     plant = _KC_DATA.get(normalize_key(plant_type))
     if not plant:
         return 1.0
