@@ -1,4 +1,5 @@
 import pytest
+import json
 
 from plant_engine.environment_manager import (
     get_environmental_targets,
@@ -520,3 +521,20 @@ def test_score_environment_series():
 
 def test_score_environment_series_empty():
     assert score_environment_series([], "citrus") == 0.0
+
+
+def test_score_environment_weighting(tmp_path, monkeypatch):
+    overlay = tmp_path / "overlay"
+    overlay.mkdir()
+    (overlay / "environment_weights.json").write_text(
+        json.dumps({"temp_c": 2, "humidity_pct": 1, "light_ppfd": 1, "co2_ppm": 1})
+    )
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    import importlib
+    import plant_engine.environment_manager as em
+    importlib.reload(em)
+
+    current = {"temp_c": 30, "humidity_pct": 70, "light_ppfd": 200, "co2_ppm": 500}
+    # Without weighting the score would be 75
+    score = em.score_environment(current, "citrus", "seedling")
+    assert score == 60.0

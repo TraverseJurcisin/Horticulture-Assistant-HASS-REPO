@@ -4,4 +4,5 @@
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "growth_stages.json": "Expected duration and notes for each growth stage."
+  ,"environment_weights.json": "Importance weights for environment score calculation."
 }
