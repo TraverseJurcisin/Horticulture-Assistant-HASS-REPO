@@ -1,6 +1,7 @@
 """Plant engine package utilities."""
 
 from .utils import load_json, save_json
+from .datasets import list_datasets, get_dataset_description
 from .environment_manager import (
     get_environmental_targets,
     recommend_environment_adjustments,
@@ -159,6 +160,8 @@ from .compute_transpiration import TranspirationMetrics
 __all__ = [
     "load_json",
     "save_json",
+    "list_datasets",
+    "get_dataset_description",
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "optimize_environment",
