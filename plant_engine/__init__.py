@@ -56,6 +56,7 @@ from .disease_monitor import (
     estimate_disease_risk,
     generate_disease_report,
 )
+from .integrated_monitor import generate_integrated_monitoring_schedule
 from .disease_manager import (
     get_disease_guidelines,
     recommend_treatments as recommend_disease_treatments,
@@ -263,6 +264,7 @@ __all__ = [
     "recommend_disease_threshold_actions",
     "estimate_disease_risk",
     "generate_disease_report",
+    "generate_integrated_monitoring_schedule",
     "recommend_fertigation_schedule",
     "recommend_correction_schedule",
     "get_fertilizer_purity",
