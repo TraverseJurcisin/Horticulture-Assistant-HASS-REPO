@@ -80,5 +80,6 @@
   "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
   "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
-  "emitter_flow_rates.json": "Typical emitter flow rates in L/h."
+  "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
+  "canopy_area_guidelines.json": "Typical plant canopy area in square meters."
 }

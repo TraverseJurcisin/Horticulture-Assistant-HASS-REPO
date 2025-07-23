@@ -80,6 +80,10 @@ from .rootzone_model import (
     estimate_infiltration_time,
     RootZone,
 )
+from .canopy_manager import (
+    list_supported_plants as list_canopy_plants,
+    get_default_canopy_area,
+)
 from .soil_manager import (
     list_supported_plants as list_soil_plants,
     get_soil_targets,
@@ -346,6 +350,8 @@ __all__ = [
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
+    "list_canopy_plants",
+    "get_default_canopy_area",
     "STAGE_MULTIPLIERS",
     "get_stage_multiplier",
     "DEFAULT_ENV",

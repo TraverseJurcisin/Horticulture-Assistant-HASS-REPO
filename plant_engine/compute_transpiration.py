@@ -5,6 +5,7 @@ from dataclasses import asdict, dataclass
 from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
+from .canopy_manager import get_default_canopy_area
 from .constants import DEFAULT_ENV
 
 from plant_engine.et_model import calculate_et0, calculate_eta
@@ -75,7 +76,13 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
             kc = 1.0
     et_actual = calculate_eta(et0, kc)
 
-    canopy_m2 = plant_profile.get("canopy_m2", 0.25)
+    canopy_m2 = plant_profile.get("canopy_m2")
+    if canopy_m2 is None:
+        plant_type = plant_profile.get("plant_type")
+        if plant_type:
+            canopy_m2 = get_default_canopy_area(plant_type)
+        else:
+            canopy_m2 = 0.25
     mm_per_day = et_actual
     ml_per_day = mm_per_day * MM_TO_ML_PER_M2 * canopy_m2
 

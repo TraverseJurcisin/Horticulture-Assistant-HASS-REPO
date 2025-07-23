@@ -58,3 +58,15 @@ def test_compute_transpiration_missing_env_defaults():
     result = compute_transpiration(profile, {"temp_c": 25})
     # Ensure calculation succeeded and returned positive transpiration
     assert result["transpiration_ml_day"] > 0
+
+
+def test_compute_transpiration_dataset_canopy():
+    from plant_engine.canopy_manager import get_default_canopy_area
+
+    profile = {"plant_type": "tomato", "stage": "vegetative"}
+    env = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    expected = compute_transpiration(
+        {**profile, "canopy_m2": get_default_canopy_area("tomato")}, env
+    )
+    result = compute_transpiration(profile, env)
+    assert result == expected
