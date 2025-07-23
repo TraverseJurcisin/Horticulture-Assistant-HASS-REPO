@@ -27,3 +27,12 @@ def test_classify_water_quality():
     assert rating_fair == "fair"
     rating_poor = water_quality.classify_water_quality({"Na": 60, "Cl": 120, "B": 2.0})
     assert rating_poor == "poor"
+
+
+def test_score_water_quality():
+    assert water_quality.score_water_quality({"Na": 40}) == 100.0
+    # Exceeding by 20% deducts 5 points
+    score = water_quality.score_water_quality({"Na": 60})
+    assert 94.0 <= score <= 95.0
+    low_score = water_quality.score_water_quality({"Na": 120, "Cl": 120})
+    assert low_score < score

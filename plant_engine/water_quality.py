@@ -16,6 +16,7 @@ __all__ = [
     "get_threshold",
     "interpret_water_profile",
     "classify_water_quality",
+    "score_water_quality",
 ]
 
 
@@ -61,3 +62,18 @@ def classify_water_quality(water_test: Dict[str, float]) -> str:
     if count <= 2:
         return "fair"
     return "poor"
+
+
+def score_water_quality(water_test: Dict[str, float]) -> float:
+    """Return a 0-100 score based on threshold exceedances."""
+    score = 100.0
+    for ion, limit in _THRESHOLDS.items():
+        if ion not in water_test:
+            continue
+        value = water_test[ion]
+        if value <= limit:
+            continue
+        exceed_ratio = (value - limit) / limit
+        penalty = min(exceed_ratio, 1.0) * 25
+        score -= penalty
+    return round(max(score, 0.0), 1)

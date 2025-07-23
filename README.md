@@ -211,6 +211,8 @@ or incomplete and should only be used as a starting point for your own research.
   hours required to hit midpoint DLI targets at the current PPFD.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
+- **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
+  returns a 0‑100 rating based on toxicity thresholds.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,
   nutrient and pest guidance for quick reference.
 
