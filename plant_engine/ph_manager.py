@@ -6,15 +6,18 @@ from typing import Dict, Iterable
 from .utils import load_dataset
 
 DATA_FILE = "ph_guidelines.json"
+ADJUST_FILE = "ph_adjustment_factors.json"
 
 # Cached dataset loaded once
 _DATA: Dict[str, Dict[str, Iterable[float]]] = load_dataset(DATA_FILE)
+_ADJUST: Dict[str, Dict[str, float]] = load_dataset(ADJUST_FILE)
 
 __all__ = [
     "list_supported_plants",
     "get_ph_range",
     "recommend_ph_adjustment",
     "recommended_ph_setpoint",
+    "estimate_ph_adjustment_volume",
 ]
 
 
@@ -63,3 +66,37 @@ def recommended_ph_setpoint(plant_type: str, stage: str | None = None) -> float 
     if not rng:
         return None
     return round((rng[0] + rng[1]) / 2, 2)
+
+
+def estimate_ph_adjustment_volume(
+    current_ph: float,
+    target_ph: float,
+    volume_l: float,
+    product: str,
+) -> float | None:
+    """Return milliliters of ``product`` to adjust solution pH.
+
+    The :data:`ph_adjustment_factors.json` dataset defines the expected pH
+    change per milliliter added to one liter of solution. The required volume
+    scales linearly with the total solution volume. ``None`` is returned if the
+    product is unknown.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    delta = target_ph - current_ph
+    if delta == 0:
+        return 0.0
+
+    info = _ADJUST.get(product)
+    if not info:
+        return None
+    effect = info.get("effect_per_ml_per_l")
+    if not isinstance(effect, (int, float)) or effect == 0:
+        return None
+
+    # Effect per ml for the whole volume
+    effect_total = effect / volume_l
+    ml_needed = delta / effect_total
+    return round(abs(ml_needed), 2)
