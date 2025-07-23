@@ -172,6 +172,7 @@ Key reference datasets reside in the `data/` directory:
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
+- `water_usage_guidelines.json` – estimated daily water use by crop stage
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `yield/` – per‑plant yield logs created during operation
@@ -225,7 +226,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Uptake Cost Estimation**: `estimate_stage_cost` and `estimate_cycle_cost`
   convert those totals into fertilizer costs using price data.
 - **Irrigation Targets**: `get_daily_irrigation_target` returns default
-  milliliters per plant based on `irrigation_guidelines.json`.
+  milliliters per plant based on `irrigation_guidelines.json`. The `get_daily_water_use` helper provides similar estimates from `water_usage_guidelines.json`.
 - **Irrigation Efficiency**: `adjust_irrigation_for_efficiency` scales volumes
   based on delivery method using `irrigation_efficiency.json`.
 - **Irrigation Schedule Efficiency**: `generate_irrigation_schedule` accepts a
