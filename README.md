@@ -178,7 +178,9 @@ the same entries.
 You can override the default `data/` directory by setting the environment
 variable `HORTICULTURE_DATA_DIR` when running scripts or tests. An additional
 `HORTICULTURE_OVERLAY_DIR` may contain files that override or extend those
-datasets without copying the entire directory.
+datasets without copying the entire directory. Overlay files are merged
+recursively so nested keys can be customized without redefining the entire
+structure.
 
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.
