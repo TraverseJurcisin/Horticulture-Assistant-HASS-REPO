@@ -220,6 +220,8 @@ or incomplete and should only be used as a starting point for your own research.
   severity and treatment guidance based on new `disease_thresholds.json`.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
   reports provide an estimated harvest date based on `growth_stages.json`.
+- **Stage Schedule Planner**: `build_stage_schedule` returns the expected start
+  and end date of each growth stage when given a planting date.
 - **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
   expected totals from `yield_estimates.json`.
 - **Environment Quality Rating**: `classify_environment_quality` converts the
