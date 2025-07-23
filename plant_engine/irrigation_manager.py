@@ -1,7 +1,7 @@
 """Helpers for irrigation scheduling."""
 from __future__ import annotations
 
-from typing import Mapping, Dict
+from typing import Mapping, Dict, Iterable
 
 from .utils import load_dataset, normalize_key
 from .et_model import calculate_eta
@@ -13,6 +13,7 @@ __all__ = [
     "recommend_irrigation_interval",
     "get_crop_coefficient",
     "estimate_irrigation_demand",
+    "estimate_irrigation_demand_series",
     "recommend_irrigation_from_environment",
     "list_supported_plants",
     "get_daily_irrigation_target",
@@ -127,6 +128,32 @@ def estimate_irrigation_demand(
     eta_mm = calculate_eta(et0_mm_day, kc)
     liters = eta_mm * area_m2
     return round(liters, 2)
+
+
+def estimate_irrigation_demand_series(
+    plant_type: str, stage: str, et0_series: Iterable[float], area_m2: float = 1.0
+) -> list[float]:
+    """Return irrigation demand for each ET₀ value in ``et0_series``.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop type used to look up the crop coefficient.
+    stage : str
+        Growth stage for the coefficient lookup.
+    et0_series : Iterable[float]
+        Sequence of daily reference evapotranspiration values (mm/day).
+    area_m2 : float, optional
+        Plant canopy area in square meters used by
+        :func:`estimate_irrigation_demand`.
+    """
+
+    volumes: list[float] = []
+    for et0 in et0_series:
+        volumes.append(
+            estimate_irrigation_demand(plant_type, stage, float(et0), area_m2)
+        )
+    return volumes
 
 
 def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
