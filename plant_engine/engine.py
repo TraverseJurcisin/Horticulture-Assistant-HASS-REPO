@@ -1,6 +1,7 @@
 import os
 import logging
 from typing import Dict, Mapping, Any
+
 from plant_engine.utils import load_json, save_json
 from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
@@ -17,23 +18,18 @@ from plant_engine.environment_manager import (
     optimize_environment,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
-from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
+from plant_engine.pest_manager import (
+    recommend_treatments as recommend_pest_treatments,
+)
+from plant_engine.disease_manager import (
+    recommend_treatments as recommend_disease_treatments,
+)
 from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
+from plant_engine.constants import STAGE_MULTIPLIERS, DEFAULT_ENV
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
-
-# Default environment readings used when a profile lacks recent data
-DEFAULT_ENV = {
-    "temp_c": 26,
-    "temp_c_max": 30,
-    "temp_c_min": 22,
-    "rh_pct": 65,
-    "par_w_m2": 350,
-    "wind_speed_m_s": 1.2,
-}
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -61,16 +57,15 @@ def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
         mapped["photoperiod_hours"] = env["photoperiod_hours"]
     return mapped
 
-# Basic multipliers to scale nutrient recommendations by growth stage
-STAGE_MULTIPLIERS = {
-    "seedling": 0.5,
-    "vegetative": 1.0,
-    "flowering": 1.2,
-    "fruiting": 1.1,
-}
 
 def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
-    """Run a full daily processing cycle for a plant profile."""
+    """Return a consolidated daily report for ``plant_id``.
+
+    The function orchestrates all processing steps including transpiration
+    calculation, environment optimization, nutrient recommendations and
+    optional AI analysis. Results are written to ``data/reports`` and also
+    returned as a dictionary.
+    """
     profile = load_profile(plant_id)
     plant_file = os.path.join(PLANTS_DIR, f"{plant_id}.json")
 

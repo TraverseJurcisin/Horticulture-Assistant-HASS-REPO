@@ -16,16 +16,9 @@ except ImportError:
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.utils import load_json, save_json
+from plant_engine.constants import STAGE_MULTIPLIERS
 
 _LOGGER = logging.getLogger(__name__)
-
-# Default multipliers for nutrient targets by lifecycle stage
-STAGE_MULTIPLIERS = {
-    "seedling": 0.5,
-    "vegetative": 1.0,
-    "flowering": 1.2,
-    "fruiting": 1.1,
-}
 
 # Map common stage shorthand to formal stage names
 STAGE_SYNONYMS = {

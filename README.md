@@ -125,6 +125,7 @@ horticulture-assistant/
 ├── blueprints/                                # automation blueprints
 ├── data/                                      # reference datasets
 ├── plant_engine/                              # nutrient and disease modules
+│   └── constants.py                           # shared constants
 ├── scripts/                                   # helper scripts
 ├── plants/                                    # example plant profiles
 ├── plant_registry.json
@@ -183,6 +184,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Custom Plant Profiles**: Drop JSON profiles in `plants/` for per‑plant settings.
 - **Auto Approval**: Toggle `input_boolean.auto_approve_all` to apply AI recommendations automatically.
 - **Data Logging**: Set `state_class: measurement` on sensors for proper history recording.
+- **Customization**: Edit `plant_engine/constants.py` to tweak default environment
+  readings or nutrient multipliers when profiles omit them.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets and can optionally include
