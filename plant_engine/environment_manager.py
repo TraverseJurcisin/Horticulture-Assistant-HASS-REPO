@@ -26,6 +26,7 @@ SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
+SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -34,6 +35,7 @@ ACTION_LABELS = {
     "humidity_pct": "humidity",
     "light_ppfd": "light",
     "co2_ppm": "co2",
+    "soil_temp_c": "soil_temperature",
 }
 
 # aliases for environment keys used when comparing readings. This allows
@@ -49,6 +51,8 @@ ENV_ALIASES = {
     "ec": ["ec", "EC"],
     "wind_m_s": ["wind_m_s", "wind", "wind_speed"],
     "soil_moisture_pct": ["soil_moisture_pct", "soil_moisture", "moisture", "vwc"],
+    "soil_temp_c": ["soil_temp_c", "soil_temperature", "soil_temp", "root_temp"],
+    "soil_temp_f": ["soil_temp_f", "soil_temp_fahrenheit"],
 }
 
 # reverse mapping for constant time alias lookups
@@ -148,6 +152,7 @@ __all__ = [
     "get_target_photoperiod",
     "get_target_co2",
     "get_target_soil_moisture",
+    "get_target_soil_temperature",
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
@@ -165,6 +170,7 @@ __all__ = [
     "evaluate_wind_stress",
     "evaluate_humidity_stress",
     "evaluate_moisture_stress",
+    "evaluate_soil_temperature_stress",
     "get_humidity_action",
     "recommend_humidity_action",
     "evaluate_ph_stress",
@@ -203,6 +209,7 @@ _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
+_SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -352,6 +359,7 @@ class StressFlags:
     humidity: str | None
     moisture: str | None
     ph: str | None
+    soil_temp: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -976,6 +984,32 @@ def evaluate_moisture_stress(
     return None
 
 
+def get_target_soil_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+    """Return recommended soil temperature range for a plant stage."""
+
+    return _lookup_range(_SOIL_TEMP_DATA, plant_type, stage)
+
+
+def evaluate_soil_temperature_stress(
+    soil_temp_c: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
+    """Return 'cold' or 'hot' if soil temperature is outside the target range."""
+
+    if soil_temp_c is None:
+        return None
+
+    target = get_target_soil_temperature(plant_type, stage)
+    if not target:
+        return None
+
+    low, high = target
+    if soil_temp_c < low:
+        return "cold"
+    if soil_temp_c > high:
+        return "hot"
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1005,6 +1039,7 @@ def evaluate_stress_conditions(
     moisture_pct: float | None,
     plant_type: str,
     stage: str | None = None,
+    soil_temp_c: float | None = None,
 ) -> StressFlags:
     """Return consolidated stress flags for current conditions."""
 
@@ -1016,6 +1051,7 @@ def evaluate_stress_conditions(
         humidity=evaluate_humidity_stress(humidity_pct, plant_type),
         moisture=evaluate_moisture_stress(moisture_pct, plant_type, stage),
         ph=evaluate_ph_stress(ph, plant_type, stage),
+        soil_temp=evaluate_soil_temperature_stress(soil_temp_c, plant_type, stage),
     )
 
 

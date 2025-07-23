@@ -65,6 +65,7 @@
   "soil_texture_parameters.json": "Typical sand, silt and clay percentages.",
   "soil_infiltration_rates.json": "Infiltration rates (mm/hr) by soil texture.",
   "soil_moisture_guidelines.json": "Recommended soil moisture percentages for common crops.",
+  "soil_temperature_guidelines.json": "Recommended soil temperature ranges for germination and growth stages.",
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "co2_prices.json": "Cost per kg of CO₂ for enrichment.",
