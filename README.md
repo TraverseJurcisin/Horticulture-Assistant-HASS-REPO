@@ -244,6 +244,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Pest Monitoring Report**: `generate_pest_report` combines severity,
   treatment, biological control, severity actions and prevention advice for observed pests using `pest_severity_actions.json`.
 - **Pest Scouting Intervals**: `get_pest_monitoring_interval` returns recommended days between checks using `pest_monitoring_intervals.json`.
+- **Next Scouting Date**: `next_monitor_date` adds ``timedelta`` days to the last
+  scouting date based on these intervals.
 - **Disease Monitoring Report**: `generate_disease_report` now provides
   severity and treatment guidance based on new `disease_thresholds.json`.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily

@@ -6,6 +6,7 @@
   "nutrient_weights.json": "Relative importance weighting for nutrient scoring.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "pest_thresholds.json": "Economic threshold counts for triggering actions.",
+  "pest_monitoring_intervals.json": "Recommended days between pest scouting events.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
   "growth_stages.json": "Expected duration and notes for each growth stage.",
