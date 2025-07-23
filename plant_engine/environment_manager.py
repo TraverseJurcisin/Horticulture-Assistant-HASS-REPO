@@ -276,6 +276,9 @@ class EnvironmentOptimization:
     wind_stress: bool | None = None
     humidity_stress: str | None = None
     ph_stress: str | None = None
+    quality: str | None = None
+    score: float | None = None
+    water_quality: WaterQualityInfo | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -302,6 +305,9 @@ class EnvironmentOptimization:
             "wind_stress": self.wind_stress,
             "humidity_stress": self.humidity_stress,
             "ph_stress": self.ph_stress,
+            "quality": self.quality,
+            "score": self.score,
+            "water_quality": self.water_quality.as_dict() if self.water_quality else None,
         }
 
 
@@ -1081,7 +1087,10 @@ def calculate_environment_metrics(
 
 
 def optimize_environment(
-    current: Mapping[str, float], plant_type: str, stage: str | None = None
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    water_test: Mapping[str, float] | None = None,
 ) -> Dict[str, object]:
     """Return optimized environment data for a plant.
 
@@ -1147,6 +1156,15 @@ def optimize_environment(
         stage,
     )
 
+    quality = classify_environment_quality(readings, plant_type, stage)
+    score = score_environment(readings, plant_type, stage)
+
+    wq = None
+    if water_test is not None:
+        rating = water_quality.classify_water_quality(water_test)
+        wscore = water_quality.score_water_quality(water_test)
+        wq = WaterQualityInfo(rating=rating, score=wscore)
+
     result = EnvironmentOptimization(
         setpoints,
         actions,
@@ -1164,6 +1182,9 @@ def optimize_environment(
         wind_stress=stress.wind,
         humidity_stress=stress.humidity,
         ph_stress=stress.ph,
+        quality=quality,
+        score=score,
+        water_quality=wq,
     )
     return result.as_dict()
 
