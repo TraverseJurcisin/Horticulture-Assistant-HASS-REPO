@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
 
@@ -17,6 +17,7 @@ __all__ = [
     "TranspirationMetrics",
     "lookup_crop_coefficient",
     "compute_transpiration",
+    "compute_transpiration_series",
 ]
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
 MM_TO_ML_PER_M2 = 1000
@@ -78,4 +79,31 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
     )
 
     return metrics.as_dict()
+
+
+def compute_transpiration_series(
+    plant_profile: Mapping, env_series: Iterable[Mapping]
+) -> Dict[str, float]:
+    """Return averaged transpiration metrics for a sequence of readings."""
+
+    total_et0 = 0.0
+    total_eta = 0.0
+    total_ml = 0.0
+    count = 0
+
+    for env in env_series:
+        metrics = compute_transpiration(plant_profile, env)
+        total_et0 += metrics["et0_mm_day"]
+        total_eta += metrics["eta_mm_day"]
+        total_ml += metrics["transpiration_ml_day"]
+        count += 1
+
+    if count == 0:
+        return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
+
+    return TranspirationMetrics(
+        round(total_et0 / count, 2),
+        round(total_eta / count, 2),
+        round(total_ml / count, 1),
+    ).as_dict()
 
