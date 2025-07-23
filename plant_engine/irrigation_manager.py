@@ -15,6 +15,7 @@ __all__ = [
     "recommend_irrigation_interval",
     "get_crop_coefficient",
     "estimate_irrigation_demand",
+    "estimate_irrigation_from_month",
     "recommend_irrigation_from_environment",
     "list_supported_plants",
     "get_daily_irrigation_target",
@@ -190,6 +191,22 @@ def estimate_irrigation_demand(
     eta_mm = calculate_eta(et0_mm_day, kc)
     liters = eta_mm * area_m2
     return round(liters, 2)
+
+
+def estimate_irrigation_from_month(
+    plant_type: str,
+    stage: str,
+    month: int,
+    area_m2: float = 1.0,
+) -> float:
+    """Return irrigation demand using monthly reference ET₀."""
+
+    from .et_model import get_reference_et0
+
+    et0 = get_reference_et0(month)
+    if et0 is None:
+        return 0.0
+    return estimate_irrigation_demand(plant_type, stage, et0, area_m2)
 
 
 def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:

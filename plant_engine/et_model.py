@@ -1,5 +1,10 @@
+"""Evapotranspiration model and reference lookups."""
+
 import math
+from functools import lru_cache
 from typing import Optional
+
+from .utils import load_dataset
 
 def calculate_et0(
     temperature_c: float,
@@ -44,3 +49,26 @@ def calculate_et0(
 def calculate_eta(et0: float, kc: float = 1.0) -> float:
     """Calculate Actual Evapotranspiration based on Kc coefficient."""
     return round(et0 * kc, 2)
+
+
+ET0_DATA_FILE = "reference_et0.json"
+
+
+@lru_cache(maxsize=None)
+def get_reference_et0(month: int) -> float | None:
+    """Return typical reference ET₀ for the given month if known."""
+
+    if not 1 <= month <= 12:
+        raise ValueError("month must be between 1 and 12")
+
+    data = load_dataset(ET0_DATA_FILE)
+    value = data.get(str(month))
+    return float(value) if isinstance(value, (int, float)) else None
+
+
+__all__ = [
+    "calculate_et0",
+    "calculate_eta",
+    "get_reference_et0",
+]
+

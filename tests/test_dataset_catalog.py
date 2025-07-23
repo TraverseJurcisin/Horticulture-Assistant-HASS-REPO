@@ -10,6 +10,7 @@ def test_list_datasets_contains_known():
     assert "nutrient_guidelines.json" in datasets
     assert "irrigation_intervals.json" in datasets
     assert "soil_moisture_guidelines.json" in datasets
+    assert "reference_et0.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -36,6 +37,9 @@ def test_get_dataset_description():
 
     desc6 = get_dataset_description("soil_moisture_guidelines.json")
     assert "moisture" in desc6
+
+    desc7 = get_dataset_description("reference_et0.json")
+    assert "ET0" in desc7 or "et0" in desc7.lower()
 
 
 def test_search_datasets():
