@@ -1,6 +1,7 @@
 from plant_engine.nutrient_interactions import (
     list_interactions,
     get_interaction_info,
+    get_max_ratio,
     check_imbalances,
 )
 
@@ -13,6 +14,13 @@ def test_list_interactions():
 def test_get_interaction_info():
     info = get_interaction_info("K_Mg")
     assert info["max_ratio"] == 3
+
+
+def test_get_max_ratio():
+    assert get_max_ratio("K", "Mg") == 3
+    assert get_max_ratio("Mg", "K") == 3
+    assert get_max_ratio("N", "P") == 8
+    assert get_max_ratio("X", "Y") is None
 
 
 def test_check_imbalances():
