@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Dict
+from typing import Dict, Mapping
 
 from plant_engine.utils import load_dataset
 

@@ -1,4 +1,4 @@
-from typing import Literal, List, Dict, Optional
+from typing import Literal, List, Dict
 
 
 class ProductCostAnalyzer:
@@ -48,7 +48,7 @@ class ProductCostAnalyzer:
                     entry["price"], entry["size"], entry["unit"]
                 )
                 per_unit_prices.append(cost)
-            except ValueError as e:
+            except ValueError:
                 continue
 
         if not per_unit_prices:

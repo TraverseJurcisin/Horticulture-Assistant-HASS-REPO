@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Pest monitoring utilities using threshold datasets."""
+
+from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from typing import Dict, Mapping

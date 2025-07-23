@@ -1,6 +1,5 @@
 import importlib
 import json
-from pathlib import Path
 
 import plant_engine.yield_prediction as yp
 from plant_engine import yield_manager

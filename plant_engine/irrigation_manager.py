@@ -1,7 +1,7 @@
 """Helpers for irrigation scheduling."""
 from __future__ import annotations
 
-from typing import Optional, Mapping, Dict
+from typing import Mapping, Dict
 
 from .utils import load_dataset, normalize_key
 from .et_model import calculate_eta
