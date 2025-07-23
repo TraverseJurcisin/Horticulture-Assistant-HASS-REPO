@@ -31,13 +31,14 @@ def write_profile_sections(
         if file_path.exists() and not overwrite:
             _LOGGER.info("File %s already exists. Skipping write.", file_path)
             continue
-        if save_json(file_path, data):
-            if file_path.exists() and overwrite:
+        try:
+            save_json(file_path, data)
+            if overwrite and file_path.exists():
                 _LOGGER.info("Overwrote existing file: %s", file_path)
             else:
                 _LOGGER.info("Created file: %s", file_path)
-        else:
-            _LOGGER.error("Failed to write %s", file_path)
+        except Exception as err:  # pragma: no cover - unexpected errors
+            _LOGGER.error("Failed to write %s: %s", file_path, err)
 
     _LOGGER.info("Profile files prepared for '%s' at %s", plant_id, plant_dir)
     return plant_id
