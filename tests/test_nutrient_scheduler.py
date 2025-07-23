@@ -3,6 +3,8 @@ import shutil
 import importlib.util
 import sys
 import types
+import json
+import plant_engine.utils as utils
 
 MODULE_PATH = (
     Path(__file__).resolve().parents[1]
@@ -88,3 +90,30 @@ def test_tag_based_modifier(tmp_path):
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("tag", hass=hass).as_dict()
     assert result["N"] == 48.0
+
+
+def test_dataset_override(tmp_path, monkeypatch):
+    overlay = tmp_path / "overlay"
+    overlay.mkdir()
+    (overlay / "nutrient_tag_modifiers.json").write_text(
+        json.dumps({"test-tag": {"N": 1.5}})
+    )
+    assert (overlay / "nutrient_tag_modifiers.json").exists()
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    import importlib
+    importlib.reload(utils)
+    nutrient_scheduler.load_dataset = utils.load_dataset
+    utils.load_dataset.cache_clear()
+    nutrient_scheduler._tag_modifiers.cache_clear()
+
+    assert nutrient_scheduler._tag_modifiers()["test_tag"]["N"] == 1.5
+
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "tag.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling", "tags": ["test-tag"]}}'
+    )
+    hass = _hass_for(tmp_path)
+    result = schedule_nutrients("tag", hass=hass).as_dict()
+    assert result["N"] == 60.0
+    monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR", raising=False)

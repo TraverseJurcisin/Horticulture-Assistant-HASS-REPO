@@ -152,6 +152,7 @@ Key reference datasets reside in the `data/` directory:
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
 - `light_spectrum_guidelines.json` – optimal red/blue light ratios by stage
 - `nutrient_uptake.json` – typical daily N‑P‑K demand per plant stage
+- `nutrient_tag_modifiers.json` – per-tag multipliers for nutrient scheduling
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
 - `humidity_actions.json` – actions to correct low or high humidity levels

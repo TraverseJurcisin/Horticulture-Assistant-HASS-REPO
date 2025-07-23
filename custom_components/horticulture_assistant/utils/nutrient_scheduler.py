@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import logging
 from dataclasses import dataclass, asdict
+from functools import lru_cache
 
 try:
     # If running within Home Assistant, this will be available
@@ -14,7 +15,7 @@ except ImportError:
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.utils import load_json, save_json
+from plant_engine.utils import load_json, save_json, load_dataset
 from plant_engine.constants import STAGE_MULTIPLIERS
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,19 +33,34 @@ STAGE_SYNONYMS = {
     "fruiting": "fruiting",
 }
 
-# Tag-specific nutrient modifiers (multipliers for specific nutrients)
-TAG_NUTRIENT_MODIFIERS = {
-    "high-nitrogen": {"N": 1.2},
-    "low-nitrogen": {"N": 0.8},
-    "high_nitrogen": {"N": 1.2},       # allow underscore variants
-    "low_nitrogen": {"N": 0.8},
-    "potassium-sensitive": {"K": 0.8},
-    "potassium_sensitive": {"K": 0.8},
-    "high-potassium": {"K": 1.2},
-    "high_potassium": {"K": 1.2},
-    "low-potassium": {"K": 0.9},
-    "low_potassium": {"K": 0.9},
-}
+# Normalize tags to lowercase with underscores for dataset lookups.
+def _normalize_tag(tag: str) -> str:
+    return str(tag).lower().replace(" ", "_").replace("-", "_")
+
+
+# Tag-specific nutrient modifiers loaded from a dataset.  Users can extend
+# or override this mapping by providing ``nutrient_tag_modifiers.json`` in
+# the dataset overlay directory.
+TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
+
+@lru_cache(maxsize=1)
+def _tag_modifiers() -> dict[str, dict[str, float]]:
+    """Return normalized tag modifier mapping from the dataset."""
+    raw = load_dataset(TAG_MODIFIER_FILE)
+    modifiers: dict[str, dict[str, float]] = {}
+    for tag, data in raw.items():
+        norm_tag = _normalize_tag(tag)
+        if not isinstance(data, dict):
+            continue
+        mods: dict[str, float] = {}
+        for nutrient, factor in data.items():
+            try:
+                mods[nutrient] = float(factor)
+            except (TypeError, ValueError):
+                continue
+        if mods:
+            modifiers[norm_tag] = mods
+    return modifiers
 
 PLANT_REGISTRY_FILE = "plant_registry.json"
 
@@ -112,10 +128,11 @@ def _stage_multiplier(profile: dict, stage_key: str) -> float:
 
 
 def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
-    """Modify ``targets`` in place using tag multipliers."""
+    """Modify ``targets`` in place using tag multipliers from the dataset."""
 
+    modifiers = _tag_modifiers()
     for tag in tags:
-        mods = TAG_NUTRIENT_MODIFIERS.get(tag)
+        mods = modifiers.get(_normalize_tag(tag))
         if not mods:
             continue
         for nut, factor in mods.items():
