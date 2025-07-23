@@ -12,6 +12,7 @@ from plant_engine.nutrient_manager import (
     get_stage_ratio,
     score_nutrient_levels,
     score_nutrient_series,
+    normalize_levels,
 )
 
 
@@ -87,7 +88,9 @@ def test_score_nutrient_levels_weighted(tmp_path, monkeypatch):
     (overlay / "nutrient_weights.json").write_text(json.dumps(weights))
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
+    import plant_engine.utils as utils
     import plant_engine.nutrient_manager as nm
+    utils.clear_dataset_cache()
     importlib.reload(nm)
     current = {"N": 80, "P": 30, "K": 60}
     score = nm.score_nutrient_levels(current, "tomato", "fruiting")
@@ -126,3 +129,15 @@ def test_score_nutrient_series():
     s2 = {"N": 60, "P": 50, "K": 100}
     score = score_nutrient_series([s1, s2], "tomato", "fruiting")
     assert score == (100.0 + score_nutrient_levels(s2, "tomato", "fruiting")) / 2
+
+
+def test_normalize_levels():
+    raw = {"N": "50", "P": -10, "K": None, "Ca": 20.5}
+    result = normalize_levels(raw)
+    assert result == {"N": 50.0, "P": 0.0, "Ca": 20.5}
+
+
+def test_deficiency_with_invalid_values():
+    levels = {"N": "30", "P": -5, "K": "bad"}
+    deficits = calculate_deficiencies(levels, "tomato", "vegetative")
+    assert "N" in deficits and deficits["N"] > 0
