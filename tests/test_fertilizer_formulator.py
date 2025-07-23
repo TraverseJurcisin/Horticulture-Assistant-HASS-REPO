@@ -26,6 +26,7 @@ calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
 check_solubility_limits = fert_mod.check_solubility_limits
+estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 
 
 def test_convert_guaranteed_analysis():
@@ -168,4 +169,14 @@ def test_check_solubility_limits():
 
     with pytest.raises(ValueError):
         check_solubility_limits(schedule, 0)
+
+
+def test_estimate_cost_per_nutrient():
+    costs = estimate_cost_per_nutrient("foxfarm_grow_big")
+    assert "N" in costs and costs["N"] > 0
+    # cost per nutrient should be higher for micro nutrients
+    assert costs["N"] < costs.get("Fe", costs["N"])
+
+    with pytest.raises(KeyError):
+        estimate_cost_per_nutrient("unknown")
 
