@@ -3,7 +3,9 @@ from plant_engine.deficiency_manager import (
     get_deficiency_symptom,
     diagnose_deficiencies,
     diagnose_deficiencies_detailed,
+    diagnose_deficiency_causes,
     get_deficiency_treatment,
+    get_deficiency_cause,
     get_nutrient_mobility,
     recommend_deficiency_treatments,
 )
@@ -55,4 +57,18 @@ def test_diagnose_deficiencies_detailed():
     details = diagnose_deficiencies_detailed(current, "spinach", "harvest")
     assert details["N"]["mobility"] == "mobile"
     assert "symptom" in details["N"]
+    assert "cause" in details["N"]
+
+
+def test_get_deficiency_cause():
+    cause = get_deficiency_cause("N")
+    assert "fertilization" in cause.lower() or "organic" in cause.lower()
+    assert get_deficiency_cause("unknown") == ""
+
+
+def test_diagnose_deficiency_causes():
+    guidelines = get_recommended_levels("spinach", "harvest")
+    current = {key: 0 for key in guidelines}
+    causes = diagnose_deficiency_causes(current, "spinach", "harvest")
+    assert "N" in causes
 

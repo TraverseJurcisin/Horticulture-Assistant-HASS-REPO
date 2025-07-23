@@ -155,6 +155,7 @@ Key reference datasets reside in the `data/` directory:
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
 - `wind_stress_thresholds.json` – maximum safe wind speed before damage
 - `nutrient_deficiency_treatments.json` – remedies for common nutrient shortages
+- `nutrient_deficiency_causes.json` – common root causes for nutrient shortages
 - `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `nutrient_toxicity_thresholds.json` – upper limits to flag potential toxicity
