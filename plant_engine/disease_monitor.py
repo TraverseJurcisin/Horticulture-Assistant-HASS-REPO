@@ -24,6 +24,7 @@ __all__ = [
     "recommend_threshold_actions",
     "get_monitoring_interval",
     "next_monitor_date",
+    "generate_monitoring_schedule",
     "generate_disease_report",
     "DiseaseReport",
 ]
@@ -104,6 +105,19 @@ def next_monitor_date(
     if interval is None:
         return None
     return last_date + timedelta(days=interval)
+
+
+def generate_monitoring_schedule(
+    plant_type: str,
+    stage: str | None,
+    start: date,
+    events: int,
+) -> list[date]:
+    """Return list of upcoming disease monitoring dates."""
+    interval = get_monitoring_interval(plant_type, stage)
+    if interval is None or events <= 0:
+        return []
+    return [start + timedelta(days=interval * i) for i in range(1, events + 1)]
 
 
 @dataclass
