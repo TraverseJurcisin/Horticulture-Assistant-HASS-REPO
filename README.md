@@ -149,6 +149,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_surplus_actions.json` – steps to mitigate excess nutrient levels
 - `nutrient_interactions.json` – warning ratios for antagonistic nutrients
 - `nutrient_toxicity_thresholds.json` – upper limits to flag potential toxicity
+- `ph_nutrient_availability.json` – relative nutrient availability at different pH values
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
@@ -205,6 +206,9 @@ or incomplete and should only be used as a starting point for your own research.
   alongside recommended adjustments and calculated metrics in one step.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,
   nutrient and pest guidance for quick reference.
+- **pH Nutrient Availability**: `get_nutrient_availability` returns relative
+  availability of macro and micronutrients at a given pH so you can quickly
+  identify limiting factors.
 
 
 ### Automation Blueprint Guide

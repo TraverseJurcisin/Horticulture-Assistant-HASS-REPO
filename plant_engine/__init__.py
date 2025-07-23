@@ -105,6 +105,8 @@ from .ph_manager import (
     list_supported_plants as list_ph_plants,
     get_ph_range,
     recommend_ph_adjustment,
+    get_nutrient_availability,
+    limiting_nutrients,
 )
 from .thermal_time import (
     calculate_gdd,
@@ -182,6 +184,8 @@ __all__ = [
     "list_ph_plants",
     "get_ph_range",
     "recommend_ph_adjustment",
+    "get_nutrient_availability",
+    "limiting_nutrients",
     "list_pruning_plants",
     "list_pruning_stages",
     "get_pruning_instructions",

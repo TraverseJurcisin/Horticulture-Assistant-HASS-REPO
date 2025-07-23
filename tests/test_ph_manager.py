@@ -27,3 +27,12 @@ def test_recommended_ph_setpoint():
     assert ph_manager.recommended_ph_setpoint("citrus") == 6.0
     assert ph_manager.recommended_ph_setpoint("unknown") is None
 
+
+def test_nutrient_availability_helpers():
+    avail = ph_manager.get_nutrient_availability(6.0)
+    assert avail["N"] == 1.0
+    assert "Fe" in avail
+    assert ph_manager.limiting_nutrients(7.5) != []
+    with pytest.raises(ValueError):
+        ph_manager.get_nutrient_availability(-1)
+
