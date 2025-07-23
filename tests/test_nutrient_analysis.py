@@ -12,3 +12,6 @@ def test_analyze_nutrient_profile():
     assert "toxicities" in result
     assert result["deficiencies"]
     assert not result["interaction_warnings"]
+    assert "ratio_guideline" in result
+    assert "npk_ratio" in result
+    assert "ratio_delta" in result
