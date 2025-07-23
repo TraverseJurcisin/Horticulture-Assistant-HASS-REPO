@@ -24,6 +24,7 @@ __all__ = [
     "predict_harvest_date",
     "stage_progress",
     "days_until_harvest",
+    "predict_next_stage_date",
 ]
 
 
@@ -115,3 +116,29 @@ def days_until_harvest(
         return None
     remaining = (harvest - current_date).days
     return max(0, remaining)
+
+
+def predict_next_stage_date(
+    plant_type: str, current_stage: str, stage_start: date
+) -> date | None:
+    """Return the estimated start date of the stage following ``current_stage``.
+
+    Parameters
+    ----------
+    plant_type : str
+        Plant type used to look up stage durations.
+    current_stage : str
+        Name of the current stage in the growth cycle.
+    stage_start : date
+        Date when ``current_stage`` began.
+
+    Returns
+    -------
+    date | None
+        The expected date of the next stage transition or ``None`` if unknown.
+    """
+
+    duration = get_stage_duration(plant_type, current_stage)
+    if duration is None:
+        return None
+    return stage_start + timedelta(days=duration)
