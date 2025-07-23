@@ -186,6 +186,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
+- `pesticide_withdrawal_days.json` – required wait time before harvest after pesticide use
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
 - `dataset_catalog.json` – short descriptions of the bundled datasets for quick reference

@@ -44,6 +44,10 @@ from .pest_monitor import (
     assess_pest_pressure,
     recommend_threshold_actions,
 )
+from .pesticide_manager import (
+    get_withdrawal_days,
+    earliest_harvest_date,
+)
 from .disease_monitor import (
     get_disease_thresholds,
     assess_disease_pressure,
@@ -358,6 +362,8 @@ __all__ = [
     "get_toxicity_thresholds",
     "check_toxicities",
     "get_guideline_summary",
+    "get_withdrawal_days",
+    "earliest_harvest_date",
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
