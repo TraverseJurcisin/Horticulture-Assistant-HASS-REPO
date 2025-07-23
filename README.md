@@ -369,6 +369,18 @@ for pid, result in profiles.items():
     print(pid, result.loaded, result.issues)
 ```
 
+To quickly discover which profiles exist without loading them, use the
+`list_available_profiles` helper:
+
+```python
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    list_available_profiles,
+)
+
+ids = list_available_profiles()
+print(ids)
+```
+
 ## Troubleshooting
 - **Sensors show `unavailable`**: verify the entity IDs and that the devices are reporting to Home Assistant.
 - **Config flow fails**: check the logs for JSON errors in your plant profiles or missing permissions.

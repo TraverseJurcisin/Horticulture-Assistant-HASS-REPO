@@ -60,3 +60,14 @@ def test_load_profile_missing(tmp_path):
     finally:
         loader.DEFAULT_BASE_DIR = orig
     assert profile == {}
+
+
+def test_list_available_profiles(tmp_path):
+    plants = tmp_path / "profiles"
+    plants.mkdir()
+    (plants / "one.json").write_text("{}")
+    (plants / "two.yaml").write_text("general: {}")
+    (plants / "skip.txt").write_text("bad")
+
+    result = loader.list_available_profiles(plants)
+    assert result == ["one", "two"]
