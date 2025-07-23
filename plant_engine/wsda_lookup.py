@@ -19,6 +19,7 @@ __all__ = [
     "search_products",
     "list_product_names",
     "list_product_numbers",
+    "recommend_products_for_nutrient",
 ]
 
 @dataclass(frozen=True)
@@ -141,3 +142,22 @@ def list_product_numbers() -> List[str]:
     """Return all WSDA product numbers sorted alphabetically."""
     _, numbers = _build_indexes()
     return sorted(numbers.keys())
+
+
+def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> List[str]:
+    """Return product names with the highest percentage of ``nutrient``.
+
+    The search is case-insensitive and results are sorted by nutrient
+    concentration in descending order.
+    """
+    n = nutrient.upper().strip()
+    names, _ = _build_indexes()
+    ranked = []
+    for prod in names.values():
+        value = prod.analysis.get(n)
+        if value is not None:
+            ranked.append((prod.name, value))
+
+    ranked.sort(key=lambda x: x[1], reverse=True)
+    return [name for name, _ in ranked[: max(limit, 0)]]
+
