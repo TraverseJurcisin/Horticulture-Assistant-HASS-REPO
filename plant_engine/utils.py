@@ -12,6 +12,7 @@ __all__ = [
     "load_json",
     "save_json",
     "load_dataset",
+    "clear_dataset_cache",
     "normalize_key",
     "list_dataset_entries",
     "deep_update",
@@ -96,6 +97,12 @@ def load_dataset(filename: str) -> Dict[str, Any]:
                 data = extra
 
     return data
+
+
+def clear_dataset_cache() -> None:
+    """Clear cached dataset results loaded via :func:`load_dataset`."""
+
+    load_dataset.cache_clear()
 
 
 def normalize_key(key: str) -> str:
