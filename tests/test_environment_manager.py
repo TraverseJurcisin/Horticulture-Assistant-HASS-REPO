@@ -13,6 +13,7 @@ from plant_engine.environment_manager import (
     calculate_absolute_humidity,
     calculate_dli,
     calculate_dli_series,
+    calculate_vpd_series,
     photoperiod_for_target_dli,
     get_target_dli,
     get_target_vpd,
@@ -380,3 +381,16 @@ def test_evaluate_stress_conditions():
 
     stress_none = evaluate_stress_conditions(None, None, None, "citrus")
     assert stress_none.heat is None
+
+
+def test_calculate_vpd_series():
+    temps = [20, 22, 24]
+    humidity = [70, 65, 60]
+    expected = sum(calculate_vpd(t, h) for t, h in zip(temps, humidity)) / 3
+    assert calculate_vpd_series(temps, humidity) == round(expected, 3)
+
+    with pytest.raises(ValueError):
+        calculate_vpd_series([20], [60, 70])
+
+    with pytest.raises(ValueError):
+        calculate_vpd_series([20], [-1])
