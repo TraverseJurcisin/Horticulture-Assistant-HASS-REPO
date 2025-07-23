@@ -6,10 +6,12 @@ from typing import Dict
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrient_guidelines.json"
+RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
 
 
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
+_RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -21,6 +23,7 @@ __all__ = [
     "calculate_surplus",
     "calculate_all_surplus",
     "get_npk_ratio",
+    "get_stage_ratio",
     "score_nutrient_levels",
 ]
 
@@ -119,6 +122,19 @@ def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
         "P": round(p / total, 2),
         "K": round(k / total, 2),
     }
+
+
+def get_stage_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return NPK ratio from :data:`nutrient_ratio_guidelines.json` if available."""
+
+    plant = _RATIO_DATA.get(normalize_key(plant_type))
+    if plant and normalize_key(stage) in plant:
+        ratios = plant[normalize_key(stage)]
+        total = sum(float(v) for v in ratios.values() if v)
+        if total > 0:
+            return {k: round(float(v) / total, 2) for k, v in ratios.items()}
+
+    return get_npk_ratio(plant_type, stage)
 
 
 def score_nutrient_levels(
