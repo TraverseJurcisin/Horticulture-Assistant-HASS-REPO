@@ -71,5 +71,6 @@
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
   "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
-  "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines)."
+  "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
+  "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient."
 }
