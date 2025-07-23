@@ -246,3 +246,15 @@ def test_recommend_precise_fertigation():
     assert total >= 0
     assert breakdown
     assert warnings == {}
+
+
+def test_generate_cycle_fertigation_plan():
+    from plant_engine.fertigation import generate_cycle_fertigation_plan
+
+    plan = generate_cycle_fertigation_plan("lettuce")
+    assert set(plan.keys()) == {"seedling", "vegetative", "harvest"}
+    assert len(plan["seedling"]) == 25
+    assert len(plan["vegetative"]) == 35
+    assert len(plan["harvest"]) == 30
+    first_day = plan["seedling"][1]
+    assert first_day["N"] > 0
