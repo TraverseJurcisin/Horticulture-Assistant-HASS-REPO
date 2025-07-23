@@ -75,6 +75,7 @@ __all__ = [
     "get_target_dli",
     "get_target_vpd",
     "humidity_for_target_vpd",
+    "recommend_photoperiod",
     "evaluate_heat_stress",
     "evaluate_cold_stress",
     "optimize_environment",
@@ -510,6 +511,25 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     ea = es - target_vpd
     rh = 100 * ea / es
     return round(rh, 1)
+
+
+def recommend_photoperiod(
+    ppfd: float, plant_type: str, stage: str | None = None
+) -> float | None:
+    """Return photoperiod hours to achieve the midpoint DLI target.
+
+    If either the plant has no DLI guidelines or ``ppfd`` is non-positive,
+    ``None`` is returned.
+    """
+    if ppfd <= 0:
+        return None
+
+    target = get_target_dli(plant_type, stage)
+    if not target:
+        return None
+
+    mid_target = sum(target) / 2
+    return photoperiod_for_target_dli(mid_target, ppfd)
 
 
 def evaluate_heat_stress(
