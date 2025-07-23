@@ -319,3 +319,12 @@ def test_next_fertigation_date():
     assert next_fertigation_date("tomato", "vegetative", last) == expected
     assert next_fertigation_date("unknown", None, last) is None
 
+
+def test_recommend_stock_solution_injection():
+    from plant_engine.fertigation import recommend_stock_solution_injection
+
+    targets = {"N": 150, "P": 50, "K": 120}
+    result = recommend_stock_solution_injection(targets, 10.0)
+    assert result["stock_a"] == pytest.approx(25.0, rel=1e-3)
+    assert result["stock_b"] == pytest.approx(10.0, rel=1e-3)
+
