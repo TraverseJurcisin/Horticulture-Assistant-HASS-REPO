@@ -56,6 +56,7 @@ applying it to your plants.
 - Light stress detection using DLI ranges
 - Stage-adjusted nutrient targets
 - Leaf tissue analysis with nutrient balance scoring
+- Nutrient deficiency severity and treatment recommendations
 - Example crop profiles for strawberries, basil, spinach and more
 - Helper functions to list known pests and diseases by crop
 

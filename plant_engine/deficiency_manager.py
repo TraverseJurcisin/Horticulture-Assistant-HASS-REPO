@@ -27,6 +27,7 @@ __all__ = [
     "classify_deficiency_levels",
     "assess_deficiency_severity",
     "recommend_deficiency_treatments",
+    "diagnose_deficiency_actions",
 ]
 
 
@@ -111,3 +112,22 @@ def assess_deficiency_severity(
 
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     return classify_deficiency_levels(deficits)
+
+
+def diagnose_deficiency_actions(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, Dict[str, str]]:
+    """Return severity and treatment recommendations for deficiencies."""
+
+    deficits = calculate_deficiencies(current_levels, plant_type, stage)
+    if not deficits:
+        return {}
+
+    severity = classify_deficiency_levels(deficits)
+    actions: Dict[str, Dict[str, str]] = {}
+    for nutrient in deficits:
+        actions[nutrient] = {
+            "severity": severity.get(nutrient, ""),
+            "treatment": get_deficiency_treatment(nutrient),
+        }
+    return actions
