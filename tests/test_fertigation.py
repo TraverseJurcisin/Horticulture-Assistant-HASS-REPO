@@ -11,6 +11,7 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_cost,
     recommend_nutrient_mix_with_cost_breakdown,
     generate_fertigation_plan,
+    calculate_mix_nutrients,
 )
 
 
@@ -181,3 +182,21 @@ def test_generate_fertigation_plan():
     day1 = plan[1]
     assert day1["N"] > 0
     assert day1 == plan[2] == plan[3]
+
+
+def test_calculate_mix_nutrients_wrapper():
+    mix = {"foxfarm_grow_big": 9.6}
+    totals = calculate_mix_nutrients(mix)
+    assert totals["N"] > 0
+
+
+def test_estimate_daily_nutrient_uptake_invalid():
+    with pytest.raises(ValueError):
+        estimate_daily_nutrient_uptake("tomato", "vegetative", daily_water_ml=-1)
+
+
+def test_recommend_uptake_fertigation_invalid():
+    from plant_engine.fertigation import recommend_uptake_fertigation
+
+    with pytest.raises(ValueError):
+        recommend_uptake_fertigation("lettuce", "vegetative", num_plants=0)
