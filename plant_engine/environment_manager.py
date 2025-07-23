@@ -75,7 +75,7 @@ def _parse_range(value: Iterable[float]) -> RangeTuple | None:
     return (low, high)
 
 
-@dataclass(frozen=True)
+@dataclass(slots=True, frozen=True)
 class EnvironmentGuidelines:
     """Environmental target ranges for a plant stage."""
 
@@ -279,7 +279,7 @@ def actual_vapor_pressure(temp_c: float, humidity_pct: float) -> float:
     return saturation_vapor_pressure(temp_c) * humidity_pct / 100
 
 
-@dataclass
+@dataclass(slots=True)
 class EnvironmentMetrics:
     """Calculated environmental metrics."""
 
@@ -296,7 +296,7 @@ class EnvironmentMetrics:
         return asdict(self)
 
 
-@dataclass
+@dataclass(slots=True)
 class EnvironmentOptimization:
     """Consolidated environment optimization result."""
 
@@ -1204,8 +1204,12 @@ def recommend_co2_injection(
     return calculate_co2_injection(current_ppm, target, volume_m3)
 
 
+@lru_cache(maxsize=None)
 def get_co2_price(method: str) -> float:
-    """Return price per kg of CO₂ for ``method``."""
+    """Return price per kg of CO₂ for ``method``.
+
+    The result is cached for efficiency.
+    """
     try:
         return float(_CO2_PRICES.get(normalize_key(method), 0.0))
     except (TypeError, ValueError):
