@@ -109,6 +109,12 @@ from .water_quality import (
     get_threshold as get_water_threshold,
     interpret_water_profile,
 )
+from .ec_manager import (
+    list_supported_plants as list_ec_plants,
+    get_ec_range,
+    classify_ec_level,
+    recommend_ec_adjustment,
+)
 from .toxicity_manager import (
     list_supported_plants as list_toxicity_plants,
     get_toxicity_thresholds,
@@ -204,6 +210,10 @@ __all__ = [
     "list_water_analytes",
     "get_water_threshold",
     "interpret_water_profile",
+    "list_ec_plants",
+    "get_ec_range",
+    "classify_ec_level",
+    "recommend_ec_adjustment",
     "list_ph_plants",
     "get_ph_range",
     "recommend_ph_adjustment",

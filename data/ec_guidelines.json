@@ -1,0 +1,14 @@
+{
+  "lettuce": {
+    "seedling": [0.8, 1.2],
+    "harvest": [1.2, 1.8]
+  },
+  "tomato": {
+    "seedling": [1.0, 1.5],
+    "fruiting": [2.0, 3.5]
+  },
+  "citrus": {
+    "vegetative": [1.2, 2.0],
+    "fruiting": [1.8, 2.5]
+  }
+}
