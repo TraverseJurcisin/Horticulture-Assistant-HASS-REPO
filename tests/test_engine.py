@@ -52,3 +52,40 @@ def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
     assert report["environment_optimization"]["setpoints"]["temp_c"] == 24
     assert "nutrient_targets" in report
 
+
+def test_load_profile(tmp_path, monkeypatch):
+    plants_dir = tmp_path / "plants"
+    plants_dir.mkdir()
+    monkeypatch.setattr(engine, "PLANTS_DIR", str(plants_dir))
+    path = plants_dir / "demo.json"
+    path.write_text('{"a":1}')
+    data = engine.load_profile("demo")
+    assert data["a"] == 1
+
+
+def test_daily_report_as_dict():
+    from plant_engine.report import DailyReport
+
+    report = DailyReport(
+        plant_id="x",
+        thresholds={},
+        growth={},
+        transpiration={},
+        water_deficit={},
+        rootzone={},
+        nue={},
+        guidelines={},
+        nutrient_targets={},
+        environment_actions={},
+        environment_optimization={},
+        pest_actions={},
+        disease_actions={},
+        lifecycle_stage="seedling",
+        stage_info={},
+        tags=[],
+    )
+
+    d = report.as_dict()
+    assert d["plant_id"] == "x"
+    assert d["lifecycle_stage"] == "seedling"
+

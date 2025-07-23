@@ -68,6 +68,8 @@ from .micro_manager import (
 )
 from .growth_stage import get_stage_info, list_growth_stages
 from .guidelines import get_guideline_summary
+from .report import DailyReport
+from .engine import load_profile
 from .health_report import generate_health_report
 from .deficiency_manager import (
     get_deficiency_treatment,
@@ -207,5 +209,7 @@ __all__ = [
     "get_toxicity_thresholds",
     "check_toxicities",
     "get_guideline_summary",
+    "DailyReport",
+    "load_profile",
     "TranspirationMetrics",
 ]
