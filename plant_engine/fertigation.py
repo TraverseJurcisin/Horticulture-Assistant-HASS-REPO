@@ -15,6 +15,7 @@ from .utils import load_dataset, normalize_key
 FOLIAR_DATA = "foliar_feed_guidelines.json"
 
 PURITY_DATA = "fertilizer_purity.json"
+EC_FACTOR_DATA = "ion_ec_factors.json"
 
 
 @lru_cache(maxsize=None)
@@ -35,6 +36,12 @@ def get_fertilizer_purity(name: str) -> Dict[str, float]:
     """
     data = load_dataset(PURITY_DATA)
     return data.get(name.lower(), {})
+
+
+@lru_cache(maxsize=None)
+def get_ec_factors() -> Dict[str, float]:
+    """Return EC contribution factors for nutrient ions."""
+    return load_dataset(EC_FACTOR_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -82,6 +89,7 @@ __all__ = [
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
+    "estimate_solution_ec",
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
@@ -577,6 +585,17 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     )
 
     return _calc(schedule)
+
+
+def estimate_solution_ec(schedule: Mapping[str, float]) -> float:
+    """Return estimated EC (dS/m) for a nutrient solution."""
+
+    factors = get_ec_factors()
+    total_us_cm = 0.0
+    for nutrient, ppm in schedule.items():
+        factor = factors.get(nutrient, 0.0)
+        total_us_cm += float(ppm) * factor
+    return round(total_us_cm / 1000, 3)
 
 
 def _schedule_from_totals(

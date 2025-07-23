@@ -7,7 +7,7 @@
   "environment_score_weights.json": "Weights for environment quality metrics.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "pest_thresholds.json": "Economic threshold counts for triggering actions.",
-  "pest_monitoring_intervals.json": "Recommended days between pest scouting events.",
+  "pest_monitoring_intervals.json": "Recommended days between scouting events.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
   "growth_stages.json": "Expected duration and notes for each growth stage.",
@@ -21,8 +21,7 @@
   "water_quality_actions.json": "Recommended remediation steps for poor water quality.",
   "leaf_tissue_targets.json": "Optimal nutrient ranges for leaf tissue analysis.",
   "root_depth_guidelines.json": "Typical maximum root depth per crop.",
-  "plant_density_guidelines.json": "Recommended plant spacing for common crops."
-  ,
+  "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
   "beneficial_insects.json": "Natural predators for common greenhouse pests.",
   "crop_coefficients.json": "Crop coefficients for evapotranspiration models.",
   "disease_thresholds.json": "Severity thresholds triggering treatments.",
@@ -42,7 +41,6 @@
   "nutrient_toxicity_thresholds.json": "Maximum safe ppm before toxicity occurs.",
   "nutrient_toxicity_treatments.json": "Actions for nutrient toxicity issues.",
   "nutrient_uptake.json": "Estimated daily uptake rates for nutrients.",
-  "pest_monitoring_intervals.json": "Recommended days between scouting events.",
   "pest_prevention.json": "Cultural practices to reduce pest pressure.",
   "pest_risk_factors.json": "Environmental factors increasing pest risk.",
   "pest_severity_actions.json": "Actions to take based on pest severity level.",
@@ -55,5 +53,6 @@
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
-  "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers."
+  "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
+  "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm)."
 }
