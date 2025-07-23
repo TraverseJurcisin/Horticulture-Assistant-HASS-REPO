@@ -5,6 +5,7 @@ from plant_engine.deficiency_manager import (
     diagnose_deficiencies_detailed,
     get_deficiency_treatment,
     get_nutrient_mobility,
+    assess_deficiency_severity,
     recommend_deficiency_treatments,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
@@ -55,4 +56,12 @@ def test_diagnose_deficiencies_detailed():
     details = diagnose_deficiencies_detailed(current, "spinach", "harvest")
     assert details["N"]["mobility"] == "mobile"
     assert "symptom" in details["N"]
+
+
+def test_assess_deficiency_severity():
+    guidelines = get_recommended_levels("lettuce", "seedling")
+    current = {n: 0 for n in guidelines}
+    severity = assess_deficiency_severity(current, "lettuce", "seedling")
+    assert severity.get("N") == "severe"
+    assert severity.get("P") == "severe"
 

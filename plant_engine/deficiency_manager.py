@@ -9,11 +9,13 @@ from .utils import load_dataset
 DATA_FILE = "nutrient_deficiency_symptoms.json"
 TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
 MOBILITY_DATA_FILE = "nutrient_mobility.json"
+THRESHOLD_DATA_FILE = "nutrient_deficiency_thresholds.json"
 
 # Load dataset once using cached loader
 _SYMPTOMS: Dict[str, str] = load_dataset(DATA_FILE)
 _TREATMENTS: Dict[str, str] = load_dataset(TREATMENT_DATA_FILE)
 _MOBILITY: Dict[str, str] = load_dataset(MOBILITY_DATA_FILE)
+_THRESHOLDS: Dict[str, list[float]] = load_dataset(THRESHOLD_DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -22,6 +24,8 @@ __all__ = [
     "diagnose_deficiencies_detailed",
     "get_deficiency_treatment",
     "get_nutrient_mobility",
+    "classify_deficiency_levels",
+    "assess_deficiency_severity",
     "recommend_deficiency_treatments",
 ]
 
@@ -80,3 +84,30 @@ def recommend_deficiency_treatments(
     """Return treatments for diagnosed nutrient deficiencies."""
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     return {n: get_deficiency_treatment(n) for n in deficits}
+
+
+def classify_deficiency_levels(deficits: Mapping[str, float]) -> Dict[str, str]:
+    """Return severity classification for nutrient deficits."""
+    levels: Dict[str, str] = {}
+    for nutrient, amount in deficits.items():
+        bounds = _THRESHOLDS.get(nutrient)
+        if not bounds or len(bounds) != 2:
+            continue
+        mild, severe = bounds
+        if amount < mild:
+            level = "mild"
+        elif amount < severe:
+            level = "moderate"
+        else:
+            level = "severe"
+        levels[nutrient] = level
+    return levels
+
+
+def assess_deficiency_severity(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, str]:
+    """Return severity classification for each deficient nutrient."""
+
+    deficits = calculate_deficiencies(current_levels, plant_type, stage)
+    return classify_deficiency_levels(deficits)
