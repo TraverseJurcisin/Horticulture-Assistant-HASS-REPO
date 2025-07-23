@@ -199,6 +199,10 @@ variable `HORTICULTURE_DATA_DIR` when running scripts or tests. An additional
 datasets without copying the entire directory. Overlay files are merged
 recursively so nested keys can be customized without redefining the entire
 structure.
+Multiple extra dataset directories can also be specified via
+`HORTICULTURE_EXTRA_DATA_DIRS` as a list separated by your OS path separator
+(``:`` on Linux/macOS, ``;`` on Windows). These paths are merged in the order
+provided before any overlay files.
 Call `plant_engine.utils.clear_dataset_cache()` if you modify these
 environment variables while the application is running so changes are
 immediately reflected.

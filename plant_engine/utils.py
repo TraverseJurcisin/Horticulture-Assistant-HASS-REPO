@@ -62,10 +62,15 @@ def deep_update(base: Dict[str, Any], other: Mapping[str, Any]) -> Dict[str, Any
 # Default data directory is the repository ``data`` folder. It can be
 # overridden using ``HORTICULTURE_DATA_DIR``. An optional overlay directory
 # ``HORTICULTURE_OVERLAY_DIR`` can hold user-provided files that merge with
-# the defaults. This allows extending or overriding individual datasets
-# without copying the entire directory.
+# the defaults. Additional directories may be specified via the
+# ``HORTICULTURE_EXTRA_DATA_DIRS`` environment variable as a
+# ``os.pathsep``-separated list. These paths are merged in order after the
+# default data directory but before the overlay directory. This allows
+# extending or overriding individual datasets without copying the entire
+# directory hierarchy.
 DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
+EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
 def _data_dir() -> Path:
     env = os.getenv("HORTICULTURE_DATA_DIR")
@@ -77,14 +82,32 @@ def _overlay_dir() -> Path | None:
     return Path(env) if env else None
 
 
+def _extra_dirs() -> list[Path]:
+    env = os.getenv(EXTRA_ENV)
+    if not env:
+        return []
+    dirs: list[Path] = []
+    for part in env.split(os.pathsep):
+        path = Path(part)
+        if path.is_dir():
+            dirs.append(path)
+    return dirs
+
+
 @lru_cache(maxsize=None)
 def load_dataset(filename: str) -> Dict[str, Any]:
     """Return dataset ``filename`` merged with any overlay data."""
 
-    base_path = _data_dir() / filename
     data: Dict[str, Any] = {}
-    if base_path.exists():
-        data = load_json(str(base_path))
+    paths = [_data_dir(), *_extra_dirs()]
+    for base in paths:
+        path = base / filename
+        if path.exists():
+            extra = load_json(str(path))
+            if isinstance(extra, dict) and isinstance(data, dict):
+                deep_update(data, extra)
+            else:
+                data = extra
 
     overlay = _overlay_dir()
     if overlay:
