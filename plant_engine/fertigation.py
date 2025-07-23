@@ -22,6 +22,7 @@ PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
 STOCK_DATA = "stock_solution_concentrations.json"
 SOLUBILITY_DATA = "fertilizer_solubility.json"
+RECIPE_DATA = "fertigation_recipes.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
@@ -33,6 +34,7 @@ _NUTRIENT_STOCK_MAP = {
     for nutrient in nutrients
 }
 _SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
+_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -69,6 +71,32 @@ def get_solubility_limits() -> Dict[str, float]:
         for k, v in _SOLUBILITY_LIMITS.items()
         if isinstance(v, (int, float))
     }
+
+
+@lru_cache(maxsize=None)
+def get_fertigation_recipe(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return grams per liter of fertilizers for a plant stage."""
+    plant = _RECIPES.get(normalize_key(plant_type), {})
+    recipe = plant.get(normalize_key(stage)) if isinstance(plant, Mapping) else None
+    if not isinstance(recipe, Mapping):
+        return {}
+    result: Dict[str, float] = {}
+    for fert, grams in recipe.items():
+        try:
+            result[fert] = float(grams)
+        except (TypeError, ValueError):
+            continue
+    return result
+
+
+def apply_fertigation_recipe(
+    plant_type: str, stage: str, volume_l: float
+) -> Dict[str, float]:
+    """Return fertilizer grams for ``volume_l`` based on a recipe."""
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    base = get_fertigation_recipe(plant_type, stage)
+    return {fid: round(g * volume_l, 3) for fid, g in base.items()}
 
 
 @lru_cache(maxsize=None)
@@ -204,6 +232,8 @@ __all__ = [
     "recommend_uptake_fertigation",
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
+    "get_fertigation_recipe",
+    "apply_fertigation_recipe",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
     "estimate_solution_ec",
