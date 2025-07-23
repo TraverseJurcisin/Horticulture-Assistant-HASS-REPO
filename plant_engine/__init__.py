@@ -188,6 +188,7 @@ __all__ = [
     "list_pest_plants",
     "get_pest_thresholds",
     "assess_pest_pressure",
+    "score_pest_pressure",
     "recommend_threshold_actions",
     "get_disease_guidelines",
     "recommend_disease_treatments",

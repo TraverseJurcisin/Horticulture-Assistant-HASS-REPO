@@ -42,6 +42,7 @@
   "nutrient_toxicity_treatments.json": "Actions for nutrient toxicity issues.",
   "nutrient_uptake.json": "Estimated daily uptake rates for nutrients.",
   "pest_monitoring_intervals.json": "Recommended days between scouting events.",
+  "pest_severity_weights.json": "Relative weights for scoring overall pest pressure.",
   "pest_prevention.json": "Cultural practices to reduce pest pressure.",
   "pest_risk_factors.json": "Environmental factors increasing pest risk.",
   "pest_severity_actions.json": "Actions to take based on pest severity level.",

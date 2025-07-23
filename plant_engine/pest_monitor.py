@@ -16,12 +16,14 @@ RISK_DATA_FILE = "pest_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 # Recommended days between scouting events
 MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
+WEIGHT_FILE = "pest_severity_weights.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
+_WEIGHTS: Dict[str, Dict[str, float]] = load_dataset(WEIGHT_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -35,6 +37,7 @@ __all__ = [
     "get_severity_action",
     "get_monitoring_interval",
     "next_monitor_date",
+    "score_pest_pressure",
     "PestReport",
 ]
 
@@ -180,6 +183,32 @@ def classify_pest_severity(
             level = "severe"
         severity[key] = level
     return severity
+
+
+def score_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> float:
+    """Return a weighted 0-100 score for overall pest pressure."""
+
+    thresholds = get_pest_thresholds(plant_type)
+    if not thresholds:
+        return 0.0
+
+    weights = _WEIGHTS.get(normalize_key(plant_type), {})
+
+    total_weight = 0.0
+    score = 0.0
+    for pest, thresh in thresholds.items():
+        if thresh <= 0:
+            continue
+        count = observations.get(pest, 0)
+        ratio = min(max(count / thresh, 0.0), 2.0)
+        weight = float(weights.get(pest, 1.0))
+        score += ratio * weight
+        total_weight += weight
+
+    if total_weight == 0.0:
+        return 0.0
+
+    return round((score / total_weight) * 50, 1)
 
 
 @dataclass

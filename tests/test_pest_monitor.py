@@ -81,3 +81,14 @@ def test_next_monitor_date():
     assert next_monitor_date("tomato", "fruiting", last) == expected
     assert next_monitor_date("unknown", None, last) is None
 
+
+def test_score_pest_pressure():
+    from plant_engine.pest_monitor import score_pest_pressure
+
+    obs = {"aphids": 5, "scale": 4}
+    score = score_pest_pressure("citrus", obs)
+    assert round(score, 1) == 80.0
+
+    low = score_pest_pressure("citrus", {"aphids": 1})
+    assert low < score
+

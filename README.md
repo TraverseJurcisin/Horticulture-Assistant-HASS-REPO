@@ -146,6 +146,7 @@ Key reference datasets reside in the `data/` directory:
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `pest_monitoring_intervals.json` – recommended scouting frequency by stage
+- `pest_severity_weights.json` – weighting factors used to score pest pressure
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `water_quality_actions.json` – recommended treatments when limits are exceeded
 - `fertilizer_purity.json` – default purity factors for common fertilizers
@@ -246,6 +247,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Pest Scouting Intervals**: `get_pest_monitoring_interval` returns recommended days between checks using `pest_monitoring_intervals.json`.
 - **Next Scouting Date**: `next_monitor_date` adds ``timedelta`` days to the last
   scouting date based on these intervals.
+- **Pest Pressure Score**: `score_pest_pressure` returns a 0‑100 index using
+  weights from `pest_severity_weights.json`.
 - **Disease Monitoring Report**: `generate_disease_report` now provides
   severity and treatment guidance based on new `disease_thresholds.json`.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily

@@ -1,0 +1,14 @@
+{
+  "citrus": {
+    "aphids": 1.0,
+    "scale": 1.5
+  },
+  "tomato": {
+    "aphids": 1.0,
+    "whiteflies": 1.2
+  },
+  "lettuce": {
+    "aphids": 1.0,
+    "thrips": 1.4
+  }
+}
