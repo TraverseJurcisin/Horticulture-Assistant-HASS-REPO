@@ -59,6 +59,7 @@ applying it to your plants.
 - Nutrient deficiency severity and treatment recommendations
 - Example crop profiles for strawberries, basil, spinach and more
 - Helper functions to list known pests and diseases by crop
+- Energy cost estimation for lighting and heating
 
 ---
 
