@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
@@ -17,7 +17,7 @@ def _load_log(log_path):
         return []
 
 def _filter_last_24h(entries):
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     threshold = now - timedelta(days=1)
     return [e for e in entries if 'timestamp' in e and datetime.fromisoformat(e['timestamp']) >= threshold]
 
@@ -32,7 +32,7 @@ def build_daily_report(plant_id: str, base_path: str = "plants", output_path: st
         "sensor_summary": {},
         "visual_summary": {},
         "yield": None,
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
     # Load profile and current thresholds
@@ -89,7 +89,7 @@ def build_daily_report(plant_id: str, base_path: str = "plants", output_path: st
 
     # Ensure output path exists
     Path(output_path).mkdir(parents=True, exist_ok=True)
-    out_file = Path(output_path) / f"{plant_id}_{datetime.utcnow().date()}.json"
+    out_file = Path(output_path) / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
     try:
         with open(out_file, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)

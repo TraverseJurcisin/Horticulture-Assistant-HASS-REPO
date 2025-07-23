@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from custom_components.horticulture_assistant.engine.run_daily_cycle import run_daily_cycle
 
 
@@ -13,7 +13,7 @@ def test_run_daily_cycle_nutrient_analysis(tmp_path):
     plant_dir.mkdir()
     log = [
         {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "nutrient_formulation": {"N": 50, "P": 20, "K": 40}
         }
     ]

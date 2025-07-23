@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 _LOGGER = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
     plant_dir = base_dir / plant_id
 
     data = {
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "threshold_summary": {},
         "sensor_summary": {},
         "irrigation_summary": {},
@@ -64,7 +64,7 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
             return []
 
     # Calculate cutoff for last 7 days
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     cutoff_time = now - timedelta(days=7)
 
     def _filter_last_7d(entries):
