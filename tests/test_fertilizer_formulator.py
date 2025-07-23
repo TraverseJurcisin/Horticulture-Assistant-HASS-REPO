@@ -21,6 +21,7 @@ calculate_fertilizer_nutrients_from_mass = fert_mod.calculate_fertilizer_nutrien
 calculate_fertilizer_cost_from_mass = fert_mod.calculate_fertilizer_cost_from_mass
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_mix_cost_per_plant = fert_mod.estimate_mix_cost_per_plant
+estimate_mix_cost_per_nutrient = fert_mod.estimate_mix_cost_per_nutrient
 estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
 find_products = fert_mod.find_products
 calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
@@ -199,4 +200,10 @@ def test_estimate_mix_cost_per_plant():
     assert per_plant == round(total / 5, 4)
     with pytest.raises(ValueError):
         estimate_mix_cost_per_plant(mix, 0)
+
+
+def test_estimate_mix_cost_per_nutrient():
+    mix = {"foxfarm_grow_big": 20}
+    result = estimate_mix_cost_per_nutrient(mix)
+    assert "N" in result and result["N"] > 0
 

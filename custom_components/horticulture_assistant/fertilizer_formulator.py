@@ -261,6 +261,19 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     return breakdown
 
 
+def estimate_mix_cost_per_nutrient(schedule: Mapping[str, float]) -> Dict[str, float]:
+    """Return cost per gram of each nutrient delivered by ``schedule``."""
+
+    cost_map = estimate_cost_breakdown(schedule)
+    totals = calculate_mix_nutrients(schedule)
+    efficiency: Dict[str, float] = {}
+    for nutrient, cost in cost_map.items():
+        grams = totals.get(nutrient, 0.0) / 1000
+        if grams > 0:
+            efficiency[nutrient] = round(cost / grams, 4)
+    return efficiency
+
+
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     """Return nutrient totals (mg) for a fertilizer mix."""
 
@@ -404,6 +417,7 @@ __all__ = [
     "estimate_mix_cost",
     "estimate_mix_cost_per_plant",
     "estimate_cost_breakdown",
+    "estimate_mix_cost_per_nutrient",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "check_solubility_limits",
