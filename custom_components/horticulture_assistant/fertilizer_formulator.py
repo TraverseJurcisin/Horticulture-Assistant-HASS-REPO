@@ -208,6 +208,20 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
+def estimate_mix_cost_per_plant(schedule: Mapping[str, float], num_plants: int) -> float:
+    """Return cost per plant for ``schedule`` applied to ``num_plants``.
+
+    ``num_plants`` must be positive. Costs are estimated using
+    :func:`estimate_mix_cost` and divided by the number of plants.
+    """
+
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+
+    total_cost = estimate_mix_cost(schedule)
+    return round(total_cost / num_plants, 4)
+
+
 def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     """Return estimated cost contribution per nutrient in ``schedule``.
 
@@ -388,6 +402,7 @@ __all__ = [
     "calculate_fertilizer_cost_from_mass",
     "calculate_fertilizer_ppm",
     "estimate_mix_cost",
+    "estimate_mix_cost_per_plant",
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
     "calculate_mix_density",

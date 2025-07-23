@@ -231,6 +231,8 @@ or incomplete and should only be used as a starting point for your own research.
   micronutrients using the new `micronutrient_guidelines.json` dataset.
 - **Mix Cost Estimation**: `recommend_nutrient_mix_with_cost` returns the same
   schedule along with an estimated dollar cost based on fertilizer prices.
+- **Per-Plant Cost**: `estimate_mix_cost_per_plant` divides the total mix cost
+  by plant count for precise budgeting.
 - **Mix Nutrient Totals**: `calculate_mix_nutrients` reports the elemental
   nutrient amounts contributed by each fertilizer mix in milligrams.
 - **Solubility Check**: `check_solubility_limits` warns when a fertilizer mix
