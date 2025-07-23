@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
 
@@ -17,6 +17,7 @@ __all__ = [
     "TranspirationMetrics",
     "lookup_crop_coefficient",
     "compute_transpiration",
+    "compute_transpiration_series",
 ]
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
 MM_TO_ML_PER_M2 = 1000
@@ -78,4 +79,29 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
     )
 
     return metrics.as_dict()
+
+
+def compute_transpiration_series(
+    plant_profile: Mapping, env_series: Iterable[Mapping]
+) -> list[Dict[str, float]]:
+    """Return transpiration metrics for each set of environment readings.
+
+    Parameters
+    ----------
+    plant_profile : Mapping
+        Plant profile containing ``plant_type`` and optional ``stage`` keys.
+    env_series : Iterable[Mapping]
+        Sequence of environment readings passed to :func:`compute_transpiration`.
+
+    Returns
+    -------
+    list[Dict[str, float]]
+        List of dictionaries matching the return value of
+        :func:`compute_transpiration`.
+    """
+
+    results: list[Dict[str, float]] = []
+    for env in env_series:
+        results.append(compute_transpiration(plant_profile, env))
+    return results
 
