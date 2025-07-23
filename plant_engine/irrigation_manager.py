@@ -15,6 +15,7 @@ __all__ = [
     "get_crop_coefficient",
     "estimate_irrigation_demand",
     "recommend_irrigation_from_environment",
+    "generate_irrigation_schedule_from_environment",
     "list_supported_plants",
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
@@ -228,6 +229,46 @@ def generate_irrigation_schedule(
     schedule: Dict[int, float] = {}
     remaining = float(available_ml)
     for day, et_ml in enumerate(et_ml_series, start=1):
+        volume = recommend_irrigation_volume(
+            rootzone, remaining, et_ml, refill_to_full=refill_to_full
+        )
+        if method:
+            volume = adjust_irrigation_for_efficiency(volume, method)
+        schedule[day] = volume
+        remaining = calculate_remaining_water(
+            rootzone, remaining, irrigation_ml=volume, et_ml=et_ml
+        )
+
+    return schedule
+
+
+def generate_irrigation_schedule_from_environment(
+    plant_profile: Mapping[str, float],
+    env_series: Iterable[Mapping[str, float]],
+    rootzone: RootZone,
+    available_ml: float,
+    *,
+    refill_to_full: bool = True,
+    method: str | None = None,
+) -> Dict[int, float]:
+    """Return irrigation schedule using daily environment readings.
+
+    Each ``env_series`` entry should contain the keys required by
+    :func:`plant_engine.compute_transpiration.compute_transpiration`.
+    The function simulates soil moisture using daily transpiration estimates
+    derived from the environment data.
+    """
+
+    from .compute_transpiration import compute_transpiration
+
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
+    schedule: Dict[int, float] = {}
+    remaining = float(available_ml)
+    for day, env in enumerate(env_series, start=1):
+        metrics = compute_transpiration(plant_profile, env)
+        et_ml = metrics["transpiration_ml_day"]
         volume = recommend_irrigation_volume(
             rootzone, remaining, et_ml, refill_to_full=refill_to_full
         )

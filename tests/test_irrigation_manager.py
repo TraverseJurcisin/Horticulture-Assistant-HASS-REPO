@@ -9,6 +9,7 @@ from plant_engine.irrigation_manager import (
     get_daily_irrigation_target,
     list_supported_plants,
     generate_irrigation_schedule,
+    generate_irrigation_schedule_from_environment,
     adjust_irrigation_for_efficiency,
     IrrigationRecommendation,
 )
@@ -146,6 +147,30 @@ def test_generate_irrigation_schedule_with_method():
     )
     assert schedule[1] == 0.0
     assert schedule[2] == pytest.approx(88.9, rel=1e-2)
+
+
+def test_generate_schedule_from_environment():
+    profile = {"kc": 1.0, "canopy_m2": 1.0}
+    env_series = [
+        {"temp_c": 25, "rh_pct": 60, "par_w_m2": 400},
+        {"temp_c": 26, "rh_pct": 55, "par_w_m2": 400},
+        {"temp_c": 26, "rh_pct": 55, "par_w_m2": 400},
+    ]
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    et_series = [
+        compute_transpiration(profile, env)["transpiration_ml_day"]
+        for env in env_series
+    ]
+    sched1 = generate_irrigation_schedule(zone, 150.0, et_series)
+    sched2 = generate_irrigation_schedule_from_environment(
+        profile, env_series, zone, 150.0
+    )
+    assert sched1 == sched2
 
 
 def test_adjust_irrigation_for_efficiency():

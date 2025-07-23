@@ -78,6 +78,7 @@ from .irrigation_manager import (
     list_supported_plants as list_irrigation_plants,
     get_daily_irrigation_target,
     generate_irrigation_schedule,
+    generate_irrigation_schedule_from_environment,
 )
 from .nutrient_manager import (
     calculate_deficiencies,
@@ -232,6 +233,7 @@ __all__ = [
     "list_irrigation_plants",
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
+    "generate_irrigation_schedule_from_environment",
     "HarvestRecord",
     "load_yield_history",
     "record_harvest",
