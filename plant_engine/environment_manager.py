@@ -20,6 +20,7 @@ COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
+QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -145,6 +146,7 @@ __all__ = [
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "get_score_weight",
+    "get_environment_quality_thresholds",
     "recommend_light_intensity",
     "recommend_photoperiod",
     "evaluate_heat_stress",
@@ -183,6 +185,7 @@ _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
+_QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -191,6 +194,14 @@ def get_score_weight(metric: str) -> float:
         return float(_SCORE_WEIGHTS.get(metric, 1.0))
     except (TypeError, ValueError):
         return 1.0
+
+
+def get_environment_quality_thresholds() -> Dict[str, float]:
+    """Return score thresholds for quality classification."""
+    return {
+        "good": float(_QUALITY_THRESHOLDS.get("good", 75)),
+        "fair": float(_QUALITY_THRESHOLDS.get("fair", 50)),
+    }
 
 
 def _lookup_stage_data(
@@ -568,11 +579,11 @@ def classify_environment_quality(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> str:
     """Return ``good``, ``fair`` or ``poor`` based on environment score."""
-
+    thresholds = get_environment_quality_thresholds()
     score = score_environment(current, plant_type, stage)
-    if score >= 75:
+    if score >= thresholds.get("good", 75):
         return "good"
-    if score >= 50:
+    if score >= thresholds.get("fair", 50):
         return "fair"
     return "poor"
 

@@ -441,6 +441,14 @@ def test_classify_environment_quality():
     assert classify_environment_quality(poor, "citrus", "seedling") == "poor"
 
 
+def test_classify_environment_quality_custom(monkeypatch):
+    good = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
+    from plant_engine import environment_manager as em
+    monkeypatch.setitem(em._QUALITY_THRESHOLDS, "good", 105)
+    monkeypatch.setitem(em._QUALITY_THRESHOLDS, "fair", 80)
+    assert classify_environment_quality(good, "citrus", "seedling") == "fair"
+
+
 def test_normalize_environment_readings_aliases():
     data = {"temperature": 25, "humidity": 70, "co2": "700", "ec": 1.2}
     result = normalize_environment_readings(data)
