@@ -28,6 +28,7 @@
   "ec_guidelines.json": "Electrical conductivity ranges for nutrient solutions.",
   "fertilizer_purity.json": "Nutrient purity factors for fertilizer products.",
   "fertilizer_solubility.json": "Solubility limits for common fertilizers.",
+  "light_spectrum_guidelines.json": "Recommended red/blue light ratios for growth stages.",
   "foliar_feed_guidelines.json": "Target ppm for foliar nutrient applications.",
   "gdd_requirements.json": "Growing degree day requirements by crop.",
   "heat_stress_thresholds.json": "Temperature levels causing heat stress.",
