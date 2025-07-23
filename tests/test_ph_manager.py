@@ -43,6 +43,11 @@ def test_estimate_ph_adjustment_volume():
         ph_manager.estimate_ph_adjustment_volume(6.0, 6.5, 0, "ph_up")
 
 
+def test_recommend_solution_ph_adjustment():
+    ml = ph_manager.recommend_solution_ph_adjustment(7.0, "citrus", None, 10, "ph_down")
+    assert ml == 100.0
+
+
 def test_medium_ph_functions():
     soil = ph_manager.get_medium_ph_range("soil")
     assert soil == [6.2, 7.0]
