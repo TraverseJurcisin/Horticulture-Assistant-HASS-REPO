@@ -61,5 +61,6 @@
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
-  "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm)."
+  "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
+  "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage."
 }

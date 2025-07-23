@@ -137,6 +137,10 @@ from .ec_manager import (
     classify_ec_level,
     recommend_ec_adjustment,
 )
+from .water_usage import (
+    list_supported_plants as list_water_use_plants,
+    get_daily_use as get_daily_water_use,
+)
 from .toxicity_manager import (
     list_supported_plants as list_toxicity_plants,
     get_toxicity_thresholds,
@@ -261,6 +265,8 @@ __all__ = [
     "get_ec_range",
     "classify_ec_level",
     "recommend_ec_adjustment",
+    "list_water_use_plants",
+    "get_daily_water_use",
     "list_ph_plants",
     "get_ph_range",
     "recommend_ph_adjustment",

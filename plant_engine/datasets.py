@@ -12,6 +12,7 @@ CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
 __all__ = ["list_datasets", "get_dataset_description", "list_dataset_info"]
 
 
+@lru_cache(maxsize=None)
 def list_datasets() -> List[str]:
     """Return relative paths of available JSON datasets.
 
@@ -43,6 +44,7 @@ def get_dataset_description(name: str) -> str | None:
     return _load_catalog().get(name)
 
 
+@lru_cache(maxsize=None)
 def list_dataset_info() -> Dict[str, str]:
     """Return mapping of dataset names to descriptions."""
 
