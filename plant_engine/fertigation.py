@@ -15,11 +15,13 @@ from .utils import load_dataset, normalize_key
 
 FOLIAR_DATA = "foliar_feed_guidelines.json"
 INTERVAL_DATA = "foliar_feed_intervals.json"
+FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
+_FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -103,12 +105,40 @@ def next_foliar_feed_date(
     return last_date + timedelta(days=interval)
 
 
+@lru_cache(maxsize=None)
+def get_fertigation_interval(plant_type: str, stage: str | None = None) -> int | None:
+    """Return recommended days between fertigation events."""
+
+    data = _FERTIGATION_INTERVALS.get(normalize_key(plant_type), {})
+    if stage:
+        value = data.get(normalize_key(stage))
+        if isinstance(value, (int, float)):
+            return int(value)
+    value = data.get("optimal")
+    if isinstance(value, (int, float)):
+        return int(value)
+    return None
+
+
+def next_fertigation_date(
+    plant_type: str, stage: str | None, last_date: date
+) -> date | None:
+    """Return the next recommended fertigation date."""
+
+    interval = get_fertigation_interval(plant_type, stage)
+    if interval is None:
+        return None
+    return last_date + timedelta(days=interval)
+
+
 __all__ = [
     "get_fertilizer_purity",
     "get_foliar_guidelines",
     "recommend_foliar_feed",
     "get_foliar_feed_interval",
     "next_foliar_feed_date",
+    "get_fertigation_interval",
+    "next_fertigation_date",
     "recommend_fertigation_schedule",
     "recommend_fertigation_with_water",
     "recommend_correction_schedule",

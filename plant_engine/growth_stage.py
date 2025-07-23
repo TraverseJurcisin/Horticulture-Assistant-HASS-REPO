@@ -21,6 +21,7 @@ __all__ = [
     "list_growth_stages",
     "get_stage_duration",
     "estimate_stage_from_age",
+    "estimate_stage_from_date",
     "predict_harvest_date",
     "stage_progress",
     "days_until_harvest",
@@ -73,6 +74,17 @@ def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | Non
                 return stage_name
 
     return None
+
+
+def estimate_stage_from_date(
+    plant_type: str, start_date: date, current_date: date
+) -> str | None:
+    """Return growth stage for ``current_date`` based on ``start_date``."""
+
+    days = (current_date - start_date).days
+    if days < 0:
+        raise ValueError("current_date cannot be before start_date")
+    return estimate_stage_from_age(plant_type, days)
 
 
 def predict_harvest_date(plant_type: str, start_date: date) -> date | None:
