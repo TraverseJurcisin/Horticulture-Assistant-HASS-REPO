@@ -225,6 +225,40 @@ def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> Dict[st
     return {nutrient: round(mg / volume_l, 2) for nutrient, mg in totals.items()}
 
 
+def calculate_mix_density(schedule: Mapping[str, float]) -> float:
+    """Return approximate density (kg/L) of a fertilizer mix.
+
+    The ``schedule`` mapping specifies grams of each fertilizer product. Densities
+    are looked up in the inventory dataset. The density is computed as the total
+    mass divided by the total volume of all products. An empty schedule results in
+    ``0.0``.
+    """
+
+    inventory = _inventory()
+    total_mass_kg = 0.0
+    total_volume_l = 0.0
+
+    for fert_id, grams in schedule.items():
+        if grams <= 0:
+            continue
+        if fert_id not in inventory:
+            raise KeyError(f"Unknown fertilizer '{fert_id}'")
+
+        density = inventory[fert_id].density_kg_per_l
+        if density is None:
+            raise KeyError(f"Density for '{fert_id}' is not defined")
+
+        mass_kg = grams / 1000
+        volume_l = mass_kg / density
+        total_mass_kg += mass_kg
+        total_volume_l += volume_l
+
+    if total_volume_l == 0:
+        return 0.0
+
+    return round(total_mass_kg / total_volume_l, 3)
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
@@ -232,6 +266,7 @@ __all__ = [
     "estimate_mix_cost",
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
+    "calculate_mix_density",
     "list_products",
     "get_product_info",
     "find_products",

@@ -22,6 +22,7 @@ estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
 find_products = fert_mod.find_products
 calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 calculate_mix_ppm = fert_mod.calculate_mix_ppm
+calculate_mix_density = fert_mod.calculate_mix_density
 
 
 def test_convert_guaranteed_analysis():
@@ -121,4 +122,15 @@ def test_calculate_mix_ppm():
 
     with pytest.raises(ValueError):
         calculate_mix_ppm(mix, 0)
+
+
+def test_calculate_mix_density():
+    schedule = {"foxfarm_grow_big": 200, "magriculture": 100}
+    density = calculate_mix_density(schedule)
+    assert round(density, 3) == 0.973
+
+    assert calculate_mix_density({}) == 0.0
+
+    with pytest.raises(KeyError):
+        calculate_mix_density({"unknown": 10})
 
