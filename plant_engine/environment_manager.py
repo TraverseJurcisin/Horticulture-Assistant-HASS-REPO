@@ -27,6 +27,7 @@ QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
+SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -153,6 +154,7 @@ __all__ = [
     "get_target_co2",
     "get_target_soil_moisture",
     "get_target_soil_temperature",
+    "get_target_soil_ec",
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
@@ -172,6 +174,7 @@ __all__ = [
     "evaluate_humidity_stress",
     "evaluate_moisture_stress",
     "evaluate_soil_temperature_stress",
+    "evaluate_soil_ec_stress",
     "get_humidity_action",
     "recommend_humidity_action",
     "evaluate_ph_stress",
@@ -211,6 +214,7 @@ _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
+_SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -313,6 +317,7 @@ class EnvironmentOptimization:
     humidity_stress: str | None = None
     moisture_stress: str | None = None
     ph_stress: str | None = None
+    soil_ec_stress: str | None = None
     quality: str | None = None
     score: float | None = None
     water_quality: WaterQualityInfo | None = None
@@ -343,6 +348,7 @@ class EnvironmentOptimization:
             "humidity_stress": self.humidity_stress,
             "moisture_stress": self.moisture_stress,
             "ph_stress": self.ph_stress,
+            "soil_ec_stress": self.soil_ec_stress,
             "quality": self.quality,
             "score": self.score,
             "water_quality": self.water_quality.as_dict() if self.water_quality else None,
@@ -361,6 +367,7 @@ class StressFlags:
     moisture: str | None
     ph: str | None
     soil_temp: str | None = None
+    soil_ec: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -991,6 +998,12 @@ def get_target_soil_temperature(plant_type: str, stage: str | None = None) -> Ra
     return _lookup_range(_SOIL_TEMP_DATA, plant_type, stage)
 
 
+def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+    """Return recommended soil EC range for a plant stage."""
+
+    return _lookup_range(_SOIL_EC_DATA, plant_type, stage)
+
+
 def evaluate_soil_temperature_stress(
     soil_temp_c: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1008,6 +1021,26 @@ def evaluate_soil_temperature_stress(
         return "cold"
     if soil_temp_c > high:
         return "hot"
+    return None
+
+
+def evaluate_soil_ec_stress(
+    soil_ec_ds_m: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
+    """Return 'low' or 'high' if soil EC is outside the target range."""
+
+    if soil_ec_ds_m is None:
+        return None
+
+    target = get_target_soil_ec(plant_type, stage)
+    if not target:
+        return None
+
+    low, high = target
+    if soil_ec_ds_m < low:
+        return "low"
+    if soil_ec_ds_m > high:
+        return "high"
     return None
 
 
@@ -1041,6 +1074,7 @@ def evaluate_stress_conditions(
     plant_type: str,
     stage: str | None = None,
     soil_temp_c: float | None = None,
+    soil_ec_ds_m: float | None = None,
 ) -> StressFlags:
     """Return consolidated stress flags for current conditions."""
 
@@ -1053,6 +1087,7 @@ def evaluate_stress_conditions(
         moisture=evaluate_moisture_stress(moisture_pct, plant_type, stage),
         ph=evaluate_ph_stress(ph, plant_type, stage),
         soil_temp=evaluate_soil_temperature_stress(soil_temp_c, plant_type, stage),
+        soil_ec=evaluate_soil_ec_stress(soil_ec_ds_m, plant_type, stage),
     )
 
 
@@ -1343,6 +1378,8 @@ def optimize_environment(
         readings.get("soil_moisture_pct"),
         plant_type,
         stage,
+        readings.get("soil_temp_c"),
+        readings.get("ec"),
     )
 
     quality = classify_environment_quality(readings, plant_type, stage)
@@ -1372,6 +1409,7 @@ def optimize_environment(
         humidity_stress=stress.humidity,
         moisture_stress=stress.moisture,
         ph_stress=stress.ph,
+        soil_ec_stress=stress.soil_ec,
         quality=quality,
         score=score,
         water_quality=wq,
@@ -1423,6 +1461,8 @@ def summarize_environment(
         readings.get("soil_moisture_pct"),
         plant_type,
         stage,
+        readings.get("soil_temp_c"),
+        readings.get("ec"),
     )
 
     water_info = None
