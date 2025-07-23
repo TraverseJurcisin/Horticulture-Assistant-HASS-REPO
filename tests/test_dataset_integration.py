@@ -162,3 +162,6 @@ def test_treatment_guidelines_lettuce():
 
     blue_dis = disease_manager.recommend_treatments("blueberry", ["mummy berry"])
     assert "mummified" in blue_dis["mummy berry"].lower()
+
+    prev = disease_manager.recommend_prevention("lettuce", ["lettuce drop"])
+    assert prev["lettuce drop"].startswith("Use clean transplants")
