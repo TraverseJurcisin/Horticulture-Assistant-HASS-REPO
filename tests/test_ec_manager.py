@@ -12,6 +12,11 @@ def test_get_ec_range():
     assert rng == (0.8, 1.2)
 
 
+def test_get_optimal_ec():
+    assert ec_manager.get_optimal_ec("lettuce", "seedling") == 1.0
+    assert ec_manager.get_optimal_ec("tomato", "fruiting") == 2.75
+
+
 def test_classify_ec_level():
     assert ec_manager.classify_ec_level(0.7, "lettuce", "seedling") == "low"
     assert ec_manager.classify_ec_level(1.0, "lettuce", "seedling") == "optimal"

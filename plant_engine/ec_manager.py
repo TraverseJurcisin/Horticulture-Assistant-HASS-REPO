@@ -16,6 +16,7 @@ def _data() -> Dict[str, Dict[str, Tuple[float, float]]]:
 __all__ = [
     "list_supported_plants",
     "get_ec_range",
+    "get_optimal_ec",
     "classify_ec_level",
     "recommend_ec_adjustment",
 ]
@@ -40,6 +41,16 @@ def get_ec_range(plant_type: str, stage: str | None = None) -> Tuple[float, floa
     if isinstance(default, (list, tuple)) and len(default) == 2:
         return float(default[0]), float(default[1])
     return None
+
+
+def get_optimal_ec(plant_type: str, stage: str | None = None) -> float | None:
+    """Return midpoint EC target for a plant stage if available."""
+
+    rng = get_ec_range(plant_type, stage)
+    if not rng:
+        return None
+    low, high = rng
+    return round((low + high) / 2, 2)
 
 
 def classify_ec_level(ec_ds_m: float, plant_type: str, stage: str | None = None) -> str:
