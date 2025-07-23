@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.data/
+data/pending_thresholds/
+data/water_balance/
+data/reports/

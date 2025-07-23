@@ -13,6 +13,7 @@ from . import (
     pest_monitor,
     disease_manager,
     ph_manager,
+    ec_manager,
     growth_stage,
 )
 
@@ -32,6 +33,7 @@ class GuidelineSummary:
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
     ph_range: List[float] = dataclass_field(default_factory=list)
+    ec_range: List[float] = dataclass_field(default_factory=list)
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
 
@@ -61,6 +63,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         pest_thresholds=thresholds,
         beneficial_insects=beneficial,
         ph_range=ph_manager.get_ph_range(plant_type, stage),
+        ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
     )
