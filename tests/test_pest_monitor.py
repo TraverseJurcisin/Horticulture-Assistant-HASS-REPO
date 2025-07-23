@@ -4,6 +4,7 @@ from plant_engine.pest_monitor import (
     assess_pest_pressure,
     recommend_threshold_actions,
     recommend_biological_controls,
+    classify_pest_severity,
 )
 
 
@@ -45,3 +46,10 @@ def test_recommend_biological_controls():
     bio = recommend_biological_controls("citrus", obs)
     assert "aphids" in bio
     assert isinstance(bio["aphids"], list)
+
+
+def test_classify_pest_severity():
+    obs = {"aphids": 3, "scale": 5}
+    severity = classify_pest_severity("citrus", obs)
+    assert severity["aphids"] == "low"
+    assert severity["scale"] == "severe"
