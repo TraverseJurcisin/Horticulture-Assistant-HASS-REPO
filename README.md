@@ -170,6 +170,7 @@ Key reference datasets reside in the `data/` directory:
 - `growth_medium_ph_ranges.json` – preferred pH ranges for soil, coco and hydroponics
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
+- `pruning_intervals.json` – days between recommended pruning events
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
@@ -252,6 +253,8 @@ or incomplete and should only be used as a starting point for your own research.
   `nutrient_analysis` to highlight imbalances in recent applications.
 - **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific
   pruning tips loaded from `pruning_guidelines.json`.
+- **Pruning Schedule Planning**: Use `get_pruning_interval` and `next_pruning_date`
+  to determine when each plant should be pruned based on `pruning_intervals.json`.
 - **Beneficial Insect Suggestions**: Daily reports list natural predators for
   observed pests using `beneficial_insects.json`.
 - **Biological Control Helper**: `recommend_biological_controls` suggests

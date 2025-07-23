@@ -1,0 +1,15 @@
+{
+  "tomato": {
+    "vegetative": 7,
+    "fruiting": 14,
+    "optimal": 7
+  },
+  "citrus": {
+    "dormant": 30,
+    "optimal": 30
+  },
+  "strawberry": {
+    "post-harvest": 10,
+    "optimal": 10
+  }
+}
