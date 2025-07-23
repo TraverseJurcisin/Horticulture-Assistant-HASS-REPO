@@ -11,6 +11,8 @@ from plant_engine.irrigation_manager import (
     generate_irrigation_schedule,
     adjust_irrigation_for_efficiency,
     generate_env_irrigation_schedule,
+    generate_precipitation_schedule,
+    get_rain_capture_efficiency,
     IrrigationRecommendation,
 )
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
@@ -187,4 +189,24 @@ def test_generate_env_irrigation_schedule():
     assert sched[1]["metrics"] == m1
     assert sched[2]["volume_ml"] == vol2
     assert sched[2]["metrics"] == m2
+
+
+def test_generate_precipitation_schedule():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_precipitation_schedule(
+        zone,
+        150.0,
+        [30.0, 30.0, 30.0],
+        [10.0, 0.0, 20.0],
+        surface="mulch",
+    )
+    # First day net ET = 30 - 10*0.75 = 22.5 -> no irrigation needed
+    assert schedule[1] == 0.0
+    # Second day no rain -> irrigation required
+    assert schedule[2] > 0.0
 
