@@ -1340,21 +1340,20 @@ def summarize_environment_series(
 ) -> Dict[str, Any]:
     """Return summary for averaged environment readings.
 
-    When multiple readings are provided they are normalized, averaged and then
+    The ``series`` argument can be any iterable of reading mappings. Each
+    reading is normalized and accumulated without loading the entire sequence
+    into memory before the average is calculated. The averaged values are then
     passed to :func:`summarize_environment`.
     """
 
-    iterator = list(series)
-    if not iterator:
-        avg = {}
-    else:
-        totals: Dict[str, float] = {}
-        count = 0
-        for reading in iterator:
-            for key, value in normalize_environment_readings(reading).items():
-                totals[key] = totals.get(key, 0.0) + float(value)
-            count += 1
-        avg = {k: v / count for k, v in totals.items()}
+    totals: Dict[str, float] = {}
+    count = 0
+    for reading in series:
+        for key, value in normalize_environment_readings(reading).items():
+            totals[key] = totals.get(key, 0.0) + float(value)
+        count += 1
+
+    avg = {k: v / count for k, v in totals.items()} if count else {}
 
     return summarize_environment(
         avg,
