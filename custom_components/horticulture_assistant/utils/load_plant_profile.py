@@ -1,5 +1,13 @@
-import logging
+"""Helper for loading multi-file plant profiles from disk.
+
+Each plant has its own directory under ``plants/`` containing JSON fragments
+describing the profile. This module aggregates those fragments into a single
+dictionary which other modules can consume. Validation-only files are skipped by
+default to speed up loading in production.
+"""
+
 import json
+import logging
 from pathlib import Path
 
 _LOGGER = logging.getLogger(__name__)

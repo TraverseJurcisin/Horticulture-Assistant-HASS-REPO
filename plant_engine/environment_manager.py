@@ -603,14 +603,23 @@ def score_environment_series(
 
 
 def classify_environment_quality(
-    current: Mapping[str, float], plant_type: str, stage: str | None = None
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    thresholds: Mapping[str, float] | None = None,
 ) -> str:
-    """Return ``good``, ``fair`` or ``poor`` based on environment score."""
-    thresholds = get_environment_quality_thresholds()
+    """Return ``good``, ``fair`` or ``poor`` based on environment score.
+
+    The optional ``thresholds`` mapping can override the default values loaded
+    from :data:`environment_quality_thresholds.json` which enables customized
+    quality bands for specific deployments.
+    """
+
+    thresh = thresholds or get_environment_quality_thresholds()
     score = score_environment(current, plant_type, stage)
-    if score >= thresholds.get("good", 75):
+    if score >= thresh.get("good", 75):
         return "good"
-    if score >= thresholds.get("fair", 50):
+    if score >= thresh.get("fair", 50):
         return "fair"
     return "poor"
 
