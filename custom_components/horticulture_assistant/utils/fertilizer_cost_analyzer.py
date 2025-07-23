@@ -1,73 +1,75 @@
-from typing import List, Dict
+"""Helpers to compare fertilizer product pricing and ingredients.
+
+The :func:`price_per_unit` function normalizes prices across units so
+products can be compared easily. :func:`get_cheapest_option` returns the
+least expensive product option given a sequence of :class:`ProductOption`.
+:func:`compare_ingredient_costs` determines the minimum cost per mg of
+active ingredient across options.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Dict, Iterable, List
 
 
-class FertilizerCostAnalyzer:
-    @staticmethod
-    def calculate_price_per_unit(price: float, quantity: float, unit: str) -> float:
-        """
-        Converts a price and quantity into price per standardized unit.
-        Supports 'kg', 'g', 'lb', 'oz', 'L', 'mL', 'gal', 'fl_oz'
-        """
-        unit_conversions = {
-            "kg": 1,
-            "g": 0.001,
-            "lb": 0.453592,
-            "oz": 0.0283495,
-            "L": 1,
-            "mL": 0.001,
-            "gal": 3.78541,
-            "fl_oz": 0.0295735,
-        }
-        if unit not in unit_conversions:
-            raise ValueError(f"Unsupported unit: {unit}")
-        standardized_quantity = quantity * unit_conversions[unit]
-        return price / standardized_quantity if standardized_quantity else 0.0
+_UNIT_CONVERSIONS = {
+    "kg": 1.0,
+    "g": 0.001,
+    "lb": 0.453592,
+    "oz": 0.0283495,
+    "L": 1.0,
+    "mL": 0.001,
+    "gal": 3.78541,
+    "fl_oz": 0.0295735,
+}
 
-    @staticmethod
-    def get_cheapest_supplier(options: List[Dict]) -> Dict:
-        """
-        Expects a list of product dictionaries with keys:
-        - 'price'
-        - 'quantity'
-        - 'unit'
-        - 'supplier'
-        Returns the cheapest one by price per standardized unit.
-        """
-        best = None
-        best_price = float("inf")
 
-        for option in options:
-            unit_price = FertilizerCostAnalyzer.calculate_price_per_unit(
-                option["price"], option["quantity"], option["unit"]
-            )
-            if unit_price < best_price:
-                best_price = unit_price
-                best = option | {"price_per_unit": unit_price}
+@dataclass
+class ProductOption:
+    """Fertilizer purchase option."""
 
-        return best or {}
+    price: float
+    quantity: float
+    unit: str
+    supplier: str
+    ingredients: Dict[str, float] | None = None
 
-    @staticmethod
-    def compare_ingredient_costs(products: List[Dict]) -> Dict[str, float]:
-        """
-        Calculates cost per mg of each active ingredient across product options.
-        Each product should have:
-        - 'ingredients': {name: amount_in_mg}
-        - 'price_per_unit': cost per kg or L
-        - 'unit_weight': total weight or volume in kg or L
-        """
-        ingredient_costs = {}
+    def price_per_unit(self) -> float:
+        """Return price normalized to the base unit (kg or L)."""
+        if self.unit not in _UNIT_CONVERSIONS:
+            raise ValueError(f"Unsupported unit: {self.unit}")
+        normalized = self.quantity * _UNIT_CONVERSIONS[self.unit]
+        return self.price / normalized if normalized else 0.0
 
-        for product in products:
-            for ingredient, mass_mg in product.get("ingredients", {}).items():
-                if mass_mg > 0:
-                    cost_per_mg = (
-                        product["price_per_unit"] * product["unit_weight"] / mass_mg
-                    )
-                    if ingredient not in ingredient_costs:
-                        ingredient_costs[ingredient] = cost_per_mg
-                    else:
-                        ingredient_costs[ingredient] = min(
-                            ingredient_costs[ingredient], cost_per_mg
-                        )
 
-        return ingredient_costs
+def price_per_unit(price: float, quantity: float, unit: str) -> float:
+    """Return cost normalized to the base unit."""
+    return ProductOption(price, quantity, unit, "").price_per_unit()
+
+
+def get_cheapest_option(options: Iterable[ProductOption]) -> ProductOption | None:
+    """Return the option with the lowest unit price."""
+    best: ProductOption | None = None
+    best_price = float("inf")
+    for opt in options:
+        unit_price = opt.price_per_unit()
+        if unit_price < best_price:
+            best_price = unit_price
+            best = opt
+    return best
+
+
+def compare_ingredient_costs(options: Iterable[ProductOption]) -> Dict[str, float]:
+    """Return lowest cost per mg for each ingredient across options."""
+    costs: Dict[str, float] = {}
+    for opt in options:
+        if not opt.ingredients:
+            continue
+        for ing, mass_mg in opt.ingredients.items():
+            if mass_mg <= 0:
+                continue
+            cost = opt.price / mass_mg
+            if ing not in costs or cost < costs[ing]:
+                costs[ing] = cost
+    return costs
