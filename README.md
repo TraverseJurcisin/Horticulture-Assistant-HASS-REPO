@@ -225,6 +225,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Environment Quality Rating**: `classify_environment_quality` converts the
   numeric score from `score_environment` into `good`, `fair` or `poor` for
   quick evaluation.
+- **Environment Score Breakdown**: `score_environment_components` returns
+  per-parameter scores so problem areas are easy to identify.
 - **Photoperiod Suggestions**: `recommend_photoperiod` returns the daily light
   hours required to hit midpoint DLI targets at the current PPFD.
 - **Photoperiod Guidelines**: `get_target_photoperiod` looks up recommended day lengths from `photoperiod_guidelines.json`.
