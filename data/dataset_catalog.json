@@ -12,6 +12,7 @@
   "pest_monitoring_intervals.json": "Recommended days between scouting events.",
   "ipm_guidelines.json": "Integrated pest management practices by crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
+  "disease_risk_factors.json": "Environmental factors increasing disease risk.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
   "growth_stages.json": "Expected duration and notes for each growth stage.",
   "stage_multipliers.json": "Scaling factors for nutrient targets by stage.",
