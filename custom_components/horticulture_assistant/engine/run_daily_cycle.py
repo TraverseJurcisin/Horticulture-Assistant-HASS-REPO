@@ -1,12 +1,15 @@
 """Daily report generation for plant profiles.
 
-This module summarizes the previous day's irrigation, nutrient applications,
-sensor readings and growth metrics into a JSON report that can be consumed by
-other automations or dashboards.
+This module summarizes irrigation, nutrient applications and sensor readings
+from the previous 24 hours into a structured report suitable for automations
+or dashboards.
 """
+
+from __future__ import annotations
 
 import json
 import logging
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
 from statistics import mean
@@ -14,11 +17,39 @@ from statistics import mean
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile_by_id,
 )
-from plant_engine.environment_manager import compare_environment
+from plant_engine.environment_manager import compare_environment, optimize_environment
 from plant_engine.growth_stage import predict_harvest_date
 from plant_engine.pest_manager import recommend_beneficials
 from plant_engine.utils import load_dataset
+from plant_engine.fertigation import recommend_nutrient_mix
 from plant_engine.rootzone_model import estimate_water_capacity
+
+
+@dataclass
+class DailyReport:
+    """Structured daily report data."""
+
+    plant_id: str
+    lifecycle_stage: str = "unknown"
+    thresholds: dict[str, object] = field(default_factory=dict)
+    irrigation_summary: dict[str, object] = field(default_factory=dict)
+    nutrient_summary: dict[str, object] = field(default_factory=dict)
+    sensor_summary: dict[str, object] = field(default_factory=dict)
+    environment_comparison: dict[str, object] = field(default_factory=dict)
+    environment_optimization: dict[str, object] = field(default_factory=dict)
+    pest_actions: dict[str, str] = field(default_factory=dict)
+    disease_actions: dict[str, str] = field(default_factory=dict)
+    beneficial_insects: dict[str, list[str]] = field(default_factory=dict)
+    root_zone: dict[str, object] = field(default_factory=dict)
+    stage_info: dict[str, object] = field(default_factory=dict)
+    fertigation_schedule: dict[str, float] = field(default_factory=dict)
+    irrigation_target_ml: float | None = None
+    predicted_harvest_date: str | None = None
+    yield_: float | None = None
+    timestamp: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+
+    def as_dict(self) -> dict:
+        return asdict(self)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,24 +85,17 @@ def _filter_last_24h(entries: list[dict]) -> list[dict]:
 
     return recent
 
-def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports") -> dict:
-    """Run the daily processing cycle for a given plant and produce a daily report."""
+def run_daily_cycle(
+    plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
+) -> dict:
+    """Return an aggregated 24h report for ``plant_id``.
+
+    The report includes irrigation, nutrients, sensor averages, environment
+    analysis and optional fertigation recommendations.
+    """
+
     plant_dir = Path(base_path) / plant_id
-    report = {
-        "plant_id": plant_id,
-        "lifecycle_stage": "unknown",
-        "thresholds": {},
-        "irrigation_summary": {},
-        "nutrient_summary": {},
-        "sensor_summary": {},
-        "environment_comparison": {},
-        "pest_actions": {},
-        "disease_actions": {},
-        "root_zone": {},
-        "stage_info": {},
-        "yield": None,
-        "timestamp": datetime.utcnow().isoformat()
-    }
+    report = DailyReport(plant_id)
     # Load plant profile (structured data)
     profile = load_profile_by_id(plant_id, base_dir=base_path)
     if not profile:
@@ -81,21 +105,20 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
     general = profile.get("general", {})
     stage_name = general.get("lifecycle_stage") or general.get("stage")
     if stage_name:
-        report["lifecycle_stage"] = stage_name
+        report.lifecycle_stage = stage_name
     # Get current thresholds from profile
     thresholds = profile.get("thresholds", {})
-    report["thresholds"] = thresholds
+    report.thresholds = thresholds
     # Load last 24h logs for irrigation, nutrients, sensors, visuals, yield
     irrigation_entries = _filter_last_24h(_load_log(plant_dir / "irrigation_log.json"))
     nutrient_entries = _filter_last_24h(_load_log(plant_dir / "nutrient_application_log.json"))
     sensor_entries = _filter_last_24h(_load_log(plant_dir / "sensor_reading_log.json"))
-    visual_entries = _filter_last_24h(_load_log(plant_dir / "visual_inspection_log.json"))
     yield_entries = _filter_last_24h(_load_log(plant_dir / "yield_tracking_log.json"))
     # Summarize irrigation events (24h)
     if irrigation_entries:
         total_volume = sum(e.get("volume_applied_ml", 0) for e in irrigation_entries)
         methods = {e.get("method") for e in irrigation_entries if e.get("method")}
-        report["irrigation_summary"] = {
+        report.irrigation_summary = {
             "events": len(irrigation_entries),
             "total_volume_ml": total_volume,
             "methods": list(methods)
@@ -107,7 +130,7 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
             formulation = entry.get("nutrient_formulation", {})
             for nutrient, amount in formulation.items():
                 nutrient_totals[nutrient] = nutrient_totals.get(nutrient, 0) + amount
-        report["nutrient_summary"] = nutrient_totals
+        report.nutrient_summary = nutrient_totals
     # Summarize sensor readings (24h average per sensor type)
     sensor_data = {}
     for entry in sensor_entries:
@@ -121,12 +144,16 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
             continue
         sensor_data.setdefault(stype, []).append(val)
     sensor_avg = {stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals}
-    report["sensor_summary"] = sensor_avg
+    report.sensor_summary = sensor_avg
     # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
     current_env = {**latest_env, **sensor_avg}
+    plant_type = general.get("plant_type", "").lower()
     env_compare = compare_environment(current_env, thresholds)
-    report["environment_comparison"] = env_compare
+    report.environment_comparison = env_compare
+    report.environment_optimization = optimize_environment(
+        current_env, plant_type, stage_name
+    )
     # Pest and disease alerts (if any observed in profile)
     pest_actions = {}
     disease_actions = {}
@@ -134,7 +161,6 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
     observed_diseases = general.get("observed_diseases", [])
     # Load pest treatment guidelines from the bundled dataset
     pest_guidelines = load_dataset("pest_guidelines.json")
-    plant_type = general.get("plant_type", "").lower()
     for pest in observed_pests:
         pest_key = str(pest).lower()
         action = None
@@ -159,11 +185,11 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
         if action is None:
             action = disease_guidelines.get(disease_key, f"No guideline available for {disease}.")
         disease_actions[disease] = action
-    report["pest_actions"] = pest_actions
-    report["disease_actions"] = disease_actions
+    report.pest_actions = pest_actions
+    report.disease_actions = disease_actions
     # Suggest beneficial insects for observed pests
     if observed_pests:
-        report["beneficial_insects"] = recommend_beneficials(observed_pests)
+        report.beneficial_insects = recommend_beneficials(observed_pests)
 
     # Predict harvest date if a start date is provided
     start_date_str = general.get("start_date")
@@ -172,7 +198,7 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
             start_date = datetime.fromisoformat(start_date_str).date()
             harvest = predict_harvest_date(general.get("plant_type", ""), start_date)
             if harvest:
-                report["predicted_harvest_date"] = harvest.isoformat()
+                report.predicted_harvest_date = harvest.isoformat()
         except Exception:  # noqa: broad-except -- ignore parse errors
             pass
     # Calculate root zone water metrics (TAW, MAD, current moisture)
@@ -195,26 +221,40 @@ def run_daily_cycle(plant_id: str, base_path: str = "plants", output_path: str =
             break
     if moisture_value is not None:
         root_zone_info["current_moisture_pct"] = moisture_value
-    report["root_zone"] = root_zone_info
+    report.root_zone = root_zone_info
+
+    # Irrigation and fertigation targets
+    irrigation_data = load_dataset("irrigation_guidelines.json")
+    report.irrigation_target_ml = (
+        irrigation_data.get(plant_type, {}).get(stage_name or "")
+    )
+    if report.irrigation_target_ml:
+        vol_l = report.irrigation_target_ml / 1000
+        report.fertigation_schedule = recommend_nutrient_mix(
+            plant_type,
+            stage_name or "",
+            vol_l,
+            include_micro=True,
+        )
     # Include stage details if available in profile
     if stage_name:
         stages = profile.get("stages", {})
         # Check for exact or lowercase match in stage definitions
         stage_key = stage_name if stage_name in stages else stage_name.lower()
         if stage_key in stages and isinstance(stages[stage_key], dict):
-            report["stage_info"] = stages[stage_key]
+            report.stage_info = stages[stage_key]
     # Include latest yield measurement (if any in last 24h)
     if yield_entries:
         last_yield = yield_entries[-1].get("yield_quantity")
-        report["yield"] = last_yield
+        report.yield_ = last_yield
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
     out_file = output_dir / f"{plant_id}_{datetime.utcnow().date()}.json"
     try:
-        with open(out_file, 'w', encoding='utf-8') as f:
-            json.dump(report, f, indent=2)
+        with open(out_file, "w", encoding="utf-8") as f:
+            json.dump(report.as_dict(), f, indent=2)
         _LOGGER.info("Saved daily report for %s to %s", plant_id, out_file)
     except Exception as e:
         _LOGGER.error("Failed to write report for %s: %s", plant_id, e)
-    return report
+    return report.as_dict()

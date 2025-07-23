@@ -11,9 +11,14 @@ Repo: horticulture-assistant
 
 import logging
 
-from homeassistant.core import HomeAssistant
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.typing import ConfigType
+try:
+    from homeassistant.core import HomeAssistant
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.helpers.typing import ConfigType
+except ModuleNotFoundError:  # pragma: no cover - allow running tests without HA
+    HomeAssistant = object  # type: ignore
+    ConfigEntry = object  # type: ignore
+    ConfigType = dict
 
 from .const import DOMAIN, PLATFORMS
 import asyncio
