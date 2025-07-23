@@ -18,6 +18,7 @@ _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
 __all__ = [
     "estimate_rootzone_depth",
     "estimate_water_capacity",
+    "calculate_remaining_water",
     "get_soil_parameters",
     "RootZone",
 ]
@@ -106,3 +107,25 @@ def estimate_water_capacity(
         field_capacity_pct=field_capacity,
         mad_pct=mad_fraction,
     )
+
+
+def calculate_remaining_water(
+    rootzone: RootZone,
+    available_ml: float,
+    *,
+    irrigation_ml: float = 0.0,
+    et_ml: float = 0.0,
+) -> float:
+    """Return updated available water volume within the root zone.
+
+    The result is clipped to the valid range ``0`` to
+    ``rootzone.total_available_water_ml``.
+    """
+
+    if any(x < 0 for x in (available_ml, irrigation_ml, et_ml)):
+        raise ValueError("Volumes must be non-negative")
+
+    new_vol = available_ml + irrigation_ml - et_ml
+    new_vol = min(new_vol, rootzone.total_available_water_ml)
+    return round(max(new_vol, 0.0), 1)
+
