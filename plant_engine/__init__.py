@@ -25,6 +25,12 @@ from .environment_manager import (
     evaluate_stress_conditions,
     list_supported_plants as list_environment_plants,
 )
+from .co2_manager import (
+    list_sources as list_co2_sources,
+    get_co2_price,
+    estimate_injection_cost,
+)
+
 from .pest_manager import (
     get_pest_guidelines,
     recommend_treatments as recommend_pest_treatments,
@@ -190,6 +196,9 @@ __all__ = [
     "evaluate_wind_stress",
     "evaluate_stress_conditions",
     "list_environment_plants",
+    "list_co2_sources",
+    "get_co2_price",
+    "estimate_injection_cost",
     "get_pest_guidelines",
     "recommend_pest_treatments",
     "get_pest_prevention",
