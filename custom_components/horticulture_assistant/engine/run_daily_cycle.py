@@ -19,7 +19,15 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
 )
 from plant_engine.environment_manager import compare_environment, optimize_environment
 from plant_engine.growth_stage import predict_harvest_date
-from plant_engine.pest_manager import recommend_beneficials
+from plant_engine.pest_manager import (
+    recommend_beneficials,
+    recommend_treatments as recommend_pest_treatments,
+    recommend_prevention as recommend_pest_prevention,
+)
+from plant_engine.disease_manager import (
+    recommend_treatments as recommend_disease_treatments,
+    recommend_prevention as recommend_disease_prevention,
+)
 from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.utils import load_dataset
 from plant_engine.fertigation import recommend_nutrient_mix
@@ -43,6 +51,8 @@ class DailyReport:
     environment_optimization: dict[str, object] = field(default_factory=dict)
     pest_actions: dict[str, str] = field(default_factory=dict)
     disease_actions: dict[str, str] = field(default_factory=dict)
+    pest_prevention: dict[str, str] = field(default_factory=dict)
+    disease_prevention: dict[str, str] = field(default_factory=dict)
     beneficial_insects: dict[str, list[str]] = field(default_factory=dict)
     pest_severity: dict[str, str] = field(default_factory=dict)
     root_zone: dict[str, object] = field(default_factory=dict)
@@ -167,34 +177,18 @@ def run_daily_cycle(
     disease_actions = {}
     observed_pests = general.get("observed_pests", [])
     observed_diseases = general.get("observed_diseases", [])
-    # Load pest treatment guidelines from the bundled dataset
-    pest_guidelines = load_dataset("pest_guidelines.json")
-    for pest in observed_pests:
-        pest_key = str(pest).lower()
-        action = None
-        if plant_type and plant_type in pest_guidelines and pest_key in pest_guidelines[plant_type]:
-            action = pest_guidelines[plant_type][pest_key]
-        elif pest_key in pest_guidelines:
-            action = pest_guidelines[pest_key]
-        if action is None:
-            action = f"No guideline available for {pest}."
-        pest_actions[pest] = action
-    # Basic disease guidelines for common issues (fallback if not in pest_guidelines)
-    disease_guidelines = {
-        "root rot": "Ensure good drainage and avoid overwatering.",
-        "powdery mildew": "Apply appropriate fungicide and remove affected leaves.",
-        "blight": "Apply copper-based fungicide at first sign of disease."
-    }
-    for disease in observed_diseases:
-        disease_key = str(disease).lower()
-        action = None
-        if plant_type and plant_type in pest_guidelines and disease_key in pest_guidelines[plant_type]:
-            action = pest_guidelines[plant_type][disease_key]
-        if action is None:
-            action = disease_guidelines.get(disease_key, f"No guideline available for {disease}.")
-        disease_actions[disease] = action
-    report.pest_actions = pest_actions
-    report.disease_actions = disease_actions
+    if observed_pests:
+        pest_actions = recommend_pest_treatments(plant_type, observed_pests)
+        report.pest_actions = pest_actions
+        report.pest_prevention = recommend_pest_prevention(
+            plant_type, observed_pests
+        )
+    if observed_diseases:
+        disease_actions = recommend_disease_treatments(plant_type, observed_diseases)
+        report.disease_actions = disease_actions
+        report.disease_prevention = recommend_disease_prevention(
+            plant_type, observed_diseases
+        )
     # Suggest beneficial insects for observed pests
     if observed_pests:
         report.beneficial_insects = recommend_beneficials(observed_pests)
