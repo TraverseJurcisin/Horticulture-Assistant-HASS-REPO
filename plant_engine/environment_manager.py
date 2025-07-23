@@ -218,12 +218,16 @@ class EnvironmentSummary:
     quality: str
     adjustments: Dict[str, str]
     metrics: EnvironmentMetrics
+    score: float
+    stress: StressFlags
 
     def as_dict(self) -> Dict[str, Any]:
         return {
             "quality": self.quality,
             "adjustments": self.adjustments,
             "metrics": self.metrics.as_dict(),
+            "score": self.score,
+            "stress": self.stress.as_dict(),
         }
 
 
@@ -638,12 +642,14 @@ def calculate_dli_series(
     """
     if interval_hours <= 0:
         raise ValueError("interval_hours must be positive")
-    total = 0.0
-    for val in ppfd_values:
-        if val < 0:
-            raise ValueError("PPFD values must be non-negative")
-        total += val * 3600 * interval_hours
-    return round(total / 1_000_000, 2)
+
+    values = [float(v) for v in ppfd_values]
+    if any(v < 0 for v in values):
+        raise ValueError("PPFD values must be non-negative")
+
+    total = sum(values)
+    dli = total * 3600 * interval_hours / 1_000_000
+    return round(dli, 2)
 
 
 def calculate_vpd_series(
@@ -772,15 +778,26 @@ def optimize_environment(
 def summarize_environment(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
-    """Return combined quality rating, adjustments and metrics."""
+    """Return combined quality rating, adjustments, metrics and stress."""
 
     readings = normalize_environment_readings(current)
+
+    metrics = calculate_environment_metrics(
+        readings.get("temp_c"), readings.get("humidity_pct")
+    )
+    stress = evaluate_stress_conditions(
+        readings.get("temp_c"),
+        readings.get("humidity_pct"),
+        readings.get("dli"),
+        plant_type,
+        stage,
+    )
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
         adjustments=recommend_environment_adjustments(readings, plant_type, stage),
-        metrics=calculate_environment_metrics(
-            readings.get("temp_c"), readings.get("humidity_pct")
-        ),
+        metrics=metrics,
+        score=score_environment(readings, plant_type, stage),
+        stress=stress,
     )
     return summary.as_dict()
