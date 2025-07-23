@@ -22,6 +22,7 @@ COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
+LIGHT_STRESS_DATA_FILE = "light_stress_thresholds.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
@@ -148,6 +149,7 @@ __all__ = [
     "get_target_photoperiod",
     "get_target_co2",
     "get_target_soil_moisture",
+    "get_light_stress_thresholds",
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
@@ -199,6 +201,7 @@ _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
+_LIGHT_STRESS_THRESHOLDS: Dict[str, Any] = load_dataset(LIGHT_STRESS_DATA_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
@@ -976,6 +979,22 @@ def evaluate_moisture_stress(
     return None
 
 
+@lru_cache(maxsize=None)
+def get_light_stress_thresholds(plant_type: str) -> RangeTuple | None:
+    """Return DLI thresholds for light stress warnings."""
+
+    data = _LIGHT_STRESS_THRESHOLDS.get(
+        normalize_key(plant_type), _LIGHT_STRESS_THRESHOLDS.get("default")
+    )
+    if isinstance(data, Iterable) and len(data) == 2:
+        try:
+            low, high = float(data[0]), float(data[1])
+            return (low, high)
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -986,9 +1005,12 @@ def evaluate_light_stress(
 
     target = get_target_dli(plant_type, stage)
     if not target:
-        return None
-
-    low, high = target
+        thresholds = get_light_stress_thresholds(plant_type)
+        if not thresholds:
+            return None
+        low, high = thresholds
+    else:
+        low, high = target
     if dli < low:
         return "low"
     if dli > high:

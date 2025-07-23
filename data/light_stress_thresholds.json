@@ -1,0 +1,8 @@
+{
+  "default": [5, 25],
+  "lettuce": [8, 14],
+  "tomato": [18, 32],
+  "citrus": [12, 35],
+  "strawberry": [10, 20],
+  "basil": [12, 25]
+}

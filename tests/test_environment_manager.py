@@ -515,6 +515,18 @@ def test_evaluate_light_stress():
     assert evaluate_light_stress(11, "lettuce", "seedling") is None
     assert evaluate_light_stress(10, "unknown") is None
 
+def test_get_light_stress_thresholds():
+    from plant_engine import environment_manager as em
+
+    thresh = em.get_light_stress_thresholds("lettuce")
+    assert thresh == (8.0, 14.0)
+    assert em.get_light_stress_thresholds("unknown") == (5.0, 25.0)
+
+def test_evaluate_light_stress_no_stage():
+    assert evaluate_light_stress(6, "lettuce") == "low"
+    assert evaluate_light_stress(16, "lettuce") == "high"
+    assert evaluate_light_stress(12, "lettuce") is None
+
 
 def test_optimize_environment_light_stress():
     result = optimize_environment({"dli": 8}, "lettuce", "seedling")
