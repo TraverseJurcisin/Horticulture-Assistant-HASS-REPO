@@ -1,0 +1,10 @@
+{
+  "lettuce": {
+    "seedling": {"Si": 20},
+    "harvest": {"Si": 30}
+  },
+  "tomato": {
+    "vegetative": {"Si": 35},
+    "fruiting": {"Si": 40}
+  }
+}
