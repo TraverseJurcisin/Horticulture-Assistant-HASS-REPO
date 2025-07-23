@@ -145,6 +145,7 @@ Key reference datasets reside in the `data/` directory:
 - `disease_prevention.json` – cultural practices to prevent common diseases
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
+- `pest_monitoring_intervals.json` – recommended scouting frequency by stage
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `water_quality_actions.json` – recommended treatments when limits are exceeded
 - `fertilizer_purity.json` – default purity factors for common fertilizers
@@ -238,6 +239,7 @@ or incomplete and should only be used as a starting point for your own research.
   beneficial insects to deploy when pest thresholds are exceeded.
 - **Pest Monitoring Report**: `generate_pest_report` combines severity,
   treatment, biological control, severity actions and prevention advice for observed pests using `pest_severity_actions.json`.
+- **Pest Scouting Intervals**: `get_pest_monitoring_interval` returns recommended days between checks using `pest_monitoring_intervals.json`.
 - **Disease Monitoring Report**: `generate_disease_report` now provides
   severity and treatment guidance based on new `disease_thresholds.json`.
 - **Harvest Date Prediction**: If plant profiles include a `start_date`, daily
