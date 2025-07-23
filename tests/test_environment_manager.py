@@ -59,11 +59,14 @@ def test_get_environmental_targets_seedling():
     assert data["humidity_pct"] == [60, 80]
     assert data["light_ppfd"] == [150, 300]
     assert data["co2_ppm"] == [400, 600]
+    assert data["ph"] == [5.5, 6.5]
+    assert data["soil_moisture_pct"] == [30, 50]
 
 
 def test_get_environmental_targets_case_insensitive():
     data = get_environmental_targets("CITRUS", "SeEdLiNg")
     assert data["temp_c"] == [22, 26]
+    assert data["ph"] == [5.5, 6.5]
 
 
 def test_recommend_environment_adjustments():
@@ -73,6 +76,8 @@ def test_recommend_environment_adjustments():
             "humidity_pct": 90,
             "light_ppfd": 100,
             "co2_ppm": 700,
+            "ph": 7.2,
+            "soil_moisture_pct": 20,
         },
         "citrus",
         "seedling",
@@ -81,11 +86,20 @@ def test_recommend_environment_adjustments():
     assert actions["humidity"] == "decrease"
     assert actions["light"] == "increase"
     assert actions["co2"] == "decrease"
+    assert actions["ph"] == "decrease"
+    assert actions["moisture"] == "increase"
 
 
 def test_recommend_environment_adjustments_aliases():
     actions = recommend_environment_adjustments(
-        {"temperature": 18, "humidity": 90, "light": 100, "co2": 700},
+        {
+            "temperature": 18,
+            "humidity": 90,
+            "light": 100,
+            "co2": 700,
+            "ph_level": 7.2,
+            "moisture": 20,
+        },
         "citrus",
         "seedling",
     )
@@ -93,6 +107,8 @@ def test_recommend_environment_adjustments_aliases():
     assert actions["humidity"] == "decrease"
     assert actions["light"] == "increase"
     assert actions["co2"] == "decrease"
+    assert actions["ph"] == "decrease"
+    assert actions["moisture"] == "increase"
 
 
 def test_recommend_environment_adjustments_no_data():
@@ -106,6 +122,8 @@ def test_suggest_environment_setpoints():
     assert setpoints["humidity_pct"] == 70
     assert setpoints["light_ppfd"] == 225
     assert setpoints["co2_ppm"] == 500
+    assert setpoints["ph"] == 6.0
+    assert setpoints["soil_moisture_pct"] == 40
 
 
 def test_vapor_pressure_helpers():

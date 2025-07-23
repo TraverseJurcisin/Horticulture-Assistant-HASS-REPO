@@ -34,6 +34,8 @@ ACTION_LABELS = {
     "humidity_pct": "humidity",
     "light_ppfd": "light",
     "co2_ppm": "co2",
+    "ph": "ph",
+    "soil_moisture_pct": "moisture",
 }
 
 # aliases for environment keys used when comparing readings. This allows
@@ -46,6 +48,7 @@ ENV_ALIASES = {
     "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct"],
     "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
     "co2_ppm": ["co2_ppm", "co2"],
+    "ph": ["ph", "solution_ph", "ph_level"],
     "ec": ["ec", "EC"],
     "wind_m_s": ["wind_m_s", "wind", "wind_speed"],
     "soil_moisture_pct": ["soil_moisture_pct", "soil_moisture", "moisture", "vwc"],
@@ -78,6 +81,8 @@ class EnvironmentGuidelines:
     humidity_pct: RangeTuple | None = None
     light_ppfd: RangeTuple | None = None
     co2_ppm: RangeTuple | None = None
+    ph: RangeTuple | None = None
+    soil_moisture_pct: RangeTuple | None = None
 
     def as_dict(self) -> Dict[str, list[float]]:
         """Return guidelines as a dictionary with list values."""
@@ -102,6 +107,10 @@ def get_environment_guidelines(
         humidity_pct=_parse_range(data.get("humidity_pct")),
         light_ppfd=_parse_range(data.get("light_ppfd")),
         co2_ppm=_parse_range(data.get("co2_ppm")),
+        ph=_parse_range(ph_manager.get_ph_range(plant_type, stage)),
+        soil_moisture_pct=_parse_range(
+            get_target_soil_moisture(plant_type, stage) or []
+        ),
     )
 
 
@@ -399,8 +408,20 @@ def list_supported_plants() -> list[str]:
 def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
-    """Return recommended environmental ranges for a plant type and stage."""
-    return get_environment_guidelines(plant_type, stage).as_dict()
+    """Return recommended environmental ranges for a plant type and stage.
+
+    The result combines general environment guidelines with pH and soil
+    moisture recommendations if available.
+    """
+
+    data = get_environment_guidelines(plant_type, stage).as_dict()
+    ph_range = ph_manager.get_ph_range(plant_type, stage)
+    if ph_range:
+        data["ph"] = ph_range
+    moisture = get_target_soil_moisture(plant_type, stage)
+    if moisture:
+        data["soil_moisture_pct"] = list(moisture)
+    return data
 
 
 def clear_environment_cache() -> None:
@@ -654,7 +675,7 @@ def score_overall_environment(
 def suggest_environment_setpoints(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, float]:
-    """Return midpoint setpoints for temperature, humidity, light and CO₂."""
+    """Return midpoint setpoints for key environmental parameters."""
     targets = get_environmental_targets(plant_type, stage)
     setpoints: Dict[str, float] = {}
     for key, bounds in targets.items():
