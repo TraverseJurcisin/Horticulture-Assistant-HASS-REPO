@@ -22,13 +22,17 @@ def generate_health_report(
     *,
     pests: Iterable[str] = (),
     diseases: Iterable[str] = (),
+    water_test: Mapping[str, float] | None = None,
 ) -> Dict[str, object]:
     """Return a consolidated health report for a plant.
 
     The report includes optimized environment data, nutrient deficiencies with
-    symptoms, and recommended pest and disease treatments.
+    symptoms, recommended pest and disease treatments and optional water quality
+    information.
     """
-    env_opt = environment_manager.optimize_environment(env, plant_type, stage)
+    env_opt = environment_manager.optimize_environment(
+        env, plant_type, stage, water_test=water_test
+    )
     deficits = nutrient_manager.calculate_deficiencies(
         nutrient_levels, plant_type, stage
     )
