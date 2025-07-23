@@ -347,6 +347,11 @@ def test_normalize_environment_readings_aliases():
         "ec": 1.2,
     }
 
+def test_normalize_environment_readings_temp_fahrenheit():
+    data = {"temperature_f": 86}
+    result = normalize_environment_readings(data)
+    assert result == {"temp_c": 30.0}
+
 
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})
