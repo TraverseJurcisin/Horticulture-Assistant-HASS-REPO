@@ -20,6 +20,7 @@ __all__ = [
     "recommend_ph_adjustment",
     "recommended_ph_setpoint",
     "estimate_ph_adjustment_volume",
+    "recommend_solution_ph_adjustment",
     "get_medium_ph_range",
     "recommend_medium_ph_adjustment",
     "recommended_ph_for_medium",
@@ -105,6 +106,26 @@ def estimate_ph_adjustment_volume(
     effect_total = effect / volume_l
     ml_needed = delta / effect_total
     return round(abs(ml_needed), 2)
+
+
+def recommend_solution_ph_adjustment(
+    current_ph: float,
+    plant_type: str,
+    stage: str | None,
+    volume_l: float,
+    product: str,
+) -> float | None:
+    """Return adjustment volume to reach the recommended pH setpoint.
+
+    This helper combines :func:`recommended_ph_setpoint` and
+    :func:`estimate_ph_adjustment_volume` for convenience when calculating
+    nutrient solution corrections.
+    """
+
+    target = recommended_ph_setpoint(plant_type, stage)
+    if target is None:
+        return None
+    return estimate_ph_adjustment_volume(current_ph, target, volume_l, product)
 
 
 def get_medium_ph_range(medium: str) -> list[float]:

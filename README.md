@@ -51,6 +51,7 @@ applying it to your plants.
 ### Data & Analytics
 - Disease and pest treatment recommendations
 - Environment optimization suggestions with pH guidance
+- Precise pH adjustment volume calculations for nutrient solutions
 - Heat stress warnings using heat index thresholds
 - Humidity stress warnings when humidity is outside safe ranges
 - Light stress detection using DLI ranges
@@ -172,6 +173,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_toxicity_symptoms.json` – visual cues indicating nutrient excess
 - `nutrient_toxicity_treatments.json` – suggested mitigation steps for toxicity
 - `growth_medium_ph_ranges.json` – preferred pH ranges for soil, coco and hydroponics
+- `ph_adjustment_factors.json` – acid/base effect per mL for pH correction
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `stage_multipliers.json` – default nutrient scaling factors by stage
 - `pruning_guidelines.json` – stage-specific pruning recommendations
