@@ -24,6 +24,7 @@ __all__ = [
     "generate_precipitation_schedule",
     "get_rain_capture_efficiency",
     "get_recommended_interval",
+    "estimate_irrigation_time",
     "IrrigationRecommendation",
 ]
 
@@ -38,6 +39,9 @@ _INTERVAL_DATA: Dict[str, Dict[str, float]] = load_dataset(_INTERVAL_FILE)
 
 _EFFICIENCY_FILE = "irrigation_efficiency.json"
 _EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
+
+_FLOW_FILE = "emitter_flow_rates.json"
+_FLOW_DATA: Dict[str, float] = load_dataset(_FLOW_FILE)
 
 _RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
 _RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
@@ -204,6 +208,31 @@ def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
     if isinstance(eff, (int, float)) and 0 < eff <= 1:
         return round(volume_ml / eff, 1)
     return volume_ml
+
+
+def estimate_irrigation_time(
+    volume_ml: float, emitter_type: str, emitters: int = 1
+) -> float:
+    """Return hours required to apply ``volume_ml`` with ``emitter_type``.
+
+    Flow rates are loaded from :data:`emitter_flow_rates.json` in liters per
+    hour for a single emitter. ``emitters`` specifies how many emitters are
+    used simultaneously. ``0.0`` is returned when the emitter type is unknown.
+    ``volume_ml`` and ``emitters`` must be positive.
+    """
+
+    if volume_ml <= 0:
+        raise ValueError("volume_ml must be positive")
+    if emitters <= 0:
+        raise ValueError("emitters must be positive")
+
+    rate_l_h = _FLOW_DATA.get(normalize_key(emitter_type))
+    if not isinstance(rate_l_h, (int, float)) or rate_l_h <= 0:
+        return 0.0
+
+    rate_ml_h = rate_l_h * 1000 * emitters
+    hours = volume_ml / rate_ml_h
+    return round(hours, 2)
 
 
 def get_rain_capture_efficiency(surface: str) -> float:

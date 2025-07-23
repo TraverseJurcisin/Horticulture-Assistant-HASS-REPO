@@ -11,6 +11,7 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     adjust_irrigation_for_efficiency,
+    estimate_irrigation_time,
     generate_env_irrigation_schedule,
     generate_precipitation_schedule,
     get_rain_capture_efficiency,
@@ -241,3 +242,14 @@ def test_generate_precipitation_schedule():
     # Second day no rain -> irrigation required
     assert schedule[2] > 0.0
 
+
+def test_estimate_irrigation_time():
+    # 4 L/h emitter with 2 emitters -> 8 L/h -> 8000 mL/h
+    hrs = estimate_irrigation_time(4000, "drip", emitters=2)
+    assert hrs == 0.5
+    # unknown emitter returns 0.0
+    assert estimate_irrigation_time(1000, "unknown") == 0.0
+    with pytest.raises(ValueError):
+        estimate_irrigation_time(-1, "drip")
+    with pytest.raises(ValueError):
+        estimate_irrigation_time(1000, "drip", emitters=0)
