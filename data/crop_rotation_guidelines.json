@@ -1,0 +1,14 @@
+{
+  "lettuce": {
+    "preceding": ["beans", "peas"],
+    "interval_months": 12
+  },
+  "tomato": {
+    "preceding": ["lettuce", "brassicas"],
+    "interval_months": 24
+  },
+  "basil": {
+    "preceding": ["lettuce"],
+    "interval_months": 6
+  }
+}

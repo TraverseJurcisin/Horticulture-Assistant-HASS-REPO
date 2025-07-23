@@ -2,6 +2,7 @@
 
 import os
 import json
+from dataclasses import dataclass, asdict
 from typing import Dict
 
 # Default storage locations can be overridden with environment variables. This
@@ -10,11 +11,21 @@ from typing import Dict
 NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
-def calculate_nue(plant_id: str) -> Dict:
-    """
-    Calculate Nutrient Use Efficiency (NUE) for all nutrients based on applied nutrients vs yield.
-    Returns NUE per nutrient as g yield per g nutrient applied.
-    """
+@dataclass
+class NUEReport:
+    """Nutrient use efficiency summary."""
+
+    plant_id: str
+    total_yield_g: float
+    nue: Dict[str, float | None]
+
+    def as_dict(self) -> Dict[str, object]:
+        """Return the report as a plain dictionary."""
+        return asdict(self)
+
+
+def calculate_nue(plant_id: str) -> NUEReport:
+    """Return nutrient use efficiency report for ``plant_id``."""
 
     # Load total nutrients applied
     path_nutrients = os.path.join(NUTRIENT_DIR, f"{plant_id}.json")
@@ -45,8 +56,8 @@ def calculate_nue(plant_id: str) -> Dict:
         g_applied = mg / 1000
         nue[nutrient] = round(total_yield_g / g_applied, 2) if g_applied else None
 
-    return {
-        "plant_id": plant_id,
-        "total_yield_g": total_yield_g,
-        "nue": nue
-    }
+    return NUEReport(
+        plant_id=plant_id,
+        total_yield_g=total_yield_g,
+        nue=nue,
+    )

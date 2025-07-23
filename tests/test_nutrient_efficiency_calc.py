@@ -25,7 +25,8 @@ def test_calculate_nue(tmp_path, monkeypatch):
     monkeypatch.setattr(nutrient_efficiency, "NUTRIENT_DIR", str(nutrient_dir))
     monkeypatch.setattr(nutrient_efficiency, "YIELD_DIR", str(yield_dir))
 
-    result = nutrient_efficiency.calculate_nue("plant")
+    report = nutrient_efficiency.calculate_nue("plant")
+    result = report.as_dict()
     assert result["total_yield_g"] == 1500
     assert result["nue"]["N"] == 1000.0  # 1500g / 1.5g
     assert result["nue"]["K"] == 2000.0  # 1500g / 0.75g
