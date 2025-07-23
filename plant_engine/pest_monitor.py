@@ -2,6 +2,7 @@ from __future__ import annotations
 
 """Pest monitoring utilities using threshold datasets."""
 
+from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key
@@ -19,6 +20,8 @@ __all__ = [
     "classify_pest_severity",
     "recommend_threshold_actions",
     "recommend_biological_controls",
+    "generate_pest_report",
+    "PestReport",
 ]
 
 
@@ -99,3 +102,42 @@ def classify_pest_severity(
             level = "severe"
         severity[key] = level
     return severity
+
+
+@dataclass
+class PestReport:
+    """Consolidated pest monitoring report."""
+
+    severity: Dict[str, str]
+    thresholds_exceeded: Dict[str, bool]
+    treatments: Dict[str, str]
+    beneficial_insects: Dict[str, list[str]]
+    prevention: Dict[str, str]
+
+    def as_dict(self) -> Dict[str, object]:
+        """Return report as a regular dictionary."""
+        return asdict(self)
+
+
+def generate_pest_report(
+    plant_type: str, observations: Mapping[str, int]
+) -> Dict[str, object]:
+    """Return severity, treatment and prevention recommendations."""
+
+    severity = classify_pest_severity(plant_type, observations)
+    thresholds = assess_pest_pressure(plant_type, observations)
+    treatments = recommend_threshold_actions(plant_type, observations)
+    beneficials = recommend_biological_controls(plant_type, observations)
+
+    from .pest_manager import recommend_prevention
+
+    prevention = recommend_prevention(plant_type, observations.keys())
+
+    report = PestReport(
+        severity=severity,
+        thresholds_exceeded=thresholds,
+        treatments=treatments,
+        beneficial_insects=beneficials,
+        prevention=prevention,
+    )
+    return report.as_dict()
