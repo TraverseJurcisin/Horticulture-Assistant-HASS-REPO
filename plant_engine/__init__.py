@@ -18,6 +18,7 @@ from .environment_manager import (
     EnvironmentMetrics,
     EnvironmentOptimization,
     StressFlags,
+    evaluate_wind_stress,
     evaluate_stress_conditions,
     list_supported_plants as list_environment_plants,
 )
@@ -147,6 +148,7 @@ __all__ = [
     "EnvironmentMetrics",
     "EnvironmentOptimization",
     "StressFlags",
+    "evaluate_wind_stress",
     "evaluate_stress_conditions",
     "list_environment_plants",
     "get_pest_guidelines",
