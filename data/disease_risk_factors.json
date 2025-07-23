@@ -1,0 +1,9 @@
+{
+  "citrus": {
+    "citrus_greening": {"humidity_pct": [80, 100], "temp_c": [20, 32]},
+    "root_rot": {"humidity_pct": [70, 100], "temp_c": [18, 28]}
+  },
+  "tomato": {
+    "blight": {"humidity_pct": [70, 100], "temp_c": [15, 25]}
+  }
+}

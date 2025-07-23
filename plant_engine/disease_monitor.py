@@ -7,14 +7,17 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .disease_manager import recommend_treatments, recommend_prevention
+from . import environment_manager
 
 DATA_FILE = "disease_thresholds.json"
 MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
+RISK_FACTOR_FILE = "disease_risk_factors.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 # Recommended days between scouting events per plant stage
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
+_RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_FACTOR_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -22,6 +25,7 @@ __all__ = [
     "assess_disease_pressure",
     "classify_disease_severity",
     "recommend_threshold_actions",
+    "estimate_disease_risk",
     "get_monitoring_interval",
     "next_monitor_date",
     "generate_monitoring_schedule",
@@ -82,6 +86,39 @@ def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]
     return recommend_treatments(plant_type, exceeded)
 
 
+def estimate_disease_risk(
+    plant_type: str, environment: Mapping[str, float]
+) -> Dict[str, str]:
+    """Return disease risk level based on environmental conditions."""
+
+    factors = _RISK_FACTORS.get(normalize_key(plant_type), {})
+    if not factors:
+        return {}
+
+    readings = environment_manager.normalize_environment_readings(environment)
+    risks: Dict[str, str] = {}
+    for disease, reqs in factors.items():
+        matches = 0
+        total = 0
+        for key, (low, high) in reqs.items():
+            total += 1
+            value = readings.get(key)
+            if value is None:
+                continue
+            if low <= value <= high:
+                matches += 1
+        if total == 0:
+            continue
+        if matches == 0:
+            level = "low"
+        elif matches < total:
+            level = "moderate"
+        else:
+            level = "high"
+        risks[disease] = level
+    return risks
+
+
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between disease scouting events."""
 
@@ -128,21 +165,28 @@ class DiseaseReport:
     thresholds_exceeded: Dict[str, bool]
     treatments: Dict[str, str]
     prevention: Dict[str, str]
+    risk_levels: Dict[str, str]
 
     def as_dict(self) -> Dict[str, object]:
         return asdict(self)
 
 
-def generate_disease_report(plant_type: str, observations: Mapping[str, int]) -> Dict[str, object]:
-    """Return severity, treatment and prevention recommendations."""
+def generate_disease_report(
+    plant_type: str,
+    observations: Mapping[str, int],
+    environment: Mapping[str, float] | None = None,
+) -> Dict[str, object]:
+    """Return severity, treatment, prevention and risk assessments."""
     severity = classify_disease_severity(plant_type, observations)
     thresholds = assess_disease_pressure(plant_type, observations)
     treatments = recommend_threshold_actions(plant_type, observations)
     prevention = recommend_prevention(plant_type, observations.keys())
+    risk = estimate_disease_risk(plant_type, environment) if environment else {}
     report = DiseaseReport(
         severity=severity,
         thresholds_exceeded=thresholds,
         treatments=treatments,
         prevention=prevention,
+        risk_levels=risk,
     )
     return report.as_dict()

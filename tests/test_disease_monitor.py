@@ -4,6 +4,7 @@ from plant_engine.disease_monitor import (
     assess_disease_pressure,
     classify_disease_severity,
     recommend_threshold_actions,
+    estimate_disease_risk,
     generate_disease_report,
     get_monitoring_interval,
     next_monitor_date,
@@ -43,6 +44,19 @@ def test_generate_disease_report():
     assert report["thresholds_exceeded"]["citrus_greening"] is True
     assert "citrus greening" in report["treatments"]
     assert "root rot" in report["prevention"]
+
+
+def test_estimate_disease_risk():
+    env = {"humidity": 85, "temperature": 26}
+    risk = estimate_disease_risk("citrus", env)
+    assert risk["citrus_greening"] == "high"
+
+
+def test_generate_disease_report_with_environment():
+    obs = {"citrus greening": 1}
+    env = {"humidity": 85, "temperature": 26}
+    report = generate_disease_report("citrus", obs, environment=env)
+    assert report["risk_levels"]["citrus_greening"] == "high"
 
 
 def test_get_monitoring_interval():

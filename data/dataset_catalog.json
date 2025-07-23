@@ -13,6 +13,7 @@
   "ipm_guidelines.json": "Integrated pest management practices by crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
+  "disease_risk_factors.json": "Environmental conditions that favor common plant diseases.",
   "growth_stages.json": "Expected duration and notes for each growth stage.",
   "stage_multipliers.json": "Scaling factors for nutrient targets by stage.",
   "light_dli_guidelines.json": "Daily Light Integral targets for growth stages.",
