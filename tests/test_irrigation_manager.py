@@ -10,9 +10,10 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     adjust_irrigation_for_efficiency,
+    generate_env_irrigation_schedule,
     IrrigationRecommendation,
 )
-from plant_engine.rootzone_model import RootZone
+from plant_engine.rootzone_model import RootZone, calculate_remaining_water
 from plant_engine.compute_transpiration import compute_transpiration
 
 
@@ -155,4 +156,35 @@ def test_adjust_irrigation_for_efficiency():
     assert adjust_irrigation_for_efficiency(50.0, "unknown") == 50.0
     with pytest.raises(ValueError):
         adjust_irrigation_for_efficiency(-1.0, "drip")
+
+
+def test_generate_env_irrigation_schedule():
+    profile = {"kc": 1.0, "canopy_m2": 0.25}
+    env = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    env_series = [env, env]
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+
+    sched = generate_env_irrigation_schedule(profile, env_series, zone, 150.0)
+
+    m1 = compute_transpiration(profile, env)
+    vol1 = recommend_irrigation_volume(
+        zone, 150.0, m1["transpiration_ml_day"]
+    )
+    remaining = calculate_remaining_water(
+        zone, 150.0, irrigation_ml=vol1, et_ml=m1["transpiration_ml_day"]
+    )
+    m2 = compute_transpiration(profile, env)
+    vol2 = recommend_irrigation_volume(
+        zone, remaining, m2["transpiration_ml_day"]
+    )
+
+    assert sched[1]["volume_ml"] == vol1
+    assert sched[1]["metrics"] == m1
+    assert sched[2]["volume_ml"] == vol2
+    assert sched[2]["metrics"] == m2
 
