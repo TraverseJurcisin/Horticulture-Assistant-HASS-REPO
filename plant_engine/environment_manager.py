@@ -671,12 +671,26 @@ def score_overall_environment(
 def suggest_environment_setpoints(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, float]:
-    """Return midpoint setpoints for temperature, humidity, light and CO₂."""
+    """Return midpoint setpoints for key environment parameters."""
+
     targets = get_environmental_targets(plant_type, stage)
     setpoints: Dict[str, float] = {}
     for key, bounds in targets.items():
         if isinstance(bounds, (list, tuple)) and len(bounds) == 2:
             setpoints[key] = round((bounds[0] + bounds[1]) / 2, 2)
+
+    soil = get_target_soil_moisture(plant_type, stage)
+    if soil:
+        setpoints["soil_moisture_pct"] = round((soil[0] + soil[1]) / 2, 2)
+
+    soil_temp = get_target_soil_temperature(plant_type, stage)
+    if soil_temp:
+        setpoints["soil_temp_c"] = round((soil_temp[0] + soil_temp[1]) / 2, 2)
+
+    soil_ec = get_target_soil_ec(plant_type, stage)
+    if soil_ec:
+        setpoints["soil_ec"] = round((soil_ec[0] + soil_ec[1]) / 2, 2)
+
     return setpoints
 
 
