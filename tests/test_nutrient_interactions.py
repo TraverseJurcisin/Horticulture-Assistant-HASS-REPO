@@ -3,6 +3,8 @@ from plant_engine.nutrient_interactions import (
     get_interaction_info,
     get_max_ratio,
     check_imbalances,
+    get_balance_action,
+    recommend_balance_actions,
 )
 
 
@@ -28,3 +30,15 @@ def test_check_imbalances():
     warnings = check_imbalances(levels)
     assert "K/Mg" in warnings
     assert "N/P" in warnings
+
+
+def test_get_balance_action():
+    action = get_balance_action("K_Mg")
+    assert "magnesium" in action
+
+
+def test_recommend_balance_actions():
+    levels = {"K": 150, "Mg": 20, "Ca": 50, "N": 90, "P": 10}
+    actions = recommend_balance_actions(levels)
+    assert "K/Mg" in actions
+    assert "N/P" in actions
