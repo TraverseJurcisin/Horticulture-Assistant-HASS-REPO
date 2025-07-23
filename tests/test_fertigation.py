@@ -200,3 +200,27 @@ def test_recommend_uptake_fertigation_invalid():
 
     with pytest.raises(ValueError):
         recommend_uptake_fertigation("lettuce", "vegetative", num_plants=0)
+
+
+def test_estimate_stage_and_cycle_cost():
+    from plant_engine.fertigation import estimate_stage_cost, estimate_cycle_cost
+
+    stage_cost = estimate_stage_cost(
+        "lettuce",
+        "vegetative",
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+    )
+    cycle_cost = estimate_cycle_cost(
+        "lettuce",
+        fertilizers={
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        },
+    )
+    assert stage_cost >= 0
+    assert cycle_cost >= stage_cost

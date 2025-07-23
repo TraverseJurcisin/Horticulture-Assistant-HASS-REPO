@@ -49,6 +49,8 @@ __all__ = [
     "recommend_nutrient_mix_with_cost_breakdown",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
+    "estimate_stage_cost",
+    "estimate_cycle_cost",
 ]
 
 
@@ -492,5 +494,105 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     )
 
     return _calc(schedule)
+
+
+def _schedule_from_totals(
+    totals: Mapping[str, float],
+    num_plants: int,
+    fertilizers: Mapping[str, str],
+    purity_overrides: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return fertilizer grams needed for nutrient totals."""
+
+    schedule: Dict[str, float] = {}
+    for nutrient, mg in totals.items():
+        fert = fertilizers.get(nutrient)
+        if not fert:
+            continue
+        purity = get_fertilizer_purity(fert).get(nutrient, 0.0)
+        if purity <= 0:
+            try:
+                from custom_components.horticulture_assistant.fertilizer_formulator import (
+                    get_product_info,
+                    convert_guaranteed_analysis,
+                )
+
+                info = get_product_info(fert)
+                ga = convert_guaranteed_analysis(info.guaranteed_analysis)
+                purity = ga.get(nutrient, 0.0)
+            except Exception:
+                purity = 0.0
+        if purity_overrides and nutrient in purity_overrides:
+            purity = purity_overrides[nutrient]
+        if purity <= 0:
+            # Fall back to assuming pure nutrient to avoid divide errors
+            purity = 1.0
+        grams = mg * num_plants / 1000 / purity
+        schedule[fert] = round(schedule.get(fert, 0.0) + grams, 3)
+    return schedule
+
+
+def estimate_stage_cost(
+    plant_type: str,
+    stage: str,
+    *,
+    num_plants: int = 1,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> float:
+    """Return estimated fertilizer cost for a growth stage."""
+
+    from .nutrient_uptake import estimate_stage_totals
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_mix_cost,
+    )
+
+    totals = estimate_stage_totals(plant_type, stage)
+    if not totals:
+        return 0.0
+
+    if fertilizers is None:
+        fertilizers = {
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        }
+
+    schedule = _schedule_from_totals(
+        totals, num_plants, fertilizers, purity_overrides
+    )
+    return estimate_mix_cost(schedule)
+
+
+def estimate_cycle_cost(
+    plant_type: str,
+    *,
+    num_plants: int = 1,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> float:
+    """Return estimated fertilizer cost for the entire crop cycle."""
+
+    from .nutrient_uptake import estimate_total_uptake
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_mix_cost,
+    )
+
+    totals = estimate_total_uptake(plant_type)
+    if not totals:
+        return 0.0
+
+    if fertilizers is None:
+        fertilizers = {
+            "N": "foxfarm_grow_big",
+            "P": "foxfarm_grow_big",
+            "K": "intrepid_granular_potash_0_0_60",
+        }
+
+    schedule = _schedule_from_totals(
+        totals, num_plants, fertilizers, purity_overrides
+    )
+    return estimate_mix_cost(schedule)
+
 
 
