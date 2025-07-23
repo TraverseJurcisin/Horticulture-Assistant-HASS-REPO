@@ -213,6 +213,8 @@ __all__ = [
     "get_surplus_action",
     "recommend_surplus_actions",
     "list_nutrient_plants",
+    "get_nutrient_weight",
+    "score_nutrient_levels",
     "list_micro_plants",
     "get_micro_levels",
     "get_stage_info",
