@@ -333,6 +333,21 @@ def calculate_mix_density(schedule: Mapping[str, float]) -> float:
     return round(total_mass_kg / total_volume_l, 3)
 
 
+def estimate_solution_mass(schedule: Mapping[str, float], volume_l: float) -> float:
+    """Return total solution mass (kg) for ``schedule`` dissolved in ``volume_l``.
+
+    The calculation assumes water density is 1 kg/L and simply adds the mass
+    of all fertilizer products. A ``ValueError`` is raised when ``volume_l`` is
+    negative.
+    """
+
+    if volume_l < 0:
+        raise ValueError("volume_l must be non-negative")
+
+    fertilizer_mass_kg = sum(max(g, 0.0) for g in schedule.values()) / 1000
+    return round(volume_l + fertilizer_mass_kg, 3)
+
+
 def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
@@ -406,6 +421,7 @@ __all__ = [
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
     "calculate_mix_density",
+    "estimate_solution_mass",
     "check_solubility_limits",
     "estimate_cost_per_nutrient",
     "list_products",
