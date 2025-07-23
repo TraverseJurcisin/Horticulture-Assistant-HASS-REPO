@@ -130,7 +130,7 @@ from .yield_prediction import (
     get_estimated_yield,
     estimate_remaining_yield,
 )
-from .constants import STAGE_MULTIPLIERS, DEFAULT_ENV
+from .constants import get_stage_multiplier, STAGE_MULTIPLIERS, DEFAULT_ENV
 from .pruning_manager import (
     list_supported_plants as list_pruning_plants,
     list_stages as list_pruning_stages,
@@ -335,5 +335,6 @@ __all__ = [
     "load_profile",
     "TranspirationMetrics",
     "STAGE_MULTIPLIERS",
+    "get_stage_multiplier",
     "DEFAULT_ENV",
 ]

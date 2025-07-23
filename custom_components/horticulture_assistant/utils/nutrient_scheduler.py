@@ -16,7 +16,7 @@ except ImportError:
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.utils import load_json, save_json, load_dataset
-from plant_engine.constants import STAGE_MULTIPLIERS
+from plant_engine.constants import get_stage_multiplier
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -123,7 +123,7 @@ def _stage_multiplier(profile: dict, stage_key: str) -> float:
                         mult = 1.0
                     break
     if mult == 1.0:
-        mult = STAGE_MULTIPLIERS.get(stage_key, 1.0)
+        mult = get_stage_multiplier(stage_key)
     return mult
 
 
