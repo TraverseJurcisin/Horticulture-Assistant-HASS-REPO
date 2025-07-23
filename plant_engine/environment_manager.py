@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, asdict
+from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset, normalize_key
@@ -44,6 +45,52 @@ _ALIAS_MAP: Dict[str, str] = {
 }
 
 
+def _parse_range(value: Iterable[float]) -> Tuple[float, float] | None:
+    """Return a normalized (min, max) tuple or ``None`` if invalid."""
+    try:
+        low, high = value
+        low = float(low)
+        high = float(high)
+    except (TypeError, ValueError, Exception):
+        return None
+    return (low, high)
+
+
+@dataclass(frozen=True)
+class EnvironmentGuidelines:
+    """Environmental target ranges for a plant stage."""
+
+    temp_c: Tuple[float, float] | None = None
+    humidity_pct: Tuple[float, float] | None = None
+    light_ppfd: Tuple[float, float] | None = None
+    co2_ppm: Tuple[float, float] | None = None
+
+    def as_dict(self) -> Dict[str, list[float]]:
+        """Return guidelines as a dictionary with list values."""
+        result: Dict[str, list[float]] = {}
+        for k, v in asdict(self).items():
+            if v is not None:
+                result[k] = [float(v[0]), float(v[1])]
+        return result
+
+
+@lru_cache(maxsize=None)
+def get_environment_guidelines(
+    plant_type: str, stage: str | None = None
+) -> EnvironmentGuidelines:
+    """Return :class:`EnvironmentGuidelines` for the given plant stage."""
+
+    data = _lookup_stage_data(_DATA, plant_type, stage)
+    if not isinstance(data, Mapping):
+        data = {}
+    return EnvironmentGuidelines(
+        temp_c=_parse_range(data.get("temp_c")),
+        humidity_pct=_parse_range(data.get("humidity_pct")),
+        light_ppfd=_parse_range(data.get("light_ppfd")),
+        co2_ppm=_parse_range(data.get("co2_ppm")),
+    )
+
+
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
     """Return ``readings`` with keys mapped to canonical environment names."""
 
@@ -59,6 +106,7 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
 
 __all__ = [
     "list_supported_plants",
+    "get_environment_guidelines",
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "score_environment",
@@ -87,6 +135,7 @@ __all__ = [
     "calculate_environment_metrics",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "EnvironmentGuidelines",
     "StressFlags",
     "WaterQualityInfo",
     "normalize_environment_readings",
@@ -259,7 +308,7 @@ def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
-    return _lookup_stage_data(_DATA, plant_type, stage)
+    return get_environment_guidelines(plant_type, stage).as_dict()
 
 
 def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
