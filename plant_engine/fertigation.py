@@ -42,6 +42,7 @@ __all__ = [
     "recommend_correction_schedule",
     "recommend_batch_fertigation",
     "recommend_nutrient_mix",
+    "recommend_nutrient_mix_with_water",
     "estimate_daily_nutrient_uptake",
     "recommend_uptake_fertigation",
     "recommend_nutrient_mix_with_cost",
@@ -276,6 +277,36 @@ def recommend_nutrient_mix(
         schedule[fert] = round(grams_fert, 3)
 
     return schedule
+
+
+def recommend_nutrient_mix_with_water(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float],
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
+    """Return fertilizer mix adjusted for nutrients in the irrigation water."""
+
+    from .water_quality import interpret_water_profile
+
+    baseline, warnings = interpret_water_profile(water_profile)
+    schedule = recommend_nutrient_mix(
+        plant_type,
+        stage,
+        volume_l,
+        current_levels=baseline,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
+
+    return schedule, warnings
 
 
 def estimate_daily_nutrient_uptake(
