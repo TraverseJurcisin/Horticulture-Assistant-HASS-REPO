@@ -29,6 +29,7 @@
   "root_depth_guidelines.json": "Typical maximum root depth per crop.",
   "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
   "beneficial_insects.json": "Natural predators for common greenhouse pests.",
+  "bioinoculant_guidelines.json": "Recommended microbial inoculants for improved nutrient uptake.",
   "crop_coefficients.json": "Crop coefficients for evapotranspiration models.",
   "disease_thresholds.json": "Severity thresholds triggering treatments.",
   "ec_guidelines.json": "Electrical conductivity ranges for nutrient solutions.",

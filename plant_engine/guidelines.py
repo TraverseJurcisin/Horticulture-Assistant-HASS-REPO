@@ -9,6 +9,7 @@ from . import (
     environment_manager,
     nutrient_manager,
     micro_manager,
+    bioinoculant_manager,
     pest_manager,
     pest_monitor,
     disease_manager,
@@ -33,6 +34,7 @@ class GuidelineSummary:
     disease_prevention: Dict[str, str]
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
+    bioinoculants: List[str] = dataclass_field(default_factory=list)
     ph_range: List[float] = dataclass_field(default_factory=list)
     ec_range: List[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
@@ -65,6 +67,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
         pest_thresholds=thresholds,
         beneficial_insects=beneficial,
+        bioinoculants=bioinoculant_manager.get_recommended_inoculants(plant_type),
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
         irrigation_volume_ml=(
