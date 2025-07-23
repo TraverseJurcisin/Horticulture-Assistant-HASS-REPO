@@ -2,6 +2,7 @@ from plant_engine.datasets import (
     list_datasets,
     get_dataset_description,
     search_datasets,
+    list_datasets_by_category,
 )
 
 
@@ -57,3 +58,10 @@ def test_search_datasets():
 
     empty = search_datasets("does-not-exist")
     assert empty == {}
+
+
+def test_list_datasets_by_category():
+    cats = list_datasets_by_category()
+    assert "fertilizers" in cats
+    assert "fertilizers/fertilizer_products.json" in cats["fertilizers"]
+    assert "nutrient_guidelines.json" in cats["root"]

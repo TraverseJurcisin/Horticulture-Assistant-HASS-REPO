@@ -22,6 +22,7 @@ __all__ = [
     "get_dataset_description",
     "list_dataset_info",
     "search_datasets",
+    "list_datasets_by_category",
 ]
 
 
@@ -80,6 +81,20 @@ class DatasetCatalog:
                 result[name] = desc
         return result
 
+    @lru_cache(maxsize=None)
+    def list_by_category(self) -> Dict[str, List[str]]:
+        """Return dataset names grouped by top-level directory."""
+
+        categories: Dict[str, List[str]] = {}
+        for name in self.list_datasets():
+            parts = name.split("/", 1)
+            category = parts[0] if len(parts) > 1 else "root"
+            categories.setdefault(category, []).append(name)
+
+        for paths in categories.values():
+            paths.sort()
+        return categories
+
 
 DEFAULT_CATALOG = DatasetCatalog()
 
@@ -106,4 +121,10 @@ def search_datasets(term: str) -> Dict[str, str]:
     """Return datasets matching ``term`` in the name or description."""
 
     return DEFAULT_CATALOG.search(term)
+
+
+def list_datasets_by_category() -> Dict[str, List[str]]:
+    """Return dataset names grouped by top-level directory."""
+
+    return DEFAULT_CATALOG.list_by_category()
 
