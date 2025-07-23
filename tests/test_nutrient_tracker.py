@@ -26,3 +26,21 @@ def test_summarize_mg_for_period_invalid_range():
     now = datetime.now()
     with pytest.raises(ValueError):
         tracker.summarize_mg_for_period(now, now - timedelta(days=1))
+
+
+def test_summarize_mg_since():
+    tracker = NutrientTracker()
+    now = datetime.now()
+    tracker.delivery_log.extend(
+        [
+            NutrientDeliveryRecord("p", "b1", now - timedelta(days=3), {"N": 10}, 1.0),
+            NutrientDeliveryRecord("p", "b2", now - timedelta(days=1), {"N": 20}, 1.0),
+            NutrientDeliveryRecord("p", "b3", now, {"N": 30}, 1.0),
+        ]
+    )
+
+    summary = tracker.summarize_mg_since(2, "p", now=now)
+    assert summary["N"] == 50.0
+
+    with pytest.raises(ValueError):
+        tracker.summarize_mg_since(-1)
