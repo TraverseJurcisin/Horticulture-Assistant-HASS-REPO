@@ -210,6 +210,7 @@ from .nutrient_budget import (
     estimate_required_nutrients,
 )
 from .compute_transpiration import TranspirationMetrics
+from .nutrient_schedule import generate_daily_uptake_plan
 
 # Run functions should be imported explicitly to avoid heavy imports at package
 # initialization time.
@@ -277,6 +278,7 @@ __all__ = [
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
+    "generate_daily_uptake_plan",
     "recommend_stock_solution_injection",
     "get_foliar_spray_volume",
     "estimate_spray_solution_volume",
