@@ -8,6 +8,7 @@ from plant_engine.pest_manager import (
     get_ipm_guidelines,
     recommend_ipm_actions,
     list_known_pests,
+    build_pest_management_plan,
 )
 
 
@@ -67,3 +68,11 @@ def test_recommend_ipm_actions():
     actions = recommend_ipm_actions("citrus", ["aphids"])
     assert "general" in actions
     assert actions["aphids"].startswith("Introduce ladybugs")
+
+
+def test_build_pest_management_plan():
+    plan = build_pest_management_plan("citrus", ["aphids", "unknown"])
+    assert "general" in plan
+    assert plan["aphids"]["treatment"].startswith("Apply insecticidal")
+    assert "ladybugs" in plan["aphids"]["beneficials"]
+    assert plan["unknown"]["treatment"] == "No guideline available"
