@@ -161,6 +161,7 @@ Key reference datasets reside in the `data/` directory:
 - `photoperiod_guidelines.json` – recommended day length by crop stage
 - `nutrient_toxicity_symptoms.json` – visual cues indicating nutrient excess
 - `nutrient_toxicity_treatments.json` – suggested mitigation steps for toxicity
+- `growth_medium_ph_ranges.json` – preferred pH ranges for soil, coco and hydroponics
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture

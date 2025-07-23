@@ -46,6 +46,7 @@
   "pest_severity_actions.json": "Actions to take based on pest severity level.",
   "ph_adjustment_factors.json": "Acid/base amounts for pH corrections.",
   "ph_guidelines.json": "Optimal pH ranges for nutrient uptake.",
+  "growth_medium_ph_ranges.json": "Recommended pH ranges for common growing media.",
   "planting_depth_guidelines.json": "Recommended seeding or transplant depths.",
   "pruning_guidelines.json": "Stage-specific pruning recommendations.",
   "soil_nutrient_guidelines.json": "Target soil nutrient levels by crop.",
