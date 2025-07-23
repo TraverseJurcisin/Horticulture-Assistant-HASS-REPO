@@ -10,8 +10,15 @@ DATA_FILE = "water_usage_guidelines.json"
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 
 from .plant_density import get_spacing_cm
+from .growth_stage import get_stage_duration, list_growth_stages
 
-__all__ = ["list_supported_plants", "get_daily_use", "estimate_area_use"]
+__all__ = [
+    "list_supported_plants",
+    "get_daily_use",
+    "estimate_area_use",
+    "estimate_stage_total_use",
+    "estimate_cycle_total_use",
+]
 
 
 def list_supported_plants() -> list[str]:
@@ -48,3 +55,25 @@ def estimate_area_use(plant_type: str, stage: str, area_m2: float) -> float:
     plants = area_m2 / ((spacing_cm / 100) ** 2)
     per_plant = get_daily_use(plant_type, stage)
     return round(plants * per_plant, 1)
+
+
+def estimate_stage_total_use(plant_type: str, stage: str) -> float:
+    """Return total water use for a stage based on duration days."""
+
+    daily = get_daily_use(plant_type, stage)
+    duration = get_stage_duration(plant_type, stage)
+    if daily <= 0 or duration is None:
+        return 0.0
+    return round(daily * duration, 1)
+
+
+def estimate_cycle_total_use(plant_type: str) -> float:
+    """Return total water requirement for the entire crop cycle."""
+
+    total = 0.0
+    for stage in list_growth_stages(plant_type):
+        daily = get_daily_use(plant_type, stage)
+        duration = get_stage_duration(plant_type, stage)
+        if daily > 0 and duration:
+            total += daily * duration
+    return round(total, 1)
