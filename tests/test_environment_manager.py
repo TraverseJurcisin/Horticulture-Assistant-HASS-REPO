@@ -42,6 +42,7 @@ from plant_engine.environment_manager import (
     _check_range,
     generate_environment_alerts,
     classify_environment_quality,
+    score_overall_environment,
     normalize_environment_readings,
     summarize_environment,
     summarize_environment_series,
@@ -583,3 +584,17 @@ def test_summarize_environment_series():
     avg = summarize_environment({"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling")
     assert summary["quality"] == avg["quality"]
     assert summary["metrics"]["vpd"] == avg["metrics"]["vpd"]
+
+
+def test_score_overall_environment():
+    env = {
+        "temp_c": 22,
+        "humidity_pct": 70,
+        "light_ppfd": 250,
+        "co2_ppm": 450,
+    }
+    water = {"Na": 60}
+    score = score_overall_environment(env, "citrus", "seedling", water)
+    base = score_environment(env, "citrus", "seedling")
+    assert score < base
+    assert score > 90

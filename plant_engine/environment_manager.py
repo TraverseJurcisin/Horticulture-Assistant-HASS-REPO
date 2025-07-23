@@ -166,6 +166,7 @@ __all__ = [
     "compare_environment",
     "generate_environment_alerts",
     "classify_environment_quality",
+    "score_overall_environment",
     "summarize_environment",
     "summarize_environment_series",
     "EnvironmentSummary",
@@ -564,6 +565,33 @@ def classify_environment_quality(
     if score >= 50:
         return "fair"
     return "poor"
+
+
+def score_overall_environment(
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    water_test: Mapping[str, float] | None = None,
+    *,
+    env_weight: float = 0.7,
+    water_weight: float = 0.3,
+) -> float:
+    """Return combined environment score factoring in water quality."""
+
+    if env_weight < 0 or water_weight < 0:
+        raise ValueError("weights must be non-negative")
+
+    env_score = score_environment(current, plant_type, stage)
+    water_score = 100.0
+    if water_test is not None:
+        water_score = water_quality.score_water_quality(water_test)
+
+    total_weight = env_weight + water_weight
+    if total_weight == 0:
+        return 0.0
+
+    overall = (env_score * env_weight + water_score * water_weight) / total_weight
+    return round(overall, 1)
 
 
 def suggest_environment_setpoints(

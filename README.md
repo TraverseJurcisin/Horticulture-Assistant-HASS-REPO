@@ -261,6 +261,8 @@ or incomplete and should only be used as a starting point for your own research.
   quick evaluation.
 - **Environment Score Breakdown**: `score_environment_components` returns
   per-parameter scores so problem areas are easy to identify.
+- **Overall Environment Score**: `score_overall_environment` combines
+  environment quality with water test results for a single rating.
 - **Photoperiod Suggestions**: `recommend_photoperiod` returns the daily light
   hours required to hit midpoint DLI targets at the current PPFD.
 - **Light Intensity Suggestions**: `recommend_light_intensity` calculates the
