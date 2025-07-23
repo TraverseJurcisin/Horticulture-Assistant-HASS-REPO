@@ -147,6 +147,7 @@ Key reference datasets reside in the `data/` directory:
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `fertilizer_purity.json` – default purity factors for common fertilizers
+- `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
 - `wind_stress_thresholds.json` – maximum safe wind speed before damage
@@ -198,6 +199,8 @@ or incomplete and should only be used as a starting point for your own research.
   schedule along with an estimated dollar cost based on fertilizer prices.
 - **Mix Nutrient Totals**: `calculate_mix_nutrients` reports the elemental
   nutrient amounts contributed by each fertilizer mix in milligrams.
+- **Solubility Check**: `check_solubility_limits` warns when a fertilizer mix
+  exceeds the maximum grams per liter defined in `fertilizer_solubility.json`.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.

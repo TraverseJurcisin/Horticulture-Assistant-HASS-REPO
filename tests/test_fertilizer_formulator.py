@@ -23,6 +23,7 @@ find_products = fert_mod.find_products
 calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
+check_solubility_limits = fert_mod.check_solubility_limits
 
 
 def test_convert_guaranteed_analysis():
@@ -133,4 +134,16 @@ def test_calculate_mix_density():
 
     with pytest.raises(KeyError):
         calculate_mix_density({"unknown": 10})
+
+
+def test_check_solubility_limits():
+    schedule = {"foxfarm_grow_big": 400}
+    warnings = check_solubility_limits(schedule, 1)
+    assert warnings["foxfarm_grow_big"] > 0
+
+    ok = check_solubility_limits({"foxfarm_grow_big": 100}, 1)
+    assert ok == {}
+
+    with pytest.raises(ValueError):
+        check_solubility_limits(schedule, 0)
 

@@ -11,6 +11,7 @@ from plant_engine.utils import load_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
+SOLUBILITY_FILE = "fertilizer_solubility.json"
 
 
 @dataclass(frozen=True)
@@ -42,6 +43,12 @@ def _inventory() -> Dict[str, Fertilizer]:
 def _price_map() -> Dict[str, float]:
     """Return fertilizer prices loaded from :mod:`data`."""
     return load_dataset(PRICE_FILE)
+
+
+@lru_cache(maxsize=None)
+def _solubility_map() -> Dict[str, float]:
+    """Return maximum solubility (g/L) for each fertilizer."""
+    return load_dataset(SOLUBILITY_FILE)
 
 
 MOLAR_MASS_CONVERSIONS = {
@@ -259,6 +266,39 @@ def calculate_mix_density(schedule: Mapping[str, float]) -> float:
     return round(total_mass_kg / total_volume_l, 3)
 
 
+def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+    """Return grams per liter exceeding solubility limits.
+
+    Parameters
+    ----------
+    schedule : Mapping[str, float]
+        Mapping of fertilizer IDs to grams of product.
+    volume_l : float
+        Total solution volume in liters.
+
+    Returns
+    -------
+    Dict[str, float]
+        Mapping of fertilizer IDs to grams per liter over the limit. Unknown
+        fertilizers are ignored. A ``ValueError`` is raised if ``volume_l`` is
+        not positive.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    limits = _solubility_map()
+    warnings: Dict[str, float] = {}
+    for fert_id, grams in schedule.items():
+        max_g_l = limits.get(fert_id)
+        if max_g_l is None:
+            continue
+        grams_per_l = grams / volume_l
+        if grams_per_l > max_g_l:
+            warnings[fert_id] = round(grams_per_l - max_g_l, 2)
+    return warnings
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
@@ -267,6 +307,7 @@ __all__ = [
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",
     "calculate_mix_density",
+    "check_solubility_limits",
     "list_products",
     "get_product_info",
     "find_products",
