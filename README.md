@@ -247,6 +247,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for
   existing water nutrient levels, can include micronutrients, and returns cost
   estimates along with any water quality warnings.
+- **Transpiration Averages**: `compute_transpiration_series` calculates mean ET
+  and water loss across multiple environment readings.
 - **Fertigation Cost Reporting**: `run_daily_cycle` writes the estimated cost of
   its generated `fertigation_schedule` under the `fertigation_cost` field.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and

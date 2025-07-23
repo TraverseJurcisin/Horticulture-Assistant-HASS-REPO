@@ -1,5 +1,6 @@
 from plant_engine.compute_transpiration import (
     compute_transpiration,
+    compute_transpiration_series,
     TranspirationMetrics,
     lookup_crop_coefficient,
 )
@@ -38,3 +39,14 @@ def test_lookup_crop_coefficient():
 def test_lookup_crop_coefficient_case_insensitive():
     kc = lookup_crop_coefficient("LeTtuce", "VeGeTaTiVe")
     assert kc == 1.0
+
+
+def test_compute_transpiration_series():
+    profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
+    env1 = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    env2 = {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420}
+    series = [env1, env2]
+    result = compute_transpiration_series(profile, series)
+    assert result["et0_mm_day"] > 0
+    assert result["eta_mm_day"] > 0
+    assert result["transpiration_ml_day"] > 0
