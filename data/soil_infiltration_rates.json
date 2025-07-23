@@ -1,0 +1,9 @@
+{
+  "sand": 25,
+  "loamy_sand": 20,
+  "sandy_loam": 15,
+  "loam": 10,
+  "silt_loam": 7,
+  "clay_loam": 5,
+  "clay": 2
+}

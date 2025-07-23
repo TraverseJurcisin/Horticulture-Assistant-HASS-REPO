@@ -5,6 +5,8 @@ from plant_engine.rootzone_model import (
     calculate_remaining_water,
     get_soil_parameters,
     soil_moisture_pct,
+    get_infiltration_rate,
+    estimate_infiltration_time,
     RootZone,
 )
 import pytest
@@ -84,4 +86,18 @@ def test_rootzone_methods():
     new = rz.calculate_remaining_water(100.0, irrigation_ml=50.0, et_ml=25.0)
     assert new == 125.0
     assert rz.moisture_pct(new) == soil_moisture_pct(rz, new)
+
+
+def test_get_infiltration_rate():
+    rate = get_infiltration_rate("loam")
+    assert rate == 10
+    assert get_infiltration_rate("unknown") is None
+
+
+def test_estimate_infiltration_time():
+    hours = estimate_infiltration_time(1000, 1.0, "loam")
+    assert hours == 0.1
+    assert estimate_infiltration_time(1000, 1.0, "unknown") is None
+    with pytest.raises(ValueError):
+        estimate_infiltration_time(-1, 1.0, "loam")
 

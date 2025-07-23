@@ -73,6 +73,8 @@ from .rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
     get_soil_parameters,
+    get_infiltration_rate,
+    estimate_infiltration_time,
     RootZone,
 )
 from .soil_manager import (
@@ -261,6 +263,8 @@ __all__ = [
     "estimate_rootzone_depth",
     "estimate_water_capacity",
     "get_soil_parameters",
+    "get_infiltration_rate",
+    "estimate_infiltration_time",
     "RootZone",
     "list_soil_plants",
     "get_soil_targets",

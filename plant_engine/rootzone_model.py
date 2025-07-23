@@ -12,10 +12,12 @@ DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 
 SOIL_DATA_FILE = "soil_texture_parameters.json"
 ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
+INFILTRATION_FILE = "soil_infiltration_rates.json"
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
 _ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
+_INFILTRATION_DATA: Dict[str, float] = load_dataset(INFILTRATION_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
@@ -24,6 +26,8 @@ __all__ = [
     "calculate_remaining_water",
     "soil_moisture_pct",
     "get_soil_parameters",
+    "get_infiltration_rate",
+    "estimate_infiltration_time",
     "RootZone",
 ]
 
@@ -31,6 +35,15 @@ __all__ = [
 def get_soil_parameters(texture: str) -> Dict[str, float]:
     """Return soil parameters for ``texture`` if available."""
     return _SOIL_DATA.get(normalize_key(texture), {})
+
+
+def get_infiltration_rate(texture: str) -> float | None:
+    """Return infiltration rate (mm/hr) for a soil texture if known."""
+    rate = _INFILTRATION_DATA.get(normalize_key(texture))
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):
+        return None
 
 
 def get_default_root_depth(plant_type: str) -> float:
@@ -154,6 +167,22 @@ def estimate_water_capacity(
         field_capacity_pct=field_capacity,
         mad_pct=mad_fraction,
     )
+
+
+def estimate_infiltration_time(
+    volume_ml: float, area_m2: float, texture: str
+) -> float | None:
+    """Return hours required for ``volume_ml`` to infiltrate given soil texture."""
+    if volume_ml < 0 or area_m2 <= 0:
+        raise ValueError("volume_ml must be non-negative and area_m2 positive")
+
+    rate = get_infiltration_rate(texture)
+    if rate is None or rate <= 0:
+        return None
+
+    depth_mm = volume_ml / 1000 / area_m2
+    hours = depth_mm / rate
+    return round(hours, 2)
 
 
 def calculate_remaining_water(
