@@ -1,7 +1,7 @@
 """Utility helpers for nutrient recommendation and analysis."""
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -22,6 +22,7 @@ __all__ = [
     "calculate_nutrient_balance",
     "calculate_surplus",
     "calculate_all_surplus",
+    "calculate_all_nutrient_balance",
     "get_npk_ratio",
     "get_stage_ratio",
     "score_nutrient_levels",
@@ -201,5 +202,23 @@ def calculate_all_surplus(
 
     surplus.update(_micro_surplus(current_levels, plant_type, stage))
     return surplus
+
+
+def calculate_all_nutrient_balance(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return ratio of current to recommended levels for all nutrients."""
+
+    recommended = get_all_recommended_levels(plant_type, stage)
+    ratios: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            continue
+        ratios[nutrient] = round(current / target, 2)
+    return ratios
 
 
