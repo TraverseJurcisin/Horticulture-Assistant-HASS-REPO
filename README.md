@@ -150,6 +150,7 @@ Key reference datasets reside in the `data/` directory:
 - `water_quality_actions.json` – recommended treatments when limits are exceeded
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
+- `light_spectrum_guidelines.json` – optimal red/blue light ratios by stage
 - `nutrient_uptake.json` – typical daily N‑P‑K demand per plant stage
 - `heat_stress_thresholds.json` – heat index limits used for stress warnings
 - `cold_stress_thresholds.json` – minimum temperature limits for cold stress
