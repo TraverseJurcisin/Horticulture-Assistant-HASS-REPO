@@ -47,6 +47,7 @@ from .pest_monitor import (
 from .pesticide_manager import (
     get_withdrawal_days,
     earliest_harvest_date,
+    adjust_harvest_date,
 )
 from .disease_monitor import (
     get_disease_thresholds,
@@ -370,6 +371,7 @@ __all__ = [
     "get_guideline_summary",
     "get_withdrawal_days",
     "earliest_harvest_date",
+    "adjust_harvest_date",
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",

@@ -1,6 +1,10 @@
 import datetime
 
-from plant_engine.pesticide_manager import get_withdrawal_days, earliest_harvest_date
+from plant_engine.pesticide_manager import (
+    get_withdrawal_days,
+    earliest_harvest_date,
+    adjust_harvest_date,
+)
 
 
 def test_get_withdrawal_days_known():
@@ -17,3 +21,11 @@ def test_earliest_harvest_date():
     harvest = earliest_harvest_date("spinosad", date)
     assert harvest == date + datetime.timedelta(days=1)
     assert earliest_harvest_date("foo", date) is None
+
+
+def test_adjust_harvest_date():
+    start = datetime.date(2024, 5, 1)
+    application = datetime.date(2024, 7, 29)
+    adjusted = adjust_harvest_date("lettuce", start, "imidacloprid", application)
+    expected = earliest_harvest_date("imidacloprid", application)
+    assert adjusted == expected

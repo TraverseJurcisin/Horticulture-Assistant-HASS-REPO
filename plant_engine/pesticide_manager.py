@@ -11,7 +11,11 @@ DATA_FILE = "pesticide_withdrawal_days.json"
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
 
-__all__ = ["get_withdrawal_days", "earliest_harvest_date"]
+__all__ = [
+    "get_withdrawal_days",
+    "earliest_harvest_date",
+    "adjust_harvest_date",
+]
 
 
 def get_withdrawal_days(product: str) -> int | None:
@@ -36,3 +40,28 @@ def earliest_harvest_date(product: str, application_date: date) -> date | None:
     if days is None:
         return None
     return application_date + timedelta(days=days)
+
+
+def adjust_harvest_date(
+    plant_type: str,
+    start_date: date,
+    product: str,
+    application_date: date,
+) -> date | None:
+    """Return harvest date adjusted for pesticide withdrawal.
+
+    The returned date is the later of :func:`growth_stage.predict_harvest_date`
+    and :func:`earliest_harvest_date` for ``product``. ``None`` is returned if
+    both dates are unknown.
+    """
+
+    from . import growth_stage
+
+    predicted = growth_stage.predict_harvest_date(plant_type, start_date)
+    wait_until = earliest_harvest_date(product, application_date)
+
+    if predicted is None:
+        return wait_until
+    if wait_until is None:
+        return predicted
+    return max(predicted, wait_until)
