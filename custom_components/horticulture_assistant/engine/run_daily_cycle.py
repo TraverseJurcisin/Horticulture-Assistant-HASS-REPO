@@ -23,6 +23,7 @@ from plant_engine.pest_manager import recommend_beneficials
 from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.utils import load_dataset
 from plant_engine.fertigation import recommend_nutrient_mix
+from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.rootzone_model import estimate_water_capacity
 
 
@@ -35,6 +36,7 @@ class DailyReport:
     thresholds: dict[str, object] = field(default_factory=dict)
     irrigation_summary: dict[str, object] = field(default_factory=dict)
     nutrient_summary: dict[str, object] = field(default_factory=dict)
+    nutrient_analysis: dict[str, object] = field(default_factory=dict)
     sensor_summary: dict[str, object] = field(default_factory=dict)
     environment_comparison: dict[str, object] = field(default_factory=dict)
     environment_optimization: dict[str, object] = field(default_factory=dict)
@@ -56,12 +58,12 @@ class DailyReport:
 _LOGGER = logging.getLogger(__name__)
 
 
-def _load_log(log_path: Path) -> list[dict]:
-    """Return parsed JSON from ``log_path`` or an empty list."""
+def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
+    """Return log entries from ``log_path`` within the last ``hours``."""
 
     try:
         with open(log_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
     except FileNotFoundError:
         _LOGGER.info("Log file not found: %s", log_path)
         return []
@@ -69,21 +71,17 @@ def _load_log(log_path: Path) -> list[dict]:
         _LOGGER.warning("Failed to read %s: %s", log_path, exc)
         return []
 
-def _filter_last_24h(entries: list[dict]) -> list[dict]:
-    """Return entries from the last 24 hours based on ``timestamp``."""
-
-    cutoff = datetime.utcnow() - timedelta(days=1)
-    recent = []
-    for entry in entries:
+    cutoff = datetime.utcnow() - timedelta(hours=hours)
+    recent: list[dict] = []
+    for entry in data:
         ts = entry.get("timestamp")
         if not ts:
             continue
         try:
-            tstamp = datetime.fromisoformat(ts)
+            if datetime.fromisoformat(ts) >= cutoff:
+                recent.append(entry)
         except Exception:  # noqa: broad-except -- skip malformed entry
             continue
-        if tstamp >= cutoff:
-            recent.append(entry)
 
     return recent
 
@@ -106,16 +104,17 @@ def run_daily_cycle(
     # Determine current lifecycle stage
     general = profile.get("general", {})
     stage_name = general.get("lifecycle_stage") or general.get("stage")
+    plant_type = general.get("plant_type", "").lower()
     if stage_name:
         report.lifecycle_stage = stage_name
     # Get current thresholds from profile
     thresholds = profile.get("thresholds", {})
     report.thresholds = thresholds
     # Load last 24h logs for irrigation, nutrients, sensors, visuals, yield
-    irrigation_entries = _filter_last_24h(_load_log(plant_dir / "irrigation_log.json"))
-    nutrient_entries = _filter_last_24h(_load_log(plant_dir / "nutrient_application_log.json"))
-    sensor_entries = _filter_last_24h(_load_log(plant_dir / "sensor_reading_log.json"))
-    yield_entries = _filter_last_24h(_load_log(plant_dir / "yield_tracking_log.json"))
+    irrigation_entries = _load_recent_entries(plant_dir / "irrigation_log.json")
+    nutrient_entries = _load_recent_entries(plant_dir / "nutrient_application_log.json")
+    sensor_entries = _load_recent_entries(plant_dir / "sensor_reading_log.json")
+    yield_entries = _load_recent_entries(plant_dir / "yield_tracking_log.json")
     # Summarize irrigation events (24h)
     if irrigation_entries:
         total_volume = sum(e.get("volume_applied_ml", 0) for e in irrigation_entries)
@@ -127,12 +126,18 @@ def run_daily_cycle(
         }
     # Summarize nutrient applications (aggregate nutrients applied in 24h)
     if nutrient_entries:
-        nutrient_totals = {}
+        nutrient_totals: dict[str, float] = {}
         for entry in nutrient_entries:
             formulation = entry.get("nutrient_formulation", {})
             for nutrient, amount in formulation.items():
                 nutrient_totals[nutrient] = nutrient_totals.get(nutrient, 0) + amount
         report.nutrient_summary = nutrient_totals
+        try:
+            report.nutrient_analysis = analyze_nutrient_profile(
+                nutrient_totals, plant_type, stage_name or ""
+            )
+        except Exception:
+            _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
     # Summarize sensor readings (24h average per sensor type)
     sensor_data = {}
     for entry in sensor_entries:
@@ -150,7 +155,6 @@ def run_daily_cycle(
     # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
     current_env = {**latest_env, **sensor_avg}
-    plant_type = general.get("plant_type", "").lower()
     env_compare = compare_environment(current_env, thresholds)
     report.environment_comparison = env_compare
     report.environment_optimization = optimize_environment(
