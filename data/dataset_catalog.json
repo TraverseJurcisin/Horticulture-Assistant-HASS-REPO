@@ -20,6 +20,7 @@
   "water_quality_thresholds.json": "Maximum safe levels of common water analytes.",
   "water_quality_actions.json": "Recommended remediation steps for poor water quality.",
   "leaf_tissue_targets.json": "Optimal nutrient ranges for leaf tissue analysis.",
+  "leaf_tissue_score_weights.json": "Scoring weights for leaf tissue nutrients.",
   "root_depth_guidelines.json": "Typical maximum root depth per crop.",
   "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
   "beneficial_insects.json": "Natural predators for common greenhouse pests.",
