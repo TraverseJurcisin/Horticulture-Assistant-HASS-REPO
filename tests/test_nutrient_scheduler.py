@@ -27,6 +27,7 @@ if "homeassistant" not in sys.modules:
     sys.modules["homeassistant.helpers.typing"] = ha.helpers.typing
 spec.loader.exec_module(nutrient_scheduler)
 schedule_nutrients = nutrient_scheduler.schedule_nutrients
+NutrientTargets = nutrient_scheduler.NutrientTargets
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -50,7 +51,40 @@ def test_schedule_nutrients_dataset(tmp_path, monkeypatch):
 
     hass = DummyHass(tmp_path)
 
-    result = schedule_nutrients("citrus_backyard_spring2025", hass=hass)
+    result = schedule_nutrients("citrus_backyard_spring2025", hass=hass).as_dict()
     # citrus fruiting guidelines N=120, K=100 with stage multiplier 1.1
     assert result["N"] == 132.0
     assert result["K"] == 110.0
+
+
+def _hass_for(tmp_path: Path) -> object:
+    class DummyConfig:
+        def __init__(self, base: Path):
+            self._base = base
+
+        def path(self, name: str) -> str:
+            return str(self._base / name)
+
+    class DummyHass:
+        def __init__(self, base: Path):
+            self.config = DummyConfig(base)
+
+    return DummyHass(tmp_path)
+
+
+def test_stage_synonym_resolution(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "test.json").write_text('{"general": {"plant_type": "strawberry", "stage": "veg"}}')
+    hass = _hass_for(tmp_path)
+    result = schedule_nutrients("test", hass=hass).as_dict()
+    assert result["N"] == 70
+
+
+def test_tag_based_modifier(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "tag.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling", "tags": ["high-nitrogen"]}}')
+    hass = _hass_for(tmp_path)
+    result = schedule_nutrients("tag", hass=hass).as_dict()
+    assert result["N"] == 48.0
