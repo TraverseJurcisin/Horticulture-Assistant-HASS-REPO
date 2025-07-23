@@ -53,6 +53,7 @@ from plant_engine.environment_manager import (
     normalize_environment_readings,
     summarize_environment,
     summarize_environment_series,
+    calculate_environment_metrics_series,
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
@@ -679,6 +680,18 @@ def test_summarize_environment_series():
     avg = summarize_environment({"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling")
     assert summary["quality"] == avg["quality"]
     assert summary["metrics"]["vpd"] == avg["metrics"]["vpd"]
+
+
+def test_calculate_environment_metrics_series():
+    series = [
+        {"temp_c": 20, "humidity_pct": 60},
+        {"temp_c": 22, "humidity_pct": 65},
+        {"temp_c": 21, "humidity_pct": 55},
+    ]
+    metrics = calculate_environment_metrics_series(series)
+    avg_temp = (20 + 22 + 21) / 3
+    avg_hum = (60 + 65 + 55) / 3
+    assert metrics.vpd == calculate_vpd(avg_temp, avg_hum)
 
 
 def test_summarize_environment_series_generator():

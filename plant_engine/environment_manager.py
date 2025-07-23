@@ -233,6 +233,7 @@ __all__ = [
     "summarize_environment",
     "summarize_environment_series",
     "EnvironmentSummary",
+    "calculate_environment_metrics_series",
 ]
 
 
@@ -1389,6 +1390,34 @@ def calculate_environment_metrics(
             metrics.transpiration_ml_day = transp.get("transpiration_ml_day")
 
     return metrics
+
+
+def calculate_environment_metrics_series(
+    series: Iterable[Mapping[str, float]],
+    plant_type: str | None = None,
+    stage: str | None = None,
+) -> EnvironmentMetrics:
+    """Return :class:`EnvironmentMetrics` for averaged environment data."""
+
+    totals: Dict[str, float] = {}
+    count = 0
+    for reading in series:
+        for key, value in normalize_environment_readings(reading).items():
+            totals[key] = totals.get(key, 0.0) + float(value)
+        count += 1
+
+    if count == 0:
+        return EnvironmentMetrics(None, None, None, None)
+
+    avg = {k: v / count for k, v in totals.items()}
+
+    return calculate_environment_metrics(
+        avg.get("temp_c"),
+        avg.get("humidity_pct"),
+        env=avg,
+        plant_type=plant_type,
+        stage=stage,
+    )
 
 
 def optimize_environment(
