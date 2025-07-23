@@ -171,3 +171,33 @@ def load_profile(
         return load_profile_by_id(plant_id, base_dir)
     _LOGGER.error("No plant_id or path specified for loading profile")
     return {}
+
+
+def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
+    """Return all plant IDs with a profile file in ``base_dir``.
+
+    The helper scans for ``*.json``, ``*.yaml`` and ``*.yml`` files and
+    returns their stem names sorted alphabetically. When the directory does
+    not exist an empty list is returned.
+    """
+
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    if not directory.is_dir():
+        return []
+
+    plant_ids: set[str] = set()
+    for entry in directory.iterdir():
+        if not entry.is_file():
+            continue
+        if entry.suffix.lower() in {".json", ".yaml", ".yml"}:
+            plant_ids.add(entry.stem)
+
+    return sorted(plant_ids)
+
+
+__all__ = [
+    "load_profile_from_path",
+    "load_profile_by_id",
+    "load_profile",
+    "list_available_profiles",
+]
