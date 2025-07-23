@@ -187,12 +187,36 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     return breakdown
 
 
+def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
+    """Return nutrient totals (mg) for a fertilizer mix."""
+
+    inventory = _inventory()
+    totals: Dict[str, float] = {}
+
+    for fert_id, grams in schedule.items():
+        if grams <= 0:
+            continue
+        if fert_id not in inventory:
+            raise KeyError(f"Unknown fertilizer '{fert_id}'")
+
+        ga = convert_guaranteed_analysis(
+            inventory[fert_id].guaranteed_analysis
+        )
+        for nutrient, pct in ga.items():
+            totals[nutrient] = round(
+                totals.get(nutrient, 0.0) + grams * pct * 1000, 2
+            )
+
+    return totals
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "convert_guaranteed_analysis",
     "calculate_fertilizer_cost",
     "estimate_mix_cost",
     "estimate_cost_breakdown",
+    "calculate_mix_nutrients",
     "list_products",
     "get_product_info",
     "find_products",

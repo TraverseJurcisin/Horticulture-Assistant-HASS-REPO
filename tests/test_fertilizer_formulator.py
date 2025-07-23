@@ -20,6 +20,7 @@ calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
 find_products = fert_mod.find_products
+calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 
 
 def test_convert_guaranteed_analysis():
@@ -95,4 +96,15 @@ def test_list_products_sorted_by_name():
     ids = list_products()
     names = [get_product_info(pid).product_name or pid for pid in ids]
     assert names == sorted(names)
+
+
+def test_calculate_mix_nutrients():
+    mix = {"foxfarm_grow_big": 9.6}
+    totals = calculate_mix_nutrients(mix)
+
+    reference = calculate_fertilizer_nutrients(
+        "plant", "foxfarm_grow_big", 10
+    )["nutrients"]
+
+    assert totals == reference
 

@@ -185,6 +185,8 @@ or incomplete and should only be used as a starting point for your own research.
   micronutrients using the new `micronutrient_guidelines.json` dataset.
 - **Mix Cost Estimation**: `recommend_nutrient_mix_with_cost` returns the same
   schedule along with an estimated dollar cost based on fertilizer prices.
+- **Mix Nutrient Totals**: `calculate_mix_nutrients` reports the elemental
+  nutrient amounts contributed by each fertilizer mix in milligrams.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
