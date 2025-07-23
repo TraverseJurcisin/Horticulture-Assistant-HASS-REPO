@@ -306,6 +306,13 @@ python scripts/generate_plant_sensors.py <plant_id>
 ```
 The generated YAML is written to `templates/generated/` for easy import.
 
+`export_all_growth_yield.py` aggregates growth and yield data from the
+`analytics/` directory into a single JSON file:
+
+```bash
+python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
+```
+
 ## Troubleshooting
 - **Sensors show `unavailable`**: verify the entity IDs and that the devices are reporting to Home Assistant.
 - **Config flow fails**: check the logs for JSON errors in your plant profiles or missing permissions.
