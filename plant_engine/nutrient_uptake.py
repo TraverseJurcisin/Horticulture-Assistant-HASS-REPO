@@ -9,7 +9,12 @@ DATA_FILE = "nutrient_uptake.json"
 
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 
-__all__ = ["list_supported_plants", "get_daily_uptake"]
+__all__ = [
+    "list_supported_plants",
+    "get_daily_uptake",
+    "estimate_stage_totals",
+    "estimate_total_uptake",
+]
 
 
 def list_supported_plants() -> list[str]:
@@ -23,3 +28,29 @@ def get_daily_uptake(plant_type: str, stage: str) -> Dict[str, float]:
     if not plant:
         return {}
     return plant.get(stage.lower(), {})
+
+
+def estimate_stage_totals(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return total nutrient demand for a single stage in milligrams."""
+
+    from .growth_stage import get_stage_duration
+
+    duration = get_stage_duration(plant_type, stage)
+    if not duration:
+        return {}
+
+    daily = get_daily_uptake(plant_type, stage)
+    return {n: round(mg_per_day * duration, 2) for n, mg_per_day in daily.items()}
+
+
+def estimate_total_uptake(plant_type: str) -> Dict[str, float]:
+    """Return estimated nutrient use for the entire growth cycle."""
+
+    from .growth_stage import list_growth_stages
+
+    totals: Dict[str, float] = {}
+    for stage in list_growth_stages(plant_type):
+        stage_totals = estimate_stage_totals(plant_type, stage)
+        for nutrient, mg in stage_totals.items():
+            totals[nutrient] = round(totals.get(nutrient, 0.0) + mg, 2)
+    return totals
