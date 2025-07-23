@@ -1,0 +1,21 @@
+{
+  "tomato": {
+    "vegetative": {
+      "urea": 0.5,
+      "map": 0.3,
+      "kcl": 0.2
+    },
+    "fruiting": {
+      "urea": 0.4,
+      "map": 0.4,
+      "kcl": 0.3
+    }
+  },
+  "lettuce": {
+    "vegetative": {
+      "urea": 0.2,
+      "map": 0.2,
+      "kcl": 0.1
+    }
+  }
+}

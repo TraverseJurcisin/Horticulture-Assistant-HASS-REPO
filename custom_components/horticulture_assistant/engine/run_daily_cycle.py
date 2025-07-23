@@ -18,6 +18,7 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
     load_profile_by_id,
 )
 from plant_engine.environment_manager import compare_environment, optimize_environment
+from plant_engine.report_utils import load_recent_entries
 from plant_engine.growth_stage import predict_harvest_date
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
@@ -60,34 +61,6 @@ class DailyReport:
 
 _LOGGER = logging.getLogger(__name__)
 
-
-def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
-    """Return log entries from ``log_path`` within the last ``hours``."""
-
-    try:
-        with open(log_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        _LOGGER.info("Log file not found: %s", log_path)
-        return []
-    except Exception as exc:  # noqa: BLE001 -- log any failure
-        _LOGGER.warning("Failed to read %s: %s", log_path, exc)
-        return []
-
-    cutoff = datetime.utcnow() - timedelta(hours=hours)
-    recent: list[dict] = []
-    for entry in data:
-        ts = entry.get("timestamp")
-        if not ts:
-            continue
-        try:
-            if datetime.fromisoformat(ts) >= cutoff:
-                recent.append(entry)
-        except Exception:  # noqa: BLE001 -- skip malformed entry
-            continue
-
-    return recent
-
 def run_daily_cycle(
     plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
 ) -> dict:
@@ -114,10 +87,10 @@ def run_daily_cycle(
     thresholds = profile.get("thresholds", {})
     report.thresholds = thresholds
     # Load last 24h logs for irrigation, nutrients, sensors, visuals, yield
-    irrigation_entries = _load_recent_entries(plant_dir / "irrigation_log.json")
-    nutrient_entries = _load_recent_entries(plant_dir / "nutrient_application_log.json")
-    sensor_entries = _load_recent_entries(plant_dir / "sensor_reading_log.json")
-    yield_entries = _load_recent_entries(plant_dir / "yield_tracking_log.json")
+    irrigation_entries = load_recent_entries(plant_dir / "irrigation_log.json")
+    nutrient_entries = load_recent_entries(plant_dir / "nutrient_application_log.json")
+    sensor_entries = load_recent_entries(plant_dir / "sensor_reading_log.json")
+    yield_entries = load_recent_entries(plant_dir / "yield_tracking_log.json")
     # Summarize irrigation events (24h)
     if irrigation_entries:
         total_volume = sum(e.get("volume_applied_ml", 0) for e in irrigation_entries)
