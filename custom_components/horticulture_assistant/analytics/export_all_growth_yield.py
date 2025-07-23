@@ -1,22 +1,24 @@
-import os
+"""Helper to combine growth and yield logs for multiple plants."""
+
+from __future__ import annotations
+
 import json
 import logging
 from pathlib import Path
 
 _LOGGER = logging.getLogger(__name__)
 
-def export_all_growth_yield():
-    """
-    Aggregate growth and yield data for all plants into a single JSON.
-    Scans the 'analytics/' directory for '*_growth_yield.json' files
-    and combines them into one dictionary with plant_id as keys.
-    """
-    base_dir = Path(os.getcwd()) / "analytics"
-    if not base_dir.is_dir():
-        base_dir = Path(__file__).parent
+
+def export_all_growth_yield(base_dir: Path | None = None) -> dict[str, list]:
+    """Return consolidated growth/yield logs from ``base_dir``."""
+
+    if base_dir is None:
+        base_dir = Path.cwd() / "analytics"
         if not base_dir.is_dir():
-            _LOGGER.error("Analytics directory not found: %s", base_dir)
-            return {}
+            base_dir = Path(__file__).parent
+    if not base_dir.is_dir():
+        _LOGGER.error("Analytics directory not found: %s", base_dir)
+        return {}
     results = {}
     for file_path in base_dir.glob("*_growth_yield.json"):
         plant_id = file_path.name.replace("_growth_yield.json", "")
