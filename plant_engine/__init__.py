@@ -16,6 +16,8 @@ from .environment_manager import (
     recommend_photoperiod,
     EnvironmentMetrics,
     EnvironmentOptimization,
+    StressFlags,
+    evaluate_stress_conditions,
     list_supported_plants as list_environment_plants,
 )
 from .pest_manager import (
@@ -137,6 +139,8 @@ __all__ = [
     "recommend_photoperiod",
     "EnvironmentMetrics",
     "EnvironmentOptimization",
+    "StressFlags",
+    "evaluate_stress_conditions",
     "list_environment_plants",
     "get_pest_guidelines",
     "recommend_pest_treatments",
