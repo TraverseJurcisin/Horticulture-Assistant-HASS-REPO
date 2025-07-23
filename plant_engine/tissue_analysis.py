@@ -8,7 +8,14 @@ from .utils import load_dataset, normalize_key
 DATA_FILE = "leaf_tissue_targets.json"
 _TARGETS: Dict[str, Dict[str, Dict[str, list[float]]]] = load_dataset(DATA_FILE)
 
-__all__ = ["get_target_ranges", "evaluate_tissue_levels"]
+WEIGHT_FILE = "leaf_tissue_score_weights.json"
+_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_FILE)
+
+__all__ = [
+    "get_target_ranges",
+    "evaluate_tissue_levels",
+    "score_tissue_levels",
+]
 
 
 def get_target_ranges(plant_type: str, stage: str) -> Dict[str, list[float]]:
@@ -39,3 +46,51 @@ def evaluate_tissue_levels(
             else:
                 results[nutrient] = "ok"
     return results
+
+
+def score_tissue_levels(
+    plant_type: str,
+    stage: str,
+    sample_levels: Mapping[str, float],
+    *,
+    weights: Mapping[str, float] | None = None,
+) -> float:
+    """Return a 0-100 score for how close ``sample_levels`` are to targets."""
+
+    ranges = get_target_ranges(plant_type, stage)
+    if not ranges:
+        return 0.0
+
+    if weights is None:
+        weights = _WEIGHTS
+
+    total = 0.0
+    total_weight = 0.0
+    for nutrient, bounds in ranges.items():
+        if (
+            not isinstance(bounds, (list, tuple))
+            or len(bounds) != 2
+            or nutrient not in sample_levels
+        ):
+            continue
+        try:
+            val = float(sample_levels[nutrient])
+            low, high = float(bounds[0]), float(bounds[1])
+        except (TypeError, ValueError):
+            continue
+
+        weight = float(weights.get(nutrient, 1.0))
+        if val < low:
+            ratio = max(val, 0) / low if low > 0 else 0.0
+        elif val > high:
+            ratio = high / val if val > 0 else 0.0
+        else:
+            ratio = 1.0
+
+        total += ratio * weight
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((total / total_weight) * 100, 1)
