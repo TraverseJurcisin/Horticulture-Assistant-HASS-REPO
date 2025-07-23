@@ -179,6 +179,7 @@ Key reference datasets reside in the `data/` directory:
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `foliar_feed_intervals.json` – suggested days between foliar applications
+- `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by

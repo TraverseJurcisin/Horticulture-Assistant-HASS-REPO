@@ -137,6 +137,12 @@ from .pruning_manager import (
     get_pruning_instructions,
 )
 from .nutrient_analysis import analyze_nutrient_profile
+from .nutrient_leaching import (
+    list_known_nutrients as list_leaching_nutrients,
+    get_leaching_rate,
+    estimate_leaching_loss,
+    compensate_for_leaching,
+)
 from .water_quality import (
     list_analytes as list_water_analytes,
     get_threshold as get_water_threshold,
@@ -317,6 +323,10 @@ __all__ = [
     "calculate_all_surplus",
     "calculate_micro_surplus",
     "analyze_nutrient_profile",
+    "list_leaching_nutrients",
+    "get_leaching_rate",
+    "estimate_leaching_loss",
+    "compensate_for_leaching",
     "list_toxicity_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
