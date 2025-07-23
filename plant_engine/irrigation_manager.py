@@ -11,6 +11,7 @@ from .rootzone_model import RootZone, calculate_remaining_water
 
 __all__ = [
     "recommend_irrigation_volume",
+    "recommend_irrigation_with_rainfall",
     "recommend_irrigation_interval",
     "get_crop_coefficient",
     "estimate_irrigation_demand",
@@ -82,6 +83,38 @@ def recommend_irrigation_volume(
     max_add = rootzone.total_available_water_ml - available_ml
     required = min(required, max_add)
     return round(max(required, 0.0), 1)
+
+
+def recommend_irrigation_with_rainfall(
+    rootzone: RootZone,
+    available_ml: float,
+    expected_et_ml: float,
+    rainfall_ml: float,
+    *,
+    refill_to_full: bool = True,
+    runoff_fraction: float = 0.1,
+) -> float:
+    """Return irrigation volume adjusted for expected rainfall.
+
+    ``rainfall_ml`` represents precipitation reaching the soil. A portion may
+    be lost to runoff or interception, controlled by ``runoff_fraction``.
+    The remaining water offsets evapotranspiration loss before calculating the
+    required irrigation volume via :func:`recommend_irrigation_volume`.
+    """
+
+    if rainfall_ml < 0:
+        raise ValueError("rainfall_ml must be non-negative")
+    if not 0 <= runoff_fraction <= 1:
+        raise ValueError("runoff_fraction must be between 0 and 1")
+
+    net_rain = rainfall_ml * (1 - runoff_fraction)
+    adjusted_et = max(expected_et_ml - net_rain, 0.0)
+    return recommend_irrigation_volume(
+        rootzone,
+        available_ml,
+        adjusted_et,
+        refill_to_full=refill_to_full,
+    )
 
 
 def recommend_irrigation_interval(
