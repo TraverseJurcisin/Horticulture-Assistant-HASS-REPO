@@ -148,6 +148,18 @@ def calculate_fertilizer_nutrients_from_mass(
     return {element: round(grams * pct * 1000, 2) for element, pct in ga.items()}
 
 
+def calculate_fertilizer_ppm(
+    fertilizer_id: str, grams: float, volume_l: float
+) -> Dict[str, float]:
+    """Return nutrient ppm for ``grams`` dissolved in ``volume_l`` solution."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    nutrients = calculate_fertilizer_nutrients_from_mass(fertilizer_id, grams)
+    return {n: round(mg / volume_l, 2) for n, mg in nutrients.items()}
+
+
 def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> float:
     """Return estimated cost for ``grams`` of fertilizer product."""
 
@@ -374,6 +386,7 @@ __all__ = [
     "convert_guaranteed_analysis",
     "calculate_fertilizer_cost",
     "calculate_fertilizer_cost_from_mass",
+    "calculate_fertilizer_ppm",
     "estimate_mix_cost",
     "estimate_cost_breakdown",
     "calculate_mix_nutrients",

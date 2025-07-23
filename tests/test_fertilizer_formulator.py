@@ -27,6 +27,7 @@ calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
 check_solubility_limits = fert_mod.check_solubility_limits
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
+calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 
 
 def test_convert_guaranteed_analysis():
@@ -179,4 +180,13 @@ def test_estimate_cost_per_nutrient():
 
     with pytest.raises(KeyError):
         estimate_cost_per_nutrient("unknown")
+
+
+def test_calculate_fertilizer_ppm():
+    ppm = calculate_fertilizer_ppm("foxfarm_grow_big", 9.6, 10)
+    reference = calculate_mix_ppm({"foxfarm_grow_big": 9.6}, 10)
+    assert ppm == reference
+
+    with pytest.raises(ValueError):
+        calculate_fertilizer_ppm("foxfarm_grow_big", 9.6, 0)
 
