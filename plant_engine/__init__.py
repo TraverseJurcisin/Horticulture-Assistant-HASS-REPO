@@ -71,6 +71,7 @@ from .micro_manager import (
     calculate_surplus as calculate_micro_surplus,
 )
 from .growth_stage import get_stage_info, list_growth_stages
+from .stage_factors import get_stage_factor, list_stages as list_stage_factors
 from .guidelines import get_guideline_summary
 from .report import DailyReport
 from .engine import load_profile
@@ -179,6 +180,8 @@ __all__ = [
     "get_micro_levels",
     "get_stage_info",
     "list_growth_stages",
+    "get_stage_factor",
+    "list_stage_factors",
     "estimate_rootzone_depth",
     "estimate_water_capacity",
     "get_soil_parameters",
