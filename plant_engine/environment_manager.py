@@ -17,6 +17,7 @@ PHOTOPERIOD_DATA_FILE = "photoperiod_guidelines.json"
 HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
+HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -139,6 +140,7 @@ __all__ = [
     "evaluate_cold_stress",
     "evaluate_light_stress",
     "evaluate_wind_stress",
+    "evaluate_humidity_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
     "calculate_environment_metrics",
@@ -164,6 +166,7 @@ _HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
 _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
+_HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 
 
 def _lookup_stage_data(
@@ -243,6 +246,7 @@ class EnvironmentOptimization:
     cold_stress: bool | None = None
     light_stress: str | None = None
     wind_stress: bool | None = None
+    humidity_stress: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
@@ -263,6 +267,7 @@ class EnvironmentOptimization:
             "cold_stress": self.cold_stress,
             "light_stress": self.light_stress,
             "wind_stress": self.wind_stress,
+            "humidity_stress": self.humidity_stress,
         }
 
 
@@ -274,6 +279,7 @@ class StressFlags:
     cold: bool | None
     light: str | None
     wind: bool | None
+    humidity: str | None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -691,6 +697,29 @@ def evaluate_wind_stress(
     return wind_m_s >= float(threshold)
 
 
+def evaluate_humidity_stress(
+    humidity_pct: float | None,
+    plant_type: str,
+) -> str | None:
+    """Return 'low' or 'high' if humidity is outside thresholds."""
+
+    if humidity_pct is None:
+        return None
+
+    thresh = _HUMIDITY_THRESHOLDS.get(
+        normalize_key(plant_type), _HUMIDITY_THRESHOLDS.get("default")
+    )
+    if not isinstance(thresh, (list, tuple)) or len(thresh) != 2:
+        return None
+
+    low, high = float(thresh[0]), float(thresh[1])
+    if humidity_pct < low:
+        return "low"
+    if humidity_pct > high:
+        return "high"
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -726,6 +755,7 @@ def evaluate_stress_conditions(
         cold=evaluate_cold_stress(temp_c, plant_type),
         light=evaluate_light_stress(dli, plant_type, stage),
         wind=evaluate_wind_stress(wind_m_s, plant_type),
+        humidity=evaluate_humidity_stress(humidity_pct, plant_type),
     )
 
 
@@ -883,6 +913,7 @@ def optimize_environment(
         cold_stress=stress.cold,
         light_stress=stress.light,
         wind_stress=stress.wind,
+        humidity_stress=stress.humidity,
     )
     return result.as_dict()
 
