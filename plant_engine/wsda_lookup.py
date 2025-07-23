@@ -11,6 +11,7 @@ _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.jso
 __all__ = [
     "get_product_npk_by_name",
     "get_product_npk_by_number",
+    "search_products",
 ]
 
 @lru_cache(maxsize=None)
@@ -20,6 +21,26 @@ def _database() -> List[Dict[str, object]]:
         return []
     with open(_WSDA_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+@lru_cache(maxsize=None)
+def _name_index() -> Dict[str, Dict[str, object]]:
+    """Return mapping of lowercase product names to records."""
+    return {
+        str(rec.get("product_name", "")).lower(): rec
+        for rec in _database()
+        if rec.get("product_name")
+    }
+
+
+@lru_cache(maxsize=None)
+def _number_index() -> Dict[str, Dict[str, object]]:
+    """Return mapping of WSDA product numbers to records."""
+    return {
+        rec.get("wsda_product_number", ""): rec
+        for rec in _database()
+        if rec.get("wsda_product_number")
+    }
 
 
 def _match_record(predicate) -> Dict[str, object] | None:
@@ -45,11 +66,25 @@ def get_product_npk_by_name(name: str) -> Dict[str, float]:
     An empty dictionary is returned if the product cannot be found.
     """
     name_l = name.lower()
-    rec = _match_record(lambda d: d.get("product_name", "").lower() == name_l)
+    rec = _name_index().get(name_l)
+    if not rec:
+        rec = _match_record(lambda d: str(d.get("product_name", "")).lower() == name_l)
     return _extract_npk(rec)
 
 
 def get_product_npk_by_number(number: str) -> Dict[str, float]:
     """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
-    rec = _match_record(lambda d: d.get("wsda_product_number") == number)
+    rec = _number_index().get(number)
+    if not rec:
+        rec = _match_record(lambda d: d.get("wsda_product_number") == number)
     return _extract_npk(rec)
+
+
+def search_products(query: str, limit: int = 10) -> List[str]:
+    """Return product names containing ``query`` case-insensitively."""
+    q = query.lower()
+    matches = [name for name in _name_index() if q in name]
+    matches.sort()
+    return [
+        _name_index()[name]["product_name"] for name in matches[: max(limit, 0)]
+    ]

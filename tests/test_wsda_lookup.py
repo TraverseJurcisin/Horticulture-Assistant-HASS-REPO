@@ -10,6 +10,7 @@ spec.loader.exec_module(wsda)
 
 get_product_npk_by_name = wsda.get_product_npk_by_name
 get_product_npk_by_number = wsda.get_product_npk_by_number
+search_products = wsda.search_products
 
 
 def test_lookup_by_name():
@@ -24,3 +25,8 @@ def test_lookup_by_number():
     assert result["N"] == 5.0
     assert result["P"] == 6.0
     assert result["K"] == 6.0
+
+
+def test_search_products():
+    results = search_products("EARTH-CARE")
+    assert any("EARTH-CARE" in name for name in results)
