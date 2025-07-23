@@ -92,6 +92,13 @@ from .irrigation_manager import (
     get_daily_irrigation_target,
     generate_irrigation_schedule,
 )
+from .energy_manager import (
+    get_energy_rate,
+    estimate_lighting_energy,
+    estimate_lighting_cost,
+    estimate_heating_energy,
+    estimate_heating_cost,
+)
 from .nutrient_manager import (
     calculate_deficiencies,
     calculate_all_surplus,
@@ -337,4 +344,9 @@ __all__ = [
     "STAGE_MULTIPLIERS",
     "get_stage_multiplier",
     "DEFAULT_ENV",
+    "get_energy_rate",
+    "estimate_lighting_energy",
+    "estimate_lighting_cost",
+    "estimate_heating_energy",
+    "estimate_heating_cost",
 ]
