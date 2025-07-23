@@ -986,8 +986,26 @@ def summarize_environment(
     plant_type: str,
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
+    *,
+    include_targets: bool = False,
 ) -> Dict[str, Any]:
-    """Return combined quality rating, adjustments, metrics, stress and water quality."""
+    """Return a consolidated environment summary for a plant stage.
+
+    Parameters
+    ----------
+    current : Mapping[str, float]
+        Current environment readings which may use any of the supported
+        aliases in :data:`ENV_ALIASES`.
+    plant_type : str
+        Plant type used to look up guideline ranges.
+    stage : str, optional
+        Growth stage for stage specific guidelines.
+    water_test : Mapping[str, float], optional
+        Water quality metrics to include in the summary.
+    include_targets : bool, optional
+        If ``True`` the returned dictionary contains the recommended target
+        ranges under the ``"targets"`` key.
+    """
 
     readings = normalize_environment_readings(current)
 
@@ -1017,4 +1035,7 @@ def summarize_environment(
         stress=stress,
         water_quality=water_info,
     )
-    return summary.as_dict()
+    data = summary.as_dict()
+    if include_targets:
+        data["targets"] = get_environmental_targets(plant_type, stage)
+    return data
