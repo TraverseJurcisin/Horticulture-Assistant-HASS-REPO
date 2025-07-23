@@ -7,9 +7,17 @@ def test_list_datasets_contains_known():
     assert "dataset_catalog.json" not in datasets
 
 
+def test_list_datasets_includes_subdirectory():
+    datasets = list_datasets()
+    assert "fertilizers/fertilizer_products.json" in datasets
+
+
 def test_get_dataset_description():
     desc = get_dataset_description("nutrient_guidelines.json")
     assert "macronutrient" in desc
 
     desc2 = get_dataset_description("micronutrient_guidelines.json")
     assert "micronutrient" in desc2
+
+    desc3 = get_dataset_description("fertilizer_purity.json")
+    assert "purity" in desc3
