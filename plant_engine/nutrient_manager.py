@@ -26,6 +26,7 @@ __all__ = [
     "get_npk_ratio",
     "get_stage_ratio",
     "score_nutrient_levels",
+    "recommend_ratio_adjustments",
 ]
 
 
@@ -220,5 +221,56 @@ def calculate_all_nutrient_balance(
             continue
         ratios[nutrient] = round(current / target, 2)
     return ratios
+
+
+def recommend_ratio_adjustments(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    *,
+    total_ppm: float | None = None,
+    tolerance: float = 0.05,
+) -> Dict[str, float]:
+    """Return ppm adjustments to achieve the recommended NPK ratio.
+
+    Parameters
+    ----------
+    current_levels : Mapping[str, float]
+        Current nutrient concentration in ppm.
+    plant_type : str
+        Crop identifier used for ratio guidelines.
+    stage : str
+        Growth stage for ratio lookup.
+    total_ppm : float, optional
+        Total NPK ppm to use for calculating target amounts. When ``None`` the
+        sum of current N, P and K levels is used.
+    tolerance : float, optional
+        Minimum fractional difference before an adjustment is returned.
+
+    Returns
+    -------
+    Dict[str, float]
+        Mapping of nutrient codes to positive (add) or negative (remove) ppm
+        values needed to achieve the guideline ratio.
+    """
+
+    target_ratio = get_stage_ratio(plant_type, stage)
+    if not target_ratio:
+        return {}
+
+    if total_ppm is None:
+        total_ppm = sum(float(current_levels.get(n, 0.0)) for n in ("N", "P", "K"))
+    if total_ppm <= 0:
+        return {}
+
+    adjustments: Dict[str, float] = {}
+    for nutrient in ("N", "P", "K"):
+        target_ppm = target_ratio.get(nutrient, 0.0) * total_ppm
+        current_ppm = float(current_levels.get(nutrient, 0.0))
+        delta = target_ppm - current_ppm
+        if abs(delta) / total_ppm > tolerance:
+            adjustments[nutrient] = round(delta, 2)
+
+    return adjustments
 
 
