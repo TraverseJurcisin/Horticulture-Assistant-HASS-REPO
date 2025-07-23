@@ -147,6 +147,7 @@ def test_optimize_environment():
     assert result["ph_action"] is None
     assert result["target_dli"] is None
     assert result["photoperiod_hours"] is None
+    assert result["metrics"]["vpd"] == result["vpd"]
 
     result2 = optimize_environment(
         {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},

@@ -175,22 +175,25 @@ class EnvironmentOptimization:
     cold_stress: bool | None = None
 
     def as_dict(self) -> Dict[str, Any]:
-        """Return the optimization result as a serializable dictionary."""
-        return {
+        """Return a serializable representation including flattened metrics."""
+
+        # base payload with nested metrics for easy consumption
+        data = {
             "setpoints": self.setpoints,
             "adjustments": self.adjustments,
-            "vpd": self.metrics.vpd,
-            "dew_point_c": self.metrics.dew_point_c,
-            "heat_index_c": self.metrics.heat_index_c,
-            "absolute_humidity_g_m3": self.metrics.absolute_humidity_g_m3,
+            "metrics": self.metrics.as_dict(),
             "ph_setpoint": self.ph_setpoint,
             "ph_action": self.ph_action,
             "target_dli": self.target_dli,
             "target_vpd": self.target_vpd,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
-        "cold_stress": self.cold_stress,
+            "cold_stress": self.cold_stress,
         }
+
+        # Preserve legacy top-level metric keys for backward compatibility
+        data.update(self.metrics.as_dict())
+        return data
 
 
 @dataclass
