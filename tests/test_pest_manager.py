@@ -5,6 +5,7 @@ from plant_engine.pest_manager import (
     recommend_beneficials,
     get_pest_prevention,
     recommend_prevention,
+    list_known_pests,
 )
 
 
@@ -35,6 +36,11 @@ def test_recommend_beneficials():
     rec = recommend_beneficials(["aphids", "scale"])
     assert "ladybugs" in rec["aphids"]
     assert "parasitic wasps" in rec["scale"]
+
+
+def test_list_known_pests():
+    pests = list_known_pests("citrus")
+    assert "aphids" in pests
 
 
 def test_get_pest_prevention():

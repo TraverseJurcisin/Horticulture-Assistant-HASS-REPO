@@ -25,6 +25,11 @@ def get_disease_guidelines(plant_type: str) -> Dict[str, str]:
     return _DATA.get(normalize_key(plant_type), {})
 
 
+def list_known_diseases(plant_type: str) -> list[str]:
+    """Return all diseases with guidelines for ``plant_type``."""
+    return sorted(get_disease_guidelines(plant_type).keys())
+
+
 def recommend_treatments(plant_type: str, diseases: Iterable[str]) -> Dict[str, str]:
     """Return recommended treatment strings for each observed disease."""
     guide = get_disease_guidelines(plant_type)
@@ -51,6 +56,7 @@ def recommend_prevention(plant_type: str, diseases: Iterable[str]) -> Dict[str, 
 __all__ = [
     "list_supported_plants",
     "get_disease_guidelines",
+    "list_known_diseases",
     "recommend_treatments",
     "get_disease_prevention",
     "recommend_prevention",

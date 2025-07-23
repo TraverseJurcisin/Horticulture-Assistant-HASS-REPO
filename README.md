@@ -55,6 +55,7 @@ applying it to your plants.
 - Light stress detection using DLI ranges
 - Stage-adjusted nutrient targets
 - Example crop profiles for strawberries, basil, spinach and more
+- Helper functions to list known pests and diseases by crop
 
 ---
 
