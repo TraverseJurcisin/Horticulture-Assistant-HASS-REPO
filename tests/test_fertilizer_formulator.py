@@ -17,6 +17,8 @@ convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
+calculate_fertilizer_nutrients_from_mass = fert_mod.calculate_fertilizer_nutrients_from_mass
+calculate_fertilizer_cost_from_mass = fert_mod.calculate_fertilizer_cost_from_mass
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_cost_breakdown = fert_mod.estimate_cost_breakdown
 find_products = fert_mod.find_products
@@ -73,6 +75,26 @@ def test_calculate_fertilizer_cost():
         calculate_fertilizer_cost("foxfarm_grow_big", -1)
     with pytest.raises(KeyError):
         calculate_fertilizer_cost("unknown", 10)
+
+
+def test_mass_helpers_match_volume_equivalents():
+    mass = 9.6  # grams corresponding to 10 mL at 0.96 kg/L
+    grams_output = calculate_fertilizer_nutrients_from_mass("foxfarm_grow_big", mass)
+    volume_output = calculate_fertilizer_nutrients(
+        "plant", "foxfarm_grow_big", 10
+    )["nutrients"]
+    assert grams_output == volume_output
+
+    cost_mass = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", mass)
+    cost_volume = calculate_fertilizer_cost("foxfarm_grow_big", 10)
+    assert cost_mass == cost_volume
+
+    with pytest.raises(ValueError):
+        calculate_fertilizer_nutrients_from_mass("foxfarm_grow_big", 0)
+    with pytest.raises(ValueError):
+        calculate_fertilizer_cost_from_mass("foxfarm_grow_big", -1)
+    with pytest.raises(KeyError):
+        calculate_fertilizer_cost_from_mass("unknown", 10)
 
 
 def test_estimate_mix_cost():
