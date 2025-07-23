@@ -12,6 +12,7 @@ from . import ph_manager
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
 VPD_DATA_FILE = "vpd_guidelines.json"
+PHOTOPERIOD_DATA_FILE = "photoperiod_guidelines.json"
 HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 
@@ -75,6 +76,7 @@ __all__ = [
     "calculate_vpd_series",
     "get_target_dli",
     "get_target_vpd",
+    "get_target_photoperiod",
     "humidity_for_target_vpd",
     "recommend_photoperiod",
     "evaluate_heat_stress",
@@ -101,6 +103,7 @@ _DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
 _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 _HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
 _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
+_PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 
 
 def _lookup_stage_data(
@@ -174,6 +177,7 @@ class EnvironmentOptimization:
     ph_action: str | None = None
     target_dli: tuple[float, float] | None = None
     target_vpd: tuple[float, float] | None = None
+    target_photoperiod: tuple[float, float] | None = None
     photoperiod_hours: float | None = None
     heat_stress: bool | None = None
     cold_stress: bool | None = None
@@ -192,6 +196,7 @@ class EnvironmentOptimization:
             "ph_action": self.ph_action,
             "target_dli": self.target_dli,
             "target_vpd": self.target_vpd,
+            "target_photoperiod": self.target_photoperiod,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
             "cold_stress": self.cold_stress,
@@ -684,6 +689,13 @@ def get_target_vpd(
     return _lookup_range(_VPD_DATA, plant_type, stage)
 
 
+def get_target_photoperiod(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended photoperiod range for a plant stage."""
+    return _lookup_range(_PHOTOPERIOD_DATA, plant_type, stage)
+
+
 def calculate_environment_metrics(
     temp_c: float | None, humidity_pct: float | None
 ) -> EnvironmentMetrics:
@@ -709,8 +721,8 @@ def optimize_environment(
     environmental metrics such as Vapor Pressure Deficit (VPD), dew point,
     heat index and absolute humidity when temperature and humidity readings are
     available. It also flags potential heat stress based on
-    :data:`heat_stress_thresholds.json`. If target DLI or VPD ranges are
-    defined in the datasets they are also included. This helper consolidates
+    :data:`heat_stress_thresholds.json`. If target DLI, VPD or photoperiod
+    ranges are defined they are returned as well. This helper consolidates
     several utilities for convenience when automating greenhouse controls.
     """
 
@@ -732,6 +744,7 @@ def optimize_environment(
 
     target_dli = get_target_dli(plant_type, stage)
     target_vpd = get_target_vpd(plant_type, stage)
+    target_photoperiod = get_target_photoperiod(plant_type, stage)
     photoperiod_hours = None
     if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
@@ -767,6 +780,7 @@ def optimize_environment(
         ph_action=ph_act,
         target_dli=target_dli,
         target_vpd=target_vpd,
+        target_photoperiod=target_photoperiod,
         photoperiod_hours=photoperiod_hours,
         heat_stress=stress.heat,
         cold_stress=stress.cold,

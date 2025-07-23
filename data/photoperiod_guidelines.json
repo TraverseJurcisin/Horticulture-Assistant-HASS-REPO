@@ -1,0 +1,15 @@
+{
+  "lettuce": {
+    "seedling": [16, 18],
+    "harvest": [12, 14]
+  },
+  "tomato": {
+    "seedling": [18, 20],
+    "fruiting": [12, 14]
+  },
+  "citrus": {
+    "seedling": [16, 18],
+    "vegetative": [16, 18],
+    "flowering": [12, 14]
+  }
+}
