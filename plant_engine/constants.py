@@ -32,6 +32,7 @@ DEFAULT_ENV: dict[str, float] = {
     "rh_pct": 65,
     "par_w_m2": 350,
     "wind_speed_m_s": 1.2,
+    "soil_temp_c": 22,
 }
 
 __all__ = ["STAGE_MULTIPLIERS", "get_stage_multiplier", "DEFAULT_ENV"]

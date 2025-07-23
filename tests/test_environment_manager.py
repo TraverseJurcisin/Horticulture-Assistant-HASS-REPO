@@ -35,6 +35,7 @@ from plant_engine.environment_manager import (
     evaluate_humidity_stress,
     evaluate_ph_stress,
     evaluate_stress_conditions,
+    evaluate_soil_temperature_stress,
     score_environment,
     score_environment_series,
     score_environment_components,
@@ -50,6 +51,7 @@ from plant_engine.environment_manager import (
     summarize_environment,
     summarize_environment_series,
     clear_environment_cache,
+    get_target_soil_temperature,
 )
 
 
@@ -564,16 +566,26 @@ def test_optimize_environment_humidity_stress():
 
 
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, "lettuce", "seedling")
+    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, 15, "lettuce", "seedling")
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
     assert stress.wind is True
     assert stress.humidity is None
 
-    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, "citrus")
+    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, None, "citrus")
     assert stress_none.heat is None
     assert stress_none.humidity is None
+
+
+def test_get_target_soil_temperature():
+    assert get_target_soil_temperature("citrus", "seedling") == (20, 25)
+
+
+def test_evaluate_soil_temperature_stress():
+    assert evaluate_soil_temperature_stress(18, "citrus", "seedling") == "low"
+    assert evaluate_soil_temperature_stress(26, "citrus", "seedling") == "high"
+    assert evaluate_soil_temperature_stress(22, "citrus", "seedling") is None
 
 
 def test_score_environment_components():
