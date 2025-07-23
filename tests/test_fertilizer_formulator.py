@@ -31,6 +31,7 @@ check_solubility_limits = fert_mod.check_solubility_limits
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
+get_application_method = fert_mod.get_application_method
 
 
 def test_convert_guaranteed_analysis():
@@ -226,4 +227,10 @@ def test_calculate_mass_for_target_ppm():
         calculate_mass_for_target_ppm("unknown", "N", 10, 1)
     with pytest.raises(KeyError):
         calculate_mass_for_target_ppm("foxfarm_grow_big", "X", 10, 1)
+
+
+def test_get_application_method():
+    assert get_application_method("foxfarm_grow_big") == "soil drench"
+    assert get_application_method("magriculture") == "foliar"
+    assert get_application_method("unknown") is None
 
