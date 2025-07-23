@@ -82,5 +82,6 @@
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
   "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
   "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
-  "companion_plants.json": "Companion planting recommendations."
+  "companion_plants.json": "Companion planting recommendations.",
+  "reference_et0.json": "Monthly reference ET0 values in mm/day"
 }
