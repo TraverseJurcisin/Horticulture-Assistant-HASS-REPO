@@ -7,7 +7,7 @@ from dataclasses import dataclass, asdict
 from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 from . import ph_manager, water_quality
 
 DATA_FILE = "environment_guidelines.json"
@@ -314,7 +314,7 @@ class EnvironmentSummary:
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with available environment data."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_environmental_targets(

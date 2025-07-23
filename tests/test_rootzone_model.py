@@ -5,6 +5,7 @@ from plant_engine.rootzone_model import (
     get_soil_parameters,
     RootZone,
 )
+import pytest
 
 
 def test_estimate_rootzone_depth():
@@ -56,4 +57,10 @@ def test_calculate_remaining_water_clamped():
     rz = estimate_water_capacity(10, area_cm2=100)
     remaining = calculate_remaining_water(rz, 400.0, irrigation_ml=50.0, et_ml=10.0)
     assert remaining == rz.total_available_water_ml
+
+
+def test_calculate_remaining_water_negative():
+    rz = estimate_water_capacity(10, area_cm2=100)
+    with pytest.raises(ValueError):
+        calculate_remaining_water(rz, -1.0)
 

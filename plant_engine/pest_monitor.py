@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Dict, Mapping
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 from .pest_manager import recommend_treatments, recommend_beneficials
 
 DATA_FILE = "pest_thresholds.json"
@@ -38,7 +38,7 @@ def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
 def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
-    return sorted(_THRESHOLDS.keys())
+    return list_dataset_entries(_THRESHOLDS)
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:

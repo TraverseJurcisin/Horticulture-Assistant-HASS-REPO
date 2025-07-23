@@ -6,9 +6,15 @@ import json
 import os
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Mapping
 
-__all__ = ["load_json", "save_json", "load_dataset", "normalize_key"]
+__all__ = [
+    "load_json",
+    "save_json",
+    "load_dataset",
+    "normalize_key",
+    "list_dataset_entries",
+]
 
 
 def load_json(path: str) -> Dict[str, Any]:
@@ -47,3 +53,9 @@ def load_dataset(filename: str) -> Dict[str, Any]:
 def normalize_key(key: str) -> str:
     """Return ``key`` normalized for case-insensitive dataset lookups."""
     return str(key).lower().replace(" ", "_")
+
+
+def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
+    """Return sorted top-level keys from a dataset mapping."""
+
+    return sorted(str(k) for k in dataset.keys())
