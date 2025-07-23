@@ -92,6 +92,11 @@ from .water_quality import (
     get_threshold as get_water_threshold,
     interpret_water_profile,
 )
+from .toxicity_manager import (
+    list_supported_plants as list_toxicity_plants,
+    get_toxicity_thresholds,
+    check_toxicities,
+)
 from .ph_manager import (
     list_supported_plants as list_ph_plants,
     get_ph_range,
@@ -180,6 +185,9 @@ __all__ = [
     "calculate_all_surplus",
     "calculate_micro_surplus",
     "analyze_nutrient_profile",
+    "list_toxicity_plants",
+    "get_toxicity_thresholds",
+    "check_toxicities",
     "get_guideline_summary",
     "TranspirationMetrics",
 ]

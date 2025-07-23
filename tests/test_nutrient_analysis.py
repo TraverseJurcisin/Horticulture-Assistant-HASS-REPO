@@ -9,5 +9,6 @@ def test_analyze_nutrient_profile():
     assert "surplus" in result
     assert "balance" in result
     assert "interaction_warnings" in result
+    assert "toxicities" in result
     assert result["deficiencies"]
     assert not result["interaction_warnings"]
