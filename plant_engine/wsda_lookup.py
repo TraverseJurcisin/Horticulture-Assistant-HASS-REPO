@@ -11,7 +11,13 @@ from typing import Dict, List, Tuple
 # Path to the WSDA fertilizer database packaged with the repository
 _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
 
-__all__ = ["get_product_npk_by_name", "get_product_npk_by_number", "search_products"]
+__all__ = [
+    "get_product_npk_by_name",
+    "get_product_npk_by_number",
+    "search_products",
+    "list_product_names",
+    "list_product_numbers",
+]
 
 @dataclass(frozen=True)
 class _Product:
@@ -78,3 +84,15 @@ def search_products(query: str, limit: int = 10) -> List[str]:
     matches = [prod.name for key, prod in names.items() if q in key]
     matches.sort()
     return matches[: max(limit, 0)]
+
+
+def list_product_names() -> List[str]:
+    """Return all product names sorted alphabetically."""
+    names, _ = _build_indexes()
+    return sorted(prod.name for prod in names.values())
+
+
+def list_product_numbers() -> List[str]:
+    """Return all WSDA product numbers sorted alphabetically."""
+    _, numbers = _build_indexes()
+    return sorted(numbers.keys())

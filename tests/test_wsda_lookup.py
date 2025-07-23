@@ -11,6 +11,8 @@ spec.loader.exec_module(wsda)
 get_product_npk_by_name = wsda.get_product_npk_by_name
 get_product_npk_by_number = wsda.get_product_npk_by_number
 search_products = wsda.search_products
+list_product_names = wsda.list_product_names
+list_product_numbers = wsda.list_product_numbers
 
 
 def test_lookup_by_name():
@@ -40,3 +42,13 @@ def test_lookup_unknown_product():
 def test_search_limit():
     results = search_products("CARE", limit=1)
     assert len(results) == 1
+
+
+def test_list_product_names_contains_known():
+    names = list_product_names()
+    assert any("EARTH-CARE" in n for n in names)
+
+
+def test_list_product_numbers_contains_known():
+    numbers = list_product_numbers()
+    assert "(#4083-0001)" in numbers

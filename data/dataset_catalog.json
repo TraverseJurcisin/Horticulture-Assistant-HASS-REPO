@@ -65,5 +65,7 @@
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
-  "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage."
+  "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
+  "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
+  "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines)."
 }

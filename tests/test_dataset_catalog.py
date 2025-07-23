@@ -25,3 +25,6 @@ def test_get_dataset_description():
 
     desc4 = get_dataset_description("irrigation_intervals.json")
     assert "irrigation" in desc4
+
+    desc5 = get_dataset_description("wsda_fertilizer_database.json")
+    assert "WSDA" in desc5
