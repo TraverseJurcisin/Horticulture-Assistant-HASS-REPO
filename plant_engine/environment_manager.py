@@ -25,6 +25,7 @@ HUMIDITY_ACTION_FILE = "humidity_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
+CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
@@ -110,6 +111,48 @@ def get_environment_guidelines(
     )
 
 
+@lru_cache(maxsize=None)
+def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
+    """Return environmental guidelines for a climate ``zone``."""
+
+    data = _CLIMATE_DATA.get(normalize_key(zone), {})
+    if not isinstance(data, Mapping):
+        data = {}
+    return EnvironmentGuidelines(
+        temp_c=_parse_range(data.get("temp_c")),
+        humidity_pct=_parse_range(data.get("humidity_pct")),
+        light_ppfd=_parse_range(data.get("light_ppfd")),
+        co2_ppm=_parse_range(data.get("co2_ppm")),
+    )
+
+
+def recommend_climate_adjustments(
+    current_env: Mapping[str, float], zone: str
+) -> Dict[str, str]:
+    """Return simple adjustment suggestions for ``zone`` based on ``current_env``."""
+
+    guide = get_climate_guidelines(zone)
+    env = normalize_environment_readings(current_env)
+    suggestions: Dict[str, str] = {}
+    if guide.temp_c is not None:
+        low, high = guide.temp_c
+        temp = env.get("temp_c")
+        if temp is not None:
+            if temp < low:
+                suggestions["temperature"] = f"raise to {low}-{high}°C"
+            elif temp > high:
+                suggestions["temperature"] = f"lower to {low}-{high}°C"
+    if guide.humidity_pct is not None:
+        low, high = guide.humidity_pct
+        rh = env.get("humidity_pct")
+        if rh is not None:
+            if rh < low:
+                suggestions["humidity"] = f"increase to {low}-{high}%"
+            elif rh > high:
+                suggestions["humidity"] = f"decrease to {low}-{high}%"
+    return suggestions
+
+
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
     """Return ``readings`` with keys mapped to canonical environment names."""
 
@@ -130,6 +173,8 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
 __all__ = [
     "list_supported_plants",
     "get_environment_guidelines",
+    "get_climate_guidelines",
+    "recommend_climate_adjustments",
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "score_environment",
@@ -213,6 +258,7 @@ _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
+_CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
