@@ -258,3 +258,11 @@ def test_generate_cycle_fertigation_plan():
     assert len(plan["harvest"]) == 30
     first_day = plan["seedling"][1]
     assert first_day["N"] > 0
+
+
+def test_estimate_solution_ec():
+    from plant_engine.fertigation import estimate_solution_ec
+
+    schedule = {"N": 100, "K": 150}
+    ec = estimate_solution_ec(schedule)
+    assert ec == pytest.approx(0.465, rel=1e-3)
