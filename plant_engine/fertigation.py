@@ -16,6 +16,7 @@ from .utils import load_dataset, normalize_key
 FOLIAR_DATA = "foliar_feed_guidelines.json"
 INTERVAL_DATA = "foliar_feed_intervals.json"
 FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
+FOLIAR_VOLUME_DATA = "foliar_spray_volume.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
@@ -24,6 +25,7 @@ SOLUBILITY_DATA = "fertilizer_solubility.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
+_FOLIAR_VOLUME: Dict[str, Dict[str, float]] = load_dataset(FOLIAR_VOLUME_DATA)
 _STOCK_SOLUTIONS: Dict[str, Dict[str, float]] = load_dataset(STOCK_DATA)
 _NUTRIENT_STOCK_MAP = {
     nutrient: sid
@@ -125,6 +127,37 @@ def next_foliar_feed_date(
 
 
 @lru_cache(maxsize=None)
+def get_foliar_spray_volume(
+    plant_type: str, stage: str | None = None
+) -> float | None:
+    """Return recommended foliar spray volume per plant in milliliters."""
+
+    data = _FOLIAR_VOLUME.get(normalize_key(plant_type), {})
+    if stage:
+        value = data.get(normalize_key(stage))
+        if isinstance(value, (int, float)):
+            return float(value)
+    value = data.get("optimal")
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def estimate_spray_solution_volume(
+    num_plants: int, plant_type: str, stage: str | None = None
+) -> float | None:
+    """Return total spray solution volume in liters for ``num_plants``."""
+
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+    per_plant = get_foliar_spray_volume(plant_type, stage)
+    if per_plant is None:
+        return None
+    total_ml = per_plant * num_plants
+    return round(total_ml / 1000, 2)
+
+
+@lru_cache(maxsize=None)
 def get_fertigation_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between fertigation events."""
 
@@ -157,6 +190,8 @@ __all__ = [
     "recommend_foliar_feed",
     "get_foliar_feed_interval",
     "next_foliar_feed_date",
+    "get_foliar_spray_volume",
+    "estimate_spray_solution_volume",
     "get_fertigation_interval",
     "next_fertigation_date",
     "recommend_fertigation_schedule",

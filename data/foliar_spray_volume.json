@@ -1,0 +1,4 @@
+{
+  "tomato": {"vegetative": 50, "flowering": 60, "optimal": 55},
+  "lettuce": {"vegetative": 30, "optimal": 30}
+}
