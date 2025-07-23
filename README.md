@@ -155,6 +155,7 @@ Key reference datasets reside in the `data/` directory:
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `yield/` – per‑plant yield logs created during operation
+- `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
 
