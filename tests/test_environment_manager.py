@@ -29,6 +29,7 @@ from plant_engine.environment_manager import (
     evaluate_humidity_stress,
     evaluate_stress_conditions,
     score_environment,
+    score_environment_series,
     score_environment_components,
     optimize_environment,
     calculate_environment_metrics,
@@ -473,3 +474,16 @@ def test_calculate_vpd_series():
 
     with pytest.raises(ValueError):
         calculate_vpd_series([20], [-1])
+
+
+def test_score_environment_series():
+    series = [
+        {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450},
+        {"temp_c": 24, "humidity_pct": 75, "light_ppfd": 260, "co2_ppm": 460},
+    ]
+    score = score_environment_series(series, "citrus", "seedling")
+    assert 90 <= score <= 100
+
+
+def test_score_environment_series_empty():
+    assert score_environment_series([], "citrus") == 0.0

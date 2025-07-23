@@ -119,6 +119,7 @@ __all__ = [
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "score_environment",
+    "score_environment_series",
     "score_environment_components",
     "suggest_environment_setpoints",
     "saturation_vapor_pressure",
@@ -487,6 +488,21 @@ def score_environment(
 
     avg = sum(components.values()) / len(components)
     return round(avg, 1)
+
+
+def score_environment_series(
+    series: Iterable[Mapping[str, float]],
+    plant_type: str,
+    stage: str | None = None,
+) -> float:
+    """Return the average environment score for a sequence of readings."""
+
+    scores = [
+        score_environment(reading, plant_type, stage) for reading in series
+    ]
+    if not scores:
+        return 0.0
+    return round(sum(scores) / len(scores), 1)
 
 
 def classify_environment_quality(
