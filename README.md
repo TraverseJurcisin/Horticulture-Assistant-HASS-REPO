@@ -235,6 +235,8 @@ or incomplete and should only be used as a starting point for your own research.
   by plant count for precise budgeting.
 - **Mix Nutrient Totals**: `calculate_mix_nutrients` reports the elemental
   nutrient amounts contributed by each fertilizer mix in milligrams.
+- **Solution Weight Estimate**: `estimate_solution_mass` adds fertilizer mass to
+  water volume to approximate the total weight of a nutrient solution.
 - **Solubility Check**: `check_solubility_limits` warns when a fertilizer mix
   exceeds the maximum grams per liter defined in `fertilizer_solubility.json`.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert

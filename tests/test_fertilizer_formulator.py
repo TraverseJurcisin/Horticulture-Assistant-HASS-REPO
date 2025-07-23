@@ -26,6 +26,7 @@ find_products = fert_mod.find_products
 calculate_mix_nutrients = fert_mod.calculate_mix_nutrients
 calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
+estimate_solution_mass = fert_mod.estimate_solution_mass
 check_solubility_limits = fert_mod.check_solubility_limits
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
@@ -199,4 +200,15 @@ def test_estimate_mix_cost_per_plant():
     assert per_plant == round(total / 5, 4)
     with pytest.raises(ValueError):
         estimate_mix_cost_per_plant(mix, 0)
+
+
+def test_estimate_solution_mass():
+    schedule = {"foxfarm_grow_big": 20, "magriculture": 10}
+    mass = estimate_solution_mass(schedule, 5)
+    assert round(mass, 3) == round(5 + 0.03, 3)
+
+    assert estimate_solution_mass({}, 2) == 2
+
+    with pytest.raises(ValueError):
+        estimate_solution_mass(schedule, -1)
 
