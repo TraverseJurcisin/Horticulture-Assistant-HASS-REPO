@@ -12,6 +12,8 @@ from typing import Optional
 
 from homeassistant.core import HomeAssistant
 
+from .state_helpers import get_numeric_state
+
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile,
 )
@@ -43,19 +45,7 @@ class DailyReport:
         return asdict(self)
 
 
-__all__ = ["DailyReport", "build_daily_report", "get_state_value"]
-
-def get_state_value(hass: HomeAssistant, entity_id: str) -> float | None:
-    """Return the numeric state of ``entity_id`` or ``None`` if missing."""
-    state = hass.states.get(entity_id)
-    if not state or state.state in ("unknown", "unavailable"):
-        _LOGGER.debug("Sensor %s is unavailable or unknown; skipping.", entity_id)
-        return None
-    try:
-        return float(state.state)
-    except (ValueError, TypeError):
-        _LOGGER.warning("State of %s is not a numeric value: %s", entity_id, state.state)
-        return None
+__all__ = ["DailyReport", "build_daily_report"]
 
 
 def _resolve_plant_type(hass: HomeAssistant, plant_id: str, profile: dict) -> Optional[str]:
@@ -112,11 +102,11 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         or profile.get("general", {}).get("sensor_entities")
         or {}
     )
-    moisture = get_state_value(hass, sensor_map.get("moisture") or f"sensor.{plant_id}_raw_moisture")
-    ec = get_state_value(hass, sensor_map.get("ec") or f"sensor.{plant_id}_raw_ec")
-    temperature = get_state_value(hass, sensor_map.get("temperature") or f"sensor.{plant_id}_raw_temperature")
-    humidity = get_state_value(hass, sensor_map.get("humidity") or f"sensor.{plant_id}_raw_humidity")
-    light = get_state_value(hass, sensor_map.get("light") or f"sensor.{plant_id}_raw_light")
+    moisture = get_numeric_state(hass, sensor_map.get("moisture") or f"sensor.{plant_id}_raw_moisture")
+    ec = get_numeric_state(hass, sensor_map.get("ec") or f"sensor.{plant_id}_raw_ec")
+    temperature = get_numeric_state(hass, sensor_map.get("temperature") or f"sensor.{plant_id}_raw_temperature")
+    humidity = get_numeric_state(hass, sensor_map.get("humidity") or f"sensor.{plant_id}_raw_humidity")
+    light = get_numeric_state(hass, sensor_map.get("light") or f"sensor.{plant_id}_raw_light")
 
     # Last known yield (e.g., total yield or current yield progress)
     yield_val = profile.get("last_yield")
@@ -128,7 +118,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
             f"sensor.plant_{short_id}_yield_progress"
         ]
         for ent in possible_yield_entities:
-            y_state = get_state_value(hass, ent)
+            y_state = get_numeric_state(hass, ent)
             if y_state is not None:
                 yield_val = y_state
                 break

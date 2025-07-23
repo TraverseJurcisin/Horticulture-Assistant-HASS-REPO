@@ -17,6 +17,8 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from .utils.state_helpers import get_numeric_state
+
 from plant_engine.environment_manager import score_environment
 
 from .const import (
@@ -77,15 +79,8 @@ class HorticultureBaseSensor(SensorEntity):
         }
 
     def _get_state_value(self, entity_id: str) -> float | None:
-        """Get state of an entity as a float, or None if unavailable/invalid."""
-        state = self.hass.states.get(entity_id)
-        if not state or state.state in ("unknown", "unavailable"):
-            return None
-        try:
-            return float(state.state)
-        except (ValueError, TypeError):
-            _LOGGER.warning("State of %s is not a number: %s", entity_id, state.state)
-            return None
+        """Return the numeric state of ``entity_id`` using :func:`get_numeric_state`."""
+        return get_numeric_state(self.hass, entity_id)
 
 class ExponentialMovingAverageSensor(HorticultureBaseSensor):
     """Base sensor applying an exponential moving average to another sensor."""

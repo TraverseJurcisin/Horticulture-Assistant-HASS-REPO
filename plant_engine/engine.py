@@ -4,7 +4,10 @@ from typing import Dict, Mapping, Any
 
 from functools import lru_cache
 
-from plant_engine.utils import load_json, save_json
+from plant_engine.utils import save_json
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_profile_by_id,
+)
 from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.water_deficit_tracker import update_water_balance
@@ -40,8 +43,12 @@ _LOGGER = logging.getLogger(__name__)
 @lru_cache(maxsize=None)
 def load_profile(plant_id: str) -> Dict[str, Any]:
     """Return the plant profile for ``plant_id`` loaded from disk."""
-    path = os.path.join(PLANTS_DIR, f"{plant_id}.json")
-    return load_json(path)
+    profile = load_profile_by_id(plant_id, PLANTS_DIR)
+    if "general" in profile and isinstance(profile["general"], dict):
+        flat = {k: v for k, v in profile.items() if k != "general"}
+        flat.update(profile["general"])
+        return flat
+    return profile
 
 
 def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
