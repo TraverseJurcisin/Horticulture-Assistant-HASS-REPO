@@ -27,6 +27,7 @@ from plant_engine.environment_manager import (
     evaluate_humidity_stress,
     evaluate_stress_conditions,
     score_environment,
+    score_environment_components,
     optimize_environment,
     calculate_environment_metrics,
     compare_environment,
@@ -434,6 +435,12 @@ def test_evaluate_stress_conditions():
     stress_none = evaluate_stress_conditions(None, None, None, None, "citrus")
     assert stress_none.heat is None
     assert stress_none.humidity is None
+
+
+def test_score_environment_components():
+    scores = score_environment_components({"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling")
+    assert scores["temp_c"] == 100.0
+    assert scores["humidity_pct"] == 100.0
 
 
 def test_calculate_vpd_series():

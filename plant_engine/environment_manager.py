@@ -119,6 +119,7 @@ __all__ = [
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "score_environment",
+    "score_environment_components",
     "suggest_environment_setpoints",
     "saturation_vapor_pressure",
     "actual_vapor_pressure",
@@ -441,17 +442,19 @@ def generate_environment_alerts(
     return alerts
 
 
-def score_environment(
-    current: Mapping[str, float], plant_type: str, stage: str | None = None
-) -> float:
-    """Return a 0-100 score representing how close ``current`` is to targets."""
+def score_environment_components(
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+) -> Dict[str, float]:
+    """Return per-parameter environment scores on a 0-100 scale."""
+
     targets = get_environmental_targets(plant_type, stage)
     if not targets:
-        return 0.0
+        return {}
 
     readings = normalize_environment_readings(current)
-    score = 0.0
-    count = 0
+    scores: Dict[str, float] = {}
     for key, bounds in targets.items():
         if key not in readings or not isinstance(bounds, (list, tuple)):
             continue
@@ -461,16 +464,27 @@ def score_environment(
         if width <= 0:
             continue
         if low <= val <= high:
-            score += 1
+            comp = 1.0
         elif val < low:
-            score += max(0.0, 1 - (low - val) / width)
+            comp = max(0.0, 1 - (low - val) / width)
         else:
-            score += max(0.0, 1 - (val - high) / width)
-        count += 1
+            comp = max(0.0, 1 - (val - high) / width)
+        scores[key] = round(comp * 100, 1)
 
-    if count == 0:
+    return scores
+
+
+def score_environment(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> float:
+    """Return a 0-100 score representing overall environment quality."""
+
+    components = score_environment_components(current, plant_type, stage)
+    if not components:
         return 0.0
-    return round((score / count) * 100, 1)
+
+    avg = sum(components.values()) / len(components)
+    return round(avg, 1)
 
 
 def classify_environment_quality(
