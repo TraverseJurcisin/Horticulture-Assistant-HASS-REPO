@@ -44,15 +44,19 @@ class HorticultureBaseSwitch(SwitchEntity):
             "model": "Irrigation/Fertigation Controller"
         }
 
-    async def async_turn_on(self, **kwargs):
-        self._attr_is_on = True
-        _LOGGER.info("Turned ON %s for %s", self.name, self._plant_name)
-        self.async_write_ha_state()
+    async def async_turn_on(self, **kwargs) -> None:
+        """Turn the switch on."""
+        if not self._attr_is_on:
+            self._attr_is_on = True
+            self.async_write_ha_state()
+            _LOGGER.info("Turned ON %s for %s", self.name, self._plant_name)
 
-    async def async_turn_off(self, **kwargs):
-        self._attr_is_on = False
-        _LOGGER.info("Turned OFF %s for %s", self.name, self._plant_name)
-        self.async_write_ha_state()
+    async def async_turn_off(self, **kwargs) -> None:
+        """Turn the switch off."""
+        if self._attr_is_on:
+            self._attr_is_on = False
+            self.async_write_ha_state()
+            _LOGGER.info("Turned OFF %s for %s", self.name, self._plant_name)
 
 class IrrigationSwitch(HorticultureBaseSwitch):
     """Switch to enable or disable irrigation per plant."""
