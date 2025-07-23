@@ -5,6 +5,8 @@ from plant_engine.pest_manager import (
     recommend_beneficials,
     get_pest_prevention,
     recommend_prevention,
+    get_ipm_guidelines,
+    recommend_ipm_actions,
     list_known_pests,
 )
 
@@ -53,3 +55,15 @@ def test_recommend_prevention():
     rec = recommend_prevention("citrus", ["aphids", "unknown"])
     assert rec["aphids"].startswith("Encourage")
     assert rec["unknown"] == "No guideline available"
+
+
+def test_get_ipm_guidelines():
+    data = get_ipm_guidelines("citrus")
+    assert data["general"].startswith("Prune")
+    assert "aphids" in data
+
+
+def test_recommend_ipm_actions():
+    actions = recommend_ipm_actions("citrus", ["aphids"])
+    assert "general" in actions
+    assert actions["aphids"].startswith("Introduce ladybugs")

@@ -10,6 +10,7 @@
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "pest_thresholds.json": "Economic threshold counts for triggering actions.",
   "pest_monitoring_intervals.json": "Recommended days between scouting events.",
+  "ipm_guidelines.json": "Integrated pest management practices by crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
   "growth_stages.json": "Expected duration and notes for each growth stage.",
