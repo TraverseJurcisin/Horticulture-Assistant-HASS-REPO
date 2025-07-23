@@ -15,6 +15,7 @@ from plant_engine.fertigation import (
     calculate_mix_nutrients,
     get_fertigation_interval,
     next_fertigation_date,
+    check_solubility_limits,
 )
 
 
@@ -318,4 +319,15 @@ def test_next_fertigation_date():
     expected = date(2025, 1, 3)
     assert next_fertigation_date("tomato", "vegetative", last) == expected
     assert next_fertigation_date("unknown", None, last) is None
+
+
+def test_check_solubility_limits():
+    warnings = check_solubility_limits({"foxfarm_grow_big": 400}, 1)
+    assert warnings["foxfarm_grow_big"] > 0
+
+    ok = check_solubility_limits({"foxfarm_grow_big": 100}, 1)
+    assert ok == {}
+
+    with pytest.raises(ValueError):
+        check_solubility_limits({"foxfarm_grow_big": 100}, 0)
 

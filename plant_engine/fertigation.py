@@ -19,9 +19,11 @@ FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
+SOLUBILITY_DATA = "fertilizer_solubility.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
+_SOLUBILITY_MAP: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -152,6 +154,7 @@ __all__ = [
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
     "estimate_solution_ec",
+    "check_solubility_limits",
     "estimate_stage_cost",
     "estimate_cycle_cost",
     "generate_cycle_fertigation_plan",
@@ -682,6 +685,37 @@ def estimate_solution_ec(schedule: Mapping[str, float]) -> float:
         factor = factors.get(nutrient, 0.0)
         total_us_cm += float(ppm) * factor
     return round(total_us_cm / 1000, 3)
+
+
+def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+    """Return grams per liter exceeding solubility limits.
+
+    Parameters
+    ----------
+    schedule : Mapping[str, float]
+        Mapping of fertilizer names to grams applied.
+    volume_l : float
+        Total solution volume in liters. Must be positive.
+
+    Returns
+    -------
+    Dict[str, float]
+        Mapping of fertilizer names to grams per liter above the allowed
+        solubility. Unknown fertilizers are ignored.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    warnings: Dict[str, float] = {}
+    for fert, grams in schedule.items():
+        limit = _SOLUBILITY_MAP.get(fert)
+        if limit is None:
+            continue
+        gpl = grams / volume_l
+        if gpl > limit:
+            warnings[fert] = round(gpl - limit, 2)
+    return warnings
 
 
 def _schedule_from_totals(
