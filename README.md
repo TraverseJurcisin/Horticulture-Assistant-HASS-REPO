@@ -186,6 +186,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **Multi-day Fertigation Plans**: `generate_fertigation_plan` returns the total
+  fertilizer mix required for any number of days at a chosen daily volume.
 - **Irrigation Targets**: `get_daily_irrigation_target` returns default
   milliliters per plant based on `irrigation_guidelines.json`.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and

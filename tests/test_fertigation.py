@@ -10,6 +10,7 @@ from plant_engine.fertigation import (
     estimate_daily_nutrient_uptake,
     recommend_nutrient_mix_with_cost,
     recommend_nutrient_mix_with_cost_breakdown,
+    generate_fertigation_plan,
 )
 
 
@@ -172,3 +173,15 @@ def test_recommend_nutrient_mix_with_cost_breakdown():
     assert total >= 0
     assert isinstance(breakdown, dict)
     assert sum(breakdown.values()) == pytest.approx(total, rel=0.1)
+
+
+def test_generate_fertigation_plan():
+    plan = generate_fertigation_plan(
+        "tomato",
+        "vegetative",
+        days=3,
+        daily_water_ml=2000.0,
+    )
+    assert plan["urea"] > 0
+    assert plan["map"] > 0
+    assert plan["kcl"] > 0

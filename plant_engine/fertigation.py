@@ -47,6 +47,7 @@ __all__ = [
     "recommend_uptake_fertigation",
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
+    "generate_fertigation_plan",
 ]
 
 
@@ -432,4 +433,55 @@ def recommend_nutrient_mix_with_cost_breakdown(
 
     breakdown = estimate_cost_breakdown(schedule)
     return schedule, total, breakdown
+
+
+def generate_fertigation_plan(
+    plant_type: str,
+    stage: str,
+    days: int,
+    daily_water_ml: float,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> Dict[str, float]:
+    """Return total fertilizer requirements for a multi-day period.
+
+    Parameters
+    ----------
+    plant_type : str
+        Type of plant used for nutrient guidelines.
+    stage : str
+        Growth stage corresponding to the nutrient targets.
+    days : int
+        Number of days in the fertigation plan. Must be positive.
+    daily_water_ml : float
+        Irrigation volume per day in milliliters. Must be positive.
+    fertilizers : Mapping[str, str] | None, optional
+        Optional mapping of nutrient code to fertilizer IDs.
+    purity_overrides : Mapping[str, float] | None, optional
+        Purity factors overriding defaults from :data:`fertilizer_purity.json`.
+    include_micro : bool, optional
+        Include micronutrients if ``True``.
+    micro_fertilizers : Mapping[str, str] | None, optional
+        Mapping of micronutrient codes to fertilizer IDs.
+    """
+
+    if days <= 0:
+        raise ValueError("days must be positive")
+    if daily_water_ml <= 0:
+        raise ValueError("daily_water_ml must be positive")
+
+    total_volume_l = (daily_water_ml * days) / 1000
+
+    return recommend_nutrient_mix(
+        plant_type,
+        stage,
+        total_volume_l,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
 
