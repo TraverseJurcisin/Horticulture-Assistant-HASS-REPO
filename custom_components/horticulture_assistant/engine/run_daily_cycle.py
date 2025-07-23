@@ -23,7 +23,10 @@ from plant_engine.pest_manager import recommend_beneficials, recommend_treatment
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
 from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.utils import load_dataset
-from plant_engine.fertigation import recommend_nutrient_mix
+from plant_engine.fertigation import (
+    recommend_nutrient_mix,
+    recommend_nutrient_mix_with_cost,
+)
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.rootzone_model import estimate_water_capacity
 from plant_engine.yield_prediction import estimate_remaining_yield
@@ -49,6 +52,7 @@ class DailyReport:
     root_zone: dict[str, object] = field(default_factory=dict)
     stage_info: dict[str, object] = field(default_factory=dict)
     fertigation_schedule: dict[str, float] = field(default_factory=dict)
+    fertigation_cost: float | None = None
     irrigation_target_ml: float | None = None
     predicted_harvest_date: str | None = None
     yield_: float | None = None
@@ -222,12 +226,23 @@ def run_daily_cycle(
     )
     if report.irrigation_target_ml:
         vol_l = report.irrigation_target_ml / 1000
-        report.fertigation_schedule = recommend_nutrient_mix(
-            plant_type,
-            stage_name or "",
-            vol_l,
-            include_micro=True,
-        )
+        try:
+            schedule, cost = recommend_nutrient_mix_with_cost(
+                plant_type,
+                stage_name or "",
+                vol_l,
+                include_micro=True,
+            )
+        except KeyError:
+            schedule = recommend_nutrient_mix(
+                plant_type,
+                stage_name or "",
+                vol_l,
+                include_micro=True,
+            )
+            cost = None
+        report.fertigation_schedule = schedule
+        report.fertigation_cost = cost
     # Include stage details if available in profile
     if stage_name:
         stages = profile.get("stages", {})
