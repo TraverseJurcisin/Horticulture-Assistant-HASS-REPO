@@ -10,6 +10,7 @@ from plant_engine.growth_stage import (
     stage_progress,
     days_until_harvest,
     predict_next_stage_date,
+    get_germination_duration,
 )
 
 
@@ -87,5 +88,11 @@ def test_estimate_stage_from_date():
 
     with pytest.raises(ValueError):
         estimate_stage_from_date("tomato", cur, start)
+
+
+def test_get_germination_duration():
+    assert get_germination_duration("tomato") == 5
+    assert get_germination_duration("lettuce") == 7
+    assert get_germination_duration("unknown") is None
 
 

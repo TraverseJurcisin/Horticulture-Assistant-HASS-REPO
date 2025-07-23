@@ -8,11 +8,13 @@ from datetime import date, timedelta
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "growth_stages.json"
+GERMINATION_FILE = "germination_duration.json"
 
 
 
 # Load growth stage dataset once. ``load_dataset`` handles caching.
 _DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
+_GERMINATION: Dict[str, int] = load_dataset(GERMINATION_FILE)
 
 
 
@@ -26,6 +28,7 @@ __all__ = [
     "stage_progress",
     "days_until_harvest",
     "predict_next_stage_date",
+    "get_germination_duration",
 ]
 
 
@@ -154,3 +157,12 @@ def predict_next_stage_date(
     if duration is None:
         return None
     return stage_start + timedelta(days=duration)
+
+
+def get_germination_duration(plant_type: str) -> int | None:
+    """Return default days to germination for ``plant_type`` if known."""
+
+    value = _GERMINATION.get(normalize_key(plant_type))
+    if isinstance(value, (int, float)):
+        return int(value)
+    return None
