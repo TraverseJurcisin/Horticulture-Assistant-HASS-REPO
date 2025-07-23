@@ -6,7 +6,7 @@ from typing import Optional, Mapping, Dict
 from .utils import load_dataset, normalize_key
 from .et_model import calculate_eta
 
-from .rootzone_model import RootZone
+from .rootzone_model import RootZone, calculate_remaining_water
 
 __all__ = [
     "recommend_irrigation_volume",
@@ -16,6 +16,7 @@ __all__ = [
     "recommend_irrigation_from_environment",
     "list_supported_plants",
     "get_daily_irrigation_target",
+    "generate_irrigation_schedule",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -165,3 +166,37 @@ def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
     plant = _IRRIGATION_DATA.get(normalize_key(plant_type), {})
     value = plant.get(normalize_key(stage))
     return float(value) if isinstance(value, (int, float)) else 0.0
+
+
+def generate_irrigation_schedule(
+    rootzone: RootZone,
+    available_ml: float,
+    et_ml_series: Mapping[int, float] | list[float],
+    *,
+    refill_to_full: bool = True,
+) -> Dict[int, float]:
+    """Return daily irrigation volumes to maintain root zone moisture.
+
+    ``et_ml_series`` should contain expected evapotranspiration loss for each
+    day in milliliters. The function simulates soil moisture over the period and
+    calls :func:`recommend_irrigation_volume` for each day, accounting for
+    irrigation applied on previous days.
+    """
+
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+    if any(v < 0 for v in et_ml_series):
+        raise ValueError("et_ml_series values must be non-negative")
+
+    schedule: Dict[int, float] = {}
+    remaining = float(available_ml)
+    for day, et_ml in enumerate(et_ml_series, start=1):
+        volume = recommend_irrigation_volume(
+            rootzone, remaining, et_ml, refill_to_full=refill_to_full
+        )
+        schedule[day] = volume
+        remaining = calculate_remaining_water(
+            rootzone, remaining, irrigation_ml=volume, et_ml=et_ml
+        )
+
+    return schedule
