@@ -23,3 +23,9 @@ def test_accumulate_gdd_series():
     series = [(10, 20)] * 5
     total = thermal_time.accumulate_gdd_series(series, base_temp_c=10)
     assert total == 25.0
+
+
+def test_estimate_days_to_stage():
+    temps = [(20, 30)] * 60
+    days = thermal_time.estimate_days_to_stage("tomato", "fruiting", temps)
+    assert isinstance(days, int) and 0 < days <= 60
