@@ -84,6 +84,7 @@ __all__ = [
     "calculate_mix_nutrients",
     "estimate_stage_cost",
     "estimate_cycle_cost",
+    "generate_cycle_fertigation_plan",
     "recommend_precise_fertigation",
 ]
 
@@ -675,6 +676,31 @@ def estimate_cycle_cost(
         totals, num_plants, fertilizers, purity_overrides
     )
     return estimate_mix_cost(schedule)
+
+
+def generate_cycle_fertigation_plan(
+    plant_type: str,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> Dict[str, Dict[int, Dict[str, float]]]:
+    """Return fertigation plan for each stage of the crop cycle."""
+
+    from .growth_stage import list_growth_stages, get_stage_duration
+
+    cycle_plan: Dict[str, Dict[int, Dict[str, float]]] = {}
+    for stage in list_growth_stages(plant_type):
+        days = get_stage_duration(plant_type, stage)
+        if not days:
+            continue
+        cycle_plan[stage] = generate_fertigation_plan(
+            plant_type,
+            stage,
+            days,
+            purity,
+            product=product,
+        )
+    return cycle_plan
 
 
 
