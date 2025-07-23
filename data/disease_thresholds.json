@@ -1,0 +1,14 @@
+{
+  "citrus": {
+    "citrus greening": 1,
+    "root rot": 2
+  },
+  "tomato": {
+    "blight": 1,
+    "powdery mildew": 3
+  },
+  "lettuce": {
+    "downy mildew": 2,
+    "tipburn": 3
+  }
+}
