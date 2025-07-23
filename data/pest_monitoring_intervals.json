@@ -1,0 +1,18 @@
+{
+  "citrus": {
+    "seedling": 7,
+    "vegetative": 5,
+    "fruiting": 3,
+    "optimal": 5
+  },
+  "lettuce": {
+    "seedling": 6,
+    "harvest": 2,
+    "optimal": 4
+  },
+  "tomato": {
+    "seedling": 7,
+    "fruiting": 3,
+    "optimal": 5
+  }
+}

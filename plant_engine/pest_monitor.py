@@ -13,11 +13,14 @@ from .pest_manager import recommend_treatments, recommend_beneficials
 DATA_FILE = "pest_thresholds.json"
 RISK_DATA_FILE = "pest_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
+# Recommended days between scouting events
+MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
+_MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -29,6 +32,7 @@ __all__ = [
     "estimate_pest_risk",
     "generate_pest_report",
     "get_severity_action",
+    "get_monitoring_interval",
     "PestReport",
 ]
 
@@ -47,6 +51,20 @@ def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
     return list_dataset_entries(_THRESHOLDS)
+
+
+def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
+    """Return recommended days between scouting events for a plant stage."""
+
+    data = _MONITOR_INTERVALS.get(normalize_key(plant_type), {})
+    if stage:
+        value = data.get(normalize_key(stage))
+        if isinstance(value, (int, float)):
+            return int(value)
+    value = data.get("optimal")
+    if isinstance(value, (int, float)):
+        return int(value)
+    return None
 
 
 def get_severity_action(level: str) -> str:

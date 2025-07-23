@@ -6,6 +6,7 @@ from plant_engine.pest_monitor import (
     recommend_biological_controls,
     classify_pest_severity,
     generate_pest_report,
+    get_monitoring_interval,
 )
 
 
@@ -64,4 +65,10 @@ def test_generate_pest_report():
     assert "aphids" in report["treatments"]
     assert "aphids" in report["beneficial_insects"]
     assert report["severity_actions"]["aphids"]
+
+
+def test_get_monitoring_interval():
+    assert get_monitoring_interval("citrus", "fruiting") == 3
+    assert get_monitoring_interval("CITRUS") == 5
+    assert get_monitoring_interval("unknown") is None
 
