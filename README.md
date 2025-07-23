@@ -162,6 +162,7 @@ Key reference datasets reside in the `data/` directory:
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
+- `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
@@ -208,6 +209,8 @@ or incomplete and should only be used as a starting point for your own research.
   convert those totals into fertilizer costs using price data.
 - **Irrigation Targets**: `get_daily_irrigation_target` returns default
   milliliters per plant based on `irrigation_guidelines.json`.
+- **Irrigation Efficiency**: `adjust_irrigation_for_efficiency` scales volumes
+  based on delivery method using `irrigation_efficiency.json`.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
   fertilizer schedule using those irrigation targets.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for
