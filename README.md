@@ -203,6 +203,9 @@ or incomplete and should only be used as a starting point for your own research.
   milliliters per plant based on `irrigation_guidelines.json`.
 - **Fertigation Planning**: `generate_fertigation_plan` produces a day-by-day
   fertilizer schedule using those irrigation targets.
+- **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for
+  existing water nutrient levels, can include micronutrients, and returns cost
+  estimates along with any water quality warnings.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.
