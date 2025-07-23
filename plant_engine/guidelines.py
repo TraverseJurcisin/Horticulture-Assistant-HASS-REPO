@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field as dataclass_field
 from typing import Any, Dict, List, Optional
 
 from . import (
@@ -10,6 +10,7 @@ from . import (
     nutrient_manager,
     micro_manager,
     pest_manager,
+    pest_monitor,
     disease_manager,
     ph_manager,
     growth_stage,
@@ -28,7 +29,9 @@ class GuidelineSummary:
     pest_guidelines: Dict[str, str]
     disease_guidelines: Dict[str, str]
     disease_prevention: Dict[str, str]
-    ph_range: List[float]
+    pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
+    beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
+    ph_range: List[float] = dataclass_field(default_factory=list)
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
 
@@ -40,9 +43,13 @@ class GuidelineSummary:
 def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str, Any]:
     """Return combined environment, nutrient and pest guidelines.
 
-    The summary now also includes disease management and pH guidance for
+    The summary now also includes disease management, pH guidance,
+    pest monitoring thresholds and beneficial insect suggestions for
     richer automation data.
     """
+
+    thresholds = pest_monitor.get_pest_thresholds(plant_type)
+    beneficial = {p: pest_manager.get_beneficial_insects(p) for p in thresholds}
 
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
@@ -51,6 +58,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         pest_guidelines=pest_manager.get_pest_guidelines(plant_type),
         disease_guidelines=disease_manager.get_disease_guidelines(plant_type),
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
+        pest_thresholds=thresholds,
+        beneficial_insects=beneficial,
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),

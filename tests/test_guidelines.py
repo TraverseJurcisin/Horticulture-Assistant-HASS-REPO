@@ -11,6 +11,8 @@ def test_get_guideline_summary():
     assert data["ph_range"] == [5.5, 6.5]
     assert data["stage_info"]["duration_days"] == 90
     assert data["micronutrients"] == {}
+    assert data["pest_thresholds"]["aphids"] == 5
+    assert "ladybugs" in data["beneficial_insects"]["aphids"]
 
 
 def test_guideline_summary_no_stage():
