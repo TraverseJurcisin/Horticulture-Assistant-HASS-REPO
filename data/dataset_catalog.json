@@ -3,5 +3,6 @@
   "nutrient_guidelines.json": "Recommended macronutrient ppm levels for each plant stage.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
-  "growth_stages.json": "Expected duration and notes for each growth stage."
+  "growth_stages.json": "Expected duration and notes for each growth stage.",
+  "crop_rotation_guidelines.json": "Recommended preceding crops and rotation intervals."
 }

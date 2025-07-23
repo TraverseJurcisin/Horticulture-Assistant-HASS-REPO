@@ -171,6 +171,7 @@ Key reference datasets reside in the `data/` directory:
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
+- `crop_rotation_guidelines.json` – recommended preceding crops and rotation intervals
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
 - `dataset_catalog.json` – short descriptions of the bundled datasets for quick reference

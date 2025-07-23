@@ -92,6 +92,11 @@ from .micro_manager import (
     calculate_surplus as calculate_micro_surplus,
 )
 from .growth_stage import get_stage_info, list_growth_stages
+from .crop_rotation import (
+    list_supported_plants as list_rotation_plants,
+    get_preceding_crops,
+    get_rotation_interval,
+)
 from .harvest_planner import build_stage_schedule
 from .guidelines import get_guideline_summary
 from .report import DailyReport
@@ -270,6 +275,9 @@ __all__ = [
     "list_toxicity_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
+    "list_rotation_plants",
+    "get_preceding_crops",
+    "get_rotation_interval",
     "get_guideline_summary",
     "DailyReport",
     "load_profile",
