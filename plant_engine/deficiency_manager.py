@@ -1,17 +1,19 @@
 """Nutrient deficiency diagnosis utilities."""
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from typing import Dict, Iterable, Mapping
 
 from .nutrient_manager import calculate_deficiencies
 from .utils import load_dataset
 
 DATA_FILE = "nutrient_deficiency_symptoms.json"
 TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
+MOBILITY_FILE = "nutrient_mobility.json"
 
 # Load dataset once using cached loader
 _SYMPTOMS: Dict[str, str] = load_dataset(DATA_FILE)
 _TREATMENTS: Dict[str, str] = load_dataset(TREATMENT_DATA_FILE)
+_MOBILITY: Dict[str, str] = load_dataset(MOBILITY_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -19,6 +21,8 @@ __all__ = [
     "diagnose_deficiencies",
     "get_deficiency_treatment",
     "recommend_deficiency_treatments",
+    "get_nutrient_mobility",
+    "classify_mobility",
 ]
 
 
@@ -55,3 +59,13 @@ def recommend_deficiency_treatments(
     """Return treatments for diagnosed nutrient deficiencies."""
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     return {n: get_deficiency_treatment(n) for n in deficits}
+
+
+def get_nutrient_mobility(nutrient: str) -> str:
+    """Return mobility classification for a nutrient."""
+    return _MOBILITY.get(nutrient, "")
+
+
+def classify_mobility(nutrients: Iterable[str]) -> Dict[str, str]:
+    """Return mobility classes for an iterable of nutrient codes."""
+    return {n: get_nutrient_mobility(n) for n in nutrients}

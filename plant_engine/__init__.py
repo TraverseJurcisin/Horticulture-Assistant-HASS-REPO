@@ -91,6 +91,8 @@ from .health_report import generate_health_report
 from .deficiency_manager import (
     get_deficiency_treatment,
     recommend_deficiency_treatments,
+    get_nutrient_mobility,
+    classify_mobility,
 )
 from .surplus_manager import (
     list_known_nutrients as list_surplus_nutrients,
@@ -200,6 +202,8 @@ __all__ = [
     "calculate_micro_deficiencies",
     "get_deficiency_treatment",
     "recommend_deficiency_treatments",
+    "get_nutrient_mobility",
+    "classify_mobility",
     "list_surplus_nutrients",
     "get_surplus_action",
     "recommend_surplus_actions",

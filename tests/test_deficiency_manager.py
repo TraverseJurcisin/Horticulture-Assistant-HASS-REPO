@@ -4,6 +4,8 @@ from plant_engine.deficiency_manager import (
     diagnose_deficiencies,
     get_deficiency_treatment,
     recommend_deficiency_treatments,
+    get_nutrient_mobility,
+    classify_mobility,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
 
@@ -40,4 +42,15 @@ def test_recommend_deficiency_treatments():
     current = {key: 0 for key in guidelines}
     actions = recommend_deficiency_treatments(current, "spinach", "harvest")
     assert "N" in actions and actions["N"]
+
+
+def test_get_nutrient_mobility():
+    assert get_nutrient_mobility("N") == "mobile"
+    assert get_nutrient_mobility("Ca") == "immobile"
+    assert get_nutrient_mobility("unknown") == ""
+
+
+def test_classify_mobility():
+    result = classify_mobility(["N", "Fe", "Mo"])
+    assert result == {"N": "mobile", "Fe": "immobile", "Mo": "mobile"}
 
