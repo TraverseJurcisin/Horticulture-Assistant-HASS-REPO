@@ -14,6 +14,7 @@ __all__ = [
     "get_daily_uptake",
     "estimate_stage_totals",
     "estimate_total_uptake",
+    "get_uptake_ratio",
 ]
 
 
@@ -28,6 +29,26 @@ def get_daily_uptake(plant_type: str, stage: str) -> Dict[str, float]:
     if not plant:
         return {}
     return plant.get(stage.lower(), {})
+
+
+def get_uptake_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return normalized N:P:K ratio from daily uptake data.
+
+    The values sum to 1.0. Unknown plants or stages return an empty mapping.
+    """
+
+    daily = get_daily_uptake(plant_type, stage)
+    n = daily.get("N", 0.0)
+    p = daily.get("P", 0.0)
+    k = daily.get("K", 0.0)
+    total = n + p + k
+    if total <= 0:
+        return {}
+    return {
+        "N": round(n / total, 2),
+        "P": round(p / total, 2),
+        "K": round(k / total, 2),
+    }
 
 
 def estimate_stage_totals(plant_type: str, stage: str) -> Dict[str, float]:
