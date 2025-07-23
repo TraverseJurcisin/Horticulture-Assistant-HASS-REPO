@@ -23,6 +23,7 @@ __all__ = [
     "generate_env_irrigation_schedule",
     "generate_precipitation_schedule",
     "get_rain_capture_efficiency",
+    "get_recommended_interval",
     "IrrigationRecommendation",
 ]
 
@@ -31,6 +32,9 @@ _KC_DATA = load_dataset(_KC_DATA_FILE)
 
 _IRRIGATION_FILE = "irrigation_guidelines.json"
 _IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
+
+_INTERVAL_FILE = "irrigation_intervals.json"
+_INTERVAL_DATA: Dict[str, Dict[str, float]] = load_dataset(_INTERVAL_FILE)
 
 _EFFICIENCY_FILE = "irrigation_efficiency.json"
 _EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
@@ -248,6 +252,17 @@ def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
     plant = _IRRIGATION_DATA.get(normalize_key(plant_type), {})
     value = plant.get(normalize_key(stage))
     return float(value) if isinstance(value, (int, float)) else 0.0
+
+
+def get_recommended_interval(plant_type: str, stage: str) -> float | None:
+    """Return days between irrigation events for a plant stage if known."""
+
+    plant = _INTERVAL_DATA.get(normalize_key(plant_type), {})
+    value = plant.get(normalize_key(stage))
+    if isinstance(value, (int, float)):
+        return float(value)
+    value = plant.get("optimal")
+    return float(value) if isinstance(value, (int, float)) else None
 
 
 def generate_irrigation_schedule(
