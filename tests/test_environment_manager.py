@@ -46,6 +46,7 @@ from plant_engine.environment_manager import (
     normalize_environment_readings,
     summarize_environment,
     summarize_environment_series,
+    clear_environment_cache,
 )
 
 
@@ -620,3 +621,10 @@ def test_score_overall_environment():
     base = score_environment(env, "citrus", "seedling")
     assert score < base
     assert score > 90
+
+
+def test_clear_environment_cache():
+    data1 = get_environmental_targets("citrus", "seedling")
+    clear_environment_cache()
+    data2 = get_environmental_targets("citrus", "seedling")
+    assert data1 == data2

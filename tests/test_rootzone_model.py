@@ -78,3 +78,10 @@ def test_soil_moisture_pct():
     with pytest.raises(ValueError):
         soil_moisture_pct(rz, -1)
 
+
+def test_rootzone_methods():
+    rz = estimate_water_capacity(10, area_cm2=100)
+    new = rz.calculate_remaining_water(100.0, irrigation_ml=50.0, et_ml=25.0)
+    assert new == 125.0
+    assert rz.moisture_pct(new) == soil_moisture_pct(rz, new)
+

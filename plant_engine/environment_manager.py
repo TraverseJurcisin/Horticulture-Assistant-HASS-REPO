@@ -7,6 +7,8 @@ from dataclasses import dataclass, asdict
 from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
+RangeTuple = Tuple[float, float]
+
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from . import ph_manager, water_quality
 from .compute_transpiration import compute_transpiration
@@ -52,7 +54,7 @@ _ALIAS_MAP: Dict[str, str] = {
 }
 
 
-def _parse_range(value: Iterable[float]) -> Tuple[float, float] | None:
+def _parse_range(value: Iterable[float]) -> RangeTuple | None:
     """Return a normalized (min, max) tuple or ``None`` if invalid."""
     try:
         low, high = value
@@ -67,10 +69,10 @@ def _parse_range(value: Iterable[float]) -> Tuple[float, float] | None:
 class EnvironmentGuidelines:
     """Environmental target ranges for a plant stage."""
 
-    temp_c: Tuple[float, float] | None = None
-    humidity_pct: Tuple[float, float] | None = None
-    light_ppfd: Tuple[float, float] | None = None
-    co2_ppm: Tuple[float, float] | None = None
+    temp_c: RangeTuple | None = None
+    humidity_pct: RangeTuple | None = None
+    light_ppfd: RangeTuple | None = None
+    co2_ppm: RangeTuple | None = None
 
     def as_dict(self) -> Dict[str, list[float]]:
         """Return guidelines as a dictionary with list values."""
@@ -167,6 +169,7 @@ __all__ = [
     "generate_environment_alerts",
     "classify_environment_quality",
     "score_overall_environment",
+    "clear_environment_cache",
     "summarize_environment",
     "summarize_environment_series",
     "EnvironmentSummary",
@@ -210,7 +213,7 @@ def _lookup_stage_data(
 
 def _lookup_range(
     dataset: Mapping[str, Any], plant_type: str, stage: str | None
-) -> tuple[float, float] | None:
+) -> RangeTuple | None:
     """Return (min, max) tuple for stage specific range datasets."""
     plant = dataset.get(normalize_key(plant_type), {})
     vals = None
@@ -364,6 +367,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
+@lru_cache(maxsize=None)
 def get_environmental_targets(
     plant_type: str, stage: str | None = None
 ) -> Dict[str, Any]:
@@ -371,7 +375,13 @@ def get_environmental_targets(
     return get_environment_guidelines(plant_type, stage).as_dict()
 
 
-def classify_value_range(value: float, bounds: Tuple[float, float]) -> str:
+def clear_environment_cache() -> None:
+    """Clear cached environment targets and guidelines."""
+    get_environmental_targets.cache_clear()
+    get_environment_guidelines.cache_clear()
+
+
+def classify_value_range(value: float, bounds: RangeTuple) -> str:
     """Return classification of ``value`` relative to ``bounds``.
 
     The return value is one of ``"below range"``, ``"above range"`` or
@@ -385,7 +395,7 @@ def classify_value_range(value: float, bounds: Tuple[float, float]) -> str:
     return "within range"
 
 
-def _check_range(value: float, bounds: Tuple[float, float]) -> str | None:
+def _check_range(value: float, bounds: RangeTuple) -> str | None:
     """Return adjustment suggestion for ``value`` relative to ``bounds``."""
 
     status = classify_value_range(value, bounds)
