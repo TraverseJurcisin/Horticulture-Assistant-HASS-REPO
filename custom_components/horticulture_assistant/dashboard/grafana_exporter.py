@@ -1,7 +1,8 @@
-import json
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
+
+from custom_components.horticulture_assistant.utils.json_io import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,14 +26,9 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
     }
 
     # Load plant profile JSON
-    profile = {}
-    try:
-        with open(profile_path, 'r', encoding='utf-8') as f:
-            profile = json.load(f) or {}
-    except FileNotFoundError:
-        _LOGGER.error("Plant profile not found: %s", profile_path)
-    except Exception as e:
-        _LOGGER.error("Failed to load plant profile %s: %s", profile_path, e)
+    profile = load_json(profile_path, default={})
+    if profile is None:
+        profile = {}
 
     # Extract current threshold values
     thresholds = {}
@@ -53,15 +49,12 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
 
     # Helper to load JSON log files safely
     def _load_log(path: Path):
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                return json.load(f) or []
-        except FileNotFoundError:
-            _LOGGER.info("Log file not found: %s", path)
-            return []
-        except Exception as e:
-            _LOGGER.warning("Error reading log file %s: %s", path, e)
-            return []
+        data = load_json(path, default=[])
+        if isinstance(data, list):
+            return data
+        if data:
+            _LOGGER.warning("Log file %s has unexpected format", path)
+        return []
 
     # Calculate cutoff for last 7 days
     now = datetime.utcnow()
@@ -146,11 +139,9 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
 
     # Write the resulting data to a JSON file
     output_file = output_dir / f"{plant_id}_grafana.json"
-    try:
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
+    if save_json(output_file, data):
         _LOGGER.info("Grafana export saved for plant %s at %s", plant_id, output_file)
-    except Exception as e:
-        _LOGGER.error("Failed to write Grafana export for plant %s: %s", plant_id, e)
+    else:
+        _LOGGER.error("Failed to write Grafana export for plant %s", plant_id)
 
     return data

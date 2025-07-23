@@ -1,6 +1,5 @@
 # File: custom_components/horticulture_assistant/utils/yield_tracker.py
 """Utility for tracking and recording yield entries for plants."""
-import json
 import os
 import logging
 from datetime import datetime, date
@@ -27,9 +26,10 @@ class YieldTracker:
         self._hass = hass
         self._logs: Dict[str, List[Dict]] = {}
         # Load existing logs from file if available
+        from .json_io import load_json
+
         try:
-            with open(self._data_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            data = load_json(self._data_file, default={})
             if isinstance(data, dict):
                 # Ensure all keys map to list of entries
                 for pid, entries in data.items():
@@ -42,8 +42,6 @@ class YieldTracker:
                 _LOGGER.warning("Yield logs file format invalid (expected dict at top level); starting with empty logs.")
         except FileNotFoundError:
             _LOGGER.info("Yield logs file not found at %s; starting new yield log.", self._data_file)
-        except json.JSONDecodeError as e:
-            _LOGGER.error("JSON decode error reading yield logs from %s: %s; initializing empty log.", self._data_file, e)
         except Exception as e:
             _LOGGER.error("Error loading yield logs from %s: %s; initializing empty log.", self._data_file, e)
 
@@ -190,9 +188,7 @@ class YieldTracker:
 
     def _save_to_file(self) -> None:
         """Save the current logs to the JSON file."""
-        os.makedirs(os.path.dirname(self._data_file) or ".", exist_ok=True)
-        try:
-            with open(self._data_file, "w", encoding="utf-8") as f:
-                json.dump(self._logs, f, indent=2)
-        except Exception as e:
-            _LOGGER.error("Failed to write yield logs to %s: %s", self._data_file, e)
+        from .json_io import save_json
+
+        if not save_json(self._data_file, self._logs):
+            _LOGGER.error("Failed to write yield logs to %s", self._data_file)
