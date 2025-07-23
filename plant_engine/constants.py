@@ -19,3 +19,7 @@ DEFAULT_ENV: dict[str, float] = {
     "par_w_m2": 350,
     "wind_speed_m_s": 1.2,
 }
+
+# Dataset filenames used across the engine. Centralizing these paths helps
+# maintain consistency when loading data files and allows easy updates.
+ENV_SCORE_WEIGHTS_FILE = "environment_score_weights.json"

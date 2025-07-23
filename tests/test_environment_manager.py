@@ -29,6 +29,7 @@ from plant_engine.environment_manager import (
     evaluate_humidity_stress,
     evaluate_stress_conditions,
     score_environment,
+    score_environment_weighted,
     score_environment_series,
     score_environment_components,
     optimize_environment,
@@ -378,6 +379,7 @@ def test_normalize_environment_readings_aliases():
         "ec": 1.2,
     }
 
+
 def test_normalize_environment_readings_temp_fahrenheit():
     data = {"temperature_f": 86}
     result = normalize_environment_readings(data)
@@ -390,7 +392,9 @@ def test_normalize_environment_readings_unknown_key():
 
 
 def test_summarize_environment():
-    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling")
+    summary = summarize_environment(
+        {"temperature": 18, "humidity": 90}, "citrus", "seedling"
+    )
     assert summary["quality"] == "poor"
     assert summary["adjustments"]["temperature"] == "increase"
     assert summary["adjustments"]["humidity"] == "decrease"
@@ -458,7 +462,9 @@ def test_evaluate_stress_conditions():
 
 
 def test_score_environment_components():
-    scores = score_environment_components({"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling")
+    scores = score_environment_components(
+        {"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling"
+    )
     assert scores["temp_c"] == 100.0
     assert scores["humidity_pct"] == 100.0
 
@@ -487,3 +493,18 @@ def test_score_environment_series():
 
 def test_score_environment_series_empty():
     assert score_environment_series([], "citrus") == 0.0
+
+
+def test_score_environment_weighted():
+    current = {"temp_c": 22, "humidity_pct": 60, "light_ppfd": 250, "co2_ppm": 450}
+    unweighted = score_environment(current, "lettuce", "seedling")
+    weighted = score_environment_weighted(current, "lettuce", "seedling")
+    assert weighted != unweighted
+    assert 0 < weighted <= 100
+
+
+def test_score_environment_weighted_default():
+    current = {"temp_c": 24, "humidity_pct": 70, "light_ppfd": 260, "co2_ppm": 460}
+    assert score_environment_weighted(current, "unknown") == score_environment(
+        current, "unknown"
+    )

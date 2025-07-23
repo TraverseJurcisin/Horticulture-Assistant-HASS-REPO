@@ -1,0 +1,4 @@
+{
+  "default": {"temp_c": 0.25, "humidity_pct": 0.25, "light_ppfd": 0.25, "co2_ppm": 0.25},
+  "lettuce": {"temp_c": 0.3, "humidity_pct": 0.3, "light_ppfd": 0.3, "co2_ppm": 0.1}
+}

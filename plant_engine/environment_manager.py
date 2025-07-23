@@ -8,7 +8,7 @@ from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
-from . import ph_manager, water_quality
+from . import ph_manager, water_quality, constants
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
@@ -18,6 +18,7 @@ HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
+WEIGHTS_DATA_FILE = constants.ENV_SCORE_WEIGHTS_FILE
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -44,9 +45,7 @@ ENV_ALIASES = {
 
 # reverse mapping for constant time alias lookups
 _ALIAS_MAP: Dict[str, str] = {
-    alias: canonical
-    for canonical, aliases in ENV_ALIASES.items()
-    for alias in aliases
+    alias: canonical for canonical, aliases in ENV_ALIASES.items() for alias in aliases
 }
 
 
@@ -119,6 +118,7 @@ __all__ = [
     "get_environmental_targets",
     "recommend_environment_adjustments",
     "score_environment",
+    "score_environment_weighted",
     "score_environment_series",
     "score_environment_components",
     "suggest_environment_setpoints",
@@ -171,6 +171,7 @@ _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
+_WEIGHTS: Dict[str, Dict[str, float]] = load_dataset(WEIGHTS_DATA_FILE)
 
 
 def _lookup_stage_data(
@@ -318,7 +319,9 @@ class EnvironmentSummary:
             "metrics": self.metrics.as_dict(),
             "score": self.score,
             "stress": self.stress.as_dict(),
-            "water_quality": self.water_quality.as_dict() if self.water_quality else None,
+            "water_quality": (
+                self.water_quality.as_dict() if self.water_quality else None
+            ),
         }
 
 
@@ -490,6 +493,27 @@ def score_environment(
     return round(avg, 1)
 
 
+def score_environment_weighted(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> float:
+    """Return weighted environment score using dataset-defined weights."""
+
+    components = score_environment_components(current, plant_type, stage)
+    if not components:
+        return 0.0
+
+    weights = _WEIGHTS.get(normalize_key(plant_type), _WEIGHTS.get("default", {}))
+    total = 0.0
+    weight_sum = 0.0
+    for key, value in components.items():
+        weight = float(weights.get(key, 1.0))
+        total += value * weight
+        weight_sum += weight
+    if weight_sum == 0:
+        return score_environment(current, plant_type, stage)
+    return round(total / weight_sum, 1)
+
+
 def score_environment_series(
     series: Iterable[Mapping[str, float]],
     plant_type: str,
@@ -497,9 +521,7 @@ def score_environment_series(
 ) -> float:
     """Return the average environment score for a sequence of readings."""
 
-    scores = [
-        score_environment(reading, plant_type, stage) for reading in series
-    ]
+    scores = [score_environment(reading, plant_type, stage) for reading in series]
     if not scores:
         return 0.0
     return round(sum(scores) / len(scores), 1)
