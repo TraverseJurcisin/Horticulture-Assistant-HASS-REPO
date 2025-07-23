@@ -19,7 +19,9 @@ from plant_engine.environment_manager import (
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
-from plant_engine.growth_stage import get_stage_info
+from datetime import datetime
+from plant_engine.growth_stage import get_stage_info, predict_harvest_date
+from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.report import DailyReport
 
 PLANTS_DIR = "plants"
@@ -138,6 +140,20 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
         profile.get("plant_type", ""), profile.get("stage", "")
     )
 
+    harvest_date = None
+    start_date_str = profile.get("start_date")
+    if start_date_str:
+        try:
+            start_date = datetime.fromisoformat(start_date_str).date()
+            hd = predict_harvest_date(profile.get("plant_type", ""), start_date)
+            harvest_date = hd.isoformat() if hd else None
+        except Exception:
+            harvest_date = None
+
+    remaining_yield = estimate_remaining_yield(
+        plant_id, profile.get("plant_type", "")
+    )
+
     # Step 7: AI Recommendation
     report_obj = DailyReport(
         plant_id=plant_id,
@@ -156,6 +172,8 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
         lifecycle_stage=profile.get("stage", "unknown"),
         stage_info=stage_info,
         tags=profile.get("tags", []),
+        predicted_harvest_date=harvest_date,
+        remaining_yield_g=remaining_yield,
     )
     report = report_obj.as_dict()
 

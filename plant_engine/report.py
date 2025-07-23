@@ -25,6 +25,8 @@ class DailyReport:
     lifecycle_stage: str
     stage_info: Dict[str, Any]
     tags: List[str]
+    predicted_harvest_date: str | None = None
+    remaining_yield_g: float | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return the dataclass as a serializable dictionary."""

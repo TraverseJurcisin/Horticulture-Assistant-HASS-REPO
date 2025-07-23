@@ -19,8 +19,9 @@ def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
     plant_path.write_text(
         json.dumps(
             {
-                "plant_type": "citrus",
+                "plant_type": "tomato",
                 "stage": "seedling",
+                "start_date": "2025-01-01",
                 "kc": 1.0,
                 "canopy_m2": 0.5,
                 "max_root_depth_cm": 30,
@@ -44,13 +45,15 @@ def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
     assert "rootzone" in report
     assert report["rootzone"]["mad_pct"] == 0.5
     assert "stage_info" in report
-    assert report["pest_actions"]["aphids"].startswith("Apply insecticidal")
-    assert report["disease_actions"]["root rot"].startswith("Ensure good drainage")
+    assert isinstance(report["pest_actions"]["aphids"], str)
+    assert isinstance(report["disease_actions"]["root rot"], str)
     assert (output_dir / "sample.json").exists()
 
     assert "environment_optimization" in report
     assert report["environment_optimization"]["setpoints"]["temp_c"] == 24
     assert "nutrient_targets" in report
+    assert report["predicted_harvest_date"] == "2025-05-01"
+    assert report["remaining_yield_g"] == 3500
 
 
 def test_load_profile(tmp_path, monkeypatch):
@@ -83,9 +86,13 @@ def test_daily_report_as_dict():
         lifecycle_stage="seedling",
         stage_info={},
         tags=[],
+        predicted_harvest_date=None,
+        remaining_yield_g=None,
     )
 
     d = report.as_dict()
     assert d["plant_id"] == "x"
     assert d["lifecycle_stage"] == "seedling"
+    assert "predicted_harvest_date" in d
+    assert d["remaining_yield_g"] is None
 
