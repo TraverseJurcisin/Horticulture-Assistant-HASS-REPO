@@ -5,6 +5,7 @@ from plant_engine.growth_stage import (
     get_stage_info,
     get_stage_duration,
     estimate_stage_from_age,
+    estimate_stage_from_date,
     predict_harvest_date,
     stage_progress,
     days_until_harvest,
@@ -77,4 +78,14 @@ def test_predict_next_stage_date():
     assert (
         predict_next_stage_date("unknown", "seedling", stage_start) is None
     )
+
+
+def test_estimate_stage_from_date():
+    start = date(2025, 1, 1)
+    cur = date(2025, 1, 15)
+    assert estimate_stage_from_date("tomato", start, cur) == "seedling"
+
+    with pytest.raises(ValueError):
+        estimate_stage_from_date("tomato", cur, start)
+
 

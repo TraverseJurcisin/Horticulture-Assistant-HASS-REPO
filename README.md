@@ -261,6 +261,8 @@ or incomplete and should only be used as a starting point for your own research.
   pruning tips loaded from `pruning_guidelines.json`.
 - **Pruning Schedule Planning**: Use `get_pruning_interval` and `next_pruning_date`
   to determine when each plant should be pruned based on `pruning_intervals.json`.
+- **Fertigation Intervals**: `get_fertigation_interval` and `next_fertigation_date`
+  provide recommended application spacing using `fertigation_intervals.json`.
 - **Beneficial Insect Suggestions**: Daily reports list natural predators for
   observed pests using `beneficial_insects.json`.
 - **Biological Control Helper**: `recommend_biological_controls` suggests

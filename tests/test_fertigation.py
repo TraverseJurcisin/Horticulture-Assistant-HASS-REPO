@@ -1,4 +1,5 @@
 import pytest
+from datetime import date
 from plant_engine.fertigation import (
     recommend_fertigation_schedule,
     recommend_fertigation_with_water,
@@ -12,6 +13,8 @@ from plant_engine.fertigation import (
     recommend_nutrient_mix_with_cost_breakdown,
     generate_fertigation_plan,
     calculate_mix_nutrients,
+    get_fertigation_interval,
+    next_fertigation_date,
 )
 
 
@@ -302,4 +305,17 @@ def test_grams_to_ppm_invalid():
         grams_to_ppm(1.0, 0.0, 1.0)
     with pytest.raises(ValueError):
         grams_to_ppm(1.0, 1.0, 0.0)
+
+
+def test_get_fertigation_interval():
+    assert get_fertigation_interval("tomato", "vegetative") == 2
+    assert get_fertigation_interval("lettuce") == 1
+    assert get_fertigation_interval("unknown") is None
+
+
+def test_next_fertigation_date():
+    last = date(2025, 1, 1)
+    expected = date(2025, 1, 3)
+    assert next_fertigation_date("tomato", "vegetative", last) == expected
+    assert next_fertigation_date("unknown", None, last) is None
 
