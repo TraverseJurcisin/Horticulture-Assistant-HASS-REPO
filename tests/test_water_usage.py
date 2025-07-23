@@ -25,3 +25,12 @@ def test_estimate_area_use():
 
     with pytest.raises(ValueError):
         water_usage.estimate_area_use("lettuce", "vegetative", -1)
+
+
+def test_estimate_cycle_use():
+    total = water_usage.estimate_cycle_use("lettuce", area_m2=1.0)
+    assert total == pytest.approx(192.0)
+
+    assert water_usage.estimate_cycle_use("unknown") == 0.0
+    with pytest.raises(ValueError):
+        water_usage.estimate_cycle_use("lettuce", area_m2=-1)
