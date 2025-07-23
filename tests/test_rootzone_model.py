@@ -1,6 +1,7 @@
 from plant_engine.rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
+    calculate_remaining_water,
     get_soil_parameters,
     RootZone,
 )
@@ -43,4 +44,16 @@ def test_estimate_water_capacity_texture():
     result = estimate_water_capacity(10, area_cm2=100, texture="loam")
     assert result.total_available_water_ml == 250.0
     assert result.mad_pct == 0.45
+
+
+def test_calculate_remaining_water():
+    rz = estimate_water_capacity(10, area_cm2=100)
+    remaining = calculate_remaining_water(rz, 150.0, irrigation_ml=50.0, et_ml=25.0)
+    assert remaining == 175.0
+
+
+def test_calculate_remaining_water_clamped():
+    rz = estimate_water_capacity(10, area_cm2=100)
+    remaining = calculate_remaining_water(rz, 400.0, irrigation_ml=50.0, et_ml=10.0)
+    assert remaining == rz.total_available_water_ml
 
