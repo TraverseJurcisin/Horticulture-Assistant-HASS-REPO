@@ -138,6 +138,7 @@ Key reference datasets reside in the `data/` directory:
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
 - `micronutrient_guidelines.json` – Fe/Mn/Zn/B/Cu/Mo levels across stages
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
+- `disease_prevention.json` – cultural practices to prevent common diseases
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water

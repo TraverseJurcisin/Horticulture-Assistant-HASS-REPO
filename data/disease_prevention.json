@@ -1,0 +1,38 @@
+{
+  "citrus": {
+    "citrus greening": "Use disease-free seedlings and control psyllids.",
+    "root rot": "Plant in well-drained soil and avoid overwatering."
+  },
+  "tomato": {
+    "blight": "Rotate crops yearly and avoid wet foliage.",
+    "powdery mildew": "Ensure good air circulation and lower humidity."
+  },
+  "lettuce": {
+    "downy mildew": "Provide ample spacing and water early in the day.",
+    "lettuce drop": "Use clean transplants and remove plant debris."
+  },
+  "strawberry": {
+    "powdery mildew": "Plant resistant varieties and reduce humidity.",
+    "botrytis": "Improve airflow and remove dead berries."
+  },
+  "spinach": {
+    "downy mildew": "Use resistant cultivars and irrigate at soil level.",
+    "leaf spot": "Avoid overhead watering and remove infected leaves."
+  },
+  "cucumber": {
+    "powdery mildew": "Plant in full sun and space plants properly.",
+    "bacterial wilt": "Control cucumber beetles and remove infected vines."
+  },
+  "pepper": {
+    "powdery mildew": "Maintain low humidity and provide air movement.",
+    "bacterial spot": "Use certified seed and avoid working when leaves are wet."
+  },
+  "arugula": {
+    "downy mildew": "Rotate crops and avoid excessive moisture.",
+    "leaf spot": "Promote airflow and remove debris."
+  },
+  "blueberry": {
+    "mummy berry": "Rake and destroy mummified fruit to break the cycle.",
+    "botrytis": "Prune regularly to increase airflow."
+  }
+}
