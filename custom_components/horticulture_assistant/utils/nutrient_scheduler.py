@@ -14,17 +14,12 @@ except ImportError:
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
+from plant_engine.stage_factors import get_stage_factor
 from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
-# Default multipliers for nutrient targets by lifecycle stage
-STAGE_MULTIPLIERS = {
-    "seedling": 0.5,
-    "vegetative": 1.0,
-    "flowering": 1.2,
-    "fruiting": 1.1,
-}
+# Stage nutrient multipliers now loaded from dataset
 
 # Map common stage shorthand to formal stage names
 STAGE_SYNONYMS = {
@@ -141,11 +136,9 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> dict:
                         _LOGGER.warning("Invalid nutrient factor in profile for stage '%s'; defaulting to 1.0", stage_key)
                     break
     if stage_multiplier == 1.0:
-        if stage_key in STAGE_MULTIPLIERS:
-            stage_multiplier = STAGE_MULTIPLIERS[stage_key]
-        else:
-            if stage_key not in ("unknown", ""):
-                _LOGGER.info("No predefined nutrient multiplier for stage '%s'; using 1.0", stage_key)
+        stage_multiplier = get_stage_factor(stage_key)
+        if stage_multiplier == 1.0 and stage_key not in ("unknown", ""):
+            _LOGGER.info("No predefined nutrient multiplier for stage '%s'; using 1.0", stage_key)
     # Log stage-based adjustment
     if stage_multiplier != 1.0:
         _LOGGER.info("Applying stage multiplier for '%s': %sx to all nutrient targets", stage_key, stage_multiplier)

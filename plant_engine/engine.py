@@ -18,6 +18,7 @@ from plant_engine.environment_manager import (
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.pest_manager import recommend_treatments as recommend_pest_treatments
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
+from plant_engine.stage_factors import get_stage_factor
 from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
 
@@ -58,13 +59,6 @@ def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
         mapped["photoperiod_hours"] = env["photoperiod_hours"]
     return mapped
 
-# Basic multipliers to scale nutrient recommendations by growth stage
-STAGE_MULTIPLIERS = {
-    "seedling": 0.5,
-    "vegetative": 1.0,
-    "flowering": 1.2,
-    "fruiting": 1.1,
-}
 
 def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     """Run a full daily processing cycle for a plant profile."""
@@ -121,7 +115,7 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     )
 
     stage_name = str(profile.get("stage", "")).lower()
-    stage_mult = STAGE_MULTIPLIERS.get(stage_name, 1.0)
+    stage_mult = get_stage_factor(stage_name)
     nutrient_targets = {
         n: round(v * stage_mult, 2) for n, v in guidelines.items()
     } if guidelines else {}

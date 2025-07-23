@@ -139,6 +139,7 @@ Key reference datasets reside in the `data/` directory:
 - `environment_guidelines.json` – optimal temperature, humidity and light by crop
 - `nutrient_guidelines.json` – recommended N‑P‑K levels across stages
 - `micronutrient_guidelines.json` – Fe/Mn/Zn/B/Cu/Mo levels across stages
+- `nutrient_stage_factors.json` – multipliers for adjusting nutrient targets by stage
 - `disease_guidelines.json` and `pest_guidelines.json` – treatment references
 - `disease_prevention.json` – cultural practices to prevent common diseases
 - `pest_thresholds.json` – action thresholds for common pests
