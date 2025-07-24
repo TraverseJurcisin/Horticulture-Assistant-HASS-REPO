@@ -226,6 +226,7 @@ from .water_usage import (
     estimate_stage_total_use,
     estimate_cycle_total_use,
 )
+from .water_costs import get_water_cost_rate, estimate_water_cost
 from .toxicity_manager import (
     list_supported_plants as list_toxicity_plants,
     get_toxicity_thresholds,
@@ -469,4 +470,6 @@ __all__ = [
     "STAGE_MULTIPLIERS",
     "get_stage_multiplier",
     "DEFAULT_ENV",
+    "get_water_cost_rate",
+    "estimate_water_cost",
 ]

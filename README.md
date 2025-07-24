@@ -197,6 +197,7 @@ Key reference datasets reside in the `data/` directory:
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `emitter_flow_rates.json` – typical emitter flow rates (L/h) for irrigation time estimates
 - `hvac_energy_coefficients.json` – kWh usage per degree-day for heating and cooling
+- `water_costs.json` – water cost per liter by region used for irrigation budgeting
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `foliar_feed_intervals.json` – suggested days between foliar applications
 - `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
@@ -282,6 +283,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Irrigation Efficiency**: `adjust_irrigation_for_efficiency` scales volumes
   based on delivery method using `irrigation_efficiency.json`.
 - **Irrigation Duration Estimate**: `estimate_irrigation_time` uses `emitter_flow_rates.json` to predict how long a watering event will take.
+- **Irrigation Cost Estimate**: `estimate_water_cost` multiplies applied volume by the regional rate from `water_costs.json`.
 - **Irrigation Schedule Efficiency**: `generate_irrigation_schedule` accepts a
   `method` parameter to automatically apply those efficiency factors.
 - **Cycle Irrigation Plan**: `generate_cycle_irrigation_plan` returns stage
