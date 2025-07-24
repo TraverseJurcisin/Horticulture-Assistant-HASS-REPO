@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .utils import load_dataset
+from .utils import load_dataset, list_dataset_entries
 
 DATA_FILE = "nutrient_uptake.json"
 
@@ -20,7 +20,7 @@ __all__ = [
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with uptake data."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_daily_uptake(plant_type: str, stage: str) -> Dict[str, float]:

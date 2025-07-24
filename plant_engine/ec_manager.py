@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Tuple
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "ec_guidelines.json"
 
@@ -24,7 +24,7 @@ __all__ = [
 
 def list_supported_plants() -> list[str]:
     """Return plant types with EC guidelines."""
-    return sorted(_data().keys())
+    return list_dataset_entries(_data())
 
 
 def get_ec_range(plant_type: str, stage: str | None = None) -> Tuple[float, float] | None:

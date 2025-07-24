@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict, Iterable
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "gdd_requirements.json"
 
@@ -31,7 +31,7 @@ def calculate_gdd(temp_min_c: float, temp_max_c: float, base_temp_c: float = 10.
 
 def list_supported_plants() -> list[str]:
     """Return plant types with GDD data."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_stage_gdd_requirement(plant_type: str, stage: str) -> int | None:

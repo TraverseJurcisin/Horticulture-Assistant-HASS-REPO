@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Iterable, Tuple
 
-from .utils import load_dataset
+from .utils import load_dataset, list_dataset_entries
 
 DATA_FILE = "nutrient_availability_ph.json"
 
@@ -23,7 +23,7 @@ Range = Tuple[float, float]
 @lru_cache(maxsize=None)
 def list_supported_nutrients() -> list[str]:
     """Return nutrient codes with availability data."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 @lru_cache(maxsize=None)
