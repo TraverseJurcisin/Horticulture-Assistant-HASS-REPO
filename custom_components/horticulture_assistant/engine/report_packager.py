@@ -4,24 +4,34 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import load_plant_profile
+from custom_components.horticulture_assistant.utils.plant_profile_loader import \
+    load_plant_profile
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def _load_log(log_path):
     try:
-        with open(log_path, 'r', encoding='utf-8') as f:
+        with open(log_path, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         _LOGGER.warning("Failed to read %s: %s", log_path, e)
         return []
 
+
 def _filter_last_24h(entries):
     now = datetime.now(timezone.utc)
     threshold = now - timedelta(days=1)
-    return [e for e in entries if 'timestamp' in e and datetime.fromisoformat(e['timestamp']) >= threshold]
+    return [
+        e
+        for e in entries
+        if "timestamp" in e and datetime.fromisoformat(e["timestamp"]) >= threshold
+    ]
 
-def build_daily_report(plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports") -> dict:
+
+def build_daily_report(
+    plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
+) -> dict:
     plant_dir = Path(base_path) / plant_id
     report = {
         "plant_id": plant_id,
@@ -32,12 +42,15 @@ def build_daily_report(plant_id: str, base_path: str = "plants", output_path: st
         "sensor_summary": {},
         "visual_summary": {},
         "yield": None,
-        "timestamp": datetime.now(timezone.utc).isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
     # Load profile and current thresholds
     profile = load_plant_profile(plant_id, base_path)
-    profile_data = profile.get("profile_data", {})
+    if isinstance(profile, dict):
+        profile_data = profile.get("profile_data", {})
+    else:
+        profile_data = profile.profile_data
     stage_data = profile_data.get("stage", {})
     thresholds = profile_data.get("thresholds", {})
 
@@ -57,7 +70,7 @@ def build_daily_report(plant_id: str, base_path: str = "plants", output_path: st
         report["irrigation_summary"] = {
             "events": len(irrigation),
             "total_volume_ml": total_volume,
-            "methods": list({e.get("method") for e in irrigation})
+            "methods": list({e.get("method") for e in irrigation}),
         }
 
     # Nutrient Summary
@@ -89,9 +102,11 @@ def build_daily_report(plant_id: str, base_path: str = "plants", output_path: st
 
     # Ensure output path exists
     Path(output_path).mkdir(parents=True, exist_ok=True)
-    out_file = Path(output_path) / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
+    out_file = (
+        Path(output_path) / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
+    )
     try:
-        with open(out_file, 'w', encoding='utf-8') as f:
+        with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2)
         _LOGGER.info("Saved daily report for %s to %s", plant_id, out_file)
     except Exception as e:

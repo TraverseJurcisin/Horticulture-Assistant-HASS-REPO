@@ -48,6 +48,14 @@ def test_recommend_solution_ph_adjustment():
     assert ml == 100.0
 
 
+def test_recommend_ph_correction():
+    result = ph_manager.recommend_ph_correction(7.0, "citrus", None, 10)
+    assert result == ("ph_down", 100.0)
+
+    # No correction when within range
+    assert ph_manager.recommend_ph_correction(6.0, "citrus", None, 10) is None
+
+
 def test_medium_ph_functions():
     soil = ph_manager.get_medium_ph_range("soil")
     assert soil == [6.2, 7.0]
@@ -56,4 +64,3 @@ def test_medium_ph_functions():
     assert ph_manager.recommend_medium_ph_adjustment(6.5, "soil") is None
     assert ph_manager.recommended_ph_for_medium("coco") == 6.0
     assert ph_manager.get_medium_ph_range("unknown") == []
-

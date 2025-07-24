@@ -8,9 +8,28 @@ default to speed up loading in production.
 
 import json
 import logging
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, Dict
 
 _LOGGER = logging.getLogger(__name__)
+
+
+@dataclass(slots=True)
+class PlantProfile:
+    """Loaded plant profile data."""
+
+    plant_id: str
+    profile_data: Dict[str, Dict[str, Any]]
+
+    def as_dict(self) -> Dict[str, Any]:
+        """Return profile data as a plain dictionary."""
+        return {"plant_id": self.plant_id, "profile_data": self.profile_data}
+
+    # Provide basic mapping-style access for backward compatibility
+    def __getitem__(self, item: str) -> Any:
+        return self.as_dict()[item]
+
 
 def load_plant_profile(
     plant_id: str,
@@ -80,7 +99,10 @@ def load_plant_profile(
                 continue
             # Ensure the parsed data is a dictionary (profile sections should be dicts)
             if not isinstance(data, dict):
-                _LOGGER.warning("Profile file %s did not contain a JSON object; skipping.", file_path)
+                _LOGGER.warning(
+                    "Profile file %s did not contain a JSON object; skipping.",
+                    file_path,
+                )
                 continue
             # Use the filename (without .json extension) as the key in profile_data
             key = file_path.stem
@@ -92,13 +114,13 @@ def load_plant_profile(
 
     # If no profile sections were loaded, log an error and return empty
     if count_loaded == 0:
-        _LOGGER.error("No profile data loaded for plant '%s' (no valid profile files found).", plant_id)
+        _LOGGER.error(
+            "No profile data loaded for plant '%s' (no valid profile files found).",
+            plant_id,
+        )
         return {}
 
     # Log summary of modules loaded
     _LOGGER.info("Loaded %d profile modules for plant '%s'.", count_loaded, plant_id)
 
-    return {
-        "plant_id": plant_id,
-        "profile_data": profile_data
-    }
+    return PlantProfile(plant_id=str(plant_id), profile_data=profile_data)
