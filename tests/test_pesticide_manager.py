@@ -1,6 +1,7 @@
 import datetime
 
 from plant_engine.pesticide_manager import (
+    get_pesticide_info,
     get_withdrawal_days,
     earliest_harvest_date,
     adjust_harvest_date,
@@ -14,6 +15,12 @@ def test_get_withdrawal_days_known():
 
 def test_get_withdrawal_days_unknown():
     assert get_withdrawal_days("foo") is None
+
+
+def test_get_pesticide_info():
+    info = get_pesticide_info("spinosad")
+    assert info == {"withdrawal_days": 1, "toxicity": "low"}
+    assert get_pesticide_info("foo") is None
 
 
 def test_earliest_harvest_date():

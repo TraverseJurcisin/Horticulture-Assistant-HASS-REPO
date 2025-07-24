@@ -1,0 +1,7 @@
+{
+  "imidacloprid": {"withdrawal_days": 7, "toxicity": "moderate"},
+  "spinosad": {"withdrawal_days": 1, "toxicity": "low"},
+  "pyrethrin": {"withdrawal_days": 0, "toxicity": "low"},
+  "sulfur": {"withdrawal_days": 0, "toxicity": "low"},
+  "copper_sulfate": {"withdrawal_days": 2, "toxicity": "high"}
+}
