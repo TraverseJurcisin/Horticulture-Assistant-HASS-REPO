@@ -1,9 +1,10 @@
 """pH management utilities."""
+
 from __future__ import annotations
 
 from typing import Dict, Iterable
 
-from .utils import load_dataset, list_dataset_entries, stage_value
+from .utils import list_dataset_entries, load_dataset, stage_value
 
 DATA_FILE = "ph_guidelines.json"
 ADJUST_FILE = "ph_adjustment_factors.json"
@@ -21,6 +22,7 @@ __all__ = [
     "recommended_ph_setpoint",
     "estimate_ph_adjustment_volume",
     "recommend_solution_ph_adjustment",
+    "recommend_ph_correction",
     "get_medium_ph_range",
     "recommend_medium_ph_adjustment",
     "recommended_ph_for_medium",
@@ -121,6 +123,38 @@ def recommend_solution_ph_adjustment(
     if target is None:
         return None
     return estimate_ph_adjustment_volume(current_ph, target, volume_l, product)
+
+
+def recommend_ph_correction(
+    current_ph: float,
+    plant_type: str,
+    stage: str | None,
+    volume_l: float,
+    *,
+    up_product: str = "ph_up",
+    down_product: str = "ph_down",
+) -> tuple[str, float] | None:
+    """Return fertilizer product and volume to correct solution pH.
+
+    This helper selects ``up_product`` when the current pH is below the
+    recommended range and ``down_product`` when it is above. ``None`` is
+    returned if the pH is already within range or the adjustment volume cannot
+    be calculated.
+    """
+
+    target = recommended_ph_setpoint(plant_type, stage)
+    if target is None:
+        return None
+
+    delta = target - current_ph
+    if abs(delta) < 0.01:
+        return None
+
+    product = up_product if delta > 0 else down_product
+    volume = estimate_ph_adjustment_volume(current_ph, target, volume_l, product)
+    if volume is None:
+        return None
+    return product, volume
 
 
 def get_medium_ph_range(medium: str) -> list[float]:
