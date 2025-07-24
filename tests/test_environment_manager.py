@@ -54,6 +54,7 @@ from plant_engine.environment_manager import (
     summarize_environment,
     summarize_environment_series,
     calculate_environment_metrics_series,
+    average_environment_readings,
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
@@ -514,6 +515,16 @@ def test_normalize_environment_readings_soil_temp_fahrenheit():
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})
     assert result == {"foo": 1.0}
+
+
+def test_average_environment_readings():
+    series = [
+        {"temp_c": 20, "humidity_pct": 60},
+        {"temperature": 22, "humidity": 70},
+    ]
+    avg = average_environment_readings(series)
+    assert avg["temp_c"] == pytest.approx(21)
+    assert avg["humidity_pct"] == pytest.approx(65)
 
 
 def test_summarize_environment():
