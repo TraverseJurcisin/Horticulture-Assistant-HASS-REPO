@@ -16,6 +16,7 @@ __all__ = [
     "calculate_soil_deficiencies",
     "calculate_soil_surplus",
     "score_soil_nutrients",
+    "calculate_soil_balance",
 ]
 
 
@@ -86,3 +87,23 @@ def score_soil_nutrients(levels: Mapping[str, float], plant_type: str) -> float:
     if count == 0:
         return 0.0
     return round((total / count) * 100, 1)
+
+
+def calculate_soil_balance(levels: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+    """Return ratio of current to target soil nutrient levels."""
+
+    targets = get_soil_targets(plant_type)
+    if not targets:
+        return {}
+
+    balance: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        balance[nutrient] = round(current / target, 2)
+
+    return balance
