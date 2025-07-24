@@ -4,6 +4,7 @@ from plant_engine.soil_manager import (
     calculate_soil_deficiencies,
     calculate_soil_surplus,
     score_soil_nutrients,
+    calculate_soil_balance,
 )
 
 
@@ -36,3 +37,8 @@ def test_score_soil_nutrients():
     poor = score_soil_nutrients({"N": 20, "P": 5, "K": 20}, "citrus")
     assert good > poor
     assert good >= 90
+
+
+def test_calculate_soil_balance():
+    balance = calculate_soil_balance({"N": 40, "P": 15, "K": 45}, "citrus")
+    assert balance == {"N": 0.5, "P": 0.5, "K": 0.5}
