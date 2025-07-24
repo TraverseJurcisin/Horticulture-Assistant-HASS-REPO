@@ -11,6 +11,7 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     generate_irrigation_schedule_with_runtime,
+    generate_cycle_irrigation_plan,
     adjust_irrigation_for_efficiency,
     estimate_irrigation_time,
     generate_env_irrigation_schedule,
@@ -273,4 +274,13 @@ def test_generate_irrigation_schedule_with_runtime():
     assert schedule[1]["volume_ml"] == 0.0
     runtime = estimate_irrigation_time(80.0, "drip", emitters=2)
     assert schedule[2]["runtime_h"] == pytest.approx(runtime, rel=1e-2)
+
+
+def test_generate_cycle_irrigation_plan():
+    plan = generate_cycle_irrigation_plan("lettuce")
+    assert "vegetative" in plan
+    veg = plan["vegetative"]
+    # verify at least one scheduled volume and it is positive
+    assert veg
+    assert veg[1] > 0
 

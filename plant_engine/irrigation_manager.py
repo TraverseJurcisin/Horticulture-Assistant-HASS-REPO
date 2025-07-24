@@ -27,6 +27,7 @@ __all__ = [
     "get_rain_capture_efficiency",
     "get_recommended_interval",
     "estimate_irrigation_time",
+    "generate_cycle_irrigation_plan",
     "IrrigationRecommendation",
 ]
 
@@ -450,3 +451,30 @@ def generate_irrigation_schedule_with_runtime(
         result[day] = {"volume_ml": volume, "runtime_h": runtime}
 
     return result
+
+
+def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float]]:
+    """Return irrigation volumes for each growth stage of ``plant_type``.
+
+    The plan combines daily irrigation targets with stage durations and
+    recommended irrigation intervals. Volumes are expressed in milliliters
+    per plant for each scheduled irrigation event.
+    """
+
+    from .growth_stage import list_growth_stages, get_stage_duration
+
+    plan: Dict[str, Dict[int, float]] = {}
+    for stage in list_growth_stages(plant_type):
+        daily_ml = get_daily_irrigation_target(plant_type, stage)
+        days = get_stage_duration(plant_type, stage)
+        if not days or daily_ml <= 0:
+            continue
+        interval = get_recommended_interval(plant_type, stage) or 1
+        day = 1
+        stage_plan: Dict[int, float] = {}
+        while day <= days:
+            stage_plan[day] = round(daily_ml * interval, 1)
+            day += interval
+        plan[stage] = stage_plan
+
+    return plan
