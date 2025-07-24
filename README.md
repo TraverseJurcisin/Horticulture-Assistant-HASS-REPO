@@ -270,6 +270,8 @@ or incomplete and should only be used as a starting point for your own research.
 - **Comprehensive Fertigation**: `recommend_precise_fertigation` adjusts for
   existing water nutrient levels, can include micronutrients, and returns cost
   estimates along with any water quality warnings.
+- **Quick NPK Mix**: `build_simple_npk_mix` calculates grams of each fertilizer
+  needed to hit target N, P and K concentrations for a given solution volume.
 - **Transpiration Averages**: `compute_transpiration_series` calculates mean ET
   and water loss across multiple environment readings. A new `weights`
   parameter lets you apply weighted averages when readings span different

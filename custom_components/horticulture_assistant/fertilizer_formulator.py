@@ -72,6 +72,7 @@ MOLAR_MASS_CONVERSIONS = {
 
 def convert_guaranteed_analysis(ga: dict) -> dict:
     """Return GA with P₂O₅/K₂O converted to elemental P and K."""
+
     result: dict[str, float] = {}
     for k, v in ga.items():
         if v is None:
@@ -80,11 +81,19 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
             val = float(v)
         except (TypeError, ValueError):
             continue
-        if k in MOLAR_MASS_CONVERSIONS:
-            element, factor = MOLAR_MASS_CONVERSIONS[k]
+
+        key = k
+        if "P2O5" in k:
+            key = "P2O5"
+        elif "K2O" in k:
+            key = "K2O"
+
+        if key in MOLAR_MASS_CONVERSIONS:
+            element, factor = MOLAR_MASS_CONVERSIONS[key]
             result[element] = result.get(element, 0) + val * factor
         else:
-            result[k] = result.get(k, 0) + val
+            result[key] = result.get(key, 0) + val
+
     return result
 
 
@@ -215,6 +224,40 @@ def calculate_mass_for_target_ppm(
     fraction = ga[nutrient]
     grams = (target_ppm * volume_l) / (fraction * 1000)
     return round(grams, 3)
+
+
+def build_simple_npk_mix(
+    targets: Mapping[str, float], fertilizers: Mapping[str, str], volume_l: float
+) -> Dict[str, float]:
+    """Return grams of each fertilizer to hit NPK targets.
+
+    Parameters
+    ----------
+    targets : Mapping[str, float]
+        Desired ppm values for ``"N"``, ``"P"`` and ``"K"``.
+    fertilizers : Mapping[str, str]
+        Mapping of nutrient codes to fertilizer product IDs.
+    volume_l : float
+        Total solution volume in liters.
+
+    Returns
+    -------
+    Dict[str, float]
+        Mapping of fertilizer IDs to grams required for the mix.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    schedule: Dict[str, float] = {}
+    for nutrient in ("N", "P", "K"):
+        ppm = targets.get(nutrient)
+        fert = fertilizers.get(nutrient)
+        if ppm is None or ppm <= 0 or fert is None:
+            continue
+        grams = calculate_mass_for_target_ppm(fert, nutrient, ppm, volume_l)
+        schedule[fert] = schedule.get(fert, 0.0) + grams
+    return schedule
 
 
 def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> float:
@@ -538,6 +581,7 @@ __all__ = [
     "find_products",
     "calculate_mix_ppm",
     "get_application_method",
+    "build_simple_npk_mix",
 ]
 
 

@@ -244,3 +244,25 @@ def test_get_application_method():
     assert get_application_method("magriculture") == "foliar"
     assert get_application_method("unknown") is None
 
+
+def test_build_simple_npk_mix():
+    targets = {"N": 100, "P": 50, "K": 150}
+    ferts = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+    mix = fert_mod.build_simple_npk_mix(targets, ferts, 10)
+
+    # verify keys and positive grams
+    assert set(mix.keys()) == {
+        "foxfarm_grow_big",
+        "intrepid_granular_potash_0_0_60",
+    }
+    assert all(g > 0 for g in mix.values())
+
+
+def test_get_cheapest_product():
+    pid, cost = fert_mod.get_cheapest_product("N")
+    assert isinstance(pid, str) and cost > 0
+
