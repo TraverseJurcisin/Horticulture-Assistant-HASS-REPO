@@ -194,6 +194,7 @@ Key reference datasets reside in the `data/` directory:
 - `pesticide_withdrawal_days.json` – required wait time before harvest after pesticide use
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
   `plant_engine.wsda_lookup` for product N‑P‑K values
+- `products_index.jsonl` – compact summary of WSDA products for fast searches (use `wsda_product_index`)
 - `dataset_catalog.json` – short descriptions of the bundled datasets for quick reference
   Use `plant_engine.datasets.list_datasets()` to list available files and
   `get_dataset_description()` to read these summaries programmatically.
