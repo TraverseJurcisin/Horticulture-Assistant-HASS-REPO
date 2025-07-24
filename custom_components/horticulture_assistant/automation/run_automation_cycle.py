@@ -1,5 +1,10 @@
+"""Simple irrigation automation using local plant profiles."""
+
+from __future__ import annotations
+
 import logging
 from pathlib import Path
+from dataclasses import dataclass
 from datetime import datetime
 
 from .helpers import iter_profiles, append_json_log
@@ -8,6 +13,62 @@ from .helpers import iter_profiles, append_json_log
 ENABLE_AUTOMATION = False
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _irrigation_enabled(profile: dict) -> bool:
+    """Return ``True`` if irrigation automation is enabled for the profile."""
+
+    if profile.get("irrigation_enabled") is False:
+        return False
+    gen = profile.get("general")
+    if isinstance(gen, dict) and gen.get("irrigation_enabled") is False:
+        return False
+    acts = profile.get("actuators")
+    if isinstance(acts, dict):
+        return acts.get("irrigation_enabled", True)
+    return True
+
+
+def _get_moisture_threshold(profile: dict) -> float | None:
+    """Return soil moisture threshold value if defined."""
+
+    thresholds = profile.get("thresholds", {})
+    for key in ("soil_moisture_min", "soil_moisture_pct", "soil_moisture"):
+        if key in thresholds:
+            val = thresholds[key]
+            if isinstance(val, (list, tuple)):
+                val = val[0]
+            try:
+                return float(val)
+            except (TypeError, ValueError):
+                return None
+    return None
+
+
+def _get_current_moisture(profile: dict) -> float | None:
+    """Return latest soil moisture reading from profile data."""
+
+    data = {}
+    gen = profile.get("general")
+    if isinstance(gen, dict):
+        data = gen.get("latest_env", {}) or {}
+    if not data:
+        data = profile.get("latest_env", {})
+    for key in ("soil_moisture", "soil_moisture_pct", "moisture", "vwc"):
+        if key in data:
+            try:
+                return float(data[key])
+            except (TypeError, ValueError):
+                return None
+    return None
+
+
+@dataclass(slots=True)
+class MoistureInfo:
+    """Current reading and threshold for irrigation checks."""
+
+    current: float
+    threshold: float
 
 def run_automation_cycle(base_path: str = "plants") -> None:
     """
@@ -31,90 +92,50 @@ def run_automation_cycle(base_path: str = "plants") -> None:
         return
 
     for plant_id, profile_data in profiles:
-
-        # Check if irrigation is enabled for this plant
-        irrigation_enabled = True
-        if isinstance(profile_data.get("actuators"), dict):
-            irrigation_enabled = profile_data["actuators"].get("irrigation_enabled", True)
-        if not irrigation_enabled or profile_data.get("irrigation_enabled") is False or \
-           (isinstance(profile_data.get("general"), dict) and profile_data["general"].get("irrigation_enabled") is False):
-            _LOGGER.info("Irrigation is disabled in the profile for plant %s. Skipping irrigation check.", plant_id)
+        if not _irrigation_enabled(profile_data):
+            _LOGGER.info("Irrigation disabled for plant %s. Skipping.", plant_id)
             continue
 
-        # Get latest sensor data (especially soil moisture) for this plant
-        sensor_data = {}
-        if isinstance(profile_data.get("general"), dict):
-            sensor_data = profile_data["general"].get("latest_env", {}) or {}
-        if not sensor_data:
-            # Also allow top-level latest_env if profile might store it there
-            sensor_data = profile_data.get("latest_env", {})
-        if not sensor_data:
-            _LOGGER.warning("No latest sensor data found for plant %s. Skipping.", plant_id)
+        threshold = _get_moisture_threshold(profile_data)
+        current = _get_current_moisture(profile_data)
+        if threshold is None or current is None:
+            _LOGGER.error("Missing moisture data for plant %s. Skipping.", plant_id)
             continue
 
-        # Determine soil moisture threshold
-        thresholds = profile_data.get("thresholds", {})
-        threshold_value = None
-        if "soil_moisture_min" in thresholds:
-            threshold_value = thresholds["soil_moisture_min"]
-        elif "soil_moisture_pct" in thresholds:
-            threshold_value = thresholds["soil_moisture_pct"]
-        elif "soil_moisture" in thresholds:
-            threshold_value = thresholds["soil_moisture"]
-        else:
-            _LOGGER.error("No soil moisture threshold defined for plant %s. Skipping.", plant_id)
-            continue
+        info = MoistureInfo(current=current, threshold=threshold)
 
-        # Get current soil moisture reading from sensor_data
-        current_moisture = None
-        for key in ("soil_moisture", "soil_moisture_pct", "moisture", "vwc"):
-            if key in sensor_data:
-                current_moisture = sensor_data[key]
-                break
-        if current_moisture is None:
-            _LOGGER.error("No current soil moisture reading available for plant %s. Skipping.", plant_id)
-            continue
-
-        # Convert values to float for comparison
-        try:
-            current_val = float(current_moisture)
-        except (TypeError, ValueError):
-            _LOGGER.error("Invalid soil moisture value for plant %s: %s", plant_id, current_moisture)
-            continue
-        try:
-            if isinstance(threshold_value, (list, tuple)):
-                threshold_val = float(threshold_value[0])
-            else:
-                threshold_val = float(threshold_value)
-        except (TypeError, ValueError):
-            _LOGGER.error("Invalid threshold value for plant %s: %s", plant_id, threshold_value)
-            continue
-
-        # Compare moisture against threshold and take action
         triggered = False
-        if current_val < threshold_val:
-            _LOGGER.info("Soil moisture below threshold for plant %s (%.2f < %.2f). Triggering irrigation.", plant_id, current_val, threshold_val)
+        if info.current < info.threshold:
+            _LOGGER.info(
+                "Soil moisture below threshold for %s (%.2f < %.2f). Triggering irrigation.",
+                plant_id,
+                info.current,
+                info.threshold,
+            )
             try:
-                # Trigger the irrigation actuator for this plant
                 import custom_components.horticulture_assistant.automation.irrigation_actuator as irrigation_actuator
-                irrigation_actuator.trigger_irrigation_actuator(plant_id=plant_id, trigger=True, base_path=base_path)
-            except Exception as e:
-                _LOGGER.error("Failed to trigger irrigation actuator for plant %s: %s", plant_id, e)
+                irrigation_actuator.trigger_irrigation_actuator(
+                    plant_id=plant_id, trigger=True, base_path=base_path
+                )
+            except Exception as e:  # noqa: BLE001
+                _LOGGER.error(
+                    "Failed to trigger irrigation actuator for plant %s: %s", plant_id, e
+                )
             else:
                 triggered = True
         else:
-            _LOGGER.info("Soil moisture sufficient for plant %s (%.2f >= %.2f). No irrigation needed.", plant_id, current_val, threshold_val)
-            triggered = False
+            _LOGGER.info(
+                "Soil moisture sufficient for plant %s (%.2f >= %.2f).", plant_id, info.current, info.threshold
+            )
 
-        # Log the outcome to irrigation_log.json for the plant (append entry with timestamp)
         entry = {
             "timestamp": datetime.now().isoformat(),
-            "soil_moisture": current_val,
-            "threshold": threshold_val,
+            "soil_moisture": info.current,
+            "threshold": info.threshold,
             "triggered": triggered,
         }
         log_file = plants_dir / str(plant_id) / "irrigation_log.json"
         try:
             append_json_log(log_file, entry)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             _LOGGER.error("Failed to write irrigation log for plant %s: %s", plant_id, e)

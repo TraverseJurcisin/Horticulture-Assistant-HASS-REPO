@@ -4,6 +4,7 @@ from plant_engine.datasets import (
     search_datasets,
     list_datasets_by_category,
 )
+import plant_engine.datasets as datasets
 
 
 def test_list_datasets_contains_known():
@@ -65,3 +66,26 @@ def test_list_datasets_by_category():
     assert "fertilizers" in cats
     assert "fertilizers/fertilizer_products.json" in cats["fertilizers"]
     assert "nutrient_guidelines.json" in cats["root"]
+
+
+def test_catalog_custom_dir(tmp_path):
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    (data_dir / "a.json").write_text("{}")
+    (data_dir / "dataset_catalog.json").write_text('{"a.json": "A file"}')
+    cat = datasets.DatasetCatalog(base_dir=data_dir)
+    assert cat.list_datasets() == ["a.json"]
+    assert cat.get_description("a.json") == "A file"
+    assert cat.list_info()["a.json"] == "A file"
+    assert cat.search("file") == {"a.json": "A file"}
+    assert cat.list_by_category() == {"root": ["a.json"]}
+
+
+def test_catalog_refresh(tmp_path):
+    (tmp_path / "x.json").write_text("{}")
+    cat = datasets.DatasetCatalog(base_dir=tmp_path)
+    assert cat.list_datasets() == ["x.json"]
+    (tmp_path / "y.json").write_text("{}")
+    assert cat.list_datasets() == ["x.json"]
+    cat.refresh()
+    assert sorted(cat.list_datasets()) == ["x.json", "y.json"]
