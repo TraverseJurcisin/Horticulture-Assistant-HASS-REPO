@@ -356,3 +356,26 @@ def test_validate_fertigation_schedule():
     diag = validate_fertigation_schedule(schedule, 1.0, "tomato")
     assert "imbalances" in diag and diag["imbalances"]
     assert "toxicities" in diag and diag["toxicities"]
+
+
+def test_recommend_rootzone_fertigation():
+    from plant_engine.fertigation import recommend_rootzone_fertigation
+    from plant_engine.rootzone_model import RootZone
+
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+
+    volume, schedule = recommend_rootzone_fertigation(
+        "tomato",
+        "vegetative",
+        zone,
+        available_ml=80.0,
+        expected_et_ml=50.0,
+    )
+
+    assert volume > 0
+    assert schedule["N"] > 0

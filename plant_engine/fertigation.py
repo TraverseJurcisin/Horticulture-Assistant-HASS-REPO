@@ -247,6 +247,7 @@ __all__ = [
     "generate_cycle_fertigation_plan_with_cost",
     "optimize_fertigation_schedule",
     "recommend_precise_fertigation",
+    "recommend_rootzone_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
     "recommend_stock_solution_injection",
@@ -780,6 +781,45 @@ def recommend_precise_fertigation(
     diagnostics = validate_fertigation_schedule(schedule, volume_l, plant_type)
 
     return schedule, total, breakdown, warnings, diagnostics
+
+
+def recommend_rootzone_fertigation(
+    plant_type: str,
+    stage: str,
+    rootzone: "RootZone",
+    available_ml: float,
+    expected_et_ml: float,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> tuple[float, Dict[str, float]]:
+    """Return irrigation volume (mL) and fertilizer grams for the root zone.
+
+    This helper combines :func:`irrigation_manager.recommend_irrigation_volume`
+    with :func:`recommend_fertigation_schedule` to generate a fertigation plan
+    based on the current root zone status.
+    """
+
+    from .irrigation_manager import recommend_irrigation_volume
+
+    volume_ml = recommend_irrigation_volume(
+        rootzone,
+        available_ml,
+        expected_et_ml,
+    )
+
+    if volume_ml <= 0:
+        return 0.0, {}
+
+    schedule = recommend_fertigation_schedule(
+        plant_type,
+        stage,
+        volume_ml / 1000,
+        purity,
+        product=product,
+    )
+
+    return volume_ml, schedule
 
 
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
