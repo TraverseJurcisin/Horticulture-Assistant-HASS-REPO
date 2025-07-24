@@ -8,6 +8,8 @@ from plant_engine.pesticide_manager import (
     get_reentry_hours,
     earliest_reentry_time,
     calculate_reentry_window,
+    get_mode_of_action,
+    list_known_pesticides,
 )
 
 
@@ -66,4 +68,15 @@ def test_calculate_reentry_window():
     window = calculate_reentry_window(apps)
     expected = earliest_reentry_time("imidacloprid", apps[1][1])
     assert window == expected
+
+
+def test_get_mode_of_action():
+    assert get_mode_of_action("spinosad") == "spinosyn"
+    assert get_mode_of_action("unknown") is None
+
+
+def test_list_known_pesticides():
+    pesticides = list_known_pesticides()
+    assert "imidacloprid" in pesticides
+    assert "pyrethrin" in pesticides
 

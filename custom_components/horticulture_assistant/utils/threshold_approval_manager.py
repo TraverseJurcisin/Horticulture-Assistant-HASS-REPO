@@ -13,8 +13,6 @@ from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
-_LOGGER = logging.getLogger(__name__)
-
 
 def _load_json(path: str) -> Any:
     if not os.path.exists(path):
@@ -54,6 +52,8 @@ def _save_json(path: str, data: Any) -> None:
 
 
 def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
+    """Write updated ``pending`` mapping back to ``path`` preserving format."""
+
     if isinstance(original, list):
         data = list(pending.values())
     elif isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
