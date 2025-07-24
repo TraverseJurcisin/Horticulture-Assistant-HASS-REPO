@@ -152,6 +152,7 @@ Key reference datasets reside in the `data/` directory:
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
 - `pest_prevention.json` – cultural practices to deter common pests
+- `organic_pest_controls.json` – organic treatment options for common pests
 - `pest_resistance_ratings.json` – relative resistance scores (1‑5) by crop and pest
 - `disease_resistance_ratings.json` – relative resistance scores (1‑5) by crop and disease
 - `bioinoculant_guidelines.json` – microbial inoculant suggestions by crop

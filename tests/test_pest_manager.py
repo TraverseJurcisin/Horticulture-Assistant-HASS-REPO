@@ -83,3 +83,24 @@ def test_get_pest_resistance():
 
     assert get_pest_resistance("citrus", "aphids") == 3.0
     assert get_pest_resistance("citrus", "unknown") is None
+
+
+def test_get_organic_controls():
+    from plant_engine.pest_manager import (
+        get_organic_controls,
+        recommend_organic_controls,
+    )
+
+    controls = get_organic_controls("aphids")
+    assert "neem oil" in controls
+    assert get_organic_controls("unknown") == []
+
+    rec = recommend_organic_controls(["aphids", "unknown"])
+    assert "neem oil" in rec["aphids"]
+    assert rec["unknown"] == []
+
+
+def test_build_pest_management_plan_includes_organic():
+    plan = build_pest_management_plan("citrus", ["aphids"])
+    assert "organic" in plan["aphids"]
+    assert "neem oil" in plan["aphids"]["organic"]
