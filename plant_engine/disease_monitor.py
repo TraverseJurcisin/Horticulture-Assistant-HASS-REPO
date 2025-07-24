@@ -13,12 +13,14 @@ from . import environment_manager
 DATA_FILE = "disease_thresholds.json"
 MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
 RISK_DATA_FILE = "disease_risk_factors.json"
+SEVERITY_ACTIONS_FILE = "disease_severity_actions.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 # Recommended days between scouting events per plant stage
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
+_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -26,6 +28,7 @@ __all__ = [
     "assess_disease_pressure",
     "classify_disease_severity",
     "recommend_threshold_actions",
+    "get_severity_action",
     "estimate_disease_risk",
     "get_monitoring_interval",
     "next_monitor_date",
@@ -144,6 +147,12 @@ def generate_monitoring_schedule(
     return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
 
 
+def get_severity_action(level: str) -> str:
+    """Return recommended action for a severity ``level``."""
+
+    return _SEVERITY_ACTIONS.get(level.lower(), "")
+
+
 @dataclass
 class DiseaseReport:
     """Consolidated disease monitoring report."""
@@ -152,6 +161,7 @@ class DiseaseReport:
     thresholds_exceeded: Dict[str, bool]
     treatments: Dict[str, str]
     prevention: Dict[str, str]
+    severity_actions: Dict[str, str]
 
     def as_dict(self) -> Dict[str, object]:
         return asdict(self)
@@ -163,10 +173,12 @@ def generate_disease_report(plant_type: str, observations: Mapping[str, int]) ->
     thresholds = assess_disease_pressure(plant_type, observations)
     treatments = recommend_threshold_actions(plant_type, observations)
     prevention = recommend_prevention(plant_type, observations.keys())
+    severity_actions = {d: get_severity_action(lvl) for d, lvl in severity.items()}
     report = DiseaseReport(
         severity=severity,
         thresholds_exceeded=thresholds,
         treatments=treatments,
         prevention=prevention,
+        severity_actions=severity_actions,
     )
     return report.as_dict()
