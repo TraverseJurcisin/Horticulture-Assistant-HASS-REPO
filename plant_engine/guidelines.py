@@ -32,6 +32,8 @@ class GuidelineSummary:
     pest_guidelines: Dict[str, str]
     disease_guidelines: Dict[str, str]
     disease_prevention: Dict[str, str]
+    pest_prevention: Dict[str, str] = dataclass_field(default_factory=dict)
+    ipm_guidelines: Dict[str, str] = dataclass_field(default_factory=dict)
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
     bioinoculants: List[str] = dataclass_field(default_factory=list)
@@ -63,6 +65,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         nutrients=nutrient_manager.get_recommended_levels(plant_type, stage) if stage else {},
         micronutrients=micro_manager.get_recommended_levels(plant_type, stage) if stage else {},
         pest_guidelines=pest_manager.get_pest_guidelines(plant_type),
+        pest_prevention=pest_manager.get_pest_prevention(plant_type),
+        ipm_guidelines=pest_manager.get_ipm_guidelines(plant_type),
         disease_guidelines=disease_manager.get_disease_guidelines(plant_type),
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
         pest_thresholds=thresholds,

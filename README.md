@@ -150,6 +150,7 @@ Key reference datasets reside in the `data/` directory:
 - `disease_prevention.json` – cultural practices to prevent common diseases
 - `pest_thresholds.json` – action thresholds for common pests
 - `beneficial_insects.json` – natural predator recommendations for pests
+- `pest_prevention.json` – cultural practices to deter common pests
 - `bioinoculant_guidelines.json` – microbial inoculant suggestions by crop
 - `pest_monitoring_intervals.json` – recommended scouting frequency by stage
 - `ipm_guidelines.json` – integrated pest management practices by crop
