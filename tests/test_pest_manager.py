@@ -46,6 +46,13 @@ def test_list_known_pests():
     assert "aphids" in pests
 
 
+def test_get_scientific_name():
+    from plant_engine.pest_manager import get_scientific_name
+
+    assert get_scientific_name("aphids") == "Aphidoidea"
+    assert get_scientific_name("unknown") is None
+
+
 def test_get_pest_prevention():
     guide = get_pest_prevention("citrus")
     assert "aphids" in guide

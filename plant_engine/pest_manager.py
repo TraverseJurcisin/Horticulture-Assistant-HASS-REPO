@@ -11,6 +11,7 @@ PREVENTION_FILE = "pest_prevention.json"
 IPM_FILE = "ipm_guidelines.json"
 RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
+TAXONOMY_FILE = "pest_scientific_names.json"
 
 
 
@@ -21,6 +22,7 @@ _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
+_TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -36,6 +38,11 @@ def get_pest_guidelines(plant_type: str) -> Dict[str, str]:
 def list_known_pests(plant_type: str) -> list[str]:
     """Return all pests with guidelines for ``plant_type``."""
     return sorted(get_pest_guidelines(plant_type).keys())
+
+
+def get_scientific_name(pest: str) -> str | None:
+    """Return the scientific (Latin) name for ``pest`` if known."""
+    return _TAXONOMY.get(normalize_key(pest))
 
 
 def get_pest_resistance(plant_type: str, pest: str) -> float | None:
@@ -159,6 +166,7 @@ __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
     "list_known_pests",
+    "get_scientific_name",
     "recommend_treatments",
     "get_beneficial_insects",
     "recommend_beneficials",
