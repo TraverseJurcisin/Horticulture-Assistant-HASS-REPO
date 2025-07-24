@@ -96,6 +96,7 @@
   "stock_solution_concentrations.json": "Nutrient concentrations for standard stock solutions.",
   "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
   "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
+  "disease_severity_actions.json": "Actions to take based on disease severity level.",
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day"
 }

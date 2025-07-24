@@ -8,6 +8,7 @@ from plant_engine.disease_monitor import (
     get_monitoring_interval,
     next_monitor_date,
     generate_monitoring_schedule,
+    get_severity_action,
 )
 
 
@@ -63,3 +64,15 @@ def test_generate_monitoring_schedule():
     sched = generate_monitoring_schedule("citrus", "fruiting", start, 2)
     assert sched == [date(2023, 1, 5), date(2023, 1, 9)]
     assert generate_monitoring_schedule("unknown", None, start, 1) == []
+
+
+def test_get_severity_action():
+    assert get_severity_action("low").startswith("Monitor")
+    assert get_severity_action("moderate")
+    assert get_severity_action("unknown") == ""
+
+def test_report_includes_severity_actions():
+    obs = {"citrus greening": 3}
+    report = generate_disease_report("citrus", obs)
+    assert report["severity_actions"]["citrus_greening"]
+
