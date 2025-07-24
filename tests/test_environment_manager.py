@@ -57,6 +57,7 @@ from plant_engine.environment_manager import (
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
+    energy_optimized_setpoints,
 )
 
 
@@ -131,6 +132,20 @@ def test_suggest_environment_setpoints_advanced_vpd_fallback(monkeypatch):
     result = suggest_environment_setpoints_advanced("foo", "bar")
     expected = em.humidity_for_target_vpd(22.0, 1.0)
     assert result["humidity_pct"] == expected
+
+
+def test_energy_optimized_setpoints():
+    normal = suggest_environment_setpoints("citrus", "seedling")
+    result = energy_optimized_setpoints("citrus", "seedling", 20, 12)
+    assert result["temp_c"] == 22
+    for key, value in normal.items():
+        if key != "temp_c":
+            assert result[key] == value
+
+
+def test_energy_optimized_setpoints_invalid():
+    with pytest.raises(ValueError):
+        energy_optimized_setpoints("citrus", "seedling", 20, 0)
 
 
 def test_vapor_pressure_helpers():

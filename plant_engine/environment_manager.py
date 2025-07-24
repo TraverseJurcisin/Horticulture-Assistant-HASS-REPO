@@ -215,6 +215,7 @@ __all__ = [
     "score_environment_components",
     "suggest_environment_setpoints",
     "suggest_environment_setpoints_advanced",
+    "energy_optimized_setpoints",
     "saturation_vapor_pressure",
     "actual_vapor_pressure",
     "calculate_vpd",
@@ -798,6 +799,38 @@ def suggest_environment_setpoints_advanced(
                 )
             except ValueError:
                 pass
+    return setpoints
+
+
+def energy_optimized_setpoints(
+    plant_type: str,
+    stage: str | None,
+    current_temp_c: float,
+    hours: float,
+    system: str = "heating",
+) -> Dict[str, float]:
+    """Return environment setpoints minimizing HVAC energy use.
+
+    The recommended temperature setpoint is chosen from the lower or upper
+    bound of the target range depending on which requires less energy to
+    maintain from ``current_temp_c`` for ``hours`` using the HVAC ``system``.
+    All other setpoints are the same as :func:`suggest_environment_setpoints`.
+    """
+
+    if hours <= 0:
+        raise ValueError("hours must be positive")
+
+    setpoints = suggest_environment_setpoints(plant_type, stage)
+    temp_range = get_environmental_targets(plant_type, stage).get("temp_c")
+    if not isinstance(temp_range, (list, tuple)) or len(temp_range) != 2:
+        return setpoints
+
+    from .energy_manager import estimate_hvac_energy
+
+    low, high = float(temp_range[0]), float(temp_range[1])
+    low_kwh = estimate_hvac_energy(current_temp_c, low, hours, system)
+    high_kwh = estimate_hvac_energy(current_temp_c, high, hours, system)
+    setpoints["temp_c"] = low if low_kwh <= high_kwh else high
     return setpoints
 
 
