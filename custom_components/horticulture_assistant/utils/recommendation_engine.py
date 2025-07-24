@@ -37,6 +37,9 @@ class RecommendationEngine:
     The engine stores sensor readings and plant profiles then produces
     recommendations for irrigation volume and fertilizer dosing.  Product
     availability can be provided so that only stocked items are suggested.
+
+    A small cache is maintained to quickly map nutrients to available
+    fertilizer products so repeated recommendations run efficiently.
     """
 
     def __init__(self) -> None:
@@ -47,6 +50,8 @@ class RecommendationEngine:
         self.product_availability: Dict[str, Dict] = {}
         self.ai_feedback: Dict[str, Dict] = {}
         self.environment_data: Dict[str, Dict] = {}
+        # Internal mapping of nutrient element -> product id
+        self._element_map: Dict[str, str] = {}
 
     # ------------------------------------------------------------------
     # Update helpers
@@ -65,8 +70,34 @@ class RecommendationEngine:
         self.sensor_data[plant_id] = sensor_payload
 
     def update_product_availability(self, product_payload: Dict) -> None:
-        """Set the currently available fertilizer products."""
+        """Set the currently available fertilizer products.
+
+        The nutrient-to-product cache is rebuilt whenever availability changes
+        to speed up subsequent lookups.
+        """
         self.product_availability = product_payload
+        self._refresh_element_map()
+
+    def _refresh_element_map(self) -> None:
+        """Rebuild the nutrient element lookup cache."""
+        mapping: Dict[str, str] = {}
+        for pid, data in self.product_availability.items():
+            for element in data.get("elements", []):
+                mapping.setdefault(element, pid)
+        self._element_map = mapping
+
+    def reset_state(self) -> None:
+        """Clear stored profiles, sensor data and cached mappings."""
+        self.plant_profiles.clear()
+        self.sensor_data.clear()
+        self.product_availability.clear()
+        self.ai_feedback.clear()
+        self.environment_data.clear()
+        self._element_map.clear()
+
+    def recommend_all(self) -> Dict[str, RecommendationBundle]:
+        """Return recommendations for every known plant."""
+        return {pid: self.recommend(pid) for pid in self.plant_profiles.keys()}
 
     def update_ai_feedback(self, plant_id: str, ai_feedback: Dict) -> None:
         """Cache AI feedback notes for ``plant_id``."""
@@ -169,11 +200,4 @@ class RecommendationEngine:
 
     def _select_best_product(self, element: str) -> Optional[str]:
         """Return the first product containing ``element`` if any."""
-        return next(
-            (
-                name
-                for name, data in self.product_availability.items()
-                if element in data.get("elements", [])
-            ),
-            None,
-        )
+        return self._element_map.get(element)

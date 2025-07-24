@@ -287,6 +287,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Nutrient Interaction Details**: `analyze_interactions` returns ratios,
   messages and corrective actions for any detected nutrient imbalances.
 - **Deficit-Based Fertilizer Suggestions**: `RecommendationEngine` now recommends products using nutrient guidelines when sensor readings fall short.
+- **Multi-Plant Recommendations**: `RecommendationEngine.recommend_all` returns a
+  bundle for every registered plant and `reset_state` clears cached data for new
+  planning cycles.
 - **Daily Nutrient Report**: `run_daily_cycle` now embeds this analysis under
   `nutrient_analysis` to highlight imbalances in recent applications.
 - **Pruning Recommendations**: Call `get_pruning_instructions` for stage-specific
