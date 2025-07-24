@@ -44,3 +44,12 @@ def test_recommendation_engine_environment_notes():
     eng = _setup_engine(auto=False)
     rec = eng.recommend("p1")
     assert any("temperature" in n for n in rec.notes)
+
+
+def test_recommendation_engine_recommend_all_and_reset():
+    eng = _setup_engine(auto=False)
+    all_recs = eng.recommend_all()
+    assert "p1" in all_recs
+    eng.reset_state()
+    assert eng.plant_profiles == {}
+    assert eng._element_map == {}
