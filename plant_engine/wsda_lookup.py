@@ -8,7 +8,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List, Tuple, Mapping, Iterable
 
-from plant_engine.utils import load_json
+from plant_engine.utils import load_json, load_dataset
 
 # Path to the WSDA fertilizer database packaged with the repository. Using
 # :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
@@ -60,9 +60,12 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 def _records() -> Iterable[Mapping[str, object]]:
     """Return WSDA fertilizer records loaded from the bundled JSON file."""
 
-    if not _WSDA_PATH.exists():
-        return []
-    data = load_json(str(_WSDA_PATH))
+    if _WSDA_PATH.exists():
+        data = load_json(str(_WSDA_PATH))
+    else:
+        # Fallback to dataset loader so overrides work even if the path is missing
+        data = load_dataset(_WSDA_PATH.name)
+
     if isinstance(data, list):
         return data
     if isinstance(data, Mapping) and "records" in data:
