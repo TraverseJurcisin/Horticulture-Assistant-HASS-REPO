@@ -138,3 +138,18 @@ def test_apply_tag_modifiers():
 
     unchanged = nm.apply_tag_modifiers(base, ["unknown-tag"])
     assert unchanged == base
+
+
+def test_get_ph_adjusted_levels():
+    from plant_engine.nutrient_manager import get_ph_adjusted_levels
+
+    adjusted = get_ph_adjusted_levels("tomato", "fruiting", 5.0)
+    assert adjusted["P"] > 60  # higher target at low pH
+
+
+def test_calculate_deficiencies_with_ph():
+    from plant_engine.nutrient_manager import calculate_deficiencies_with_ph
+
+    current = {"N": 80, "P": 60, "K": 120}
+    deficits = calculate_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
+    assert deficits["P"] > 0
