@@ -216,6 +216,10 @@ Call `plant_engine.utils.clear_dataset_cache()` if you modify these
 environment variables while the application is running so changes are
 immediately reflected.
 
+The :mod:`plant_engine.datasets` helpers that list or describe datasets also
+use these environment variables so custom directories appear in search results
+without additional configuration.
+
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.
 

@@ -2,19 +2,23 @@
 
 This module exposes helpers for listing available JSON datasets bundled with
 the project. A :class:`DatasetCatalog` dataclass manages dataset paths and uses
-``lru_cache`` so repeated lookups avoid hitting the filesystem.
+``lru_cache`` so repeated lookups avoid hitting the filesystem.  It now honors
+the ``HORTICULTURE_DATA_DIR``, ``HORTICULTURE_EXTRA_DATA_DIRS`` and
+``HORTICULTURE_OVERLAY_DIR`` environment variables in the same manner as
+``plant_engine.utils.load_dataset`` so custom data locations are discovered
+automatically.
 """
 
 from __future__ import annotations
 
-import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 from typing import Dict, List
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
-CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
+from .utils import _data_dir, _extra_dirs, _overlay_dir, load_json, deep_update
+
+CATALOG_FILENAME = "dataset_catalog.json"
 
 __all__ = [
     "DatasetCatalog",
@@ -30,29 +34,52 @@ __all__ = [
 class DatasetCatalog:
     """Helper object for discovering bundled datasets."""
 
-    base_dir: Path = DATA_DIR
-    catalog_file: Path = CATALOG_FILE
+    base_dir: Path = field(default_factory=_data_dir)
+    extra_dirs: tuple[Path, ...] = field(default_factory=lambda: tuple(_extra_dirs()))
+    overlay_dir: Path | None = field(default_factory=_overlay_dir)
+    catalog_file_name: str = CATALOG_FILENAME
 
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
         """Return relative paths of available JSON datasets."""
 
-        datasets: List[str] = []
-        for path in self.base_dir.rglob("*.json"):
-            if path.name == self.catalog_file.name:
+        datasets: Dict[str, Path] = {}
+        search_dirs = [self.base_dir, *self.extra_dirs]
+        for directory in search_dirs:
+            if not directory.is_dir():
                 continue
-            datasets.append(path.relative_to(self.base_dir).as_posix())
+            for path in directory.rglob("*.json"):
+                if path.name == self.catalog_file_name:
+                    continue
+                datasets[path.relative_to(directory).as_posix()] = path
 
-        return sorted(datasets)
+        if self.overlay_dir and self.overlay_dir.is_dir():
+            for path in self.overlay_dir.rglob("*.json"):
+                if path.name == self.catalog_file_name:
+                    continue
+                datasets[path.relative_to(self.overlay_dir).as_posix()] = path
+
+        return sorted(datasets.keys())
 
     @lru_cache(maxsize=None)
     def _load_catalog(self) -> Dict[str, str]:
-        if self.catalog_file.exists():
-            with open(self.catalog_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-                if isinstance(data, dict):
-                    return {str(k): str(v) for k, v in data.items()}
-        return {}
+        data: Dict[str, str] = {}
+        search_dirs = [self.base_dir, *self.extra_dirs]
+        for directory in search_dirs:
+            path = directory / self.catalog_file_name
+            if path.exists():
+                extra = load_json(str(path))
+                if isinstance(extra, dict):
+                    deep_update(data, {str(k): str(v) for k, v in extra.items()})
+
+        if self.overlay_dir:
+            path = self.overlay_dir / self.catalog_file_name
+            if path.exists():
+                extra = load_json(str(path))
+                if isinstance(extra, dict):
+                    deep_update(data, {str(k): str(v) for k, v in extra.items()})
+
+        return data
 
     def get_description(self, name: str) -> str | None:
         """Return the human readable description for ``name`` if known."""
