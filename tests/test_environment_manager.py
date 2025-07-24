@@ -407,6 +407,17 @@ def test_calculate_dli_series():
         calculate_dli_series([100], 0)
 
 
+def test_calculate_dli_series_generator():
+    """Ensure generator inputs are supported."""
+
+    def gen():
+        for _ in range(24):
+            yield 150
+
+    expected = calculate_dli_series([150] * 24)
+    assert calculate_dli_series(gen()) == expected
+
+
 def test_compare_environment():
     targets = {"temp_c": [18, 22], "humidity_pct": [60, 80]}
     current = {"temperature": 20, "humidity": 70}
@@ -645,6 +656,23 @@ def test_calculate_vpd_series():
 
     with pytest.raises(ValueError):
         calculate_vpd_series([20], [-1])
+
+
+def test_calculate_vpd_series_generator():
+    """Ensure VPD calculation works with generator inputs."""
+
+    def temps():
+        for t in [20, 22, 24]:
+            yield t
+
+    def hums():
+        for h in [70, 65, 60]:
+            yield h
+
+    expected = sum(
+        calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60])
+    ) / 3
+    assert calculate_vpd_series(temps(), hums()) == round(expected, 3)
 
 
 def test_score_environment_series():
