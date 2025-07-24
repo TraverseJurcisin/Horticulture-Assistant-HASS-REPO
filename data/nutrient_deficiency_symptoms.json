@@ -4,5 +4,11 @@
   "K": "Leaf edges may scorch or curl.",
   "Ca": "New leaves appear distorted or die back.",
   "Mg": "Yellowing between veins on older leaves.",
-  "Fe": "Young leaves become yellow while veins remain green."
+  "Fe": "Young leaves become yellow while veins remain green.",
+  "S": "Young foliage appears pale and overall growth slows.",
+  "Zn": "Short internodes with mottled young leaves.",
+  "Mn": "Interveinal chlorosis with brown spotting on leaves.",
+  "B": "Growing tips die back and leaves become brittle.",
+  "Cu": "New leaves are dark and may wilt or curl.",
+  "Mo": "Older leaves show mottling or marginal necrosis."
 }

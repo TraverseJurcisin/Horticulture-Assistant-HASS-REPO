@@ -51,6 +51,13 @@ def test_get_nutrient_mobility():
     assert get_nutrient_mobility("N") == "mobile"
 
 
+def test_new_nutrient_entries():
+    """Ensure newly added nutrients are recognized."""
+    assert "Zn" in list_known_nutrients()
+    assert get_nutrient_mobility("Zn") == "immobile"
+    assert "boron" in get_deficiency_treatment("B").lower()
+
+
 def test_diagnose_deficiencies_detailed():
     guidelines = get_recommended_levels("spinach", "harvest")
     current = {key: 0 for key in guidelines}

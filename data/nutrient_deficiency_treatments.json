@@ -4,5 +4,11 @@
   "K": "Add potassium sulfate or a balanced fertilizer.",
   "Ca": "Use calcium nitrate or agricultural lime.",
   "Mg": "Apply magnesium sulfate (Epsom salt).",
-  "Fe": "Spray with chelated iron or adjust pH to improve availability."
+  "Fe": "Spray with chelated iron or adjust pH to improve availability.",
+  "S": "Apply gypsum or elemental sulfur depending on soil pH.",
+  "Zn": "Foliar spray with zinc sulfate or chelated zinc.",
+  "Mn": "Apply manganese sulfate as a soil drench or foliar spray.",
+  "B": "Use borax or a boron-containing fertilizer sparingly.",
+  "Cu": "Apply copper sulfate or a copper chelate at low rates.",
+  "Mo": "Provide sodium molybdate or ammonium molybdate."
 }
