@@ -230,6 +230,33 @@ def calculate_mass_for_target_ppm(
     return round(grams, 3)
 
 
+def calculate_volume_for_target_ppm(
+    fertilizer_id: str,
+    nutrient: str,
+    target_ppm: float,
+    volume_l: float,
+) -> float:
+    """Return milliliters of ``fertilizer_id`` for ``target_ppm`` of ``nutrient``.
+
+    This convenience helper converts the grams returned by
+    :func:`calculate_mass_for_target_ppm` into milliliters using the product
+    density from the inventory database.
+    """
+
+    grams = calculate_mass_for_target_ppm(fertilizer_id, nutrient, target_ppm, volume_l)
+
+    inventory = CATALOG.inventory()
+    if fertilizer_id not in inventory:
+        raise KeyError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
+
+    density = inventory[fertilizer_id].density_kg_per_l
+    if density <= 0:
+        raise ValueError("density must be positive")
+
+    volume_ml = grams / (density * 1000) * 1000
+    return round(volume_ml, 2)
+
+
 def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> float:
     """Return estimated cost for ``grams`` of fertilizer product."""
 
@@ -278,7 +305,9 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
-def estimate_mix_cost_per_plant(schedule: Mapping[str, float], num_plants: int) -> float:
+def estimate_mix_cost_per_plant(
+    schedule: Mapping[str, float], num_plants: int
+) -> float:
     """Return cost per plant for ``schedule`` applied to ``num_plants``.
 
     ``num_plants`` must be positive. Costs are estimated using
@@ -343,18 +372,16 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
         if fert_id not in inventory:
             raise KeyError(f"Unknown fertilizer '{fert_id}'")
 
-        ga = convert_guaranteed_analysis(
-            inventory[fert_id].guaranteed_analysis
-        )
+        ga = convert_guaranteed_analysis(inventory[fert_id].guaranteed_analysis)
         for nutrient, pct in ga.items():
-            totals[nutrient] = round(
-                totals.get(nutrient, 0.0) + grams * pct * 1000, 2
-            )
+            totals[nutrient] = round(totals.get(nutrient, 0.0) + grams * pct * 1000, 2)
 
     return totals
 
 
-def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def calculate_mix_ppm(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
 
     ``volume_l`` is the final solution volume in liters. The returned mapping
@@ -435,7 +462,9 @@ def estimate_mix_cost_per_liter(
     return round(total / volume_l, 4)
 
 
-def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def check_solubility_limits(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
     Parameters
@@ -546,6 +575,7 @@ __all__ = [
     "check_solubility_limits",
     "estimate_cost_per_nutrient",
     "calculate_mass_for_target_ppm",
+    "calculate_volume_for_target_ppm",
     "list_products",
     "get_product_info",
     "find_products",
@@ -582,4 +612,3 @@ def get_application_method(fertilizer_id: str) -> str | None:
     """Return recommended application method for ``fertilizer_id``."""
 
     return CATALOG.application_methods().get(fertilizer_id)
-

@@ -17,7 +17,9 @@ convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
-calculate_fertilizer_nutrients_from_mass = fert_mod.calculate_fertilizer_nutrients_from_mass
+calculate_fertilizer_nutrients_from_mass = (
+    fert_mod.calculate_fertilizer_nutrients_from_mass
+)
 calculate_fertilizer_cost_from_mass = fert_mod.calculate_fertilizer_cost_from_mass
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_mix_cost_per_plant = fert_mod.estimate_mix_cost_per_plant
@@ -32,6 +34,7 @@ check_solubility_limits = fert_mod.check_solubility_limits
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
+calculate_volume_for_target_ppm = fert_mod.calculate_volume_for_target_ppm
 get_application_method = fert_mod.get_application_method
 CATALOG = fert_mod.CATALOG
 
@@ -88,9 +91,9 @@ def test_calculate_fertilizer_cost():
 def test_mass_helpers_match_volume_equivalents():
     mass = 9.6  # grams corresponding to 10 mL at 0.96 kg/L
     grams_output = calculate_fertilizer_nutrients_from_mass("foxfarm_grow_big", mass)
-    volume_output = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    volume_output = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)[
+        "nutrients"
+    ]
     assert grams_output == volume_output
 
     cost_mass = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", mass)
@@ -135,9 +138,9 @@ def test_calculate_mix_nutrients():
     mix = {"foxfarm_grow_big": 9.6}
     totals = calculate_mix_nutrients(mix)
 
-    reference = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    reference = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)[
+        "nutrients"
+    ]
 
     assert totals == reference
 
@@ -240,6 +243,17 @@ def test_calculate_mass_for_target_ppm():
         calculate_mass_for_target_ppm("foxfarm_grow_big", "X", 10, 1)
 
 
+def test_calculate_volume_for_target_ppm():
+    ml = calculate_volume_for_target_ppm("foxfarm_grow_big", "N", 100, 1)
+    grams = calculate_mass_for_target_ppm("foxfarm_grow_big", "N", 100, 1)
+    density = CATALOG.get_product_info("foxfarm_grow_big").density_kg_per_l
+    expected_ml = grams / (density * 1000) * 1000
+    assert round(ml, 2) == round(expected_ml, 2)
+
+    with pytest.raises(KeyError):
+        calculate_volume_for_target_ppm("unknown", "N", 10, 1)
+
+
 def test_get_application_method():
     assert get_application_method("foxfarm_grow_big") == "soil drench"
     assert get_application_method("magriculture") == "foliar"
@@ -251,4 +265,3 @@ def test_catalog_lists_products():
     assert "foxfarm_grow_big" in ids
     info = CATALOG.get_product_info("foxfarm_grow_big")
     assert info.product_name
-
