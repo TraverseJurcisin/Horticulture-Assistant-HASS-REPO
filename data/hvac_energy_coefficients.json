@@ -1,0 +1,4 @@
+{
+  "heating": {"kwh_per_degree_day": 0.5},
+  "cooling": {"kwh_per_degree_day": 0.4}
+}
