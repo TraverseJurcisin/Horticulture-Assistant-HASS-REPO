@@ -91,9 +91,7 @@ def test_recommend_nutrient_mix_full():
 
 def test_recommend_nutrient_mix_deficit():
     current = {"N": 60, "P": 30, "K": 60}
-    mix = recommend_nutrient_mix(
-        "tomato", "vegetative", 10.0, current_levels=current
-    )
+    mix = recommend_nutrient_mix("tomato", "vegetative", 10.0, current_levels=current)
     assert mix["urea"] == pytest.approx(0.87, rel=1e-2)
     assert mix["map"] == pytest.approx(0.909, rel=1e-2)
     assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
@@ -132,7 +130,6 @@ def test_estimate_daily_nutrient_uptake():
     )
     assert uptake["N"] == pytest.approx(200.0)
     assert uptake["P"] == pytest.approx(100.0)
-
 
 
 def test_recommend_nutrient_mix_with_micro():
@@ -232,7 +229,7 @@ def test_estimate_stage_and_cycle_cost():
 def test_recommend_precise_fertigation():
     from plant_engine.fertigation import recommend_precise_fertigation
 
-    schedule, total, breakdown, warnings = recommend_precise_fertigation(
+    schedule, total, breakdown, warnings, diag = recommend_precise_fertigation(
         "tomato",
         "vegetative",
         volume_l=10.0,
@@ -249,6 +246,7 @@ def test_recommend_precise_fertigation():
     assert total >= 0
     assert breakdown
     assert warnings == {}
+    assert "ppm" in diag
 
 
 def test_generate_cycle_fertigation_plan():
@@ -287,9 +285,7 @@ def test_generate_cycle_fertigation_plan_with_cost():
 def test_optimize_fertigation_schedule():
     from plant_engine.fertigation import optimize_fertigation_schedule
 
-    schedule, cost = optimize_fertigation_schedule(
-        "citrus", "vegetative", volume_l=1.0
-    )
+    schedule, cost = optimize_fertigation_schedule("citrus", "vegetative", volume_l=1.0)
 
     assert schedule
     assert "foxfarm_grow_big" in schedule
@@ -346,9 +342,17 @@ def test_check_solubility_limits():
 
     schedule = {
         "foxfarm_grow_big": 400.0,  # 300 g/L limit in dataset
-        "magriculture": 500.0,      # 800 g/L limit in dataset
+        "magriculture": 500.0,  # 800 g/L limit in dataset
     }
     warnings = check_solubility_limits(schedule, 1.0)
     assert "foxfarm_grow_big" in warnings
     assert "magriculture" not in warnings
 
+
+def test_validate_fertigation_schedule():
+    from plant_engine.fertigation import validate_fertigation_schedule
+
+    schedule = {"foxfarm_grow_big": 300.0}
+    diag = validate_fertigation_schedule(schedule, 1.0, "tomato")
+    assert "imbalances" in diag and diag["imbalances"]
+    assert "toxicities" in diag and diag["toxicities"]
