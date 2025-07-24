@@ -32,7 +32,10 @@ from plant_engine.fertigation import (
 )
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.compute_transpiration import compute_transpiration
-from plant_engine.rootzone_model import estimate_water_capacity
+from plant_engine.rootzone_model import (
+    estimate_water_capacity,
+    estimate_infiltration_time,
+)
 from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.stage_tasks import get_stage_tasks
 
@@ -273,6 +276,12 @@ def run_daily_cycle(
             cost = None
         report.fertigation_schedule = schedule
         report.fertigation_cost = cost
+        # Estimate how long the irrigation volume takes to infiltrate
+        soil_texture = general.get("soil_texture", "loam")
+        area_m2 = float(general.get("surface_area_m2", 0.09))
+        infil = estimate_infiltration_time(report.irrigation_target_ml, area_m2, soil_texture)
+        if infil is not None:
+            report.root_zone["infiltration_time_hr"] = infil
     # Include stage details and progress if available in profile
     if stage_name:
         stages = profile.get("stages", {})
