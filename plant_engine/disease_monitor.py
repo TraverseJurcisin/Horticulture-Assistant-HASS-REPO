@@ -99,28 +99,9 @@ def estimate_disease_risk(
     if not factors:
         return {}
 
-    readings = environment_manager.normalize_environment_readings(environment)
-    risks: Dict[str, str] = {}
-    for disease, reqs in factors.items():
-        matches = 0
-        total = 0
-        for key, (low, high) in reqs.items():
-            total += 1
-            value = readings.get(key)
-            if value is None:
-                continue
-            if low <= value <= high:
-                matches += 1
-        if total == 0:
-            continue
-        if matches == 0:
-            level = "low"
-        elif matches < total:
-            level = "moderate"
-        else:
-            level = "high"
-        risks[disease] = level
-    return risks
+    from .monitor_utils import estimate_condition_risk
+
+    return estimate_condition_risk(factors, environment)
 
 
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
