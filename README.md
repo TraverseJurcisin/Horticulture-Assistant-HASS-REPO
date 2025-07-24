@@ -55,6 +55,7 @@ applying it to your plants.
 - Heat stress warnings using heat index thresholds
 - Humidity stress warnings when humidity is outside safe ranges
 - Light stress detection using DLI ranges
+- AI inference of temperature stress conditions
 - Stage-adjusted nutrient targets
 - Leaf tissue analysis with nutrient balance scoring
 - Nutrient deficiency severity and treatment recommendations

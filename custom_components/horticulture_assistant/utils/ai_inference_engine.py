@@ -31,6 +31,7 @@ class DailyPackage:
 
     date: str
     plant_data: Dict[str, Any]
+    #: Mapping of plant_id to environment metrics (``temp_c``/``humidity_pct`` etc.)
     environment_data: Dict[str, Any]
     fertigation_data: Dict[str, Any]
     notes: Optional[str] = None
@@ -61,6 +62,9 @@ class AIInferenceEngine:
             self._check_growth(pdata, issues, recs)
             self._check_yield(pdata, issues, recs)
             self._check_ec(pdata, issues, recs)
+            env = package.environment_data.get(plant_id, {})
+            plant_type = pdata.get("plant_type", "default")
+            self._check_environment(env, plant_type, issues, recs)
 
             confidence = max(0.1, 1.0 - len(issues) * 0.1)
             results.append(
@@ -100,6 +104,34 @@ class AIInferenceEngine:
         if ec is not None and ec > self.HIGH_EC_THRESHOLD:
             issues.append("High EC detected")
             recs.append("Consider flushing media")
+
+    def _check_environment(
+        self,
+        env: Mapping[str, Any],
+        plant_type: str,
+        issues: List[str],
+        recs: List[str],
+    ) -> None:
+        """Check temperature stress based on dataset thresholds."""
+
+        if not env:
+            return
+        try:
+            from plant_engine.environment_manager import (
+                evaluate_heat_stress,
+                evaluate_cold_stress,
+            )
+        except Exception:
+            return
+
+        temp = env.get("temp_c")
+        rh = env.get("humidity_pct")
+        if evaluate_heat_stress(temp, rh, plant_type):
+            issues.append("Heat stress detected")
+            recs.append("Increase cooling or shading")
+        if evaluate_cold_stress(temp, plant_type):
+            issues.append("Cold stress detected")
+            recs.append("Provide heating or protection")
 
     # ------------------------------------------------------------------
     # Utilities
