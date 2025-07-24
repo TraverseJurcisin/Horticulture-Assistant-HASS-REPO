@@ -11,6 +11,7 @@ from plant_engine.irrigation_manager import (
     list_supported_plants,
     generate_irrigation_schedule,
     generate_irrigation_schedule_with_runtime,
+    summarize_irrigation_schedule,
     generate_cycle_irrigation_plan,
     adjust_irrigation_for_efficiency,
     estimate_irrigation_time,
@@ -274,6 +275,26 @@ def test_generate_irrigation_schedule_with_runtime():
     assert schedule[1]["volume_ml"] == 0.0
     runtime = estimate_irrigation_time(80.0, "drip", emitters=2)
     assert schedule[2]["runtime_h"] == pytest.approx(runtime, rel=1e-2)
+
+
+def test_summarize_irrigation_schedule():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_irrigation_schedule_with_runtime(
+        zone,
+        150.0,
+        [30.0, 30.0],
+        emitter_type="drip",
+        emitters=2,
+    )
+    summary = summarize_irrigation_schedule(schedule)
+    assert summary["events"] == 1
+    assert summary["total_volume_ml"] > 0
+    assert summary["total_runtime_h"] > 0
 
 
 def test_generate_cycle_irrigation_plan():
