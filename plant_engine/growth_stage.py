@@ -25,6 +25,7 @@ __all__ = [
     "estimate_stage_from_age",
     "estimate_stage_from_date",
     "predict_harvest_date",
+    "get_total_cycle_duration",
     "stage_progress",
     "days_until_harvest",
     "predict_next_stage_date",
@@ -50,6 +51,20 @@ def get_stage_duration(plant_type: str, stage: str) -> int | None:
     if isinstance(duration, (int, float)):
         return int(duration)
     return None
+
+
+def get_total_cycle_duration(plant_type: str) -> int | None:
+    """Return total days for all stages of ``plant_type`` if available."""
+
+    stages = _DATA.get(normalize_key(plant_type))
+    if not isinstance(stages, dict):
+        return None
+    total = 0
+    for info in stages.values():
+        days = info.get("duration_days")
+        if isinstance(days, (int, float)):
+            total += int(days)
+    return total if total > 0 else None
 
 
 def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:

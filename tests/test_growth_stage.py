@@ -7,6 +7,7 @@ from plant_engine.growth_stage import (
     estimate_stage_from_age,
     estimate_stage_from_date,
     predict_harvest_date,
+    get_total_cycle_duration,
     stage_progress,
     days_until_harvest,
     predict_next_stage_date,
@@ -105,5 +106,10 @@ def test_days_until_next_stage():
     assert days_until_next_stage("unknown", "seedling", 5) is None
     with pytest.raises(ValueError):
         days_until_next_stage("tomato", "seedling", -1)
+
+
+def test_get_total_cycle_duration():
+    assert get_total_cycle_duration("tomato") == 120
+    assert get_total_cycle_duration("unknown") is None
 
 
