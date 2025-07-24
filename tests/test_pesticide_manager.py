@@ -4,6 +4,7 @@ from plant_engine.pesticide_manager import (
     get_withdrawal_days,
     earliest_harvest_date,
     adjust_harvest_date,
+    calculate_harvest_window,
 )
 
 
@@ -29,3 +30,14 @@ def test_adjust_harvest_date():
     adjusted = adjust_harvest_date("lettuce", start, "imidacloprid", application)
     expected = earliest_harvest_date("imidacloprid", application)
     assert adjusted == expected
+
+
+def test_calculate_harvest_window():
+    applications = [
+        ("spinosad", datetime.date(2024, 6, 1)),
+        ("imidacloprid", datetime.date(2024, 6, 10)),
+    ]
+    harvest = calculate_harvest_window(applications)
+    expected = earliest_harvest_date("imidacloprid", datetime.date(2024, 6, 10))
+    assert harvest == expected
+
