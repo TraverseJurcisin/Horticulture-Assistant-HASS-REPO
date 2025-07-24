@@ -76,3 +76,10 @@ def test_build_pest_management_plan():
     assert plan["aphids"]["treatment"].startswith("Apply insecticidal")
     assert "ladybugs" in plan["aphids"]["beneficials"]
     assert plan["unknown"]["treatment"] == "No guideline available"
+
+
+def test_get_pest_resistance():
+    from plant_engine.pest_manager import get_pest_resistance
+
+    assert get_pest_resistance("citrus", "aphids") == 3.0
+    assert get_pest_resistance("citrus", "unknown") is None

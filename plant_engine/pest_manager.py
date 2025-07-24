@@ -9,6 +9,7 @@ DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
 PREVENTION_FILE = "pest_prevention.json"
 IPM_FILE = "ipm_guidelines.json"
+RESISTANCE_FILE = "pest_resistance_ratings.json"
 
 
 
@@ -17,6 +18,7 @@ _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
+_RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -32,6 +34,19 @@ def get_pest_guidelines(plant_type: str) -> Dict[str, str]:
 def list_known_pests(plant_type: str) -> list[str]:
     """Return all pests with guidelines for ``plant_type``."""
     return sorted(get_pest_guidelines(plant_type).keys())
+
+
+def get_pest_resistance(plant_type: str, pest: str) -> float | None:
+    """Return relative resistance rating of a plant to ``pest``.
+
+    Ratings are arbitrary scores (1-5) where higher values indicate
+    greater natural resistance. ``None`` is returned when no rating is
+    defined for the plant/pest combination.
+    """
+
+    data = _RESISTANCE.get(normalize_key(plant_type), {})
+    value = data.get(normalize_key(pest))
+    return float(value) if isinstance(value, (int, float)) else None
 
 
 def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
@@ -135,5 +150,6 @@ __all__ = [
     "recommend_prevention",
     "get_ipm_guidelines",
     "recommend_ipm_actions",
+    "get_pest_resistance",
     "build_pest_management_plan",
 ]
