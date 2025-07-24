@@ -21,6 +21,7 @@ __all__ = [
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
     "generate_irrigation_schedule_with_runtime",
+    "summarize_irrigation_schedule",
     "adjust_irrigation_for_efficiency",
     "generate_env_irrigation_schedule",
     "generate_precipitation_schedule",
@@ -449,6 +450,29 @@ def generate_irrigation_schedule_with_runtime(
         result[day] = {"volume_ml": volume, "runtime_h": runtime}
 
     return result
+
+
+def summarize_irrigation_schedule(
+    schedule: Mapping[int, Mapping[str, float | None]]
+) -> Dict[str, float]:
+    """Return total events, volume and runtime for an irrigation schedule."""
+
+    total_volume = 0.0
+    total_runtime = 0.0
+    events = 0
+    for entry in schedule.values():
+        volume = float(entry.get("volume_ml", 0.0) or 0.0)
+        runtime = float(entry.get("runtime_h") or 0.0)
+        total_volume += volume
+        total_runtime += runtime
+        if volume > 0 or runtime > 0:
+            events += 1
+
+    return {
+        "events": events,
+        "total_volume_ml": round(total_volume, 1),
+        "total_runtime_h": round(total_runtime, 2),
+    }
 
 
 def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float]]:

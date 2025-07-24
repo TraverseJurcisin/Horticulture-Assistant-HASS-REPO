@@ -395,6 +395,8 @@ __all__ = [
     "list_irrigation_plants",
     "get_daily_irrigation_target",
     "generate_irrigation_schedule",
+    "generate_irrigation_schedule_with_runtime",
+    "summarize_irrigation_schedule",
     "generate_cycle_irrigation_plan",
     "HarvestRecord",
     "load_yield_history",
