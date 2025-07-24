@@ -23,6 +23,7 @@ DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
 SOLUBILITY_FILE = "fertilizer_solubility.json"
 APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
+RATE_FILE = "fertilizers/fertilizer_application_rates.json"
 
 
 @dataclass(frozen=True)
@@ -66,6 +67,12 @@ class FertilizerCatalog:
     @lru_cache(maxsize=None)
     def application_methods() -> Dict[str, str]:
         return load_dataset(APPLICATION_FILE)
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def application_rates() -> Dict[str, float]:
+        """Return recommended grams per liter for each fertilizer."""
+        return load_dataset(RATE_FILE)
 
     def list_products(self) -> list[str]:
         inv = self.inventory()
@@ -563,6 +570,30 @@ def get_application_method(fertilizer_id: str) -> str | None:
     return CATALOG.application_methods().get(fertilizer_id)
 
 
+def get_application_rate(fertilizer_id: str) -> float | None:
+    """Return recommended grams per liter for ``fertilizer_id`` if defined."""
+
+    rate = CATALOG.application_rates().get(fertilizer_id)
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
+
+
+def calculate_recommended_application(fertilizer_id: str, volume_l: float) -> float:
+    """Return grams of fertilizer for ``volume_l`` solution using rate data."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    rate = get_application_rate(fertilizer_id)
+    if rate is None:
+        raise KeyError(f"Application rate for '{fertilizer_id}' is not defined")
+
+    grams = rate * volume_l
+    return round(grams, 3)
+
+
 def recommend_wsda_products(nutrient: str, limit: int = 5) -> List[str]:
     """Return WSDA product names with high concentrations of ``nutrient``."""
 
@@ -592,6 +623,8 @@ __all__ = [
     "find_products",
     "calculate_mix_ppm",
     "get_application_method",
+    "get_application_rate",
+    "calculate_recommended_application",
     "recommend_wsda_products",
     "CATALOG",
 ]

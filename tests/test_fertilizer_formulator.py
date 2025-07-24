@@ -33,6 +33,8 @@ estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
 get_application_method = fert_mod.get_application_method
+get_application_rate = fert_mod.get_application_rate
+calculate_recommended_application = fert_mod.calculate_recommended_application
 recommend_wsda_products = fert_mod.recommend_wsda_products
 CATALOG = fert_mod.CATALOG
 
@@ -245,6 +247,20 @@ def test_get_application_method():
     assert get_application_method("foxfarm_grow_big") == "soil drench"
     assert get_application_method("magriculture") == "foliar"
     assert get_application_method("unknown") is None
+
+
+def test_get_application_rate():
+    assert get_application_rate("foxfarm_grow_big") == 5.0
+    assert get_application_rate("unknown") is None
+
+
+def test_calculate_recommended_application():
+    grams = calculate_recommended_application("foxfarm_grow_big", 2)
+    assert grams == 10.0
+    with pytest.raises(ValueError):
+        calculate_recommended_application("foxfarm_grow_big", 0)
+    with pytest.raises(KeyError):
+        calculate_recommended_application("unknown", 1)
 
 
 def test_catalog_lists_products():
