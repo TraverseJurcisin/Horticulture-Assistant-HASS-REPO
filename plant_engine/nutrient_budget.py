@@ -19,6 +19,8 @@ DATA_FILE = "nutrient_removal_rates.json"
 
 # Cached dataset loaded once at import
 _RATES: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+# Fertilizer solubility (grams per liter) loaded once at import
+_SOLUBILITY: Dict[str, float] = load_dataset("fertilizer_solubility.json")
 
 __all__ = [
     "list_supported_plants",
@@ -26,6 +28,7 @@ __all__ = [
     "estimate_total_removal",
     "estimate_required_nutrients",
     "estimate_fertilizer_requirements",
+    "estimate_solution_volume",
     "RemovalEstimate",
 ]
 
@@ -119,3 +122,27 @@ def estimate_fertilizer_requirements(
         totals[fert_id] = round(totals.get(fert_id, 0.0) + grams / purity_val, 2)
 
     return totals
+
+
+def estimate_solution_volume(masses: Mapping[str, float]) -> Dict[str, float]:
+    """Return liters of water needed to dissolve each fertilizer mass.
+
+    Solubility limits from ``fertilizer_solubility.json`` are used to
+    convert grams of product into the minimum volume of water required.
+    Unknown fertilizers are ignored.
+    """
+
+    volumes: Dict[str, float] = {}
+    for fert_id, grams in masses.items():
+        if grams <= 0:
+            continue
+        sol = _SOLUBILITY.get(fert_id)
+        try:
+            sol_rate = float(sol)
+        except (TypeError, ValueError):
+            continue
+        if sol_rate <= 0:
+            continue
+        volumes[fert_id] = round(grams / sol_rate, 3)
+
+    return volumes
