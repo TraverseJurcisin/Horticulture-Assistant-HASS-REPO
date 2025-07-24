@@ -42,3 +42,11 @@ def test_recommend_treatments():
     recs = water_quality.recommend_treatments({"Na": 60, "Cl": 50})
     assert "Na" in recs
     assert "Cl" not in recs
+
+
+def test_summarize_water_profile():
+    summary = water_quality.summarize_water_profile({"Na": 60, "Cl": 50})
+    assert summary["rating"] == "fair"
+    assert summary["baseline"]["Na"] == 60
+    assert "Na" in summary["warnings"]
+    assert "score" in summary

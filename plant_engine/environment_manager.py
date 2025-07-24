@@ -1646,9 +1646,10 @@ def summarize_environment(
 
     water_info = None
     if water_test is not None:
-        rating = water_quality.classify_water_quality(water_test)
-        score = water_quality.score_water_quality(water_test)
-        water_info = WaterQualityInfo(rating=rating, score=score)
+        summary = water_quality.summarize_water_profile(water_test)
+        water_info = WaterQualityInfo(
+            rating=summary["rating"], score=summary["score"]
+        )
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),

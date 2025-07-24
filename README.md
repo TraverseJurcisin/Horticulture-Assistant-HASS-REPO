@@ -334,6 +334,8 @@ or incomplete and should only be used as a starting point for your own research.
   humidity targets from VPD guidelines when direct values are unavailable.
 - **Water Quality Scoring**: `score_water_quality` evaluates irrigation water and
   returns a 0‑100 rating based on toxicity thresholds.
+- **Water Quality Summary**: `summarize_water_profile` combines baseline
+  readings with warnings, rating and score in one step.
 - **Guideline Summary**: `get_guideline_summary` consolidates environment,
   nutrient, irrigation and pest guidance for quick reference.
 - **Nutrient Score Trend**: `score_nutrient_series` averages multiple nutrient

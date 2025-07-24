@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Mapping, Any
 
 from .utils import load_dataset
 
@@ -20,6 +20,7 @@ __all__ = [
     "classify_water_quality",
     "score_water_quality",
     "recommend_treatments",
+    "summarize_water_profile",
 ]
 
 
@@ -90,3 +91,15 @@ def recommend_treatments(water_test: Dict[str, float]) -> Dict[str, str]:
         if action:
             recommendations[analyte] = action
     return recommendations
+
+
+def summarize_water_profile(water_test: Mapping[str, float]) -> Dict[str, Any]:
+    """Return baseline, warnings, rating and score for ``water_test``."""
+
+    baseline, warnings = interpret_water_profile(dict(water_test))
+    return {
+        "baseline": baseline,
+        "warnings": warnings,
+        "rating": classify_water_quality(baseline),
+        "score": score_water_quality(baseline),
+    }
