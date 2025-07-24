@@ -164,3 +164,20 @@ def test_calculate_deficiencies_with_ph():
     current = {"N": 80, "P": 60, "K": 120}
     deficits = calculate_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
     assert deficits["P"] > 0
+
+
+def test_get_all_ph_adjusted_levels():
+    from plant_engine.nutrient_manager import get_all_ph_adjusted_levels
+
+    adjusted = get_all_ph_adjusted_levels("tomato", "fruiting", 5.0)
+    assert "Fe" in adjusted
+    assert adjusted["P"] > 60
+
+
+def test_calculate_all_deficiencies_with_ph():
+    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph
+
+    current = {"N": 80, "Fe": 1.0}
+    deficits = calculate_all_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
+    assert deficits["P"] > 0
+    assert deficits["Fe"] > 0
