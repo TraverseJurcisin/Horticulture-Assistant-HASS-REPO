@@ -85,6 +85,7 @@
   "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
   "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
+  "nutrient_volatilization_rates.json": "Volatilization loss fractions by nutrient.",
   "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
   "fertigation_recipes.json": "Recommended grams per liter of fertilizer products for each stage.",
   "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
