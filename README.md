@@ -244,6 +244,9 @@ or incomplete and should only be used as a starting point for your own research.
   readings or nutrient multipliers when profiles omit them.
 - **Dataset Cache**: Call `plant_engine.utils.clear_dataset_cache()` after
   adjusting dataset environment variables to refresh cached lookups.
+- **Flexible Temperature Inputs**: `normalize_environment_readings` accepts
+  Fahrenheit or Kelvin temperature keys and converts them to Celsius
+  automatically.
 - **Dynamic Tags**: Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards.
 - **Nutrient Mix Helper**: The `recommend_nutrient_mix` function computes exact
   fertilizer grams needed to hit N/P/K targets and can optionally include

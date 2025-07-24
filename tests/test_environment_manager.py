@@ -528,6 +528,18 @@ def test_normalize_environment_readings_soil_temp_fahrenheit():
     assert result == {"soil_temp_c": 25.0}
 
 
+def test_normalize_environment_readings_temp_kelvin():
+    data = {"temperature_k": 298.15}
+    result = normalize_environment_readings(data)
+    assert result == {"temp_c": 25.0}
+
+
+def test_normalize_environment_readings_soil_temp_kelvin():
+    data = {"soil_temp_k": 298.15}
+    result = normalize_environment_readings(data)
+    assert result == {"soil_temp_c": 25.0}
+
+
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})
     assert result == {"foo": 1.0}
