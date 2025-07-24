@@ -15,6 +15,7 @@ def test_list_datasets_contains_known():
     assert "leaf_temperature_guidelines.json" in datasets
     assert "disease_monitoring_intervals.json" in datasets
     assert "reference_et0.json" in datasets
+    assert "pesticide_modes.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -49,6 +50,9 @@ def test_get_dataset_description():
     assert "ET0" in desc8 or "et0" in desc8.lower()
     desc9 = get_dataset_description("leaf_temperature_guidelines.json")
     assert "temperature" in desc9
+
+    desc9 = get_dataset_description("pesticide_modes.json")
+    assert "action" in desc9
 
 
 def test_search_datasets():

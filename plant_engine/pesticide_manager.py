@@ -2,16 +2,18 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
-from typing import Dict, Iterable
+from typing import Dict, Iterable, List
 
 from .utils import load_dataset
 
 DATA_FILE = "pesticide_withdrawal_days.json"
 REENTRY_FILE = "pesticide_reentry_intervals.json"
+MOA_FILE = "pesticide_modes.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
 _REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
+_MOA: Dict[str, str] = load_dataset(MOA_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -21,6 +23,8 @@ __all__ = [
     "get_reentry_hours",
     "earliest_reentry_time",
     "calculate_reentry_window",
+    "get_mode_of_action",
+    "list_known_pesticides",
 ]
 
 
@@ -109,3 +113,15 @@ def calculate_harvest_window(applications: Iterable[tuple[str, date]]) -> date |
         if latest is None or harvest > latest:
             latest = harvest
     return latest
+
+
+def get_mode_of_action(product: str) -> str | None:
+    """Return the mode of action classification for ``product`` if known."""
+
+    return _MOA.get(product.lower())
+
+
+def list_known_pesticides() -> List[str]:
+    """Return alphabetically sorted list of pesticides with MOA data."""
+
+    return sorted(_MOA.keys())
