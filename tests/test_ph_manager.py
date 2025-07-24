@@ -16,6 +16,13 @@ def test_recommend_ph_adjustment():
     assert ph_manager.recommend_ph_adjustment(6.0, "citrus") is None
 
 
+def test_classify_ph():
+    assert ph_manager.classify_ph(5.0, "citrus") == "low"
+    assert ph_manager.classify_ph(7.0, "citrus") == "high"
+    assert ph_manager.classify_ph(6.0, "citrus") == "optimal"
+    assert ph_manager.classify_ph(6.0, "unknown") is None
+
+
 def test_recommend_unknown_or_invalid():
     assert ph_manager.get_ph_range("unknown") == []
     assert ph_manager.recommend_ph_adjustment(6.0, "unknown") is None
