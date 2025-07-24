@@ -237,6 +237,7 @@ __all__ = [
     "check_solubility_limits",
     "recommend_stock_solution_injection",
     "validate_fertigation_schedule",
+    "summarize_fertigation_schedule",
 ]
 
 
@@ -1071,4 +1072,69 @@ def validate_fertigation_schedule(
         "ppm": ppm_levels,
         "imbalances": check_imbalances(ppm_levels),
         "toxicities": check_toxicities(ppm_levels, plant_type),
+    }
+
+
+def summarize_fertigation_schedule(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+    fertilizers: Mapping[str, str] | None = None,
+) -> Dict[str, object]:
+    """Return fertigation schedule with cost and solubility diagnostics.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop type name used for guideline lookup.
+    stage : str
+        Growth stage for guideline lookup.
+    volume_l : float
+        Total solution volume in liters.
+    purity : Mapping[str, float] | None, optional
+        Explicit nutrient purity overrides.
+    product : str, optional
+        Fertilizer product ID to load purity data from.
+    fertilizers : Mapping[str, str] | None, optional
+        Mapping of nutrient codes to fertilizer product IDs used for cost
+        estimates.
+
+    Returns
+    -------
+    Dict[str, object]
+        Mapping with keys ``schedule``, ``cost_total``, ``cost_breakdown``
+        and ``solubility_warnings``.
+    """
+
+    schedule = recommend_fertigation_schedule(
+        plant_type,
+        stage,
+        volume_l,
+        purity,
+        product=product,
+    )
+
+    if fertilizers:
+        from plant_engine.fertigation import recommend_nutrient_mix_with_cost_breakdown
+
+        _, total, breakdown = recommend_nutrient_mix_with_cost_breakdown(
+            plant_type,
+            stage,
+            volume_l,
+            fertilizers=fertilizers,
+            purity_overrides=purity,
+        )
+    else:
+        total = 0.0
+        breakdown = {}
+    warnings = check_solubility_limits(schedule, volume_l)
+
+    return {
+        "schedule": schedule,
+        "cost_total": total,
+        "cost_breakdown": breakdown,
+        "solubility_warnings": warnings,
     }
