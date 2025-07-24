@@ -45,6 +45,8 @@ __all__ = [
     "apply_tag_modifiers",
     "get_ph_adjusted_levels",
     "calculate_deficiencies_with_ph",
+    "get_all_ph_adjusted_levels",
+    "calculate_all_deficiencies_with_ph",
 ]
 
 
@@ -306,6 +308,45 @@ def calculate_deficiencies_with_ph(
     """Return deficiencies using pH-adjusted nutrient targets."""
 
     targets = get_ph_adjusted_levels(plant_type, stage, ph)
+    deficits: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        diff = round(target - current, 2)
+        if diff > 0:
+            deficits[nutrient] = diff
+    return deficits
+
+
+def get_all_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
+    """Return macro and micro nutrient targets adjusted for solution pH."""
+
+    targets = get_all_recommended_levels(plant_type, stage)
+    if not targets:
+        return {}
+
+    if not 0 < ph <= 14:
+        raise ValueError("ph must be between 0 and 14")
+
+    factors = availability_for_all(ph)
+    adjusted: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        factor = factors.get(nutrient, 1.0)
+        adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
+    return adjusted
+
+
+def calculate_all_deficiencies_with_ph(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    ph: float,
+) -> Dict[str, float]:
+    """Return overall deficiencies using pH-adjusted guidelines."""
+
+    targets = get_all_ph_adjusted_levels(plant_type, stage, ph)
     deficits: Dict[str, float] = {}
     for nutrient, target in targets.items():
         try:

@@ -268,6 +268,9 @@ or incomplete and should only be used as a starting point for your own research.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.
+- **pH-Adjusted Deficiency Analysis**: `get_all_ph_adjusted_levels` and
+  `calculate_all_deficiencies_with_ph` account for nutrient availability at the
+  solution pH when diagnosing shortages.
 - **Total Uptake Estimation**: `estimate_stage_totals` multiplies daily uptake by
   growth stage duration while `estimate_total_uptake` sums these values across
   the entire crop cycle.
