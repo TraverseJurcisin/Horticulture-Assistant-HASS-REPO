@@ -185,6 +185,12 @@ from .nutrient_leaching import (
     estimate_leaching_loss,
     compensate_for_leaching,
 )
+from .nutrient_volatilization import (
+    list_known_nutrients as list_volatilization_nutrients,
+    get_volatilization_rate,
+    estimate_volatilization_loss,
+    compensate_for_volatilization,
+)
 from .water_quality import (
     list_analytes as list_water_analytes,
     get_threshold as get_water_threshold,
@@ -401,6 +407,10 @@ __all__ = [
     "get_leaching_rate",
     "estimate_leaching_loss",
     "compensate_for_leaching",
+    "list_volatilization_nutrients",
+    "get_volatilization_rate",
+    "estimate_volatilization_loss",
+    "compensate_for_volatilization",
     "list_toxicity_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
