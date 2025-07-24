@@ -11,7 +11,7 @@ import json
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .utils import _data_dir, _extra_dirs, _overlay_dir
 
@@ -25,6 +25,8 @@ __all__ = [
     "list_dataset_info",
     "search_datasets",
     "list_datasets_by_category",
+    "get_dataset_path",
+    "load_dataset_file",
 ]
 
 
@@ -112,6 +114,29 @@ class DatasetCatalog:
             paths.sort()
         return categories
 
+    @lru_cache(maxsize=None)
+    def find_path(self, name: str) -> Path | None:
+        """Return absolute :class:`Path` to ``name`` if it exists."""
+
+        search_paths = []
+        if self.overlay_dir:
+            search_paths.append(self.overlay_dir)
+        search_paths.extend([self.base_dir, *self.extra_dirs])
+        for base in search_paths:
+            candidate = base / name
+            if candidate.exists():
+                return candidate
+        return None
+
+    def load(self, name: str) -> object | None:
+        """Return parsed JSON contents of ``name`` or ``None`` if missing."""
+
+        path = self.find_path(name)
+        if not path:
+            return None
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
     def refresh(self) -> None:
         """Clear cached results so subsequent calls reload data."""
 
@@ -152,6 +177,18 @@ def list_datasets_by_category() -> Dict[str, List[str]]:
     """Return dataset names grouped by top-level directory."""
 
     return DEFAULT_CATALOG.list_by_category()
+
+
+def get_dataset_path(name: str) -> Path | None:
+    """Return absolute path to ``name`` if found in the catalog."""
+
+    return DEFAULT_CATALOG.find_path(name)
+
+
+def load_dataset_file(name: str) -> object | None:
+    """Return parsed JSON contents of ``name`` using the default catalog."""
+
+    return DEFAULT_CATALOG.load(name)
 
 
 def refresh_datasets() -> None:

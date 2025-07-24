@@ -92,3 +92,10 @@ def test_catalog_refresh(tmp_path):
     assert cat.list_datasets() == ["x.json"]
     cat.refresh()
     assert sorted(cat.list_datasets()) == ["x.json", "y.json"]
+
+
+def test_get_dataset_path_and_load():
+    path = datasets.get_dataset_path("nutrient_guidelines.json")
+    assert path and path.exists()
+    data = datasets.load_dataset_file("nutrient_guidelines.json")
+    assert isinstance(data, dict)
