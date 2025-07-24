@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Dict
+from typing import Dict, Iterable
 
 from .utils import load_dataset
 
@@ -15,6 +15,7 @@ __all__ = [
     "get_withdrawal_days",
     "earliest_harvest_date",
     "adjust_harvest_date",
+    "calculate_harvest_window",
 ]
 
 
@@ -65,3 +66,16 @@ def adjust_harvest_date(
     if wait_until is None:
         return predicted
     return max(predicted, wait_until)
+
+
+def calculate_harvest_window(applications: Iterable[tuple[str, date]]) -> date | None:
+    """Return earliest harvest date after multiple pesticide applications."""
+
+    latest: date | None = None
+    for product, applied in applications:
+        harvest = earliest_harvest_date(product, applied)
+        if harvest is None:
+            continue
+        if latest is None or harvest > latest:
+            latest = harvest
+    return latest
