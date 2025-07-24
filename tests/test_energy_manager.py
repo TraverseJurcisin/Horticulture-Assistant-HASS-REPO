@@ -3,6 +3,7 @@ import pytest
 from plant_engine.energy_manager import (
     get_energy_coefficient,
     estimate_hvac_energy,
+    estimate_hvac_cost,
     get_electricity_rate,
     estimate_lighting_energy,
     estimate_lighting_cost,
@@ -41,3 +42,10 @@ def test_estimate_lighting_energy_and_cost():
 def test_estimate_lighting_energy_invalid():
     with pytest.raises(ValueError):
         estimate_lighting_energy(0, 5)
+
+
+def test_estimate_hvac_cost():
+    # 2 degree difference for 12 hours using heating system with rate 0.18
+    cost = estimate_hvac_cost(18, 20, 12, "heating", region="california")
+    expected_kwh = 0.5 * (2 * 12 / 24)
+    assert cost == pytest.approx(expected_kwh * 0.18, 0.01)
