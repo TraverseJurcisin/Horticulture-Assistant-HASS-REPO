@@ -11,7 +11,11 @@ from __future__ import annotations
 import datetime
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Dict, Mapping
+from typing import Dict, Mapping, List
+
+from plant_engine.wsda_lookup import (
+    recommend_products_for_nutrient as _wsda_recommend,
+)
 
 from plant_engine.utils import load_dataset
 
@@ -528,31 +532,6 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
     return best_id, best_cost
 
 
-__all__ = [
-    "calculate_fertilizer_nutrients",
-    "calculate_fertilizer_nutrients_from_mass",
-    "convert_guaranteed_analysis",
-    "calculate_fertilizer_cost",
-    "calculate_fertilizer_cost_from_mass",
-    "calculate_fertilizer_ppm",
-    "estimate_mix_cost",
-    "estimate_mix_cost_per_plant",
-    "estimate_mix_cost_per_liter",
-    "estimate_cost_breakdown",
-    "get_cheapest_product",
-    "calculate_mix_nutrients",
-    "calculate_mix_density",
-    "estimate_solution_mass",
-    "check_solubility_limits",
-    "estimate_cost_per_nutrient",
-    "calculate_mass_for_target_ppm",
-    "list_products",
-    "get_product_info",
-    "find_products",
-    "calculate_mix_ppm",
-    "get_application_method",
-    "CATALOG",
-]
 
 
 def list_products() -> list[str]:
@@ -582,4 +561,38 @@ def get_application_method(fertilizer_id: str) -> str | None:
     """Return recommended application method for ``fertilizer_id``."""
 
     return CATALOG.application_methods().get(fertilizer_id)
+
+
+def recommend_wsda_products(nutrient: str, limit: int = 5) -> List[str]:
+    """Return WSDA product names with high concentrations of ``nutrient``."""
+
+    return _wsda_recommend(nutrient, limit=limit)
+
+
+__all__ = [
+    "calculate_fertilizer_nutrients",
+    "calculate_fertilizer_nutrients_from_mass",
+    "convert_guaranteed_analysis",
+    "calculate_fertilizer_cost",
+    "calculate_fertilizer_cost_from_mass",
+    "calculate_fertilizer_ppm",
+    "estimate_mix_cost",
+    "estimate_mix_cost_per_plant",
+    "estimate_mix_cost_per_liter",
+    "estimate_cost_breakdown",
+    "get_cheapest_product",
+    "calculate_mix_nutrients",
+    "calculate_mix_density",
+    "estimate_solution_mass",
+    "check_solubility_limits",
+    "estimate_cost_per_nutrient",
+    "calculate_mass_for_target_ppm",
+    "list_products",
+    "get_product_info",
+    "find_products",
+    "calculate_mix_ppm",
+    "get_application_method",
+    "recommend_wsda_products",
+    "CATALOG",
+]
 
