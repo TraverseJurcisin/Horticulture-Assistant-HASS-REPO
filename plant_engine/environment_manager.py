@@ -1175,6 +1175,9 @@ def calculate_dli_series(
 ) -> float:
     """Return Daily Light Integral from a sequence of PPFD readings.
 
+    ``ppfd_values`` may be any iterable. Values are consumed lazily so large
+    generators do not need to be materialized in memory.
+
     Parameters
     ----------
     ppfd_values: Iterable[float]
@@ -1185,11 +1188,13 @@ def calculate_dli_series(
     if interval_hours <= 0:
         raise ValueError("interval_hours must be positive")
 
-    values = [float(v) for v in ppfd_values]
-    if any(v < 0 for v in values):
-        raise ValueError("PPFD values must be non-negative")
+    total = 0.0
+    for raw in ppfd_values:
+        val = float(raw)
+        if val < 0:
+            raise ValueError("PPFD values must be non-negative")
+        total += val
 
-    total = sum(values)
     dli = total * 3600 * interval_hours / 1_000_000
     return round(dli, 2)
 
@@ -1197,19 +1202,41 @@ def calculate_dli_series(
 def calculate_vpd_series(
     temp_values: Iterable[float], humidity_values: Iterable[float]
 ) -> float:
-    """Return average VPD from paired temperature and humidity readings."""
+    """Return average VPD from paired temperature and humidity readings.
 
-    temps = list(temp_values)
-    hums = list(humidity_values)
-    if len(temps) != len(hums):
-        raise ValueError("temperature and humidity readings must have the same length")
-    if not temps:
-        return 0.0
+    The iterables are consumed lazily so large data sets do not require
+    additional memory. An empty input yields ``0.0``.
+    """
+
+    temp_iter = iter(temp_values)
+    hum_iter = iter(humidity_values)
 
     total = 0.0
-    for t, h in zip(temps, hums):
-        total += calculate_vpd(t, h)
-    return round(total / len(temps), 3)
+    count = 0
+
+    for t in temp_iter:
+        try:
+            h = next(hum_iter)
+        except StopIteration:
+            raise ValueError(
+                "temperature and humidity readings must have the same length"
+            )
+
+        total += calculate_vpd(float(t), float(h))
+        count += 1
+
+    try:
+        next(hum_iter)
+        raise ValueError(
+            "temperature and humidity readings must have the same length"
+        )
+    except StopIteration:
+        pass
+
+    if count == 0:
+        return 0.0
+
+    return round(total / count, 3)
 
 
 def get_target_dli(
