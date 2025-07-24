@@ -398,6 +398,15 @@ python scripts/generate_plant_sensors.py --all
 ```
 The generated YAML is written to `templates/generated/` for easy import.
 
+`wsda_search.py` provides a quick way to query the bundled WSDA fertilizer
+database from the command line:
+
+```bash
+python scripts/wsda_search.py "EARTH-CARE" --limit 5
+python scripts/wsda_search.py "(#4083-0001)" --number
+```
+Use `--number` to look up a product by its WSDA product number.
+
 `export_all_growth_yield.py` aggregates growth and yield data from the
 `analytics/` directory into a single JSON file:
 
@@ -439,6 +448,7 @@ print(ids)
 Run the unit tests with:
 
 ```bash
+pip install -r requirements.txt
 pytest -q
 ```
 

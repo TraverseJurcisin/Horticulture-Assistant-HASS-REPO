@@ -6,9 +6,13 @@ import json
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Tuple, Mapping
+from typing import Dict, List, Tuple, Mapping, Iterable
 
-# Path to the WSDA fertilizer database packaged with the repository
+from plant_engine.utils import load_json
+
+# Path to the WSDA fertilizer database packaged with the repository. Using
+# :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
+# variables to work as expected.
 _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
 
 __all__ = [
@@ -53,13 +57,28 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 
 @lru_cache(maxsize=None)
+def _records() -> Iterable[Mapping[str, object]]:
+    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+
+    if not _WSDA_PATH.exists():
+        return []
+    data = load_json(str(_WSDA_PATH))
+    if isinstance(data, list):
+        return data
+    if isinstance(data, Mapping) and "records" in data:
+        recs = data.get("records")
+        if isinstance(recs, list):
+            return recs
+    return []
+
+
+@lru_cache(maxsize=None)
 def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
     """Return lookup tables keyed by name and product number."""
-    if not _WSDA_PATH.exists():
-        return {}, {}
 
-    with open(_WSDA_PATH, "r", encoding="utf-8") as f:
-        records = json.load(f)
+    records = list(_records())
+    if not records:
+        return {}, {}
 
     names: Dict[str, _Product] = {}
     numbers: Dict[str, _Product] = {}
