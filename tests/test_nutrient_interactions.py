@@ -2,9 +2,11 @@ from plant_engine.nutrient_interactions import (
     list_interactions,
     get_interaction_info,
     get_max_ratio,
+    get_interaction_message,
     check_imbalances,
     get_balance_action,
     recommend_balance_actions,
+    analyze_interactions,
 )
 
 
@@ -25,6 +27,11 @@ def test_get_max_ratio():
     assert get_max_ratio("X", "Y") is None
 
 
+def test_get_interaction_message():
+    assert "magnesium" in get_interaction_message("K", "Mg")
+    assert get_interaction_message("X", "Y") == ""
+
+
 def test_check_imbalances():
     levels = {"K": 150, "Mg": 20, "Ca": 50, "N": 90, "P": 10}
     warnings = check_imbalances(levels)
@@ -42,3 +49,10 @@ def test_recommend_balance_actions():
     actions = recommend_balance_actions(levels)
     assert "K/Mg" in actions
     assert "N/P" in actions
+
+
+def test_analyze_interactions():
+    levels = {"K": 150, "Mg": 20, "N": 90, "P": 10}
+    result = analyze_interactions(levels)
+    assert "K/Mg" in result
+    assert result["K/Mg"]["ratio"] > result["K/Mg"]["max_ratio"]

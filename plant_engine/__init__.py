@@ -160,6 +160,16 @@ from .surplus_manager import (
     get_surplus_action,
     recommend_surplus_actions,
 )
+from .nutrient_interactions import (
+    list_interactions,
+    get_interaction_info,
+    get_max_ratio,
+    get_interaction_message,
+    check_imbalances,
+    get_balance_action,
+    recommend_balance_actions,
+    analyze_interactions,
+)
 from .yield_manager import (
     HarvestRecord,
     load_yield_history,
@@ -314,6 +324,14 @@ __all__ = [
     "list_surplus_nutrients",
     "get_surplus_action",
     "recommend_surplus_actions",
+    "list_interactions",
+    "get_interaction_info",
+    "get_max_ratio",
+    "get_interaction_message",
+    "check_imbalances",
+    "get_balance_action",
+    "recommend_balance_actions",
+    "analyze_interactions",
     "list_nutrient_plants",
     "get_nutrient_weight",
     "score_nutrient_levels",

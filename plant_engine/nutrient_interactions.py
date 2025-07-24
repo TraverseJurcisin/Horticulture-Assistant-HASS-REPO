@@ -1,11 +1,19 @@
 """Utilities for detecting and correcting nutrient ratio imbalances."""
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from dataclasses import dataclass
+from typing import Dict, Mapping, Tuple
 
 from .utils import load_dataset, list_dataset_entries
 
-_Pair = tuple[str, str]
+_Pair = Tuple[str, str]
+
+@dataclass(frozen=True)
+class InteractionInfo:
+    """Normalized dataset entry for a nutrient pair."""
+
+    max_ratio: float
+    message: str = ""
 
 DATA_FILE = "nutrient_interactions.json"
 ACTION_FILE = "nutrient_interaction_actions.json"
@@ -14,7 +22,7 @@ ACTION_FILE = "nutrient_interaction_actions.json"
 _DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
 
 # Precompute a mapping of nutrient pairs to interaction info for faster lookups
-_PAIR_DATA: Dict[_Pair, Dict[str, object]] = {}
+_PAIR_DATA: Dict[_Pair, InteractionInfo] = {}
 for _key, _info in _DATA.items():
     if not isinstance(_info, dict):
         continue
@@ -22,7 +30,12 @@ for _key, _info in _DATA.items():
         n1, n2 = _key.split("_")
     except ValueError:
         continue
-    _PAIR_DATA[(n1, n2)] = _info
+    try:
+        max_ratio = float(_info.get("max_ratio", 0))
+    except (TypeError, ValueError):
+        continue
+    msg = str(_info.get("message", ""))
+    _PAIR_DATA[(n1, n2)] = InteractionInfo(max_ratio=max_ratio, message=msg)
 
 _ACTIONS: Dict[str, str] = load_dataset(ACTION_FILE)
 
@@ -30,9 +43,11 @@ __all__ = [
     "list_interactions",
     "get_interaction_info",
     "get_max_ratio",
+    "get_interaction_message",
     "check_imbalances",
     "get_balance_action",
     "recommend_balance_actions",
+    "analyze_interactions",
 ]
 
 
@@ -49,13 +64,13 @@ def get_interaction_info(pair: str) -> Dict[str, object]:
 def get_max_ratio(n1: str, n2: str) -> float | None:
     """Return the defined maximum ratio for two nutrients if available."""
     info = _PAIR_DATA.get((n1, n2)) or _PAIR_DATA.get((n2, n1))
-    if info is None:
-        return None
-    value = info.get("max_ratio")
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
+    return info.max_ratio if info else None
+
+
+def get_interaction_message(n1: str, n2: str) -> str:
+    """Return advisory message for a nutrient pair if defined."""
+    info = _PAIR_DATA.get((n1, n2)) or _PAIR_DATA.get((n2, n1))
+    return info.message if info else ""
 
 
 def check_imbalances(levels: Mapping[str, float]) -> Dict[str, str]:
@@ -68,12 +83,10 @@ def check_imbalances(levels: Mapping[str, float]) -> Dict[str, str]:
         val2 = levels[n2]
         try:
             ratio = float(val1) / float(val2)
-            max_ratio = float(info.get("max_ratio", 0))
         except Exception:
             continue
-        if ratio > max_ratio:
-            msg = str(info.get("message", "Imbalance detected"))
-            warnings[f"{n1}/{n2}"] = msg
+        if ratio > info.max_ratio:
+            warnings[f"{n1}/{n2}"] = info.message or "Imbalance detected"
     return warnings
 
 
@@ -98,4 +111,26 @@ def recommend_balance_actions(levels: Mapping[str, float]) -> Dict[str, str]:
         if action:
             actions[pair] = action
     return actions
+
+
+def analyze_interactions(levels: Mapping[str, float]) -> Dict[str, Dict[str, object]]:
+    """Return detailed information for each detected imbalance."""
+
+    result: Dict[str, Dict[str, object]] = {}
+    for (n1, n2), info in _PAIR_DATA.items():
+        if n1 not in levels or n2 not in levels:
+            continue
+        try:
+            ratio = float(levels[n1]) / float(levels[n2])
+        except Exception:
+            continue
+        if ratio > info.max_ratio:
+            pair = f"{n1}/{n2}"
+            result[pair] = {
+                "ratio": round(ratio, 2),
+                "max_ratio": info.max_ratio,
+                "message": info.message,
+                "action": get_balance_action(pair),
+            }
+    return result
 
