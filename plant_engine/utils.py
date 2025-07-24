@@ -6,7 +6,7 @@ import json
 import os
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, Mapping
+from typing import Any, Dict, Mapping, Iterable
 
 __all__ = [
     "load_json",
@@ -76,12 +76,12 @@ EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
 def _data_dir() -> Path:
     env = os.getenv("HORTICULTURE_DATA_DIR")
-    return Path(env) if env else DEFAULT_DATA_DIR
+    return Path(env).expanduser() if env else DEFAULT_DATA_DIR
 
 
 def _overlay_dir() -> Path | None:
     env = os.getenv(OVERLAY_ENV)
-    return Path(env) if env else None
+    return Path(env).expanduser() if env else None
 
 
 def _extra_dirs() -> list[Path]:
@@ -90,7 +90,7 @@ def _extra_dirs() -> list[Path]:
         return []
     dirs: list[Path] = []
     for part in env.split(os.pathsep):
-        path = Path(part)
+        path = Path(part).expanduser()
         if path.is_dir():
             dirs.append(path)
     return dirs
@@ -142,7 +142,13 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
 
 
 def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
-    """Return a normalized ``(min, max)`` tuple or ``None`` if invalid."""
+    """Return a normalized ``(min, max)`` tuple or ``None`` if invalid.
+
+    ``value`` may be any iterable with at least two numeric entries. Values are
+    cast to ``float`` and returned as a two-item tuple. If the input cannot be
+    interpreted as a pair of numbers, ``None`` is returned instead of raising an
+    exception.
+    """
 
     try:
         low, high = value
