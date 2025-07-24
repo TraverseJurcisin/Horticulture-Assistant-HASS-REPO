@@ -10,6 +10,11 @@ from typing import Dict, List, Tuple, Mapping, Iterable
 
 from plant_engine.utils import load_json
 
+# Fallback newline-delimited product index used when the full WSDA dataset is
+# unavailable. This index contains a subset of information but provides the
+# NPK values required by the public lookup helpers.
+_INDEX_PATH = Path(__file__).resolve().parents[1] / "products_index.jsonl"
+
 # Path to the WSDA fertilizer database packaged with the repository. Using
 # :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
 # variables to work as expected.
@@ -57,19 +62,64 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 
 @lru_cache(maxsize=None)
-def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+def _records_from_index() -> list[Mapping[str, object]]:
+    """Return minimal fertilizer records built from the product index."""
 
-    if not _WSDA_PATH.exists():
+    if not _INDEX_PATH.exists():
         return []
-    data = load_json(str(_WSDA_PATH))
-    if isinstance(data, list):
-        return data
-    if isinstance(data, Mapping) and "records" in data:
-        recs = data.get("records")
-        if isinstance(recs, list):
-            return recs
-    return []
+
+    records: list[dict] = []
+    with open(_INDEX_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                item = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+
+            ga: dict[str, float] = {}
+            if item.get("n") is not None:
+                ga["Total Nitrogen"] = item["n"]
+            if item.get("p") is not None:
+                ga["Available Phosphoric Acid"] = item["p"]
+            if item.get("k") is not None:
+                ga["Soluble Potash"] = item["k"]
+
+            records.append(
+                {
+                    "product_name": item.get("label_name"),
+                    "wsda_product_number": item.get("wsda_reg_no"),
+                    "guaranteed_analysis": ga,
+                }
+            )
+
+    return records
+
+
+@lru_cache(maxsize=None)
+def _records() -> Iterable[Mapping[str, object]]:
+    """Return WSDA fertilizer records loaded from the bundled JSON file.
+
+    If the bundled JSON file is missing or invalid, fall back to a compact
+    product index containing the NPK values required by the public helpers.
+    """
+
+    if _WSDA_PATH.exists():
+        try:
+            data = load_json(str(_WSDA_PATH))
+        except ValueError:  # invalid JSON
+            data = None
+        if isinstance(data, list):
+            return data
+        if isinstance(data, Mapping) and "records" in data:
+            recs = data.get("records")
+            if isinstance(recs, list):
+                return recs
+
+    # Fallback to the trimmed index distributed with tests
+    return _records_from_index()
 
 
 @lru_cache(maxsize=None)
