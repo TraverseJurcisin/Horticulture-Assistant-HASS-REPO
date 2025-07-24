@@ -155,7 +155,11 @@ def list_datasets_by_category() -> Dict[str, List[str]]:
 
 
 def refresh_datasets() -> None:
-    """Clear cached dataset listings in the default catalog."""
+    """Clear cached dataset and catalog results."""
 
     DEFAULT_CATALOG.refresh()
+    # Also clear any cached dataset contents so reloading picks up changes
+    from .utils import clear_dataset_cache
+
+    clear_dataset_cache()
 
