@@ -10,6 +10,7 @@ def _sample_package():
         date="2024-01-01",
         plant_data={
             "p1": {
+                "plant_type": "tomato",
                 "growth_rate": 0.5,
                 "expected_growth": 1.0,
                 "yield": 7.0,
@@ -17,7 +18,9 @@ def _sample_package():
                 "ec": 3.0,
             }
         },
-        environment_data={},
+        environment_data={
+            "p1": {"temp_c": 42, "humidity_pct": 60}
+        },
         fertigation_data={},
     )
 
@@ -30,6 +33,7 @@ def test_ai_inference_engine_detects_issues():
     assert "Low growth rate detected" in res.flagged_issues
     assert "Yield below expected threshold" in res.flagged_issues
     assert "High EC detected" in res.flagged_issues
+    assert "Heat stress detected" in res.flagged_issues
     assert res.confidence < 1.0
 
 
