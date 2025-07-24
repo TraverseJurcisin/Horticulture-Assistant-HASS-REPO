@@ -96,3 +96,37 @@ class DoseCalculator:
         if from_unit == to_unit:
             return value
         raise ValueError(f"Unsupported conversion: {from_unit} -> {to_unit}")
+
+    @staticmethod
+    def calculate_dilution_volume(
+        stock_concentration: float,
+        desired_concentration: float,
+        final_volume_l: float,
+        unit: Literal["mg/L", "g/L", "ppm"] = "ppm",
+    ) -> float:
+        """Return stock solution volume (liters) required to dilute to target.
+
+        The ``stock_concentration`` and ``desired_concentration`` are interpreted
+        according to ``unit``. ``"ppm"`` is treated as ``"mg/L"``. The function
+        implements the basic dilution equation ``C1 * V1 = C2 * V2`` where
+        ``C1`` is the stock concentration, ``C2`` the desired concentration and
+        ``V2`` the final solution volume. The returned value ``V1`` is rounded to
+        three decimals.
+        """
+
+        if stock_concentration <= 0 or desired_concentration <= 0:
+            raise ValueError("Concentrations must be positive")
+        if final_volume_l <= 0:
+            raise ValueError("final_volume_l must be positive")
+
+        u = unit
+        if u == "ppm":
+            u = "mg/L"
+        if u not in {"mg/L", "g/L"}:
+            raise ValueError("Unsupported unit")
+
+        if desired_concentration >= stock_concentration:
+            raise ValueError("Stock concentration must exceed desired")
+
+        v1 = (desired_concentration * final_volume_l) / stock_concentration
+        return round(v1, 3)
