@@ -30,6 +30,7 @@ CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
+LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -242,6 +243,7 @@ __all__ = [
     "get_target_soil_moisture",
     "get_target_soil_temperature",
     "get_target_soil_ec",
+    "get_target_leaf_temperature",
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
@@ -263,6 +265,7 @@ __all__ = [
     "evaluate_moisture_stress",
     "evaluate_soil_temperature_stress",
     "evaluate_soil_ec_stress",
+    "evaluate_leaf_temperature_stress",
     "get_humidity_action",
     "recommend_humidity_action",
     "evaluate_ph_stress",
@@ -307,6 +310,7 @@ _CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
+_LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -481,6 +485,7 @@ class StressFlags:
     ph: str | None
     soil_temp: str | None = None
     soil_ec: str | None = None
+    leaf_temp: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -1198,6 +1203,12 @@ def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple 
     return _lookup_range(_SOIL_EC_DATA, plant_type, stage)
 
 
+def get_target_leaf_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+    """Return recommended leaf temperature range for a plant stage."""
+
+    return _lookup_range(_LEAF_TEMP_DATA, plant_type, stage)
+
+
 def evaluate_soil_temperature_stress(
     soil_temp_c: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1238,6 +1249,26 @@ def evaluate_soil_ec_stress(
     return None
 
 
+def evaluate_leaf_temperature_stress(
+    leaf_temp_c: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
+    """Return 'cold' or 'hot' if leaf temperature is outside the target range."""
+
+    if leaf_temp_c is None:
+        return None
+
+    target = get_target_leaf_temperature(plant_type, stage)
+    if not target:
+        return None
+
+    low, high = target
+    if leaf_temp_c < low:
+        return "cold"
+    if leaf_temp_c > high:
+        return "hot"
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1265,6 +1296,7 @@ def evaluate_stress_conditions(
     ph: float | None,
     wind_m_s: float | None,
     moisture_pct: float | None,
+    leaf_temp_c: float | None,
     plant_type: str,
     stage: str | None = None,
     soil_temp_c: float | None = None,
@@ -1279,6 +1311,7 @@ def evaluate_stress_conditions(
         wind=evaluate_wind_stress(wind_m_s, plant_type),
         humidity=evaluate_humidity_stress(humidity_pct, plant_type),
         moisture=evaluate_moisture_stress(moisture_pct, plant_type, stage),
+        leaf_temp=evaluate_leaf_temperature_stress(leaf_temp_c, plant_type, stage),
         ph=evaluate_ph_stress(ph, plant_type, stage),
         soil_temp=evaluate_soil_temperature_stress(soil_temp_c, plant_type, stage),
         soil_ec=evaluate_soil_ec_stress(soil_ec_ds_m, plant_type, stage),
@@ -1636,6 +1669,7 @@ def optimize_environment(
         readings.get("ph"),
         readings.get("wind_m_s"),
         readings.get("soil_moisture_pct"),
+        readings.get("leaf_temp_c"),
         plant_type,
         stage,
         readings.get("soil_temp_c"),
@@ -1719,6 +1753,7 @@ def summarize_environment(
         readings.get("ph"),
         readings.get("wind_m_s"),
         readings.get("soil_moisture_pct"),
+        readings.get("leaf_temp_c"),
         plant_type,
         stage,
         readings.get("soil_temp_c"),
