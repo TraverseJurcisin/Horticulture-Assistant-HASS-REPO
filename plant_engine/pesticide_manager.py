@@ -1,21 +1,26 @@
 """Utilities for pesticide withdrawal periods."""
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from typing import Dict, Iterable
 
 from .utils import load_dataset
 
 DATA_FILE = "pesticide_withdrawal_days.json"
+REENTRY_FILE = "pesticide_reentry_intervals.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
+_REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
 
 __all__ = [
     "get_withdrawal_days",
     "earliest_harvest_date",
     "adjust_harvest_date",
     "calculate_harvest_window",
+    "get_reentry_hours",
+    "earliest_reentry_time",
+    "calculate_reentry_window",
 ]
 
 
@@ -66,6 +71,31 @@ def adjust_harvest_date(
     if wait_until is None:
         return predicted
     return max(predicted, wait_until)
+
+
+def get_reentry_hours(product: str) -> float | None:
+    """Return reentry interval in hours for ``product``."""
+    return _REENTRY.get(product.lower())
+
+
+def earliest_reentry_time(product: str, application_time: datetime) -> datetime | None:
+    """Return earliest safe reentry ``datetime`` after pesticide application."""
+    hours = get_reentry_hours(product)
+    if hours is None:
+        return None
+    return application_time + timedelta(hours=float(hours))
+
+
+def calculate_reentry_window(applications: Iterable[tuple[str, datetime]]) -> datetime | None:
+    """Return latest reentry time from multiple pesticide applications."""
+    latest: datetime | None = None
+    for product, applied in applications:
+        entry = earliest_reentry_time(product, applied)
+        if entry is None:
+            continue
+        if latest is None or entry > latest:
+            latest = entry
+    return latest
 
 
 def calculate_harvest_window(applications: Iterable[tuple[str, date]]) -> date | None:

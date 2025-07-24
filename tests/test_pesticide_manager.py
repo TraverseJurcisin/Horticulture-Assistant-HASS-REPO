@@ -5,6 +5,9 @@ from plant_engine.pesticide_manager import (
     earliest_harvest_date,
     adjust_harvest_date,
     calculate_harvest_window,
+    get_reentry_hours,
+    earliest_reentry_time,
+    calculate_reentry_window,
 )
 
 
@@ -40,4 +43,27 @@ def test_calculate_harvest_window():
     harvest = calculate_harvest_window(applications)
     expected = earliest_harvest_date("imidacloprid", datetime.date(2024, 6, 10))
     assert harvest == expected
+
+
+def test_get_reentry_hours():
+    assert get_reentry_hours("spinosad") == 4
+    assert get_reentry_hours("imidacloprid") == 12
+    assert get_reentry_hours("foo") is None
+
+
+def test_earliest_reentry_time():
+    dt = datetime.datetime(2024, 6, 1, 8, 0)
+    result = earliest_reentry_time("spinosad", dt)
+    assert result == dt + datetime.timedelta(hours=4)
+    assert earliest_reentry_time("foo", dt) is None
+
+
+def test_calculate_reentry_window():
+    apps = [
+        ("spinosad", datetime.datetime(2024, 6, 1, 6)),
+        ("imidacloprid", datetime.datetime(2024, 6, 2, 9)),
+    ]
+    window = calculate_reentry_window(apps)
+    expected = earliest_reentry_time("imidacloprid", apps[1][1])
+    assert window == expected
 
