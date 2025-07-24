@@ -1,4 +1,7 @@
-import os
+"""Helper utilities for writing plant profile sections to disk."""
+
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 from typing import Mapping, Any
@@ -16,12 +19,29 @@ def write_profile_sections(
 ) -> str:
     """Write profile JSON ``sections`` for ``plant_id`` under ``base_path``.
 
-    Returns the ``plant_id`` on success or an empty string on error.
+    Parameters
+    ----------
+    plant_id:
+        Directory name for the plant within ``base_path``.
+    sections:
+        Mapping of file names to JSON serializable data.
+    base_path:
+        Optional root directory to create the profile under. Defaults to
+        ``./plants``.
+    overwrite:
+        If ``True`` existing files are replaced. Otherwise they are left
+        untouched and logged.
+
+    Returns
+    -------
+    str
+        The ``plant_id`` on success or an empty string if a failure
+        prevented writing any files.
     """
     base_dir = Path(base_path) if base_path else Path("plants")
     plant_dir = base_dir / plant_id
     try:
-        os.makedirs(plant_dir, exist_ok=True)
+        plant_dir.mkdir(parents=True, exist_ok=True)
     except Exception as err:  # pragma: no cover - unexpected errors
         _LOGGER.error("Failed to create directory %s: %s", plant_dir, err)
         return ""
