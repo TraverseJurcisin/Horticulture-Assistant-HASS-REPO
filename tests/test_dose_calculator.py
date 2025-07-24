@@ -36,3 +36,16 @@ def test_convert_unit():
     assert DoseCalculator.convert_unit(1000, "mL", "L") == 1
     with pytest.raises(ValueError):
         DoseCalculator.convert_unit(1, "foo", "bar")
+
+
+def test_calculate_dilution_volume():
+    vol = DoseCalculator.calculate_dilution_volume(1000, 100, 10, "ppm")
+    assert vol == 1
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_dilution_volume(100, 100, 10)
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_dilution_volume(1000, 0, 10)
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_dilution_volume(1000, 100, -1)
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_dilution_volume(500, 600, 1)
