@@ -27,6 +27,7 @@ from plant_engine.environment_manager import (
     estimate_co2_cost,
     recommend_co2_injection_with_cost,
     calculate_co2_injection_series,
+    calculate_co2_cost_series,
     humidity_for_target_vpd,
     recommend_photoperiod,
     recommend_light_intensity,
@@ -799,3 +800,11 @@ def test_calculate_co2_injection_series():
     assert len(grams) == 3
     assert grams[0] > grams[1] >= 0
     assert grams[2] == 0.0
+
+
+def test_calculate_co2_cost_series():
+    series = [300, 500, 700]
+    costs = calculate_co2_cost_series(series, "citrus", "seedling", 50.0)
+    assert len(costs) == 3
+    assert costs[0] > costs[1] >= 0
+    assert costs[2] == 0.0

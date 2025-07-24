@@ -241,6 +241,7 @@ __all__ = [
     "estimate_co2_cost",
     "recommend_co2_injection_with_cost",
     "calculate_co2_injection_series",
+    "calculate_co2_cost_series",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "get_score_weight",
@@ -1479,6 +1480,21 @@ def calculate_co2_injection_series(
         )
 
     return injections
+
+
+def calculate_co2_cost_series(
+    ppm_series: Iterable[float],
+    plant_type: str,
+    stage: str | None,
+    volume_m3: float,
+    method: str = "bulk_tank",
+) -> list[float]:
+    """Return cost for CO₂ injections calculated for each reading."""
+
+    injections = calculate_co2_injection_series(
+        ppm_series, plant_type, stage, volume_m3
+    )
+    return [estimate_co2_cost(g, method) for g in injections]
 
 
 def calculate_environment_metrics(
