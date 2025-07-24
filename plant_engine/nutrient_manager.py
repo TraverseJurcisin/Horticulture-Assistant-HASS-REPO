@@ -3,7 +3,13 @@ from __future__ import annotations
 
 from typing import Dict, Mapping, Iterable
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import (
+    load_dataset,
+    normalize_key,
+    list_dataset_entries,
+    clear_dataset_cache,
+)
+from .nutrient_availability import availability_factor, availability_for_all
 
 DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
@@ -11,6 +17,8 @@ WEIGHT_DATA_FILE = "nutrient_weights.json"
 TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
 
 
+# Ensure dataset cache respects overlay changes on reload
+clear_dataset_cache()
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
@@ -35,6 +43,8 @@ __all__ = [
     "recommend_ratio_adjustments",
     "get_tag_modifier",
     "apply_tag_modifiers",
+    "get_ph_adjusted_levels",
+    "calculate_deficiencies_with_ph",
 ]
 
 
@@ -254,6 +264,48 @@ def calculate_all_nutrient_balance(
             continue
         ratios[nutrient] = round(current / target, 2)
     return ratios
+
+
+def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
+    """Return nutrient targets adjusted for solution pH availability."""
+
+    if ph <= 0:
+        raise ValueError("ph must be positive")
+
+    targets = get_recommended_levels(plant_type, stage)
+    if not targets:
+        return {}
+
+    factors = availability_for_all(ph)
+    adjusted: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        factor = factors.get(nutrient, 1.0)
+        if factor <= 0:
+            adjusted[nutrient] = ppm
+        else:
+            adjusted[nutrient] = round(ppm / factor, 2)
+    return adjusted
+
+
+def calculate_deficiencies_with_ph(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    ph: float,
+) -> Dict[str, float]:
+    """Return deficiencies using pH-adjusted nutrient targets."""
+
+    targets = get_ph_adjusted_levels(plant_type, stage, ph)
+    deficits: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        diff = round(target - current, 2)
+        if diff > 0:
+            deficits[nutrient] = diff
+    return deficits
 
 
 def recommend_ratio_adjustments(

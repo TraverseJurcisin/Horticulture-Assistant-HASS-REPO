@@ -346,6 +346,8 @@ __all__ = [
     "list_nutrient_plants",
     "get_nutrient_weight",
     "score_nutrient_levels",
+    "get_ph_adjusted_levels",
+    "calculate_deficiencies_with_ph",
     "list_micro_plants",
     "get_micro_levels",
     "list_silicon_plants",
