@@ -5,6 +5,8 @@ from typing import Dict, Iterable
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
+RESISTANCE_FILE = "disease_resistance_ratings.json"
+
 DATA_FILE = "disease_guidelines.json"
 PREVENTION_FILE = "disease_prevention.json"
 
@@ -13,6 +15,7 @@ PREVENTION_FILE = "disease_prevention.json"
 # Dataset is cached by ``load_dataset`` so load once at import time
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
+_RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -53,6 +56,18 @@ def recommend_prevention(plant_type: str, diseases: Iterable[str]) -> Dict[str, 
     return actions
 
 
+def get_disease_resistance(plant_type: str, disease: str) -> float | None:
+    """Return relative resistance rating of a plant to ``disease``.
+
+    Ratings are arbitrary scores (1-5). ``None`` is returned when no rating is
+    defined for the plant/disease combination.
+    """
+
+    data = _RESISTANCE.get(normalize_key(plant_type), {})
+    value = data.get(normalize_key(disease))
+    return float(value) if isinstance(value, (int, float)) else None
+
+
 __all__ = [
     "list_supported_plants",
     "get_disease_guidelines",
@@ -60,4 +75,5 @@ __all__ = [
     "recommend_treatments",
     "get_disease_prevention",
     "recommend_prevention",
+    "get_disease_resistance",
 ]

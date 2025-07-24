@@ -2,6 +2,7 @@ from plant_engine.disease_manager import (
     get_disease_guidelines,
     recommend_treatments,
     list_known_diseases,
+    get_disease_resistance,
 )
 
 
@@ -25,3 +26,8 @@ def test_recommend_treatments():
 def test_list_known_diseases():
     diseases = list_known_diseases("citrus")
     assert "root rot" in diseases
+
+
+def test_get_disease_resistance():
+    assert get_disease_resistance("citrus", "greasy_spot") == 4.0
+    assert get_disease_resistance("citrus", "unknown") is None

@@ -64,6 +64,7 @@ from .disease_manager import (
     list_supported_plants as list_disease_plants,
     get_disease_prevention,
     recommend_prevention as recommend_disease_prevention,
+    get_disease_resistance,
 )
 from .fertigation import (
     recommend_fertigation_schedule,
@@ -303,6 +304,7 @@ __all__ = [
     "recommend_disease_treatments",
     "get_disease_prevention",
     "recommend_disease_prevention",
+    "get_disease_resistance",
     "list_disease_plants",
     "get_disease_thresholds",
     "assess_disease_pressure",

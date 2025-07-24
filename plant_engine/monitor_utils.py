@@ -10,6 +10,7 @@ __all__ = [
     "get_interval",
     "next_date",
     "generate_schedule",
+    "estimate_condition_risk",
 ]
 
 
@@ -53,3 +54,41 @@ def generate_schedule(
     if interval is None or events <= 0:
         return []
     return [start + timedelta(days=interval * i) for i in range(1, events + 1)]
+
+
+def estimate_condition_risk(
+    factors: Mapping[str, Mapping[str, list]],
+    environment: Mapping[str, float],
+) -> dict[str, str]:
+    """Return risk classification for each condition in ``factors``."""
+
+    from . import environment_manager
+
+    readings = environment_manager.normalize_environment_readings(environment)
+    risks: dict[str, str] = {}
+    for name, reqs in factors.items():
+        matches = 0
+        total = 0
+        for key, bounds in reqs.items():
+            if (
+                not isinstance(bounds, (list, tuple))
+                or len(bounds) != 2
+            ):
+                continue
+            total += 1
+            value = readings.get(key)
+            if value is None:
+                continue
+            low, high = bounds
+            if low <= value <= high:
+                matches += 1
+        if total == 0:
+            continue
+        if matches == 0:
+            level = "low"
+        elif matches < total:
+            level = "moderate"
+        else:
+            level = "high"
+        risks[normalize_key(name)] = level
+    return risks
