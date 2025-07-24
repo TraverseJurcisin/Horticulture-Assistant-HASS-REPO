@@ -9,6 +9,7 @@ from plant_engine.pest_manager import (
     recommend_ipm_actions,
     list_known_pests,
     build_pest_management_plan,
+    get_all_pest_resistance,
 )
 
 
@@ -83,3 +84,16 @@ def test_get_pest_resistance():
 
     assert get_pest_resistance("citrus", "aphids") == 3.0
     assert get_pest_resistance("citrus", "unknown") is None
+
+
+def test_get_all_pest_resistance():
+    from plant_engine.pest_manager import get_all_pest_resistance
+
+    ratings = get_all_pest_resistance("citrus")
+    assert ratings["aphids"] == 3.0
+    assert "scale" in ratings
+
+
+def test_plan_includes_resistance():
+    plan = build_pest_management_plan("citrus", ["aphids"])
+    assert plan["aphids"]["resistance"] == 3.0

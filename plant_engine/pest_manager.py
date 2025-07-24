@@ -49,6 +49,19 @@ def get_pest_resistance(plant_type: str, pest: str) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
 
 
+def get_all_pest_resistance(plant_type: str) -> Dict[str, float]:
+    """Return mapping of pests to resistance ratings for ``plant_type``."""
+
+    ratings = _RESISTANCE.get(normalize_key(plant_type), {})
+    result: Dict[str, float] = {}
+    for pest, value in ratings.items():
+        try:
+            result[pest] = float(value)
+        except (TypeError, ValueError):
+            continue
+    return result
+
+
 def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
     """Return recommended treatment strings for each observed pest."""
     guide = get_pest_guidelines(plant_type)
@@ -134,6 +147,7 @@ def build_pest_management_plan(
             "prevention": prevention.get(pest, "No guideline available"),
             "beneficials": beneficials.get(pest, []),
             "ipm": ipm_actions.get(pest),
+            "resistance": get_pest_resistance(plant_type, pest),
         }
 
     return plan
@@ -151,5 +165,6 @@ __all__ = [
     "get_ipm_guidelines",
     "recommend_ipm_actions",
     "get_pest_resistance",
+    "get_all_pest_resistance",
     "build_pest_management_plan",
 ]
