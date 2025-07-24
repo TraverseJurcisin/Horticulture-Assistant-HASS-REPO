@@ -1,6 +1,10 @@
+"""Data structures for tracking product pricing over time."""
+
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from datetime import datetime
+
+__all__ = ["ProductPriceEntry", "CostAnalyzer"]
 
 
 @dataclass
@@ -37,3 +41,4 @@ class CostAnalyzer:
                 unit_prices = [e.price / e.package_size for e in entries]
                 summary[product_id] = sum(unit_prices) / len(unit_prices)
         return summary
+
