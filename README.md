@@ -378,10 +378,15 @@ Development is private for now. Feedback is welcome, but pull requests will open
 ## Command Line Utilities
 This repository ships with a few helper scripts in the `scripts/` directory. The
 `generate_plant_sensors.py` utility converts daily JSON reports into Home
-Assistant template sensor YAML. Run it with:
+Assistant template sensor YAML. It can process a single plant or every report in
+the directory. Example usage:
 
 ```bash
+# single plant
 python scripts/generate_plant_sensors.py <plant_id>
+
+# generate for all reports
+python scripts/generate_plant_sensors.py --all
 ```
 The generated YAML is written to `templates/generated/` for easy import.
 
