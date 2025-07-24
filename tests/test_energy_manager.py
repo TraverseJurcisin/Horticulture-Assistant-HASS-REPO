@@ -1,6 +1,12 @@
 import pytest
 
-from plant_engine.energy_manager import get_energy_coefficient, estimate_hvac_energy
+from plant_engine.energy_manager import (
+    get_energy_coefficient,
+    estimate_hvac_energy,
+    get_electricity_rate,
+    estimate_lighting_energy,
+    estimate_lighting_cost,
+)
 
 
 def test_get_energy_coefficient():
@@ -18,3 +24,20 @@ def test_estimate_hvac_energy():
 def test_estimate_hvac_energy_invalid_hours():
     with pytest.raises(ValueError):
         estimate_hvac_energy(18, 20, 0, "heating")
+
+
+def test_electricity_rate_lookup():
+    assert get_electricity_rate("california") == 0.18
+    assert get_electricity_rate("unknown") == 0.12
+
+
+def test_estimate_lighting_energy_and_cost():
+    energy = estimate_lighting_energy(200, 5)
+    assert energy == 1.0
+    cost = estimate_lighting_cost(200, 5, "california")
+    assert cost == pytest.approx(1.0 * 0.18, 0.01)
+
+
+def test_estimate_lighting_energy_invalid():
+    with pytest.raises(ValueError):
+        estimate_lighting_energy(0, 5)
