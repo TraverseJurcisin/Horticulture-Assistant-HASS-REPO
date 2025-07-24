@@ -259,6 +259,8 @@ or incomplete and should only be used as a starting point for your own research.
   water volume to approximate the total weight of a nutrient solution.
 - **Solubility Check**: `check_solubility_limits` warns when a fertilizer mix
   exceeds the maximum grams per liter defined in `fertilizer_solubility.json`.
+- **Solution Volume Estimate**: `estimate_solution_volume` calculates how much
+  water is needed to fully dissolve a fertilizer mix.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.

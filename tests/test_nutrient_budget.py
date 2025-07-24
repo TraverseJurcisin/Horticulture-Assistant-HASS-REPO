@@ -33,3 +33,10 @@ def test_estimate_fertilizer_requirements():
     assert round(masses["map"], 2) == round(0.2 / 0.22, 2)
     assert round(masses["kcl"], 2) == round(1.5 / 0.5, 2)
 
+
+def test_estimate_solution_volume():
+    masses = {"foxfarm_grow_big": 150, "magriculture": 800}
+    volumes = nutrient_budget.estimate_solution_volume(masses)
+    assert volumes["foxfarm_grow_big"] == 0.5  # 150g / 300 g/L
+    assert volumes["magriculture"] == 1.0      # 800g / 800 g/L
+

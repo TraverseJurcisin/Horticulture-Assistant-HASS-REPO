@@ -405,6 +405,8 @@ __all__ = [
     "get_removal_rates",
     "estimate_total_removal",
     "estimate_required_nutrients",
+    "estimate_fertilizer_requirements",
+    "estimate_solution_volume",
     "generate_health_report",
     "list_water_analytes",
     "get_water_threshold",
