@@ -34,6 +34,7 @@ from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.rootzone_model import estimate_water_capacity
 from plant_engine.yield_prediction import estimate_remaining_yield
+from plant_engine.stage_tasks import get_stage_tasks
 
 
 @dataclass
@@ -57,6 +58,7 @@ class DailyReport:
     root_zone: dict[str, object] = field(default_factory=dict)
     transpiration: dict[str, float] = field(default_factory=dict)
     stage_info: dict[str, object] = field(default_factory=dict)
+    stage_tasks: list[str] = field(default_factory=list)
     stage_progress_pct: float | None = None
     fertigation_schedule: dict[str, float] = field(default_factory=dict)
     fertigation_cost: float | None = None
@@ -277,6 +279,9 @@ def run_daily_cycle(
         stage_key = stage_name if stage_name in stages else stage_name.lower()
         if stage_key in stages and isinstance(stages[stage_key], dict):
             report.stage_info = stages[stage_key]
+        tasks = get_stage_tasks(plant_type, stage_name)
+        if tasks:
+            report.stage_tasks = tasks
         if start_date_str:
             try:
                 start_date = datetime.fromisoformat(start_date_str).date()
