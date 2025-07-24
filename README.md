@@ -61,6 +61,7 @@ applying it to your plants.
 - Nutrient deficiency severity and treatment recommendations
 - Combined deficiency/toxicity nutrient status classification
 - Automated deficiency action recommendations in daily reports
+- Infiltration time estimates for irrigation volumes
 - Example crop profiles for strawberries, basil, spinach and more
 - Helper functions to list known pests and diseases by crop
 
