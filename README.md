@@ -196,6 +196,8 @@ Key reference datasets reside in the `data/` directory:
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `emitter_flow_rates.json` – typical emitter flow rates (L/h) for irrigation time estimates
 - `hvac_energy_coefficients.json` – kWh usage per degree-day for heating and cooling
+- `electricity_rates.json` – average electricity cost per kWh by region
+- `electricity_rates_monthly.json` – monthly electricity rates for finer grained cost estimates
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `foliar_feed_intervals.json` – suggested days between foliar applications
 - `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
