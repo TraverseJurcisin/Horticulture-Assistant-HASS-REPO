@@ -35,6 +35,7 @@ from .const import (
     EVENT_YIELD_UPDATE,
     MOVING_AVERAGE_ALPHA,
 )
+from .entity_base import HorticultureBaseEntity
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(minutes=5)  # fallback update rate
@@ -65,23 +66,12 @@ async def async_setup_entry(
 
     async_add_entities(sensors)
 
-class HorticultureBaseSensor(SensorEntity):
+class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
     """Base class for horticulture sensors."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        self.hass = hass
-        self._attr_has_entity_name = True
-        self._plant_name = plant_name
-        self._plant_id = plant_id
 
-    @property
-    def device_info(self) -> dict:
-        """Return device information for this sensor."""
-        return {
-            "identifiers": {(DOMAIN, self._plant_id)},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": "AI Monitored Plant",
-        }
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+        super().__init__(plant_name, plant_id, model="AI Monitored Plant")
+        self.hass = hass
 
     def _get_state_value(self, entity_id: str) -> float | None:
         """Return the numeric state of ``entity_id`` using :func:`get_numeric_state`."""
