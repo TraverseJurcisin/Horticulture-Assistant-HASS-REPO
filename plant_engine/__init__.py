@@ -202,6 +202,7 @@ from .toxicity_manager import (
     get_toxicity_thresholds,
     check_toxicities,
 )
+from .nutrient_status import classify_nutrient_status
 from .ph_manager import (
     list_supported_plants as list_ph_plants,
     get_ph_range,
@@ -395,6 +396,7 @@ __all__ = [
     "list_toxicity_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
+    "classify_nutrient_status",
     "get_guideline_summary",
     "get_withdrawal_days",
     "earliest_harvest_date",
