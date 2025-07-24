@@ -11,6 +11,7 @@ RangeTuple = Tuple[float, float]
 
 from .utils import load_dataset, normalize_key, list_dataset_entries, parse_range
 from . import ph_manager, water_quality
+from .growth_stage import list_growth_stages
 from .compute_transpiration import compute_transpiration
 
 DATA_FILE = "environment_guidelines.json"
@@ -275,6 +276,7 @@ __all__ = [
     "summarize_environment_series",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
+    "generate_stage_environment_plan",
 ]
 
 
@@ -797,6 +799,15 @@ def suggest_environment_setpoints_advanced(
             except ValueError:
                 pass
     return setpoints
+
+
+def generate_stage_environment_plan(plant_type: str) -> Dict[str, Dict[str, float]]:
+    """Return recommended environment setpoints for all growth stages."""
+
+    plan: Dict[str, Dict[str, float]] = {}
+    for stage in list_growth_stages(plant_type):
+        plan[stage] = suggest_environment_setpoints(plant_type, stage)
+    return plan
 
 
 def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
