@@ -274,6 +274,7 @@ __all__ = [
     "clear_environment_cache",
     "summarize_environment",
     "summarize_environment_series",
+    "average_environment_readings",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
@@ -347,6 +348,27 @@ def _lookup_range(
         except (TypeError, ValueError):
             return None
     return None
+
+
+def average_environment_readings(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+    """Return the average of normalized environment readings.
+
+    Each mapping in ``series`` may use any of the aliases supported by
+    :func:`normalize_environment_readings`. Invalid values are ignored.
+    The result contains canonical keys with float values.
+    """
+
+    totals: Dict[str, float] = {}
+    count = 0
+    for reading in series:
+        for key, value in normalize_environment_readings(reading).items():
+            totals[key] = totals.get(key, 0.0) + float(value)
+        count += 1
+
+    if count == 0:
+        return {}
+
+    return {k: v / count for k, v in totals.items()}
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -1478,17 +1500,9 @@ def calculate_environment_metrics_series(
 ) -> EnvironmentMetrics:
     """Return :class:`EnvironmentMetrics` for averaged environment data."""
 
-    totals: Dict[str, float] = {}
-    count = 0
-    for reading in series:
-        for key, value in normalize_environment_readings(reading).items():
-            totals[key] = totals.get(key, 0.0) + float(value)
-        count += 1
-
-    if count == 0:
+    avg = average_environment_readings(series)
+    if not avg:
         return EnvironmentMetrics(None, None, None, None)
-
-    avg = {k: v / count for k, v in totals.items()}
 
     return calculate_environment_metrics(
         avg.get("temp_c"),
@@ -1687,19 +1701,12 @@ def summarize_environment_series(
     """Return summary for averaged environment readings.
 
     The ``series`` argument can be any iterable of reading mappings. Each
-    reading is normalized and accumulated without loading the entire sequence
-    into memory before the average is calculated. The averaged values are then
-    passed to :func:`summarize_environment`.
+    reading is normalized and averaged using
+    :func:`average_environment_readings` before the result is passed to
+    :func:`summarize_environment`.
     """
 
-    totals: Dict[str, float] = {}
-    count = 0
-    for reading in series:
-        for key, value in normalize_environment_readings(reading).items():
-            totals[key] = totals.get(key, 0.0) + float(value)
-        count += 1
-
-    avg = {k: v / count for k, v in totals.items()} if count else {}
+    avg = average_environment_readings(series)
 
     return summarize_environment(
         avg,
