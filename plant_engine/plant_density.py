@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "plant_density_guidelines.json"
 
@@ -14,7 +14,7 @@ __all__ = ["list_supported_plants", "get_spacing_cm", "plants_per_area"]
 
 def list_supported_plants() -> list[str]:
     """Return plant types with spacing guidelines."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_spacing_cm(plant_type: str) -> float | None:

@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date, timedelta
 from typing import Dict
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "pruning_guidelines.json"
 INTERVAL_FILE = "pruning_intervals.json"
@@ -24,7 +24,7 @@ __all__ = [
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with pruning data."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def list_stages(plant_type: str) -> list[str]:

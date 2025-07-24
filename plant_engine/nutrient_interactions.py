@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict, Mapping
 
-from .utils import load_dataset
+from .utils import load_dataset, list_dataset_entries
 
 _Pair = tuple[str, str]
 
@@ -38,7 +38,7 @@ __all__ = [
 
 def list_interactions() -> list[str]:
     """Return all defined nutrient interaction pairs."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_interaction_info(pair: str) -> Dict[str, object]:

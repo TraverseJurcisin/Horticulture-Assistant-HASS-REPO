@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
@@ -21,7 +21,7 @@ _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with pest guidelines."""
-    return sorted(_DATA.keys())
+    return list_dataset_entries(_DATA)
 
 
 def get_pest_guidelines(plant_type: str) -> Dict[str, str]:
