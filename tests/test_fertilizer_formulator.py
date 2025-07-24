@@ -33,6 +33,7 @@ estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
 get_application_method = fert_mod.get_application_method
+recommend_wsda_products = fert_mod.recommend_wsda_products
 CATALOG = fert_mod.CATALOG
 
 
@@ -251,4 +252,10 @@ def test_catalog_lists_products():
     assert "foxfarm_grow_big" in ids
     info = CATALOG.get_product_info("foxfarm_grow_big")
     assert info.product_name
+
+
+def test_recommend_wsda_products():
+    products = recommend_wsda_products("N", limit=3)
+    assert len(products) == 3
+    assert all(isinstance(p, str) for p in products)
 
