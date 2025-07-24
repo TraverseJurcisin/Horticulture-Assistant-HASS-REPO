@@ -9,6 +9,7 @@ DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
 PREVENTION_FILE = "pest_prevention.json"
 IPM_FILE = "ipm_guidelines.json"
+ORGANIC_FILE = "organic_pest_controls.json"
 
 
 
@@ -17,6 +18,7 @@ _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
+_ORGANIC: Dict[str, str] = load_dataset(ORGANIC_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -51,6 +53,16 @@ def get_beneficial_insects(pest: str) -> List[str]:
 def recommend_beneficials(pests: Iterable[str]) -> Dict[str, List[str]]:
     """Return beneficial insect suggestions for observed ``pests``."""
     return {p: get_beneficial_insects(p) for p in pests}
+
+
+def get_organic_control(pest: str) -> str:
+    """Return organic treatment recommendation for ``pest``."""
+    return _ORGANIC.get(normalize_key(pest), "")
+
+
+def recommend_organic_controls(pests: Iterable[str]) -> Dict[str, str]:
+    """Return organic control options for each pest in ``pests``."""
+    return {p: get_organic_control(p) for p in pests}
 
 
 def get_pest_prevention(plant_type: str) -> Dict[str, str]:
@@ -112,6 +124,7 @@ def build_pest_management_plan(
     treatments = recommend_treatments(plant_type, pest_list)
     prevention = recommend_prevention(plant_type, pest_list)
     beneficials = recommend_beneficials(pest_list)
+    organic = recommend_organic_controls(pest_list)
 
     for pest in pest_list:
         plan[pest] = {
@@ -119,6 +132,7 @@ def build_pest_management_plan(
             "prevention": prevention.get(pest, "No guideline available"),
             "beneficials": beneficials.get(pest, []),
             "ipm": ipm_actions.get(pest),
+            "organic": organic.get(pest, ""),
         }
 
     return plan
@@ -131,6 +145,8 @@ __all__ = [
     "recommend_treatments",
     "get_beneficial_insects",
     "recommend_beneficials",
+    "get_organic_control",
+    "recommend_organic_controls",
     "get_pest_prevention",
     "recommend_prevention",
     "get_ipm_guidelines",

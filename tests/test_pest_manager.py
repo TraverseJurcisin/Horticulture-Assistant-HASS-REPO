@@ -9,6 +9,8 @@ from plant_engine.pest_manager import (
     recommend_ipm_actions,
     list_known_pests,
     build_pest_management_plan,
+    get_organic_control,
+    recommend_organic_controls,
 )
 
 
@@ -39,6 +41,17 @@ def test_recommend_beneficials():
     rec = recommend_beneficials(["aphids", "scale"])
     assert "ladybugs" in rec["aphids"]
     assert "parasitic wasps" in rec["scale"]
+
+
+def test_get_organic_control():
+    assert "neem" in get_organic_control("aphids").lower()
+    assert get_organic_control("unknown") == ""
+
+
+def test_recommend_organic_controls():
+    rec = recommend_organic_controls(["aphids", "scale"])
+    assert "neem" in rec["aphids"].lower()
+    assert "oil" in rec["scale"].lower()
 
 
 def test_list_known_pests():
@@ -75,4 +88,5 @@ def test_build_pest_management_plan():
     assert "general" in plan
     assert plan["aphids"]["treatment"].startswith("Apply insecticidal")
     assert "ladybugs" in plan["aphids"]["beneficials"]
+    assert "neem" in plan["aphids"]["organic"].lower()
     assert plan["unknown"]["treatment"] == "No guideline available"
