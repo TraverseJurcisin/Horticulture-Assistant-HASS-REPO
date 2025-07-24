@@ -293,6 +293,7 @@ __all__ = [
     "recommend_pest_treatments",
     "get_pest_prevention",
     "recommend_pest_prevention",
+    "get_pest_resistance",
     "list_pest_plants",
     "get_pest_thresholds",
     "assess_pest_pressure",
