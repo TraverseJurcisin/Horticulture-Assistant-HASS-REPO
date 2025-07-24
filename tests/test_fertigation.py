@@ -379,3 +379,20 @@ def test_recommend_rootzone_fertigation():
 
     assert volume > 0
     assert schedule["N"] > 0
+
+
+def test_summarize_fertigation_schedule():
+    from plant_engine.fertigation import summarize_fertigation_schedule
+
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+    summary = summarize_fertigation_schedule(
+        "citrus", "vegetative", 1.0, fertilizers=fert_map
+    )
+    assert "schedule" in summary
+    assert "cost_total" in summary
+    assert isinstance(summary["schedule"], dict)
+    assert summary["cost_total"] >= 0
