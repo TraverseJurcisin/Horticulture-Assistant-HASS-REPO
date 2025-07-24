@@ -2,7 +2,7 @@
 
 import os
 import json
-from typing import Dict
+from typing import Dict, Tuple
 
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
@@ -10,13 +10,9 @@ from typing import Dict
 NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
-def calculate_nue(plant_id: str) -> Dict:
-    """
-    Calculate Nutrient Use Efficiency (NUE) for all nutrients based on applied nutrients vs yield.
-    Returns NUE per nutrient as g yield per g nutrient applied.
-    """
+def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
+    """Return total nutrients applied (mg) and total yield (g)."""
 
-    # Load total nutrients applied
     path_nutrients = os.path.join(NUTRIENT_DIR, f"{plant_id}.json")
     if not os.path.exists(path_nutrients):
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
@@ -24,12 +20,11 @@ def calculate_nue(plant_id: str) -> Dict:
     with open(path_nutrients, "r", encoding="utf-8") as f:
         nutrient_log = json.load(f)
 
-    total_applied_mg = {}
+    total_applied_mg: Dict[str, float] = {}
     for entry in nutrient_log.get("records", []):
-        for k, v in entry["nutrients_mg"].items():
-            total_applied_mg[k] = total_applied_mg.get(k, 0) + v
+        for k, v in entry.get("nutrients_mg", {}).items():
+            total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
 
-    # Load total yield
     path_yield = os.path.join(YIELD_DIR, f"{plant_id}.json")
     if not os.path.exists(path_yield):
         raise FileNotFoundError(f"No yield record found for {plant_id}")
@@ -37,16 +32,30 @@ def calculate_nue(plant_id: str) -> Dict:
     with open(path_yield, "r", encoding="utf-8") as f:
         yield_data = json.load(f)
 
-    total_yield_g = sum(h["yield_grams"] for h in yield_data.get("harvests", []))
+    total_yield_g = sum(float(h.get("yield_grams", 0)) for h in yield_data.get("harvests", []))
 
-    # Calculate NUE
-    nue = {}
+    return total_applied_mg, total_yield_g
+
+
+def calculate_nue(plant_id: str) -> Dict:
+    """Return nutrient use efficiency for all nutrients."""
+
+    total_applied_mg, total_yield_g = _load_totals(plant_id)
+
+    nue: Dict[str, float | None] = {}
     for nutrient, mg in total_applied_mg.items():
         g_applied = mg / 1000
         nue[nutrient] = round(total_yield_g / g_applied, 2) if g_applied else None
 
-    return {
-        "plant_id": plant_id,
-        "total_yield_g": total_yield_g,
-        "nue": nue
-    }
+    return {"plant_id": plant_id, "total_yield_g": total_yield_g, "nue": nue}
+
+
+def calculate_nue_for_nutrient(plant_id: str, nutrient: str) -> float | None:
+    """Return NUE for a single nutrient or ``None`` if data missing."""
+
+    total_applied_mg, total_yield_g = _load_totals(plant_id)
+    mg = total_applied_mg.get(nutrient)
+    if mg is None:
+        return None
+    g_applied = mg / 1000
+    return round(total_yield_g / g_applied, 2) if g_applied else None
