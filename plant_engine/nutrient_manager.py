@@ -267,10 +267,20 @@ def calculate_all_nutrient_balance(
 
 
 def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
-    """Return nutrient targets adjusted for solution pH availability."""
+    """Return nutrient targets adjusted for solution pH availability.
 
-    if ph <= 0:
-        raise ValueError("ph must be positive")
+    Parameters
+    ----------
+    plant_type : str
+        Crop identifier used to look up nutrient guidelines.
+    stage : str
+        Growth stage for guideline lookup.
+    ph : float
+        Solution pH value. Must be within the standard 0-14 range.
+    """
+
+    if not 0 < ph <= 14:
+        raise ValueError("ph must be between 0 and 14")
 
     targets = get_recommended_levels(plant_type, stage)
     if not targets:
