@@ -104,5 +104,6 @@
   "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
   "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day",
-  "electricity_rates.json": "Electricity cost per kWh by region."
+  "electricity_rates.json": "Electricity cost per kWh by region.",
+  "water_costs.json": "Water cost per liter by region."
 }
