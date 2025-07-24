@@ -1,0 +1,5 @@
+{
+  "tomato": {"family": "solanaceae", "years": 3},
+  "lettuce": {"family": "asteraceae", "years": 2},
+  "cucumber": {"family": "cucurbitaceae", "years": 3}
+}

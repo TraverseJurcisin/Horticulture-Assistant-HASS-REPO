@@ -130,6 +130,11 @@ from .companion_manager import (
     recommend_companions,
     recommend_antagonists,
 )
+from .rotation_manager import (
+    list_supported_plants as list_rotation_plants,
+    get_rotation_info,
+    recommended_rotation_years,
+)
 from .growth_stage import (
     get_stage_info,
     list_growth_stages,
@@ -324,6 +329,9 @@ __all__ = [
     "get_companion_info",
     "recommend_companions",
     "recommend_antagonists",
+    "list_rotation_plants",
+    "get_rotation_info",
+    "recommended_rotation_years",
     "get_stage_info",
     "list_growth_stages",
     "days_until_next_stage",
