@@ -4,7 +4,12 @@ import pytest
 import importlib
 
 import plant_engine.utils as utils
-from plant_engine.utils import load_json, normalize_key, clear_dataset_cache
+from plant_engine.utils import (
+    load_json,
+    normalize_key,
+    clear_dataset_cache,
+    stage_value,
+)
 
 
 def test_normalize_key_lowercase():
@@ -58,3 +63,15 @@ def test_clear_dataset_cache(monkeypatch, tmp_path):
     importlib.reload(utils)
     second = utils.load_dataset("sample.json")
     assert second == {"a": 2}
+
+
+def test_stage_value_fallback():
+    data = {"lettuce": {"seedling": "A", "optimal": "B"}}
+    assert stage_value(data, "lettuce", "seedling") == "A"
+    assert stage_value(data, "lettuce", None) == "B"
+    assert stage_value(data, "lettuce", "unknown") == "B"
+
+
+def test_stage_value_custom_default():
+    data = {"crop": {"phase": 1, "default": 2}}
+    assert stage_value(data, "crop", "missing", default_key="default") == 2

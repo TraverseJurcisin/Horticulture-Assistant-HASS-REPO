@@ -15,7 +15,7 @@ from .nutrient_manager import (
     calculate_all_deficiencies,
     get_all_recommended_levels,
 )
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, stage_value
 
 FOLIAR_DATA = "foliar_feed_guidelines.json"
 INTERVAL_DATA = "foliar_feed_intervals.json"
@@ -138,12 +138,7 @@ def recommend_foliar_feed(
 def get_foliar_feed_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between foliar feeds."""
 
-    data = _INTERVALS.get(normalize_key(plant_type), {})
-    if stage:
-        value = data.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
-            return int(value)
-    value = data.get("optimal")
+    value = stage_value(_INTERVALS, plant_type, stage)
     if isinstance(value, (int, float)):
         return int(value)
     return None
@@ -164,12 +159,7 @@ def next_foliar_feed_date(
 def get_foliar_spray_volume(plant_type: str, stage: str | None = None) -> float | None:
     """Return recommended foliar spray volume per plant in milliliters."""
 
-    data = _FOLIAR_VOLUME.get(normalize_key(plant_type), {})
-    if stage:
-        value = data.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
-            return float(value)
-    value = data.get("optimal")
+    value = stage_value(_FOLIAR_VOLUME, plant_type, stage)
     if isinstance(value, (int, float)):
         return float(value)
     return None
@@ -193,12 +183,7 @@ def estimate_spray_solution_volume(
 def get_fertigation_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between fertigation events."""
 
-    data = _FERTIGATION_INTERVALS.get(normalize_key(plant_type), {})
-    if stage:
-        value = data.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
-            return int(value)
-    value = data.get("optimal")
+    value = stage_value(_FERTIGATION_INTERVALS, plant_type, stage)
     if isinstance(value, (int, float)):
         return int(value)
     return None
