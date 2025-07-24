@@ -159,6 +159,7 @@ Key reference datasets reside in the `data/` directory:
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
 - `fertigation_recipes.json` – grams per liter of each product for standard mixes
+- `stock_solution_prices.json` – price per liter for premixed stock solutions
 - `light_spectrum_guidelines.json` – optimal red/blue light ratios by stage
 - `nutrient_uptake.json` – typical daily N‑P‑K demand per plant stage
 - `nutrient_tag_modifiers.json` – per-tag multipliers for nutrient scheduling
@@ -276,6 +277,7 @@ or incomplete and should only be used as a starting point for your own research.
   durations.
 - **Fertigation Cost Reporting**: `run_daily_cycle` writes the estimated cost of
   its generated `fertigation_schedule` under the `fertigation_cost` field.
+- **Stock Solution Costing**: `estimate_stock_solution_cost` totals up injection costs using `stock_solution_prices.json`.
 - **Nutrient Profile Analysis**: `analyze_nutrient_profile` combines macro and
   micro guidelines with interaction checks to summarize deficiencies and
   surpluses at once.

@@ -356,3 +356,18 @@ def test_validate_fertigation_schedule():
     diag = validate_fertigation_schedule(schedule, 1.0, "tomato")
     assert "imbalances" in diag and diag["imbalances"]
     assert "toxicities" in diag and diag["toxicities"]
+
+
+def test_estimate_stock_solution_cost():
+    from plant_engine.fertigation import (
+        recommend_stock_solution_injection,
+        estimate_stock_solution_cost,
+    )
+
+    targets = {"N": 100, "K": 100}
+    volumes = recommend_stock_solution_injection(targets, 10.0)
+    cost = estimate_stock_solution_cost(volumes)
+    assert cost > 0
+
+    with pytest.raises(ValueError):
+        estimate_stock_solution_cost({"stock_a": -1})

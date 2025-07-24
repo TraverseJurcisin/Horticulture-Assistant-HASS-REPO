@@ -250,6 +250,7 @@ __all__ = [
     "grams_to_ppm",
     "check_solubility_limits",
     "recommend_stock_solution_injection",
+    "estimate_stock_solution_cost",
     "validate_fertigation_schedule",
 ]
 
@@ -1017,6 +1018,23 @@ def recommend_stock_solution_injection(
         volumes[solution] = round(volumes.get(solution, 0.0) + ml, 2)
 
     return volumes
+
+
+def estimate_stock_solution_cost(volumes: Mapping[str, float]) -> float:
+    """Return estimated cost (USD) for injected stock solution volumes."""
+
+    if any(v < 0 for v in volumes.values()):
+        raise ValueError("volumes must be non-negative")
+
+    prices = load_dataset("stock_solution_prices.json")
+
+    total = 0.0
+    for sid, ml in volumes.items():
+        price = prices.get(sid)
+        if price is None or ml <= 0:
+            continue
+        total += price * (ml / 1000)
+    return round(total, 2)
 
 
 def validate_fertigation_schedule(
