@@ -249,6 +249,7 @@ from .nutrient_budget import (
     estimate_required_nutrients,
 )
 from .compute_transpiration import TranspirationMetrics
+from .nutrient_efficiency import calculate_nue, calculate_nue_for_nutrient
 from .nutrient_schedule import generate_daily_uptake_plan
 
 # Run functions should be imported explicitly to avoid heavy imports at package
@@ -440,6 +441,8 @@ __all__ = [
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
+    "calculate_nue",
+    "calculate_nue_for_nutrient",
     "STAGE_MULTIPLIERS",
     "get_stage_multiplier",
     "DEFAULT_ENV",
