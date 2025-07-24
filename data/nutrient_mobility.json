@@ -4,5 +4,11 @@
   "K": "mobile",
   "Ca": "immobile",
   "Mg": "mobile",
-  "Fe": "immobile"
+  "Fe": "immobile",
+  "S": "mobile",
+  "Zn": "immobile",
+  "Mn": "immobile",
+  "B": "immobile",
+  "Cu": "immobile",
+  "Mo": "mobile"
 }
