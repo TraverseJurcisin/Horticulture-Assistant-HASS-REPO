@@ -17,6 +17,7 @@ __all__ = [
     "list_dataset_entries",
     "parse_range",
     "deep_update",
+    "stage_value",
 ]
 
 
@@ -148,3 +149,19 @@ def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
         return float(low), float(high)
     except (TypeError, ValueError, Exception):
         return None
+
+
+def stage_value(
+    dataset: Mapping[str, Any],
+    plant_type: str,
+    stage: str | None,
+    default_key: str = "optimal",
+) -> Any:
+    """Return a stage specific value from ``dataset`` with fallback."""
+
+    plant = dataset.get(normalize_key(plant_type), {})
+    if stage:
+        value = plant.get(normalize_key(stage))
+        if value is not None:
+            return value
+    return plant.get(default_key)

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Dict, Iterable
 
-from .utils import load_dataset, list_dataset_entries
+from .utils import load_dataset, list_dataset_entries, stage_value
 
 DATA_FILE = "ph_guidelines.json"
 ADJUST_FILE = "ph_adjustment_factors.json"
@@ -34,13 +34,8 @@ def list_supported_plants() -> list[str]:
 
 def get_ph_range(plant_type: str, stage: str | None = None) -> list[float]:
     """Return pH range for ``plant_type`` and ``stage``."""
-    data = _DATA.get(plant_type.lower())
-    if not data:
-        return []
-    if stage and stage in data:
-        rng = data[stage]
-    else:
-        rng = data.get("optimal")
+
+    rng = stage_value(_DATA, plant_type, stage)
     if isinstance(rng, Iterable):
         values = list(rng)
         if len(values) == 2:

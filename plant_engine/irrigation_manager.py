@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Mapping, Dict, Any
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, stage_value
 from .et_model import calculate_eta
 
 from .rootzone_model import RootZone, calculate_remaining_water
@@ -305,12 +305,10 @@ def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
 def get_recommended_interval(plant_type: str, stage: str) -> float | None:
     """Return days between irrigation events for a plant stage if known."""
 
-    plant = _INTERVAL_DATA.get(normalize_key(plant_type), {})
-    value = plant.get(normalize_key(stage))
+    value = stage_value(_INTERVAL_DATA, plant_type, stage)
     if isinstance(value, (int, float)):
         return float(value)
-    value = plant.get("optimal")
-    return float(value) if isinstance(value, (int, float)) else None
+    return None
 
 
 def generate_irrigation_schedule(

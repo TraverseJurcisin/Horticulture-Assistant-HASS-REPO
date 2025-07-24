@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date, timedelta
 from typing import Dict
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import load_dataset, normalize_key, list_dataset_entries, stage_value
 
 DATA_FILE = "pruning_guidelines.json"
 INTERVAL_FILE = "pruning_intervals.json"
@@ -43,14 +43,7 @@ def get_pruning_instructions(plant_type: str, stage: str) -> str:
 def get_pruning_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between pruning events."""
 
-    data = _INTERVALS.get(normalize_key(plant_type))
-    if not isinstance(data, dict):
-        return None
-    if stage and normalize_key(stage) in data:
-        value = data[normalize_key(stage)]
-        if isinstance(value, (int, float)):
-            return int(value)
-    value = data.get("optimal")
+    value = stage_value(_INTERVALS, plant_type, stage)
     if isinstance(value, (int, float)):
         return int(value)
     return None
