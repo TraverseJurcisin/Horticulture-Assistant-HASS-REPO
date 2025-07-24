@@ -337,6 +337,7 @@ or incomplete and should only be used as a starting point for your own research.
 - **Photoperiod Guidelines**: `get_target_photoperiod` looks up recommended day lengths from `photoperiod_guidelines.json`.
 - **CO₂ Guidelines**: `get_target_co2` returns recommended enrichment ranges for each stage.
 - **CO₂ Injection Calculator**: `calculate_co2_injection` estimates the grams of CO₂ needed to hit the target range based on greenhouse volume.
+- **CO₂ Cost Series**: `calculate_co2_cost_series` returns the price of repeated injections for a ppm data series.
 - **Environment Summary**: `summarize_environment` returns the quality rating
   alongside recommended adjustments and calculated metrics in one step.
 - **Metrics From Data Series**: `calculate_environment_metrics_series` averages
