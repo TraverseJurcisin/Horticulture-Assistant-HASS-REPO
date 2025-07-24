@@ -179,6 +179,7 @@ Key reference datasets reside in the `data/` directory:
 - `ph_adjustment_factors.json` – acid/base effect per mL for pH correction
 - `growth_stages.json` – lifecycle stage durations and notes by crop
 - `stage_multipliers.json` – default nutrient scaling factors by stage
+- `stage_tasks.json` – daily task recommendations for each growth stage
 - `pruning_guidelines.json` – stage-specific pruning recommendations
 - `pruning_intervals.json` – days between recommended pruning events
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
@@ -313,6 +314,8 @@ or incomplete and should only be used as a starting point for your own research.
   and end date of each growth stage when given a planting date.
 - **Stage Progress Remaining**: `days_until_next_stage` reports how many days
   remain in the current stage based on `growth_stages.json`.
+- **Stage Task Recommendations**: daily reports now include `stage_tasks` listing
+  suggested actions pulled from `stage_tasks.json`.
 - **Yield Estimation**: `estimate_remaining_yield` compares logged harvests to
   expected totals from `yield_estimates.json`.
   Daily reports now expose this value under `remaining_yield_g` for quick
