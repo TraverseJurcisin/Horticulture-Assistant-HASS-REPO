@@ -50,6 +50,9 @@ from .pesticide_manager import (
     get_withdrawal_days,
     earliest_harvest_date,
     adjust_harvest_date,
+    get_reentry_hours,
+    earliest_reentry_time,
+    calculate_reentry_window,
 )
 from .disease_monitor import (
     get_disease_thresholds,
@@ -451,6 +454,9 @@ __all__ = [
     "get_withdrawal_days",
     "earliest_harvest_date",
     "adjust_harvest_date",
+    "get_reentry_hours",
+    "earliest_reentry_time",
+    "calculate_reentry_window",
     "DailyReport",
     "load_profile",
     "TranspirationMetrics",
