@@ -14,6 +14,8 @@ def test_get_guideline_summary():
     assert data["pest_thresholds"]["aphids"] == 5
     assert "ladybugs" in data["beneficial_insects"]["aphids"]
     assert data["bioinoculants"] == []
+    assert "aphids" in data["pest_prevention"]
+    assert "general" in data["ipm_guidelines"]
     assert data["irrigation_volume_ml"] == 300
     assert "irrigation_interval_days" in data
 
