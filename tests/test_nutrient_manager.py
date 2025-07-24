@@ -1,4 +1,5 @@
 import json
+import pytest
 from plant_engine.nutrient_manager import (
     get_recommended_levels,
     get_all_recommended_levels,
@@ -145,6 +146,16 @@ def test_get_ph_adjusted_levels():
 
     adjusted = get_ph_adjusted_levels("tomato", "fruiting", 5.0)
     assert adjusted["P"] > 60  # higher target at low pH
+
+
+def test_get_ph_adjusted_levels_invalid():
+    from plant_engine.nutrient_manager import get_ph_adjusted_levels
+
+    with pytest.raises(ValueError):
+        get_ph_adjusted_levels("tomato", "fruiting", -1)
+
+    with pytest.raises(ValueError):
+        get_ph_adjusted_levels("tomato", "fruiting", 15)
 
 
 def test_calculate_deficiencies_with_ph():
