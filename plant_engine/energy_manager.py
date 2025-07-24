@@ -16,6 +16,7 @@ _RATES: Dict[str, float] = load_dataset(RATE_FILE)
 __all__ = [
     "get_energy_coefficient",
     "estimate_hvac_energy",
+    "estimate_hvac_cost",
     "get_electricity_rate",
     "estimate_lighting_energy",
     "estimate_lighting_cost",
@@ -80,3 +81,17 @@ def estimate_lighting_cost(
     kwh = estimate_lighting_energy(power_watts, hours)
     rate = get_electricity_rate(region)
     return round(kwh * rate, 2)
+
+
+def estimate_hvac_cost(
+    current_temp_c: float,
+    target_temp_c: float,
+    hours: float,
+    system: str,
+    region: str | None = None,
+) -> float:
+    """Return cost to maintain ``target_temp_c`` for ``hours`` using ``system``."""
+
+    energy = estimate_hvac_energy(current_temp_c, target_temp_c, hours, system)
+    rate = get_electricity_rate(region)
+    return round(energy * rate, 2)
