@@ -17,12 +17,15 @@ RISK_DATA_FILE = "pest_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 # Recommended days between scouting events
 MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
+# Adjustment factors for risk-based interval modifications
+RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
+_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -35,6 +38,7 @@ __all__ = [
     "generate_pest_report",
     "get_severity_action",
     "get_monitoring_interval",
+    "risk_adjusted_monitor_interval",
     "next_monitor_date",
     "generate_monitoring_schedule",
     "PestReport",
@@ -61,6 +65,29 @@ def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | 
     """Return recommended days between scouting events for a plant stage."""
 
     return _get_interval(_MONITOR_INTERVALS, plant_type, stage)
+
+
+def risk_adjusted_monitor_interval(
+    plant_type: str,
+    stage: str | None,
+    environment: Mapping[str, float],
+) -> int | None:
+    """Return monitoring interval adjusted for current pest risk."""
+
+    base = get_monitoring_interval(plant_type, stage)
+    if base is None:
+        return None
+
+    risks = estimate_pest_risk(plant_type, environment)
+    level = "low"
+    if any(r == "high" for r in risks.values()):
+        level = "high"
+    elif any(r == "moderate" for r in risks.values()):
+        level = "moderate"
+
+    modifier = _RISK_MODIFIERS.get(level, 1.0)
+    interval = int(round(base * modifier))
+    return max(1, interval)
 
 
 def next_monitor_date(

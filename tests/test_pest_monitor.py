@@ -11,6 +11,7 @@ from plant_engine.pest_monitor import (
     get_monitoring_interval,
     next_monitor_date,
     generate_monitoring_schedule,
+    risk_adjusted_monitor_interval,
 )
 
 
@@ -96,4 +97,22 @@ def test_generate_monitoring_schedule():
     sched = generate_monitoring_schedule("tomato", "fruiting", start, 3)
     assert sched == [date(2023, 1, 4), date(2023, 1, 7), date(2023, 1, 10)]
     assert generate_monitoring_schedule("unknown", None, start, 2) == []
+
+
+def test_risk_adjusted_monitor_interval_high():
+    env = {"temperature": 26, "humidity": 80}
+    interval = risk_adjusted_monitor_interval("citrus", "vegetative", env)
+    assert interval == 2
+
+
+def test_risk_adjusted_monitor_interval_moderate():
+    env = {"temperature": 10, "humidity": 80}
+    interval = risk_adjusted_monitor_interval("citrus", "vegetative", env)
+    assert interval == 4
+
+
+def test_risk_adjusted_monitor_interval_low():
+    env = {"temperature": 10, "humidity": 55}
+    interval = risk_adjusted_monitor_interval("citrus", "vegetative", env)
+    assert interval == 5
 
