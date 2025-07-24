@@ -46,6 +46,8 @@ ha.core.HomeAssistant = object
 ha.helpers = types.ModuleType("homeassistant.helpers")
 ha.helpers.entity_platform = types.ModuleType("homeassistant.helpers.entity_platform")
 ha.helpers.entity_platform.AddEntitiesCallback = object
+ha.helpers.entity = types.ModuleType("homeassistant.helpers.entity")
+ha.helpers.entity.Entity = object
 ha.const = types.ModuleType("homeassistant.const")
 ha.const.UnitOfMass = types.SimpleNamespace(GRAMS="g", MILLIGRAMS="mg")
 sys.modules.setdefault("homeassistant", ha)
@@ -54,6 +56,7 @@ sys.modules.setdefault("homeassistant.components.sensor", ha_sensor_mod)
 sys.modules.setdefault("homeassistant.config_entries", ha.config_entries)
 sys.modules.setdefault("homeassistant.core", ha.core)
 sys.modules.setdefault("homeassistant.helpers", ha.helpers)
+sys.modules.setdefault("homeassistant.helpers.entity", ha.helpers.entity)
 sys.modules.setdefault("homeassistant.helpers.entity_platform", ha.helpers.entity_platform)
 sys.modules.setdefault("homeassistant.const", ha.const)
 

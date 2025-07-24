@@ -12,6 +12,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN, CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
+from .entity_base import HorticultureBaseEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,24 +35,12 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
 
-class HorticultureBaseBinarySensor(BinarySensorEntity):
+class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
     """Base class for horticulture binary sensors."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+        super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
-        self._attr_has_entity_name = True
-        self._plant_name = plant_name
-        self._plant_id = plant_id
-
-    @property
-    def device_info(self) -> dict:
-        """Return device information for this sensor."""
-        return {
-            "identifiers": {(DOMAIN, self._plant_id)},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": "AI Monitored Plant",
-        }
 
 
 class SensorHealthBinarySensor(HorticultureBaseBinarySensor):

@@ -7,6 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
+from .entity_base import HorticultureBaseEntity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,24 +26,14 @@ async def async_setup_entry(
     ]
     async_add_entities(entities)
 
-class HorticultureBaseSwitch(SwitchEntity):
+class HorticultureBaseSwitch(HorticultureBaseEntity, SwitchEntity):
     """Base class for horticulture switches."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+        super().__init__(plant_name, plant_id, model="Irrigation/Fertigation Controller")
         self.hass = hass
-        self._plant_name = plant_name
-        self._plant_id = plant_id
-        self._attr_has_entity_name = True
         self._attr_is_on = False  # Optimistic switch model
 
-    @property
-    def device_info(self):
-        return {
-            "identifiers": {(DOMAIN, self._plant_id)},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": "Irrigation/Fertigation Controller"
-        }
 
     async def async_turn_on(self, **kwargs) -> None:
         """Turn the switch on."""

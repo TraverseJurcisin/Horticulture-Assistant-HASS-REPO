@@ -43,12 +43,15 @@ ha.core.HomeAssistant = object
 ha.helpers = types.ModuleType("homeassistant.helpers")
 ha.helpers.entity_platform = types.ModuleType("homeassistant.helpers.entity_platform")
 ha.helpers.entity_platform.AddEntitiesCallback = object
+ha.helpers.entity = types.ModuleType("homeassistant.helpers.entity")
+ha.helpers.entity.Entity = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.components", ha.components)
 sys.modules.setdefault("homeassistant.components.binary_sensor", ha_bs_mod)
 sys.modules.setdefault("homeassistant.config_entries", ha.config_entries)
 sys.modules.setdefault("homeassistant.core", ha.core)
 sys.modules.setdefault("homeassistant.helpers", ha.helpers)
+sys.modules.setdefault("homeassistant.helpers.entity", ha.helpers.entity)
 sys.modules.setdefault("homeassistant.helpers.entity_platform", ha.helpers.entity_platform)
 
 spec.loader.exec_module(binary_sensor)
