@@ -10,7 +10,11 @@ from . import environment_manager
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
-from .pest_manager import recommend_treatments, recommend_beneficials
+from .pest_manager import (
+    recommend_treatments,
+    recommend_beneficials,
+    get_pest_resistance,
+)
 
 DATA_FILE = "pest_thresholds.json"
 RISK_DATA_FILE = "pest_risk_factors.json"
@@ -35,6 +39,8 @@ __all__ = [
     "recommend_threshold_actions",
     "recommend_biological_controls",
     "estimate_pest_risk",
+    "adjust_risk_with_resistance",
+    "estimate_adjusted_pest_risk",
     "generate_pest_report",
     "get_severity_action",
     "get_monitoring_interval",
@@ -165,6 +171,40 @@ def estimate_pest_risk(
     from .monitor_utils import estimate_condition_risk
 
     return estimate_condition_risk(factors, environment)
+
+
+def adjust_risk_with_resistance(
+    plant_type: str, risk_map: Mapping[str, str]
+) -> Dict[str, str]:
+    """Return ``risk_map`` adjusted by pest resistance ratings."""
+
+    levels = ["low", "moderate", "high"]
+    adjusted: Dict[str, str] = {}
+    for pest, risk in risk_map.items():
+        rating = get_pest_resistance(plant_type, pest)
+        if rating is None or risk not in levels:
+            adjusted[pest] = risk
+            continue
+
+        idx = levels.index(risk)
+        if rating >= 4 and idx > 0:
+            idx -= 1
+        elif rating <= 2 and idx < len(levels) - 1:
+            idx += 1
+        adjusted[pest] = levels[idx]
+
+    return adjusted
+
+
+def estimate_adjusted_pest_risk(
+    plant_type: str, environment: Mapping[str, float]
+) -> Dict[str, str]:
+    """Return environment-based pest risk adjusted for crop resistance."""
+
+    risk = estimate_pest_risk(plant_type, environment)
+    if not risk:
+        return {}
+    return adjust_risk_with_resistance(plant_type, risk)
 
 
 def classify_pest_severity(
