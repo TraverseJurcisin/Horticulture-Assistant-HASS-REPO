@@ -31,37 +31,50 @@ class Fertilizer:
     wsda_product_number: str | None = None
 
 
-@lru_cache(maxsize=None)
-def _inventory() -> Dict[str, Fertilizer]:
-    """Return fertilizer inventory loaded from :mod:`data`."""
-    data = load_dataset(DATA_FILE)
-    inventory: Dict[str, Fertilizer] = {}
-    for name, info in data.items():
-        inventory[name] = Fertilizer(
-            density_kg_per_l=info.get("density_kg_per_l", 1.0),
-            guaranteed_analysis=info.get("guaranteed_analysis", {}),
-            product_name=info.get("product_name"),
-            wsda_product_number=info.get("wsda_product_number"),
-        )
-    return inventory
+class FertilizerCatalog:
+    """Cached access to fertilizer datasets."""
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def inventory() -> Dict[str, Fertilizer]:
+        data = load_dataset(DATA_FILE)
+        inv: Dict[str, Fertilizer] = {}
+        for name, info in data.items():
+            inv[name] = Fertilizer(
+                density_kg_per_l=info.get("density_kg_per_l", 1.0),
+                guaranteed_analysis=info.get("guaranteed_analysis", {}),
+                product_name=info.get("product_name"),
+                wsda_product_number=info.get("wsda_product_number"),
+            )
+        return inv
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def prices() -> Dict[str, float]:
+        return load_dataset(PRICE_FILE)
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def solubility() -> Dict[str, float]:
+        return load_dataset(SOLUBILITY_FILE)
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def application_methods() -> Dict[str, str]:
+        return load_dataset(APPLICATION_FILE)
+
+    def list_products(self) -> list[str]:
+        inv = self.inventory()
+        return sorted(inv.keys(), key=lambda pid: inv[pid].product_name or pid)
+
+    def get_product_info(self, fertilizer_id: str) -> Fertilizer:
+        inv = self.inventory()
+        if fertilizer_id not in inv:
+            raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
+        return inv[fertilizer_id]
 
 
-@lru_cache(maxsize=None)
-def _price_map() -> Dict[str, float]:
-    """Return fertilizer prices loaded from :mod:`data`."""
-    return load_dataset(PRICE_FILE)
-
-
-@lru_cache(maxsize=None)
-def _solubility_map() -> Dict[str, float]:
-    """Return maximum solubility (g/L) for each fertilizer."""
-    return load_dataset(SOLUBILITY_FILE)
-
-
-@lru_cache(maxsize=None)
-def _application_method_map() -> Dict[str, str]:
-    """Return recommended application method for each fertilizer."""
-    return load_dataset(APPLICATION_FILE)
+CATALOG = FertilizerCatalog()
 
 
 MOLAR_MASS_CONVERSIONS = {
@@ -95,7 +108,7 @@ def calculate_fertilizer_nutrients(
     if volume_ml <= 0:
         raise ValueError("volume_ml must be positive")
 
-    inventory = _inventory()
+    inventory = CATALOG.inventory()
     if fertilizer_id not in inventory:
         raise ValueError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
 
@@ -131,7 +144,7 @@ def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
     if volume_ml <= 0:
         raise ValueError("volume_ml must be positive")
 
-    prices = _price_map()
+    prices = CATALOG.prices()
     if fertilizer_id not in prices:
         raise KeyError(f"Price for '{fertilizer_id}' is not defined")
 
@@ -147,7 +160,7 @@ def calculate_fertilizer_nutrients_from_mass(
     if grams <= 0:
         raise ValueError("grams must be positive")
 
-    inventory = _inventory()
+    inventory = CATALOG.inventory()
     if fertilizer_id not in inventory:
         raise ValueError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
 
@@ -204,7 +217,7 @@ def calculate_mass_for_target_ppm(
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    inventory = _inventory()
+    inventory = CATALOG.inventory()
     if fertilizer_id not in inventory:
         raise KeyError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
 
@@ -223,8 +236,8 @@ def calculate_fertilizer_cost_from_mass(fertilizer_id: str, grams: float) -> flo
     if grams <= 0:
         raise ValueError("grams must be positive")
 
-    prices = _price_map()
-    inventory = _inventory()
+    prices = CATALOG.prices()
+    inventory = CATALOG.inventory()
 
     if fertilizer_id not in prices:
         raise KeyError(f"Price for '{fertilizer_id}' is not defined")
@@ -245,8 +258,8 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     any product lacks price or density information.
     """
 
-    prices = _price_map()
-    inventory = _inventory()
+    prices = CATALOG.prices()
+    inventory = CATALOG.inventory()
 
     total = 0.0
     for fert_id, grams in schedule.items():
@@ -289,8 +302,8 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     amounts rounded to two decimals.
     """
 
-    prices = _price_map()
-    inventory = _inventory()
+    prices = CATALOG.prices()
+    inventory = CATALOG.inventory()
 
     breakdown: Dict[str, float] = {}
     for fert_id, grams in schedule.items():
@@ -321,7 +334,7 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
     """Return nutrient totals (mg) for a fertilizer mix."""
 
-    inventory = _inventory()
+    inventory = CATALOG.inventory()
     totals: Dict[str, float] = {}
 
     for fert_id, grams in schedule.items():
@@ -365,7 +378,7 @@ def calculate_mix_density(schedule: Mapping[str, float]) -> float:
     ``0.0``.
     """
 
-    inventory = _inventory()
+    inventory = CATALOG.inventory()
     total_mass_kg = 0.0
     total_volume_l = 0.0
 
@@ -443,7 +456,7 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    limits = _solubility_map()
+    limits = CATALOG.solubility()
     warnings: Dict[str, float] = {}
     for fert_id, grams in schedule.items():
         max_g_l = limits.get(fert_id)
@@ -458,8 +471,8 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
 def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
     """Return cost per gram of each nutrient in a fertilizer product."""
 
-    inventory = _inventory()
-    prices = _price_map()
+    inventory = CATALOG.inventory()
+    prices = CATALOG.prices()
 
     if fertilizer_id not in inventory:
         raise KeyError(f"Fertilizer '{fertilizer_id}' not found in inventory.")
@@ -538,21 +551,18 @@ __all__ = [
     "find_products",
     "calculate_mix_ppm",
     "get_application_method",
+    "CATALOG",
 ]
 
 
 def list_products() -> list[str]:
     """Return available fertilizer product identifiers sorted by name."""
-    inv = _inventory()
-    return sorted(inv.keys(), key=lambda pid: inv[pid].product_name or pid)
+    return CATALOG.list_products()
 
 
 def get_product_info(fertilizer_id: str) -> Fertilizer:
     """Return :class:`Fertilizer` details for ``fertilizer_id``."""
-    inv = _inventory()
-    if fertilizer_id not in inv:
-        raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
-    return inv[fertilizer_id]
+    return CATALOG.get_product_info(fertilizer_id)
 
 
 def find_products(term: str) -> list[str]:
@@ -561,7 +571,7 @@ def find_products(term: str) -> list[str]:
         return []
     term = term.lower()
     results: list[str] = []
-    for pid, info in _inventory().items():
+    for pid, info in CATALOG.inventory().items():
         name = (info.product_name or "").lower()
         if term in pid.lower() or term in name:
             results.append(pid)
@@ -571,5 +581,5 @@ def find_products(term: str) -> list[str]:
 def get_application_method(fertilizer_id: str) -> str | None:
     """Return recommended application method for ``fertilizer_id``."""
 
-    return _application_method_map().get(fertilizer_id)
+    return CATALOG.application_methods().get(fertilizer_id)
 
