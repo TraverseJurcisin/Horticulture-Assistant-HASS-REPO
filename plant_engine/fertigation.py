@@ -1,9 +1,13 @@
 """Utility functions for fertigation calculations."""
+
 from __future__ import annotations
 
 from functools import lru_cache
 from datetime import date, timedelta
 from typing import Dict, Mapping, Iterable
+
+from .nutrient_interactions import check_imbalances
+from .toxicity_manager import check_toxicities
 
 from .nutrient_manager import (
     calculate_deficiencies,
@@ -25,7 +29,9 @@ SOLUBILITY_DATA = "fertilizer_solubility.json"
 RECIPE_DATA = "fertigation_recipes.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
-_FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(FERTIGATION_INTERVAL_DATA)
+_FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
+    FERTIGATION_INTERVAL_DATA
+)
 _FOLIAR_VOLUME: Dict[str, Dict[str, float]] = load_dataset(FOLIAR_VOLUME_DATA)
 _STOCK_SOLUTIONS: Dict[str, Dict[str, float]] = load_dataset(STOCK_DATA)
 _NUTRIENT_STOCK_MAP = {
@@ -155,9 +161,7 @@ def next_foliar_feed_date(
 
 
 @lru_cache(maxsize=None)
-def get_foliar_spray_volume(
-    plant_type: str, stage: str | None = None
-) -> float | None:
+def get_foliar_spray_volume(plant_type: str, stage: str | None = None) -> float | None:
     """Return recommended foliar spray volume per plant in milliliters."""
 
     data = _FOLIAR_VOLUME.get(normalize_key(plant_type), {})
@@ -246,6 +250,7 @@ __all__ = [
     "grams_to_ppm",
     "check_solubility_limits",
     "recommend_stock_solution_injection",
+    "validate_fertigation_schedule",
 ]
 
 
@@ -356,9 +361,7 @@ def recommend_fertigation_schedule(
     targets = get_recommended_levels(plant_type, stage)
     schedule: Dict[str, float] = {}
     for nutrient, ppm in targets.items():
-        schedule[nutrient] = _ppm_to_grams(
-            ppm, volume_l, purity_map.get(nutrient, 1.0)
-        )
+        schedule[nutrient] = _ppm_to_grams(ppm, volume_l, purity_map.get(nutrient, 1.0))
     return schedule
 
 
@@ -734,8 +737,14 @@ def recommend_precise_fertigation(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
-) -> tuple[Dict[str, float], float, Dict[str, float], Dict[str, Dict[str, float]]]:
-    """Return fertigation schedule with cost and optional water adjustments."""
+) -> tuple[
+    Dict[str, float],
+    float,
+    Dict[str, float],
+    Dict[str, Dict[str, float]],
+    Dict[str, Dict[str, float]],
+]:
+    """Return fertigation schedule with cost, diagnostics and optional water adjustments."""
 
     if water_profile is not None:
         schedule, warnings = recommend_nutrient_mix_with_water(
@@ -768,8 +777,9 @@ def recommend_precise_fertigation(
 
     total = estimate_mix_cost(schedule)
     breakdown = estimate_cost_breakdown(schedule)
+    diagnostics = validate_fertigation_schedule(schedule, volume_l, plant_type)
 
-    return schedule, total, breakdown, warnings
+    return schedule, total, breakdown, warnings, diagnostics
 
 
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
@@ -855,9 +865,7 @@ def estimate_stage_cost(
             "K": "intrepid_granular_potash_0_0_60",
         }
 
-    schedule = _schedule_from_totals(
-        totals, num_plants, fertilizers, purity_overrides
-    )
+    schedule = _schedule_from_totals(totals, num_plants, fertilizers, purity_overrides)
     return estimate_mix_cost(schedule)
 
 
@@ -886,9 +894,7 @@ def estimate_cycle_cost(
             "K": "intrepid_granular_potash_0_0_60",
         }
 
-    schedule = _schedule_from_totals(
-        totals, num_plants, fertilizers, purity_overrides
-    )
+    schedule = _schedule_from_totals(totals, num_plants, fertilizers, purity_overrides)
     return estimate_mix_cost(schedule)
 
 
@@ -961,9 +967,7 @@ def generate_cycle_fertigation_plan_with_cost(
 ) -> tuple[Dict[str, Dict[int, Dict[str, float]]], float]:
     """Return cycle fertigation plan and estimated total cost."""
 
-    plan = generate_cycle_fertigation_plan(
-        plant_type, purity, product=product
-    )
+    plan = generate_cycle_fertigation_plan(plant_type, purity, product=product)
 
     from custom_components.horticulture_assistant.fertilizer_formulator import (
         estimate_mix_cost,
@@ -1015,4 +1019,31 @@ def recommend_stock_solution_injection(
     return volumes
 
 
+def validate_fertigation_schedule(
+    schedule: Mapping[str, float], volume_l: float, plant_type: str
+) -> Dict[str, Dict[str, float]]:
+    """Return nutrient ppm, imbalance and toxicity diagnostics for ``schedule``.
 
+    Parameters
+    ----------
+    schedule : Mapping[str, float]
+        Fertilizer mix mapping product IDs to grams.
+    volume_l : float
+        Final solution volume in liters.
+    plant_type : str
+        Crop type used to check toxicity thresholds.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        calculate_mix_ppm,
+    )
+
+    ppm_levels = calculate_mix_ppm(schedule, volume_l)
+    return {
+        "ppm": ppm_levels,
+        "imbalances": check_imbalances(ppm_levels),
+        "toxicities": check_toxicities(ppm_levels, plant_type),
+    }
