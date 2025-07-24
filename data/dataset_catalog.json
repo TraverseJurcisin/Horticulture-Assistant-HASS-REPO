@@ -82,6 +82,7 @@
   "fertilizers/fertilizer_application_methods.json": "Recommended application methods for each fertilizer product.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
+  "water_prices.json": "Cost per liter of irrigation water by source.",
   "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
   "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",

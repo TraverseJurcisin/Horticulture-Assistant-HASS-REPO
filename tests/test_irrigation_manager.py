@@ -274,3 +274,19 @@ def test_generate_irrigation_schedule_with_runtime():
     runtime = estimate_irrigation_time(80.0, "drip", emitters=2)
     assert schedule[2]["runtime_h"] == pytest.approx(runtime, rel=1e-2)
 
+
+def test_water_cost_helpers():
+    from plant_engine.irrigation_manager import (
+        get_water_price,
+        estimate_irrigation_cost,
+        estimate_schedule_cost,
+    )
+
+    assert get_water_price("municipal") > 0
+    assert estimate_irrigation_cost(1000, "municipal") == pytest.approx(0.001)
+    sched = {1: 500.0, 2: 500.0}
+    total = estimate_schedule_cost(sched, "municipal")
+    assert total == pytest.approx(0.001)
+    with pytest.raises(ValueError):
+        estimate_irrigation_cost(-1)
+

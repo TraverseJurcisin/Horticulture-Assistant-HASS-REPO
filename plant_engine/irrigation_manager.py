@@ -28,6 +28,9 @@ __all__ = [
     "get_recommended_interval",
     "estimate_irrigation_time",
     "IrrigationRecommendation",
+    "get_water_price",
+    "estimate_irrigation_cost",
+    "estimate_schedule_cost",
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
@@ -47,6 +50,9 @@ _FLOW_DATA: Dict[str, float] = load_dataset(_FLOW_FILE)
 
 _RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
 _RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
+
+_WATER_PRICE_FILE = "water_prices.json"
+_WATER_PRICE_DATA: Dict[str, float] = load_dataset(_WATER_PRICE_FILE)
 
 
 @dataclass(frozen=True)
@@ -450,3 +456,25 @@ def generate_irrigation_schedule_with_runtime(
         result[day] = {"volume_ml": volume, "runtime_h": runtime}
 
     return result
+
+
+def get_water_price(source: str) -> float:
+    """Return cost per liter for a water ``source``."""
+
+    return float(_WATER_PRICE_DATA.get(normalize_key(source), 0.0))
+
+
+def estimate_irrigation_cost(volume_ml: float, source: str = "municipal") -> float:
+    """Return estimated cost for ``volume_ml`` of irrigation water."""
+
+    if volume_ml < 0:
+        raise ValueError("volume_ml must be non-negative")
+    price = get_water_price(source)
+    return round(price * (volume_ml / 1000), 4)
+
+
+def estimate_schedule_cost(schedule: Mapping[int, float], source: str = "municipal") -> float:
+    """Return total water cost for an irrigation ``schedule``."""
+
+    total_ml = sum(max(v, 0.0) for v in schedule.values())
+    return estimate_irrigation_cost(total_ml, source)

@@ -185,6 +185,7 @@ Key reference datasets reside in the `data/` directory:
 - `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
 - `water_usage_guidelines.json` – estimated daily water use by crop stage
+- `water_prices.json` – cost per liter of irrigation water by source
 - `irrigation_efficiency.json` – efficiency factors for common irrigation methods
 - `emitter_flow_rates.json` – typical emitter flow rates (L/h) for irrigation time estimates
 - `hvac_energy_coefficients.json` – kWh usage per degree-day for heating and cooling
