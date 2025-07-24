@@ -1,3 +1,4 @@
+import datetime
 from plant_engine import thermal_time
 
 
@@ -29,3 +30,12 @@ def test_estimate_days_to_stage():
     temps = [(20, 30)] * 60
     days = thermal_time.estimate_days_to_stage("tomato", "fruiting", temps)
     assert isinstance(days, int) and 0 < days <= 60
+
+
+def test_estimate_stage_completion_date():
+    temps = [(20, 30)] * 10
+    start = datetime.date(2025, 1, 1)
+    date = thermal_time.estimate_stage_completion_date(
+        "lettuce", "vegetative", start, temps
+    )
+    assert date is None or date >= start

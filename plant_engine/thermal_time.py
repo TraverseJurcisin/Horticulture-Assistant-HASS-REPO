@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import Dict, Iterable
+from datetime import date, timedelta
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -17,6 +18,7 @@ __all__ = [
     "predict_stage_completion",
     "accumulate_gdd_series",
     "estimate_days_to_stage",
+    "estimate_stage_completion_date",
 ]
 
 
@@ -83,3 +85,18 @@ def estimate_days_to_stage(
             return day
 
     return None
+
+
+def estimate_stage_completion_date(
+    plant_type: str,
+    stage: str,
+    start_date: date,
+    temps: Iterable[tuple[float, float]],
+    base_temp_c: float = 10.0,
+) -> date | None:
+    """Return predicted date when ``stage`` will be reached."""
+
+    days = estimate_days_to_stage(plant_type, stage, temps, base_temp_c)
+    if days is None:
+        return None
+    return start_date + timedelta(days=days)
