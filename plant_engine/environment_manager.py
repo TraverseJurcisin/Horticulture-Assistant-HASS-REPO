@@ -30,6 +30,7 @@ CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
+SOIL_OM_DATA_FILE = "soil_organic_matter_guidelines.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -234,6 +235,7 @@ __all__ = [
     "get_target_soil_moisture",
     "get_target_soil_temperature",
     "get_target_soil_ec",
+    "get_target_soil_organic_matter",
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
@@ -254,6 +256,7 @@ __all__ = [
     "evaluate_moisture_stress",
     "evaluate_soil_temperature_stress",
     "evaluate_soil_ec_stress",
+    "evaluate_soil_organic_matter",
     "get_humidity_action",
     "recommend_humidity_action",
     "evaluate_ph_stress",
@@ -297,6 +300,7 @@ _CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
+_SOIL_OM_DATA: Dict[str, Any] = load_dataset(SOIL_OM_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -450,6 +454,7 @@ class StressFlags:
     ph: str | None
     soil_temp: str | None = None
     soil_ec: str | None = None
+    soil_om: str | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -1135,6 +1140,12 @@ def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple 
     return _lookup_range(_SOIL_EC_DATA, plant_type, stage)
 
 
+def get_target_soil_organic_matter(plant_type: str) -> RangeTuple | None:
+    """Return recommended soil organic matter percentage for a crop."""
+
+    return _lookup_range(_SOIL_OM_DATA, plant_type, None)
+
+
 def evaluate_soil_temperature_stress(
     soil_temp_c: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1175,6 +1186,26 @@ def evaluate_soil_ec_stress(
     return None
 
 
+def evaluate_soil_organic_matter(
+    som_pct: float | None, plant_type: str
+) -> str | None:
+    """Return 'low' or 'high' if SOM % is outside the recommended range."""
+
+    if som_pct is None:
+        return None
+
+    target = get_target_soil_organic_matter(plant_type)
+    if not target:
+        return None
+
+    low, high = target
+    if som_pct < low:
+        return "low"
+    if som_pct > high:
+        return "high"
+    return None
+
+
 def evaluate_light_stress(
     dli: float | None, plant_type: str, stage: str | None = None
 ) -> str | None:
@@ -1206,6 +1237,7 @@ def evaluate_stress_conditions(
     stage: str | None = None,
     soil_temp_c: float | None = None,
     soil_ec_ds_m: float | None = None,
+    soil_om_pct: float | None = None,
 ) -> StressFlags:
     """Return consolidated stress flags for current conditions."""
 
@@ -1219,6 +1251,7 @@ def evaluate_stress_conditions(
         ph=evaluate_ph_stress(ph, plant_type, stage),
         soil_temp=evaluate_soil_temperature_stress(soil_temp_c, plant_type, stage),
         soil_ec=evaluate_soil_ec_stress(soil_ec_ds_m, plant_type, stage),
+        soil_om=evaluate_soil_organic_matter(soil_om_pct, plant_type),
     )
 
 
@@ -1570,6 +1603,7 @@ def optimize_environment(
         stage,
         readings.get("soil_temp_c"),
         readings.get("ec"),
+        readings.get("soil_organic_matter_pct"),
     )
 
     quality = classify_environment_quality(readings, plant_type, stage)
@@ -1653,6 +1687,7 @@ def summarize_environment(
         stage,
         readings.get("soil_temp_c"),
         readings.get("ec"),
+        readings.get("soil_organic_matter_pct"),
     )
 
     water_info = None

@@ -97,5 +97,6 @@
   "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
   "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
+  "soil_organic_matter_guidelines.json": "Recommended soil organic matter percentage for crops.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day"
 }

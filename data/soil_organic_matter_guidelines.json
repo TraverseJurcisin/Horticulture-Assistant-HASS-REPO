@@ -1,0 +1,5 @@
+{
+  "citrus": {"optimal": [2.5, 3.5]},
+  "tomato": {"optimal": [3.0, 4.0]},
+  "lettuce": {"optimal": [3.0, 4.5]}
+}
