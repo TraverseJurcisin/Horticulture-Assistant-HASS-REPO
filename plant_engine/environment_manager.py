@@ -117,6 +117,45 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     )
 
 
+def _intersect_range(
+    a: RangeTuple | None, b: RangeTuple | None
+) -> RangeTuple | None:
+    """Return the overlapping portion of two ranges."""
+
+    if a is None:
+        return b
+    if b is None:
+        return a
+    low = max(a[0], b[0])
+    high = min(a[1], b[1])
+    return (low, high) if low <= high else None
+
+
+@lru_cache(maxsize=None)
+def get_combined_environment_guidelines(
+    plant_type: str, stage: str | None = None, zone: str | None = None
+) -> EnvironmentGuidelines:
+    """Return plant guidelines merged with climate zone constraints."""
+
+    plant = get_environment_guidelines(plant_type, stage)
+    climate = get_climate_guidelines(zone) if zone else EnvironmentGuidelines()
+    return EnvironmentGuidelines(
+        temp_c=_intersect_range(plant.temp_c, climate.temp_c),
+        humidity_pct=_intersect_range(plant.humidity_pct, climate.humidity_pct),
+        light_ppfd=_intersect_range(plant.light_ppfd, climate.light_ppfd),
+        co2_ppm=_intersect_range(plant.co2_ppm, climate.co2_ppm),
+    )
+
+
+@lru_cache(maxsize=None)
+def get_combined_environmental_targets(
+    plant_type: str, stage: str | None = None, zone: str | None = None
+) -> Dict[str, Any]:
+    """Return environment target ranges for a plant and climate zone."""
+
+    return get_combined_environment_guidelines(plant_type, stage, zone).as_dict()
+
+
 def recommend_climate_adjustments(
     current_env: Mapping[str, float], zone: str
 ) -> Dict[str, str]:
@@ -165,6 +204,8 @@ __all__ = [
     "list_supported_plants",
     "get_environment_guidelines",
     "get_climate_guidelines",
+    "get_combined_environment_guidelines",
+    "get_combined_environmental_targets",
     "recommend_climate_adjustments",
     "get_environmental_targets",
     "recommend_environment_adjustments",
