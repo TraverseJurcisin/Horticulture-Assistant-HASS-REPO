@@ -122,6 +122,9 @@ Multiple plant profiles can be indexed in `plant_registry.json` so automations c
 }
 ```
 Tags defined in `tags.json` allow you to group plants for dashboards and analytics.
+The `tag_registry` utility exposes simple functions to list available tags and
+retrieve plants associated with a tag. This can be useful when generating
+automations or dynamic dashboards.
 
 
 ---
