@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from typing import Dict, Tuple, Mapping, Any
 
-from .utils import load_dataset
+from .utils import lazy_dataset
 
 DATA_FILE = "water_quality_thresholds.json"
 ACTION_FILE = "water_quality_actions.json"
 
 # Cached thresholds loaded once via :func:`load_dataset`
-_THRESHOLDS: Dict[str, float] = load_dataset(DATA_FILE)
-_ACTIONS: Dict[str, str] = load_dataset(ACTION_FILE)
+_thresholds = lazy_dataset(DATA_FILE)
+_actions = lazy_dataset(ACTION_FILE)
 
 __all__ = [
     "list_analytes",
@@ -26,12 +26,12 @@ __all__ = [
 
 def list_analytes() -> list[str]:
     """Return all analytes with defined thresholds."""
-    return sorted(_THRESHOLDS.keys())
+    return sorted(_thresholds().keys())
 
 
 def get_threshold(analyte: str) -> float | None:
     """Return the toxicity threshold for ``analyte`` if defined."""
-    return _THRESHOLDS.get(analyte)
+    return _thresholds().get(analyte)
 
 
 def interpret_water_profile(water_test: Dict[str, float]) -> Tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
@@ -41,7 +41,7 @@ def interpret_water_profile(water_test: Dict[str, float]) -> Tuple[Dict[str, flo
 
     for ion, value in water_test.items():
         baseline[ion] = value
-        limit = _THRESHOLDS.get(ion)
+        limit = _thresholds().get(ion)
         if limit is not None and value > limit:
             warnings[ion] = {
                 "value": value,
@@ -71,7 +71,7 @@ def classify_water_quality(water_test: Dict[str, float]) -> str:
 def score_water_quality(water_test: Dict[str, float]) -> float:
     """Return a 0-100 score based on threshold exceedances."""
     score = 100.0
-    for ion, limit in _THRESHOLDS.items():
+    for ion, limit in _thresholds().items():
         if ion not in water_test:
             continue
         value = water_test[ion]
@@ -87,7 +87,7 @@ def recommend_treatments(water_test: Dict[str, float]) -> Dict[str, str]:
     _, warnings = interpret_water_profile(water_test)
     recommendations: Dict[str, str] = {}
     for analyte in warnings:
-        action = _ACTIONS.get(analyte)
+        action = _actions().get(analyte)
         if action:
             recommendations[analyte] = action
     return recommendations

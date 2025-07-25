@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import lazy_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "companion_plants.json"
-_DATA: Dict[str, Dict[str, List[str]]] = load_dataset(DATA_FILE)
+_data = lazy_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -15,12 +15,12 @@ __all__ = [
 
 def list_supported_plants() -> List[str]:
     """Return plant types with companion planting info."""
-    return list_dataset_entries(_DATA)
+    return list_dataset_entries(_data())
 
 
 def get_companion_info(plant_type: str) -> Dict[str, List[str]]:
     """Return companion planting data for ``plant_type``."""
-    return _DATA.get(normalize_key(plant_type), {})
+    return _data().get(normalize_key(plant_type), {})
 
 
 def recommend_companions(plant_type: str) -> List[str]:

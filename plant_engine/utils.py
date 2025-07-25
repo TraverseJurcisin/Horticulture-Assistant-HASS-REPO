@@ -12,6 +12,7 @@ __all__ = [
     "load_json",
     "save_json",
     "load_dataset",
+    "lazy_dataset",
     "clear_dataset_cache",
     "dataset_paths",
     "get_data_dir",
@@ -167,6 +168,16 @@ def load_dataset(filename: str) -> Dict[str, Any]:
                 data = extra
 
     return data
+
+
+def lazy_dataset(filename: str):
+    """Return a cached loader callable for dataset ``filename``."""
+
+    @lru_cache(maxsize=None)
+    def _loader():
+        return load_dataset(filename)
+
+    return _loader
 
 
 def clear_dataset_cache() -> None:
