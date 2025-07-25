@@ -26,6 +26,7 @@ HUMIDITY_ACTION_FILE = "humidity_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
+CO2_YIELD_FILE = "co2_yield_factors.json"
 CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
@@ -251,6 +252,7 @@ __all__ = [
     "recommend_co2_injection_with_cost",
     "calculate_co2_injection_series",
     "calculate_co2_cost_series",
+    "estimate_co2_yield_increase",
     "CO2_MG_PER_M3_PER_PPM",
     "humidity_for_target_vpd",
     "get_score_weight",
@@ -306,6 +308,7 @@ _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
+_CO2_YIELD_FACTORS: Dict[str, Dict[str, float]] = load_dataset(CO2_YIELD_FILE)
 _CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
@@ -1535,6 +1538,40 @@ def calculate_co2_cost_series(
         ppm_series, plant_type, stage, volume_m3
     )
     return [estimate_co2_cost(g, method) for g in injections]
+
+
+@lru_cache(maxsize=None)
+def _get_co2_yield_map(plant_type: str) -> Dict[float, float]:
+    """Return CO₂ yield response mapping for a plant type."""
+    data = _CO2_YIELD_FACTORS.get(normalize_key(plant_type), {})
+    factors: Dict[float, float] = {}
+    for ppm, factor in data.items():
+        try:
+            factors[float(ppm)] = float(factor)
+        except (TypeError, ValueError):
+            continue
+    return factors
+
+
+def estimate_co2_yield_increase(plant_type: str, co2_ppm: float) -> float:
+    """Return fractional yield increase at ``co2_ppm`` for ``plant_type``."""
+
+    if co2_ppm <= 0:
+        raise ValueError("co2_ppm must be positive")
+
+    factors = _get_co2_yield_map(plant_type)
+    if not factors:
+        return 0.0
+
+    points = sorted(factors.items())
+    for idx, (ppm, factor) in enumerate(points):
+        if co2_ppm <= ppm:
+            if idx == 0:
+                return factor
+            p0, f0 = points[idx - 1]
+            ratio = (co2_ppm - p0) / (ppm - p0)
+            return round(f0 + ratio * (factor - f0), 3)
+    return points[-1][1]
 
 
 def calculate_environment_metrics(

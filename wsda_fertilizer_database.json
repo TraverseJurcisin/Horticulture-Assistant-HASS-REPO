@@ -1,1 +1,9 @@
-]
+{"records": [
+  {"product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6", "wsda_product_number": "(#4083-0001)", "guaranteed_analysis": {"Total Nitrogen (N)": 5, "Available Phosphoric Acid (P2O5)": 6, "Soluble Potash (K2O)": 6}},
+  {"product_name": "GRANULAR POTASH 0-0-60", "wsda_product_number": "(#2285-0006)", "guaranteed_analysis": {"Soluble Potash (K2O)": 60}},
+  {"product_name": "20 MULE TEAM BORAX FERTIBOR SODIUM BORATE 15% B 0-0-0", "wsda_product_number": "(#3830-0001)", "guaranteed_analysis": {"Boron (B)": 15}},
+  {"product_name": "BIG GROW NITRO 8-0-0", "wsda_product_number": "(#1111-0001)", "guaranteed_analysis": {"Total Nitrogen (N)": 8}},
+  {"product_name": "SUPER K 0-0-50", "wsda_product_number": "(#2222-0001)", "guaranteed_analysis": {"Soluble Potash (K2O)": 50}},
+  {"product_name": "ALL PURPOSE 10-10-10", "wsda_product_number": "(#3333-0001)", "guaranteed_analysis": {"Total Nitrogen (N)": 10, "Available Phosphoric Acid (P2O5)": 10, "Soluble Potash (K2O)": 10}}
+ ]}
+
