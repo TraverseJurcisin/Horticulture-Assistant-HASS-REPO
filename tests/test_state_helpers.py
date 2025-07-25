@@ -1,4 +1,12 @@
 import types
+import sys
+
+# Provide minimal 'homeassistant.core' stub so the helper module imports cleanly
+ha = types.ModuleType("homeassistant")
+ha.core = types.ModuleType("homeassistant.core")
+ha.core.HomeAssistant = object
+sys.modules.setdefault("homeassistant", ha)
+sys.modules.setdefault("homeassistant.core", ha.core)
 
 from custom_components.horticulture_assistant.utils.state_helpers import get_numeric_state
 
@@ -24,6 +32,12 @@ def test_get_numeric_state_with_units():
     hass = DummyHass()
     hass.states._data["sensor.temp"] = "21.5 °C"
     assert get_numeric_state(hass, "sensor.temp") == 21.5
+
+
+def test_get_numeric_state_commas_and_spaces():
+    hass = DummyHass()
+    hass.states._data["sensor.comma"] = "1,234.5 ppm"
+    assert get_numeric_state(hass, "sensor.comma") == 1234.5
 
 
 def test_get_numeric_state_invalid():

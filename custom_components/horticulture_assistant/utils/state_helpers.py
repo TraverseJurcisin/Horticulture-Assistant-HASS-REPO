@@ -10,6 +10,11 @@ _LOGGER = logging.getLogger(__name__)
 
 __all__ = ["get_numeric_state"]
 
+# Pre-compiled pattern used to extract a numeric portion from a string. This
+# avoids recompiling the regex for every state lookup and handles optional
+# sign and decimal point.
+_NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
+
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """Return the numeric state of ``entity_id`` or ``None`` if unavailable.
 
@@ -24,11 +29,11 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    value = state.state
+    value = str(state.state).replace(",", "").strip()
     try:
         return float(value)
     except (ValueError, TypeError):
-        match = re.search(r"[-+]?[0-9]*\.?[0-9]+", str(value))
+        match = _NUM_RE.search(value)
         if match:
             try:
                 return float(match.group(0))
