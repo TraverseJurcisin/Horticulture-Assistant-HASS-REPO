@@ -128,8 +128,14 @@ class DatasetCatalog:
                 return candidate
         return None
 
+    @lru_cache(maxsize=None)
     def load(self, name: str) -> object | None:
-        """Return parsed JSON contents of ``name`` or ``None`` if missing."""
+        """Return parsed JSON contents of ``name`` or ``None`` if missing.
+
+        Results are cached to avoid repeated disk reads. Call
+        :meth:`refresh` to clear the cache when underlying files may have
+        changed.
+        """
 
         path = self.find_path(name)
         if not path:
@@ -144,6 +150,7 @@ class DatasetCatalog:
         self._load_catalog.cache_clear()
         self.list_info.cache_clear()
         self.list_by_category.cache_clear()
+        self.load.cache_clear()
 
 
 DEFAULT_CATALOG = DatasetCatalog()
