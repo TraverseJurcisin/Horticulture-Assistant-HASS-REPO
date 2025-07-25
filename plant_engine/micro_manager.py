@@ -15,6 +15,7 @@ __all__ = [
     "get_recommended_levels",
     "calculate_deficiencies",
     "calculate_surplus",
+    "calculate_balance",
 ]
 
 
@@ -31,19 +32,41 @@ def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     return plant.get(normalize_key(stage), {})
 
 
+def _calculate_diff(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    *,
+    mode: str,
+) -> Dict[str, float]:
+    """Return difference from guidelines for ``mode``.
+
+    ``mode`` may be ``"deficit"`` or ``"surplus"``.
+    Positive values are returned for nutrients requiring adjustment.
+    """
+
+    target = get_recommended_levels(plant_type, stage)
+    result: Dict[str, float] = {}
+    for nutrient, rec in target.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        delta = round(rec - current, 2)
+        if mode == "deficit" and delta > 0:
+            result[nutrient] = delta
+        elif mode == "surplus" and delta < 0:
+            result[nutrient] = -delta
+    return result
+
+
 def calculate_deficiencies(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
 ) -> Dict[str, float]:
     """Return micronutrient deficiencies compared to guidelines."""
-    target = get_recommended_levels(plant_type, stage)
-    deficits: Dict[str, float] = {}
-    for nutrient, rec in target.items():
-        diff = round(rec - current_levels.get(nutrient, 0.0), 2)
-        if diff > 0:
-            deficits[nutrient] = diff
-    return deficits
+    return _calculate_diff(current_levels, plant_type, stage, mode="deficit")
 
 
 def calculate_surplus(
@@ -53,10 +76,24 @@ def calculate_surplus(
 ) -> Dict[str, float]:
     """Return micronutrient surpluses above recommended levels."""
 
+    return _calculate_diff(current_levels, plant_type, stage, mode="surplus")
+
+
+def calculate_balance(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+) -> Dict[str, float]:
+    """Return ratio of current to recommended micronutrient levels."""
+
     target = get_recommended_levels(plant_type, stage)
-    surplus: Dict[str, float] = {}
+    ratios: Dict[str, float] = {}
     for nutrient, rec in target.items():
-        diff = round(current_levels.get(nutrient, 0.0) - rec, 2)
-        if diff > 0:
-            surplus[nutrient] = diff
-    return surplus
+        if rec <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        ratios[nutrient] = round(current / rec, 2)
+    return ratios
