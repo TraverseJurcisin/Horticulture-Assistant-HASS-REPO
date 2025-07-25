@@ -4,25 +4,27 @@
 
 from __future__ import annotations
 
-import json
 import logging
-import os
+from pathlib import Path
 from typing import Any, Dict, Tuple
 
 from homeassistant.core import HomeAssistant
 
+from .json_io import load_json as _strict_load_json, save_json as _strict_save_json
+
 _LOGGER = logging.getLogger(__name__)
 
 
-def _load_json(path: str) -> Any:
-    if not os.path.exists(path):
+def _load_json(path: str | Path) -> Any:
+    """Return parsed JSON from ``path`` or ``None`` if loading fails."""
+
+    try:
+        return _strict_load_json(str(path))
+    except FileNotFoundError:
         return None
-    with open(path, "r", encoding="utf-8") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError as exc:
-            _LOGGER.error("Invalid JSON in %s: %s", path, exc)
-            return None
+    except ValueError as exc:
+        _LOGGER.error("Invalid JSON in %s: %s", path, exc)
+        return None
 
 
 def _load_pending(path: str) -> Tuple[Dict[str, Any], Any]:
@@ -45,10 +47,10 @@ def _load_pending(path: str) -> Tuple[Dict[str, Any], Any]:
     return {}, data
 
 
-def _save_json(path: str, data: Any) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+def _save_json(path: str | Path, data: Any) -> None:
+    """Write ``data`` to ``path`` creating parent directories."""
+
+    _strict_save_json(str(path), data)
 
 
 def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
@@ -65,13 +67,13 @@ def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
 
 def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
     """Apply approved threshold changes from pending approvals to plant profiles."""
-    base_data_dir = hass.config.path("data") if hass else "data"
-    base_plants_dir = hass.config.path("plants") if hass else "plants"
-    pending_file_path = os.path.join(base_data_dir, "pending_approvals.json")
+    base_data_dir = Path(hass.config.path("data")) if hass else Path("data")
+    base_plants_dir = Path(hass.config.path("plants")) if hass else Path("plants")
+    pending_file_path = base_data_dir / "pending_approvals.json"
     pending_dict, pending_data = _load_pending(pending_file_path)
     if not pending_dict:
         _LOGGER.info("No pending approvals found at %s", pending_file_path)
-        return
+        return 0
 
     changes_applied = 0
     # Iterate through each plant entry and apply approved changes
@@ -82,17 +84,11 @@ def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
             _LOGGER.info("No pending threshold changes for plant %s; skipping.", plant_id)
             continue
 
-        plant_file_path = os.path.join(base_plants_dir, f"{plant_id}.json")
-        # Load the plant's profile JSON
-        try:
-            with open(plant_file_path, "r", encoding="utf-8") as pf:
-                profile = json.load(pf)
-        except FileNotFoundError:
-            _LOGGER.error("Plant profile file not found for '%s' at %s; skipping these changes.", plant_id, plant_file_path)
+        plant_file_path = base_plants_dir / f"{plant_id}.json"
+        profile = _load_json(plant_file_path)
+        if not isinstance(profile, dict):
+            _LOGGER.error("Plant profile file not found or invalid for '%s' at %s; skipping these changes.", plant_id, plant_file_path)
             # Do not remove these changes so they can be applied later when profile exists
-            continue
-        except json.JSONDecodeError as e:
-            _LOGGER.error("Failed to read profile for plant '%s': %s; skipping its changes.", plant_id, e)
             continue
 
         # Ensure thresholds section exists in profile
@@ -130,10 +126,8 @@ def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
         # Save updated thresholds back to the plant profile file
         profile["thresholds"] = thresholds
         try:
-            os.makedirs(os.path.dirname(plant_file_path), exist_ok=True)
-            with open(plant_file_path, "w", encoding="utf-8") as pf:
-                json.dump(profile, pf, indent=2)
-        except Exception as e:
+            _save_json(plant_file_path, profile)
+        except Exception as e:  # pragma: no cover - unexpected errors
             _LOGGER.error("Failed to write updated profile for plant '%s': %s", plant_id, e)
             # Skip removal so the changes can be retried later
             continue
@@ -150,26 +144,29 @@ def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
 
     # Write the updated pending approvals back to file (removing applied changes)
     try:
-        os.makedirs(os.path.dirname(pending_file_path), exist_ok=True)
         # Determine output structure type (same format as original)
         output_data = None
         if isinstance(pending_data, list):
-            # Convert dict back to list of entries
             output_data = list(pending_dict.values())
-        elif isinstance(pending_data, dict) and any(k in ("plant_id", "changes", "timestamp") for k in pending_data.keys()):
-            # Single record originally
-            if pending_dict:
-                output_data = next(iter(pending_dict.values()))
-            else:
-                output_data = {}
+        elif isinstance(pending_data, dict) and any(
+            k in ("plant_id", "changes", "timestamp") for k in pending_data.keys()
+        ):
+            output_data = next(iter(pending_dict.values())) if pending_dict else {}
         else:
             output_data = pending_dict
-        with open(pending_file_path, "w", encoding="utf-8") as f:
-            json.dump(output_data, f, indent=2)
-    except Exception as e:
+
+        _save_json(pending_file_path, output_data)
+    except Exception as e:  # pragma: no cover - unexpected errors
         _LOGGER.error("Failed to update pending approvals file: %s", e)
     else:
         if changes_applied:
-            _LOGGER.info("Threshold approval processing complete - applied %d change(s). Pending approvals file updated.", changes_applied)
+            _LOGGER.info(
+                "Threshold approval processing complete - applied %d change(s). Pending approvals file updated.",
+                changes_applied,
+            )
         else:
-            _LOGGER.info("No approved threshold changes were applied. Pending approvals file updated with no changes removed.")
+            _LOGGER.info(
+                "No approved threshold changes were applied. Pending approvals file updated with no changes removed."
+            )
+
+    return changes_applied
