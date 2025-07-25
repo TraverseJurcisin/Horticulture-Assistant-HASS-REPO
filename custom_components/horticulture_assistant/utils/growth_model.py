@@ -6,6 +6,9 @@ import logging
 import math
 from datetime import datetime
 
+# Reuse the central evapotranspiration formulas from plant_engine
+from plant_engine.et_model import calculate_et0, calculate_eta
+
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -31,34 +34,6 @@ IDEAL_ENV_DEFAULT = {
     "wind_speed_m_s": 1.2,
     "elevation_m": 200.0
 }
-
-def calculate_et0(temperature_c: float, rh_percent: float, solar_rad_w_m2: float,
-                  wind_m_s: float = 1.0, elevation_m: float = 200.0) -> float:
-    """
-    Calculate reference evapotranspiration (ET₀) in mm/day using a simplified FAO-56 Penman-Monteith equation.
-    """
-    # Convert solar radiation from W/m² (average) to MJ/m²/day
-    solar_rad_mj = solar_rad_w_m2 * 0.0864
-    # Psychrometric constant (kPa/°C)
-    gamma = 0.665e-3 * (101.3 * ((293 - 0.0065 * elevation_m) / 293) ** 5.26)
-    # Saturation vapor pressure (kPa) at given temperature
-    es = 0.6108 * math.exp((17.27 * temperature_c) / (temperature_c + 237.3))
-    # Actual vapor pressure (kPa) from relative humidity
-    ea = es * (rh_percent / 100.0)
-    # Slope of vapor pressure curve at temperature (kPa/°C)
-    delta = 4098 * es / ((temperature_c + 237.3) ** 2)
-    # Net radiation (MJ/m²/day) assuming 23% losses (albedo)
-    rn = 0.77 * solar_rad_mj
-    # Penman-Monteith ET₀ calculation
-    et0 = ((0.408 * delta * rn) + (gamma * 900 * wind_m_s * (es - ea) / (temperature_c + 273))) \
-          / (delta + gamma * (1 + 0.34 * wind_m_s))
-    return max(et0, 0.0)  # in mm/day
-
-def calculate_eta(et0: float, kc: float = 1.0) -> float:
-    """
-    Calculate actual evapotranspiration (ETₐ) in mm/day using a crop coefficient (Kc).
-    """
-    return max(et0 * kc, 0.0)
 
 def update_growth_index(
     hass: HomeAssistant | None,
