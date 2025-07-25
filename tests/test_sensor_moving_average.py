@@ -89,3 +89,17 @@ def test_exponential_moving_average():
     asyncio.run(sensor_entity.async_update())
     expected = round(ALPHA * 14 + (1 - ALPHA) * 10, 1)
     assert sensor_entity.native_value == expected
+
+
+def test_ema_multiple_sources():
+    hass = DummyHass()
+    sensor_entity = SmoothedMoistureSensor(
+        hass,
+        "Plant",
+        "pid",
+        sensor_map={"moisture_sensors": ["sensor.m1", "sensor.m2"]},
+    )
+    hass.states._data["sensor.m1"] = "10"
+    hass.states._data["sensor.m2"] = "14"
+    asyncio.run(sensor_entity.async_update())
+    assert sensor_entity.native_value == 12

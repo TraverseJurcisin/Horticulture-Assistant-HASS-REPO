@@ -50,18 +50,46 @@ async def async_setup_entry(
     plant_id = entry.entry_id
     plant_name = f"Plant {plant_id[:6]}"
 
+    def _normalize(val, default):
+        if not val:
+            return [default]
+        if isinstance(val, str):
+            return [v.strip() for v in val.split(",") if v.strip()]
+        return list(val)
+
+    sensor_map = {
+        "moisture_sensors": _normalize(
+            entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
+        ),
+        "temperature_sensors": _normalize(
+            entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
+        ),
+        "humidity_sensors": _normalize(
+            entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
+        ),
+        "light_sensors": _normalize(
+            entry.data.get("light_sensors"), f"sensor.{plant_id}_raw_light"
+        ),
+        "ec_sensors": _normalize(
+            entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
+        ),
+        "co2_sensors": _normalize(
+            entry.data.get("co2_sensors"), f"sensor.{plant_id}_raw_co2"
+        ),
+    }
+
     sensors: list[SensorEntity] = [
-        SmoothedMoistureSensor(hass, plant_name, plant_id),
-        DailyETSensor(hass, plant_name, plant_id),
-        RootZoneDepletionSensor(hass, plant_name, plant_id),
-        SmoothedECSensor(hass, plant_name, plant_id),
-        EstimatedFieldCapacitySensor(hass, plant_name, plant_id),
-        EstimatedWiltingPointSensor(hass, plant_name, plant_id),
-        DailyNitrogenAppliedSensor(hass, plant_name, plant_id),
-        YieldProgressSensor(hass, plant_name, plant_id),
-        AIRecommendationSensor(hass, plant_name, plant_id),
-        EnvironmentScoreSensor(hass, plant_name, plant_id),
-        EnvironmentQualitySensor(hass, plant_name, plant_id),
+        SmoothedMoistureSensor(hass, plant_name, plant_id, sensor_map),
+        DailyETSensor(hass, plant_name, plant_id, sensor_map),
+        RootZoneDepletionSensor(hass, plant_name, plant_id, sensor_map),
+        SmoothedECSensor(hass, plant_name, plant_id, sensor_map),
+        EstimatedFieldCapacitySensor(hass, plant_name, plant_id, sensor_map),
+        EstimatedWiltingPointSensor(hass, plant_name, plant_id, sensor_map),
+        DailyNitrogenAppliedSensor(hass, plant_name, plant_id, sensor_map),
+        YieldProgressSensor(hass, plant_name, plant_id, sensor_map),
+        AIRecommendationSensor(hass, plant_name, plant_id, sensor_map),
+        EnvironmentScoreSensor(hass, plant_name, plant_id, sensor_map),
+        EnvironmentQualitySensor(hass, plant_name, plant_id, sensor_map),
     ]
 
     async_add_entities(sensors)
@@ -69,12 +97,36 @@ async def async_setup_entry(
 class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
     """Base class for horticulture sensors."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ) -> None:
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
+        if sensor_map is None:
+            sensor_map = {
+                "moisture_sensors": [f"sensor.{plant_id}_raw_moisture"],
+                "temperature_sensors": [f"sensor.{plant_id}_raw_temperature"],
+                "humidity_sensors": [f"sensor.{plant_id}_raw_humidity"],
+                "light_sensors": [f"sensor.{plant_id}_raw_light"],
+                "ec_sensors": [f"sensor.{plant_id}_raw_ec"],
+                "co2_sensors": [f"sensor.{plant_id}_raw_co2"],
+            }
+        self._sensor_map = sensor_map
 
-    def _get_state_value(self, entity_id: str) -> float | None:
-        """Return the numeric state of ``entity_id`` using :func:`get_numeric_state`."""
+    def _get_state_value(self, entity_id: str | list[str] | None) -> float | None:
+        """Return the numeric state or average value of the given entity or list."""
+        if not entity_id:
+            return None
+        if isinstance(entity_id, list):
+            vals = [get_numeric_state(self.hass, eid) for eid in entity_id]
+            vals = [v for v in vals if v is not None]
+            if not vals:
+                return None
+            return sum(vals) / len(vals)
         return get_numeric_state(self.hass, entity_id)
 
 class ExponentialMovingAverageSensor(HorticultureBaseSensor):
@@ -86,15 +138,16 @@ class ExponentialMovingAverageSensor(HorticultureBaseSensor):
         plant_name: str,
         plant_id: str,
         *,
-        source_sensor: str,
+        source_sensor: str | list[str],
         name: str,
         unique_id: str,
         unit: str,
         icon: str,
         precision: int,
         device_class: SensorDeviceClass | None = None,
+        sensor_map: dict[str, list[str]] | None = None,
     ) -> None:
-        super().__init__(hass, plant_name, plant_id)
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._source = source_sensor
         self._precision = precision
         self._attr_name = name
@@ -127,24 +180,38 @@ class ExponentialMovingAverageSensor(HorticultureBaseSensor):
 class SmoothedMoistureSensor(ExponentialMovingAverageSensor):
     """Smoothed moisture using an exponential moving average."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
         super().__init__(
             hass,
             plant_name,
             plant_id,
-            source_sensor=f"sensor.{plant_id}_raw_moisture",
+            source_sensor=(sensor_map or {}).get("moisture_sensors")
+            or f"sensor.{plant_id}_raw_moisture",
             name="Smoothed Moisture",
             unique_id=f"{plant_id}_smoothed_moisture",
             unit=UNIT_PERCENT,
             icon="mdi:water-percent",
             precision=1,
             device_class=SensorDeviceClass.MOISTURE,
+            sensor_map=sensor_map,
         )
 
 class DailyETSensor(HorticultureBaseSensor):
     """Sensor estimating daily ET (Evapotranspiration) loss."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Estimated Daily ET"
         self._attr_unique_id = f"{plant_id}_daily_et"
         self._attr_native_unit_of_measurement = UNIT_MM_DAY
@@ -155,8 +222,8 @@ class DailyETSensor(HorticultureBaseSensor):
 
     async def async_update(self):
         """Calculate daily ET estimate (using a simple temperature/humidity formula)."""
-        temp = self._get_state_value(f"sensor.{self._plant_id}_raw_temperature")
-        hum = self._get_state_value(f"sensor.{self._plant_id}_raw_humidity")
+        temp = self._get_state_value(self._sensor_map.get("temperature_sensors"))
+        hum = self._get_state_value(self._sensor_map.get("humidity_sensors"))
         if temp is not None and hum is not None:
             et = max(0, (temp - 10) * (1 - hum / 100) * 0.5)
             self._attr_native_value = round(et, 1)
@@ -167,8 +234,14 @@ class DailyETSensor(HorticultureBaseSensor):
 
 class RootZoneDepletionSensor(HorticultureBaseSensor):
     """Sensor estimating % root zone water depletion."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Root Zone Depletion"
         self._attr_unique_id = f"{plant_id}_depletion"
         self._attr_native_unit_of_measurement = UNIT_PERCENT
@@ -197,23 +270,36 @@ class RootZoneDepletionSensor(HorticultureBaseSensor):
 class SmoothedECSensor(ExponentialMovingAverageSensor):
     """Smoothed EC reading using an exponential moving average."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
         super().__init__(
             hass,
             plant_name,
             plant_id,
-            source_sensor=f"sensor.{plant_id}_raw_ec",
+            source_sensor=(sensor_map or {}).get("ec_sensors") or f"sensor.{plant_id}_raw_ec",
             name="Smoothed EC",
             unique_id=f"{plant_id}_smoothed_ec",
             unit="mS/cm",
             icon="mdi:water-outline",
             precision=2,
+            sensor_map=sensor_map,
         )
 
 class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
     """Estimate of field capacity from past max moisture post-irrigation."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Estimated Field Capacity"
         self._attr_unique_id = f"{plant_id}_field_capacity"
         self._attr_native_unit_of_measurement = UNIT_PERCENT
@@ -224,7 +310,7 @@ class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
     async def async_update(self):
         """Estimate field capacity (peak moisture over recent period)."""
         _LOGGER.debug("Estimating field capacity for plant: %s", self._plant_id)
-        current = self._get_state_value(f"sensor.{self._plant_id}_raw_moisture")
+        current = self._get_state_value(self._sensor_map.get("moisture_sensors"))
         if current is not None:
             max_val = getattr(self, "_max_moisture", None)
             self._max_moisture = current if max_val is None else max(max_val, current)
@@ -234,8 +320,14 @@ class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
 
 class EstimatedWiltingPointSensor(HorticultureBaseSensor):
     """Estimate of permanent wilting point based on dry-down observation."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Estimated Wilting Point"
         self._attr_unique_id = f"{plant_id}_wilting_point"
         self._attr_native_unit_of_measurement = UNIT_PERCENT
@@ -246,7 +338,7 @@ class EstimatedWiltingPointSensor(HorticultureBaseSensor):
     async def async_update(self):
         """Estimate wilting point (minimum moisture over recent period)."""
         _LOGGER.debug("Estimating wilting point for plant: %s", self._plant_id)
-        current = self._get_state_value(f"sensor.{self._plant_id}_raw_moisture")
+        current = self._get_state_value(self._sensor_map.get("moisture_sensors"))
         if current is not None:
             min_val = getattr(self, "_min_moisture", None)
             self._min_moisture = current if min_val is None else min(min_val, current)
@@ -256,8 +348,14 @@ class EstimatedWiltingPointSensor(HorticultureBaseSensor):
 
 class DailyNitrogenAppliedSensor(HorticultureBaseSensor):
     """Amount of nitrogen applied to plant today."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Nitrogen Applied Today"
         self._attr_unique_id = f"{plant_id}_daily_nitrogen"
         self._attr_native_unit_of_measurement = UnitOfMass.MILLIGRAMS
@@ -279,8 +377,14 @@ class DailyNitrogenAppliedSensor(HorticultureBaseSensor):
 
 class YieldProgressSensor(HorticultureBaseSensor):
     """Yield or growth progress (user updated or AI projected)."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Yield Progress"
         self._attr_unique_id = f"{plant_id}_yield"
         self._attr_native_unit_of_measurement = UnitOfMass.GRAMS
@@ -306,8 +410,14 @@ class YieldProgressSensor(HorticultureBaseSensor):
 
 class AIRecommendationSensor(HorticultureBaseSensor):
     """AI-generated recommendation (string message)."""
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "AI Recommendation"
         self._attr_unique_id = f"{plant_id}_ai_recommendation"
         self._attr_icon = "mdi:robot-outline"
@@ -335,8 +445,14 @@ class _EnvironmentEvaluationSensor(HorticultureBaseSensor):
     UNIQUE_KEY: str = ""
     ICON: str = "mdi:leaf"
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ) -> None:
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = self.NAME
         self._attr_unique_id = f"{plant_id}_{self.UNIQUE_KEY}"
         self._attr_icon = self.ICON
@@ -345,10 +461,10 @@ class _EnvironmentEvaluationSensor(HorticultureBaseSensor):
     def _gather_environment(self) -> dict[str, float]:
         """Return available raw environment readings for this plant."""
         sensors = {
-            "temp_c": f"sensor.{self._plant_id}_raw_temperature",
-            "humidity_pct": f"sensor.{self._plant_id}_raw_humidity",
-            "light_ppfd": f"sensor.{self._plant_id}_raw_light",
-            "co2_ppm": f"sensor.{self._plant_id}_raw_co2",
+            "temp_c": self._sensor_map.get("temperature_sensors"),
+            "humidity_pct": self._sensor_map.get("humidity_sensors"),
+            "light_ppfd": self._sensor_map.get("light_sensors"),
+            "co2_ppm": self._sensor_map.get("co2_sensors"),
         }
         return {
             key: val

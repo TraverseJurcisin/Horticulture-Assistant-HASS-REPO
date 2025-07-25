@@ -26,10 +26,32 @@ async def async_setup_entry(
     plant_id = entry.entry_id
     plant_name = f"Plant {plant_id[:6]}"
 
+    def _normalize(val, default):
+        if not val:
+            return [default]
+        if isinstance(val, str):
+            return [v.strip() for v in val.split(",") if v.strip()]
+        return list(val)
+
+    sensor_map = {
+        "moisture_sensors": _normalize(
+            entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
+        ),
+        "temperature_sensors": _normalize(
+            entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
+        ),
+        "humidity_sensors": _normalize(
+            entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
+        ),
+        "ec_sensors": _normalize(
+            entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
+        ),
+    }
+
     sensors: list[BinarySensorEntity] = [
-        SensorHealthBinarySensor(hass, plant_name, plant_id),
-        IrrigationReadinessBinarySensor(hass, plant_name, plant_id),
-        FaultDetectionBinarySensor(hass, plant_name, plant_id),
+        SensorHealthBinarySensor(hass, plant_name, plant_id, sensor_map),
+        IrrigationReadinessBinarySensor(hass, plant_name, plant_id, sensor_map),
+        FaultDetectionBinarySensor(hass, plant_name, plant_id, sensor_map),
     ]
 
     async_add_entities(sensors)
@@ -38,16 +60,36 @@ async def async_setup_entry(
 class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
     """Base class for horticulture binary sensors."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ) -> None:
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
+        if sensor_map is None:
+            sensor_map = {
+                "moisture_sensors": [f"sensor.{plant_id}_raw_moisture"],
+                "temperature_sensors": [f"sensor.{plant_id}_raw_temperature"],
+                "humidity_sensors": [f"sensor.{plant_id}_raw_humidity"],
+                "ec_sensors": [f"sensor.{plant_id}_raw_ec"],
+            }
+        self._sensor_map = sensor_map
 
 
 class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
     """Binary sensor to indicate overall sensor health (any raw sensor offline)."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Sensor Health"
         self._attr_unique_id = f"{plant_id}_sensor_health"
         self._attr_device_class = DEVICE_CLASS_PROBLEM
@@ -57,12 +99,12 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
     async def async_update(self):
         """Check if raw sensors are online (no missing or unavailable sensors)."""
         # List of expected raw sensor entity IDs
-        raw_ids = [
-            f"sensor.{self._plant_id}_raw_moisture",
-            f"sensor.{self._plant_id}_raw_temperature",
-            f"sensor.{self._plant_id}_raw_humidity",
-            f"sensor.{self._plant_id}_raw_ec",
-        ]
+        raw_ids = (
+            self._sensor_map.get("moisture_sensors", [])
+            + self._sensor_map.get("temperature_sensors", [])
+            + self._sensor_map.get("humidity_sensors", [])
+            + self._sensor_map.get("ec_sensors", [])
+        )
         problem = False
         for entity_id in raw_ids:
             state = self.hass.states.get(entity_id)
@@ -78,8 +120,14 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
 class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     """Binary sensor to indicate if irrigation should run (root zone dry)."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Irrigation Readiness"
         self._attr_unique_id = f"{plant_id}_irrigation_readiness"
         self._attr_device_class = DEVICE_CLASS_MOISTURE
@@ -111,8 +159,14 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
 class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
     """Binary sensor to detect faults (sensor out of bounds or removed)."""
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, plant_id: str):
-        super().__init__(hass, plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        plant_name: str,
+        plant_id: str,
+        sensor_map: dict[str, list[str]] | None = None,
+    ):
+        super().__init__(hass, plant_name, plant_id, sensor_map)
         self._attr_name = "Fault Detection"
         self._attr_unique_id = f"{plant_id}_fault_detection"
         self._attr_device_class = DEVICE_CLASS_SAFETY
@@ -122,12 +176,15 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
     async def async_update(self):
         """Check for sensor faults or out-of-range values."""
         # Expected sensors and their valid ranges
-        checks = [
-            (f"sensor.{self._plant_id}_raw_moisture", 0.0, 100.0),
-            (f"sensor.{self._plant_id}_raw_humidity", 0.0, 100.0),
-            (f"sensor.{self._plant_id}_raw_temperature", -50.0, 60.0),
-            (f"sensor.{self._plant_id}_raw_ec", 0.0, 50.0),
-        ]
+        checks = []
+        for eid in self._sensor_map.get("moisture_sensors", []):
+            checks.append((eid, 0.0, 100.0))
+        for eid in self._sensor_map.get("humidity_sensors", []):
+            checks.append((eid, 0.0, 100.0))
+        for eid in self._sensor_map.get("temperature_sensors", []):
+            checks.append((eid, -50.0, 60.0))
+        for eid in self._sensor_map.get("ec_sensors", []):
+            checks.append((eid, 0.0, 50.0))
         fault = False
         for entity_id, min_val, max_val in checks:
             state = self.hass.states.get(entity_id)

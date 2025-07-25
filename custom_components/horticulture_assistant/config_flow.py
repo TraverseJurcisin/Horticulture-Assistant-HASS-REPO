@@ -49,13 +49,16 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_sensors(self, user_input: dict | None = None) -> FlowResult:
         """Ask for sensor entity ids and finish."""
         if user_input is not None:
+            for key in ("moisture_sensors", "temperature_sensors"):
+                if key in user_input and isinstance(user_input[key], str):
+                    user_input[key] = [s.strip() for s in user_input[key].split(",") if s.strip()]
             self._data.update(user_input)
             generate_profile(self._data)
             return self.async_create_entry(title=self._data["plant_name"], data=self._data)
 
         data_schema = vol.Schema({
-            vol.Optional("moisture_sensor"): TextSelector(),
-            vol.Optional("temperature_sensor"): TextSelector(),
+            vol.Optional("moisture_sensors"): TextSelector(),
+            vol.Optional("temperature_sensors"): TextSelector(),
         })
 
         return self.async_show_form(step_id="sensors", data_schema=data_schema)

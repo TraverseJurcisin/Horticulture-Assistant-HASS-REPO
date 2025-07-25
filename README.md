@@ -100,6 +100,20 @@ Plant profiles are JSON files placed in the `plants/` directory. A minimal examp
 }
 ```
 
+Sensor entity mappings can be defined under `sensor_entities`. Use plural keys
+like `"moisture_sensors"` or `"temperature_sensors"` with a list of entity IDs:
+
+```json
+{
+  "general": {
+    "sensor_entities": {
+      "moisture_sensors": ["sensor.bed_moist_1", "sensor.bed_moist_2"],
+      "temperature_sensors": ["sensor.greenhouse_temp"]
+    }
+  }
+}
+```
+
 ### Plant Registry
 Multiple profiles can be indexed in `plant_registry.json` so automations can discover them easily. Example:
 ```json
