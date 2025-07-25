@@ -6,13 +6,14 @@ import json
 import os
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, Mapping, Iterable
+from typing import Any, Dict, Mapping, Iterable, Sequence
 
 __all__ = [
     "load_json",
     "save_json",
     "load_dataset",
     "clear_dataset_cache",
+    "set_dataset_paths",
     "normalize_key",
     "list_dataset_entries",
     "parse_range",
@@ -74,17 +75,18 @@ DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
-def _data_dir() -> Path:
+
+def _env_data_dir() -> Path:
     env = os.getenv("HORTICULTURE_DATA_DIR")
     return Path(env).expanduser() if env else DEFAULT_DATA_DIR
 
 
-def _overlay_dir() -> Path | None:
+def _env_overlay_dir() -> Path | None:
     env = os.getenv(OVERLAY_ENV)
     return Path(env).expanduser() if env else None
 
 
-def _extra_dirs() -> list[Path]:
+def _env_extra_dirs() -> list[Path]:
     env = os.getenv(EXTRA_ENV)
     if not env:
         return []
@@ -94,6 +96,71 @@ def _extra_dirs() -> list[Path]:
         if path.is_dir():
             dirs.append(path)
     return dirs
+
+
+# Optional overrides controlled by ``set_dataset_paths``
+_DATA_DIR_OVERRIDE: Path | None = None
+_OVERLAY_DIR_OVERRIDE: Path | None = None
+_EXTRA_DIRS_OVERRIDE: list[Path] | None = None
+
+
+def set_dataset_paths(
+    data_dir: str | Path | None = None,
+    *,
+    overlay_dir: str | Path | None = None,
+    extra_dirs: Sequence[str | Path] | None = None,
+) -> None:
+    """Override dataset search paths and clear caches.
+
+    Parameters
+    ----------
+    data_dir : str | Path | None
+        Base directory containing the default datasets. ``None`` resets to the
+        current environment variable or project default.
+    overlay_dir : str | Path | None
+        Optional directory with files that override those in ``data_dir``.
+    extra_dirs : Sequence[str | Path] | None
+        Additional directories searched after ``data_dir`` but before
+        ``overlay_dir``. Non-existent paths are ignored. ``None`` reloads paths
+        from the ``HORTICULTURE_EXTRA_DATA_DIRS`` environment variable.
+    """
+
+    global _DATA_DIR_OVERRIDE, _OVERLAY_DIR_OVERRIDE, _EXTRA_DIRS_OVERRIDE
+
+    _DATA_DIR_OVERRIDE = Path(data_dir).expanduser() if data_dir is not None else None
+    _OVERLAY_DIR_OVERRIDE = (
+        Path(overlay_dir).expanduser() if overlay_dir is not None else None
+    )
+    if extra_dirs is not None:
+        _EXTRA_DIRS_OVERRIDE = [Path(p).expanduser() for p in extra_dirs]
+    else:
+        _EXTRA_DIRS_OVERRIDE = None
+
+    clear_dataset_cache()
+    try:  # Refresh dataset catalog caches if available
+        from . import datasets
+
+        datasets.refresh_datasets()
+    except Exception:  # pragma: no cover - defensive
+        pass
+
+
+def _data_dir() -> Path:
+    if _DATA_DIR_OVERRIDE is not None:
+        return _DATA_DIR_OVERRIDE
+    return _env_data_dir()
+
+
+def _overlay_dir() -> Path | None:
+    if _OVERLAY_DIR_OVERRIDE is not None:
+        return _OVERLAY_DIR_OVERRIDE
+    return _env_overlay_dir()
+
+
+def _extra_dirs() -> list[Path]:
+    if _EXTRA_DIRS_OVERRIDE is not None:
+        return list(_EXTRA_DIRS_OVERRIDE)
+    return _env_extra_dirs()
 
 
 @lru_cache(maxsize=None)

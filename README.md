@@ -233,6 +233,8 @@ provided before any overlay files.
 Call `plant_engine.utils.clear_dataset_cache()` if you modify these
 environment variables while the application is running so changes are
 immediately reflected.
+Alternatively, call `plant_engine.utils.set_dataset_paths()` to programmatically
+override the search locations and refresh cached lookups at runtime.
 
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.
