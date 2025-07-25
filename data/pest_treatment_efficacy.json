@@ -1,0 +1,14 @@
+{
+  "aphids": {
+    "insecticidal_soap": 0.8,
+    "neem_oil": 0.7
+  },
+  "spider_mites": {
+    "miticide": 0.9,
+    "predatory_mites": 0.85
+  },
+  "leafminers": {
+    "yellow_sticky_traps": 0.6,
+    "spinosad": 0.75
+  }
+}

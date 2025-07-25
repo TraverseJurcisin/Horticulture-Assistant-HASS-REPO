@@ -106,6 +106,7 @@
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
   "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
   "pest_scientific_names.json": "Common pests mapped to their scientific names.",
+  "pest_treatment_efficacy.json": "Relative effectiveness ratings for common pest treatments.",
   "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day",
   "electricity_rates.json": "Electricity cost per kWh by region.",

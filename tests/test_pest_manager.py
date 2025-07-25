@@ -111,3 +111,15 @@ def test_build_pest_management_plan_includes_organic():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert "organic" in plan["aphids"]
     assert "neem oil" in plan["aphids"]["organic"]
+
+
+def test_treatment_efficacy_helpers():
+    from plant_engine.pest_manager import (
+        get_treatment_efficacy,
+        recommend_best_treatment,
+    )
+
+    assert get_treatment_efficacy("aphids", "neem oil") == 0.7
+    assert get_treatment_efficacy("unknown", "foo") is None
+    assert recommend_best_treatment("spider mites") == "miticide"
+    assert recommend_best_treatment("unknown") is None

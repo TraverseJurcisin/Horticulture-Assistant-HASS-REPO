@@ -156,6 +156,7 @@ Key reference datasets reside in the `data/` directory:
 - `organic_pest_controls.json` – organic treatment options for common pests
 - `pest_resistance_ratings.json` – relative resistance scores (1‑5) by crop and pest
 - `pest_scientific_names.json` – common pests mapped to scientific names
+- `pest_treatment_efficacy.json` – relative effectiveness ratings for common pest treatments
 - `disease_resistance_ratings.json` – relative resistance scores (1‑5) by crop and disease
 - `bioinoculant_guidelines.json` – microbial inoculant suggestions by crop
 - `pest_monitoring_intervals.json` – recommended scouting frequency by stage

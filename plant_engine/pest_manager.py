@@ -12,6 +12,7 @@ IPM_FILE = "ipm_guidelines.json"
 RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
+EFFICACY_FILE = "pest_treatment_efficacy.json"
 
 
 
@@ -23,6 +24,7 @@ _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
 _TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
+_EFFICACY: Dict[str, Dict[str, float]] = load_dataset(EFFICACY_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -81,6 +83,23 @@ def get_organic_controls(pest: str) -> List[str]:
     """Return organic control options for ``pest``."""
 
     return _ORGANIC.get(normalize_key(pest), [])
+
+
+def get_treatment_efficacy(pest: str, treatment: str) -> float | None:
+    """Return relative efficacy rating for ``treatment`` against ``pest``."""
+
+    data = _EFFICACY.get(normalize_key(pest), {})
+    value = data.get(normalize_key(treatment))
+    return float(value) if isinstance(value, (int, float)) else None
+
+
+def recommend_best_treatment(pest: str) -> str | None:
+    """Return highest rated treatment for ``pest`` if known."""
+
+    options = _EFFICACY.get(normalize_key(pest))
+    if not options:
+        return None
+    return max(options, key=options.get)
 
 
 def recommend_organic_controls(pests: Iterable[str]) -> Dict[str, List[str]]:
@@ -172,6 +191,8 @@ __all__ = [
     "recommend_beneficials",
     "get_organic_controls",
     "recommend_organic_controls",
+    "get_treatment_efficacy",
+    "recommend_best_treatment",
     "get_pest_prevention",
     "recommend_prevention",
     "get_ipm_guidelines",
