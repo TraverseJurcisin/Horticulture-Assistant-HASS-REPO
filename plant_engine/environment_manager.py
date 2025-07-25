@@ -31,6 +31,7 @@ MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
+ENV_ACTION_FILE = "environment_actions.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -218,6 +219,7 @@ __all__ = [
     "recommend_climate_adjustments",
     "get_environmental_targets",
     "recommend_environment_adjustments",
+    "recommend_environment_actions",
     "score_environment",
     "score_environment_series",
     "score_environment_components",
@@ -303,6 +305,7 @@ _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
+_ENV_ACTIONS: Dict[str, Dict[str, str]] = load_dataset(ENV_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
@@ -626,6 +629,23 @@ def recommend_environment_adjustments(
         label = ACTION_LABELS.get(key, key)
         actions[label] = "increase" if status == "below range" else "decrease"
 
+    return actions
+
+
+def recommend_environment_actions(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, str]:
+    """Return detailed actions for environment adjustments."""
+
+    basic = recommend_environment_adjustments(current, plant_type, stage)
+    actions: Dict[str, str] = {}
+    for key, direction in basic.items():
+        entry = _ENV_ACTIONS.get(key)
+        if not entry:
+            continue
+        text = entry.get(direction)
+        if text:
+            actions[key] = text
     return actions
 
 

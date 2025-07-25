@@ -1,1 +1,40 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 5,
+      "Available Phosphoric Acid": 6,
+      "Soluble Potash": 6,
+      "Calcium (Ca)": 1,
+      "Magnesium (Mg)": 0.5
+    }
+  },
+  {
+    "product_name": "BEST K+ 0-0-50",
+    "wsda_product_number": "(#1234-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 0,
+      "Available Phosphoric Acid": 0,
+      "Soluble Potash": 50
+    }
+  },
+  {
+    "product_name": "SUPER NITRO 32-0-0",
+    "wsda_product_number": "(#2345-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 32,
+      "Available Phosphoric Acid": 0,
+      "Soluble Potash": 0
+    }
+  },
+  {
+    "product_name": "TRIPLE SUPERPHOSPHATE 0-45-0",
+    "wsda_product_number": "(#3456-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 0,
+      "Available Phosphoric Acid": 45,
+      "Soluble Potash": 0
+    }
+  }
 ]

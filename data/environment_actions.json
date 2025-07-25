@@ -1,0 +1,22 @@
+{
+  "temperature": {
+    "increase": "enable heating to raise temperature",
+    "decrease": "use cooling or shade to lower temperature"
+  },
+  "humidity": {
+    "increase": "use misting or humidifiers",
+    "decrease": "increase ventilation or dehumidify"
+  },
+  "light": {
+    "increase": "add supplemental lighting",
+    "decrease": "reduce light intensity"
+  },
+  "co2": {
+    "increase": "inject CO2",
+    "decrease": "improve air exchange"
+  },
+  "soil_moisture": {
+    "increase": "irrigate to raise soil moisture",
+    "decrease": "allow soil to dry"
+  }
+}

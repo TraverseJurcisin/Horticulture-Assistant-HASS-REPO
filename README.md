@@ -162,6 +162,7 @@ Key reference datasets reside in the `data/` directory:
 - `ipm_guidelines.json` – integrated pest management practices by crop
 - `water_quality_thresholds.json` – acceptable ion limits for irrigation water
 - `water_quality_actions.json` – recommended treatments when limits are exceeded
+- `environment_actions.json` – suggested actions for environmental adjustments
 - `fertilizer_purity.json` – default purity factors for common fertilizers
 - `fertilizer_solubility.json` – maximum solubility (g/L) for fertilizers
 - `fertigation_recipes.json` – grams per liter of each product for standard mixes
