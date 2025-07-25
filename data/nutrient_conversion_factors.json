@@ -1,0 +1,6 @@
+{
+  "P2O5": {"element": "P", "factor": 0.436},
+  "K2O": {"element": "K", "factor": 0.830},
+  "CaO": {"element": "Ca", "factor": 0.715},
+  "MgO": {"element": "Mg", "factor": 0.603}
+}

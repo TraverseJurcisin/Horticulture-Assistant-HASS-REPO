@@ -14,6 +14,7 @@ spec.loader.exec_module(fert_mod)
 
 calculate_fertilizer_nutrients = fert_mod.calculate_fertilizer_nutrients
 convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
+get_conversion_factors = fert_mod.get_conversion_factors
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
@@ -45,6 +46,12 @@ def test_convert_guaranteed_analysis():
     assert result["N"] == 0.05
     assert round(result["P"], 4) == 0.0436
     assert round(result["K"], 3) == 0.166
+
+
+def test_get_conversion_factors():
+    factors = get_conversion_factors()
+    assert factors["P2O5"][0] == "P"
+    assert round(factors["P2O5"][1], 3) == 0.436
 
 
 def test_convert_guaranteed_analysis_skips_none():

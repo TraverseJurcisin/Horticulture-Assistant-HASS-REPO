@@ -1,1 +1,29 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  {
+    "product_name": "INTREPID POTASH-NEW MEXICO LLC Granular Potash 0-0-60 0-0-60",
+    "wsda_product_number": "(#2285-0006)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 60.0
+    }
+  },
+  {
+    "product_name": "ACADIAN LIQUID SEAWEED CONCENTRATE 0-0-5",
+    "wsda_product_number": "(#0001-0025)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 5.0
+    }
+  }
 ]

@@ -16,6 +16,7 @@ def test_list_datasets_contains_known():
     assert "disease_monitoring_intervals.json" in datasets
     assert "reference_et0.json" in datasets
     assert "pesticide_modes.json" in datasets
+    assert "nutrient_conversion_factors.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -33,6 +34,9 @@ def test_get_dataset_description():
 
     desc3 = get_dataset_description("fertilizer_purity.json")
     assert "purity" in desc3
+
+    desc_new = get_dataset_description("nutrient_conversion_factors.json")
+    assert "molar" in desc_new.lower()
 
     desc4 = get_dataset_description("irrigation_intervals.json")
     assert "irrigation" in desc4

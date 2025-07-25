@@ -87,15 +87,30 @@ class FertilizerCatalog:
 
 CATALOG = FertilizerCatalog()
 
+CONVERSION_DATA = "nutrient_conversion_factors.json"
 
-MOLAR_MASS_CONVERSIONS = {
-    "P2O5": ("P", 0.436),
-    "K2O": ("K", 0.830),
-}
+@lru_cache(maxsize=None)
+def get_conversion_factors() -> Dict[str, tuple[str, float]]:
+    """Return oxide to elemental conversion factors."""
+    data = load_dataset(CONVERSION_DATA)
+    factors: Dict[str, tuple[str, float]] = {}
+    for oxide, info in data.items():
+        if not isinstance(info, Mapping):
+            continue
+        element = info.get("element")
+        factor = info.get("factor")
+        if element is None or factor is None:
+            continue
+        try:
+            factors[oxide] = (str(element), float(factor))
+        except (TypeError, ValueError):
+            continue
+    return factors
 
 
 def convert_guaranteed_analysis(ga: dict) -> dict:
-    """Return GA with P₂O₅/K₂O converted to elemental P and K."""
+    """Return GA with oxide forms converted to elemental nutrients."""
+    factors = get_conversion_factors()
     result: dict[str, float] = {}
     for k, v in ga.items():
         if v is None:
@@ -104,8 +119,8 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
             val = float(v)
         except (TypeError, ValueError):
             continue
-        if k in MOLAR_MASS_CONVERSIONS:
-            element, factor = MOLAR_MASS_CONVERSIONS[k]
+        if k in factors:
+            element, factor = factors[k]
             result[element] = result.get(element, 0) + val * factor
         else:
             result[k] = result.get(k, 0) + val
@@ -607,6 +622,7 @@ __all__ = [
     "calculate_fertilizer_cost",
     "calculate_fertilizer_cost_from_mass",
     "calculate_fertilizer_ppm",
+    "get_conversion_factors",
     "estimate_mix_cost",
     "estimate_mix_cost_per_plant",
     "estimate_mix_cost_per_liter",

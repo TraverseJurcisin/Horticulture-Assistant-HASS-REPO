@@ -39,6 +39,7 @@
   "ec_guidelines.json": "Electrical conductivity ranges for nutrient solutions.",
   "fertilizer_purity.json": "Nutrient purity factors for fertilizer products.",
   "fertilizer_solubility.json": "Solubility limits for common fertilizers.",
+  "nutrient_conversion_factors.json": "Molar mass factors for converting oxide forms to elemental nutrients.",
   "light_spectrum_guidelines.json": "Recommended red/blue light ratios for growth stages.",
   "foliar_feed_guidelines.json": "Target ppm for foliar nutrient applications.",
   "foliar_feed_intervals.json": "Recommended days between foliar feed applications.",
