@@ -211,6 +211,12 @@ from .nutrient_volatilization import (
     estimate_volatilization_loss,
     compensate_for_volatilization,
 )
+from .nutrient_recovery import (
+    list_known_nutrients as list_recovery_nutrients,
+    get_recovery_factor,
+    estimate_recovered_amounts,
+    adjust_for_recovery,
+)
 from .water_quality import (
     list_analytes as list_water_analytes,
     get_threshold as get_water_threshold,
@@ -455,6 +461,10 @@ __all__ = [
     "get_volatilization_rate",
     "estimate_volatilization_loss",
     "compensate_for_volatilization",
+    "list_recovery_nutrients",
+    "get_recovery_factor",
+    "estimate_recovered_amounts",
+    "adjust_for_recovery",
     "list_toxicity_plants",
     "get_toxicity_thresholds",
     "check_toxicities",
