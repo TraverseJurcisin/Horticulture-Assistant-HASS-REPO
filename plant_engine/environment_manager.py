@@ -370,6 +370,16 @@ def _lookup_range(
     return None
 
 
+def _lookup_threshold(dataset: Mapping[str, Any], plant_type: str) -> float | None:
+    """Return numeric threshold for ``plant_type`` with fallback."""
+
+    try:
+        value = dataset.get(normalize_key(plant_type), dataset.get("default"))
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def average_environment_readings(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
     """Return the average of normalized environment readings.
 
@@ -1146,14 +1156,12 @@ def evaluate_heat_stress(
     if temp_c is None or humidity_pct is None:
         return None
 
-    threshold = _HEAT_THRESHOLDS.get(
-        normalize_key(plant_type), _HEAT_THRESHOLDS.get("default")
-    )
+    threshold = _lookup_threshold(_HEAT_THRESHOLDS, plant_type)
     if threshold is None:
         return None
 
     hi = calculate_heat_index(temp_c, humidity_pct)
-    return hi >= float(threshold)
+    return hi >= threshold
 
 
 def evaluate_cold_stress(
@@ -1165,13 +1173,11 @@ def evaluate_cold_stress(
     if temp_c is None:
         return None
 
-    threshold = _COLD_THRESHOLDS.get(
-        normalize_key(plant_type), _COLD_THRESHOLDS.get("default")
-    )
+    threshold = _lookup_threshold(_COLD_THRESHOLDS, plant_type)
     if threshold is None:
         return None
 
-    return temp_c <= float(threshold)
+    return temp_c <= threshold
 
 
 def evaluate_wind_stress(
@@ -1183,13 +1189,11 @@ def evaluate_wind_stress(
     if wind_m_s is None:
         return None
 
-    threshold = _WIND_THRESHOLDS.get(
-        normalize_key(plant_type), _WIND_THRESHOLDS.get("default")
-    )
+    threshold = _lookup_threshold(_WIND_THRESHOLDS, plant_type)
     if threshold is None:
         return None
 
-    return wind_m_s >= float(threshold)
+    return wind_m_s >= threshold
 
 
 def evaluate_humidity_stress(
