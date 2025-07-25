@@ -254,6 +254,8 @@ or incomplete and should only be used as a starting point for your own research.
   adjusting dataset environment variables to refresh cached lookups.
   Use `plant_engine.datasets.refresh_datasets()` to clear both the dataset
   catalog and dataset caches when files change.
+- **Pending Approvals Directory**: Set `HORTICULTURE_PENDING_DIR` to store
+  threshold changes in a custom location.
 - **Flexible Temperature Inputs**: `normalize_environment_readings` accepts
   Fahrenheit or Kelvin temperature keys and converts them to Celsius
   automatically.

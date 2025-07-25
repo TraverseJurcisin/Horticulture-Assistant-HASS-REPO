@@ -3,6 +3,9 @@ import os
 import json
 import logging
 from datetime import datetime
+from pathlib import Path
+
+from plant_engine import approval_queue
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -157,8 +160,8 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         "changes": changes
     }
     
-    # Write record to data/pending_thresholds/{plant_id}_{YYYY-MM-DD}.json
-    base_dir = os.path.join("data", "pending_thresholds")
+    # Write record to the pending thresholds directory
+    base_dir = approval_queue.get_pending_dir()
     os.makedirs(base_dir, exist_ok=True)
     date_str = datetime.now().date().isoformat()
     ts = report.get("timestamp")
@@ -168,7 +171,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         except Exception:
             pass
     filename = f"{plant_id}_{date_str}.json"
-    file_path = os.path.join(base_dir, filename)
+    file_path = Path(base_dir) / filename
     try:
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(record, f, indent=2)

@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from plant_engine.approval_queue import queue_threshold_updates
+from plant_engine.approval_queue import queue_threshold_updates, get_pending_dir
 from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ def push_to_approval_queue(
         return {}
 
     old = profile.get("thresholds", {})
-    pending_dir = base / "data" / "pending_thresholds"
+    pending_dir = get_pending_dir(base)
     pending_file = queue_threshold_updates(
         plant_id, old, proposed_thresholds, pending_dir
     )

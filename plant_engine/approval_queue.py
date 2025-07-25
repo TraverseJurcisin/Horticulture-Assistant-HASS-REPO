@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
@@ -12,12 +13,26 @@ from .utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
+# Default location for queued threshold changes
 PENDING_DIR = Path("data/pending_thresholds")
+# Environment variable allowing the directory to be customized
+PENDING_ENV = "HORTICULTURE_PENDING_DIR"
+
+def get_pending_dir(base: str | Path | None = None) -> Path:
+    """Return directory used to store pending threshold files."""
+
+    env = os.getenv(PENDING_ENV)
+    if env:
+        return Path(env).expanduser()
+    if base is not None:
+        return Path(base) / "data" / "pending_thresholds"
+    return PENDING_DIR
 
 __all__ = [
     "queue_threshold_updates",
     "apply_approved_thresholds",
     "list_pending_changes",
+    "get_pending_dir",
     "ThresholdChange",
     "ThresholdUpdateRecord",
 ]
@@ -58,7 +73,7 @@ def queue_threshold_updates(
 ) -> Path:
     """Write pending threshold updates and return the file path."""
 
-    directory = base_dir or PENDING_DIR
+    directory = Path(base_dir) if base_dir is not None else get_pending_dir()
     directory.mkdir(parents=True, exist_ok=True)
     pending_file = directory / f"{plant_id}.json"
 
@@ -103,10 +118,12 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
     return applied
 
 
-def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[str, Any] | None:
+def list_pending_changes(
+    plant_id: str, base_dir: str | Path | None = None
+) -> Dict[str, Any] | None:
     """Return pending changes for ``plant_id`` if a record exists."""
 
-    directory = base_dir or PENDING_DIR
+    directory = Path(base_dir) if base_dir is not None else get_pending_dir()
     path = directory / f"{plant_id}.json"
     if not path.exists():
         return None

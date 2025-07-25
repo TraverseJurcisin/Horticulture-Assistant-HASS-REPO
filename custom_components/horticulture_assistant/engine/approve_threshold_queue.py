@@ -2,6 +2,9 @@ import os
 import json
 import logging
 import re
+from pathlib import Path
+
+from plant_engine import approval_queue
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -17,7 +20,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     """
     base_data_dir = hass.config.path("data") if hass else "data"
     base_plants_dir = hass.config.path("plants") if hass else "plants"
-    pending_dir = os.path.join(base_data_dir, "pending_thresholds")
+    pending_dir = approval_queue.get_pending_dir(base_data_dir)
     # Pattern for pending threshold files: {plant_id}_YYYY-MM-DD.json
     file_pattern = re.compile(r"^.+_\d{4}-\d{2}-\d{2}\.json$")
     if not os.path.isdir(pending_dir):
@@ -34,7 +37,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     total_rejected = 0
     total_skipped = 0
     for filename in files:
-        file_path = os.path.join(pending_dir, filename)
+        file_path = Path(pending_dir) / filename
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)

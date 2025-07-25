@@ -1,18 +1,18 @@
 import os
-from approval_queue import apply_approved_thresholds
+from plant_engine.approval_queue import apply_approved_thresholds, get_pending_dir
 from plant_engine.utils import load_json, save_json
 
-PENDING_DIR = "data/pending_thresholds"
 PLANT_DIR = "plants"
 
 def review_pending_thresholds():
     print("🔍 Scanning for pending threshold files...\n")
 
-    for fname in os.listdir(PENDING_DIR):
+    pending_dir = get_pending_dir()
+    for fname in os.listdir(pending_dir):
         if not fname.endswith(".json"):
             continue
 
-        full_path = os.path.join(PENDING_DIR, fname)
+        full_path = os.path.join(pending_dir, fname)
         pending = load_json(full_path)
         plant_id = pending["plant_id"]
         changes = pending["changes"]
