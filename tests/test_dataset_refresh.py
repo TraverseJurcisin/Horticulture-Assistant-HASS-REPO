@@ -16,13 +16,16 @@ def test_refresh_datasets_reload(tmp_path, monkeypatch):
     importlib.reload(datasets)
 
     assert utils.load_dataset("sample.json") == {"a": 1}
+    assert datasets.load_dataset_file("sample.json") == {"a": 1}
 
     file.write_text(json.dumps({"a": 2}))
 
     # Cached result should still return original value
     assert utils.load_dataset("sample.json") == {"a": 1}
+    assert datasets.load_dataset_file("sample.json") == {"a": 1}
 
     datasets.refresh_datasets()
 
     # After refresh we should get the updated value
     assert utils.load_dataset("sample.json") == {"a": 2}
+    assert datasets.load_dataset_file("sample.json") == {"a": 2}

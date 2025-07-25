@@ -252,6 +252,8 @@ or incomplete and should only be used as a starting point for your own research.
   readings or nutrient multipliers when profiles omit them.
 - **Dataset Cache**: Call `plant_engine.utils.clear_dataset_cache()` after
   adjusting dataset environment variables to refresh cached lookups.
+  Use `plant_engine.datasets.refresh_datasets()` to clear both the dataset
+  catalog and dataset caches when files change.
 - **Flexible Temperature Inputs**: `normalize_environment_readings` accepts
   Fahrenheit or Kelvin temperature keys and converts them to Celsius
   automatically.
