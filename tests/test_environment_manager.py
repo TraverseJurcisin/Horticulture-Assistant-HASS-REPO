@@ -28,6 +28,7 @@ from plant_engine.environment_manager import (
     recommend_co2_injection_with_cost,
     calculate_co2_injection_series,
     calculate_co2_cost_series,
+    estimate_co2_yield_increase,
     humidity_for_target_vpd,
     recommend_photoperiod,
     recommend_light_intensity,
@@ -834,3 +835,11 @@ def test_calculate_co2_cost_series():
     assert len(costs) == 3
     assert costs[0] > costs[1] >= 0
     assert costs[2] == 0.0
+
+
+def test_estimate_co2_yield_increase():
+    assert estimate_co2_yield_increase("citrus", 800) == pytest.approx(0.1, rel=1e-3)
+    assert estimate_co2_yield_increase("citrus", 700) == pytest.approx(0.075, rel=1e-3)
+    assert estimate_co2_yield_increase("unknown", 800) == 0.0
+    with pytest.raises(ValueError):
+        estimate_co2_yield_increase("citrus", -100)
