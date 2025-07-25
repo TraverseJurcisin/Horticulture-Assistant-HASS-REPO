@@ -26,6 +26,7 @@ HUMIDITY_ACTION_FILE = "humidity_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
+CO2_EFFICIENCY_FILE = "co2_method_efficiency.json"
 CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
 MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
@@ -247,6 +248,7 @@ __all__ = [
     "calculate_co2_injection",
     "recommend_co2_injection",
     "get_co2_price",
+    "get_co2_efficiency",
     "estimate_co2_cost",
     "recommend_co2_injection_with_cost",
     "calculate_co2_injection_series",
@@ -306,6 +308,7 @@ _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
+_CO2_EFFICIENCY: Dict[str, float] = load_dataset(CO2_EFFICIENCY_FILE)
 _CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
 _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
@@ -1470,12 +1473,25 @@ def get_co2_price(method: str) -> float:
         return 0.0
 
 
+@lru_cache(maxsize=None)
+def get_co2_efficiency(method: str) -> float:
+    """Return delivery efficiency factor for a CO₂ injection method."""
+
+    try:
+        value = float(_CO2_EFFICIENCY.get(normalize_key(method), 1.0))
+        return value if value > 0 else 1.0
+    except (TypeError, ValueError):
+        return 1.0
+
+
 def estimate_co2_cost(grams: float, method: str) -> float:
     """Return estimated CO₂ cost in dollars."""
     if grams < 0:
         raise ValueError("grams must be non-negative")
     price = get_co2_price(method)
-    return round((grams / 1000) * price, 2)
+    efficiency = get_co2_efficiency(method)
+    grams_required = grams / efficiency if efficiency > 0 else grams
+    return round((grams_required / 1000) * price, 2)
 
 
 def recommend_co2_injection_with_cost(
