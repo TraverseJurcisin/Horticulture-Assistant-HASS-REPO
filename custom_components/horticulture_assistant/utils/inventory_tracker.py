@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 import uuid
 
-@dataclass
+@dataclass(slots=True)
 class InventoryLot:
     """A single lot (batch) of a fertilizer or nutrient product."""
     product_name: str

@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 import datetime
 
-@dataclass
+@dataclass(slots=True)
 class BatchDelivery:
     batch_id: str
     delivery_id: str
@@ -13,6 +13,6 @@ class BatchDelivery:
     dilution_factor: Optional[float] = None
     notes: Optional[str] = None
 
-@dataclass
+@dataclass(slots=True)
 class DeliveryLog:
     deliveries: List[BatchDelivery] = field(default_factory=list)

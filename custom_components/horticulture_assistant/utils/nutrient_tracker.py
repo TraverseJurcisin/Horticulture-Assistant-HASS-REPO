@@ -5,7 +5,7 @@ from typing import Dict, Optional, List, Iterable
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-@dataclass
+@dataclass(slots=True)
 class NutrientEntry:
     """Mapping of an element to its concentration in a product."""
 
@@ -13,7 +13,7 @@ class NutrientEntry:
     value_mg_per_kg: float
     source_compound: Optional[str] = None
 
-@dataclass
+@dataclass(slots=True)
 class ProductNutrientProfile:
     """Profile describing nutrient concentrations for a product."""
 
@@ -35,7 +35,7 @@ class ProductNutrientProfile:
             ppm_map[nutrient.element] = round(ppm, 4)
         return ppm_map
 
-@dataclass
+@dataclass(slots=True)
 class NutrientDeliveryRecord:
     """Record describing a single nutrient application."""
 
@@ -45,7 +45,7 @@ class NutrientDeliveryRecord:
     ppm_delivered: Dict[str, float]
     volume_l: float
 
-@dataclass
+@dataclass(slots=True)
 class NutrientTracker:
     """Track nutrient deliveries and summarize totals."""
 

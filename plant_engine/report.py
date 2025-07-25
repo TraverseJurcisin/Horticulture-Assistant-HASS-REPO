@@ -5,7 +5,7 @@ from typing import Any, Dict, List
 
 __all__ = ["DailyReport"]
 
-@dataclass
+@dataclass(slots=True)
 class DailyReport:
     """Container for daily plant processing results."""
 
