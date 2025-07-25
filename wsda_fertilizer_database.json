@@ -1,1 +1,40 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 5,
+      "Available Phosphoric Acid (P2O5)": 6,
+      "Soluble Potash (K2O)": 6
+    }
+  },
+  {
+    "product_name": "GRANULAR POTASH 0-0-60",
+    "wsda_product_number": "(#2285-0006)",
+    "guaranteed_analysis": {
+      "Soluble Potash (K2O)": 60
+    }
+  },
+  {
+    "product_name": "AMMONIUM NITRATE 34-0-0",
+    "wsda_product_number": "(#1000-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 34
+    }
+  },
+  {
+    "product_name": "UREA 46-0-0",
+    "wsda_product_number": "(#1000-0002)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 46
+    }
+  },
+  {
+    "product_name": "POTASSIUM NITRATE 13-0-44",
+    "wsda_product_number": "(#1000-0003)",
+    "guaranteed_analysis": {
+      "Total Nitrogen": 13,
+      "Soluble Potash (K2O)": 44
+    }
+  }
 ]

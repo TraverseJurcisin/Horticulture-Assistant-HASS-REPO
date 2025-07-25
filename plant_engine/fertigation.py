@@ -221,6 +221,7 @@ __all__ = [
     "recommend_uptake_fertigation",
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
+    "recommend_loss_compensated_mix",
     "get_fertigation_recipe",
     "apply_fertigation_recipe",
     "generate_fertigation_plan",
@@ -806,6 +807,67 @@ def recommend_rootzone_fertigation(
     )
 
     return volume_ml, schedule
+
+
+def recommend_loss_compensated_mix(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    losses: Iterable[str] = ("leaching", "volatilization"),
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> Dict[str, float]:
+    """Return fertigation mix adjusted for nutrient losses."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    if include_micro:
+        targets = get_all_recommended_levels(plant_type, stage)
+    else:
+        targets = get_recommended_levels(plant_type, stage)
+
+    adjusted = dict(targets)
+    if "leaching" in losses:
+        from .nutrient_leaching import compensate_for_leaching
+
+        adjusted = compensate_for_leaching(adjusted, plant_type)
+    if "volatilization" in losses:
+        from .nutrient_volatilization import compensate_for_volatilization
+
+        adjusted = compensate_for_volatilization(adjusted, plant_type)
+
+    if fertilizers is None:
+        fertilizers = {"N": "urea", "P": "map", "K": "kcl"}
+    if micro_fertilizers is None:
+        micro_fertilizers = {
+            "Fe": "chelated_fe",
+            "Mn": "chelated_mn",
+            "Zn": "chelated_zn",
+            "B": "boric_acid",
+            "Cu": "chelated_cu",
+            "Mo": "sodium_molybdate",
+        }
+
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in adjusted.items():
+        fert = fertilizers.get(nutrient)
+        if include_micro and fert is None:
+            fert = micro_fertilizers.get(nutrient)
+        if not fert:
+            continue
+        purity = get_fertilizer_purity(fert).get(nutrient, 1.0)
+        if purity_overrides and nutrient in purity_overrides:
+            purity = purity_overrides[nutrient]
+        if purity <= 0:
+            raise ValueError(f"Purity for {nutrient} in {fert} must be > 0")
+        grams = (ppm * volume_l) / 1000 / purity
+        schedule[fert] = round(schedule.get(fert, 0.0) + grams, 3)
+
+    return schedule
 
 
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
