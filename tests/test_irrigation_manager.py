@@ -17,6 +17,7 @@ from plant_engine.irrigation_manager import (
     estimate_irrigation_time,
     generate_env_irrigation_schedule,
     generate_precipitation_schedule,
+    generate_env_precipitation_schedule,
     get_rain_capture_efficiency,
     get_recommended_interval,
     IrrigationRecommendation,
@@ -304,4 +305,37 @@ def test_generate_cycle_irrigation_plan():
     # verify at least one scheduled volume and it is positive
     assert veg
     assert veg[1] > 0
+
+
+def test_generate_env_precipitation_schedule():
+    profile = {"kc": 1.0, "canopy_m2": 0.25}
+    env = {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400}
+    env_series = [env, env]
+    rain = [10.0, 0.0]
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_env_precipitation_schedule(
+        profile,
+        env_series,
+        rain,
+        zone,
+        150.0,
+        surface="mulch",
+    )
+
+    metrics = compute_transpiration(profile, env)
+    rain_eff = get_rain_capture_efficiency("mulch")
+    net_et1 = max(0.0, metrics["transpiration_ml_day"] - rain[0] * rain_eff)
+    vol1 = recommend_irrigation_volume(zone, 150.0, net_et1)
+    remaining = calculate_remaining_water(zone, 150.0, irrigation_ml=vol1, et_ml=net_et1)
+    net_et2 = max(0.0, metrics["transpiration_ml_day"] - rain[1] * rain_eff)
+    vol2 = recommend_irrigation_volume(zone, remaining, net_et2)
+
+    assert schedule[1]["volume_ml"] == vol1
+    assert schedule[1]["metrics"] == metrics
+    assert schedule[2]["volume_ml"] == vol2
 
