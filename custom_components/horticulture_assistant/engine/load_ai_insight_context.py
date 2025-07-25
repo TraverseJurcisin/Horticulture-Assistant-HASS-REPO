@@ -1,6 +1,7 @@
-import json
 import logging
 from pathlib import Path
+
+from ..utils.json_io import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -35,13 +36,12 @@ def load_ai_insight_context(plant_id: str, base_path: str = "plants", analytics_
     # Load plant profile JSON
     profile = {}
     try:
-        with open(profile_path, "r", encoding="utf-8") as pf:
-            profile = json.load(pf)
+        profile = load_json(str(profile_path))
     except FileNotFoundError:
         _LOGGER.error("Plant profile not found for '%s' at %s", plant_id, profile_path)
         # If profile is missing, return context with default values (plant_id already set)
         return context
-    except json.JSONDecodeError as e:
+    except Exception as e:
         _LOGGER.error("Failed to parse profile for plant '%s': %s", plant_id, e)
         return context
     
@@ -66,18 +66,15 @@ def load_ai_insight_context(plant_id: str, base_path: str = "plants", analytics_
     # Load recent growth/yield data
     series = []
     try:
-        with open(analytics_file, "r", encoding="utf-8") as af:
-            data = json.load(af)
+        data = load_json(str(analytics_file))
         if isinstance(data, list):
             series = data
         else:
             _LOGGER.warning("Growth/yield data for plant %s is not a list; ignoring content.", plant_id)
     except FileNotFoundError:
         _LOGGER.warning("Growth/yield data file not found for plant %s at %s", plant_id, analytics_file)
-    except json.JSONDecodeError as e:
-        _LOGGER.error("Failed to read growth/yield data for plant '%s': %s", plant_id, e)
     except Exception as e:
-        _LOGGER.error("Unexpected error loading growth/yield data for plant '%s': %s", plant_id, e)
+        _LOGGER.error("Failed to read growth/yield data for plant '%s': %s", plant_id, e)
     
     if series:
         # Determine latest cumulative yield from last entry

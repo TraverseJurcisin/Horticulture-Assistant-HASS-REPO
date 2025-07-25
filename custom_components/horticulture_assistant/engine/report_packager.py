@@ -4,16 +4,17 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import \
-    load_plant_profile
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_plant_profile,
+)
+from ..utils.json_io import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
 
 def _load_log(log_path):
     try:
-        with open(log_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        return load_json(str(log_path))
     except Exception as e:
         _LOGGER.warning("Failed to read %s: %s", log_path, e)
         return []
@@ -106,8 +107,7 @@ def build_daily_report(
         Path(output_path) / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
     )
     try:
-        with open(out_file, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2)
+        save_json(str(out_file), report)
         _LOGGER.info("Saved daily report for %s to %s", plant_id, out_file)
     except Exception as e:
         _LOGGER.error("Failed to write report for %s: %s", plant_id, e)

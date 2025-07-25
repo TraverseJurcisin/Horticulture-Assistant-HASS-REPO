@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import json
 import logging
 from pathlib import Path
+
+from ..utils.json_io import load_json
 
 try:
     from homeassistant.core import HomeAssistant
@@ -27,8 +28,7 @@ def trigger_actuator(
         return
 
     try:
-        with open(profile_file, "r", encoding="utf-8") as f:
-            profile_data = json.load(f)
+        profile_data = load_json(str(profile_file))
     except Exception as e:  # pragma: no cover - unlikely to happen in tests
         _LOGGER.error("Error reading plant profile file %s: %s", profile_file, e)
         return
