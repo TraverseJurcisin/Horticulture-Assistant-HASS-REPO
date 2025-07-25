@@ -1,26 +1,31 @@
 """Helpers for calculating nutrient dosing volumes and concentrations."""
 
-from typing import Dict, Literal, Tuple
+from typing import Literal
+
+try:
+    from .unit_utils import convert
+except ImportError:  # pragma: no cover - fallback for direct execution
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location(
+        "unit_utils",
+        Path(__file__).resolve().parent / "unit_utils.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)  # type: ignore
+    convert = mod.convert  # type: ignore
 
 
 class DoseCalculator:
     """Utility helpers for nutrient dosing calculations.
 
-    All conversion factors are stored in :data:`CONVERSIONS` and the public
-    methods simply apply these ratios. Values are rounded for user friendly
+    Unit conversions are handled by :mod:`unit_utils`. Values are rounded for
+    user friendly
     output. The helpers are stateless and purely functional allowing easy use
     in automations and tests.
     """
 
-    #: Conversion factors keyed by ``(from_unit, to_unit)`` tuples.
-    CONVERSIONS: Dict[Tuple[str, str], float] = {
-        ("oz", "g"): 28.3495,
-        ("g", "oz"): 1 / 28.3495,
-        ("mL", "L"): 0.001,
-        ("L", "mL"): 1000,
-        ("gal", "L"): 3.78541,
-        ("L", "gal"): 1 / 3.78541,
-    }
 
     @staticmethod
     def calculate_mass_dose(
@@ -90,12 +95,10 @@ class DoseCalculator:
     ) -> float:
         """Return ``value`` converted from ``from_unit`` to ``to_unit``."""
 
-        key = (from_unit, to_unit)
-        if key in DoseCalculator.CONVERSIONS:
-            return round(value * DoseCalculator.CONVERSIONS[key], 4)
         if from_unit == to_unit:
             return value
-        raise ValueError(f"Unsupported conversion: {from_unit} -> {to_unit}")
+
+        return round(convert(value, from_unit, to_unit), 4)
 
     @staticmethod
     def calculate_dilution_volume(
