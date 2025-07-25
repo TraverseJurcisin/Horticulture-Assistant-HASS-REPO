@@ -204,8 +204,8 @@ Key reference datasets reside in the `data/` directory:
 - `yield/` – per‑plant yield logs created during operation
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `pesticide_withdrawal_days.json` – required wait time before harvest after pesticide use
-- `wsda_fertilizer_database.json` – full fertilizer analysis database used by
-  `plant_engine.wsda_lookup` for product N‑P‑K values
+- `wsda_fertilizer_database.json` – sample fertilizer analysis records used by
+  `plant_engine.wsda_lookup` for product N‑P‑K lookups
 - The `recommend_wsda_products` helper in `fertilizer_formulator` returns the
   highest concentration products for a nutrient using this dataset.
 - `products_index.jsonl` – compact summary of WSDA products for fast searches (use `wsda_product_index`)

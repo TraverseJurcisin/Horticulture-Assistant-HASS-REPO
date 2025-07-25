@@ -1,1 +1,29 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  {
+    "product_name": "Generic Potash 0-0-50",
+    "wsda_product_number": "(#0000-0002)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 50.0
+    }
+  },
+  {
+    "product_name": "Balanced Mix 10-10-10",
+    "wsda_product_number": "(#0000-0003)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0
+    }
+  }
 ]

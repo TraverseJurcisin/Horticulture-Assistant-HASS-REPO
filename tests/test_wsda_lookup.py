@@ -18,6 +18,20 @@ list_product_numbers = wsda.list_product_numbers
 recommend_products_for_nutrient = wsda.recommend_products_for_nutrient
 
 
+def test_parse_analysis_helper():
+    ga = {
+        "Total Nitrogen (N)": "5",
+        "Available Phosphoric Acid (P2O5)": "6",
+        "Soluble Potash (K2O)": "6",
+        "Boron (B)": "0.1",
+    }
+    parsed = wsda._parse_analysis(ga)
+    assert parsed["N"] == 5
+    assert parsed["P"] == 6
+    assert parsed["K"] == 6
+    assert parsed["Boron"] == 0.1
+
+
 def test_lookup_by_name():
     result = get_product_npk_by_name("1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6")
     assert result["N"] == 5.0
