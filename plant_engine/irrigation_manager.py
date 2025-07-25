@@ -7,7 +7,11 @@ from typing import Mapping, Dict, Any
 from .utils import load_dataset, normalize_key, stage_value
 from .et_model import calculate_eta
 
-from .rootzone_model import RootZone, calculate_remaining_water
+from .rootzone_model import (
+    RootZone,
+    calculate_remaining_water,
+    estimate_infiltration_time,
+)
 
 __all__ = [
     "recommend_irrigation_volume",
@@ -29,6 +33,7 @@ __all__ = [
     "get_recommended_interval",
     "estimate_irrigation_time",
     "generate_cycle_irrigation_plan",
+    "estimate_infiltration_series",
     "IrrigationRecommendation",
 ]
 
@@ -500,3 +505,36 @@ def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float
         plan[stage] = stage_plan
 
     return plan
+
+
+def estimate_infiltration_series(
+    schedule: Mapping[int, float], area_m2: float, texture: str
+) -> Dict[int, float | None]:
+    """Return infiltration time (hours) for each scheduled irrigation volume.
+
+    Parameters
+    ----------
+    schedule : Mapping[int, float]
+        Mapping of day numbers to irrigation volume in milliliters.
+    area_m2 : float
+        Soil surface area receiving irrigation.
+    texture : str
+        Soil texture used to look up infiltration rate.
+
+    Returns
+    -------
+    Dict[int, float | None]
+        Mapping of day numbers to hours required for infiltration.
+        ``None`` is used when the texture rate is unknown.
+    """
+
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+
+    result: Dict[int, float | None] = {}
+    for day, volume in schedule.items():
+        if volume <= 0:
+            result[day] = 0.0
+        else:
+            result[day] = estimate_infiltration_time(volume, area_m2, texture)
+    return result

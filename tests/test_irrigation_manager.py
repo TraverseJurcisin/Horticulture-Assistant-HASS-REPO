@@ -19,6 +19,7 @@ from plant_engine.irrigation_manager import (
     generate_precipitation_schedule,
     get_rain_capture_efficiency,
     get_recommended_interval,
+    estimate_infiltration_series,
     IrrigationRecommendation,
 )
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
@@ -304,4 +305,14 @@ def test_generate_cycle_irrigation_plan():
     # verify at least one scheduled volume and it is positive
     assert veg
     assert veg[1] > 0
+
+
+def test_estimate_infiltration_series():
+    schedule = {1: 100.0, 2: 0.0, 3: 50.0}
+    times = estimate_infiltration_series(schedule, 1.0, "loam")
+    assert times[1] == 0.01
+    assert times[2] == 0.0
+    assert times[3] == 0.01
+    with pytest.raises(ValueError):
+        estimate_infiltration_series(schedule, 0, "loam")
 
