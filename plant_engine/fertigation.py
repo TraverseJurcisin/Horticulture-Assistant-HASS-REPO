@@ -300,22 +300,13 @@ def grams_to_ppm(grams: float, volume_l: float, purity: float) -> float:
 def check_solubility_limits(
     schedule: Mapping[str, float], volume_l: float
 ) -> Dict[str, float]:
-    """Return grams per liter exceeding solubility limits for each fertilizer."""
+    """Delegate to :func:`fertilizer_formulator.check_solubility_limits`."""
 
-    if volume_l <= 0:
-        raise ValueError("volume_l must be > 0")
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        check_solubility_limits as _check,
+    )
 
-    limits = get_solubility_limits()
-    excess: Dict[str, float] = {}
-    for fert, grams in schedule.items():
-        key = normalize_key(fert)
-        limit = limits.get(key)
-        if limit is None:
-            continue
-        g_per_l = grams / volume_l
-        if g_per_l > limit:
-            excess[fert] = round(g_per_l - limit, 2)
-    return excess
+    return _check(schedule, volume_l)
 
 
 def recommend_fertigation_schedule(

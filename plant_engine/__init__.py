@@ -235,6 +235,12 @@ from .water_usage import (
     estimate_cycle_total_use,
 )
 from .water_costs import get_water_cost_rate, estimate_water_cost
+from .solution_temperature import (
+    list_supported_plants as list_solution_temp_plants,
+    get_temperature_range as get_solution_temp_range,
+    evaluate_solution_temperature,
+    recommend_temperature_adjustment,
+)
 from .toxicity_manager import (
     list_supported_plants as list_toxicity_plants,
     get_toxicity_thresholds,
@@ -486,4 +492,8 @@ __all__ = [
     "DEFAULT_ENV",
     "get_water_cost_rate",
     "estimate_water_cost",
+    "list_solution_temp_plants",
+    "get_solution_temp_range",
+    "evaluate_solution_temperature",
+    "recommend_temperature_adjustment",
 ]
