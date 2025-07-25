@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+from plant_engine.utils import save_json
 
 from homeassistant.core import HomeAssistant
 
@@ -142,15 +143,12 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     )
 
     # Save report to disk (under data/daily_reports/<plant_id>-YYYYMMDD.json)
-    report_dir = hass.config.path("data", "daily_reports")
-    os.makedirs(report_dir, exist_ok=True)
-    date_str = datetime.now().strftime("%Y%m%d")
-    file_path = os.path.join(report_dir, f"{plant_id}-{date_str}.json")
+    report_dir = Path(hass.config.path("data", "daily_reports"))
+    file_path = _report_path(report_dir, plant_id)
     try:
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(report.as_dict(), f, indent=2)
+        save_json(str(file_path), report.as_dict())
         _LOGGER.info("Daily report saved for plant %s at %s", plant_id, file_path)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover - unexpected errors
         _LOGGER.error("Failed to save daily report for %s: %s", plant_id, e)
 
     return report
