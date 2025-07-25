@@ -205,7 +205,7 @@ Key reference datasets reside in the `data/` directory:
 - `plant_density_guidelines.json` – recommended plant spacing (cm) for density calculations
 - `pesticide_withdrawal_days.json` – required wait time before harvest after pesticide use
 - `wsda_fertilizer_database.json` – full fertilizer analysis database used by
-  `plant_engine.wsda_lookup` for product N‑P‑K values
+  `plant_engine.wsda_lookup` for product N‑P‑K values. The path can be overridden with `HORTICULTURE_WSDA_DB`.
 - The `recommend_wsda_products` helper in `fertilizer_formulator` returns the
   highest concentration products for a nutrient using this dataset.
 - `products_index.jsonl` – compact summary of WSDA products for fast searches (use `wsda_product_index`)
@@ -229,7 +229,8 @@ Multiple extra dataset directories can also be specified via
 provided before any overlay files.
 Call `plant_engine.utils.clear_dataset_cache()` if you modify these
 environment variables while the application is running so changes are
-immediately reflected.
+immediately reflected. The WSDA fertilizer database path may also be
+overridden via `HORTICULTURE_WSDA_DB`.
 
 The datasets are snapshots compiled from public resources. They may be outdated
 or incomplete and should only be used as a starting point for your own research.

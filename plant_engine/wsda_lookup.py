@@ -3,6 +3,7 @@ from __future__ import annotations
 """Utilities for looking up fertilizer analysis data from the WSDA database."""
 
 import json
+import os
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -10,10 +11,15 @@ from typing import Dict, List, Tuple, Mapping, Iterable
 
 from plant_engine.utils import load_json
 
-# Path to the WSDA fertilizer database packaged with the repository. Using
-# :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
-# variables to work as expected.
+# Path to the bundled WSDA fertilizer database. Set the ``HORTICULTURE_WSDA_DB``
+# environment variable to point at an alternate file.
+_WSDA_ENV = "HORTICULTURE_WSDA_DB"
 _WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
+
+
+def _db_path() -> Path:
+    env = os.getenv(_WSDA_ENV)
+    return Path(env).expanduser() if env else _WSDA_PATH
 
 __all__ = [
     "get_product_npk_by_name",
@@ -58,11 +64,12 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 @lru_cache(maxsize=None)
 def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+    """Return WSDA fertilizer records loaded from the JSON database."""
 
-    if not _WSDA_PATH.exists():
+    path = _db_path()
+    if not path.exists():
         return []
-    data = load_json(str(_WSDA_PATH))
+    data = load_json(str(path))
     if isinstance(data, list):
         return data
     if isinstance(data, Mapping) and "records" in data:
