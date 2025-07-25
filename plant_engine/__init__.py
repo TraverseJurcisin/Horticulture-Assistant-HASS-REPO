@@ -227,6 +227,7 @@ from .water_usage import (
     estimate_cycle_total_use,
 )
 from .water_costs import get_water_cost_rate, estimate_water_cost
+from .ec_conversions import ec_to_ppm, ppm_to_ec, get_factor, list_scales
 from .toxicity_manager import (
     list_supported_plants as list_toxicity_plants,
     get_toxicity_thresholds,
@@ -413,6 +414,10 @@ __all__ = [
     "estimate_required_nutrients",
     "estimate_fertilizer_requirements",
     "estimate_solution_volume",
+    "ec_to_ppm",
+    "ppm_to_ec",
+    "get_factor",
+    "list_scales",
     "generate_health_report",
     "list_water_analytes",
     "get_water_threshold",

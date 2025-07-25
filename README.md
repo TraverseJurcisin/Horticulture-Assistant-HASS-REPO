@@ -198,6 +198,7 @@ Key reference datasets reside in the `data/` directory:
 - `emitter_flow_rates.json` – typical emitter flow rates (L/h) for irrigation time estimates
 - `hvac_energy_coefficients.json` – kWh usage per degree-day for heating and cooling
 - `water_costs.json` – water cost per liter by region used for irrigation budgeting
+- `ec_to_ppm_factors.json` – conversion factors used by `ec_conversions.ec_to_ppm` and `ppm_to_ec`
 - `foliar_feed_guidelines.json` – recommended nutrient ppm for foliar sprays
 - `foliar_feed_intervals.json` – suggested days between foliar applications
 - `nutrient_leaching_rates.json` – estimated fraction of nutrients lost to leaching
@@ -267,6 +268,7 @@ or incomplete and should only be used as a starting point for your own research.
   exceeds the maximum grams per liter defined in `fertilizer_solubility.json`.
 - **Solution Volume Estimate**: `estimate_solution_volume` calculates how much
   water is needed to fully dissolve a fertilizer mix.
+- **EC/PPM Conversions**: `ec_conversions.ec_to_ppm` and `ppm_to_ec` convert between conductivity readings and nutrient ppm.
 - **Daily Uptake Estimation**: Use `estimate_daily_nutrient_uptake` to convert
   ppm guidelines and irrigation volume into milligrams of nutrients consumed
   each day.

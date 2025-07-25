@@ -1,1 +1,48 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  {
+    "product_name": "GRANULAR POTASH 0-0-60",
+    "wsda_product_number": "(#2285-0006)",
+    "guaranteed_analysis": {
+      "Soluble Potash (K2O)": 60.0
+    }
+  },
+  {
+    "product_name": "20 MULE TEAM BORAX FERTIBOR SODIUM BORATE 15% B 0-0-0",
+    "wsda_product_number": "(#3830-0001)",
+    "guaranteed_analysis": {
+      "B": 15.0
+    }
+  },
+  {
+    "product_name": "FOXFARM GROW BIG LIQUID PLANT FOOD 6-4-4",
+    "wsda_product_number": "(#3242-0006)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 4.0
+    }
+  },
+  {
+    "product_name": "GENERIC N FERT 10-0-0",
+    "wsda_product_number": "(#0001-0001)",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0
+    }
+  },
+  {
+    "product_name": "GENERIC K FERT 0-0-20",
+    "wsda_product_number": "(#0001-0002)",
+    "guaranteed_analysis": {
+      "Soluble Potash (K2O)": 20.0
+    }
+  }
 ]
