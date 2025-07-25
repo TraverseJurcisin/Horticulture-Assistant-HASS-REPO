@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Mapping, Any
 
 from .json_io import save_json
+from plant_engine.utils import get_plants_dir
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ def write_profile_sections(
         The ``plant_id`` on success or an empty string if a failure
         prevented writing any files.
     """
-    base_dir = Path(base_path) if base_path else Path("plants")
+    base_dir = Path(base_path) if base_path else get_plants_dir()
     plant_dir = base_dir / plant_id
     try:
         plant_dir.mkdir(parents=True, exist_ok=True)

@@ -10,6 +10,7 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
+from plant_engine.utils import get_plants_dir
 from typing import Any, Dict
 
 _LOGGER = logging.getLogger(__name__)
@@ -65,7 +66,7 @@ def load_plant_profile(
     :return: A dictionary containing the plant_id and loaded profile_data sections, or an empty dict on error.
     """
     # Determine the base directory and plant profile directory
-    base_dir = Path(base_path) if base_path else Path("plants")
+    base_dir = Path(base_path) if base_path else get_plants_dir()
     plant_dir = base_dir / str(plant_id)
 
     # Ensure the plant directory exists

@@ -9,6 +9,8 @@ from plant_engine.utils import (
     normalize_key,
     clear_dataset_cache,
     stage_value,
+    get_plants_dir,
+    get_reports_dir,
 )
 
 
@@ -75,3 +77,21 @@ def test_stage_value_fallback():
 def test_stage_value_custom_default():
     data = {"crop": {"phase": 1, "default": 2}}
     assert stage_value(data, "crop", "missing", default_key="default") == 2
+
+
+def test_get_plants_dir_env(monkeypatch, tmp_path):
+    monkeypatch.setenv("HORTICULTURE_PLANTS_DIR", str(tmp_path))
+    import importlib
+    import plant_engine.utils as reload_utils
+    importlib.reload(reload_utils)
+    assert reload_utils.get_plants_dir() == tmp_path
+    monkeypatch.delenv("HORTICULTURE_PLANTS_DIR", raising=False)
+
+
+def test_get_reports_dir_env(monkeypatch, tmp_path):
+    monkeypatch.setenv("HORTICULTURE_REPORTS_DIR", str(tmp_path))
+    import importlib
+    import plant_engine.utils as reload_utils
+    importlib.reload(reload_utils)
+    assert reload_utils.get_reports_dir() == tmp_path
+    monkeypatch.delenv("HORTICULTURE_REPORTS_DIR", raising=False)

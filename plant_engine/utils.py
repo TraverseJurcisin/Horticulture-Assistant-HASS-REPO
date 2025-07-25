@@ -22,6 +22,8 @@ __all__ = [
     "parse_range",
     "deep_update",
     "stage_value",
+    "get_plants_dir",
+    "get_reports_dir",
 ]
 
 
@@ -77,6 +79,14 @@ def deep_update(base: Dict[str, Any], other: Mapping[str, Any]) -> Dict[str, Any
 DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
+
+# Paths for plant profiles and generated reports. These can be overridden with
+# the environment variables ``HORTICULTURE_PLANTS_DIR`` and
+# ``HORTICULTURE_REPORTS_DIR`` respectively.
+DEFAULT_PLANTS_DIR = Path(__file__).resolve().parents[1] / "plants"
+DEFAULT_REPORTS_DIR = Path(__file__).resolve().parents[1] / "data" / "reports"
+PLANTS_ENV = "HORTICULTURE_PLANTS_DIR"
+REPORTS_ENV = "HORTICULTURE_REPORTS_DIR"
 
 
 def get_data_dir() -> Path:
@@ -188,3 +198,15 @@ def stage_value(
         if value is not None:
             return value
     return plant.get(default_key)
+
+
+def get_plants_dir() -> Path:
+    """Return base directory for plant profiles."""
+    env = os.getenv(PLANTS_ENV)
+    return Path(env).expanduser() if env else DEFAULT_PLANTS_DIR
+
+
+def get_reports_dir() -> Path:
+    """Return directory for generated reports."""
+    env = os.getenv(REPORTS_ENV)
+    return Path(env).expanduser() if env else DEFAULT_REPORTS_DIR

@@ -2,6 +2,7 @@ import os
 import json
 import logging
 from pathlib import Path
+from plant_engine.utils import get_plants_dir
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,7 +31,7 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     if base_path:
         base_dir = Path(base_path)
     else:
-        base_dir = Path("plants")
+        base_dir = get_plants_dir()
     plant_dir = base_dir / str(plant_id)
 
     # Ensure the plant directory exists

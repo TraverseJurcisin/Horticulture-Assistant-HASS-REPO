@@ -3,6 +3,7 @@ import re
 import json
 import logging
 from pathlib import Path
+from plant_engine.utils import get_plants_dir
 
 try:
     from homeassistant.core import HomeAssistant
@@ -65,9 +66,9 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
             base_path = Path(hass.config.path("plants"))
         except Exception as e:
             _LOGGER.error("Error resolving Home Assistant plants directory: %s", e)
-            base_path = Path("plants")
+            base_path = get_plants_dir()
     else:
-        base_path = Path("plants")
+        base_path = get_plants_dir()
 
     plant_dir = base_path / plant_id
     try:

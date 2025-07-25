@@ -6,6 +6,7 @@ except ImportError:  # pragma: no cover - outside Home Assistant
     HomeAssistant = None
 
 from .profile_helpers import write_profile_sections
+from plant_engine.utils import get_plants_dir
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,9 +25,9 @@ def initialize_nutrient_logs(
             base_path = Path(hass.config.path("plants"))
         except Exception as err:  # pragma: no cover - path resolution failure
             _LOGGER.error("Error resolving Home Assistant plants directory: %s", err)
-            base_path = Path("plants")
+            base_path = get_plants_dir()
     else:
-        base_path = Path("plants")
+        base_path = get_plants_dir()
     sections = {
         "nutrient_application_log.json": [],
         "fertilizer_cost_tracking.json": [],

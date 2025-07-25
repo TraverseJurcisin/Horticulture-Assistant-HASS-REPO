@@ -6,6 +6,7 @@ import json
 import logging
 from pathlib import Path
 from functools import lru_cache
+from plant_engine.utils import get_plants_dir
 
 # Attempt to import PyYAML for optional YAML support. Tests fall back to a very
 # small parser that understands the limited subset of YAML used in fixtures.
@@ -17,7 +18,7 @@ except ImportError:
 _LOGGER = logging.getLogger(__name__)
 
 # Default directory containing individual plant profiles
-DEFAULT_BASE_DIR = Path("plants")
+DEFAULT_BASE_DIR = get_plants_dir()
 
 REQUIRED_THRESHOLD_KEYS = {"light", "temperature", "EC"}
 REQUIRED_STAGE_KEY = "stage_duration"

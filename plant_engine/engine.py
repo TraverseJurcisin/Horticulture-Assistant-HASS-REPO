@@ -4,7 +4,7 @@ from typing import Dict, Mapping, Any
 
 from functools import lru_cache
 
-from plant_engine.utils import save_json
+from plant_engine.utils import save_json, get_plants_dir, get_reports_dir
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile_by_id,
 )
@@ -34,8 +34,8 @@ from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
 from plant_engine.constants import get_stage_multiplier, DEFAULT_ENV
 
-PLANTS_DIR = "plants"
-OUTPUT_DIR = "data/reports"
+PLANTS_DIR = str(get_plants_dir())
+OUTPUT_DIR = str(get_reports_dir())
 
 _LOGGER = logging.getLogger(__name__)
 
