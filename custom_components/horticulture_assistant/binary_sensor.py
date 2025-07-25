@@ -11,7 +11,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
+from .const import CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
 from .entity_base import HorticultureBaseEntity
 from .utils.sensor_mapping import load_sensor_map
 

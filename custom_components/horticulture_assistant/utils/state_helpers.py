@@ -4,11 +4,10 @@ from __future__ import annotations
 
 import logging
 import re
+from statistics import mean, median
 from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
-
-from statistics import mean, median
 
 __all__ = ["get_numeric_state", "get_aggregated_state"]
 

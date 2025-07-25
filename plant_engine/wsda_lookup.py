@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Utilities for looking up fertilizer analysis data from the WSDA database."""
+
+from __future__ import annotations
 
 import json
 from dataclasses import dataclass
