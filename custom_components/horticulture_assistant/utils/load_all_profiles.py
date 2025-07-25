@@ -1,11 +1,14 @@
 """Utilities for loading and validating multiple plant profiles."""
 
-import json
 import logging
 import os
 from dataclasses import dataclass, asdict
+from fnmatch import fnmatch
 from pathlib import Path
 
+from custom_components.horticulture_assistant.utils.load_plant_profile import (
+    load_plant_profile,
+)
 from custom_components.horticulture_assistant.utils.validate_profile_structure import (
     validate_profile_structure,
 )
@@ -56,38 +59,31 @@ def load_all_profiles(
         if not plant_dir.is_dir():
             continue  # skip any files in the base directory
         plant_id = plant_dir.name
-        json_files = list(plant_dir.glob(pattern))
-        if not json_files:
-            # skip this directory if it contains no JSON files
-            continue
-        profile_data: dict[str, dict] = {}
-        issues: dict[str, object] = {}
-        loaded_flag = False
-        # Load each JSON file in the plant directory
-        for file_path in json_files:
-            file_name = file_path.name
-            try:
-                with open(file_path, "r", encoding="utf-8") as f:
-                    content = json.load(f)
-                if not isinstance(content, dict):
-                    raise ValueError("Content is not a dict")
-            except Exception as exc:
-                if not validate:
-                    _LOGGER.error("Failed to load %s: %s", file_path, exc)
-                issues[file_name] = {"error": str(exc)}
-                continue
 
-            loaded_flag = True
-            profile_data[file_path.stem] = content
-        # If requested, validate the profile structure and use the results
+        profile_obj = load_plant_profile(plant_id, base_path=base_dir)
+        if not profile_obj:
+            continue
+
+        # Filter loaded sections based on the pattern
+        profile_data = {
+            name: data
+            for name, data in profile_obj.profile_data.items()
+            if fnmatch(f"{name}.json", pattern)
+        }
+        if not profile_data:
+            # skip this directory if no files match the pattern
+            continue
+
+        issues: dict[str, object] = {}
         if validate:
-            validation_issues = validate_profile_structure(plant_id, base_path=base_path, verbose=verbose)
-            # Use validation issues if any found (this covers parse errors and structural issues)
+            validation_issues = validate_profile_structure(
+                plant_id, base_path=base_path, verbose=verbose
+            )
             if validation_issues:
                 issues = validation_issues
-        # Store the results for this plant
+
         profiles[plant_id] = ProfileLoadResult(
-            loaded=loaded_flag,
+            loaded=True,
             profile_data=profile_data,
             issues=issues,
         )
