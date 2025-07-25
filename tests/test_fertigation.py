@@ -410,3 +410,15 @@ def test_recommend_loss_compensated_mix():
     assert adjusted["urea"] > base["urea"]
     assert adjusted["urea"] == pytest.approx(base["urea"] * 1.32, rel=1e-2)
     assert adjusted["map"] == pytest.approx(base["map"] * 1.05, rel=1e-2)
+
+
+def test_recommend_recovery_adjusted_schedule():
+    from plant_engine.fertigation import recommend_recovery_adjusted_schedule
+
+    schedule = recommend_recovery_adjusted_schedule(
+        "tomato", "vegetative", 10.0
+    )
+
+    assert schedule["N"] == pytest.approx(1.667, rel=1e-3)
+    assert schedule["P"] == pytest.approx(1.429, rel=1e-3)
+    assert schedule["K"] == pytest.approx(1.231, rel=1e-3)
