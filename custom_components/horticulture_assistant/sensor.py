@@ -118,7 +118,7 @@ class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
         self._sensor_map = sensor_map
 
     def _get_state_value(self, entity_id: str | list[str] | None) -> float | None:
-        """Return the numeric state or average value of the given entity or list."""
+        """Return numeric state or aggregated value of ``entity_id``(s)."""
         if not entity_id:
             return None
         if isinstance(entity_id, list):
@@ -126,6 +126,10 @@ class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
             vals = [v for v in vals if v is not None]
             if not vals:
                 return None
+            if len(vals) > 2:
+                from statistics import median
+
+                return median(vals)
             return sum(vals) / len(vals)
         return get_numeric_state(self.hass, entity_id)
 
