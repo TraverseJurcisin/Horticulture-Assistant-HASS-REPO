@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 from dataclasses import dataclass, asdict
@@ -13,6 +12,7 @@ from typing import Optional
 from homeassistant.core import HomeAssistant
 
 from .state_helpers import get_numeric_state
+from .json_io import load_json, save_json
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile,
@@ -55,8 +55,7 @@ def _resolve_plant_type(hass: HomeAssistant, plant_id: str, profile: dict) -> Op
         return str(ptype)
     reg_path = hass.config.path("plant_registry.json")
     try:
-        with open(reg_path, "r", encoding="utf-8") as fh:
-            reg = json.load(fh)
+        reg = load_json(reg_path)
         return reg.get(plant_id, {}).get("plant_type")
     except Exception:
         return None
@@ -147,8 +146,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     date_str = datetime.now().strftime("%Y%m%d")
     file_path = os.path.join(report_dir, f"{plant_id}-{date_str}.json")
     try:
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(report.as_dict(), f, indent=2)
+        save_json(file_path, report.as_dict())
         _LOGGER.info("Daily report saved for plant %s at %s", plant_id, file_path)
     except Exception as e:
         _LOGGER.error("Failed to save daily report for %s: %s", plant_id, e)

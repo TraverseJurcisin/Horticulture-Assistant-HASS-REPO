@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-import json
 import os
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from typing import Dict, Optional, Any
+
+from .utils import load_json, save_json
 
 STORAGE_PATH = "data/water_balance"
 MAX_LOG_DAYS = 14  # for rolling average or ET smoothing (optional)
@@ -68,8 +69,7 @@ def update_water_balance(
     file_path = os.path.join(storage_path, f"{plant_id}.json")
 
     if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as f:
-            history = json.load(f)
+        history = load_json(file_path)
     else:
         history = {}
 
@@ -110,8 +110,7 @@ def update_water_balance(
     )
 
     # Write updated history
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2)
+    save_json(file_path, history)
 
     return summary
 
@@ -121,8 +120,7 @@ def load_water_balance(plant_id: str, storage_path: str = STORAGE_PATH) -> Dict[
     file_path = os.path.join(storage_path, f"{plant_id}.json")
     if not os.path.exists(file_path):
         return {}
-    with open(file_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    return load_json(file_path)
 
 
 __all__ = ["update_water_balance", "load_water_balance", "WaterBalance"]
