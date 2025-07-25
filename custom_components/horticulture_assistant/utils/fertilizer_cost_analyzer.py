@@ -12,17 +12,22 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, Iterable
 
+try:
+    from .unit_utils import UNIT_CONVERSIONS, to_base
+except ImportError:  # pragma: no cover - fallback for direct execution
+    import importlib.util
+    from pathlib import Path
 
-_UNIT_CONVERSIONS = {
-    "kg": 1.0,
-    "g": 0.001,
-    "lb": 0.453592,
-    "oz": 0.0283495,
-    "L": 1.0,
-    "mL": 0.001,
-    "gal": 3.78541,
-    "fl_oz": 0.0295735,
-}
+    spec = importlib.util.spec_from_file_location(
+        "unit_utils",
+        Path(__file__).resolve().parent / "unit_utils.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)  # type: ignore
+    UNIT_CONVERSIONS = mod.UNIT_CONVERSIONS  # type: ignore
+    to_base = mod.to_base  # type: ignore
+
+
 
 
 @dataclass
@@ -37,15 +42,18 @@ class ProductOption:
 
     def price_per_unit(self) -> float:
         """Return price normalized to the base unit (kg or L)."""
-        if self.unit not in _UNIT_CONVERSIONS:
+        if self.unit not in UNIT_CONVERSIONS:
             raise ValueError(f"Unsupported unit: {self.unit}")
-        normalized = self.quantity * _UNIT_CONVERSIONS[self.unit]
+        normalized = to_base(self.quantity, self.unit)
         return self.price / normalized if normalized else 0.0
 
 
 def price_per_unit(price: float, quantity: float, unit: str) -> float:
     """Return cost normalized to the base unit."""
-    return ProductOption(price, quantity, unit, "").price_per_unit()
+    if unit not in UNIT_CONVERSIONS:
+        raise ValueError(f"Unsupported unit: {unit}")
+    normalized = to_base(quantity, unit)
+    return price / normalized if normalized else 0.0
 
 
 def get_cheapest_option(options: Iterable[ProductOption]) -> ProductOption | None:

@@ -2,20 +2,26 @@
 
 from typing import Dict, List, Literal
 
+try:
+    from .unit_utils import UNIT_CONVERSIONS, to_base
+except ImportError:  # pragma: no cover - fallback for direct execution
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location(
+        "unit_utils",
+        Path(__file__).resolve().parent / "unit_utils.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)  # type: ignore
+    UNIT_CONVERSIONS = mod.UNIT_CONVERSIONS  # type: ignore
+    to_base = mod.to_base  # type: ignore
+
 __all__ = [
     "ProductCostAnalyzer",
 ]
 
 
-# Conversion factors to liters or kilograms
-UNIT_CONVERSIONS = {
-    "L": 1.0,
-    "mL": 1.0 / 1000,
-    "gal": 3.78541,
-    "kg": 1.0,
-    "g": 1.0 / 1000,
-    "oz": 0.0283495,
-}
 
 
 class ProductCostAnalyzer:
@@ -32,7 +38,7 @@ class ProductCostAnalyzer:
         if unit not in UNIT_CONVERSIONS:
             raise ValueError(f"Unsupported unit: {unit}")
 
-        size_in_standard = size * UNIT_CONVERSIONS[unit]
+        size_in_standard = to_base(size, unit)
         if size_in_standard <= 0:
             raise ValueError("Size must be greater than zero")
 
@@ -76,5 +82,5 @@ class ProductCostAnalyzer:
         if dose_unit not in UNIT_CONVERSIONS:
             raise ValueError(f"Unsupported dose unit: {dose_unit}")
 
-        dose_in_standard = dose_amount * UNIT_CONVERSIONS[dose_unit]
+        dose_in_standard = to_base(dose_amount, dose_unit)
         return round(cost_per_unit * dose_in_standard, 4)
