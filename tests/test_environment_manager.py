@@ -24,6 +24,7 @@ from plant_engine.environment_manager import (
     calculate_co2_injection,
     recommend_co2_injection,
     get_co2_price,
+    get_co2_efficiency,
     estimate_co2_cost,
     recommend_co2_injection_with_cost,
     calculate_co2_injection_series,
@@ -810,6 +811,7 @@ def test_clear_environment_cache():
 def test_co2_price_and_cost():
     assert get_co2_price("bulk_tank") == 0.7
     assert estimate_co2_cost(1000, "bulk_tank") == 0.7
+    assert get_co2_efficiency("cartridge") == 0.85
     grams, cost = recommend_co2_injection_with_cost(300, "citrus", "seedling", 100.0, "cartridge")
     assert grams > 0
     assert cost == estimate_co2_cost(grams, "cartridge")
