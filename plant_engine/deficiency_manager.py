@@ -4,18 +4,18 @@ from __future__ import annotations
 from typing import Dict, Mapping
 
 from .nutrient_manager import calculate_deficiencies
-from .utils import load_dataset
+from .utils import lazy_dataset
 
 DATA_FILE = "nutrient_deficiency_symptoms.json"
 TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
 MOBILITY_DATA_FILE = "nutrient_mobility.json"
 THRESHOLD_DATA_FILE = "nutrient_deficiency_thresholds.json"
 
-# Load dataset once using cached loader
-_SYMPTOMS: Dict[str, str] = load_dataset(DATA_FILE)
-_TREATMENTS: Dict[str, str] = load_dataset(TREATMENT_DATA_FILE)
-_MOBILITY: Dict[str, str] = load_dataset(MOBILITY_DATA_FILE)
-_THRESHOLDS: Dict[str, list[float]] = load_dataset(THRESHOLD_DATA_FILE)
+# Load datasets lazily to avoid unnecessary work during import
+_symptoms = lazy_dataset(DATA_FILE)
+_treatments = lazy_dataset(TREATMENT_DATA_FILE)
+_mobility = lazy_dataset(MOBILITY_DATA_FILE)
+_thresholds = lazy_dataset(THRESHOLD_DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -33,17 +33,17 @@ __all__ = [
 
 def list_known_nutrients() -> list[str]:
     """Return all nutrients with recorded deficiency symptoms."""
-    return sorted(_SYMPTOMS.keys())
+    return sorted(_symptoms().keys())
 
 
 def get_deficiency_symptom(nutrient: str) -> str:
     """Return the symptom description for a nutrient or an empty string."""
-    return _SYMPTOMS.get(nutrient, "")
+    return _symptoms().get(nutrient, "")
 
 
 def get_nutrient_mobility(nutrient: str) -> str:
     """Return ``mobile`` or ``immobile`` classification for ``nutrient``."""
-    return _MOBILITY.get(nutrient, "unknown")
+    return _mobility().get(nutrient, "unknown")
 
 
 def diagnose_deficiencies(
@@ -74,7 +74,7 @@ def diagnose_deficiencies_detailed(
 
 def get_deficiency_treatment(nutrient: str) -> str:
     """Return suggested treatment for a nutrient deficiency."""
-    return _TREATMENTS.get(nutrient, "")
+    return _treatments().get(nutrient, "")
 
 
 def recommend_deficiency_treatments(
@@ -91,7 +91,7 @@ def classify_deficiency_levels(deficits: Mapping[str, float]) -> Dict[str, str]:
     """Return severity classification for nutrient deficits."""
     levels: Dict[str, str] = {}
     for nutrient, amount in deficits.items():
-        bounds = _THRESHOLDS.get(nutrient)
+        bounds = _thresholds().get(nutrient)
         if not bounds or len(bounds) != 2:
             continue
         mild, severe = bounds
