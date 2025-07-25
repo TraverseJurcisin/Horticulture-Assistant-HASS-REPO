@@ -195,9 +195,57 @@ def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
     return sorted(plant_ids)
 
 
+def save_profile_to_path(profile: dict, path: str | Path) -> bool:
+    """Write ``profile`` to ``path`` as JSON."""
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(profile, f, indent=2)
+    except Exception as exc:  # pragma: no cover - unexpected file errors
+        _LOGGER.error("Failed to write profile %s: %s", path, exc)
+        return False
+    return True
+
+
+def save_profile_by_id(
+    plant_id: str, profile: dict, base_dir: str | Path | None = None
+) -> bool:
+    """Write profile for ``plant_id`` under ``base_dir``."""
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    file_path = directory / f"{plant_id}.json"
+    return save_profile_to_path(profile, file_path)
+
+
+def update_profile_sensors(
+    plant_id: str,
+    sensors: dict,
+    base_dir: str | Path | None = None,
+) -> bool:
+    """Update ``sensor_entities`` for ``plant_id`` and save the profile."""
+    if not isinstance(sensors, dict):
+        return False
+    profile = load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return False
+
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    for key, val in sensors.items():
+        if isinstance(val, str):
+            val = [val]
+        container.setdefault("sensor_entities", {})[key] = list(val)
+    if container is not profile:
+        profile["general"] = container
+
+    return save_profile_by_id(plant_id, profile, base_dir)
+
+
 __all__ = [
     "load_profile_from_path",
     "load_profile_by_id",
     "load_profile",
     "list_available_profiles",
+    "save_profile_to_path",
+    "save_profile_by_id",
+    "update_profile_sensors",
 ]

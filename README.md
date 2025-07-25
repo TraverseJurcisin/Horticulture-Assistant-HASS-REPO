@@ -118,6 +118,20 @@ If multiple entity IDs are provided, their values are averaged. When more than
 two sensors are listed, the median of the available readings is used instead to
 reduce the effect of outliers.
 
+You can update the sensor mapping later using the ``horticulture_assistant.update_sensors`` service:
+
+```yaml
+service: horticulture_assistant.update_sensors
+data:
+  plant_id: citrus_backyard_spring2025
+  sensors:
+    moisture_sensors:
+      - sensor.new_moisture
+    temperature_sensors:
+      - sensor.new_temp
+      - sensor.backup_temp
+```
+
 ### Plant Registry
 Multiple profiles can be indexed in `plant_registry.json` so automations can discover them easily. Example:
 ```json
