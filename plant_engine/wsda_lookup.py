@@ -26,7 +26,7 @@ __all__ = [
     "recommend_products_for_nutrient",
 ]
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class _Product:
     """Normalized fertilizer entry."""
 

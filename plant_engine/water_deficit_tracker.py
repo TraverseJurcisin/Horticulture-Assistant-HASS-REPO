@@ -12,7 +12,7 @@ STORAGE_PATH = "data/water_balance"
 MAX_LOG_DAYS = 14  # for rolling average or ET smoothing (optional)
 
 
-@dataclass
+@dataclass(slots=True)
 class WaterBalance:
     """Summary of the current water balance status."""
 

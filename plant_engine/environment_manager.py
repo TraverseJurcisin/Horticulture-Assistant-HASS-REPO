@@ -508,7 +508,7 @@ class EnvironmentOptimization:
         }
 
 
-@dataclass
+@dataclass(slots=True)
 class StressFlags:
     """Combined abiotic stress indicators."""
 
@@ -527,7 +527,7 @@ class StressFlags:
         return asdict(self)
 
 
-@dataclass
+@dataclass(slots=True)
 class WaterQualityInfo:
     """Simple rating and score for irrigation water."""
 
@@ -538,7 +538,7 @@ class WaterQualityInfo:
         return asdict(self)
 
 
-@dataclass
+@dataclass(slots=True)
 class EnvironmentSummary:
     """High level summary of current environmental conditions."""
 

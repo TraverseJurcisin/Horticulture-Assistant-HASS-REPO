@@ -33,7 +33,7 @@ __all__ = [
 ]
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class RemovalEstimate:
     """Container for nutrient removal calculations."""
 

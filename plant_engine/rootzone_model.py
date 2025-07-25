@@ -75,7 +75,7 @@ def estimate_rootzone_depth(
     depth = max_depth_cm / (1 + math.exp(-k * (growth_index - midpoint)))
     return round(depth, 2)
 
-@dataclass
+@dataclass(slots=True)
 class RootZone:
     """Container for root zone capacity estimates."""
 

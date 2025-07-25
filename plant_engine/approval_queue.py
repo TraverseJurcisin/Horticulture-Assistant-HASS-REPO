@@ -23,7 +23,7 @@ __all__ = [
 ]
 
 
-@dataclass
+@dataclass(slots=True)
 class ThresholdChange:
     """Single threshold change proposal."""
 
@@ -35,7 +35,7 @@ class ThresholdChange:
         return asdict(self)
 
 
-@dataclass
+@dataclass(slots=True)
 class ThresholdUpdateRecord:
     """Container for pending threshold updates."""
 

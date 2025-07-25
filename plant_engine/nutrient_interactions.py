@@ -8,7 +8,7 @@ from .utils import load_dataset, list_dataset_entries
 
 _Pair = Tuple[str, str]
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class InteractionInfo:
     """Normalized dataset entry for a nutrient pair."""
 

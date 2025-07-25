@@ -134,7 +134,7 @@ def get_severity_action(level: str) -> str:
     return _SEVERITY_ACTIONS.get(level.lower(), "")
 
 
-@dataclass
+@dataclass(slots=True)
 class DiseaseReport:
     """Consolidated disease monitoring report."""
 

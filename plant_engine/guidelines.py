@@ -22,7 +22,7 @@ from . import (
 __all__ = ["GuidelineSummary", "get_guideline_summary"]
 
 
-@dataclass
+@dataclass(slots=True)
 class GuidelineSummary:
     """Container for consolidated plant guideline data."""
 
