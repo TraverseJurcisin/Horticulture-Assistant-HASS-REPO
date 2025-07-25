@@ -12,8 +12,10 @@ import sys
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT))
+from scripts import ensure_repo_root_on_path
+
+ROOT = ensure_repo_root_on_path()
 
 from plant_engine.wsda_lookup import (
     search_products,
