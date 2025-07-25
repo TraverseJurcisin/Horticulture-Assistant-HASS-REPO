@@ -236,7 +236,7 @@ def classify_pest_severity(
     return severity
 
 
-@dataclass
+@dataclass(slots=True)
 class PestReport:
     """Consolidated pest monitoring report."""
 

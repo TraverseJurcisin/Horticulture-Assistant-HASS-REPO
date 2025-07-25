@@ -7,7 +7,7 @@ from datetime import datetime
 __all__ = ["ProductPriceEntry", "CostAnalyzer"]
 
 
-@dataclass
+@dataclass(slots=True)
 class ProductPriceEntry:
     product_id: str
     distributor: str
@@ -19,7 +19,7 @@ class ProductPriceEntry:
     expiration_date: Optional[datetime] = None
 
 
-@dataclass
+@dataclass(slots=True)
 class CostAnalyzer:
     prices: Dict[str, List[ProductPriceEntry]] = field(default_factory=dict)
 

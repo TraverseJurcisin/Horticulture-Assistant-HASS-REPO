@@ -22,7 +22,7 @@ from plant_engine import environment_manager
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(slots=True)
 class DailyReport:
     """Lightweight representation of a daily plant report."""
 

@@ -41,7 +41,7 @@ from plant_engine.stage_tasks import get_stage_tasks
 from plant_engine import water_quality
 
 
-@dataclass
+@dataclass(slots=True)
 class DailyReport:
     """Structured daily report data."""
 

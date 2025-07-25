@@ -52,7 +52,7 @@ _RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
 _RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
 
 
-@dataclass(frozen=True)
+@dataclass(slots=True, frozen=True)
 class IrrigationRecommendation:
     """Recommended irrigation volume with ET metrics."""
 

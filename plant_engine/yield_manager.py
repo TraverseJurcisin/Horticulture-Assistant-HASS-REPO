@@ -16,7 +16,7 @@ from .utils import load_json, save_json
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
 
-@dataclass
+@dataclass(slots=True)
 class HarvestRecord:
     """Single harvest entry."""
 

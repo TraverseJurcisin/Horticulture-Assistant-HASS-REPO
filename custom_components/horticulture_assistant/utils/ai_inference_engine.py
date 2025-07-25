@@ -7,14 +7,14 @@ examines daily plant data and emits simple suggestions.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Any, Dict, List, Mapping, Optional
 
 import datetime as _dt
 import json
 
 
-@dataclass
+@dataclass(slots=True)
 class InferenceResult:
     """Result of :class:`AIInferenceEngine.analyze`."""
 
@@ -25,7 +25,7 @@ class InferenceResult:
     notes: Optional[str] = None
 
 
-@dataclass
+@dataclass(slots=True)
 class DailyPackage:
     """Container for daily inference inputs."""
 
@@ -140,7 +140,7 @@ class AIInferenceEngine:
     def export_results(self) -> str:
         """Return the stored inference results as a JSON string."""
 
-        return json.dumps([r.__dict__ for r in self.history], indent=2)
+        return json.dumps([asdict(r) for r in self.history], indent=2)
 
     def reset_history(self) -> None:
         """Clear stored inference results."""
