@@ -25,6 +25,7 @@ __all__ = [
     "adjust_irrigation_for_efficiency",
     "generate_env_irrigation_schedule",
     "generate_precipitation_schedule",
+    "generate_env_precipitation_schedule",
     "get_rain_capture_efficiency",
     "get_recommended_interval",
     "estimate_irrigation_time",
@@ -414,6 +415,44 @@ def generate_precipitation_schedule(
         if method:
             volume = adjust_irrigation_for_efficiency(volume, method)
         schedule[day] = volume
+        remaining = calculate_remaining_water(
+            rootzone, remaining, irrigation_ml=volume, et_ml=net_et
+        )
+
+    return schedule
+
+
+def generate_env_precipitation_schedule(
+    plant_profile: Mapping[str, float],
+    env_series: Iterable[Mapping[str, float]],
+    precipitation_ml: Iterable[float],
+    rootzone: RootZone,
+    available_ml: float,
+    *,
+    refill_to_full: bool = True,
+    method: str | None = None,
+    surface: str = "bare_soil",
+) -> Dict[int, Dict[str, object]]:
+    """Return irrigation schedule using environment data and rainfall."""
+
+    from .compute_transpiration import compute_transpiration
+
+    if available_ml < 0:
+        raise ValueError("available_ml must be non-negative")
+
+    rain_eff = get_rain_capture_efficiency(surface)
+    schedule: Dict[int, Dict[str, object]] = {}
+    remaining = float(available_ml)
+
+    for day, (env, rain) in enumerate(zip(env_series, precipitation_ml), start=1):
+        metrics = compute_transpiration(plant_profile, env)
+        net_et = max(0.0, metrics["transpiration_ml_day"] - rain * rain_eff)
+        volume = recommend_irrigation_volume(
+            rootzone, remaining, net_et, refill_to_full=refill_to_full
+        )
+        if method:
+            volume = adjust_irrigation_for_efficiency(volume, method)
+        schedule[day] = {"volume_ml": volume, "metrics": metrics}
         remaining = calculate_remaining_water(
             rootzone, remaining, irrigation_ml=volume, et_ml=net_et
         )
