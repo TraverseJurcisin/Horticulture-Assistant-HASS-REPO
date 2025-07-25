@@ -1,1 +1,17 @@
+[
+  {
+    "product_name": "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6",
+    "wsda_product_number": "(#4083-0001)",
+    "guaranteed_analysis": {"Total Nitrogen": 5, "Available Phosphoric Acid": 6, "Soluble Potash": 6}
+  },
+  {
+    "product_name": "GROWMORE 10-10-10",
+    "wsda_product_number": "(#0000-0002)",
+    "guaranteed_analysis": {"Total Nitrogen": 10, "Available Phosphoric Acid": 10, "Soluble Potash": 10}
+  },
+  {
+    "product_name": "SUPER K BOOST 0-0-50",
+    "wsda_product_number": "(#0000-0003)",
+    "guaranteed_analysis": {"Total Nitrogen": 0, "Available Phosphoric Acid": 0, "Soluble Potash": 50}
+  }
 ]

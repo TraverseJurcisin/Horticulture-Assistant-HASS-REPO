@@ -290,6 +290,7 @@ __all__ = [
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
+    "estimate_environment_control_cost",
 ]
 
 
@@ -876,6 +877,48 @@ def generate_stage_environment_plan(plant_type: str) -> Dict[str, Dict[str, floa
     for stage in list_growth_stages(plant_type):
         plan[stage] = suggest_environment_setpoints(plant_type, stage)
     return plan
+
+
+def estimate_environment_control_cost(
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None,
+    hours: float,
+    volume_m3: float,
+    *,
+    region: str | None = None,
+    co2_method: str = "bulk_tank",
+    system: str = "heating",
+) -> Dict[str, float]:
+    """Return estimated energy and CO₂ cost to maintain setpoints."""
+
+    if hours <= 0 or volume_m3 <= 0:
+        raise ValueError("hours and volume_m3 must be positive")
+
+    setpoints = suggest_environment_setpoints(plant_type, stage)
+    cur_temp = float(current.get("temp_c", 0.0))
+    tgt_temp = setpoints.get("temp_c", cur_temp)
+    cur_co2 = float(current.get("co2_ppm", 0.0))
+
+    from .energy_manager import estimate_hvac_energy, estimate_hvac_cost
+
+    energy_kwh = estimate_hvac_energy(cur_temp, tgt_temp, hours, system)
+    energy_cost = estimate_hvac_cost(cur_temp, tgt_temp, hours, system, region)
+
+    co2_target = setpoints.get("co2_ppm")
+    co2_grams = 0.0
+    co2_cost = 0.0
+    if co2_target:
+        grams = recommend_co2_injection(cur_co2, plant_type, stage, volume_m3)
+        co2_grams = grams
+        co2_cost = estimate_co2_cost(grams, co2_method)
+
+    return {
+        "energy_kwh": round(energy_kwh, 2),
+        "energy_cost": round(energy_cost, 2),
+        "co2_grams": round(co2_grams, 2),
+        "co2_cost": round(co2_cost, 2),
+    }
 
 
 def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
