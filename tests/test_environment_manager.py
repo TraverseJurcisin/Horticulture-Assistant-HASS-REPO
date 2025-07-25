@@ -64,6 +64,7 @@ from plant_engine.environment_manager import (
     get_target_soil_ec,
     get_target_leaf_temperature,
     energy_optimized_setpoints,
+    cost_optimized_setpoints,
 )
 
 
@@ -152,6 +153,22 @@ def test_energy_optimized_setpoints():
 def test_energy_optimized_setpoints_invalid():
     with pytest.raises(ValueError):
         energy_optimized_setpoints("citrus", "seedling", 20, 0)
+
+
+def test_cost_optimized_setpoints():
+    normal = suggest_environment_setpoints("citrus", "seedling")
+    result = cost_optimized_setpoints(
+        "citrus", "seedling", 20, 12, region="default"
+    )
+    assert result["temp_c"] == 22
+    for key, value in normal.items():
+        if key != "temp_c":
+            assert result[key] == value
+
+
+def test_cost_optimized_setpoints_invalid():
+    with pytest.raises(ValueError):
+        cost_optimized_setpoints("citrus", "seedling", 20, 0)
 
 
 def test_vapor_pressure_helpers():

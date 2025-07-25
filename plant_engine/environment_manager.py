@@ -225,6 +225,7 @@ __all__ = [
     "suggest_environment_setpoints",
     "suggest_environment_setpoints_advanced",
     "energy_optimized_setpoints",
+    "cost_optimized_setpoints",
     "saturation_vapor_pressure",
     "actual_vapor_pressure",
     "calculate_vpd",
@@ -899,6 +900,38 @@ def energy_optimized_setpoints(
     low_kwh = estimate_hvac_energy(current_temp_c, low, hours, system)
     high_kwh = estimate_hvac_energy(current_temp_c, high, hours, system)
     setpoints["temp_c"] = low if low_kwh <= high_kwh else high
+    return setpoints
+
+
+def cost_optimized_setpoints(
+    plant_type: str,
+    stage: str | None,
+    current_temp_c: float,
+    hours: float,
+    system: str = "heating",
+    region: str | None = None,
+) -> Dict[str, float]:
+    """Return environment setpoints minimizing HVAC cost.
+
+    The temperature setpoint that results in the lowest estimated energy
+    cost for ``hours`` is selected using :func:`energy_manager.estimate_hvac_cost`.
+    All other setpoints match :func:`suggest_environment_setpoints`.
+    """
+
+    if hours <= 0:
+        raise ValueError("hours must be positive")
+
+    setpoints = suggest_environment_setpoints(plant_type, stage)
+    temp_range = get_environmental_targets(plant_type, stage).get("temp_c")
+    if not isinstance(temp_range, (list, tuple)) or len(temp_range) != 2:
+        return setpoints
+
+    from .energy_manager import estimate_hvac_cost
+
+    low, high = float(temp_range[0]), float(temp_range[1])
+    low_cost = estimate_hvac_cost(current_temp_c, low, hours, system, region)
+    high_cost = estimate_hvac_cost(current_temp_c, high, hours, system, region)
+    setpoints["temp_c"] = low if low_cost <= high_cost else high
     return setpoints
 
 
