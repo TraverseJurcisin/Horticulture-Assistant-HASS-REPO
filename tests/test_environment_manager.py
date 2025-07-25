@@ -58,6 +58,7 @@ from plant_engine.environment_manager import (
     summarize_environment_series,
     calculate_environment_metrics_series,
     average_environment_readings,
+    calculate_environment_variance,
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
@@ -556,6 +557,21 @@ def test_average_environment_readings():
     avg = average_environment_readings(series)
     assert avg["temp_c"] == pytest.approx(21)
     assert avg["humidity_pct"] == pytest.approx(65)
+
+
+def test_calculate_environment_variance():
+    series = [
+        {"temp_c": 20, "humidity_pct": 70},
+        {"temperature": 22, "humidity": 72},
+        {"temp_c": 21, "humidity_pct": 74},
+    ]
+    var = calculate_environment_variance(series)
+    assert var["temp_c"] == pytest.approx(0.667, rel=1e-3)
+    assert var["humidity_pct"] == pytest.approx(2.667, rel=1e-3)
+
+
+def test_calculate_environment_variance_empty():
+    assert calculate_environment_variance([]) == {}
 
 
 def test_summarize_environment():

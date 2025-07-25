@@ -289,6 +289,7 @@ __all__ = [
     "summarize_environment",
     "summarize_environment_series",
     "average_environment_readings",
+    "calculate_environment_variance",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
@@ -385,6 +386,25 @@ def average_environment_readings(series: Iterable[Mapping[str, float]]) -> Dict[
         return {}
 
     return {k: v / count for k, v in totals.items()}
+
+
+def calculate_environment_variance(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+    """Return variance for normalized environment readings."""
+
+    values: Dict[str, list[float]] = {}
+    for reading in series:
+        for key, value in normalize_environment_readings(reading).items():
+            values.setdefault(key, []).append(float(value))
+
+    variance: Dict[str, float] = {}
+    for key, vals in values.items():
+        n = len(vals)
+        if n == 0:
+            continue
+        mean = sum(vals) / n
+        var = sum((v - mean) ** 2 for v in vals) / n
+        variance[key] = round(var, 3)
+    return variance
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
