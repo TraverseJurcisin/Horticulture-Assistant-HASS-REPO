@@ -1,8 +1,8 @@
 import os
 from approval_queue import apply_approved_thresholds
-from plant_engine.utils import load_json, save_json
+from plant_engine.utils import load_json, save_json, get_pending_dir
 
-PENDING_DIR = "data/pending_thresholds"
+PENDING_DIR = str(get_pending_dir())
 PLANT_DIR = "plants"
 
 def review_pending_thresholds():

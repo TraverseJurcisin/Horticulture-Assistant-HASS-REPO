@@ -5,6 +5,7 @@ import logging
 from datetime import datetime
 
 from ..utils.json_io import load_json, save_json
+from plant_engine.utils import get_pending_dir
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -159,7 +160,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     }
     
     # Write record to data/pending_thresholds/{plant_id}_{YYYY-MM-DD}.json
-    base_dir = os.path.join("data", "pending_thresholds")
+    base_dir = get_pending_dir()
     os.makedirs(base_dir, exist_ok=True)
     date_str = datetime.now().date().isoformat()
     ts = report.get("timestamp")
@@ -169,7 +170,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         except Exception:
             pass
     filename = f"{plant_id}_{date_str}.json"
-    file_path = os.path.join(base_dir, filename)
+    file_path = os.path.join(str(base_dir), filename)
     try:
         save_json(file_path, record)
     except Exception as e:

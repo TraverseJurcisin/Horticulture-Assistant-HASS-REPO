@@ -8,11 +8,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Mapping
 
-from .utils import load_json, save_json
+from .utils import load_json, save_json, get_pending_dir
 
 _LOGGER = logging.getLogger(__name__)
 
-PENDING_DIR = Path("data/pending_thresholds")
+PENDING_DIR = get_pending_dir()
 
 __all__ = [
     "queue_threshold_updates",

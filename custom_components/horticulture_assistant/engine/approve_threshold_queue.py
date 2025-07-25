@@ -8,6 +8,7 @@ except ImportError:
     HomeAssistant = None  # if Home Assistant not available, ignore for standalone use
 
 from ..utils.json_io import load_json, save_json
+from plant_engine.utils import get_pending_dir
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     """
     base_data_dir = hass.config.path("data") if hass else "data"
     base_plants_dir = hass.config.path("plants") if hass else "plants"
-    pending_dir = os.path.join(base_data_dir, "pending_thresholds")
+    pending_dir = str(get_pending_dir(base_data_dir))
     # Pattern for pending threshold files: {plant_id}_YYYY-MM-DD.json
     file_pattern = re.compile(r"^.+_\d{4}-\d{2}-\d{2}\.json$")
     if not os.path.isdir(pending_dir):

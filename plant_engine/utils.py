@@ -15,6 +15,7 @@ __all__ = [
     "clear_dataset_cache",
     "dataset_paths",
     "get_data_dir",
+    "get_pending_dir",
     "get_extra_dirs",
     "get_overlay_dir",
     "normalize_key",
@@ -82,12 +83,22 @@ EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 _PATH_CACHE: tuple[Path, ...] | None = None
 _ENV_STATE: tuple[str | None, str | None] | None = None
 
+# Directory name for pending threshold changes relative to the data dir
+PENDING_THRESHOLD_DIRNAME = "pending_thresholds"
+
 
 def get_data_dir() -> Path:
     """Return base dataset directory honoring the ``HORTICULTURE_DATA_DIR`` env."""
 
     env = os.getenv("HORTICULTURE_DATA_DIR")
     return Path(env).expanduser() if env else DEFAULT_DATA_DIR
+
+
+def get_pending_dir(base: str | Path | None = None) -> Path:
+    """Return directory used for pending threshold changes."""
+
+    base_dir = Path(base).expanduser() if base else get_data_dir()
+    return base_dir / PENDING_THRESHOLD_DIRNAME
 
 
 def get_overlay_dir() -> Path | None:
@@ -190,7 +201,7 @@ def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
     try:
         low, high = value
         return float(low), float(high)
-    except (TypeError, ValueError, Exception):
+    except (TypeError, ValueError):
         return None
 
 
