@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
-import json
+from concurrent.futures import ThreadPoolExecutor
+from itertools import repeat
+import os
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List
@@ -12,6 +14,8 @@ try:
     import yaml
 except Exception:  # pragma: no cover - fallback when PyYAML is missing
     yaml = None
+
+from custom_components.horticulture_assistant.utils.json_io import load_json
 
 
 DEFAULT_OUTPUT_DIR = Path("templates/generated")
@@ -33,8 +37,7 @@ def _load_report(plant_id: str, report_dir: Path) -> Dict[str, object]:
     """Return parsed daily report for ``plant_id`` from ``report_dir``."""
 
     path = report_dir / f"{plant_id}.json"
-    with path.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+    return load_json(str(path))
 
 
 def _write_yaml(sensors: Iterable[SensorTemplate], out_path: Path) -> None:
@@ -156,14 +159,26 @@ def generate_template_yaml(
 def generate_from_directory(
     report_dir: Path = DEFAULT_REPORT_DIR,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
+    *,
+    workers: int | None = None,
 ) -> list[Path]:
-    """Generate YAML templates for all reports in ``report_dir``."""
+    """Generate YAML templates for all reports in ``report_dir`` using threads."""
 
-    paths: list[Path] = []
-    for report in sorted(report_dir.glob("*.json")):
-        plant_id = report.stem
-        paths.append(generate_template_yaml(plant_id, report_dir, output_dir))
-    return paths
+    reports = sorted(report_dir.glob("*.json"))
+    plant_ids = [p.stem for p in reports]
+    if workers is None:
+        workers = min(32, (os.cpu_count() or 1))
+
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        results = list(
+            ex.map(
+                generate_template_yaml,
+                plant_ids,
+                repeat(report_dir),
+                repeat(output_dir),
+            )
+        )
+    return results
 
 
 def main() -> None:
