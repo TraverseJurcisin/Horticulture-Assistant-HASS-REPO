@@ -170,7 +170,10 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     general_data["tags"] = normalized_tags
 
     # Placeholders for sensor and actuator entity mappings (to be filled later)
-    general_data["sensor_entities"] = {}
+    general_data["sensor_entities"] = {
+        "moisture_sensors": metadata.get("moisture_sensors", []),
+        "temperature_sensors": metadata.get("temperature_sensors", []),
+    }
     general_data["actuator_entities"] = {}
 
     # Environment profile section (environmental thresholds and conditions)

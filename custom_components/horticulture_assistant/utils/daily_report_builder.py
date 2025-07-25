@@ -11,7 +11,10 @@ from typing import Optional
 
 from homeassistant.core import HomeAssistant
 
-from .state_helpers import get_numeric_state
+from .state_helpers import (
+    get_numeric_state,
+    aggregate_sensor_values,
+)
 from .json_io import load_json, save_json
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
@@ -101,11 +104,16 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         or profile.get("general", {}).get("sensor_entities")
         or {}
     )
-    moisture = get_numeric_state(hass, sensor_map.get("moisture") or f"sensor.{plant_id}_raw_moisture")
-    ec = get_numeric_state(hass, sensor_map.get("ec") or f"sensor.{plant_id}_raw_ec")
-    temperature = get_numeric_state(hass, sensor_map.get("temperature") or f"sensor.{plant_id}_raw_temperature")
-    humidity = get_numeric_state(hass, sensor_map.get("humidity") or f"sensor.{plant_id}_raw_humidity")
-    light = get_numeric_state(hass, sensor_map.get("light") or f"sensor.{plant_id}_raw_light")
+
+    def _aggregate(key: str, default_id: str) -> float | None:
+        val = sensor_map.get(key, default_id)
+        return aggregate_sensor_values(hass, val)
+
+    moisture = _aggregate("moisture_sensors", f"sensor.{plant_id}_raw_moisture")
+    ec = _aggregate("ec_sensors", f"sensor.{plant_id}_raw_ec")
+    temperature = _aggregate("temperature_sensors", f"sensor.{plant_id}_raw_temperature")
+    humidity = _aggregate("humidity_sensors", f"sensor.{plant_id}_raw_humidity")
+    light = _aggregate("light_sensors", f"sensor.{plant_id}_raw_light")
 
     # Last known yield (e.g., total yield or current yield progress)
     yield_val = profile.get("last_yield")

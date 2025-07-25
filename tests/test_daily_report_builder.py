@@ -37,7 +37,7 @@ def test_build_daily_report(tmp_path):
         "general": {
             "plant_type": "citrus",
             "lifecycle_stage": "fruiting",
-            "sensor_entities": {"temperature": "sensor.p1_temp"},
+            "sensor_entities": {"temperature_sensors": ["sensor.p1_temp"]},
         },
         "thresholds": {"light": 100},
         "nutrients": {"N": 120},

@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = ["get_numeric_state"]
+__all__ = ["get_numeric_state", "normalize_entities", "aggregate_sensor_values"]
 
 # Pre-compiled pattern used to extract a numeric portion from a string. This
 # avoids recompiling the regex for every state lookup and handles optional
@@ -41,3 +41,28 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
                 pass
         _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
         return None
+
+
+def normalize_entities(val: str | list[str] | None, default: str) -> list[str]:
+    """Return a list of entity IDs from ``val`` or the ``default``."""
+    if not val:
+        return [default]
+    if isinstance(val, str):
+        return [v.strip() for v in val.split(";") if v.strip()] if ";" in val else [v.strip() for v in val.split(",") if v.strip()]
+    return list(val)
+
+
+def aggregate_sensor_values(
+    hass: HomeAssistant, entity_ids: str | list[str]
+) -> float | None:
+    """Return the average or median of numeric sensor states."""
+    ids = entity_ids if isinstance(entity_ids, list) else [entity_ids]
+    values = [get_numeric_state(hass, eid) for eid in ids]
+    values = [v for v in values if v is not None]
+    if not values:
+        return None
+    if len(values) > 2:
+        from statistics import median
+
+        return median(values)
+    return sum(values) / len(values)

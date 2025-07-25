@@ -23,6 +23,7 @@ sys.modules[spec.name] = config_flow
 # Minimal Home Assistant stubs
 ha = sys.modules.get("homeassistant", types.ModuleType("homeassistant"))
 ha.config_entries = sys.modules.get("homeassistant.config_entries", types.ModuleType("homeassistant.config_entries"))
+ha.config_entries.ConfigEntry = object
 class ConfigFlowBase:
     def __init_subclass__(cls, **kwargs):
         pass
@@ -61,7 +62,8 @@ def test_full_flow(monkeypatch):
     assert result["step_id"] == "details"
     result = asyncio.run(flow.async_step_details({"plant_type": "tomato"}))
     assert result["step_id"] == "sensors"
-    result = asyncio.run(flow.async_step_sensors({"moisture_sensor": "sensor.moist"}))
+    result = asyncio.run(flow.async_step_sensors({"moisture_sensors": "sensor.moist"}))
     assert result["type"] == "create_entry"
     assert flow.created_entry["data"]["plant_name"] == "Tomato"
     assert recorded["plant_name"] == "Tomato"
+    assert flow.created_entry["data"]["moisture_sensors"] == ["sensor.moist"]
