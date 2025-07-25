@@ -193,6 +193,7 @@ Key reference datasets reside in the `data/` directory:
 - `soil_texture_parameters.json` – default field capacity and MAD values by soil texture
 - `root_depth_guidelines.json` – typical maximum root depth (cm) for common crops
 - `soil_nutrient_guidelines.json` – baseline soil N‑P‑K targets by crop
+- `solution_temperature_guidelines.json` – recommended nutrient solution temperature range by crop
 - The `soil_manager` module now includes `calculate_soil_balance` to
   compute ratios of current to target soil nutrients for quick status checks.
 - `irrigation_guidelines.json` – default daily irrigation volume per plant stage
