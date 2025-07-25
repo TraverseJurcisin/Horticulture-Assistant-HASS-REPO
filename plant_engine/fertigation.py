@@ -222,6 +222,7 @@ __all__ = [
     "recommend_nutrient_mix_with_cost",
     "recommend_nutrient_mix_with_cost_breakdown",
     "recommend_loss_compensated_mix",
+    "recommend_recovery_adjusted_schedule",
     "get_fertigation_recipe",
     "apply_fertigation_recipe",
     "generate_fertigation_plan",
@@ -858,6 +859,40 @@ def recommend_loss_compensated_mix(
         grams = (ppm * volume_l) / 1000 / purity
         schedule[fert] = round(schedule.get(fert, 0.0) + grams, 3)
 
+    return schedule
+
+
+def recommend_recovery_adjusted_schedule(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    recovery_factors: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+    purity: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return fertigation schedule adjusted for nutrient recovery factors."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    purity_map = _resolve_purity(product, purity)
+
+    targets = get_recommended_levels(plant_type, stage)
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        if recovery_factors and nutrient in recovery_factors:
+            factor = recovery_factors[nutrient]
+        else:
+            from .nutrient_recovery import get_recovery_factor
+
+            factor = get_recovery_factor(nutrient, plant_type)
+        if factor <= 0:
+            factor = 1.0
+        adjusted_ppm = ppm / factor
+        schedule[nutrient] = _ppm_to_grams(
+            adjusted_ppm, volume_l, purity_map.get(nutrient, 1.0)
+        )
     return schedule
 
 
