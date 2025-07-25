@@ -1,8 +1,13 @@
 from pathlib import Path
 import subprocess
 import sys
+import os
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts/wsda_search.py"
+ROOT = Path(__file__).resolve().parents[1]
+os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
+os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+
+SCRIPT = ROOT / "scripts/wsda_search.py"
 
 
 def test_search_cli(tmp_path):

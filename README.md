@@ -126,6 +126,22 @@ Important categories include:
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
 
+The WSDA fertilizer data now lives under `data/index_sharded/` and
+`data/detail/`. The index consists of multiple `.jsonl` shards while each
+product has a separate detail file located by the first two characters of its
+``product_id``.
+
+Example usage:
+
+```python
+from plant_engine.wsda_loader import stream_index, load_detail
+
+for prod in stream_index():
+    if prod["brand"] == "ACME SOILS":
+        detail = load_detail(prod["product_id"])
+        print(detail["metadata"]["label_name"])
+```
+
 Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_DATA_DIR` to change the base data directory
 - `HORTICULTURE_OVERLAY_DIR` to merge in custom files

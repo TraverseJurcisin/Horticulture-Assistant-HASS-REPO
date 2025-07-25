@@ -1,8 +1,13 @@
 import importlib.util
+import os
 import sys
 from pathlib import Path
 
-module_path = Path(__file__).resolve().parents[1] / "plant_engine/wsda_lookup.py"
+ROOT = Path(__file__).resolve().parents[1]
+os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
+os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+
+module_path = ROOT / "plant_engine/wsda_lookup.py"
 spec = importlib.util.spec_from_file_location("wsda_lookup", module_path)
 wsda = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = wsda

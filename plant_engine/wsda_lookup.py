@@ -6,14 +6,9 @@ import json
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Tuple, Mapping, Iterable
+from typing import Dict, Iterable, List, Mapping, Tuple
 
-from plant_engine.utils import load_json
-
-# Path to the WSDA fertilizer database packaged with the repository. Using
-# :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
-# variables to work as expected.
-_WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
+from plant_engine import wsda_loader
 
 __all__ = [
     "get_product_npk_by_name",
@@ -30,9 +25,10 @@ __all__ = [
 class _Product:
     """Normalized fertilizer entry."""
 
+    product_id: str
     name: str
-    npk: Tuple[float, float, float]
-    analysis: Dict[str, float]
+    wsda_reg_no: str
+    npk: Tuple[float | None, float | None, float | None]
 
 
 def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
@@ -58,18 +54,9 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 @lru_cache(maxsize=None)
 def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+    """Return WSDA fertilizer records loaded from sharded index."""
 
-    if not _WSDA_PATH.exists():
-        return []
-    data = load_json(str(_WSDA_PATH))
-    if isinstance(data, list):
-        return data
-    if isinstance(data, Mapping) and "records" in data:
-        recs = data.get("records")
-        if isinstance(recs, list):
-            return recs
-    return []
+    return tuple(wsda_loader.stream_index())
 
 
 @lru_cache(maxsize=None)
@@ -83,19 +70,15 @@ def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
     names: Dict[str, _Product] = {}
     numbers: Dict[str, _Product] = {}
     for rec in records:
-        ga_raw = rec.get("guaranteed_analysis", {})
-        analysis = _parse_analysis(ga_raw)
-        npk = (
-            analysis.get("N", 0.0),
-            analysis.get("P", 0.0),
-            analysis.get("K", 0.0),
-        )
-        name = str(rec.get("product_name", "")).strip()
-        number = rec.get("wsda_product_number")
+        name = str(rec.get("label_name", "")).strip()
+        number = rec.get("wsda_reg_no", "")
+        prod_id = rec.get("product_id", "")
+        npk = (rec.get("n"), rec.get("p"), rec.get("k"))
+        product = _Product(product_id=prod_id, name=name, wsda_reg_no=number, npk=npk)
         if name:
-            names[name.lower()] = _Product(name=name, npk=npk, analysis=analysis)
+            names[name.lower()] = product
         if number:
-            numbers[str(number)] = _Product(name=name, npk=npk, analysis=analysis)
+            numbers[str(number)] = product
 
     return names, numbers
 
@@ -104,12 +87,38 @@ def _extract_npk(prod: _Product | None) -> Dict[str, float]:
     if not prod:
         return {}
     n, p, k = prod.npk
-    return {"N": n, "P": p, "K": k}
+    result = {}
+    if n is not None:
+        result["N"] = float(n)
+    if p is not None:
+        result["P"] = float(p)
+    if k is not None:
+        result["K"] = float(k)
+    return result
+
+
+@lru_cache(maxsize=None)
+def _load_analysis(product_id: str) -> Dict[str, float]:
+    try:
+        detail = wsda_loader.load_detail(product_id)
+    except FileNotFoundError:
+        return {}
+    ga = {}
+    comp = detail.get("composition", {})
+    if isinstance(comp, Mapping):
+        ga = comp.get("guaranteed_analysis", {}) or {}
+    if not ga:
+        src = detail.get("source_wsda_record", {})
+        if isinstance(src, Mapping):
+            ga = src.get("guaranteed_analysis", {}) or {}
+    return _parse_analysis(ga)
 
 
 def _extract_analysis(prod: _Product | None) -> Dict[str, float]:
     """Return the full nutrient analysis for ``prod`` if available."""
-    return dict(prod.analysis) if prod else {}
+    if not prod:
+        return {}
+    return _load_analysis(prod.product_id)
 
 
 def get_product_npk_by_name(name: str) -> Dict[str, float]:
@@ -173,7 +182,8 @@ def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> List[str]:
     names, _ = _build_indexes()
     ranked = []
     for prod in names.values():
-        value = prod.analysis.get(n)
+        analysis = _load_analysis(prod.product_id)
+        value = analysis.get(n)
         if value is not None:
             ranked.append((prod.name, value))
 

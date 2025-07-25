@@ -1,3 +1,10 @@
+import os
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
+os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+
 from custom_components.horticulture_assistant.utils.wsda_product_index import (
     list_products,
     get_product_by_id,

@@ -5,11 +5,9 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from functools import lru_cache
-from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, Mapping
 
-# Path to the newline-delimited JSON index packaged with the repository
-_INDEX_PATH = Path(__file__).resolve().parents[3] / "products_index.jsonl"
+from plant_engine import wsda_loader
 
 __all__ = [
     "ProductEntry",
@@ -34,8 +32,7 @@ class ProductEntry:
     k: float | None
 
 
-def _parse_line(line: str) -> ProductEntry:
-    rec = json.loads(line)
+def _parse_record(rec: Mapping[str, object]) -> ProductEntry:
     return ProductEntry(
         product_id=rec.get("product_id", ""),
         wsda_reg_no=rec.get("wsda_reg_no", ""),
@@ -55,18 +52,11 @@ def _load_index() -> tuple[Dict[str, ProductEntry], Dict[str, ProductEntry], Lis
     by_no: Dict[str, ProductEntry] = {}
     items: List[ProductEntry] = []
 
-    if not _INDEX_PATH.exists():
-        return by_id, by_no, items
-
-    with open(_INDEX_PATH, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            item = _parse_line(line)
-            by_id[item.product_id] = item
-            by_no[item.wsda_reg_no] = item
-            items.append(item)
+    for rec in wsda_loader.stream_index():
+        item = _parse_record(rec)
+        by_id[item.product_id] = item
+        by_no[item.wsda_reg_no] = item
+        items.append(item)
 
     return by_id, by_no, items
 
