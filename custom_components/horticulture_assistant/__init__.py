@@ -12,21 +12,39 @@ Repo: horticulture-assistant
 import logging
 
 import asyncio
+from functools import partial
 
 try:
-    from homeassistant.core import HomeAssistant
+    from homeassistant.core import HomeAssistant, ServiceCall
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.helpers.typing import ConfigType
 except ModuleNotFoundError:  # pragma: no cover
     # Allow running tests without Home Assistant installed
     HomeAssistant = object  # type: ignore
+    ServiceCall = object  # type: ignore
     ConfigEntry = object  # type: ignore
     ConfigType = dict
 
 from .const import DOMAIN, PLATFORMS
+from .utils.plant_profile_loader import update_profile_sensors
 
 
 _LOGGER = logging.getLogger(__name__)
+
+
+async def update_sensors_service(hass: HomeAssistant, call: ServiceCall) -> None:
+    """Handle the ``update_sensors`` service call."""
+    plant_id = call.data.get("plant_id")
+    sensors = call.data.get("sensors")
+    if not plant_id or not isinstance(sensors, dict):
+        _LOGGER.error("update_sensors called with invalid data")
+        return
+
+    base_dir = hass.config.path("plants")
+    if update_profile_sensors(plant_id, sensors, base_dir):
+        _LOGGER.info("Updated sensors for profile %s", plant_id)
+    else:
+        _LOGGER.error("Failed to update sensors for profile %s", plant_id)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -51,6 +69,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Initialize storage/data if needed
     hass.data.setdefault(DOMAIN, {})
+
+    # Register services
+    hass.services.async_register(
+        DOMAIN,
+        "update_sensors",
+        partial(update_sensors_service, hass),
+    )
 
     return True
 

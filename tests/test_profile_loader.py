@@ -71,3 +71,29 @@ def test_list_available_profiles(tmp_path):
 
     result = loader.list_available_profiles(plants)
     assert result == ["one", "two"]
+
+
+def test_save_and_update_sensors(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+    profile = {"general": {"sensor_entities": {"moisture_sensors": ["old"]}}}
+    assert loader.save_profile_by_id("p1", profile, plants)
+
+    loader.update_profile_sensors(
+        "p1",
+        {"moisture_sensors": ["new"], "temperature_sensors": "temp1"},
+        plants,
+    )
+
+    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    sensors = updated["general"]["sensor_entities"]
+    assert sensors["moisture_sensors"] == ["new"]
+    assert sensors["temperature_sensors"] == ["temp1"]
+
+
+def test_update_profile_sensors_missing(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+
+    result = loader.update_profile_sensors("missing", {"moisture_sensors": ["x"]}, plants)
+    assert result is False
