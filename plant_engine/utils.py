@@ -141,14 +141,28 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
     return sorted(str(k) for k in dataset.keys())
 
 
-def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
+def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     """Return a normalized ``(min, max)`` tuple or ``None`` if invalid.
 
-    ``value`` may be any iterable with at least two numeric entries. Values are
-    cast to ``float`` and returned as a two-item tuple. If the input cannot be
-    interpreted as a pair of numbers, ``None`` is returned instead of raising an
-    exception.
+    ``value`` may be a two item iterable of numbers or a simple string
+    representation such as ``"1-2"`` or ``"1..2"``. Values are cast to
+    ``float``. Invalid inputs return ``None`` instead of raising an exception.
     """
+
+    if isinstance(value, str):
+        cleaned = (
+            value.replace("..", "-")
+            .replace(" to ", "-")
+            .replace(" ", "")
+        )
+        if "-" in cleaned:
+            parts = cleaned.split("-", 1)
+            if len(parts) == 2:
+                try:
+                    return float(parts[0]), float(parts[1])
+                except (TypeError, ValueError):
+                    return None
+        return None
 
     try:
         low, high = value

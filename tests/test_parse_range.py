@@ -12,3 +12,8 @@ def test_parse_range_tuple():
 def test_parse_range_invalid():
     assert parse_range([1]) is None
     assert parse_range("bad") is None
+
+
+def test_parse_range_string_formats():
+    assert parse_range("5-10") == (5.0, 10.0)
+    assert parse_range("3..7") == (3.0, 7.0)
