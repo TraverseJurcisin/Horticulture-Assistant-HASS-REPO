@@ -293,6 +293,8 @@ __all__ = [
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
+    "suggest_environment_setpoints_zone",
+    "generate_zone_environment_plan",
 ]
 
 
@@ -814,6 +816,14 @@ def suggest_environment_setpoints(
     """Return midpoint setpoints for key environment parameters."""
 
     targets = get_environmental_targets(plant_type, stage)
+    return _midpoint_setpoints(targets, plant_type, stage)
+
+
+def _midpoint_setpoints(
+    targets: Mapping[str, Any], plant_type: str, stage: str | None
+) -> Dict[str, float]:
+    """Return midpoint values for ``targets`` with soil parameters."""
+
     setpoints: Dict[str, float] = {}
     for key, bounds in targets.items():
         if isinstance(bounds, (list, tuple)) and len(bounds) == 2:
@@ -898,6 +908,24 @@ def generate_stage_environment_plan(plant_type: str) -> Dict[str, Dict[str, floa
     plan: Dict[str, Dict[str, float]] = {}
     for stage in list_growth_stages(plant_type):
         plan[stage] = suggest_environment_setpoints(plant_type, stage)
+    return plan
+
+
+def suggest_environment_setpoints_zone(
+    plant_type: str, stage: str | None, zone: str
+) -> Dict[str, float]:
+    """Return midpoint setpoints for a plant stage adjusted for ``zone``."""
+
+    targets = get_combined_environmental_targets(plant_type, stage, zone)
+    return _midpoint_setpoints(targets, plant_type, stage)
+
+
+def generate_zone_environment_plan(plant_type: str, zone: str) -> Dict[str, Dict[str, float]]:
+    """Return environment setpoints for each stage adjusted for ``zone``."""
+
+    plan: Dict[str, Dict[str, float]] = {}
+    for stage in list_growth_stages(plant_type):
+        plan[stage] = suggest_environment_setpoints_zone(plant_type, stage, zone)
     return plan
 
 
