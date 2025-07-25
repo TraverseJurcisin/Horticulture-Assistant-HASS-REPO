@@ -7,25 +7,55 @@ from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.selector import BooleanSelector, TextSelector
 
+from .utils.profile_generator import generate_profile
+
 from .const import DOMAIN, CONF_ENABLE_AUTO_APPROVE
 
 class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Horticulture Assistant."""
+
     VERSION = 1
 
+    def __init__(self) -> None:
+        self._data: dict = {}
+
     async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
-        """Handle the initial step."""
+        """Handle the initial step collecting the plant id."""
         if user_input is not None:
-            # Create a config entry with the plant name as the title
-            return self.async_create_entry(title=user_input["plant_name"], data=user_input)
+            self._data.update(user_input)
+            return await self.async_step_details()
 
         data_schema = vol.Schema({
             vol.Required("plant_name"): TextSelector(),
-            vol.Required("zone_id"): TextSelector(),
-            vol.Required(CONF_ENABLE_AUTO_APPROVE, default=False): BooleanSelector(),
+            vol.Optional("zone_id"): TextSelector(),
+            vol.Optional(CONF_ENABLE_AUTO_APPROVE, default=False): BooleanSelector(),
         })
 
-        return self.async_show_form(
-            step_id="user",
-            data_schema=data_schema
-        )
+        return self.async_show_form(step_id="user", data_schema=data_schema)
+
+    async def async_step_details(self, user_input: dict | None = None) -> FlowResult:
+        """Collect optional plant details."""
+        if user_input is not None:
+            self._data.update(user_input)
+            return await self.async_step_sensors()
+
+        data_schema = vol.Schema({
+            vol.Optional("plant_type"): TextSelector(),
+            vol.Optional("cultivar"): TextSelector(),
+        })
+
+        return self.async_show_form(step_id="details", data_schema=data_schema)
+
+    async def async_step_sensors(self, user_input: dict | None = None) -> FlowResult:
+        """Ask for sensor entity ids and finish."""
+        if user_input is not None:
+            self._data.update(user_input)
+            generate_profile(self._data)
+            return self.async_create_entry(title=self._data["plant_name"], data=self._data)
+
+        data_schema = vol.Schema({
+            vol.Optional("moisture_sensor"): TextSelector(),
+            vol.Optional("temperature_sensor"): TextSelector(),
+        })
+
+        return self.async_show_form(step_id="sensors", data_schema=data_schema)

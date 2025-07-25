@@ -38,10 +38,12 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 ## Quick Start
 1. Go to **Settings → Devices & Services** in Home Assistant.
 2. Choose **Add Integration** and search for **Horticulture Assistant**.
-3. Follow the prompts to link sensors and select or create plant profiles.
-4. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
-5. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
-6. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
+3. Enter a name and zone for your plant.
+4. Optionally fill in details like plant type and cultivar.
+5. Select any sensors you want linked to the profile.
+6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
+7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
+8. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
 
