@@ -9,10 +9,17 @@ default to speed up loading in production.
 import json
 import logging
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict
 
 _LOGGER = logging.getLogger(__name__)
+
+__all__ = [
+    "PlantProfile",
+    "load_plant_profile",
+    "clear_profile_cache",
+]
 
 
 @dataclass(slots=True)
@@ -31,6 +38,7 @@ class PlantProfile:
         return self.as_dict()[item]
 
 
+@lru_cache(maxsize=None)
 def load_plant_profile(
     plant_id: str,
     base_path: str | None = None,
@@ -124,3 +132,9 @@ def load_plant_profile(
     _LOGGER.info("Loaded %d profile modules for plant '%s'.", count_loaded, plant_id)
 
     return PlantProfile(plant_id=str(plant_id), profile_data=profile_data)
+
+
+def clear_profile_cache() -> None:
+    """Clear cached profile results from :func:`load_plant_profile`."""
+
+    load_plant_profile.cache_clear()

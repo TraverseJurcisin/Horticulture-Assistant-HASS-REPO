@@ -1,7 +1,9 @@
 import json
 
-from custom_components.horticulture_assistant.utils.load_plant_profile import \
-    load_plant_profile
+from custom_components.horticulture_assistant.utils.load_plant_profile import (
+    load_plant_profile,
+    clear_profile_cache,
+)
 
 
 def test_load_profile_basic(tmp_path):
@@ -36,3 +38,19 @@ def test_load_profile_with_validation_files(tmp_path):
 def test_load_profile_missing_dir(tmp_path):
     result = load_plant_profile("missing", base_path=tmp_path / "plants")
     assert result == {}
+
+def test_profile_caching(tmp_path):
+    plant_dir = tmp_path / "plants" / "demo"
+    plant_dir.mkdir(parents=True)
+    data_file = plant_dir / "general.json"
+    data_file.write_text(json.dumps({"name": "first"}))
+
+    first = load_plant_profile("demo", base_path=tmp_path / "plants")
+    data_file.write_text(json.dumps({"name": "second"}))
+    second = load_plant_profile("demo", base_path=tmp_path / "plants")
+    assert first.profile_data["general"]["name"] == "first"
+    assert second.profile_data["general"]["name"] == "first"
+
+    clear_profile_cache()
+    third = load_plant_profile("demo", base_path=tmp_path / "plants")
+    assert third.profile_data["general"]["name"] == "second"
