@@ -406,17 +406,25 @@ Select the corresponding sensors and plant profile when prompted. Ensure each se
 Development is private for now. Feedback is welcome, but pull requests will open once the repository becomes public. Please open discussions or issues for questions or suggestions.
 
 ## Command Line Utilities
-This repository ships with a few helper scripts in the `scripts/` directory. The
-`generate_plant_sensors.py` utility converts daily JSON reports into Home
-Assistant template sensor YAML. It can process a single plant or every report in
-the directory. Example usage:
+This repository ships with a collection of helper scripts located in the
+`scripts/` directory.  They can now be invoked through a single entry point,
+which keeps the command line interface organized:
+
+```bash
+python -m scripts <command> [args]
+```
+
+Here `<command>` corresponds to the script name without the `.py` extension.
+For example, the `generate_plant_sensors` utility converts daily JSON reports
+into Home Assistant template sensor YAML. It can process a single plant or every
+report in the directory. Example usage:
 
 ```bash
 # single plant
-python scripts/generate_plant_sensors.py <plant_id>
+python -m scripts generate_plant_sensors <plant_id>
 
 # generate for all reports
-python scripts/generate_plant_sensors.py --all
+python -m scripts generate_plant_sensors --all
 ```
 The generated YAML is written to `templates/generated/` for easy import.
 
@@ -424,8 +432,8 @@ The generated YAML is written to `templates/generated/` for easy import.
 database from the command line:
 
 ```bash
-python scripts/wsda_search.py "EARTH-CARE" --limit 5
-python scripts/wsda_search.py "(#4083-0001)" --number
+python -m scripts wsda_search "EARTH-CARE" --limit 5
+python -m scripts wsda_search "(#4083-0001)" --number
 ```
 Use `--number` to look up a product by its WSDA product number.
 
