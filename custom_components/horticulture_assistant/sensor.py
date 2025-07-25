@@ -18,7 +18,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .utils.state_helpers import get_numeric_state, get_aggregated_state
-from .utils.sensor_mapping import load_sensor_map, SENSOR_KEYS
+from .utils.sensor_mapping import load_sensor_map
 
 from plant_engine.environment_manager import (
     score_environment,
@@ -76,8 +76,13 @@ class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
 
-    def _get_state_value(self, entity_id: str | list[str]) -> float | None:
+    def _get_state_value(
+        self, entity_id: str | list[str] | tuple[list[str], str]
+    ) -> float | None:
         """Return numeric state for ``entity_id`` or aggregated list."""
+        if isinstance(entity_id, tuple):
+            ids, method = entity_id
+            return get_aggregated_state(self.hass, ids, method=method)
         if isinstance(entity_id, list):
             return get_aggregated_state(self.hass, entity_id)
         return get_numeric_state(self.hass, entity_id)
@@ -91,7 +96,7 @@ class ExponentialMovingAverageSensor(HorticultureBaseSensor):
         plant_name: str,
         plant_id: str,
         *,
-        source_sensor: str,
+        source_sensor: str | list[str] | tuple[list[str], str],
         name: str,
         unique_id: str,
         unit: str,
@@ -137,8 +142,11 @@ class SmoothedMoistureSensor(ExponentialMovingAverageSensor):
             hass,
             plant_name,
             plant_id,
-            source_sensor=(sensors or {}).get("moisture_sensors")
-            or [f"sensor.{plant_id}_raw_moisture"],
+            source_sensor=(
+                (sensors or {}).get("moisture_sensors")
+                or [f"sensor.{plant_id}_raw_moisture"],
+                (sensors or {}).get("moisture_method", "mean"),
+            ),
             name="Smoothed Moisture",
             unique_id=f"{plant_id}_smoothed_moisture",
             unit=UNIT_PERCENT,
@@ -163,12 +171,18 @@ class DailyETSensor(HorticultureBaseSensor):
     async def async_update(self):
         """Calculate daily ET estimate (using a simple temperature/humidity formula)."""
         temp = self._get_state_value(
-            self._sensors.get("temperature_sensors")
-            or [f"sensor.{self._plant_id}_raw_temperature"]
+            (
+                self._sensors.get("temperature_sensors")
+                or [f"sensor.{self._plant_id}_raw_temperature"],
+                self._sensors.get("temperature_method", "mean"),
+            )
         )
         hum = self._get_state_value(
-            self._sensors.get("humidity_sensors")
-            or [f"sensor.{self._plant_id}_raw_humidity"]
+            (
+                self._sensors.get("humidity_sensors")
+                or [f"sensor.{self._plant_id}_raw_humidity"],
+                self._sensors.get("humidity_method", "mean"),
+            )
         )
         if temp is not None and hum is not None:
             et = max(0, (temp - 10) * (1 - hum / 100) * 0.5)
@@ -216,7 +230,10 @@ class SmoothedECSensor(ExponentialMovingAverageSensor):
             hass,
             plant_name,
             plant_id,
-            source_sensor=(sensors or {}).get("ec_sensors") or [f"sensor.{plant_id}_raw_ec"],
+            source_sensor=(
+                (sensors or {}).get("ec_sensors") or [f"sensor.{plant_id}_raw_ec"],
+                (sensors or {}).get("ec_method", "mean"),
+            ),
             name="Smoothed EC",
             unique_id=f"{plant_id}_smoothed_ec",
             unit="mS/cm",
@@ -240,8 +257,11 @@ class EstimatedFieldCapacitySensor(HorticultureBaseSensor):
         """Estimate field capacity (peak moisture over recent period)."""
         _LOGGER.debug("Estimating field capacity for plant: %s", self._plant_id)
         current = self._get_state_value(
-            self._sensors.get("moisture_sensors")
-            or [f"sensor.{self._plant_id}_raw_moisture"]
+            (
+                self._sensors.get("moisture_sensors")
+                or [f"sensor.{self._plant_id}_raw_moisture"],
+                self._sensors.get("moisture_method", "mean"),
+            )
         )
         if current is not None:
             max_val = getattr(self, "_max_moisture", None)
@@ -266,8 +286,11 @@ class EstimatedWiltingPointSensor(HorticultureBaseSensor):
         """Estimate wilting point (minimum moisture over recent period)."""
         _LOGGER.debug("Estimating wilting point for plant: %s", self._plant_id)
         current = self._get_state_value(
-            self._sensors.get("moisture_sensors")
-            or [f"sensor.{self._plant_id}_raw_moisture"]
+            (
+                self._sensors.get("moisture_sensors")
+                or [f"sensor.{self._plant_id}_raw_moisture"],
+                self._sensors.get("moisture_method", "mean"),
+            )
         )
         if current is not None:
             min_val = getattr(self, "_min_moisture", None)
@@ -368,14 +391,26 @@ class _EnvironmentEvaluationSensor(HorticultureBaseSensor):
     def _gather_environment(self) -> dict[str, float]:
         """Return available raw environment readings for this plant."""
         sensors = {
-            "temp_c": self._sensors.get("temperature_sensors")
-            or [f"sensor.{self._plant_id}_raw_temperature"],
-            "humidity_pct": self._sensors.get("humidity_sensors")
-            or [f"sensor.{self._plant_id}_raw_humidity"],
-            "light_ppfd": self._sensors.get("light_sensors")
-            or [f"sensor.{self._plant_id}_raw_light"],
-            "co2_ppm": self._sensors.get("co2_sensors")
-            or [f"sensor.{self._plant_id}_raw_co2"],
+            "temp_c": (
+                self._sensors.get("temperature_sensors")
+                or [f"sensor.{self._plant_id}_raw_temperature"],
+                self._sensors.get("temperature_method", "mean"),
+            ),
+            "humidity_pct": (
+                self._sensors.get("humidity_sensors")
+                or [f"sensor.{self._plant_id}_raw_humidity"],
+                self._sensors.get("humidity_method", "mean"),
+            ),
+            "light_ppfd": (
+                self._sensors.get("light_sensors")
+                or [f"sensor.{self._plant_id}_raw_light"],
+                self._sensors.get("light_method", "mean"),
+            ),
+            "co2_ppm": (
+                self._sensors.get("co2_sensors")
+                or [f"sensor.{self._plant_id}_raw_co2"],
+                self._sensors.get("co2_method", "mean"),
+            ),
         }
         return {
             key: val

@@ -101,12 +101,14 @@ Plant profiles are JSON files placed in the `plants/` directory. A minimal examp
 ```
 
 Profiles may map Home Assistant sensor entities using plural keys under
-`sensor_entities`. Lists are averaged (or median filtered) before use:
+`sensor_entities`. Lists are averaged by default. Include an optional
+`*_method` key with value `"median"` to median-filter readings:
 
 ```json
 {
   "sensor_entities": {
     "moisture_sensors": ["sensor.bed1_moist1", "sensor.bed1_moist2"],
+    "moisture_method": "median",
     "temperature_sensors": ["sensor.greenhouse_temp"]
   }
 }

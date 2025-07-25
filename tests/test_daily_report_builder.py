@@ -62,7 +62,8 @@ def test_build_daily_report_multiple_sensors(tmp_path):
         "general": {
             "plant_type": "citrus",
             "sensor_entities": {
-                "moisture_sensors": ["sensor.m1", "sensor.m2"],
+                "moisture_sensors": ["sensor.m1", "sensor.m2", "sensor.m3"],
+                "moisture_method": "median",
             },
         }
     }
@@ -72,8 +73,9 @@ def test_build_daily_report_multiple_sensors(tmp_path):
 
     hass = DummyHass(tmp_path)
     hass.states._data["sensor.m1"] = "30"
-    hass.states._data["sensor.m2"] = "40"
+    hass.states._data["sensor.m2"] = "90"
+    hass.states._data["sensor.m3"] = "40"
 
     report = drb.build_daily_report(hass, "p2")
-    assert report.moisture == 35.0
+    assert report.moisture == 40.0
 

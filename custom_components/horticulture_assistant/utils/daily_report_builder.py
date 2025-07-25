@@ -110,26 +110,31 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         hass,
         _ensure_list(sensor_map.get("moisture_sensors") or sensor_map.get("moisture"))
         or [f"sensor.{plant_id}_raw_moisture"],
+        method=sensor_map.get("moisture_method", "mean"),
     )
     ec = get_aggregated_state(
         hass,
         _ensure_list(sensor_map.get("ec_sensors") or sensor_map.get("ec"))
         or [f"sensor.{plant_id}_raw_ec"],
+        method=sensor_map.get("ec_method", "mean"),
     )
     temperature = get_aggregated_state(
         hass,
         _ensure_list(sensor_map.get("temperature_sensors") or sensor_map.get("temperature"))
         or [f"sensor.{plant_id}_raw_temperature"],
+        method=sensor_map.get("temperature_method", "mean"),
     )
     humidity = get_aggregated_state(
         hass,
         _ensure_list(sensor_map.get("humidity_sensors") or sensor_map.get("humidity"))
         or [f"sensor.{plant_id}_raw_humidity"],
+        method=sensor_map.get("humidity_method", "mean"),
     )
     light = get_aggregated_state(
         hass,
         _ensure_list(sensor_map.get("light_sensors") or sensor_map.get("light"))
         or [f"sensor.{plant_id}_raw_light"],
+        method=sensor_map.get("light_method", "mean"),
     )
 
     # Last known yield (e.g., total yield or current yield progress)
