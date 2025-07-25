@@ -126,10 +126,10 @@ Important categories include:
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
 
-The WSDA fertilizer data now lives under `data/index_sharded/` and
-`data/detail/`. The index consists of multiple `.jsonl` shards while each
+The WSDA fertilizer data now lives under `feature/wsda_refactored_sharded/index_sharded/` and
+`feature/wsda_refactored_sharded/detail/`. The index consists of multiple `.jsonl` shards while each
 product has a separate detail file located by the first two characters of its
-``product_id``.
+``product_id``. Recent updates expanded the dataset with dozens of General Hydroponics fertilizer and pesticide records.
 
 Example usage:
 
