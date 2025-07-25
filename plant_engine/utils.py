@@ -169,7 +169,8 @@ def clear_dataset_cache() -> None:
 
 def normalize_key(key: str) -> str:
     """Return ``key`` normalized for case-insensitive dataset lookups."""
-    return str(key).lower().replace(" ", "_")
+
+    return str(key).lower().replace(" ", "_").replace("-", "_")
 
 
 def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:

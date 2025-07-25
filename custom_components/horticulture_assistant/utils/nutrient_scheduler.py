@@ -15,7 +15,7 @@ except ImportError:
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.utils import load_json, save_json, load_dataset
+from plant_engine.utils import load_json, save_json, load_dataset, normalize_key
 from plant_engine.constants import get_stage_multiplier
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,11 +33,6 @@ STAGE_SYNONYMS = {
     "fruiting": "fruiting",
 }
 
-# Normalize tags to lowercase with underscores for dataset lookups.
-def _normalize_tag(tag: str) -> str:
-    return str(tag).lower().replace(" ", "_").replace("-", "_")
-
-
 # Tag-specific nutrient modifiers loaded from a dataset.  Users can extend
 # or override this mapping by providing ``nutrient_tag_modifiers.json`` in
 # the dataset overlay directory.
@@ -49,7 +44,7 @@ def _tag_modifiers() -> dict[str, dict[str, float]]:
     raw = load_dataset(TAG_MODIFIER_FILE)
     modifiers: dict[str, dict[str, float]] = {}
     for tag, data in raw.items():
-        norm_tag = _normalize_tag(tag)
+        norm_tag = normalize_key(tag)
         if not isinstance(data, dict):
             continue
         mods: dict[str, float] = {}
@@ -132,7 +127,7 @@ def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
 
     modifiers = _tag_modifiers()
     for tag in tags:
-        mods = modifiers.get(_normalize_tag(tag))
+        mods = modifiers.get(normalize_key(tag))
         if not mods:
             continue
         for nut, factor in mods.items():

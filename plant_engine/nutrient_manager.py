@@ -23,7 +23,20 @@ clear_dataset_cache()
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
 _WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
-_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
+_RAW_TAG_MODIFIERS = load_dataset(TAG_MODIFIER_FILE)
+_TAG_MODIFIERS: Dict[str, Dict[str, float]] = {}
+for _tag, _mods in _RAW_TAG_MODIFIERS.items():
+    if not isinstance(_mods, dict):
+        continue
+    norm = normalize_key(_tag)
+    parsed: Dict[str, float] = {}
+    for _nut, _factor in _mods.items():
+        try:
+            parsed[_nut] = float(_factor)
+        except (TypeError, ValueError):
+            continue
+    if parsed:
+        _TAG_MODIFIERS[norm] = parsed
 
 __all__ = [
     "list_supported_plants",

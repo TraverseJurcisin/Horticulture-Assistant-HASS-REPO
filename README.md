@@ -219,9 +219,9 @@ Key reference datasets reside in the `data/` directory:
   Use `plant_engine.datasets.list_datasets()` to list available files and
   `get_dataset_description()` to read these summaries programmatically.
 
-All dataset lookups are case-insensitive and ignore spaces thanks to the
-`normalize_key` helper, so references such as `"Citrus"` and `"citrus"` map to
-the same entries.
+All dataset lookups are case-insensitive and ignore spaces or hyphens thanks to
+the `normalize_key` helper, so references such as `"Citrus"`, `"citrus"` and
+`"citrus-tree"` map to the same entries.
 
 You can override the default `data/` directory by setting the environment
 variable `HORTICULTURE_DATA_DIR` when running scripts or tests. An additional

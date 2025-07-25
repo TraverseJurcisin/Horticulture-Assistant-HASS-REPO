@@ -20,6 +20,10 @@ def test_normalize_key_spaces_replaced():
     assert normalize_key("My Plant") == "my_plant"
 
 
+def test_normalize_key_hyphen_replaced():
+    assert normalize_key("high-nitrogen") == "high_nitrogen"
+
+
 def test_normalize_key_non_string():
     assert normalize_key(123) == "123"
 
