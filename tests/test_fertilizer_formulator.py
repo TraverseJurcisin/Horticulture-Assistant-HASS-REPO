@@ -36,6 +36,7 @@ get_application_method = fert_mod.get_application_method
 get_application_rate = fert_mod.get_application_rate
 calculate_recommended_application = fert_mod.calculate_recommended_application
 recommend_wsda_products = fert_mod.recommend_wsda_products
+recommend_cost_effective_products = fert_mod.recommend_cost_effective_products
 CATALOG = fert_mod.CATALOG
 
 
@@ -274,4 +275,14 @@ def test_recommend_wsda_products():
     products = recommend_wsda_products("N", limit=3)
     assert len(products) == 3
     assert all(isinstance(p, str) for p in products)
+
+
+def test_recommend_cost_effective_products():
+    ranked = fert_mod.recommend_cost_effective_products("K", limit=2)
+    # cheapest source of potassium should be the granular potash product
+    assert ranked[0][0] == "intrepid_granular_potash_0_0_60"
+    assert len(ranked) == 2
+
+    with pytest.raises(ValueError):
+        fert_mod.recommend_cost_effective_products("")
 

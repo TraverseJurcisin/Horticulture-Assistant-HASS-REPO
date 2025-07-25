@@ -104,11 +104,14 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
             val = float(v)
         except (TypeError, ValueError):
             continue
-        if k in MOLAR_MASS_CONVERSIONS:
-            element, factor = MOLAR_MASS_CONVERSIONS[k]
-            result[element] = result.get(element, 0) + val * factor
+        key = k.replace("(", "").replace(")", "")
+        for conv, (element, factor) in MOLAR_MASS_CONVERSIONS.items():
+            if conv in key:
+                result[element] = result.get(element, 0) + val * factor
+                break
         else:
-            result[k] = result.get(k, 0) + val
+            abbrev = key.split(" ")[0]
+            result[abbrev] = result.get(abbrev, 0) + val
     return result
 
 
@@ -508,10 +511,14 @@ def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
 
 
 def get_cheapest_product(nutrient: str) -> tuple[str, float]:
-    """Return product ID and cost per gram for the cheapest source of ``nutrient``.
+    """Return the lowest cost fertilizer for a given nutrient.
 
-    The search is limited to products with defined prices. A ``KeyError`` is
-    raised when no product contains the requested nutrient.
+    The function iterates over all products in the local inventory and
+    uses :func:`estimate_cost_per_nutrient` to determine the price per gram
+    of ``nutrient``. The product with the lowest cost is returned along with
+    its cost value. A ``ValueError`` is raised for blank nutrient names and a
+    ``KeyError`` is raised when no priced product contains the requested
+    element.
     """
 
     nutrient = nutrient.strip()
@@ -537,6 +544,43 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
         raise KeyError(f"No priced product contains nutrient '{nutrient}'")
 
     return best_id, best_cost
+
+
+def recommend_cost_effective_products(nutrient: str, limit: int = 5) -> List[tuple[str, float]]:
+    """Return products ranked by cost efficiency for ``nutrient``.
+
+    Parameters
+    ----------
+    nutrient : str
+        Nutrient symbol to evaluate, e.g. ``"N"`` or ``"K"``.
+    limit : int, optional
+        Maximum number of results to return. ``None`` or values less
+        than one return all matches.
+
+    Returns
+    -------
+    List[tuple[str, float]]
+        Tuples of ``(fertilizer_id, cost_per_gram)`` sorted by cost.
+    """
+
+    nutrient = nutrient.strip()
+    if not nutrient:
+        raise ValueError("nutrient must be non-empty")
+
+    ranked: List[tuple[str, float]] = []
+    for pid in list_products():
+        try:
+            cost_map = estimate_cost_per_nutrient(pid)
+        except Exception:
+            continue
+        cost = cost_map.get(nutrient)
+        if cost is not None:
+            ranked.append((pid, cost))
+
+    ranked.sort(key=lambda x: x[1])
+    if limit is not None and limit > 0:
+        return ranked[:limit]
+    return ranked
 
 
 
@@ -612,6 +656,7 @@ __all__ = [
     "estimate_mix_cost_per_liter",
     "estimate_cost_breakdown",
     "get_cheapest_product",
+    "recommend_cost_effective_products",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",
