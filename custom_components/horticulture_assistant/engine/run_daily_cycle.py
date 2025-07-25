@@ -38,6 +38,7 @@ from plant_engine.rootzone_model import (
 )
 from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.stage_tasks import get_stage_tasks
+from plant_engine import water_quality
 
 
 @dataclass
@@ -60,6 +61,7 @@ class DailyReport:
     pest_severity: dict[str, str] = field(default_factory=dict)
     root_zone: dict[str, object] = field(default_factory=dict)
     transpiration: dict[str, float] = field(default_factory=dict)
+    water_quality_summary: dict[str, object] = field(default_factory=dict)
     stage_info: dict[str, object] = field(default_factory=dict)
     stage_tasks: list[str] = field(default_factory=list)
     stage_progress_pct: float | None = None
@@ -136,6 +138,7 @@ def run_daily_cycle(
     irrigation_entries = _load_recent_entries(plant_dir / "irrigation_log.json")
     nutrient_entries = _load_recent_entries(plant_dir / "nutrient_application_log.json")
     sensor_entries = _load_recent_entries(plant_dir / "sensor_reading_log.json")
+    water_quality_entries = _load_recent_entries(plant_dir / "water_quality_log.json")
     yield_entries = _load_recent_entries(plant_dir / "yield_tracking_log.json")
     # Summarize irrigation events (24h)
     if irrigation_entries:
@@ -183,6 +186,13 @@ def run_daily_cycle(
         stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals
     }
     report.sensor_summary = sensor_avg
+
+    # Include water quality analysis using the most recent test
+    if water_quality_entries:
+        latest = water_quality_entries[-1]
+        test = latest.get("results", latest)
+        if isinstance(test, dict):
+            report.water_quality_summary = water_quality.summarize_water_profile(test)
     # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
     current_env = {**latest_env, **sensor_avg}

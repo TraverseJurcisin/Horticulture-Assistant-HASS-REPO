@@ -1,4 +1,5 @@
 import json
+import datetime
 from custom_components.horticulture_assistant.engine.run_daily_cycle import run_daily_cycle
 
 
@@ -17,10 +18,20 @@ def test_run_daily_cycle_extended(tmp_path):
                     "start_date": "2025-01-01",
                     "observed_pests": ["aphids"],
                     "observed_diseases": [],
-                    "observed_pest_counts": {"aphids": 12}
+                "observed_pest_counts": {"aphids": 12}
                 }
             }
         )
+    )
+
+    (plants_dir / "sample" ).mkdir()
+    (plants_dir / "sample" / "water_quality_log.json").write_text(
+        json.dumps([
+            {
+                "results": {"Na": 60, "Cl": 50},
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+            }
+        ])
     )
 
     report = run_daily_cycle("sample", base_path=str(plants_dir), output_path=str(out_dir))
@@ -33,3 +44,4 @@ def test_run_daily_cycle_extended(tmp_path):
     assert "fertigation_schedule" in report
     assert "fertigation_cost" in report
     assert (out_dir / f"sample_{report['timestamp'][:10]}.json").exists()
+    assert report["water_quality_summary"]["rating"] == "fair"
