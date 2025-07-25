@@ -13,6 +13,10 @@ __all__ = [
     "save_json",
     "load_dataset",
     "clear_dataset_cache",
+    "dataset_paths",
+    "get_data_dir",
+    "get_extra_dirs",
+    "get_overlay_dir",
     "normalize_key",
     "list_dataset_entries",
     "parse_range",
@@ -74,26 +78,39 @@ DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
-def _data_dir() -> Path:
+
+def get_data_dir() -> Path:
+    """Return base dataset directory honoring the ``HORTICULTURE_DATA_DIR`` env."""
+
     env = os.getenv("HORTICULTURE_DATA_DIR")
     return Path(env).expanduser() if env else DEFAULT_DATA_DIR
 
 
-def _overlay_dir() -> Path | None:
+def get_overlay_dir() -> Path | None:
+    """Return optional overlay directory defined via ``HORTICULTURE_OVERLAY_DIR``."""
+
     env = os.getenv(OVERLAY_ENV)
     return Path(env).expanduser() if env else None
 
 
-def _extra_dirs() -> list[Path]:
+def get_extra_dirs() -> tuple[Path, ...]:
+    """Return additional dataset directories from ``HORTICULTURE_EXTRA_DATA_DIRS``."""
+
     env = os.getenv(EXTRA_ENV)
     if not env:
-        return []
+        return ()
     dirs: list[Path] = []
     for part in env.split(os.pathsep):
         path = Path(part).expanduser()
         if path.is_dir():
             dirs.append(path)
-    return dirs
+    return tuple(dirs)
+
+
+def dataset_paths() -> tuple[Path, ...]:
+    """Return directories searched when loading datasets."""
+
+    return (get_data_dir(), *get_extra_dirs())
 
 
 @lru_cache(maxsize=None)
@@ -101,7 +118,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     """Return dataset ``filename`` merged with any overlay data."""
 
     data: Dict[str, Any] = {}
-    paths = [_data_dir(), *_extra_dirs()]
+    paths = dataset_paths()
     for base in paths:
         path = base / filename
         if path.exists():
@@ -111,7 +128,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
             else:
                 data = extra
 
-    overlay = _overlay_dir()
+    overlay = get_overlay_dir()
     if overlay:
         overlay_path = overlay / filename
         if overlay_path.exists():

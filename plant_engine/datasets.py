@@ -13,9 +13,9 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List
 
-from .utils import _data_dir, _extra_dirs, _overlay_dir
+from .utils import get_data_dir, get_extra_dirs, get_overlay_dir
 
-DATA_DIR = _data_dir()
+DATA_DIR = get_data_dir()
 CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
 
 __all__ = [
@@ -34,10 +34,10 @@ __all__ = [
 class DatasetCatalog:
     """Helper object for discovering bundled datasets."""
 
-    base_dir: Path = field(default_factory=_data_dir)
-    extra_dirs: tuple[Path, ...] = field(default_factory=lambda: tuple(_extra_dirs()))
-    overlay_dir: Path | None = field(default_factory=_overlay_dir)
-    catalog_file: Path = field(default_factory=lambda: _data_dir() / "dataset_catalog.json")
+    base_dir: Path = field(default_factory=get_data_dir)
+    extra_dirs: tuple[Path, ...] = field(default_factory=lambda: tuple(get_extra_dirs()))
+    overlay_dir: Path | None = field(default_factory=get_overlay_dir)
+    catalog_file: Path = field(default_factory=lambda: get_data_dir() / "dataset_catalog.json")
 
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
