@@ -13,6 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN, CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
 from .entity_base import HorticultureBaseEntity
+from .utils.state_helpers import normalize_entities
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,24 +27,17 @@ async def async_setup_entry(
     plant_id = entry.entry_id
     plant_name = f"Plant {plant_id[:6]}"
 
-    def _normalize(val, default):
-        if not val:
-            return [default]
-        if isinstance(val, str):
-            return [v.strip() for v in val.split(",") if v.strip()]
-        return list(val)
-
     sensor_map = {
-        "moisture_sensors": _normalize(
+        "moisture_sensors": normalize_entities(
             entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
         ),
-        "temperature_sensors": _normalize(
+        "temperature_sensors": normalize_entities(
             entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
         ),
-        "humidity_sensors": _normalize(
+        "humidity_sensors": normalize_entities(
             entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
         ),
-        "ec_sensors": _normalize(
+        "ec_sensors": normalize_entities(
             entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
         ),
     }

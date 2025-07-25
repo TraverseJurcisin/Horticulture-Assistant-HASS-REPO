@@ -17,7 +17,11 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .utils.state_helpers import get_numeric_state
+from .utils.state_helpers import (
+    get_numeric_state,
+    normalize_entities,
+    aggregate_sensor_values,
+)
 
 from plant_engine.environment_manager import (
     score_environment,
@@ -50,30 +54,23 @@ async def async_setup_entry(
     plant_id = entry.entry_id
     plant_name = f"Plant {plant_id[:6]}"
 
-    def _normalize(val, default):
-        if not val:
-            return [default]
-        if isinstance(val, str):
-            return [v.strip() for v in val.split(",") if v.strip()]
-        return list(val)
-
     sensor_map = {
-        "moisture_sensors": _normalize(
+        "moisture_sensors": normalize_entities(
             entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
         ),
-        "temperature_sensors": _normalize(
+        "temperature_sensors": normalize_entities(
             entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
         ),
-        "humidity_sensors": _normalize(
+        "humidity_sensors": normalize_entities(
             entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
         ),
-        "light_sensors": _normalize(
+        "light_sensors": normalize_entities(
             entry.data.get("light_sensors"), f"sensor.{plant_id}_raw_light"
         ),
-        "ec_sensors": _normalize(
+        "ec_sensors": normalize_entities(
             entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
         ),
-        "co2_sensors": _normalize(
+        "co2_sensors": normalize_entities(
             entry.data.get("co2_sensors"), f"sensor.{plant_id}_raw_co2"
         ),
     }
@@ -121,17 +118,7 @@ class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
         """Return numeric state or aggregated value of ``entity_id``(s)."""
         if not entity_id:
             return None
-        if isinstance(entity_id, list):
-            vals = [get_numeric_state(self.hass, eid) for eid in entity_id]
-            vals = [v for v in vals if v is not None]
-            if not vals:
-                return None
-            if len(vals) > 2:
-                from statistics import median
-
-                return median(vals)
-            return sum(vals) / len(vals)
-        return get_numeric_state(self.hass, entity_id)
+        return aggregate_sensor_values(self.hass, entity_id)
 
 class ExponentialMovingAverageSensor(HorticultureBaseSensor):
     """Base sensor applying an exponential moving average to another sensor."""

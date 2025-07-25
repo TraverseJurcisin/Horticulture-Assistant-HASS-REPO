@@ -11,7 +11,10 @@ from typing import Optional
 
 from homeassistant.core import HomeAssistant
 
-from .state_helpers import get_numeric_state
+from .state_helpers import (
+    get_numeric_state,
+    aggregate_sensor_values,
+)
 from .json_io import load_json, save_json
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
@@ -103,24 +106,8 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     )
 
     def _aggregate(key: str, default_id: str) -> float | None:
-        val = sensor_map.get(key)
-        if isinstance(val, str):
-            entities = [val]
-        elif isinstance(val, list):
-            entities = val
-        else:
-            entities = []
-        if not entities:
-            entities = [default_id]
-        readings = [get_numeric_state(hass, eid) for eid in entities]
-        readings = [r for r in readings if r is not None]
-        if not readings:
-            return None
-        if len(readings) > 2:
-            from statistics import median
-
-            return median(readings)
-        return sum(readings) / len(readings)
+        val = sensor_map.get(key, default_id)
+        return aggregate_sensor_values(hass, val)
 
     moisture = _aggregate("moisture_sensors", f"sensor.{plant_id}_raw_moisture")
     ec = _aggregate("ec_sensors", f"sensor.{plant_id}_raw_ec")
