@@ -211,6 +211,8 @@ Key reference datasets reside in the `data/` directory:
   `plant_engine.wsda_lookup` for product N‑P‑K values
 - The `recommend_wsda_products` helper in `fertilizer_formulator` returns the
   highest concentration products for a nutrient using this dataset.
+- The `estimate_recommended_application_cost` helper computes the product cost
+  for recommended grams per liter based on the application rate data.
 - `products_index.jsonl` – compact summary of WSDA products for fast searches (use `wsda_product_index`)
 - `dataset_catalog.json` – short descriptions of the bundled datasets for quick reference
   Use `plant_engine.datasets.list_datasets()` to list available files and

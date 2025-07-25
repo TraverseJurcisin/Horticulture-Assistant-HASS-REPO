@@ -594,6 +594,13 @@ def calculate_recommended_application(fertilizer_id: str, volume_l: float) -> fl
     return round(grams, 3)
 
 
+def estimate_recommended_application_cost(fertilizer_id: str, volume_l: float) -> float:
+    """Return cost of fertilizer for ``volume_l`` solution using rate data."""
+
+    grams = calculate_recommended_application(fertilizer_id, volume_l)
+    return calculate_fertilizer_cost_from_mass(fertilizer_id, grams)
+
+
 def recommend_wsda_products(nutrient: str, limit: int = 5) -> List[str]:
     """Return WSDA product names with high concentrations of ``nutrient``."""
 
@@ -625,6 +632,7 @@ __all__ = [
     "get_application_method",
     "get_application_rate",
     "calculate_recommended_application",
+    "estimate_recommended_application_cost",
     "recommend_wsda_products",
     "CATALOG",
 ]

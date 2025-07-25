@@ -35,6 +35,7 @@ calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
 get_application_method = fert_mod.get_application_method
 get_application_rate = fert_mod.get_application_rate
 calculate_recommended_application = fert_mod.calculate_recommended_application
+estimate_recommended_application_cost = fert_mod.estimate_recommended_application_cost
 recommend_wsda_products = fert_mod.recommend_wsda_products
 CATALOG = fert_mod.CATALOG
 
@@ -274,4 +275,10 @@ def test_recommend_wsda_products():
     products = recommend_wsda_products("N", limit=3)
     assert len(products) == 3
     assert all(isinstance(p, str) for p in products)
+
+
+def test_estimate_recommended_application_cost():
+    cost = estimate_recommended_application_cost("foxfarm_grow_big", 2)
+    expected = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", 10.0)
+    assert cost == expected
 
