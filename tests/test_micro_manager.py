@@ -19,3 +19,10 @@ def test_micro_surplus():
     surplus = micro.calculate_surplus(current, "lettuce", "seedling")
     assert surplus["Fe"] == 3.0
     assert surplus["Mn"] == 0.5
+
+
+def test_micro_balance():
+    current = {"Fe": 1.0, "Mn": 0.25}
+    ratios = micro.calculate_balance(current, "lettuce", "seedling")
+    assert ratios["Fe"] == 0.5
+    assert ratios["Mn"] == 0.5
