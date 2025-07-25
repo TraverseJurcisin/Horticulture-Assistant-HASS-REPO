@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import os
 import logging
@@ -58,7 +60,12 @@ def calculate_eta(et0: float, kc: float = 1.0) -> float:
     """
     return max(et0 * kc, 0.0)
 
-def update_growth_index(hass: HomeAssistant, plant_id: str, env_data: dict, transpiration_ml: float = None) -> dict:
+def update_growth_index(
+    hass: HomeAssistant | None,
+    plant_id: str,
+    env_data: dict,
+    transpiration_ml: float | None = None,
+) -> dict:
     """
     Update the daily vegetative growth index (VGI) for a given plant.
 
@@ -72,7 +79,8 @@ def update_growth_index(hass: HomeAssistant, plant_id: str, env_data: dict, tran
     profile = {}
     try:
         from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
-        profile = load_profile(plant_id=plant_id, base_dir=hass.config.path("plants"))
+        base_dir = hass.config.path("plants") if hass else "plants"
+        profile = load_profile(plant_id=plant_id, base_dir=base_dir)
     except Exception as e:
         _LOGGER.error("Could not load profile for plant %s: %s", plant_id, e)
         profile = {}
@@ -230,7 +238,7 @@ def update_growth_index(hass: HomeAssistant, plant_id: str, env_data: dict, tran
     vgi_today = round(base_vgi_today * growth_factor, 2)
 
     # Prepare to save growth trend data
-    data_dir = hass.config.path("data")
+    data_dir = hass.config.path("data") if hass else "data"
     os.makedirs(data_dir, exist_ok=True)
     trends_path = os.path.join(data_dir, "growth_trends.json")
 
