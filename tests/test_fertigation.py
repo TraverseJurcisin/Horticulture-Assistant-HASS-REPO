@@ -396,3 +396,17 @@ def test_summarize_fertigation_schedule():
     assert "cost_total" in summary
     assert isinstance(summary["schedule"], dict)
     assert summary["cost_total"] >= 0
+
+
+def test_recommend_loss_compensated_mix():
+    from plant_engine.fertigation import (
+        recommend_nutrient_mix,
+        recommend_loss_compensated_mix,
+    )
+
+    base = recommend_nutrient_mix("citrus", "vegetative", 1.0)
+    adjusted = recommend_loss_compensated_mix("citrus", "vegetative", 1.0)
+
+    assert adjusted["urea"] > base["urea"]
+    assert adjusted["urea"] == pytest.approx(base["urea"] * 1.32, rel=1e-2)
+    assert adjusted["map"] == pytest.approx(base["map"] * 1.05, rel=1e-2)
