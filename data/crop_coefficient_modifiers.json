@@ -1,0 +1,14 @@
+{
+  "humidity": {
+    "low_threshold": 40,
+    "high_threshold": 80,
+    "low_factor": 1.1,
+    "high_factor": 0.9
+  },
+  "temperature": {
+    "low_threshold": 15,
+    "high_threshold": 30,
+    "low_factor": 0.95,
+    "high_factor": 1.05
+  }
+}

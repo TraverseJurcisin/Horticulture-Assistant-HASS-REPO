@@ -68,3 +68,15 @@ def test_compute_transpiration_missing_env_defaults():
     result = compute_transpiration(profile, {"temp_c": 25})
     # Ensure calculation succeeded and returned positive transpiration
     assert result["transpiration_ml_day"] > 0
+
+
+def test_adjust_crop_coefficient():
+    from plant_engine.compute_transpiration import adjust_crop_coefficient
+
+    base_kc = 1.0
+    # low humidity should increase kc
+    adj = adjust_crop_coefficient(base_kc, 25.0, 30.0)
+    assert adj > base_kc
+    # high humidity should decrease kc
+    adj2 = adjust_crop_coefficient(base_kc, 25.0, 90.0)
+    assert adj2 < base_kc
