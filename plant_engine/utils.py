@@ -78,6 +78,10 @@ DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
+# Cached dataset search path info
+_PATH_CACHE: tuple[Path, ...] | None = None
+_ENV_STATE: tuple[str | None, str | None] | None = None
+
 
 def get_data_dir() -> Path:
     """Return base dataset directory honoring the ``HORTICULTURE_DATA_DIR`` env."""
@@ -108,9 +112,22 @@ def get_extra_dirs() -> tuple[Path, ...]:
 
 
 def dataset_paths() -> tuple[Path, ...]:
-    """Return directories searched when loading datasets."""
+    """Return directories searched when loading datasets.
 
-    return (get_data_dir(), *get_extra_dirs())
+    Results are cached but automatically refreshed if the relevant
+    environment variables change. This avoids repeated environment lookups
+    while still allowing tests or applications to modify the dataset paths
+    on the fly.
+    """
+
+    global _PATH_CACHE, _ENV_STATE
+    env_state = (os.getenv("HORTICULTURE_DATA_DIR"), os.getenv(EXTRA_ENV))
+    if _PATH_CACHE is None or _ENV_STATE != env_state:
+        base = get_data_dir()
+        extras = get_extra_dirs()
+        _PATH_CACHE = (base, *extras)
+        _ENV_STATE = env_state
+    return _PATH_CACHE
 
 
 @lru_cache(maxsize=None)
@@ -144,7 +161,10 @@ def load_dataset(filename: str) -> Dict[str, Any]:
 def clear_dataset_cache() -> None:
     """Clear cached dataset results loaded via :func:`load_dataset`."""
 
+    global _PATH_CACHE, _ENV_STATE
     load_dataset.cache_clear()
+    _PATH_CACHE = None
+    _ENV_STATE = None
 
 
 def normalize_key(key: str) -> str:
