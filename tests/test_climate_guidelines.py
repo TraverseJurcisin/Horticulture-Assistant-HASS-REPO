@@ -14,10 +14,12 @@ def test_get_climate_guidelines():
 
 
 def test_recommend_climate_adjustments():
-    env = {"temp_c": 30, "humidity_pct": 50}
+    env = {"temp_c": 30, "humidity_pct": 50, "light_ppfd": 700, "co2_ppm": 500}
     rec = recommend_climate_adjustments(env, "temperate")
     assert "temperature" in rec and rec["temperature"].startswith("lower")
     assert "humidity" in rec and rec["humidity"].startswith("increase")
+    assert "light" in rec and rec["light"].startswith("lower")
+    assert "co2" in rec and rec["co2"].startswith("raise")
 
 
 def test_get_combined_environment_guidelines():

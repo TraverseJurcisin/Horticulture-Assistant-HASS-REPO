@@ -165,11 +165,17 @@ def get_combined_environmental_targets(
 def recommend_climate_adjustments(
     current_env: Mapping[str, float], zone: str
 ) -> Dict[str, str]:
-    """Return simple adjustment suggestions for ``zone`` based on ``current_env``."""
+    """Return simple adjustment suggestions for ``zone`` based on ``current_env``.
+
+    The comparison uses climate zone guidelines only and currently checks
+    temperature, humidity, light intensity and CO₂ levels. Keys in
+    ``current_env`` are normalized using :func:`normalize_environment_readings`.
+    """
 
     guide = get_climate_guidelines(zone)
     env = normalize_environment_readings(current_env)
     suggestions: Dict[str, str] = {}
+
     if guide.temp_c is not None:
         low, high = guide.temp_c
         temp = env.get("temp_c")
@@ -178,6 +184,7 @@ def recommend_climate_adjustments(
                 suggestions["temperature"] = f"raise to {low}-{high}°C"
             elif temp > high:
                 suggestions["temperature"] = f"lower to {low}-{high}°C"
+
     if guide.humidity_pct is not None:
         low, high = guide.humidity_pct
         rh = env.get("humidity_pct")
@@ -186,6 +193,25 @@ def recommend_climate_adjustments(
                 suggestions["humidity"] = f"increase to {low}-{high}%"
             elif rh > high:
                 suggestions["humidity"] = f"decrease to {low}-{high}%"
+
+    if guide.light_ppfd is not None:
+        low, high = guide.light_ppfd
+        light = env.get("light_ppfd")
+        if light is not None:
+            if light < low:
+                suggestions["light"] = f"raise to {low}-{high} PPFD"
+            elif light > high:
+                suggestions["light"] = f"lower to {low}-{high} PPFD"
+
+    if guide.co2_ppm is not None:
+        low, high = guide.co2_ppm
+        co2 = env.get("co2_ppm")
+        if co2 is not None:
+            if co2 < low:
+                suggestions["co2"] = f"raise to {low}-{high} ppm"
+            elif co2 > high:
+                suggestions["co2"] = f"lower to {low}-{high} ppm"
+
     return suggestions
 
 
