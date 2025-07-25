@@ -100,6 +100,18 @@ Plant profiles are JSON files placed in the `plants/` directory. A minimal examp
 }
 ```
 
+Profiles may map Home Assistant sensor entities using plural keys under
+`sensor_entities`. Lists are averaged (or median filtered) before use:
+
+```json
+{
+  "sensor_entities": {
+    "moisture_sensors": ["sensor.bed1_moist1", "sensor.bed1_moist2"],
+    "temperature_sensors": ["sensor.greenhouse_temp"]
+  }
+}
+```
+
 ### Plant Registry
 Multiple profiles can be indexed in `plant_registry.json` so automations can discover them easily. Example:
 ```json

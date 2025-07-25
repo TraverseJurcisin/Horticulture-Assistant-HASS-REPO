@@ -53,3 +53,27 @@ def test_build_daily_report(tmp_path):
     report = drb.build_daily_report(hass, "plant1")
     assert report.temperature == 25.0
     assert report.environment_targets["temp_c"] == [18, 28]
+
+
+def test_build_daily_report_multiple_sensors(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+    profile = {
+        "general": {
+            "plant_type": "citrus",
+            "sensor_entities": {
+                "moisture_sensors": ["sensor.m1", "sensor.m2"],
+            },
+        }
+    }
+    (plants / "p2.json").write_text(json.dumps(profile))
+    registry = {"p2": {"plant_type": "citrus"}}
+    (tmp_path / "plant_registry.json").write_text(json.dumps(registry))
+
+    hass = DummyHass(tmp_path)
+    hass.states._data["sensor.m1"] = "30"
+    hass.states._data["sensor.m2"] = "40"
+
+    report = drb.build_daily_report(hass, "p2")
+    assert report.moisture == 35.0
+

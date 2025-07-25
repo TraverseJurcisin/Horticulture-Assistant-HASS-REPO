@@ -10,10 +10,23 @@ from typing import Dict, List, Tuple, Mapping, Iterable
 
 from plant_engine.utils import load_json
 
-# Path to the WSDA fertilizer database packaged with the repository. Using
-# :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
-# variables to work as expected.
-_WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
+# Repository root used to locate the sharded WSDA dataset
+_ROOT = Path(__file__).resolve().parents[1]
+# Compact index of product records
+_INDEX_PATH = _ROOT / "products_index.jsonl"
+# Detailed records directory grouped by the first two characters of ``product_id``
+_DETAIL_DIR = _ROOT / "feature" / "wsda_refactored_sharded" / "detail"
+
+
+def _load_detail(product_id: str) -> Mapping[str, object] | None:
+    """Return parsed detail record for ``product_id`` if available."""
+
+    if not product_id:
+        return None
+    path = _DETAIL_DIR / product_id[:2] / f"{product_id}.json"
+    if not path.exists():
+        return None
+    return load_json(str(path))
 
 __all__ = [
     "get_product_npk_by_name",
@@ -58,18 +71,46 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 @lru_cache(maxsize=None)
 def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+    """Return WSDA fertilizer records merged from the index and detail files."""
 
-    if not _WSDA_PATH.exists():
+    if not _INDEX_PATH.exists():
         return []
-    data = load_json(str(_WSDA_PATH))
-    if isinstance(data, list):
-        return data
-    if isinstance(data, Mapping) and "records" in data:
-        recs = data.get("records")
-        if isinstance(recs, list):
-            return recs
-    return []
+
+    records = []
+    with open(_INDEX_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            idx = json.loads(line)
+            product_id = idx.get("product_id", "")
+            name = idx.get("label_name", "")
+            number = idx.get("wsda_reg_no")
+
+            analysis: Dict[str, float] = {}
+            if (val := idx.get("n")) is not None:
+                analysis["N"] = float(val)
+            if (val := idx.get("p")) is not None:
+                analysis["P"] = float(val)
+            if (val := idx.get("k")) is not None:
+                analysis["K"] = float(val)
+
+            detail = _load_detail(product_id)
+            if detail:
+                ga = detail.get("source_wsda_record", {}).get(
+                    "guaranteed_analysis", {}
+                )
+                analysis.update(_parse_analysis(ga))
+
+            records.append(
+                {
+                    "product_name": name,
+                    "wsda_product_number": number,
+                    "guaranteed_analysis": analysis,
+                }
+            )
+
+    return records
 
 
 @lru_cache(maxsize=None)
@@ -83,8 +124,7 @@ def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
     names: Dict[str, _Product] = {}
     numbers: Dict[str, _Product] = {}
     for rec in records:
-        ga_raw = rec.get("guaranteed_analysis", {})
-        analysis = _parse_analysis(ga_raw)
+        analysis = dict(rec.get("guaranteed_analysis", {}))
         npk = (
             analysis.get("N", 0.0),
             analysis.get("P", 0.0),
