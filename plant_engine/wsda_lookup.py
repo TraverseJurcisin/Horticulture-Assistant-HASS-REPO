@@ -2,18 +2,19 @@ from __future__ import annotations
 
 """Utilities for looking up fertilizer analysis data from the WSDA database."""
 
-import json
 from dataclasses import dataclass
 from functools import lru_cache
-from pathlib import Path
 from typing import Dict, List, Tuple, Mapping, Iterable
 
-from plant_engine.utils import load_json
+from plant_engine.utils import load_dataset
 
 # Path to the WSDA fertilizer database packaged with the repository. Using
 # :func:`load_dataset` allows overrides via ``HORTICULTURE_*`` environment
 # variables to work as expected.
-_WSDA_PATH = Path(__file__).resolve().parents[1] / "wsda_fertilizer_database.json"
+# Relative name of the bundled WSDA dataset. The file is loaded using
+# ``load_dataset`` so users may override or extend it via the environment
+# variables supported by :mod:`plant_engine.utils`.
+_WSDA_FILE = "wsda_fertilizer_database.json"
 
 __all__ = [
     "get_product_npk_by_name",
@@ -24,6 +25,7 @@ __all__ = [
     "list_product_names",
     "list_product_numbers",
     "recommend_products_for_nutrient",
+    "refresh_database",
 ]
 
 @dataclass(frozen=True)
@@ -58,14 +60,14 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
 
 @lru_cache(maxsize=None)
 def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from the bundled JSON file."""
+    """Return WSDA fertilizer records from the bundled dataset."""
 
-    if not _WSDA_PATH.exists():
+    data = load_dataset(_WSDA_FILE)
+    if not data:
         return []
-    data = load_json(str(_WSDA_PATH))
     if isinstance(data, list):
         return data
-    if isinstance(data, Mapping) and "records" in data:
+    if isinstance(data, Mapping):
         recs = data.get("records")
         if isinstance(recs, list):
             return recs
@@ -179,4 +181,11 @@ def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> List[str]:
 
     ranked.sort(key=lambda x: x[1], reverse=True)
     return [name for name, _ in ranked[: max(limit, 0)]]
+
+
+def refresh_database() -> None:
+    """Clear cached dataset results so subsequent lookups reload data."""
+
+    _records.cache_clear()
+    _build_indexes.cache_clear()
 
