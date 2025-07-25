@@ -9,6 +9,7 @@ from pathlib import Path
 from custom_components.horticulture_assistant.utils.load_plant_profile import (
     load_plant_profile,
 )
+from plant_engine.utils import get_plants_dir
 from custom_components.horticulture_assistant.utils.validate_profile_structure import (
     validate_profile_structure,
 )
@@ -49,7 +50,7 @@ def load_all_profiles(
     :param pattern: Glob pattern of files to load from each plant directory.
     :return: Mapping of plant_id to :class:`ProfileLoadResult` objects.
     """
-    base_dir = Path(base_path) if base_path else Path(os.getcwd()) / "plants"
+    base_dir = Path(base_path) if base_path else get_plants_dir()
     profiles: dict[str, ProfileLoadResult] = {}
     if not base_dir.is_dir():
         _LOGGER.error("Base directory for plant profiles not found: %s", base_dir)

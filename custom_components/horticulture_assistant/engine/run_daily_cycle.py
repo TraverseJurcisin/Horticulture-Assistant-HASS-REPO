@@ -25,7 +25,7 @@ from plant_engine.disease_manager import (
 )
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.pest_monitor import classify_pest_severity
-from plant_engine.utils import load_dataset
+from plant_engine.utils import load_dataset, get_plants_dir
 from plant_engine.fertigation import (
     recommend_nutrient_mix,
     recommend_nutrient_mix_with_cost,
@@ -110,7 +110,9 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
 
 
 def run_daily_cycle(
-    plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
+    plant_id: str,
+    base_path: str = str(get_plants_dir()),
+    output_path: str = "data/daily_reports",
 ) -> dict:
     """Return an aggregated 24h report for ``plant_id``.
 

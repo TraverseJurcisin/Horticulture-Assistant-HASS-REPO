@@ -3,6 +3,8 @@ import json
 import logging
 from pathlib import Path
 
+from plant_engine.utils import get_plants_dir
+
 _LOGGER = logging.getLogger(__name__)
 
 def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bool = False):
@@ -19,7 +21,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
              {"missing_keys": [...], "empty_fields": [...], "error": "..." (if any format errors), "extra_keys": [...]}.
     """
     # Determine base directory for plant profiles
-    base_dir = Path(base_path) if base_path else Path(os.getcwd()) / "plants"
+    base_dir = Path(base_path) if base_path else get_plants_dir()
     plant_dir = base_dir / str(plant_id)
     issues = {}
     if not plant_dir.is_dir():
@@ -229,7 +231,7 @@ if __name__ == "__main__":
     # Configure basic logging to console
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     # Check plant directory existence before validation
-    base_dir = Path(args.base_path) if args.base_path else Path(os.getcwd()) / "plants"
+    base_dir = Path(args.base_path) if args.base_path else get_plants_dir()
     plant_dir = base_dir / str(args.plant_id)
     if not plant_dir.is_dir():
         print(f"Error: Plant directory not found at {plant_dir}")

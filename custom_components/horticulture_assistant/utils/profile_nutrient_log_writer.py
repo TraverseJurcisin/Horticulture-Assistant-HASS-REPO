@@ -1,5 +1,7 @@
 import logging
 from pathlib import Path
+
+from plant_engine.utils import get_plants_dir
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:  # pragma: no cover - outside Home Assistant
@@ -24,9 +26,9 @@ def initialize_nutrient_logs(
             base_path = Path(hass.config.path("plants"))
         except Exception as err:  # pragma: no cover - path resolution failure
             _LOGGER.error("Error resolving Home Assistant plants directory: %s", err)
-            base_path = Path("plants")
+            base_path = get_plants_dir()
     else:
-        base_path = Path("plants")
+        base_path = get_plants_dir()
     sections = {
         "nutrient_application_log.json": [],
         "fertilizer_cost_tracking.json": [],

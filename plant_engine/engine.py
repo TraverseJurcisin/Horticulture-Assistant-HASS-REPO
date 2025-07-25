@@ -33,8 +33,9 @@ from plant_engine.disease_manager import (
 from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
 from plant_engine.constants import get_stage_multiplier, DEFAULT_ENV
+from plant_engine.utils import get_plants_dir
 
-PLANTS_DIR = "plants"
+PLANTS_DIR = str(get_plants_dir())
 OUTPUT_DIR = "data/reports"
 
 _LOGGER = logging.getLogger(__name__)

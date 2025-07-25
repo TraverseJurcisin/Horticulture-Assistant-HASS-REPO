@@ -17,6 +17,7 @@ __all__ = [
     "get_data_dir",
     "get_extra_dirs",
     "get_overlay_dir",
+    "get_plants_dir",
     "normalize_key",
     "list_dataset_entries",
     "parse_range",
@@ -78,6 +79,10 @@ DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 
+# Optional base directory for plant profiles.
+PLANTS_ENV = "HORTICULTURE_PLANTS_DIR"
+DEFAULT_PLANTS_DIR = Path("plants")
+
 # Cached dataset search path info
 _PATH_CACHE: tuple[Path, ...] | None = None
 _ENV_STATE: tuple[str | None, str | None] | None = None
@@ -109,6 +114,13 @@ def get_extra_dirs() -> tuple[Path, ...]:
         if path.is_dir():
             dirs.append(path)
     return tuple(dirs)
+
+
+def get_plants_dir() -> Path:
+    """Return base directory for plant profiles."""
+
+    env = os.getenv(PLANTS_ENV)
+    return Path(env).expanduser() if env else DEFAULT_PLANTS_DIR
 
 
 def dataset_paths() -> tuple[Path, ...]:
