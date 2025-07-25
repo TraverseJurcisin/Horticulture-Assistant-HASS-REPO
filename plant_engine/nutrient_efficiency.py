@@ -1,8 +1,9 @@
 """Calculate nutrient use efficiency from application and yield logs."""
 
 import os
-import json
 from typing import Dict, Tuple
+
+from .utils import load_json
 
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
@@ -17,8 +18,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     if not os.path.exists(path_nutrients):
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
 
-    with open(path_nutrients, "r", encoding="utf-8") as f:
-        nutrient_log = json.load(f)
+    nutrient_log = load_json(path_nutrients)
 
     total_applied_mg: Dict[str, float] = {}
     for entry in nutrient_log.get("records", []):
@@ -29,8 +29,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     if not os.path.exists(path_yield):
         raise FileNotFoundError(f"No yield record found for {plant_id}")
 
-    with open(path_yield, "r", encoding="utf-8") as f:
-        yield_data = json.load(f)
+    yield_data = load_json(path_yield)
 
     total_yield_g = sum(float(h.get("yield_grams", 0)) for h in yield_data.get("harvests", []))
 
