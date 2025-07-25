@@ -8,6 +8,10 @@ from typing import Dict, Mapping, Iterable
 from .utils import load_dataset, normalize_key
 from .constants import DEFAULT_ENV
 
+MODIFIER_FILE = "crop_coefficient_modifiers.json"
+# cached via load_dataset
+_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(MODIFIER_FILE)
+
 from plant_engine.et_model import calculate_et0, calculate_eta
 
 DATA_FILE = "crop_coefficients.json"
@@ -17,6 +21,7 @@ _KC_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 # Public API
 __all__ = [
     "TranspirationMetrics",
+    "adjust_crop_coefficient",
     "lookup_crop_coefficient",
     "compute_transpiration",
     "compute_transpiration_series",
@@ -36,6 +41,33 @@ class TranspirationMetrics:
     def as_dict(self) -> Dict[str, float]:
         """Return metrics as a regular dictionary."""
         return asdict(self)
+
+
+def adjust_crop_coefficient(
+    kc: float, temp_c: float | None, rh_pct: float | None
+) -> float:
+    """Return KC adjusted for temperature and humidity."""
+    result = kc
+
+    humidity = _MODIFIERS.get("humidity", {})
+    if rh_pct is not None:
+        low_t = humidity.get("low_threshold")
+        high_t = humidity.get("high_threshold")
+        if low_t is not None and rh_pct < low_t:
+            result *= humidity.get("low_factor", 1.0)
+        if high_t is not None and rh_pct > high_t:
+            result *= humidity.get("high_factor", 1.0)
+
+    temp = _MODIFIERS.get("temperature", {})
+    if temp_c is not None:
+        low_t = temp.get("low_threshold")
+        high_t = temp.get("high_threshold")
+        if low_t is not None and temp_c < low_t:
+            result *= temp.get("low_factor", 1.0)
+        if high_t is not None and temp_c > high_t:
+            result *= temp.get("high_factor", 1.0)
+
+    return float(result)
 
 
 @lru_cache(maxsize=None)
@@ -78,6 +110,8 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
             kc = lookup_crop_coefficient(plant_type, stage)
         else:
             kc = 1.0
+
+    kc = adjust_crop_coefficient(kc, env.get("temp_c"), env.get("rh_pct"))
     et_actual = calculate_eta(et0, kc)
 
     canopy_m2 = plant_profile.get("canopy_m2", 0.25)
