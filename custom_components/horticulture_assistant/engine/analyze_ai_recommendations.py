@@ -4,6 +4,8 @@ import json
 import logging
 from datetime import datetime
 
+from ..utils.json_io import load_json, save_json
+
 _LOGGER = logging.getLogger(__name__)
 
 def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
@@ -13,12 +15,11 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     """
     # Read the daily report JSON
     try:
-        with open(report_path, 'r', encoding='utf-8') as f:
-            report = json.load(f)
+        report = load_json(report_path)
     except FileNotFoundError:
         _LOGGER.error("Report file not found: %s", report_path)
         return
-    except json.JSONDecodeError as e:
+    except Exception as e:
         _LOGGER.error("Failed to parse JSON report for plant %s: %s", plant_id, e)
         return
     
@@ -170,8 +171,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     filename = f"{plant_id}_{date_str}.json"
     file_path = os.path.join(base_dir, filename)
     try:
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(record, f, indent=2)
+        save_json(file_path, record)
     except Exception as e:
         _LOGGER.error("Failed to save pending thresholds for plant %s: %s", plant_id, e)
         return

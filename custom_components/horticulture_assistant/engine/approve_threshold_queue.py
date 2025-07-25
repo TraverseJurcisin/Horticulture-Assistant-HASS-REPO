@@ -7,6 +7,8 @@ try:
 except ImportError:
     HomeAssistant = None  # if Home Assistant not available, ignore for standalone use
 
+from ..utils.json_io import load_json, save_json
+
 _LOGGER = logging.getLogger(__name__)
 
 def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
@@ -36,13 +38,12 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     for filename in files:
         file_path = os.path.join(pending_dir, filename)
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            data = load_json(file_path)
         except FileNotFoundError:
             _LOGGER.error("Pending threshold file not found: %s", file_path)
             print(f"Pending threshold file not found: {filename}")
             continue
-        except json.JSONDecodeError as e:
+        except Exception as e:
             _LOGGER.error("Failed to parse pending threshold file %s: %s", filename, e)
             print(f"Error reading {filename}: invalid JSON.")
             continue
@@ -98,13 +99,12 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
             # Attempt to apply approved changes to the plant's profile
             plant_file_path = os.path.join(base_plants_dir, f"{plant_id}.json")
             try:
-                with open(plant_file_path, "r", encoding="utf-8") as pf:
-                    profile = json.load(pf)
+                profile = load_json(plant_file_path)
             except FileNotFoundError:
                 _LOGGER.error("Plant profile file not found for '%s' at %s; cannot apply approved changes now.", plant_id, plant_file_path)
                 print(f"Warning: profile for plant '{plant_id}' not found. Approved changes will remain pending.")
                 profile_update_failed = True
-            except json.JSONDecodeError as e:
+            except Exception as e:
                 _LOGGER.error("Failed to read profile for plant '%s': %s; skipping its changes.", plant_id, e)
                 print(f"Warning: profile for plant '{plant_id}' is invalid. Approved changes will remain pending.")
                 profile_update_failed = True
@@ -125,8 +125,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
                 profile["thresholds"] = thresholds
                 try:
                     os.makedirs(os.path.dirname(plant_file_path), exist_ok=True)
-                    with open(plant_file_path, "w", encoding="utf-8") as pf:
-                        json.dump(profile, pf, indent=2)
+                    save_json(plant_file_path, profile)
                 except Exception as e:
                     _LOGGER.error("Failed to write updated profile for plant '%s': %s", plant_id, e)
                     print(f"Warning: could not write profile for plant '{plant_id}'. Approved changes will remain pending.")
@@ -149,8 +148,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
         # Write the updated pending file (with new statuses)
         if file_modified:
             try:
-                with open(file_path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, indent=2)
+                save_json(file_path, data)
             except Exception as e:
                 _LOGGER.error("Failed to write updated pending threshold file %s: %s", filename, e)
                 print(f"Error: failed to update pending file {filename}. Changes may not be saved.")
