@@ -105,6 +105,7 @@
   "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
   "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
   "disease_severity_actions.json": "Actions to take based on disease severity level.",
+  "disease_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on disease risk level.",   
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
   "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
   "pest_scientific_names.json": "Common pests mapped to their scientific names.",

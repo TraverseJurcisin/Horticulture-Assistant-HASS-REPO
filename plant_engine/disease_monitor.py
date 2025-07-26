@@ -8,12 +8,14 @@ from typing import Dict, Mapping
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
 from .disease_manager import recommend_treatments, recommend_prevention
+from . import disease_manager
 from . import environment_manager
 
 DATA_FILE = "disease_thresholds.json"
 MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
 RISK_DATA_FILE = "disease_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "disease_severity_actions.json"
+RISK_INTERVAL_MOD_FILE = "disease_risk_interval_modifiers.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
@@ -21,6 +23,7 @@ _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
+_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -30,7 +33,10 @@ __all__ = [
     "recommend_threshold_actions",
     "get_severity_action",
     "estimate_disease_risk",
+    "adjust_risk_with_resistance",
+    "estimate_adjusted_disease_risk",
     "get_monitoring_interval",
+    "risk_adjusted_monitor_interval",
     "next_monitor_date",
     "generate_monitoring_schedule",
     "generate_disease_report",
@@ -104,10 +110,67 @@ def estimate_disease_risk(
     return estimate_condition_risk(factors, environment)
 
 
+def adjust_risk_with_resistance(
+    plant_type: str, risk_map: Mapping[str, str]
+) -> Dict[str, str]:
+    """Return ``risk_map`` adjusted by crop disease resistance ratings."""
+
+    levels = ["low", "moderate", "high"]
+    adjusted: Dict[str, str] = {}
+    for disease, risk in risk_map.items():
+        rating = disease_manager.get_disease_resistance(plant_type, disease)
+        if rating is None or risk not in levels:
+            adjusted[disease] = risk
+            continue
+
+        idx = levels.index(risk)
+        if rating >= 4 and idx > 0:
+            idx -= 1
+        elif rating <= 2 and idx < len(levels) - 1:
+            idx += 1
+        adjusted[disease] = levels[idx]
+
+    return adjusted
+
+
+def estimate_adjusted_disease_risk(
+    plant_type: str, environment: Mapping[str, float]
+) -> Dict[str, str]:
+    """Return environment-based disease risk adjusted for crop resistance."""
+
+    risk = estimate_disease_risk(plant_type, environment)
+    if not risk:
+        return {}
+    return adjust_risk_with_resistance(plant_type, risk)
+
+
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between disease scouting events."""
 
     return _get_interval(_MONITOR_INTERVALS, plant_type, stage)
+
+
+def risk_adjusted_monitor_interval(
+    plant_type: str,
+    stage: str | None,
+    environment: Mapping[str, float],
+) -> int | None:
+    """Return monitoring interval adjusted for current disease risk."""
+
+    base = get_monitoring_interval(plant_type, stage)
+    if base is None:
+        return None
+
+    risks = estimate_adjusted_disease_risk(plant_type, environment)
+    level = "low"
+    if any(r == "high" for r in risks.values()):
+        level = "high"
+    elif any(r == "moderate" for r in risks.values()):
+        level = "moderate"
+
+    modifier = _RISK_MODIFIERS.get(level, 1.0)
+    interval = int(round(base * modifier))
+    return max(1, interval)
 
 
 def next_monitor_date(

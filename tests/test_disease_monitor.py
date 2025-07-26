@@ -6,6 +6,9 @@ from plant_engine.disease_monitor import (
     recommend_threshold_actions,
     generate_disease_report,
     get_monitoring_interval,
+    adjust_risk_with_resistance,
+    estimate_adjusted_disease_risk,
+    risk_adjusted_monitor_interval,
     next_monitor_date,
     generate_monitoring_schedule,
     get_severity_action,
@@ -75,4 +78,24 @@ def test_report_includes_severity_actions():
     obs = {"citrus greening": 3}
     report = generate_disease_report("citrus", obs)
     assert report["severity_actions"]["citrus_greening"]
+
+
+def test_adjust_risk_with_resistance():
+    risks = {"greasy_spot": "high", "powdery_mildew": "moderate"}
+    adjusted = adjust_risk_with_resistance("citrus", risks)
+    assert adjusted["greasy_spot"] == "moderate"
+    assert adjusted["powdery_mildew"] == "moderate"
+
+
+def test_estimate_adjusted_disease_risk():
+    env = {"humidity_pct": 80, "temp_c": 25}
+    risk = estimate_adjusted_disease_risk("citrus", env)
+    assert risk["greasy_spot"] == "moderate"
+    assert risk["powdery_mildew"] == "high"
+
+
+def test_risk_adjusted_monitor_interval():
+    env = {"humidity_pct": 80, "temp_c": 25}
+    interval = risk_adjusted_monitor_interval("citrus", "fruiting", env)
+    assert interval == 2
 
