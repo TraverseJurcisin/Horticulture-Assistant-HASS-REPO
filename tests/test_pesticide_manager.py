@@ -10,6 +10,8 @@ from plant_engine.pesticide_manager import (
     calculate_reentry_window,
     get_mode_of_action,
     list_known_pesticides,
+    get_rotation_interval,
+    suggest_rotation_schedule,
 )
 
 
@@ -79,4 +81,21 @@ def test_list_known_pesticides():
     pesticides = list_known_pesticides()
     assert "imidacloprid" in pesticides
     assert "pyrethrin" in pesticides
+
+
+def test_get_rotation_interval():
+    assert get_rotation_interval("imidacloprid") == 30
+    assert get_rotation_interval("spinosad") == 10
+    assert get_rotation_interval("unknown") is None
+
+
+def test_suggest_rotation_schedule():
+    start = datetime.date(2024, 1, 1)
+    schedule = suggest_rotation_schedule("imidacloprid", start, 3)
+    assert schedule == [
+        datetime.date(2024, 1, 1),
+        datetime.date(2024, 1, 31),
+        datetime.date(2024, 3, 1),
+    ]
+
 

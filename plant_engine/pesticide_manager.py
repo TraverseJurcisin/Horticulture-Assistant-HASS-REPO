@@ -9,11 +9,13 @@ from .utils import load_dataset
 DATA_FILE = "pesticide_withdrawal_days.json"
 REENTRY_FILE = "pesticide_reentry_intervals.json"
 MOA_FILE = "pesticide_modes.json"
+ROTATION_FILE = "pesticide_rotation_intervals.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
 _REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
 _MOA: Dict[str, str] = load_dataset(MOA_FILE)
+_ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -25,6 +27,8 @@ __all__ = [
     "calculate_reentry_window",
     "get_mode_of_action",
     "list_known_pesticides",
+    "get_rotation_interval",
+    "suggest_rotation_schedule",
 ]
 
 
@@ -125,3 +129,30 @@ def list_known_pesticides() -> List[str]:
     """Return alphabetically sorted list of pesticides with MOA data."""
 
     return sorted(_MOA.keys())
+
+
+def get_rotation_interval(product: str) -> int | None:
+    """Return recommended rotation interval days for ``product``.
+
+    The interval is looked up using the product's mode of action. ``None``
+    is returned if either the MOA or rotation guideline is missing.
+    """
+
+    moa = get_mode_of_action(product)
+    if moa is None:
+        return None
+    days = _ROTATION.get(moa.lower())
+    return int(days) if isinstance(days, (int, float)) else None
+
+
+def suggest_rotation_schedule(product: str, start_date: date, cycles: int) -> List[date]:
+    """Return future application dates spaced by the rotation interval."""
+
+    if cycles <= 0:
+        raise ValueError("cycles must be positive")
+
+    interval = get_rotation_interval(product)
+    if interval is None:
+        return []
+
+    return [start_date + timedelta(days=interval * i) for i in range(cycles)]
