@@ -18,6 +18,7 @@ try:
     from homeassistant.core import HomeAssistant, ServiceCall
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.helpers.typing import ConfigType
+
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
     # Allow running tests without Home Assistant installed
     HomeAssistant = object  # type: ignore
