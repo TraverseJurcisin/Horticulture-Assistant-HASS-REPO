@@ -5,8 +5,12 @@ from typing import Iterator, Dict, Any
 
 import pandas as pd
 
-WSDA_INDEX_DIR = Path(os.getenv("WSDA_INDEX_DIR", "data/index_sharded"))
-WSDA_DETAIL_DIR = Path(os.getenv("WSDA_DETAIL_DIR", "data/detail"))
+WSDA_INDEX_DIR = Path(
+    os.getenv("WSDA_INDEX_DIR", "feature/wsda_refactored_sharded/index_sharded")
+)
+WSDA_DETAIL_DIR = Path(
+    os.getenv("WSDA_DETAIL_DIR", "feature/wsda_refactored_sharded/detail")
+)
 
 
 def stream_index() -> Iterator[Dict[str, Any]]:

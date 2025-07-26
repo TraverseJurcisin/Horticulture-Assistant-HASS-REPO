@@ -89,8 +89,6 @@
   "fertilizers/fertilizer_application_rates.json": "Recommended grams per liter of fertilizer product.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
-  "wsda_fertilizer_database.json": "Full WSDA fertilizer product database for nutrient lookups.",
-  "products_index.jsonl": "Compact index of WSDA fertilizer products (JSON Lines).",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
   "nutrient_volatilization_rates.json": "Volatilization loss fractions by nutrient.",
   "nutrient_recovery_factors.json": "Fractional nutrient recovery after application.",
@@ -113,5 +111,7 @@
   "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
   "reference_et0.json": "Monthly reference ET0 values in mm/day",
   "electricity_rates.json": "Electricity cost per kWh by region.",
-  "water_costs.json": "Water cost per liter by region."
+  "water_costs.json": "Water cost per liter by region.",
+  "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
+  "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products"
 }
