@@ -68,8 +68,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             hass.config_entries.async_forward_entry_setup(entry, platform)
         )
 
-    # Initialize storage/data if needed
-    hass.data.setdefault(DOMAIN, {})
+    # Initialize storage/data if needed and store entry metadata
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+        "config_entry": entry,
+        "plant_id": entry.data.get("plant_id", entry.entry_id),
+        "data": dict(entry.data),
+    }
 
     # Register services
     hass.services.async_register(

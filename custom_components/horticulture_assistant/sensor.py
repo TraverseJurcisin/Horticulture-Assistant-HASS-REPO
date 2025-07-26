@@ -51,8 +51,8 @@ async def async_setup_entry(
 ) -> None:
     """Set up horticulture assistant sensors from a config entry."""
     _LOGGER.debug("Setting up horticulture_assistant sensors")
-    plant_id = entry.entry_id
-    plant_name = f"Plant {plant_id[:6]}"
+    plant_id = entry.data.get("plant_id", entry.entry_id)
+    plant_name = entry.data.get("plant_name", f"Plant {plant_id[:6]}")
 
     sensor_map = {
         "moisture_sensors": normalize_entities(

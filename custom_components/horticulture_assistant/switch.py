@@ -17,8 +17,8 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up switch entities for irrigation and fertigation control."""
-    plant_id = entry.entry_id
-    plant_name = f"Plant {plant_id[:6]}"
+    plant_id = entry.data.get("plant_id", entry.entry_id)
+    plant_name = entry.data.get("plant_name", f"Plant {plant_id[:6]}")
 
     entities = [
         IrrigationSwitch(hass, plant_name, plant_id),
