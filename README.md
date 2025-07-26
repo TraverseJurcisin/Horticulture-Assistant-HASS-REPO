@@ -195,6 +195,7 @@ Helper scripts live in the `scripts/` directory.
 - `export_all_growth_yield.py` aggregates growth and yield data from the `analytics/` directory.
 - `load_all_profiles` validates and aggregates every profile in the `plants/` directory.
 - `list_available_profiles` quickly lists profile IDs without loading them.
+- `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
 
 Example usage:
 ```bash
