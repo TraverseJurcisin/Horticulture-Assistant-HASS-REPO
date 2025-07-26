@@ -160,8 +160,10 @@ Important categories include:
 
 The WSDA fertilizer data now lives under `feature/wsda_refactored_sharded/index_sharded/` and
 `feature/wsda_refactored_sharded/detail/`. The index consists of multiple `.jsonl` shards while each
-product has a separate detail file located by the first two characters of its
-``product_id``. Recent updates expanded the dataset with dozens of General Hydroponics fertilizer and pesticide records.
+product has a separate detail file located by the first two characters of its ``product_id``.
+These records follow the **2025-07-v1** schema which adds fields like
+`non_plant_food_ingredients` and consolidates company information under `metadata`.
+Recent updates expanded the dataset with dozens of General Hydroponics fertilizer and pesticide records.
 
 Example usage:
 
