@@ -12,12 +12,14 @@ IPM_FILE = "ipm_guidelines.json"
 RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
+RELEASE_RATE_FILE = "beneficial_release_rates.json"
 
 
 
 # Datasets are cached by ``load_dataset`` so loaded once at import time
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
+_RELEASE_RATES: Dict[str, float] = load_dataset(RELEASE_RATE_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
@@ -75,6 +77,32 @@ def get_beneficial_insects(pest: str) -> List[str]:
 def recommend_beneficials(pests: Iterable[str]) -> Dict[str, List[str]]:
     """Return beneficial insect suggestions for observed ``pests``."""
     return {p: get_beneficial_insects(p) for p in pests}
+
+
+def get_beneficial_release_rate(insect: str) -> float | None:
+    """Return recommended release rate for a beneficial insect per m²."""
+
+    rate = _RELEASE_RATES.get(normalize_key(insect))
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def recommend_release_rates(pests: Iterable[str]) -> Dict[str, Dict[str, float]]:
+    """Return release rates for beneficials targeting the given pests."""
+
+    rec: Dict[str, Dict[str, float]] = {}
+    for pest in pests:
+        insects = get_beneficial_insects(pest)
+        rates: Dict[str, float] = {}
+        for insect in insects:
+            rate = get_beneficial_release_rate(insect)
+            if rate is not None:
+                rates[insect] = rate
+        if rates:
+            rec[pest] = rates
+    return rec
 
 
 def get_organic_controls(pest: str) -> List[str]:
@@ -170,6 +198,8 @@ __all__ = [
     "recommend_treatments",
     "get_beneficial_insects",
     "recommend_beneficials",
+    "get_beneficial_release_rate",
+    "recommend_release_rates",
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_prevention",
