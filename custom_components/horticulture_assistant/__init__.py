@@ -28,6 +28,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
 
 from .const import DOMAIN, PLATFORMS
 from .utils.plant_profile_loader import update_profile_sensors
+from .utils.path_utils import plants_path
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ async def update_sensors_service(hass: HomeAssistant, call: ServiceCall) -> None
         _LOGGER.error("update_sensors called with invalid data")
         return
 
-    base_dir = hass.config.path("plants")
+    base_dir = plants_path(hass)
     # Run potentially blocking disk IO in a thread to avoid slowing the event loop
     result = await asyncio.to_thread(
         update_profile_sensors, plant_id, sensors, base_dir

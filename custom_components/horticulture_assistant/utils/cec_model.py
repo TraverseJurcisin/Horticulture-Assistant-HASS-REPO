@@ -12,6 +12,7 @@ import logging
 from typing import Optional, Dict
 
 from . import media_inference  # use media_inference.infer_media_type for media-based CEC estimation
+from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -87,7 +88,7 @@ def log_measured_cec(plant_id: str, cec_value: float, include_warnings: bool = F
         # Include category label for reference
         result_data["category"] = category
     # Write to JSON records
-    output_path = os.path.join("data", "cec_records.json")
+    output_path = data_path(None, "cec_records.json")
     _write_cec_record(output_path, plant_id, result_data)
     _LOGGER.info("Logged measured CEC for plant %s: %.2f meq/100g", plant_id, cec_val)
     return result_data
@@ -135,7 +136,7 @@ def estimate_cec_from_media(plant_id: str, moisture_retention: float, ec_behavio
             result_data["warning"] = "High nutrient retention (CEC is high; monitor nutrient buildup)"
         result_data["category"] = category
     # Write to JSON records
-    output_path = os.path.join("data", "cec_records.json")
+    output_path = data_path(None, "cec_records.json")
     _write_cec_record(output_path, plant_id, result_data)
     _LOGGER.info("Estimated CEC for plant %s: %.2f meq/100g (media: %s, confidence: %.3f)", plant_id, estimated_cec, media_type, confidence)
     return result_data

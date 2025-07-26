@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from plant_engine.utils import load_json, save_json
+from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,7 +72,7 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
     
     # Load growth trend data (if available)
     growth_by_date = {}
-    growth_trends_file = Path("data") / "growth_trends.json"
+    growth_trends_file = Path(data_path(None, "growth_trends.json"))
     if growth_trends_file.is_file():
         growth_trends = load_json(growth_trends_file, default={})
         if isinstance(growth_trends, dict) and plant_id in growth_trends:

@@ -10,6 +10,8 @@ import json
 import logging
 from typing import Optional, Dict
 
+from custom_components.horticulture_assistant.utils.path_utils import data_path
+
 _LOGGER = logging.getLogger(__name__)
 
 # Define characteristic profiles for common media types.
@@ -83,7 +85,7 @@ def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate
     result_data = {"media_type": best_match, "confidence": confidence}
 
     # Prepare to save result to file
-    output_path = os.path.join("data", "media_type_estimates.json")
+    output_path = data_path(None, "media_type_estimates.json")
     if plant_id:
         # Store results in a dictionary per plant
         try:

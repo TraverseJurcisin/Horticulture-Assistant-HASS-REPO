@@ -13,6 +13,8 @@ import logging
 from datetime import datetime, date
 from typing import Dict, List, Optional, Union
 
+from custom_components.horticulture_assistant.utils.path_utils import data_path, config_path
+
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -35,7 +37,7 @@ class NutrientUseEfficiency:
         """
         # Determine the data file path
         if data_file is None:
-            data_file = hass.config.path("data", "nutrient_use.json") if hass is not None else os.path.join("data", "nutrient_use.json")
+            data_file = data_path(hass, "nutrient_use.json")
         self._data_file = data_file
         self._hass = hass
         # Internal logs
@@ -77,9 +79,9 @@ class NutrientUseEfficiency:
             self.application_log[pid] = total_nutrients
         # Load existing yield totals from yield tracker logs if available
         try:
-            yield_file = hass.config.path("data", "yield_logs.json") if hass is not None else os.path.join("data", "yield_logs.json")
+            yield_file = data_path(hass, "yield_logs.json")
         except Exception:
-            yield_file = os.path.join("data", "yield_logs.json")
+            yield_file = data_path(None, "yield_logs.json")
         try:
             with open(yield_file, "r", encoding="utf-8") as yf:
                 yield_data = json.load(yf)
@@ -132,7 +134,7 @@ class NutrientUseEfficiency:
         stage_name = stage
         if stage_name is None:
             # Try to retrieve current stage from plant registry if available
-            reg_path = self._hass.config.path("plant_registry.json") if self._hass is not None else "plant_registry.json"
+            reg_path = config_path(self._hass, "plant_registry.json") if self._hass is not None else "plant_registry.json"
             try:
                 with open(reg_path, "r", encoding="utf-8") as rf:
                     reg_data = json.load(rf)

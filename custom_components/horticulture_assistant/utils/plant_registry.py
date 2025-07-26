@@ -12,6 +12,7 @@ except ModuleNotFoundError:  # pragma: no cover - tests run without HA
     HomeAssistant = None  # type: ignore
 
 from .json_io import load_json
+from custom_components.horticulture_assistant.utils.path_utils import config_path
 
 PLANT_REGISTRY_FILE = "plant_registry.json"
 
@@ -27,7 +28,7 @@ def _load_registry(path: str) -> Dict[str, Any]:
 
 def get_plant_metadata(plant_id: str, hass: HomeAssistant | None = None) -> Dict[str, Any]:
     """Return metadata for ``plant_id`` from the plant registry."""
-    reg_path = hass.config.path(PLANT_REGISTRY_FILE) if hass else PLANT_REGISTRY_FILE
+    reg_path = config_path(hass, PLANT_REGISTRY_FILE)
     data = _load_registry(reg_path)
     return data.get(plant_id, {})
 

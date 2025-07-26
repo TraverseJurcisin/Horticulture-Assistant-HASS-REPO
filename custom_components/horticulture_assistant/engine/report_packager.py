@@ -4,6 +4,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
+
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_plant_profile,
 )
@@ -31,8 +36,20 @@ def _filter_last_24h(entries):
 
 
 def build_daily_report(
-    plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
+    plant_id: str,
+    base_path: str | None = None,
+    output_path: str | None = None,
 ) -> dict:
+    """Build and save a 24 hour summary report for ``plant_id``.
+
+    ``base_path`` and ``output_path`` default to the configured ``plants`` and
+    ``data/daily_reports`` directories, respectively.
+    """
+    if base_path is None:
+        base_path = plants_path(None)
+    if output_path is None:
+        output_path = data_path(None, "daily_reports")
+
     plant_dir = Path(base_path) / plant_id
     report = {
         "plant_id": plant_id,
