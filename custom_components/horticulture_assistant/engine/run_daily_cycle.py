@@ -14,6 +14,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
+
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile_by_id,
 )
@@ -110,13 +115,23 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
 
 
 def run_daily_cycle(
-    plant_id: str, base_path: str = "plants", output_path: str = "data/daily_reports"
+    plant_id: str,
+    base_path: str | None = None,
+    output_path: str | None = None,
 ) -> dict:
     """Return an aggregated 24h report for ``plant_id``.
 
     The report includes irrigation, nutrients, sensor averages, environment
     analysis and optional fertigation recommendations.
+
+    ``base_path`` and ``output_path`` default to the configured ``plants`` and
+    ``data/daily_reports`` directories, respectively.
     """
+
+    if base_path is None:
+        base_path = plants_path(None)
+    if output_path is None:
+        output_path = data_path(None, "daily_reports")
 
     plant_dir = Path(base_path) / plant_id
     report = DailyReport(plant_id)

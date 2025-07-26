@@ -1,11 +1,20 @@
 import logging
 from pathlib import Path
 
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
+
 from ..utils.json_io import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
-def load_ai_insight_context(plant_id: str, base_path: str = "plants", analytics_path: str = "analytics"):
+def load_ai_insight_context(
+    plant_id: str,
+    base_path: str | None = None,
+    analytics_path: str | None = None,
+) -> dict:
     """
     Load recent plant data and compile context for AI insights.
     
@@ -16,7 +25,11 @@ def load_ai_insight_context(plant_id: str, base_path: str = "plants", analytics_
       - growth_trend: list of recent growth metric values (last 7 data points, most recent last)
       - yield_cumulative: latest cumulative yield value for the plant (float or int)
     
-    The plant profile is expected at `{base_path}/{plant_id}.json` and growth/yield data at `{analytics_path}/{plant_id}_growth_yield.json`.
+    The plant profile is expected at `{base_path}/{plant_id}.json` and
+    growth/yield data at `{analytics_path}/{plant_id}_growth_yield.json`.
+
+    ``base_path`` and ``analytics_path`` default to the configured ``plants``
+    and ``data/analytics`` directories, respectively.
     Returns:
       A dictionary with the keys listed above, for use in downstream AI evaluation.
     """
@@ -29,6 +42,11 @@ def load_ai_insight_context(plant_id: str, base_path: str = "plants", analytics_
         "yield_cumulative": 0.0
     }
     
+    if base_path is None:
+        base_path = plants_path(None)
+    if analytics_path is None:
+        analytics_path = data_path(None, "analytics")
+
     # Construct file paths
     profile_path = Path(base_path) / f"{plant_id}.json"
     analytics_file = Path(analytics_path) / f"{plant_id}_growth_yield.json"

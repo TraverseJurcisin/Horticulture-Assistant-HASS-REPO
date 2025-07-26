@@ -4,6 +4,10 @@ import logging
 from datetime import datetime
 
 from ..engine import ai_model
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -63,7 +67,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
         auto_approve = not daily_report.get("ai_feedback_required", True)
     else:
         # Fallback: check plant profile for an auto_approve flag
-        profile_path = os.path.join("plants", f"{plant_id}.json")
+        profile_path = plants_path(None, f"{plant_id}.json")
         if os.path.exists(profile_path):
             try:
                 with open(profile_path, "r", encoding="utf-8") as pf:
@@ -88,7 +92,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
     # Apply or queue changes based on auto_approve
     if auto_approve:
         # Auto-approve: apply changes directly to the plant's profile
-        profile_path = os.path.join("plants", f"{plant_id}.json")
+        profile_path = plants_path(None, f"{plant_id}.json")
         if not os.path.exists(profile_path):
             _LOGGER.error("Plant profile not found at %s; cannot auto-apply thresholds", profile_path)
         else:
@@ -123,7 +127,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
                 "changes": changes
             }
             # Load existing pending approvals
-            pending_path = os.path.join("data", "pending_approvals.json")
+            pending_path = data_path(None, "pending_approvals.json")
             try:
                 if os.path.exists(pending_path):
                     with open(pending_path, "r", encoding="utf-8") as pf:

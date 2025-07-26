@@ -7,6 +7,8 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
+from custom_components.horticulture_assistant.utils.path_utils import plants_path
+
 from .helpers import iter_profiles, append_json_log
 
 # Global override: disable automation if False
@@ -70,17 +72,21 @@ class MoistureInfo:
     current: float
     threshold: float
 
-def run_automation_cycle(base_path: str = "plants") -> None:
+def run_automation_cycle(base_path: str | None = None) -> None:
     """
     Run one cycle of automated irrigation checks for all plant profiles.
-    Scans the plants directory for profile JSON files, checks soil moisture against thresholds,
-    and triggers irrigation actuators if needed.
+    Scans the plants directory for profile JSON files, checks soil moisture
+    against thresholds, and triggers irrigation actuators if needed.
+
+    ``base_path`` defaults to the configured ``plants`` directory.
     """
     # Global override check
     if not ENABLE_AUTOMATION:
         _LOGGER.info("Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping automation cycle.")
         return
 
+    if base_path is None:
+        base_path = plants_path(None)
     plants_dir = Path(base_path)
     if not plants_dir.is_dir():
         _LOGGER.error("Plants directory not found: %s", plants_dir)

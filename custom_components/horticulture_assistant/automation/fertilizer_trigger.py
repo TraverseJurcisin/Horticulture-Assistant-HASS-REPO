@@ -2,18 +2,25 @@ import json
 import logging
 from pathlib import Path
 
+from custom_components.horticulture_assistant.utils.path_utils import plants_path
+
 _LOGGER = logging.getLogger(__name__)
 
-def fertilizer_trigger(plant_id: str, base_path: str = "plants", sensor_data: dict = None) -> bool:
+def fertilizer_trigger(
+    plant_id: str, base_path: str | None = None, sensor_data: dict | None = None
+) -> bool:
     """
     Determine whether to trigger fertilization for a given plant based on nutrient levels and thresholds.
     Args:
         plant_id: Identifier of the plant profile.
-        base_path: Base directory path where plant profiles are stored (defaults to "plants").
+        base_path: Base directory path where plant profiles are stored. Defaults
+            to the configured ``plants`` directory.
         sensor_data: Dictionary of current sensor readings (keys like 'EC', 'leaf_nitrogen', etc).
     Returns:
         True if fertilization should be triggered, False otherwise.
     """
+    if base_path is None:
+        base_path = plants_path(None)
     if sensor_data is None:
         sensor_data = {}
     # Load plant profile from JSON file
