@@ -5,6 +5,9 @@ DOMAIN = "horticulture_assistant"
 VERSION = "0.1.0"
 ISSUE_URL = "https://github.com/TraverseJurcisin/Horticulture-Assistant/issues"
 
+# Service names
+SERVICE_UPDATE_SENSORS = "update_sensors"
+
 # Platform support
 PLATFORMS = ["sensor", "binary_sensor", "switch"]
 

@@ -54,10 +54,12 @@ def test_full_flow(monkeypatch):
     recorded = {}
     def fake_generate(data, hass=None):
         recorded.update(data)
-        return data.get("plant_name")
+        recorded["hass"] = hass
+        return "pid42"
     monkeypatch.setattr(config_flow, "generate_profile", fake_generate)
 
     flow = Flow()
+    flow.hass = object()
     result = asyncio.run(flow.async_step_user({"plant_name": "Tomato", "zone_id": "9"}))
     assert result["step_id"] == "details"
     result = asyncio.run(flow.async_step_details({"plant_type": "tomato"}))
@@ -66,4 +68,6 @@ def test_full_flow(monkeypatch):
     assert result["type"] == "create_entry"
     assert flow.created_entry["data"]["plant_name"] == "Tomato"
     assert recorded["plant_name"] == "Tomato"
+    assert recorded["hass"] is flow.hass
+    assert flow.created_entry["data"]["plant_id"] == "pid42"
     assert flow.created_entry["data"]["moisture_sensors"] == ["sensor.moist"]

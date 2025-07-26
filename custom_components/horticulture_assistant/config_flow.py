@@ -53,8 +53,13 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if key in user_input and isinstance(user_input[key], str):
                     user_input[key] = [s.strip() for s in user_input[key].split(",") if s.strip()]
             self._data.update(user_input)
-            generate_profile(self._data)
-            return self.async_create_entry(title=self._data["plant_name"], data=self._data)
+            plant_id = generate_profile(self._data, self.hass)
+            if plant_id:
+                self._data["plant_id"] = plant_id
+            return self.async_create_entry(
+                title=self._data["plant_name"],
+                data=self._data,
+            )
 
         data_schema = vol.Schema({
             vol.Optional("moisture_sensors"): TextSelector(),

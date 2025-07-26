@@ -26,7 +26,12 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
     ConfigEntry = object  # type: ignore
     ConfigType = dict
 
-from .const import DOMAIN, PLATFORMS
+from .const import DOMAIN, PLATFORMS, SERVICE_UPDATE_SENSORS
+from .utils.entry_helpers import (
+    get_entry_plant_info,
+    store_entry_data,
+    remove_entry_data,
+)
 from .utils.plant_profile_loader import update_profile_sensors
 
 
@@ -66,21 +71,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "Initializing Horticulture Assistant from entry: %s", entry.entry_id
     )
 
+    # Initialize storage/data so platforms can access it during their setup
+    store_entry_data(hass, entry)
+
     # Forward config entry to all supported platforms
     for platform in PLATFORMS:
         hass.async_create_task(
             hass.config_entries.async_forward_entry_setup(entry, platform)
         )
 
-    # Initialize storage/data if needed
-    hass.data.setdefault(DOMAIN, {})
-
-    # Register services
-    hass.services.async_register(
-        DOMAIN,
-        "update_sensors",
-        partial(update_sensors_service, hass),
-    )
+    # Register services once
+    if not hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
+        hass.services.async_register(
+            DOMAIN,
+            SERVICE_UPDATE_SENSORS,
+            partial(update_sensors_service, hass),
+        )
 
     return True
 
@@ -98,6 +104,9 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     if all(unload_results):
-        hass.data[DOMAIN].pop(entry.entry_id, None)
+        remove_entry_data(hass, entry.entry_id)
+        if not hass.data.get(DOMAIN):
+            if hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
+                hass.services.async_remove(DOMAIN, SERVICE_UPDATE_SENSORS)
 
     return all(unload_results)
