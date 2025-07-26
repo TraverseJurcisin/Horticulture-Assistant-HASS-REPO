@@ -1,0 +1,7 @@
+{
+  "default": {"min": 6, "max": 10},
+  "lettuce": {"min": 7, "max": 10},
+  "tomato": {"min": 6, "max": 9},
+  "cucumber": {"min": 6, "max": 9},
+  "basil": {"min": 6, "max": 10}
+}
