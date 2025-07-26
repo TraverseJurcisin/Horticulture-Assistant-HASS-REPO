@@ -112,6 +112,7 @@
   "reference_et0.json": "Monthly reference ET0 values in mm/day",
   "electricity_rates.json": "Electricity cost per kWh by region.",
   "water_costs.json": "Water cost per liter by region.",
+  "zone_nutrient_modifiers.json": "Multipliers for nutrient targets by climate zone",
   "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
   "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products"
 }

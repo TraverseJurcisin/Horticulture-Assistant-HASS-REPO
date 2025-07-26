@@ -15,6 +15,7 @@ DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
 WEIGHT_DATA_FILE = "nutrient_weights.json"
 TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
+ZONE_MODIFIER_FILE = "zone_nutrient_modifiers.json"
 
 
 # Ensure dataset cache respects overlay changes on reload
@@ -24,6 +25,7 @@ _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
 _WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
 _TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
+_ZONE_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(ZONE_MODIFIER_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -43,6 +45,8 @@ __all__ = [
     "recommend_ratio_adjustments",
     "get_tag_modifier",
     "apply_tag_modifiers",
+    "apply_zone_modifiers",
+    "get_zone_adjusted_levels",
     "get_ph_adjusted_levels",
     "calculate_deficiencies_with_ph",
     "get_all_ph_adjusted_levels",
@@ -433,5 +437,31 @@ def apply_tag_modifiers(
             except (TypeError, ValueError):
                 continue
     return adjusted
+
+
+def apply_zone_modifiers(targets: Mapping[str, float], zone: str) -> Dict[str, float]:
+    """Return ``targets`` adjusted by nutrient multipliers for ``zone``."""
+
+    mods = _ZONE_MODIFIERS.get(normalize_key(zone))
+    if not mods:
+        return {k: float(v) for k, v in targets.items()}
+    adjusted = {k: float(v) for k, v in targets.items()}
+    for nutrient, factor in mods.items():
+        if nutrient not in adjusted:
+            continue
+        try:
+            adjusted[nutrient] = round(adjusted[nutrient] * float(factor), 2)
+        except (TypeError, ValueError):
+            continue
+    return adjusted
+
+
+def get_zone_adjusted_levels(plant_type: str, stage: str, zone: str) -> Dict[str, float]:
+    """Return recommended nutrient levels adjusted for ``zone``."""
+
+    targets = get_recommended_levels(plant_type, stage)
+    if not targets:
+        return {}
+    return apply_zone_modifiers(targets, zone)
 
 

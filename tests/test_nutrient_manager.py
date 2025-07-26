@@ -13,6 +13,8 @@ from plant_engine.nutrient_manager import (
     get_stage_ratio,
     score_nutrient_levels,
     score_nutrient_series,
+    apply_zone_modifiers,
+    get_zone_adjusted_levels,
 )
 
 
@@ -181,3 +183,20 @@ def test_calculate_all_deficiencies_with_ph():
     deficits = calculate_all_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
     assert deficits["P"] > 0
     assert deficits["Fe"] > 0
+
+
+def test_apply_zone_modifiers():
+    from plant_engine.nutrient_manager import apply_zone_modifiers
+
+    base = {"N": 100, "P": 50, "K": 80}
+    adjusted = apply_zone_modifiers(base, "tropical")
+    assert adjusted["N"] == 110.0
+    assert adjusted["K"] == 96.0
+
+
+def test_get_zone_adjusted_levels():
+    from plant_engine.nutrient_manager import get_zone_adjusted_levels
+
+    levels = get_zone_adjusted_levels("tomato", "fruiting", "arid")
+    assert levels["P"] > 0
+    assert levels["N"] < get_recommended_levels("tomato", "fruiting")["N"]

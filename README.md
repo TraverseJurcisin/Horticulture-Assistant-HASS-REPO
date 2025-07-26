@@ -83,6 +83,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Nutrient deficiency severity and treatment recommendations
 - Daily report files summarizing environment and nutrient targets
 - Infiltration-aware irrigation burst scheduling
+- Climate zone-based nutrient adjustments
 
 ---
 
@@ -156,6 +157,7 @@ The `data/` directory contains many reference datasets. Use `dataset_catalog.jso
 Important categories include:
 - **Environment guidelines** – optimal temperature, humidity, light and CO₂ ranges
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
+- **Zone nutrient modifiers** – adjust nutrient targets for regional climate
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
