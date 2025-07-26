@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-import json
 import logging
 from pathlib import Path
 from functools import lru_cache
+
+from .json_io import load_json, save_json
 
 # Attempt to import PyYAML for optional YAML support. Tests fall back to a very
 # small parser that understands the limited subset of YAML used in fixtures.
@@ -33,10 +34,6 @@ def load_profile_from_path(path: str | Path) -> dict:
         _LOGGER.error("Profile file not found: %s", path_obj)
         return {}
     ext = path_obj.suffix.lower()
-
-    def _load_json(fp: Path) -> dict:
-        with open(fp, "r", encoding="utf-8") as f:
-            return json.load(f) or {}
 
     def _basic_yaml_parse(content: str) -> dict:
         """Parse a tiny subset of YAML used in tests when PyYAML is missing."""
@@ -76,7 +73,7 @@ def load_profile_from_path(path: str | Path) -> dict:
 
     try:
         if ext == ".json":
-            data = _load_json(path_obj)
+            data = load_json(str(path_obj))
         elif ext in {".yaml", ".yml"}:
             data = _load_yaml(path_obj)
         else:
@@ -198,8 +195,7 @@ def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
 def save_profile_to_path(profile: dict, path: str | Path) -> bool:
     """Write ``profile`` to ``path`` as JSON."""
     try:
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(profile, f, indent=2)
+        save_json(str(path), profile)
     except Exception as exc:  # pragma: no cover - unexpected file errors
         _LOGGER.error("Failed to write profile %s: %s", path, exc)
         return False
