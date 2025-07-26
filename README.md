@@ -17,6 +17,7 @@ Horticulture Assistant integrates per-plant automation and crop monitoring into 
 - [Reference Data](#reference-data)
 - [Command Line Utilities](#command-line-utilities)
 - [Advanced Usage](#advanced-usage)
+- [Garden Summary Lovelace Card](#garden-summary-lovelace-card)
 - [Repository Structure](#repository-structure)
 - [Troubleshooting](#troubleshooting)
 - [Running Tests](#running-tests)
@@ -209,6 +210,58 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `recommend_nutrient_mix` computes fertilizer grams needed to hit N/P/K targets and can include micronutrients. `recommend_nutrient_mix_with_cost` returns the same schedule with estimated cost.
 - `get_pruning_instructions` provides stage-specific pruning tips from `pruning_guidelines.json`.
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
+
+### Garden Summary Lovelace Card
+Add `garden-summary-card.js` as a Lovelace resource (HACS places it under
+`/hacsfiles/horticulture_assistant/dashboard/`) to quickly see the status of all
+plants and highlight any requiring attention.
+
+```yaml
+resources:
+  - url: /hacsfiles/horticulture_assistant/dashboard/garden-summary-card.js
+    type: module
+```
+
+Example card configuration:
+
+```yaml
+type: custom:garden-summary-card
+title: Garden Overview
+# optional card-wide thresholds
+depletion_threshold: 80
+bad_quality_state: poor
+plants:
+  - id: citrus_backyard_spring2025
+    name: Backyard Citrus
+    moisture_entity: sensor.citrus_moisture
+    quality_entity: sensor.citrus_env_quality
+    depletion_entity: sensor.citrus_depletion
+    # plant-specific overrides
+    depletion_threshold: 75
+    bad_quality_state: critical
+  - id: basil_kitchen_2025
+    name: Kitchen Basil
+    # uses default sensor names
+```
+
+The Priority column displays a check or alert icon. Plants with a root zone
+depletion above 80% or an environment quality rated `poor` show the alert
+icon. The card reads the following
+sensors for each `plant_id`:
+
+- `sensor.<plant_id>_smoothed_moisture`
+- `sensor.<plant_id>_env_quality`
+- `sensor.<plant_id>_depletion`
+
+Sensors can be overridden per plant using `moisture_entity`, `quality_entity`
+and `depletion_entity` keys. When omitted, the default entity IDs above are
+assumed. Each plant entry may also override `depletion_threshold` and
+`bad_quality_state` to fine tune the warning criteria.
+
+Two optional card-level settings control the priority criteria:
+
+- `depletion_threshold` &ndash; numeric percentage for the depletion warning (default `80`)
+- `bad_quality_state` &ndash; environment quality state that triggers a warning (default `poor`)
 
 ---
 
