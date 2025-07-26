@@ -42,7 +42,11 @@ async def update_sensors_service(hass: HomeAssistant, call: ServiceCall) -> None
         return
 
     base_dir = hass.config.path("plants")
-    if update_profile_sensors(plant_id, sensors, base_dir):
+    # Run potentially blocking disk IO in a thread to avoid slowing the event loop
+    result = await asyncio.to_thread(
+        update_profile_sensors, plant_id, sensors, base_dir
+    )
+    if result:
         _LOGGER.info("Updated sensors for profile %s", plant_id)
     else:
         _LOGGER.error("Failed to update sensors for profile %s", plant_id)
