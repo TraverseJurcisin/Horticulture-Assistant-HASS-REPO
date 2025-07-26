@@ -1,16 +1,21 @@
-import os
+"""Helpers for loading WSDA fertilizer dataset shards."""
+
+from __future__ import annotations
+
 import json
+import os
 from pathlib import Path
-from typing import Iterator, Dict, Any
+from typing import Dict, Iterator, Any
 
 import pandas as pd
 
-WSDA_INDEX_DIR = Path(
-    os.getenv("WSDA_INDEX_DIR", "feature/wsda_refactored_sharded/index_sharded")
+from .utils import get_data_dir
+
+WSDA_DATA_DIR = Path(
+    os.getenv("WSDA_DATA_DIR", get_data_dir() / "wsda_refactored_sharded")
 )
-WSDA_DETAIL_DIR = Path(
-    os.getenv("WSDA_DETAIL_DIR", "feature/wsda_refactored_sharded/detail")
-)
+WSDA_INDEX_DIR = Path(os.getenv("WSDA_INDEX_DIR", WSDA_DATA_DIR / "index_sharded"))
+WSDA_DETAIL_DIR = Path(os.getenv("WSDA_DETAIL_DIR", WSDA_DATA_DIR / "detail"))
 
 
 def stream_index() -> Iterator[Dict[str, Any]]:

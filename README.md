@@ -159,9 +159,11 @@ Important categories include:
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
 
-The WSDA fertilizer data now lives under `feature/wsda_refactored_sharded/index_sharded/` and
-`feature/wsda_refactored_sharded/detail/`. The index consists of multiple `.jsonl` shards while each
-product has a separate detail file located by the first two characters of its ``product_id``.
+The WSDA fertilizer dataset resides under `feature/wsda_refactored_sharded/` which contains an
+`index_sharded/` directory of `.jsonl` shards and a `detail/` directory of per-product records.
+You can override the location by setting ``WSDA_DATA_DIR`` or the more specific ``WSDA_INDEX_DIR`` and
+``WSDA_DETAIL_DIR`` environment variables. Each product's detail file is stored in a subdirectory
+named after the first two characters of its ``product_id``.
 These records follow the **2025-07-v1** schema which adds fields like
 `non_plant_food_ingredients` and consolidates company information under `metadata`.
 Recent updates expanded the dataset with dozens of General Hydroponics fertilizer and pesticide records.
