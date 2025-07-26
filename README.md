@@ -83,6 +83,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Nutrient deficiency severity and treatment recommendations
 - Daily report files summarizing environment and nutrient targets
 - Infiltration-aware irrigation burst scheduling
+- Risk-adjusted pest monitoring summaries and scheduling
 
 ---
 

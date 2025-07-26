@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import date
+from datetime import date, timedelta
 from typing import Dict, Mapping
 
 from . import environment_manager
@@ -48,6 +48,7 @@ __all__ = [
     "next_monitor_date",
     "generate_monitoring_schedule",
     "PestReport",
+    "summarize_pest_management",
 ]
 
 
@@ -277,4 +278,52 @@ def generate_pest_report(
         severity_actions=severity_actions,
     )
     return report.as_dict()
+
+
+def summarize_pest_management(
+    plant_type: str,
+    stage: str | None,
+    observations: Mapping[str, int],
+    environment: Mapping[str, float] | None = None,
+    last_date: date | None = None,
+) -> Dict[str, object]:
+    """Return consolidated pest status and recommendations.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop identifier for dataset lookup.
+    stage : str, optional
+        Growth stage for monitoring interval calculations.
+    observations : Mapping[str, int]
+        Current pest counts from scouting observations.
+    environment : Mapping[str, float], optional
+        Environmental readings used to estimate pest risk.
+    last_date : date, optional
+        Date of the previous scouting event for scheduling the next one.
+    """
+
+    report = generate_pest_report(plant_type, observations)
+
+    risk: Dict[str, str] | None = None
+    next_date_val: date | None = None
+    interval: int | None = None
+    if environment is not None:
+        risk = estimate_adjusted_pest_risk(plant_type, environment)
+        if last_date is not None:
+            interval = risk_adjusted_monitor_interval(
+                plant_type, stage, environment
+            )
+            if interval is not None:
+                next_date_val = last_date + timedelta(days=interval)
+
+    data = {
+        **report,
+        "risk": risk or {},
+    }
+    if interval is not None:
+        data["monitor_interval_days"] = interval
+    if next_date_val is not None:
+        data["next_monitor_date"] = next_date_val
+    return data
 
