@@ -54,4 +54,5 @@ def test_setup_entry(tmp_path: Path):
     assert entry.entry_id in hass.data[DOMAIN]
     stored = hass.data[DOMAIN][entry.entry_id]
     assert stored["plant_id"] == "tomato1"
+    assert stored["plant_name"] == "Tomato"
     assert (DOMAIN, "update_sensors") in hass.services.registered

@@ -69,9 +69,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     # Initialize storage/data if needed and store entry metadata
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+    data = hass.data.setdefault(DOMAIN, {})
+    data[entry.entry_id] = {
         "config_entry": entry,
         "plant_id": entry.data.get("plant_id", entry.entry_id),
+        "plant_name": entry.data.get("plant_name", f"Plant {entry.entry_id[:6]}"),
         "data": dict(entry.data),
     }
 
