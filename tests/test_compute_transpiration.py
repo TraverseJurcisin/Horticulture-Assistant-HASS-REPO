@@ -70,6 +70,13 @@ def test_compute_transpiration_missing_env_defaults():
     assert result["transpiration_ml_day"] > 0
 
 
+def test_compute_transpiration_auto_canopy():
+    profile = {"plant_type": "strawberry", "stage": "flowering"}
+    env = {"temp_c": 24, "rh_pct": 60, "par_w_m2": 420}
+    result = compute_transpiration(profile, env)
+    assert result["transpiration_ml_day"] > 0
+
+
 def test_adjust_crop_coefficient():
     from plant_engine.compute_transpiration import adjust_crop_coefficient
 

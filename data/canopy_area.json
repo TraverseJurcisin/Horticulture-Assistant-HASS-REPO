@@ -1,0 +1,12 @@
+{
+  "lettuce": {
+    "seedling": 0.05,
+    "vegetative": 0.1,
+    "flowering": 0.15
+  },
+  "strawberry": {
+    "seedling": 0.07,
+    "vegetative": 0.15,
+    "flowering": 0.25
+  }
+}
