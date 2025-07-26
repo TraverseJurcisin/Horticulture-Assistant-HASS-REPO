@@ -20,10 +20,15 @@ SERVICE_UPDATE_SENSORS = module.SERVICE_UPDATE_SENSORS
 class DummyServices:
     def __init__(self):
         self.registered = []
+        self.removed = []
     def async_register(self, domain, name, func):
         self.registered.append((domain, name))
     def has_service(self, domain, name):
-        return (domain, name) in self.registered
+        return (domain, name) in self.registered and (domain, name) not in self.removed
+    def async_remove(self, domain, name):
+        if (domain, name) in self.registered:
+            self.registered.remove((domain, name))
+        self.removed.append((domain, name))
 
 class DummyConfigEntries:
     def __init__(self, hass):
@@ -86,3 +91,12 @@ def test_unload_entry(tmp_path: Path):
     assert entry.entry_id in hass.data[DOMAIN]
     asyncio.run(module.async_unload_entry(hass, entry))
     assert entry.entry_id not in hass.data[DOMAIN]
+
+
+def test_service_removed_on_last_unload(tmp_path: Path):
+    hass = DummyHass(tmp_path)
+    entry = DummyEntry({"plant_name": "Tomato", "plant_id": "tomato1"})
+    asyncio.run(module.async_setup_entry(hass, entry))
+    assert hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS)
+    asyncio.run(module.async_unload_entry(hass, entry))
+    assert (DOMAIN, SERVICE_UPDATE_SENSORS) in hass.services.removed

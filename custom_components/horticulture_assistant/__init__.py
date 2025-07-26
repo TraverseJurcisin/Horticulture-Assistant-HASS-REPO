@@ -101,5 +101,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if all(unload_results):
         remove_entry_data(hass, entry.entry_id)
+        if not hass.data.get(DOMAIN):
+            if hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
+                hass.services.async_remove(DOMAIN, SERVICE_UPDATE_SENSORS)
 
     return all(unload_results)
