@@ -39,3 +39,11 @@ def remove_entry_data(hass: HomeAssistant, entry_id: str) -> None:
     domain_data = hass.data.get(DOMAIN)
     if domain_data is not None:
         domain_data.pop(entry_id, None)
+
+
+def get_entry_data(
+    hass: HomeAssistant, entry_or_id: ConfigEntry | str
+) -> dict | None:
+    """Return stored entry metadata or ``None`` if missing."""
+    entry_id = getattr(entry_or_id, "entry_id", entry_or_id)
+    return hass.data.get(DOMAIN, {}).get(entry_id)

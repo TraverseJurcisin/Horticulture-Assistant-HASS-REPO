@@ -4,6 +4,7 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     get_entry_plant_info,
     store_entry_data,
     remove_entry_data,
+    get_entry_data,
 )
 
 class DummyEntry(SimpleNamespace):
@@ -35,5 +36,8 @@ def test_store_and_remove_entry_data(tmp_path):
     assert hass.data
     assert hass.data["horticulture_assistant"]["e1"] is stored
     assert stored["profile_dir"] == Path(tmp_path / "plants/e1")
+    assert get_entry_data(hass, "e1") is stored
+    assert get_entry_data(hass, entry) is stored
     remove_entry_data(hass, "e1")
     assert "e1" not in hass.data["horticulture_assistant"]
+    assert get_entry_data(hass, "e1") is None

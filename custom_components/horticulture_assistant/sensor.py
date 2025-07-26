@@ -22,7 +22,7 @@ from .utils.state_helpers import (
     normalize_entities,
     aggregate_sensor_values,
 )
-from .utils.entry_helpers import get_entry_plant_info
+from .utils.entry_helpers import get_entry_data, store_entry_data
 
 from plant_engine.environment_manager import (
     score_environment,
@@ -52,7 +52,9 @@ async def async_setup_entry(
 ) -> None:
     """Set up horticulture assistant sensors from a config entry."""
     _LOGGER.debug("Setting up horticulture_assistant sensors")
-    plant_id, plant_name = get_entry_plant_info(entry)
+    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
+    plant_id = stored["plant_id"]
+    plant_name = stored["plant_name"]
 
     sensor_map = {
         "moisture_sensors": normalize_entities(
