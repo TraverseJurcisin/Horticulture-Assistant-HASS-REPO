@@ -5,6 +5,7 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     store_entry_data,
     remove_entry_data,
     get_entry_data,
+    get_entry_data_by_plant_id,
 )
 
 class DummyEntry(SimpleNamespace):
@@ -38,6 +39,15 @@ def test_store_and_remove_entry_data(tmp_path):
     assert stored["profile_dir"] == Path(tmp_path / "plants/e1")
     assert get_entry_data(hass, "e1") is stored
     assert get_entry_data(hass, entry) is stored
+    assert get_entry_data_by_plant_id(hass, "e1") is stored
     remove_entry_data(hass, "e1")
-    assert "e1" not in hass.data["horticulture_assistant"]
+    assert "horticulture_assistant" not in hass.data or "e1" not in hass.data["horticulture_assistant"]
     assert get_entry_data(hass, "e1") is None
+    assert get_entry_data_by_plant_id(hass, "e1") is None
+
+
+def test_get_entry_data_by_plant_id(tmp_path):
+    hass = DummyHass(tmp_path)
+    entry = DummyEntry(entry_id="e99", data={"plant_id": "pid99", "plant_name": "Pepper"})
+    stored = store_entry_data(hass, entry)
+    assert get_entry_data_by_plant_id(hass, "pid99") is stored

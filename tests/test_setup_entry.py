@@ -72,6 +72,7 @@ def test_setup_entry(tmp_path: Path):
     assert stored["plant_id"] == "tomato1"
     assert stored["plant_name"] == "Tomato"
     assert stored["profile_dir"] == Path(tmp_path / "plants/tomato1")
+    assert hass.data[DOMAIN]["by_plant_id"]["tomato1"] is stored
     assert (DOMAIN, SERVICE_UPDATE_SENSORS) in hass.services.registered
 
 
@@ -90,7 +91,9 @@ def test_unload_entry(tmp_path: Path):
     asyncio.run(module.async_setup_entry(hass, entry))
     assert entry.entry_id in hass.data[DOMAIN]
     asyncio.run(module.async_unload_entry(hass, entry))
-    assert entry.entry_id not in hass.data[DOMAIN]
+    assert DOMAIN not in hass.data or entry.entry_id not in hass.data[DOMAIN]
+    domain_data = hass.data.get(DOMAIN, {})
+    assert "tomato1" not in domain_data.get("by_plant_id", {})
 
 
 def test_service_removed_on_last_unload(tmp_path: Path):
