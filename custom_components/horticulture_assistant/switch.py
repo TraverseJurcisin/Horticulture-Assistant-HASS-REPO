@@ -41,14 +41,20 @@ class HorticultureBaseSwitch(HorticultureBaseEntity, SwitchEntity):
         """Turn the switch on."""
         if not self._attr_is_on:
             self._attr_is_on = True
-            self.async_write_ha_state()
+            try:
+                self.async_write_ha_state()
+            except Exception:  # Ignore errors if entity state can't be written
+                pass
             _LOGGER.info("Turned ON %s for %s", self.name, self._plant_name)
 
     async def async_turn_off(self, **kwargs) -> None:
         """Turn the switch off."""
         if self._attr_is_on:
             self._attr_is_on = False
-            self.async_write_ha_state()
+            try:
+                self.async_write_ha_state()
+            except Exception:
+                pass
             _LOGGER.info("Turned OFF %s for %s", self.name, self._plant_name)
 
 class IrrigationSwitch(HorticultureBaseSwitch):
