@@ -31,6 +31,7 @@
   "leaf_tissue_score_weights.json": "Scoring weights for leaf tissue nutrients.",
   "leaf_temperature_guidelines.json": "Recommended leaf temperature ranges for optimal photosynthesis.",
   "root_depth_guidelines.json": "Typical maximum root depth per crop.",
+  "root_growth_parameters.json": "Logistic growth curve parameters for root depth modeling.",
   "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
   "beneficial_insects.json": "Natural predators for common greenhouse pests.",
   "bioinoculant_guidelines.json": "Recommended microbial inoculants for improved nutrient uptake.",
