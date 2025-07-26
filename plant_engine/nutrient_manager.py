@@ -40,6 +40,7 @@ __all__ = [
     "get_nutrient_weight",
     "score_nutrient_levels",
     "score_nutrient_series",
+    "calculate_deficiency_index",
     "recommend_ratio_adjustments",
     "get_tag_modifier",
     "apply_tag_modifiers",
@@ -214,6 +215,41 @@ def score_nutrient_series(
     if not scores:
         return 0.0
     return round(sum(scores) / len(scores), 1)
+
+
+def calculate_deficiency_index(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> float:
+    """Return a weighted 0-100 index of overall nutrient deficiency severity.
+
+    A value of ``0`` indicates all nutrients meet or exceed the recommended
+    levels while ``100`` means every nutrient is completely absent. Nutrient
+    importance weights from :data:`nutrient_weights.json` are applied so more
+    critical elements have a greater influence on the index.
+    """
+
+    targets = get_all_recommended_levels(plant_type, stage)
+    if not targets:
+        return 0.0
+
+    total_weight = 0.0
+    deficit_score = 0.0
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0) / target
+        weight = get_nutrient_weight(nutrient)
+        deficit_score += weight * deficit
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((deficit_score / total_weight) * 100, 1)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
