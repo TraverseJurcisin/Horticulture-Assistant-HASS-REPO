@@ -6,6 +6,11 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
 from typing import Any, Dict, Tuple
 
 from homeassistant.core import HomeAssistant
@@ -67,8 +72,8 @@ def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
 
 def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
     """Apply approved threshold changes from pending approvals to plant profiles."""
-    base_data_dir = Path(hass.config.path("data")) if hass else Path("data")
-    base_plants_dir = Path(hass.config.path("plants")) if hass else Path("plants")
+    base_data_dir = Path(data_path(hass))
+    base_plants_dir = Path(plants_path(hass))
     pending_file_path = base_data_dir / "pending_approvals.json"
     pending_dict, pending_data = _load_pending(pending_file_path)
     if not pending_dict:

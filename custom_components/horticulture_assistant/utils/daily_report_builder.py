@@ -16,6 +16,11 @@ from .state_helpers import (
     aggregate_sensor_values,
 )
 from .json_io import load_json, save_json
+from custom_components.horticulture_assistant.utils.path_utils import (
+    config_path,
+    plants_path,
+    data_path,
+)
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile,
@@ -56,7 +61,7 @@ def _resolve_plant_type(hass: HomeAssistant, plant_id: str, profile: dict) -> Op
     ptype = profile.get("general", {}).get("plant_type")
     if ptype:
         return str(ptype)
-    reg_path = hass.config.path("plant_registry.json")
+    reg_path = config_path(hass, "plant_registry.json")
     try:
         reg = load_json(reg_path)
         return reg.get(plant_id, {}).get("plant_type")
@@ -72,7 +77,7 @@ def _report_path(base: Path, plant_id: str) -> Path:
 def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     """Collect current sensor data and profile info for a plant and compile a daily report."""
     # Load plant profile (JSON or YAML) by plant_id
-    profile = load_profile(plant_id=plant_id, base_dir=hass.config.path("plants"))
+    profile = load_profile(plant_id=plant_id, base_dir=plants_path(hass))
     if not profile:
         _LOGGER.error("Plant profile for '%s' not found or empty.", plant_id)
         return {}
@@ -149,7 +154,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
     )
 
     # Save report to disk (under data/daily_reports/<plant_id>-YYYYMMDD.json)
-    report_dir = hass.config.path("data", "daily_reports")
+    report_dir = data_path(hass, "daily_reports")
     os.makedirs(report_dir, exist_ok=True)
     date_str = datetime.now().strftime("%Y%m%d")
     file_path = os.path.join(report_dir, f"{plant_id}-{date_str}.json")

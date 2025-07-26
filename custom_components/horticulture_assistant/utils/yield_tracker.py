@@ -5,6 +5,8 @@ import os
 import logging
 from datetime import datetime, date
 from typing import List, Dict, Optional, Union
+
+from custom_components.horticulture_assistant.utils.path_utils import data_path
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -22,7 +24,7 @@ class YieldTracker:
         """
         # Determine the data file path
         if data_file is None:
-            data_file = hass.config.path("data", "yield_logs.json") if hass is not None else os.path.join("data", "yield_logs.json")
+            data_file = data_path(hass, "yield_logs.json")
         self._data_file = data_file
         self._hass = hass
         self._logs: Dict[str, List[Dict]] = {}
