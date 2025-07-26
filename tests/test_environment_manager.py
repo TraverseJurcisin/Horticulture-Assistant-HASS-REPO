@@ -658,6 +658,16 @@ def test_humidity_actions():
     assert em.recommend_humidity_action(60, "citrus") is None
 
 
+def test_temperature_actions():
+    from plant_engine import environment_manager as em
+
+    assert em.get_temperature_action("cold").startswith("Increase")
+    assert em.get_temperature_action("HOT").startswith("Provide")
+    assert em.recommend_temperature_action(5, 70, "citrus").startswith("Increase")
+    assert em.recommend_temperature_action(42, 70, "citrus").startswith("Provide")
+    assert em.recommend_temperature_action(25, 50, "citrus") is None
+
+
 def test_evaluate_ph_stress():
     assert evaluate_ph_stress(5.0, "citrus") == "low"
     assert evaluate_ph_stress(7.0, "citrus") == "high"

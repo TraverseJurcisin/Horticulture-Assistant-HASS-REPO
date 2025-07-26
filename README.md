@@ -155,6 +155,7 @@ The `data/` directory contains many reference datasets. Use `dataset_catalog.jso
 
 Important categories include:
 - **Environment guidelines** – optimal temperature, humidity, light and CO₂ ranges
+- **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
