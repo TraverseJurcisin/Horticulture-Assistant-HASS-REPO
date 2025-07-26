@@ -192,6 +192,7 @@ Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables 
 Helper scripts live in the `scripts/` directory.
 
 - `generate_plant_sensors.py` converts daily reports into Home Assistant template sensor YAML.
+- `generate_guideline_summary.py` outputs consolidated environment, nutrient and pest guidance for a crop stage.
 - `wsda_search.py` queries the bundled WSDA fertilizer database.
 - `log_runoff_ec.py` records manual runoff EC measurements for calibration.
 - `train_ec_model.py` generates EC estimator coefficients from a CSV dataset. Use

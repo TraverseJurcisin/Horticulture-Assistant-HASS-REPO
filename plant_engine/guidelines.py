@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict, field as dataclass_field
 from typing import Any, Dict, List, Optional
 
+from functools import lru_cache
 from . import (
     environment_manager,
     nutrient_manager,
@@ -49,6 +50,7 @@ class GuidelineSummary:
         return asdict(self)
 
 
+@lru_cache(maxsize=None)
 def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str, Any]:
     """Return combined environment, nutrient and pest guidelines.
 
