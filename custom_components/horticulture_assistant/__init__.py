@@ -79,12 +79,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "data": dict(entry.data),
     }
 
-    # Register services
-    hass.services.async_register(
-        DOMAIN,
-        "update_sensors",
-        partial(update_sensors_service, hass),
-    )
+    # Register services once
+    if not hass.services.has_service(DOMAIN, "update_sensors"):
+        hass.services.async_register(
+            DOMAIN,
+            "update_sensors",
+            partial(update_sensors_service, hass),
+        )
 
     return True
 

@@ -21,6 +21,8 @@ class DummyServices:
         self.registered = []
     def async_register(self, domain, name, func):
         self.registered.append((domain, name))
+    def has_service(self, domain, name):
+        return (domain, name) in self.registered
 
 class DummyConfigEntries:
     def __init__(self):
@@ -59,6 +61,15 @@ def test_setup_entry(tmp_path: Path):
     assert stored["plant_id"] == "tomato1"
     assert stored["plant_name"] == "Tomato"
     assert (DOMAIN, "update_sensors") in hass.services.registered
+
+
+def test_service_registered_once(tmp_path: Path):
+    hass = DummyHass(tmp_path)
+    entry1 = DummyEntry({"plant_name": "Tomato", "plant_id": "tomato1"})
+    entry2 = DummyEntry({"plant_name": "Basil", "plant_id": "basil1"})
+    asyncio.run(module.async_setup_entry(hass, entry1))
+    asyncio.run(module.async_setup_entry(hass, entry2))
+    assert hass.services.registered.count((DOMAIN, "update_sensors")) == 1
 
 
 def test_unload_entry(tmp_path: Path):
