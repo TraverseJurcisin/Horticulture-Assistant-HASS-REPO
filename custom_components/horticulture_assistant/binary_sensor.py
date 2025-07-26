@@ -12,6 +12,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN, CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
+from .utils.entry_helpers import get_entry_plant_info
 from .entity_base import HorticultureBaseEntity
 from .utils.state_helpers import normalize_entities
 
@@ -24,8 +25,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up horticulture assistant binary sensors from a config entry."""
     _LOGGER.debug("Setting up horticulture_assistant binary sensors")
-    plant_id = entry.data.get("plant_id", entry.entry_id)
-    plant_name = entry.data.get("plant_name", f"Plant {plant_id[:6]}")
+    plant_id, plant_name = get_entry_plant_info(entry)
 
     sensor_map = {
         "moisture_sensors": normalize_entities(

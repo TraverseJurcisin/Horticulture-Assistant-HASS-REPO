@@ -27,6 +27,9 @@ class DummyConfigEntries:
         self.forwarded = []
     def async_forward_entry_setup(self, entry, platform):
         self.forwarded.append((entry, platform))
+    async def async_forward_entry_unload(self, entry, platform):
+        self.forwarded.append((entry, f"unload_{platform}"))
+        return True
 
 class DummyConfig:
     def __init__(self, base: Path):
@@ -56,3 +59,12 @@ def test_setup_entry(tmp_path: Path):
     assert stored["plant_id"] == "tomato1"
     assert stored["plant_name"] == "Tomato"
     assert (DOMAIN, "update_sensors") in hass.services.registered
+
+
+def test_unload_entry(tmp_path: Path):
+    hass = DummyHass(tmp_path)
+    entry = DummyEntry({"plant_name": "Tomato", "plant_id": "tomato1"})
+    asyncio.run(module.async_setup_entry(hass, entry))
+    assert entry.entry_id in hass.data[DOMAIN]
+    asyncio.run(module.async_unload_entry(hass, entry))
+    assert entry.entry_id not in hass.data[DOMAIN]

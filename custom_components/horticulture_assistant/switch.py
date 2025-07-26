@@ -8,6 +8,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
 from .entity_base import HorticultureBaseEntity
+from .utils.entry_helpers import get_entry_plant_info
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,8 +18,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up switch entities for irrigation and fertigation control."""
-    plant_id = entry.data.get("plant_id", entry.entry_id)
-    plant_name = entry.data.get("plant_name", f"Plant {plant_id[:6]}")
+    plant_id, plant_name = get_entry_plant_info(entry)
 
     entities = [
         IrrigationSwitch(hass, plant_name, plant_id),

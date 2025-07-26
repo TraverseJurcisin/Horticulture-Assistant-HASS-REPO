@@ -27,6 +27,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
     ConfigType = dict
 
 from .const import DOMAIN, PLATFORMS
+from .utils.entry_helpers import get_entry_plant_info
 from .utils.plant_profile_loader import update_profile_sensors
 
 
@@ -70,10 +71,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # Initialize storage/data if needed and store entry metadata
     data = hass.data.setdefault(DOMAIN, {})
+    plant_id, plant_name = get_entry_plant_info(entry)
     data[entry.entry_id] = {
         "config_entry": entry,
-        "plant_id": entry.data.get("plant_id", entry.entry_id),
-        "plant_name": entry.data.get("plant_name", f"Plant {entry.entry_id[:6]}"),
+        "plant_id": plant_id,
+        "plant_name": plant_name,
         "data": dict(entry.data),
     }
 
