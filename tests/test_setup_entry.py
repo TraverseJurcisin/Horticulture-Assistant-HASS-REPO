@@ -26,11 +26,16 @@ class DummyServices:
         return (domain, name) in self.registered
 
 class DummyConfigEntries:
-    def __init__(self):
+    def __init__(self, hass):
         self.forwarded = []
+        self._hass = hass
+
     def async_forward_entry_setup(self, entry, platform):
+        assert entry.entry_id in self._hass.data[DOMAIN]
         self.forwarded.append((entry, platform))
+
     async def async_forward_entry_unload(self, entry, platform):
+        assert entry.entry_id in self._hass.data[DOMAIN]
         self.forwarded.append((entry, f"unload_{platform}"))
         return True
 
@@ -44,9 +49,9 @@ class DummyHass:
     def __init__(self, base: Path):
         self.config = DummyConfig(base)
         self.services = DummyServices()
-        self.config_entries = DummyConfigEntries()
-        self.async_create_task = lambda *a, **k: None
         self.data = {}
+        self.config_entries = DummyConfigEntries(self)
+        self.async_create_task = lambda coro: coro  # execute immediately
 
 class DummyEntry:
     def __init__(self, data):

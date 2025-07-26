@@ -67,14 +67,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "Initializing Horticulture Assistant from entry: %s", entry.entry_id
     )
 
+    # Initialize storage/data so platforms can access it during their setup
+    store_entry_data(hass, entry)
+
     # Forward config entry to all supported platforms
     for platform in PLATFORMS:
         hass.async_create_task(
             hass.config_entries.async_forward_entry_setup(entry, platform)
         )
-
-    # Initialize storage/data if needed and store entry metadata
-    store_entry_data(hass, entry)
 
     # Register services once
     if not hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
