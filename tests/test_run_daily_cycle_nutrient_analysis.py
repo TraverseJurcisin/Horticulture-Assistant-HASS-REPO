@@ -26,3 +26,6 @@ def test_run_daily_cycle_nutrient_analysis(tmp_path):
     # verify nutrient deficiency detection
     assert "deficiency_actions" in report
     assert report["deficiency_actions"]["Ca"]["severity"] == "severe"
+    # new expected uptake reporting
+    assert report["expected_uptake"]["N"] == 50
+    assert report["uptake_gap"]["K"] == 20
