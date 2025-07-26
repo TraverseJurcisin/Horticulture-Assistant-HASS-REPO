@@ -30,6 +30,7 @@ __all__ = [
     "get_recommended_interval",
     "estimate_irrigation_time",
     "generate_cycle_irrigation_plan",
+    "generate_infiltration_bursts",
     "IrrigationRecommendation",
 ]
 
@@ -539,3 +540,48 @@ def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float
         plan[stage] = stage_plan
 
     return plan
+
+
+def generate_infiltration_bursts(
+    volume_ml: float,
+    area_m2: float,
+    texture: str,
+    *,
+    max_hours: float = 1.0,
+) -> list[float]:
+    """Return irrigation bursts that soil can absorb without runoff.
+
+    Parameters
+    ----------
+    volume_ml : float
+        Total irrigation volume in milliliters.
+    area_m2 : float
+        Soil surface area being irrigated in square meters.
+    texture : str
+        Soil texture name for infiltration rate lookup.
+    max_hours : float, optional
+        Maximum infiltration time per burst. Defaults to ``1.0`` hour.
+    """
+
+    if volume_ml <= 0:
+        return []
+    if area_m2 <= 0 or max_hours <= 0:
+        raise ValueError("area_m2 and max_hours must be positive")
+
+    from .rootzone_model import get_infiltration_rate
+
+    rate = get_infiltration_rate(texture)
+    if rate is None or rate <= 0:
+        return [round(volume_ml, 1)]
+
+    capacity_ml_h = rate * area_m2 * 1000
+    max_burst = capacity_ml_h * max_hours
+
+    bursts: list[float] = []
+    remaining = volume_ml
+    while remaining > 0:
+        burst = min(remaining, max_burst)
+        bursts.append(round(burst, 1))
+        remaining -= burst
+
+    return bursts
