@@ -16,6 +16,11 @@ except ImportError:
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.utils import load_json, save_json, load_dataset
+from custom_components.horticulture_assistant.utils.path_utils import (
+    config_path,
+    plants_path,
+    data_path,
+)
 from plant_engine.constants import get_stage_multiplier
 
 _LOGGER = logging.getLogger(__name__)
@@ -82,7 +87,7 @@ def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) ->
     if plant_type:
         return str(plant_type).lower()
 
-    reg_path = hass.config.path(PLANT_REGISTRY_FILE) if hass else PLANT_REGISTRY_FILE
+    reg_path = config_path(hass, PLANT_REGISTRY_FILE)
     try:
         data = load_json(reg_path)
         plant_type = data.get(plant_id, {}).get("plant_type")
@@ -99,10 +104,12 @@ def _load_profile(plant_id: str, hass: HomeAssistant | None) -> dict:
     base_dir = None
     if hass is not None:
         try:
-            base_dir = hass.config.path("plants")
+            base_dir = plants_path(hass)
         except Exception as exc:  # pragma: no cover - HA may not provide path
             _LOGGER.warning("Could not determine plants directory: %s", exc)
             base_dir = None
+    else:
+        base_dir = plants_path(None)
     return load_profile(plant_id=plant_id, base_dir=base_dir)
 
 
@@ -183,7 +190,7 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTar
     tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
 
-    data_dir = hass.config.path("data") if hass else os.path.join(os.getcwd(), "data")
+    data_dir = data_path(hass)
     os.makedirs(data_dir, exist_ok=True)
     path = os.path.join(data_dir, "nutrient_targets.json")
     existing = {}

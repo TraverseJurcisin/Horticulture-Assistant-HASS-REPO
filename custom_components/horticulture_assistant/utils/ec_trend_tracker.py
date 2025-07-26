@@ -15,6 +15,11 @@ import os
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
 
+from custom_components.horticulture_assistant.utils.path_utils import (
+    data_path,
+    plants_path,
+)
+
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:
     from homeassistant.core import HomeAssistant
@@ -51,7 +56,7 @@ class ECTrendTracker:
         # Determine the data file path
         if data_file is None:
             # Use Home Assistant config directory if available
-            data_file = hass.config.path("data", "ec_alerts.json") if hass is not None else os.path.join("data", "ec_alerts.json")
+            data_file = data_path(hass, "ec_alerts.json")
         self._data_file = data_file
         self._hass = hass
         # Internal alerts log structure: dict of plant_id -> list of alert entries
@@ -94,7 +99,7 @@ class ECTrendTracker:
         # Load plant profile to get sensor entity and threshold
         profile = {}
         if load_profile is not None:
-            profile = load_profile(plant_id=plant_id, base_dir=self._hass.config.path("plants"))
+            profile = load_profile(plant_id=plant_id, base_dir=plants_path(self._hass))
         if not profile:
             _LOGGER.error("Plant profile for '%s' not found or empty. EC threshold will be unavailable.", plant_id)
 

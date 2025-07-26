@@ -8,6 +8,10 @@ from datetime import datetime
 
 # Reuse the central evapotranspiration formulas from plant_engine
 from plant_engine.et_model import calculate_et0, calculate_eta
+from custom_components.horticulture_assistant.utils.path_utils import (
+    plants_path,
+    data_path,
+)
 
 try:
     from homeassistant.core import HomeAssistant
@@ -54,7 +58,7 @@ def update_growth_index(
     profile = {}
     try:
         from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
-        base_dir = hass.config.path("plants") if hass else "plants"
+        base_dir = plants_path(hass)
         profile = load_profile(plant_id=plant_id, base_dir=base_dir)
     except Exception as e:
         _LOGGER.error("Could not load profile for plant %s: %s", plant_id, e)
@@ -213,7 +217,7 @@ def update_growth_index(
     vgi_today = round(base_vgi_today * growth_factor, 2)
 
     # Prepare to save growth trend data
-    data_dir = hass.config.path("data") if hass else "data"
+    data_dir = data_path(hass)
     os.makedirs(data_dir, exist_ok=True)
     trends_path = os.path.join(data_dir, "growth_trends.json")
 

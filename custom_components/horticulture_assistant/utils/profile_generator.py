@@ -4,6 +4,8 @@ import json
 import logging
 from pathlib import Path
 
+from custom_components.horticulture_assistant.utils.path_utils import plants_path
+
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -62,10 +64,10 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
         base_path = Path(base_dir)
     elif hass is not None:
         try:
-            base_path = Path(hass.config.path("plants"))
+            base_path = Path(plants_path(hass))
         except Exception as e:
             _LOGGER.error("Error resolving Home Assistant plants directory: %s", e)
-            base_path = Path("plants")
+            base_path = Path(plants_path(None))
     else:
         base_path = Path("plants")
 
