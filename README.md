@@ -192,6 +192,9 @@ Helper scripts live in the `scripts/` directory.
 
 - `generate_plant_sensors.py` converts daily reports into Home Assistant template sensor YAML.
 - `wsda_search.py` queries the bundled WSDA fertilizer database.
+- `log_runoff_ec.py` records manual runoff EC measurements for calibration.
+- `train_ec_model.py` generates EC estimator coefficients from a CSV dataset. Use
+  `--plant-id` to save a model under that plant's profile.
 - `export_all_growth_yield.py` aggregates growth and yield data from the `analytics/` directory.
 - `load_all_profiles` validates and aggregates every profile in the `plants/` directory.
 - `list_available_profiles` quickly lists profile IDs without loading them.
@@ -200,6 +203,8 @@ Example usage:
 ```bash
 python scripts/generate_plant_sensors.py <plant_id>
 python scripts/wsda_search.py "EARTH-CARE" --limit 5
+python scripts/log_runoff_ec.py <plant_id> <ec_value>
+python scripts/train_ec_model.py samples.csv --plant-id myplant
 python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
 ```
 
