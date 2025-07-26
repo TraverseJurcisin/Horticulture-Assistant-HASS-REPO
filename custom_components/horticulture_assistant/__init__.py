@@ -26,8 +26,12 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
     ConfigEntry = object  # type: ignore
     ConfigType = dict
 
-from .const import DOMAIN, PLATFORMS
-from .utils.entry_helpers import get_entry_plant_info
+from .const import DOMAIN, PLATFORMS, SERVICE_UPDATE_SENSORS
+from .utils.entry_helpers import (
+    get_entry_plant_info,
+    store_entry_data,
+    remove_entry_data,
+)
 from .utils.plant_profile_loader import update_profile_sensors
 
 
@@ -70,20 +74,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     # Initialize storage/data if needed and store entry metadata
-    data = hass.data.setdefault(DOMAIN, {})
-    plant_id, plant_name = get_entry_plant_info(entry)
-    data[entry.entry_id] = {
-        "config_entry": entry,
-        "plant_id": plant_id,
-        "plant_name": plant_name,
-        "data": dict(entry.data),
-    }
+    store_entry_data(hass, entry)
 
     # Register services once
-    if not hass.services.has_service(DOMAIN, "update_sensors"):
+    if not hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
         hass.services.async_register(
             DOMAIN,
-            "update_sensors",
+            SERVICE_UPDATE_SENSORS,
             partial(update_sensors_service, hass),
         )
 
@@ -103,6 +100,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     if all(unload_results):
-        hass.data[DOMAIN].pop(entry.entry_id, None)
+        remove_entry_data(hass, entry.entry_id)
 
     return all(unload_results)

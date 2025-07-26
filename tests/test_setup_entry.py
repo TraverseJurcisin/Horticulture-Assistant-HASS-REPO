@@ -15,6 +15,7 @@ module = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = module
 spec.loader.exec_module(module)
 DOMAIN = module.DOMAIN
+SERVICE_UPDATE_SENSORS = module.SERVICE_UPDATE_SENSORS
 
 class DummyServices:
     def __init__(self):
@@ -60,7 +61,8 @@ def test_setup_entry(tmp_path: Path):
     stored = hass.data[DOMAIN][entry.entry_id]
     assert stored["plant_id"] == "tomato1"
     assert stored["plant_name"] == "Tomato"
-    assert (DOMAIN, "update_sensors") in hass.services.registered
+    assert stored["profile_dir"] == Path(tmp_path / "plants/tomato1")
+    assert (DOMAIN, SERVICE_UPDATE_SENSORS) in hass.services.registered
 
 
 def test_service_registered_once(tmp_path: Path):
@@ -69,7 +71,7 @@ def test_service_registered_once(tmp_path: Path):
     entry2 = DummyEntry({"plant_name": "Basil", "plant_id": "basil1"})
     asyncio.run(module.async_setup_entry(hass, entry1))
     asyncio.run(module.async_setup_entry(hass, entry2))
-    assert hass.services.registered.count((DOMAIN, "update_sensors")) == 1
+    assert hass.services.registered.count((DOMAIN, SERVICE_UPDATE_SENSORS)) == 1
 
 
 def test_unload_entry(tmp_path: Path):
