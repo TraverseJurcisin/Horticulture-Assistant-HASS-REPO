@@ -28,7 +28,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
     # Define expected keys for each known profile file
     expected_keys = {
         "general.json": {"plant_id", "display_name", "plant_type", "cultivar", "species", "location",
-                         "lifecycle_stage", "auto_lifecycle_mode", "auto_approve_all", "tags",
+                         "zone_id", "lifecycle_stage", "auto_lifecycle_mode", "auto_approve_all", "tags",
                          "sensor_entities", "actuator_entities", "start_date"},
         "environment.json": {"light", "temperature", "humidity", "hardiness_zone", "EC", "pH"},
         "nutrition.json": {"leaf_nitrogen_ppm", "leaf_phosphorus_ppm", "leaf_potassium_ppm", "leaf_calcium_ppm",

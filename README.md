@@ -39,9 +39,9 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 ## Quick Start
 1. Go to **Settings → Devices & Services** in Home Assistant.
 2. Choose **Add Integration** and search for **Horticulture Assistant**.
-3. Enter a plant name to start the profile.
+3. Enter a plant name and (optionally) a zone ID to start the profile.
 4. If a matching template isn't found, a placeholder entry is created and you can complete the details later in **Options**.
-5. Open the entry's **Options** anytime to set the zone, enable auto‑approve or link sensors.
+5. Open the entry's **Options** anytime to update the zone, enable auto‑approve or link sensors.
 6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
 7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
 8. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
@@ -73,6 +73,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Dynamic thresholds based on growth stage history
 - Optional OpenAI or offline models for nutrient planning
 - Irrigation and fertigation switches with approval queues
+- Configurable irrigation zones with shared solenoids
 
 ### Data & Analytics
 - Disease and pest treatment recommendations
@@ -120,6 +121,39 @@ like `"moisture_sensors"` or `"temperature_sensors"` with a list of entity IDs:
 If multiple entity IDs are provided, their values are averaged. When more than
 two sensors are listed, the median of the available readings is used instead to
 reduce the effect of outliers.
+
+### Zones and Irrigation Scheduling
+Profiles can declare a `zone_id` to group plants under a common irrigation
+zone. Zones and their associated solenoids are defined in `zones.json`. Each
+zone entry lists the solenoid switches that must be opened for watering and may
+be referenced by multiple plants.
+
+You can set the zone ID during the config flow or later via **Options**. Use the
+helper functions in `zone_registry` to add zones or attach plants to a zone
+programmatically. For example:
+
+```python
+from custom_components.horticulture_assistant.utils import zone_registry
+
+zone_registry.add_zone("3", ["switch.valve_3a", "switch.valve_3b"])
+zone_registry.attach_plants("3", ["plant_a", "plant_b"])
+zone_registry.attach_solenoids("3", ["switch.extra_valve"])
+```
+
+Irrigation settings are placed under `irrigation_schedule` with a `method`
+value of `time_pattern`, `volume`, `moisture` or `pulsed`. The required keys
+vary by method but a simple timed schedule looks like this:
+
+```json
+{
+  "general": {"zone_id": "3"},
+  "irrigation_schedule": {
+    "method": "time_pattern",
+    "time": "06:00",
+    "duration_min": 10
+  }
+}
+```
 
 You can update the sensor mapping later using the ``horticulture_assistant.update_sensors`` service:
 

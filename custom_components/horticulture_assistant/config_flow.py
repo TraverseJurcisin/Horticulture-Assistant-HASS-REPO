@@ -26,7 +26,10 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
         """Collect minimal information and create the entry."""
-        data_schema = vol.Schema({vol.Required("plant_name"): TextSelector()})
+        data_schema = vol.Schema({
+            vol.Required("plant_name"): TextSelector(),
+            vol.Optional("zone_id"): TextSelector(),
+        })
 
         if user_input is not None:
             self._data.update(user_input)

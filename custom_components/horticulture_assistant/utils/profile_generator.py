@@ -90,7 +90,8 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
         "plant_type": _slugify(str(plant_type_val)) if plant_type_val else "TBD",
         "cultivar": _slugify(str(cultivar_val)) if cultivar_val else "TBD",
         "species": species_val if species_val else "TBD",
-        "location": location_val if location_val else "TBD"
+        "location": location_val if location_val else "TBD",
+        "zone_id": metadata.get("zone_id") or None,
     }
     if "start_date" in metadata:
         general_data["start_date"] = metadata["start_date"]
