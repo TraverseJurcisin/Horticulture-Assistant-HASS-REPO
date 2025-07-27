@@ -28,6 +28,7 @@ __all__ = [
     "estimate_total_removal",
     "estimate_required_nutrients",
     "estimate_fertilizer_requirements",
+    "estimate_recovery_adjusted_requirements",
     "estimate_solution_volume",
     "RemovalEstimate",
 ]
@@ -146,3 +147,53 @@ def estimate_solution_volume(masses: Mapping[str, float]) -> Dict[str, float]:
         volumes[fert_id] = round(grams / sol_rate, 3)
 
     return volumes
+
+
+def estimate_recovery_adjusted_requirements(
+    plant_type: str,
+    yield_kg: float,
+    fertilizers: Mapping[str, str],
+    *,
+    efficiency: float = 0.85,
+) -> Dict[str, float]:
+    """Return fertilizer grams needed accounting for recovery losses.
+
+    This helper first estimates the nutrient demand for ``yield_kg`` using
+    :func:`estimate_required_nutrients` then adjusts each nutrient for the
+    fractional recovery expected for ``plant_type`` as defined in
+    ``nutrient_recovery_factors.json``. The resulting nutrient masses are
+    converted into fertilizer product amounts based on purity data.
+    """
+
+    required = estimate_required_nutrients(
+        plant_type, yield_kg, efficiency=efficiency
+    ).nutrients_g
+    if not required:
+        return {}
+
+    from .nutrient_recovery import get_recovery_factor
+
+    purity_data = load_dataset("fertilizer_purity.json")
+
+    totals: Dict[str, float] = {}
+    for nutrient, grams in required.items():
+        recovery = get_recovery_factor(nutrient, plant_type)
+        if recovery <= 0:
+            continue
+        target_grams = grams / recovery
+        fert_id = fertilizers.get(nutrient)
+        if not fert_id:
+            continue
+        purity_info = purity_data.get(fert_id)
+        if not isinstance(purity_info, Mapping):
+            continue
+        purity = purity_info.get(nutrient)
+        try:
+            purity_val = float(purity)
+        except (TypeError, ValueError):
+            continue
+        if purity_val <= 0:
+            continue
+        totals[fert_id] = round(totals.get(fert_id, 0.0) + target_grams / purity_val, 2)
+
+    return totals

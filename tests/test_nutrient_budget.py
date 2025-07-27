@@ -40,3 +40,13 @@ def test_estimate_solution_volume():
     assert volumes["foxfarm_grow_big"] == 0.5  # 150g / 300 g/L
     assert volumes["magriculture"] == 1.0      # 800g / 800 g/L
 
+
+def test_estimate_recovery_adjusted_requirements():
+    ferts = {"N": "urea", "P": "map", "K": "kcl"}
+    masses = nutrient_budget.estimate_recovery_adjusted_requirements(
+        "lettuce", 1.0, ferts, efficiency=1.0
+    )
+    assert round(masses["urea"], 2) == 4.74
+    assert round(masses["map"], 2) == 3.03
+    assert round(masses["kcl"], 2) == 5.0
+

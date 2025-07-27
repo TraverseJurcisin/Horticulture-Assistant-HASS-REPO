@@ -85,6 +85,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Stage-adjusted nutrient targets and leaf tissue analysis
 - Nutrient deficiency severity and treatment recommendations
 - Combined nutrient management reports with correction schedules
+- Recovery-aware fertilizer estimates using nutrient recovery factors
 - Daily report files summarizing environment and nutrient targets
 - Environment score and quality rating for sensor data
 - Infiltration-aware irrigation burst scheduling
