@@ -4,6 +4,7 @@ from plant_engine.stage_tasks import (
     get_stage_tasks,
     list_supported_plants,
     generate_task_schedule,
+    generate_cycle_task_plan,
 )
 
 
@@ -26,3 +27,9 @@ def test_generate_task_schedule():
     assert len(schedule) == 3
     assert schedule[0].tasks
     assert schedule[0].date == date(2025, 1, 1)
+
+
+def test_generate_cycle_task_plan():
+    plan = generate_cycle_task_plan("tomato", date(2025, 1, 1))
+    assert len(plan) == 19
+    assert plan[0].date == date(2025, 1, 1)
