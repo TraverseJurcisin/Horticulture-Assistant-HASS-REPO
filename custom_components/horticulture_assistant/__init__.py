@@ -38,7 +38,9 @@ from .utils.path_utils import plants_path
 _LOGGER = logging.getLogger(__name__)
 
 
-async def update_sensors_service(hass: HomeAssistant, call: ServiceCall) -> None:
+async def update_sensors_service(
+    hass: HomeAssistant, call: ServiceCall
+) -> None:
     """Handle the ``update_sensors`` service call."""
     plant_id = call.data.get("plant_id")
     sensors = call.data.get("sensors")
@@ -47,7 +49,7 @@ async def update_sensors_service(hass: HomeAssistant, call: ServiceCall) -> None
         return
 
     base_dir = plants_path(hass)
-    # Run potentially blocking disk IO in a thread to avoid slowing the event loop
+    # Run blocking disk IO in a thread so we don't slow the event loop
     result = await asyncio.to_thread(
         update_profile_sensors, plant_id, sensors, base_dir
     )

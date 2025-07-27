@@ -7,30 +7,37 @@ from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 
-def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: str = "analytics", force: bool = False):
+def export_growth_yield(
+    plant_id: str,
+    base_path: str = "plants",
+    output_path: str = "analytics",
+    force: bool = False,
+) -> list[dict]:
     """
     Export daily growth and yield time series for a given plant.
-    
-    Reads the plant's profile data and logs to compile a daily timeline of growth metrics 
-    (e.g., growth index or canopy size, if available) and yield history.
+
+    Reads the plant's profile data and logs to compile a daily timeline of
+    growth metrics (e.g., vegetative index or canopy size) and yield history.
     Each daily entry includes:
       - date (YYYY-MM-DD)
       - growth_metric (if available for that day)
       - yield_quantity (if a yield event occurred on that day)
       - cumulative_yield (total yield up to and including that day)
-    
-    Only one entry per day is produced (multiple yield events on the same day are aggregated).
-    By default, days without any recorded growth or yield changes are omitted for brevity.
-    Set force=True to include every day in the range, inserting entries even on days with no changes.
-    
-    The resulting time series is written to a JSON file at `output_path/{plant_id}_growth_yield.json`.
-    Returns the list of daily entries for further use.
+
+    Only one entry per day is produced (multiple yield events on the same day
+    are aggregated). By default days without recorded growth or yield changes
+    are omitted for brevity. Set ``force=True`` to include every day in the
+    range, inserting empty entries when needed.
+
+    The resulting time series is written to
+    ``output_path/{plant_id}_growth_yield.json``. The list of daily entries is
+    returned for further use.
     """
     # Determine plant directory and data files
     base_dir = Path(base_path)
     plant_dir = base_dir / str(plant_id)
     yield_log_file = plant_dir / "yield_tracking_log.json"
-    
+
     # Load yield tracking log
     yield_entries = []
     if yield_log_file.is_file():
@@ -43,7 +50,7 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
             )
     else:
         _LOGGER.warning("Yield tracking log not found for plant %s at %s", plant_id, yield_log_file)
-    
+
     # Aggregate yield quantities by date
     yield_by_date = {}
     for entry in yield_entries:
@@ -69,12 +76,16 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
             qty = 0
         # Sum multiple yields on the same date
         yield_by_date[date_str] = yield_by_date.get(date_str, 0) + qty
-    
+
     # Load growth trend data (if available)
     growth_by_date = {}
     growth_trends_file = Path(data_path(None, "growth_trends.json"))
     if growth_trends_file.is_file():
-        growth_trends = load_json(growth_trends_file, default={})
+        try:
+            growth_trends = load_json(growth_trends_file)
+        except Exception as exc:
+            _LOGGER.warning("Failed to load growth trends: %s", exc)
+            growth_trends = {}
         if isinstance(growth_trends, dict) and plant_id in growth_trends:
             plant_growth = growth_trends.get(plant_id)
             if isinstance(plant_growth, dict):
@@ -104,7 +115,7 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
                         growth_by_date[date_key] = gm_val
     else:
         _LOGGER.info("Growth trends file not found at %s; proceeding without growth metrics.", growth_trends_file)
-    
+
     # Determine the set of dates to include
     dates_with_data = set(yield_by_date.keys()) | set(growth_by_date.keys())
     if not dates_with_data:
@@ -122,7 +133,7 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
             max_date = datetime.fromisoformat(max_date_str).date()
         except Exception:
             max_date = datetime.strptime(max_date_str, "%Y-%m-%d").date() if max_date_str else None
-        
+
         series = []
         current_cumulative = 0.0
         date_iter = min_date
@@ -160,13 +171,13 @@ def export_growth_yield(plant_id: str, base_path: str = "plants", output_path: s
                 series.append(entry)
             # Move to the next day
             date_iter += timedelta(days=1)
-    
+
     # Ensure output directory exists
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
     out_file = output_dir / f"{plant_id}_growth_yield.json"
-    if save_json(out_file, series):
-        _LOGGER.info(
-            "Exported growth & yield series for plant %s to %s", plant_id, out_file
-        )
+    save_json(out_file, series)
+    _LOGGER.info(
+        "Exported growth & yield series for plant %s to %s", plant_id, out_file
+    )
     return series

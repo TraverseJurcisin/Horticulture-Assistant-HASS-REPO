@@ -35,6 +35,6 @@ def export_all_growth_yield(base_dir: Path | None = None) -> dict[str, list]:
             continue
         results[plant_id] = data
     output_path = Path(__file__).parent / "all_plants_growth_yield.json"
-    if save_json(output_path, results):
-        _LOGGER.info("All plant growth yield data exported to %s", output_path)
+    save_json(output_path, results)
+    _LOGGER.info("All plant growth yield data exported to %s", output_path)
     return results
