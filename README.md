@@ -293,6 +293,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `recommend_nutrient_mix` computes fertilizer grams needed to hit N/P/K targets and can include micronutrients. `recommend_nutrient_mix_with_cost` returns the same schedule with estimated cost.
 - `get_pruning_instructions` provides stage-specific pruning tips from `pruning_guidelines.json`.
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
+- `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.
 
 ### Garden Summary Lovelace Card
 Add `garden-summary-card.js` as a Lovelace resource (HACS places it under

@@ -297,6 +297,7 @@ __all__ = [
     "summarize_environment_series",
     "average_environment_readings",
     "calculate_environment_variance",
+    "calculate_environment_stddev",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
@@ -417,15 +418,32 @@ def calculate_environment_variance(series: Iterable[Mapping[str, float]]) -> Dic
         for key, value in normalize_environment_readings(reading).items():
             values.setdefault(key, []).append(float(value))
 
-    variance: Dict[str, float] = {}
-    for key, vals in values.items():
-        n = len(vals)
-        if n == 0:
-            continue
-        mean = sum(vals) / n
-        var = sum((v - mean) ** 2 for v in vals) / n
-        variance[key] = round(var, 3)
-    return variance
+    try:
+        import numpy as np  # type: ignore
+
+        variance = {
+            key: float(np.var(np.array(vals, dtype=float)))
+            for key, vals in values.items()
+            if vals
+        }
+    except Exception:  # pragma: no cover - numpy unavailable
+        variance = {}
+        for key, vals in values.items():
+            n = len(vals)
+            if n == 0:
+                continue
+            mean = sum(vals) / n
+            var = sum((v - mean) ** 2 for v in vals) / n
+            variance[key] = var
+
+    return {k: round(v, 3) for k, v in variance.items()}
+
+
+def calculate_environment_stddev(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+    """Return standard deviation for normalized environment readings."""
+
+    variance = calculate_environment_variance(series)
+    return {k: round(math.sqrt(v), 3) for k, v in variance.items()}
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
