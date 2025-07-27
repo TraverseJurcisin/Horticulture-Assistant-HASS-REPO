@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Dict
 
+from .growth_stage import list_growth_stages
+
 from .utils import load_dataset, list_dataset_entries
 
 DATA_FILE = "nutrient_uptake.json"
@@ -14,6 +16,7 @@ __all__ = [
     "get_daily_uptake",
     "estimate_stage_totals",
     "estimate_total_uptake",
+    "estimate_cumulative_uptake",
     "estimate_average_daily_uptake",
     "get_uptake_ratio",
 ]
@@ -92,4 +95,22 @@ def estimate_average_daily_uptake(plant_type: str) -> Dict[str, float]:
         return {}
 
     return {nutrient: round(mg / days, 2) for nutrient, mg in totals.items()}
+
+
+def estimate_cumulative_uptake(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return total nutrient demand from the start through ``stage``."""
+
+    stages = list_growth_stages(plant_type)
+    if not stages or stage not in stages:
+        return {}
+
+    totals: Dict[str, float] = {}
+    for st in stages:
+        stage_totals = estimate_stage_totals(plant_type, st)
+        for nutrient, amount in stage_totals.items():
+            totals[nutrient] = round(totals.get(nutrient, 0.0) + amount, 2)
+        if st == stage:
+            break
+
+    return totals
 
