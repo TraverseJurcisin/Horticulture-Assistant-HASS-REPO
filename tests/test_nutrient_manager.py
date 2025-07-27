@@ -192,3 +192,21 @@ def test_calculate_deficiency_index():
 
     index2 = calculate_deficiency_index(guidelines, "tomato", "fruiting")
     assert index2 == 0.0
+
+
+def test_calculate_nutrient_balance_series():
+    from plant_engine.nutrient_manager import calculate_nutrient_balance_series
+
+    s1 = {"N": 80, "P": 60, "K": 120}
+    s2 = {"N": 60, "P": 50, "K": 100}
+    avg = calculate_nutrient_balance_series([s1, s2], "tomato", "fruiting")
+    r1 = calculate_nutrient_balance(s1, "tomato", "fruiting")
+    r2 = calculate_nutrient_balance(s2, "tomato", "fruiting")
+    expected = {k: round((r1[k] + r2[k]) / 2, 2) for k in r1}
+    assert avg == expected
+
+
+def test_calculate_nutrient_balance_series_empty():
+    from plant_engine.nutrient_manager import calculate_nutrient_balance_series
+
+    assert calculate_nutrient_balance_series([], "tomato", "fruiting") == {}

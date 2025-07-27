@@ -35,6 +35,7 @@ __all__ = [
     "calculate_surplus",
     "calculate_all_surplus",
     "calculate_all_nutrient_balance",
+    "calculate_nutrient_balance_series",
     "get_npk_ratio",
     "get_stage_ratio",
     "get_nutrient_weight",
@@ -302,6 +303,25 @@ def calculate_all_nutrient_balance(
             continue
         ratios[nutrient] = round(current / target, 2)
     return ratios
+
+
+def calculate_nutrient_balance_series(
+    series: Iterable[Mapping[str, float]], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return average nutrient balance ratios for a sequence of readings."""
+
+    totals: Dict[str, float] = {}
+    count = 0
+    for levels in series:
+        ratios = calculate_nutrient_balance(dict(levels), plant_type, stage)
+        for nutrient, value in ratios.items():
+            totals[nutrient] = totals.get(nutrient, 0.0) + value
+        count += 1
+
+    if count == 0:
+        return {}
+
+    return {n: round(v / count, 2) for n, v in totals.items()}
 
 
 def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
