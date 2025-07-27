@@ -48,3 +48,17 @@ def test_recommend_fungicides():
         "potassium bicarbonate",
     ]
     assert recs["unknown"] == []
+
+
+def test_get_fungicide_application_rate():
+    from plant_engine.disease_manager import get_fungicide_application_rate
+
+    assert get_fungicide_application_rate("copper fungicide") == 2.0
+    assert get_fungicide_application_rate("unknown") is None
+
+
+def test_calculate_fungicide_mix():
+    from plant_engine.disease_manager import calculate_fungicide_mix
+
+    mix = calculate_fungicide_mix("blight", 10)
+    assert mix == {"copper fungicide": 20.0, "bacillus subtilis": 10.0}
