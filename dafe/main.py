@@ -94,8 +94,8 @@ def main(argv: Sequence[str] | None = None) -> None:
     D_eff = calculate_effective_diffusion(
         D_base=D_base,
         vwc=wc,
-        porosity=media_profile["porosity"],
-        tortuosity=media_profile["tortuosity"],
+        porosity=media_profile.porosity,
+        tortuosity=media_profile.tortuosity,
     )
 
     nutrient_params = {"D_base": D_base}
