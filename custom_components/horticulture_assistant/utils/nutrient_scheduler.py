@@ -154,24 +154,15 @@ def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
                 continue
             targets[nut] = round(targets[nut] * factor, 2)
 
-def schedule_nutrients(
-    plant_id: str,
-    hass: HomeAssistant = None,
-    *,
-    include_micro: bool = False,
-) -> NutrientTargets:
-    """Return adjusted nutrient targets for ``plant_id``.
-
-    Targets are loaded from the plant profile and adjusted using stage
-    multipliers and tag-based modifiers. When ``include_micro`` is ``True``
-    any missing micronutrients are filled in from the bundled datasets. Final
-    values are persisted to ``nutrient_targets.json`` for later use.
-    """
+def _compute_nutrient_targets(
+    plant_id: str, hass: HomeAssistant | None, include_micro: bool
+) -> dict[str, float]:
+    """Return nutrient targets for ``plant_id`` without saving them."""
 
     profile = _load_profile(plant_id, hass)
     if not profile:
         _LOGGER.error("Plant profile for '%s' not found or empty", plant_id)
-        return NutrientTargets({})
+        return {}
 
     base_targets = profile.get("nutrients") or {}
     stage = (
@@ -202,10 +193,10 @@ def schedule_nutrients(
                 "No nutrient targets for '%s' and no guidelines found",
                 plant_id,
             )
-            return NutrientTargets({})
+            return {}
     elif not base_targets:
         _LOGGER.warning("No nutrient targets for '%s' and no guidelines found", plant_id)
-        return NutrientTargets({})
+        return {}
 
     mult = _stage_multiplier(profile, stage_key)
     adjusted: dict[str, float] = {}
@@ -218,6 +209,18 @@ def schedule_nutrients(
     tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
 
+    return adjusted
+
+
+def schedule_nutrients(
+    plant_id: str,
+    hass: HomeAssistant = None,
+    *,
+    include_micro: bool = False,
+) -> NutrientTargets:
+    """Return adjusted nutrient targets for ``plant_id`` and persist them."""
+
+    adjusted = _compute_nutrient_targets(plant_id, hass, include_micro)
     data_dir = ensure_data_dir(hass)
     path = os.path.join(data_dir, "nutrient_targets.json")
     existing = {}
@@ -228,7 +231,8 @@ def schedule_nutrients(
             existing = {}
     if not isinstance(existing, dict):
         existing = {}
-    existing[plant_id] = adjusted
+    if adjusted:
+        existing[plant_id] = adjusted
     try:
         save_json(path, existing)
     except Exception as exc:  # pragma: no cover - write errors are unlikely
@@ -283,13 +287,31 @@ def schedule_nutrients_bulk(
     *,
     include_micro: bool = False,
 ) -> dict[str, dict[str, float]]:
-    """Return nutrient targets for multiple plants."""
+    """Return nutrient targets for multiple plants and store them once."""
 
     results: dict[str, dict[str, float]] = {}
     for pid in plant_ids:
-        targets = schedule_nutrients(pid, hass=hass, include_micro=include_micro).as_dict()
+        targets = _compute_nutrient_targets(pid, hass, include_micro)
         if targets:
             results[pid] = targets
+
+    if results:
+        data_dir = ensure_data_dir(hass)
+        path = os.path.join(data_dir, "nutrient_targets.json")
+        existing = {}
+        if os.path.exists(path):
+            try:
+                existing = load_json(path)
+            except Exception:
+                existing = {}
+        if not isinstance(existing, dict):
+            existing = {}
+        existing.update(results)
+        try:
+            save_json(path, existing)
+        except Exception as exc:  # pragma: no cover - write errors are unlikely
+            _LOGGER.error("Failed to write nutrient targets: %s", exc)
+
     return results
 
 
