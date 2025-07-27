@@ -38,6 +38,7 @@ __all__ = [
     "is_safe_for_crop",
     "get_application_rate",
     "calculate_application_amount",
+    "summarize_pesticide_restrictions",
 ]
 
 
@@ -230,3 +231,45 @@ def calculate_application_amount(product: str, volume_l: float) -> float:
     if rate is None:
         raise KeyError(f"Application rate for '{product}' is not defined")
     return round(rate * volume_l, 3)
+
+
+def summarize_pesticide_restrictions(
+    applications: Iterable[tuple[str, datetime]] | Iterable[tuple[str, date]]
+) -> dict:
+    """Return combined reentry and harvest restrictions.
+
+    Parameters
+    ----------
+    applications:
+        Sequence of ``(product, application_time)`` tuples. ``application_time``
+        may be :class:`datetime.datetime` or :class:`datetime.date`. When a date
+        is provided the time is assumed to be midnight for reentry calculations.
+
+    Returns
+    -------
+    dict
+        Mapping with optional ``"reentry_time"`` and ``"harvest_date"`` entries
+        indicating the latest reentry datetime and earliest permissible harvest
+        date after considering all applications.
+    """
+
+    dt_apps: list[tuple[str, datetime]] = []
+    date_apps: list[tuple[str, date]] = []
+    for product, applied in applications:
+        if isinstance(applied, datetime):
+            dt_apps.append((product, applied))
+            date_apps.append((product, applied.date()))
+        else:
+            dt = datetime.combine(applied, datetime.min.time())
+            dt_apps.append((product, dt))
+            date_apps.append((product, applied))
+
+    latest_reentry = calculate_reentry_window(dt_apps)
+    earliest_harvest = calculate_harvest_window(date_apps)
+
+    info: dict = {}
+    if latest_reentry is not None:
+        info["reentry_time"] = latest_reentry
+    if earliest_harvest is not None:
+        info["harvest_date"] = earliest_harvest
+    return info
