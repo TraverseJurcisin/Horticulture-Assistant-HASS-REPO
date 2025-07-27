@@ -18,6 +18,7 @@ from . import (
     ec_manager,
     irrigation_manager,
     growth_stage,
+    stage_tasks,
 )
 
 __all__ = ["GuidelineSummary", "get_guideline_summary"]
@@ -44,6 +45,7 @@ class GuidelineSummary:
     irrigation_interval_days: float | None = None
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
+    stage_tasks: Dict[str, List[str]] = dataclass_field(default_factory=dict)
 
     def as_dict(self) -> Dict[str, Any]:
         """Return guidelines as a regular dictionary."""
@@ -61,6 +63,14 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     thresholds = pest_monitor.get_pest_thresholds(plant_type)
     beneficial = {p: pest_manager.get_beneficial_insects(p) for p in thresholds}
+
+    if stage:
+        tasks = {stage: stage_tasks.get_stage_tasks(plant_type, stage)}
+    else:
+        tasks = {
+            s: stage_tasks.get_stage_tasks(plant_type, s)
+            for s in growth_stage.list_growth_stages(plant_type)
+        }
 
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
@@ -88,6 +98,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         ),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
+        stage_tasks=tasks,
     )
 
     return summary.as_dict()
