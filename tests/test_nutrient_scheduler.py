@@ -4,6 +4,7 @@ import importlib.util
 import sys
 import types
 import json
+import pytest
 import plant_engine.utils as utils
 
 MODULE_PATH = (
@@ -143,3 +144,17 @@ def test_schedule_nutrient_corrections(tmp_path):
         "corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass
     ).as_dict()
     assert adjustments["N"] > 0
+
+
+def test_schedule_stock_injection(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "inj.json").write_text(
+        '{"general": {"plant_type": "citrus", "stage": "vegetative"}}'
+    )
+    hass = _hass_for(tmp_path)
+    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+
+    volumes = ns.schedule_stock_injection("inj", 10.0, hass=hass)
+    assert volumes["stock_a"] == pytest.approx(14.0, rel=1e-2)
+    assert volumes["stock_b"] == pytest.approx(7.5, rel=1e-2)

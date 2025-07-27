@@ -298,6 +298,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - Call `plant_engine.datasets.refresh_datasets()` if dataset files change.
 - Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards and reports.
 - `recommend_nutrient_mix` computes fertilizer grams needed to hit N/P/K targets and can include micronutrients. `recommend_nutrient_mix_with_cost` returns the same schedule with estimated cost. `generate_nutrient_management_report` consolidates analysis and correction grams for a solution volume.
+- `schedule_stock_injection` converts nutrient targets into stock solution injection volumes for a given batch size.
 - `get_pruning_instructions` provides stage-specific pruning tips from `pruning_guidelines.json`.
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
 - `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.

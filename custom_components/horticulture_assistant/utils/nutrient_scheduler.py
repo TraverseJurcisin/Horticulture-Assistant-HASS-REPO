@@ -276,4 +276,37 @@ def schedule_nutrient_corrections(
     return NutrientAdjustments(adjustments)
 
 
-__all__ = ["schedule_nutrients", "schedule_nutrient_corrections"]
+__all__ = [
+    "schedule_nutrients",
+    "schedule_nutrient_corrections",
+    "schedule_stock_injection",
+]
+
+
+def schedule_stock_injection(
+    plant_id: str,
+    volume_l: float,
+    hass: HomeAssistant = None,
+    *,
+    include_micro: bool = False,
+) -> dict[str, float]:
+    """Return stock solution volumes (mL) for ``plant_id`` and ``volume_l``.
+
+    The function first calls :func:`schedule_nutrients` to obtain nutrient
+    targets in parts per million and then converts those targets into stock
+    solution injection volumes using
+    :func:`plant_engine.fertigation.recommend_stock_solution_injection`.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    targets = schedule_nutrients(
+        plant_id, hass=hass, include_micro=include_micro
+    ).as_dict()
+    if not targets:
+        return {}
+
+    from plant_engine.fertigation import recommend_stock_solution_injection
+
+    return recommend_stock_solution_injection(targets, volume_l)
