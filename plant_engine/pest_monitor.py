@@ -6,7 +6,6 @@ from dataclasses import asdict, dataclass
 from datetime import date, timedelta
 from typing import Dict, Mapping
 
-from . import environment_manager
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule

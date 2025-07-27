@@ -20,7 +20,6 @@ ROOT = ensure_repo_root_on_path()
 from plant_engine.wsda_lookup import (
     search_products,
     get_product_analysis_by_number,
-    get_product_analysis_by_name,
 )
 
 

@@ -17,11 +17,7 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .utils.state_helpers import (
-    get_numeric_state,
-    normalize_entities,
-    aggregate_sensor_values,
-)
+from .utils.state_helpers import aggregate_sensor_values
 from .utils.sensor_map import build_sensor_map
 from .utils.entry_helpers import get_entry_data, store_entry_data
 

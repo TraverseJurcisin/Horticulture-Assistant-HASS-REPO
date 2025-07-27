@@ -1,7 +1,7 @@
 """Helpers for irrigation scheduling."""
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from typing import Mapping, Dict, Any
 
 from .utils import load_dataset, normalize_key, stage_value

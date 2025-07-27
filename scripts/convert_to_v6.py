@@ -1,4 +1,4 @@
-import json, sys, os
+import json, sys
 
 TEMPLATE = {
     "schema_version": "v6.0.0",

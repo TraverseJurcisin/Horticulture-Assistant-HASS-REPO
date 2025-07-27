@@ -1,5 +1,4 @@
 from custom_components.horticulture_assistant.utils.irrigation_schedule import (
-    Schedule,
     parse_schedule,
 )
 

@@ -2,10 +2,8 @@ from __future__ import annotations
 
 """Utilities for looking up fertilizer analysis data from the WSDA database."""
 
-import json
 from dataclasses import dataclass
 from functools import lru_cache
-from pathlib import Path
 from typing import Dict, Iterable, List, Mapping, Tuple
 
 from plant_engine import wsda_loader

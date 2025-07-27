@@ -4,7 +4,6 @@ from dafe import (
     calculate_effective_diffusion,
     generate_pulse_schedule,
     get_current_ec,
-    get_current_wc,
     load_config,
 )
 

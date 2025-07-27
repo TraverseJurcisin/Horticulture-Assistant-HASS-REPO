@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from custom_components.horticulture_assistant.utils.fertilizer_inventory import (
     FertilizerProduct,
     FertilizerInventory,
-    FertilizerListing,
 )
 
 
