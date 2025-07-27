@@ -8,6 +8,7 @@ from plant_engine.utils import (
     normalize_key,
     clear_dataset_cache,
     stage_value,
+    load_stage_dataset_value,
 )
 
 
@@ -74,3 +75,16 @@ def test_stage_value_fallback():
 def test_stage_value_custom_default():
     data = {"crop": {"phase": 1, "default": 2}}
     assert stage_value(data, "crop", "missing", default_key="default") == 2
+
+
+def test_load_stage_dataset_value():
+    value = load_stage_dataset_value(
+        "soil_moisture_guidelines.json", "citrus", "seedling"
+    )
+    assert value == [30, 50]
+
+    # missing stage falls back to the dataset's 'optimal' entry
+    assert load_stage_dataset_value(
+        "soil_moisture_guidelines.json", "citrus", "missing"
+    ) == [30, 50]
+
