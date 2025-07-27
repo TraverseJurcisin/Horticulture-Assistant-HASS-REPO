@@ -37,6 +37,8 @@ from plant_engine.environment_manager import (
     evaluate_cold_stress,
     evaluate_light_stress,
     evaluate_wind_stress,
+    get_wind_action,
+    recommend_wind_action,
     evaluate_humidity_stress,
     evaluate_ph_stress,
     evaluate_stress_conditions,
@@ -706,6 +708,14 @@ def test_temperature_actions():
     assert em.recommend_temperature_action(5, 70, "citrus").startswith("Increase")
     assert em.recommend_temperature_action(42, 70, "citrus").startswith("Provide")
     assert em.recommend_temperature_action(25, 50, "citrus") is None
+
+
+def test_wind_actions():
+    from plant_engine import environment_manager as em
+
+    assert em.get_wind_action("HIGH").startswith("Install")
+    assert em.recommend_wind_action(20, "citrus").startswith("Install")
+    assert em.recommend_wind_action(5, "citrus") is None
 
 
 def test_environment_strategies():

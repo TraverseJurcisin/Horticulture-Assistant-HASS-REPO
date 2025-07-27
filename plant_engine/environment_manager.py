@@ -24,6 +24,7 @@ WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
 TEMPERATURE_ACTION_FILE = "temperature_actions.json"
+WIND_ACTION_FILE = "wind_actions.json"
 STRATEGY_FILE = "environment_strategies.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
@@ -282,6 +283,8 @@ __all__ = [
     "recommend_humidity_action",
     "get_temperature_action",
     "recommend_temperature_action",
+    "get_wind_action",
+    "recommend_wind_action",
     "get_environment_strategy",
     "recommend_environment_strategies",
     "evaluate_ph_stress",
@@ -323,6 +326,7 @@ _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
+_WIND_ACTIONS: Dict[str, str] = load_dataset(WIND_ACTION_FILE)
 _TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
 _ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
@@ -1311,6 +1315,21 @@ def recommend_temperature_action(
         return get_temperature_action("cold") or None
     if evaluate_heat_stress(temp_c, humidity_pct, plant_type):
         return get_temperature_action("hot") or None
+    return None
+
+
+def get_wind_action(level: str) -> str:
+    """Return recommended action for a wind stress level."""
+
+    return _WIND_ACTIONS.get(level.lower(), "")
+
+
+def recommend_wind_action(wind_m_s: float | None, plant_type: str) -> str | None:
+    """Return wind mitigation recommendation if speed exceeds threshold."""
+
+    if evaluate_wind_stress(wind_m_s, plant_type):
+        action = get_wind_action("high")
+        return action or None
     return None
 
 
