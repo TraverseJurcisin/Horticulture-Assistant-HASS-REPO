@@ -1,0 +1,19 @@
+{
+  "tomato": {
+    "leaf_emergence": {"gdd": 50, "photoperiod_hours": 18},
+    "flower_initiation": {"gdd": 450, "photoperiod_hours": 12},
+    "fruiting_onset": {"gdd": 700, "photoperiod_hours": 12}
+  },
+  "citrus": {
+    "leaf_emergence": {"gdd": 150, "photoperiod_hours": 16},
+    "bud_break": {"gdd": 400, "photoperiod_hours": 16},
+    "flower_initiation": {"gdd": 850, "photoperiod_hours": 12},
+    "fruiting_onset": {"gdd": 1100, "photoperiod_hours": 12}
+  },
+  "buddhas_hand": {
+    "leaf_emergence": {"gdd": 150, "photoperiod_hours": 16},
+    "bud_break": {"gdd": 500, "photoperiod_hours": 16},
+    "flower_initiation": {"gdd": 870, "photoperiod_hours": 12},
+    "fruiting_onset": {"gdd": 1150, "photoperiod_hours": 12}
+  }
+}

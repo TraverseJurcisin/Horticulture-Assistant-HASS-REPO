@@ -41,4 +41,16 @@ def __getattr__(name: str):
         __all__.append(name)
         __all__.extend(getattr(module, "__all__", []))
         return module
+    if name == "phenology":
+        module = import_module(".phenology", __name__)
+        globals()[name] = module
+        __all__.append(name)
+        __all__.extend(getattr(module, "__all__", []))
+        return module
+    if name == "thermal_time":
+        module = import_module(".thermal_time", __name__)
+        globals()[name] = module
+        __all__.append(name)
+        __all__.extend(getattr(module, "__all__", []))
+        return module
     raise AttributeError(f"module 'plant_engine' has no attribute {name!r}")
