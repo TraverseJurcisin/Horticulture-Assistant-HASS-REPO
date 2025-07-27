@@ -50,3 +50,22 @@ def test_summarize_water_profile():
     assert summary["baseline"]["Na"] == 60
     assert "Na" in summary["warnings"]
     assert "score" in summary
+
+
+def test_blend_water_profiles():
+    from plant_engine import water_quality
+
+    a = {"Na": 80, "Cl": 80}
+    b = {"Na": 20, "Cl": 20}
+    blend = water_quality.blend_water_profiles(a, b, 0.5)
+    assert blend["Na"] == 50
+    assert blend["Cl"] == 50
+
+
+def test_max_safe_blend_ratio():
+    from plant_engine import water_quality
+
+    a = {"Na": 80, "Cl": 80}
+    b = {"Na": 20, "Cl": 20}
+    ratio = water_quality.max_safe_blend_ratio(a, b)
+    assert 0.49 <= ratio <= 0.51
