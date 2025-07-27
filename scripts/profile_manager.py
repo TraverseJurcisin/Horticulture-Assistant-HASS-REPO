@@ -111,6 +111,35 @@ def list_global_profiles(global_dir: Path = DEFAULT_GLOBAL_DIR) -> list[str]:
     return sorted(p.stem for p in path.iterdir() if p.is_file() and p.suffix == ".json")
 
 
+def list_log_files(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> list[str]:
+    """Return the available log names for ``plant_id``."""
+    log_dir = Path(base_dir) / plant_id
+    if not log_dir.is_dir():
+        return []
+    return sorted(p.stem for p in log_dir.glob("*.json"))
+
+
+def show_preferences(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> dict:
+    """Return general preferences for ``plant_id``."""
+    profile = loader.load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return {}
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    prefs = {k: v for k, v in container.items() if k != "sensor_entities"}
+    return prefs
+
+
+def show_global_profile(plant_type: str, global_dir: Path = DEFAULT_GLOBAL_DIR) -> dict:
+    """Return the template for ``plant_type`` if available."""
+    path = Path(global_dir) / f"{plant_type}.json"
+    if not path.is_file():
+        return {}
+    data = load_json(str(path))
+    return data if isinstance(data, dict) else {}
+
+
 def main(argv: list[str] | None = None) -> None:
     root_parser = argparse.ArgumentParser(add_help=False)
     root_parser.add_argument(
@@ -163,6 +192,15 @@ def main(argv: list[str] | None = None) -> None:
         "list-globals", help="list available global profiles"
     )
 
+    show_prefs_cmd = sub.add_parser("show-prefs", help="display profile preferences")
+    show_prefs_cmd.add_argument("plant_id")
+
+    list_logs_cmd = sub.add_parser("list-logs", help="list available log files")
+    list_logs_cmd.add_argument("plant_id")
+
+    show_global_cmd = sub.add_parser("show-global", help="show a global profile template")
+    show_global_cmd.add_argument("plant_type")
+
     root_args, remaining = root_parser.parse_known_args(argv)
 
     plants_dir = root_args.plants_dir
@@ -205,9 +243,18 @@ def main(argv: list[str] | None = None) -> None:
             lines=args.lines,
         )
         print(json.dumps(entries, indent=2))
+    elif args.cmd == "show-prefs":
+        prefs = show_preferences(args.plant_id, base_dir=plants_dir)
+        print(json.dumps(prefs, indent=2))
+    elif args.cmd == "list-logs":
+        logs = list_log_files(args.plant_id, base_dir=plants_dir)
+        print("\n".join(logs))
     elif args.cmd == "list-sensors":
         sensors = list_profile_sensors(args.plant_id, base_dir=plants_dir)
         print(json.dumps(sensors, indent=2))
+    elif args.cmd == "show-global":
+        data = show_global_profile(args.plant_type, global_dir=globals_dir)
+        print(json.dumps(data, indent=2))
     elif args.cmd == "list-globals":
         profiles = list_global_profiles(globals_dir)
         print("\n".join(profiles))
