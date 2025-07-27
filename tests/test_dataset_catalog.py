@@ -16,6 +16,7 @@ def test_list_datasets_contains_known():
     assert "disease_monitoring_intervals.json" in datasets
     assert "reference_et0.json" in datasets
     assert "pesticide_modes.json" in datasets
+    assert "frost_dates.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -53,6 +54,8 @@ def test_get_dataset_description():
 
     desc9 = get_dataset_description("pesticide_modes.json")
     assert "action" in desc9
+    desc10 = get_dataset_description("frost_dates.json")
+    assert "frost" in desc10
 
 
 def test_search_datasets():

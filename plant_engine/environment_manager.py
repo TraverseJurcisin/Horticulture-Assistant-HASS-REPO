@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import datetime
 from dataclasses import dataclass, asdict
 from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable
@@ -35,6 +36,7 @@ MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
+FROST_DATES_FILE = "frost_dates.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -134,6 +136,37 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     )
 
 
+@lru_cache(maxsize=None)
+def get_frost_dates(zone: str) -> tuple[str, str] | None:
+    """Return the typical last and first frost dates for ``zone``."""
+
+    data = _FROST_DATES.get(normalize_key(zone))
+    if not isinstance(data, Mapping):
+        return None
+    last = data.get("last_frost")
+    first = data.get("first_frost")
+    if isinstance(last, str) and isinstance(first, str):
+        return last, first
+    return None
+
+
+def is_frost_free(date: datetime.date, zone: str) -> bool:
+    """Return ``True`` if ``date`` is between last and first frost dates."""
+
+    window = get_frost_dates(zone)
+    if not window:
+        return True
+    last_str, first_str = window
+    try:
+        last = datetime.date(date.year, *map(int, last_str.split("-")))
+        first = datetime.date(date.year, *map(int, first_str.split("-")))
+    except ValueError:
+        return True
+    if last <= first:
+        return last < date < first
+    return not (first < date < last)
+
+
 def _intersect_range(
     a: RangeTuple | None, b: RangeTuple | None
 ) -> RangeTuple | None:
@@ -224,6 +257,8 @@ __all__ = [
     "list_supported_plants",
     "get_environment_guidelines",
     "get_climate_guidelines",
+    "get_frost_dates",
+    "is_frost_free",
     "get_combined_environment_guidelines",
     "get_combined_environmental_targets",
     "recommend_climate_adjustments",
@@ -339,6 +374,7 @@ _MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
 _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
 _LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
+_FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
 
 
 def get_score_weight(metric: str) -> float:

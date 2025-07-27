@@ -1,5 +1,6 @@
 import pytest
 import math
+import datetime
 
 from plant_engine.environment_manager import (
     get_environmental_targets,
@@ -70,6 +71,8 @@ from plant_engine.environment_manager import (
     get_target_leaf_temperature,
     energy_optimized_setpoints,
     cost_optimized_setpoints,
+    get_frost_dates,
+    is_frost_free,
 )
 
 
@@ -960,3 +963,11 @@ def test_calculate_co2_cost_series():
     assert len(costs) == 3
     assert costs[0] > costs[1] >= 0
     assert costs[2] == 0.0
+
+
+def test_get_frost_dates_and_is_frost_free():
+    dates = get_frost_dates("zone_6")
+    assert dates == ("04-25", "10-15")
+
+    assert is_frost_free(datetime.date(2024, 5, 1), "zone_6")
+    assert not is_frost_free(datetime.date(2024, 3, 1), "zone_6")
