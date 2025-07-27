@@ -7,7 +7,12 @@ from datetime import date, timedelta
 from typing import Dict, Mapping
 
 
-from .utils import lazy_dataset, normalize_key, list_dataset_entries
+from .utils import (
+    lazy_dataset,
+    load_dataset,
+    normalize_key,
+    list_dataset_entries,
+)
 from .monitor_utils import (
     get_interval as _get_interval,
     next_date as _next_date,
@@ -35,7 +40,12 @@ SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 _THRESHOLDS = lazy_dataset(DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
-_SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+# Load severity thresholds immediately so tests can easily monkeypatch the data
+# by assigning a plain dictionary. Using ``lazy_dataset`` here caused failures
+# when tests replaced the variable with a dict and the code still attempted to
+# call it as a function. Loading once at import keeps caching behaviour simple
+# and avoids the type mismatch.
+_SEVERITY_THRESHOLDS = load_dataset(SEVERITY_THRESHOLD_FILE)
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -162,8 +172,7 @@ def get_scouting_method(pest: str) -> str:
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _SEVERITY_THRESHOLDS()
-    return thresholds.get(normalize_key(pest), {})
+    return _SEVERITY_THRESHOLDS.get(normalize_key(pest), {})
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
