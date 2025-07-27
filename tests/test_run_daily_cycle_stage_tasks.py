@@ -16,3 +16,5 @@ def test_run_daily_cycle_stage_tasks(tmp_path):
     report = run_daily_cycle("plant1", base_path=str(plants_dir), output_path=str(out_dir))
 
     assert report["stage_tasks"] == ["Prune side shoots", "Apply balanced fertilizer"]
+    assert "environment_score" in report
+    assert "environment_quality" in report
