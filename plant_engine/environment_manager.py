@@ -679,7 +679,10 @@ def compare_environment(
 
 
 def recommend_environment_adjustments(
-    current: Mapping[str, float], plant_type: str, stage: str | None = None
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+    zone: str | None = None,
 ) -> Dict[str, str]:
     """Return detailed adjustment suggestions for key environment parameters.
 
@@ -688,7 +691,11 @@ def recommend_environment_adjustments(
     fall back to simple ``"increase"``/``"decrease"`` hints.
     """
 
-    targets = get_environmental_targets(plant_type, stage)
+    targets = (
+        get_combined_environmental_targets(plant_type, stage, zone)
+        if zone
+        else get_environmental_targets(plant_type, stage)
+    )
     if not targets:
         return {}
 
@@ -1801,6 +1808,8 @@ def optimize_environment(
     plant_type: str,
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
+    *,
+    zone: str | None = None,
 ) -> Dict[str, object]:
     """Return optimized environment data for a plant.
 
@@ -1815,8 +1824,11 @@ def optimize_environment(
 
     readings = normalize_environment_readings(current)
 
-    setpoints = suggest_environment_setpoints(plant_type, stage)
-    actions = recommend_environment_adjustments(readings, plant_type, stage)
+    if zone:
+        setpoints = suggest_environment_setpoints_zone(plant_type, stage, zone)
+    else:
+        setpoints = suggest_environment_setpoints(plant_type, stage)
+    actions = recommend_environment_adjustments(readings, plant_type, stage, zone)
 
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
@@ -1911,6 +1923,7 @@ def summarize_environment(
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
     *,
+    zone: str | None = None,
     include_targets: bool = False,
 ) -> Dict[str, Any]:
     """Return a consolidated environment summary for a plant stage.
@@ -1963,7 +1976,7 @@ def summarize_environment(
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
-        adjustments=recommend_environment_adjustments(readings, plant_type, stage),
+        adjustments=recommend_environment_adjustments(readings, plant_type, stage, zone),
         metrics=metrics,
         score=score_environment(readings, plant_type, stage),
         stress=stress,
@@ -1981,6 +1994,7 @@ def summarize_environment_series(
     stage: str | None = None,
     water_test: Mapping[str, float] | None = None,
     *,
+    zone: str | None = None,
     include_targets: bool = False,
 ) -> Dict[str, Any]:
     """Return summary for averaged environment readings.
@@ -1998,5 +2012,6 @@ def summarize_environment_series(
         plant_type,
         stage,
         water_test,
+        zone=zone,
         include_targets=include_targets,
     )

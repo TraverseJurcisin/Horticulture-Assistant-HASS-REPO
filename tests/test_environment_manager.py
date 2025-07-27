@@ -274,6 +274,17 @@ def test_optimize_environment_aliases():
     assert result["adjustments"]["temperature"] == "increase"
 
 
+def test_optimize_environment_zone():
+    result = optimize_environment(
+        {"temp_c": 20, "humidity_pct": 70},
+        "lettuce",
+        "seedling",
+        zone="temperate",
+    )
+    assert result["setpoints"]["humidity_pct"] == 75
+    assert result["setpoints"]["temp_c"] == 21
+
+
 def test_calculate_environment_metrics():
     metrics = calculate_environment_metrics(18, 90)
     assert metrics.vpd == calculate_vpd(18, 90)
