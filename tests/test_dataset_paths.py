@@ -38,6 +38,17 @@ def test_overlay_dir_cache(monkeypatch, tmp_path):
     assert utils.overlay_dir() == overlay
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(tmp_path / "other"))
     utils.clear_dataset_cache()
+
+
+def test_dataset_search_paths_includes_overlay(monkeypatch, tmp_path):
+    base = tmp_path / "data"
+    overlay = tmp_path / "overlay"
+    base.mkdir()
+    overlay.mkdir()
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     importlib.reload(utils)
-    assert utils.overlay_dir() != overlay
+    paths = utils.dataset_search_paths(include_overlay=True)
+    assert paths[0] == overlay
+    assert base in paths
     utils.clear_dataset_cache()
