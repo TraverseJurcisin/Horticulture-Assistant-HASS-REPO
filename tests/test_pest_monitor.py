@@ -13,6 +13,7 @@ from plant_engine.pest_monitor import (
     next_monitor_date,
     generate_monitoring_schedule,
     generate_detailed_monitoring_schedule,
+    get_all_monitoring_intervals,
     risk_adjusted_monitor_interval,
     get_scouting_method,
     get_severity_thresholds,
@@ -120,6 +121,12 @@ def test_get_monitoring_interval():
     assert get_monitoring_interval("citrus", "fruiting") == 3
     assert get_monitoring_interval("CITRUS") == 5
     assert get_monitoring_interval("unknown") is None
+
+
+def test_get_all_monitoring_intervals():
+    intervals = get_all_monitoring_intervals("citrus")
+    assert intervals["seedling"] == 7
+    assert intervals["fruiting"] == 3
 
 
 def test_next_monitor_date():
