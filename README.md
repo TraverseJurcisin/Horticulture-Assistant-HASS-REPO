@@ -78,6 +78,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 
 ### Data & Analytics
 - Disease and pest treatment recommendations
+- Organic fungicide suggestions for common diseases
 - Environment optimization suggestions with pH guidance
 - Precise pH adjustment volume calculations
 - Heat, humidity and light stress warnings
@@ -223,6 +224,7 @@ Important categories include:
 - **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
+- **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
