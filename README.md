@@ -230,6 +230,7 @@ Important categories include:
 - **Fertilizer compatibility** – warnings for mixing products that react poorly
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
+- **Media properties** – recommended pH range and water retention for common substrates
 
 The WSDA fertilizer dataset resides under `feature/wsda_refactored_sharded/` which contains an
 `index_sharded/` directory of `.jsonl` shards and a `detail/` directory of per-product records.
