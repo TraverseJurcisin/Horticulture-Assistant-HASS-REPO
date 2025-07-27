@@ -1,7 +1,7 @@
-"""Simple utilities for logging nutrient applications."""
+"""Utilities for tracking nutrient applications and generating summaries."""
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, Iterable
 from datetime import datetime, timedelta
 from collections import defaultdict
 
@@ -51,6 +51,9 @@ class NutrientTracker:
 
     product_profiles: Dict[str, ProductNutrientProfile] = field(default_factory=dict)
     delivery_log: List[NutrientDeliveryRecord] = field(default_factory=list)
+    _log_by_plant: Dict[str, List[NutrientDeliveryRecord]] = field(
+        default_factory=lambda: defaultdict(list)
+    )
 
     def register_product(self, profile: ProductNutrientProfile) -> None:
         """Register a nutrient profile so it can be referenced by ``log_delivery``."""
@@ -74,14 +77,25 @@ class NutrientTracker:
             volume_l=volume_l,
         )
         self.delivery_log.append(record)
+        self._log_by_plant[plant_id].append(record)
+
+    def _records_for(self, plant_id: Optional[str]) -> Iterable[NutrientDeliveryRecord]:
+        """Return delivery records optionally filtered by ``plant_id``."""
+
+        if plant_id:
+            stored = self._log_by_plant.get(plant_id)
+            if stored and len(stored) == sum(1 for r in self.delivery_log if r.plant_id == plant_id):
+                return stored
+            records = [r for r in self.delivery_log if r.plant_id == plant_id]
+            self._log_by_plant[plant_id] = records
+            return records
+        return self.delivery_log
 
     def summarize_nutrients(self, plant_id: Optional[str] = None) -> Dict[str, float]:
         """Return total ppm delivered across all logged applications."""
 
         summary: Dict[str, float] = defaultdict(float)
-        for record in self.delivery_log:
-            if plant_id and record.plant_id != plant_id:
-                continue
+        for record in self._records_for(plant_id):
             for element, ppm in record.ppm_delivered.items():
                 summary[element] += ppm
         return dict(summary)
@@ -90,9 +104,7 @@ class NutrientTracker:
         """Return total milligrams delivered on ``date``."""
 
         summary: Dict[str, float] = defaultdict(float)
-        for record in self.delivery_log:
-            if plant_id and record.plant_id != plant_id:
-                continue
+        for record in self._records_for(plant_id):
             if record.timestamp.date() != date.date():
                 continue
             for element, ppm in record.ppm_delivered.items():
@@ -108,9 +120,7 @@ class NutrientTracker:
             raise ValueError("start must not be after end")
 
         summary: Dict[str, float] = defaultdict(float)
-        for record in self.delivery_log:
-            if plant_id and record.plant_id != plant_id:
-                continue
+        for record in self._records_for(plant_id):
             if not (start <= record.timestamp <= end):
                 continue
             for element, ppm in record.ppm_delivered.items():
