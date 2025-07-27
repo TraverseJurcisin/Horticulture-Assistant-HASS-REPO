@@ -24,3 +24,5 @@ def test_run_daily_cycle_transpiration(tmp_path):
 
     assert "transpiration" in report
     assert report["transpiration"]["transpiration_ml_day"] > 0
+    assert "environment_score" in report
+    assert "environment_quality" in report

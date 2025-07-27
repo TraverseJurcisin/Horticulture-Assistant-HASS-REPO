@@ -22,7 +22,12 @@ from custom_components.horticulture_assistant.utils.path_utils import (
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile_by_id,
 )
-from plant_engine.environment_manager import compare_environment, optimize_environment
+from plant_engine.environment_manager import (
+    compare_environment,
+    optimize_environment,
+    score_environment,
+    classify_environment_quality,
+)
 from plant_engine.growth_stage import predict_harvest_date, stage_progress
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
 from plant_engine.disease_manager import (
@@ -62,6 +67,8 @@ class DailyReport:
     sensor_summary: dict[str, object] = field(default_factory=dict)
     environment_comparison: dict[str, object] = field(default_factory=dict)
     environment_optimization: dict[str, object] = field(default_factory=dict)
+    environment_score: float | None = None
+    environment_quality: str | None = None
     pest_actions: dict[str, str] = field(default_factory=dict)
     disease_actions: dict[str, str] = field(default_factory=dict)
     deficiency_actions: dict[str, dict[str, str]] = field(default_factory=dict)
@@ -227,6 +234,10 @@ def run_daily_cycle(
     env_compare = compare_environment(current_env, thresholds)
     report.environment_comparison = env_compare
     report.environment_optimization = optimize_environment(
+        current_env, plant_type, stage_name
+    )
+    report.environment_score = score_environment(current_env, plant_type, stage_name)
+    report.environment_quality = classify_environment_quality(
         current_env, plant_type, stage_name
     )
     # Pest and disease alerts (if any observed in profile)

@@ -41,6 +41,8 @@ def test_run_daily_cycle_extended(tmp_path):
     assert report["predicted_harvest_date"] == "2025-05-01"
     assert report["stage_progress_pct"] is not None
     assert "environment_optimization" in report
+    assert "environment_score" in report
+    assert "environment_quality" in report
     assert "fertigation_schedule" in report
     assert "fertigation_cost" in report
     assert (out_dir / f"sample_{report['timestamp'][:10]}.json").exists()
