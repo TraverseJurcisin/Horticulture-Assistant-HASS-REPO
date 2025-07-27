@@ -56,6 +56,29 @@ def test_log_runoff(tmp_path):
     assert data and data[0]["ec"] == 1.5
 
 
+def test_default_model_dataset(tmp_path):
+    """Model loads defaults from bundled dataset when file missing."""
+
+    model = ec_estimator.load_model(base_path=tmp_path)
+    assert isinstance(model, ec_estimator.ECEstimator)
+    assert model.intercept == 0.0
+    assert "moisture" in model.coeffs
+
+
+def test_load_model_cache(tmp_path):
+    """Cached model is reused until cache is cleared."""
+
+    path = tmp_path / "model.json"
+    path.write_text(json.dumps({"intercept": 1, "coeffs": {"moisture": 0.1}}))
+    m1 = ec_estimator.load_model(path)
+    path.write_text(json.dumps({"intercept": 2, "coeffs": {"moisture": 0.2}}))
+    m2 = ec_estimator.load_model(path)
+    assert m1 is m2  # cached instance
+    ec_estimator.clear_model_cache()
+    m3 = ec_estimator.load_model(path)
+    assert m3.intercept == 2
+
+
 def test_estimate_ec_from_logs(tmp_path):
     plant_id = "p1"
     plant_dir = tmp_path / plant_id
