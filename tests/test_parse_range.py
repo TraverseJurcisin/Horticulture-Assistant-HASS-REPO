@@ -19,3 +19,12 @@ def test_parse_range_extra_items():
 
 def test_parse_range_iterable():
     assert parse_range(iter([4, "5", 6])) == (4.0, 5.0)
+
+
+def test_parse_range_reversed_order():
+    assert parse_range([5, 1]) == (1.0, 5.0)
+
+
+def test_parse_range_non_finite():
+    assert parse_range([float("inf"), 1]) is None
+    assert parse_range([float("nan"), 2]) is None
