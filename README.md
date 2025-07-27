@@ -279,11 +279,11 @@ for prod in stream_index():
         print(detail["metadata"]["label_name"])
 ```
 
-Datasets can be overridden by setting environment variables:
+Datasets can be customized or extended at runtime using environment variables:
 - `HORTICULTURE_DATA_DIR` to change the base data directory
 - `HORTICULTURE_OVERLAY_DIR` to merge in custom files
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
-Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately.
+Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately. Dataset loader functions now accept raw dictionaries for easier testing and overrides.
 
 ---
 
