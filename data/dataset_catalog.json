@@ -88,6 +88,7 @@
   "dissolved_oxygen_guidelines.json": "Recommended dissolved oxygen ppm for nutrient solutions.",
   "soil_ec_guidelines.json": "Recommended soil salinity EC ranges for common crops.",
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
+  "wind_actions.json": "Recommended actions for high wind speeds.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
   "co2_prices.json": "Cost per kg of CO₂ for enrichment.",
   "co2_method_efficiency.json": "Relative CO₂ delivery efficiency by enrichment method.",
