@@ -59,3 +59,12 @@ def test_blend_solutions():
     with pytest.raises(ValueError):
         DoseCalculator.blend_solutions(100, -1, 100, 1)
 
+
+def test_calculate_nutrient_dose():
+    grams = DoseCalculator.calculate_nutrient_dose("N", 150, 10, "urea")
+    assert grams == pytest.approx(3.261, rel=1e-3)
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_nutrient_dose("N", 100, 0, "urea")
+    with pytest.raises(ValueError):
+        DoseCalculator.calculate_nutrient_dose("X", 100, 10, "urea")
+
