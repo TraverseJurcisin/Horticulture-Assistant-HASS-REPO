@@ -29,11 +29,13 @@ MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 # Adjustment factors for risk-based interval modifications
 RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
+SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
+_SEVERITY_THRESHOLDS: Dict[str, Dict[str, float]] = load_dataset(SEVERITY_THRESHOLD_FILE)
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS: Dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
@@ -52,6 +54,7 @@ __all__ = [
     "generate_pest_report",
     "get_scouting_method",
     "get_severity_action",
+    "get_severity_thresholds",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
@@ -150,6 +153,12 @@ def get_scouting_method(pest: str) -> str:
     """Return recommended scouting approach for ``pest``."""
 
     return _SCOUTING_METHODS.get(normalize_key(pest), "")
+
+
+def get_severity_thresholds(pest: str) -> Dict[str, float]:
+    """Return population thresholds for severity levels of ``pest``."""
+
+    return _SEVERITY_THRESHOLDS.get(normalize_key(pest), {})
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
@@ -270,9 +279,10 @@ def classify_pest_severity(
 ) -> Dict[str, str]:
     """Return ``low``, ``moderate`` or ``severe`` for each observed pest.
 
-    The classification uses :data:`pest_thresholds.json` values where counts
-    below the threshold are ``"low"``, counts up to double the threshold are
-    ``"moderate"`` and anything higher is ``"severe"``.
+    Severity levels are determined using optional values from
+    :data:`pest_severity_thresholds.json`. When no custom thresholds are
+    defined, the base values from :data:`pest_thresholds.json` are used and a
+    simple doubling rule defines the ``severe`` boundary.
     """
 
     thresholds = get_pest_thresholds(plant_type)
@@ -281,15 +291,22 @@ def classify_pest_severity(
         if count < 0:
             raise ValueError("pest counts must be non-negative")
         key = normalize_key(pest)
-        thresh = thresholds.get(key)
-        if thresh is None:
+        base = thresholds.get(key)
+        if base is None:
             continue
-        if count < thresh:
-            level = "low"
-        elif count < thresh * 2:
+
+        custom = get_severity_thresholds(key)
+        moderate = custom.get("moderate", base)
+        severe = custom.get("severe")
+        if severe is None:
+            severe = moderate * 2 if moderate is not None else None
+
+        if severe is not None and count >= severe:
+            level = "severe"
+        elif count >= moderate:
             level = "moderate"
         else:
-            level = "severe"
+            level = "low"
         severity[key] = level
     return severity
 
