@@ -16,6 +16,7 @@ __all__ = [
     "list_supported_plants",
     "get_daily_use",
     "estimate_area_use",
+    "estimate_area_water_cost",
     "estimate_stage_total_use",
     "estimate_cycle_total_use",
     "estimate_stage_water_cost",
@@ -79,6 +80,22 @@ def estimate_cycle_total_use(plant_type: str) -> float:
         if daily > 0 and duration:
             total += daily * duration
     return round(total, 1)
+
+
+def estimate_area_water_cost(
+    plant_type: str,
+    stage: str,
+    area_m2: float,
+    region: str | None = None,
+) -> float:
+    """Return daily watering cost for ``area_m2`` of crop."""
+
+    volume_ml = estimate_area_use(plant_type, stage, area_m2)
+    if volume_ml <= 0:
+        return 0.0
+    from .water_costs import estimate_water_cost
+
+    return estimate_water_cost(volume_ml / 1000.0, region)
 
 
 def estimate_stage_water_cost(
