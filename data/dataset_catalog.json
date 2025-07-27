@@ -93,6 +93,7 @@
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
   "fertilizers/fertilizer_application_methods.json": "Recommended application methods for each fertilizer product.",
   "fertilizers/fertilizer_application_rates.json": "Recommended grams per liter of fertilizer product.",
+  "fertilizers/fertilizer_compatibility.json": "Compatibility warnings for mixing fertilizer products.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
   "canopy_area.json": "Approximate canopy area (m²) per plant stage.",

@@ -1,0 +1,9 @@
+{
+  "calcium_nitrate": {
+    "magnesium_sulfate": "precipitation risk",
+    "potassium_phosphate": "insoluble reaction"
+  },
+  "magnesium_sulfate": {
+    "calcium_nitrate": "precipitation risk"
+  }
+}
