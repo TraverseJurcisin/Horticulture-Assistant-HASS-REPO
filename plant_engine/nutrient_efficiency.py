@@ -2,9 +2,19 @@
 
 import os
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Mapping, Any
 
-from .utils import load_json
+from .utils import load_json, load_dataset, normalize_key
+
+__all__ = [
+    "calculate_nue",
+    "calculate_nue_for_nutrient",
+    "evaluate_nue",
+    "evaluate_plant_nue",
+]
+
+# Dataset containing NUE targets per crop
+TARGET_FILE = "nutrient_efficiency_targets.json"
 
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
@@ -59,3 +69,55 @@ def calculate_nue_for_nutrient(plant_id: str, nutrient: str) -> float | None:
         return None
     g_applied = mg / 1000
     return round(total_yield_g / g_applied, 2) if g_applied else None
+
+
+def _load_targets(plant_type: str) -> Dict[str, float]:
+    """Return NUE targets for ``plant_type`` from the dataset."""
+
+    data = load_dataset(TARGET_FILE)
+    return data.get(normalize_key(plant_type), {}) if isinstance(data, Mapping) else {}
+
+
+def evaluate_nue(nue: Mapping[str, float], plant_type: str, tolerance: float = 0.1) -> Dict[str, Dict[str, Any]]:
+    """Return NUE assessment compared to targets.
+
+    Parameters
+    ----------
+    nue : Mapping[str, float]
+        Computed nutrient use efficiency values.
+    plant_type : str
+        Crop name used to look up targets in :data:`TARGET_FILE`.
+    tolerance : float, optional
+        Fractional difference allowed before classifying as above or below target.
+    """
+
+    targets = _load_targets(plant_type)
+    results: Dict[str, Dict[str, Any]] = {}
+    for nutrient, value in nue.items():
+        try:
+            val = float(value)
+        except (TypeError, ValueError):
+            continue
+        target = float(targets.get(nutrient, 0))
+        lower = target * (1 - tolerance)
+        upper = target * (1 + tolerance)
+        if target > 0:
+            if val < lower:
+                status = "below target"
+            elif val > upper:
+                status = "above target"
+            else:
+                status = "within target"
+        else:
+            status = "no target"
+        results[nutrient] = {"nue": val, "target": target, "status": status}
+    return results
+
+
+def evaluate_plant_nue(plant_id: str, plant_type: str, tolerance: float = 0.1) -> Dict[str, Dict[str, Any]]:
+    """Return NUE evaluation for a plant using logged data."""
+
+    info = calculate_nue(plant_id)
+    nue_map = info.get("nue", {})
+    return evaluate_nue(nue_map, plant_type, tolerance)
+
