@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 from datetime import date, timedelta
 
 from .utils import load_dataset, normalize_key
@@ -15,6 +15,21 @@ GERMINATION_FILE = "germination_duration.json"
 # Load growth stage dataset once. ``load_dataset`` handles caching.
 _DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
 _GERMINATION: Dict[str, int] = load_dataset(GERMINATION_FILE)
+
+# Precompute cumulative stage end days for quick lookups
+_STAGE_BOUNDS: Dict[str, List[Tuple[str, int]]] = {}
+for plant, stages in _DATA.items():
+    if not isinstance(stages, dict):
+        continue
+    elapsed = 0
+    bounds: List[Tuple[str, int]] = []
+    for stage, info in stages.items():
+        days = info.get("duration_days")
+        if isinstance(days, (int, float)):
+            elapsed += int(days)
+            bounds.append((stage, elapsed))
+    if bounds:
+        _STAGE_BOUNDS[plant] = bounds
 
 
 
@@ -33,6 +48,7 @@ __all__ = [
     "stage_progress_from_dates",
     "get_germination_duration",
     "growth_stage_summary",
+    "stage_bounds",
 ]
 
 
@@ -70,29 +86,22 @@ def get_total_cycle_duration(plant_type: str) -> int | None:
     return total if total > 0 else None
 
 
-def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:
-    """Return the current growth stage given days since planting.
+def stage_bounds(plant_type: str) -> List[Tuple[str, int]]:
+    """Return cumulative ``(stage, end_day)`` pairs for ``plant_type``."""
 
-    The ``growth_stages.json`` dataset defines ``duration_days`` for each stage.
-    Stages are assumed to occur in the order listed in the dataset.  This helper
-    walks through the stages accumulating their durations until the provided age
-    falls within a stage's span. ``None`` is returned if the plant type is
-    unknown or no match is found.
-    """
+    return list(_STAGE_BOUNDS.get(normalize_key(plant_type), []))
+
+
+def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | None:
+    """Return the current growth stage given days since planting."""
+
     if days_since_start < 0:
         raise ValueError("days_since_start must be non-negative")
 
-    stages = _DATA.get(normalize_key(plant_type))
-    if not isinstance(stages, dict):
-        return None
-
-    elapsed = 0
-    for stage_name, info in stages.items():
-        duration = info.get("duration_days")
-        if isinstance(duration, (int, float)):
-            elapsed += int(duration)
-            if days_since_start < elapsed:
-                return stage_name
+    bounds = stage_bounds(plant_type)
+    for stage_name, end_day in bounds:
+        if days_since_start < end_day:
+            return stage_name
 
     return None
 

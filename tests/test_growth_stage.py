@@ -6,6 +6,7 @@ from plant_engine.growth_stage import (
     get_stage_duration,
     estimate_stage_from_age,
     estimate_stage_from_date,
+    stage_bounds,
     predict_harvest_date,
     get_total_cycle_duration,
     stage_progress,
@@ -145,5 +146,11 @@ def test_growth_stage_summary():
 def test_growth_stage_summary_unknown():
     result = growth_stage_summary("unknown")
     assert result["stages"] == []
+
+
+def test_stage_bounds():
+    bounds = stage_bounds("tomato")
+    assert bounds[0] == ("seedling", 30)
+    assert bounds[-1][1] == 120
 
 
