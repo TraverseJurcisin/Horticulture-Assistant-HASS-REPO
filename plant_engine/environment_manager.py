@@ -64,6 +64,13 @@ ENV_ALIASES = {
     "soil_temp_f": ["soil_temp_f", "soil_temp_fahrenheit"],
     # Kelvin readings are converted to Celsius during normalization
     "soil_temp_k": ["soil_temp_k", "soil_temperature_k", "soil_temp_kelvin"],
+    # Leaf temperature aliases with unit variants
+    "leaf_temp_c": ["leaf_temp_c", "leaf_temp", "leaf_temperature"],
+    "leaf_temp_f": ["leaf_temp_f", "leaf_temp_fahrenheit"],
+    "leaf_temp_k": ["leaf_temp_k", "leaf_temp_kelvin"],
+    # Additional common names
+    "dli": ["dli", "daily_light_integral"],
+    "photoperiod_hours": ["photoperiod_hours", "photoperiod", "day_length"],
 }
 
 # reverse mapping for constant time alias lookups
@@ -202,10 +209,10 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             val = float(value)
         except (TypeError, ValueError):
             continue
-        if canonical in {"temp_f", "soil_temp_f"}:
+        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
             val = (val - 32) * 5 / 9
             canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k"}:
+        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
             val = val - 273.15
             canonical = canonical.replace("_k", "_c")
         normalized[canonical] = val
