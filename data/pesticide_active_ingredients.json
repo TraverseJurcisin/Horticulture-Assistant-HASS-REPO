@@ -1,0 +1,72 @@
+{
+  "imidacloprid": {
+    "class": "neonicotinoid",
+    "mode_of_action": "acetylcholine receptor agonist",
+    "reentry_interval_hours": 12,
+    "withdrawal_days": 7,
+    "toxicity": "moderate"
+  },
+  "spinosad": {
+    "class": "spinosyn",
+    "mode_of_action": "nicotinic acetylcholine receptor modulator",
+    "reentry_interval_hours": 4,
+    "withdrawal_days": 1,
+    "toxicity": "low"
+  },
+  "pyrethrin": {
+    "class": "pyrethroid",
+    "mode_of_action": "sodium channel modulator",
+    "reentry_interval_hours": 0,
+    "withdrawal_days": 0,
+    "toxicity": "low"
+  },
+  "sulfur": {
+    "class": "inorganic",
+    "mode_of_action": "cellular respiration disruptor",
+    "reentry_interval_hours": 0,
+    "withdrawal_days": 0,
+    "toxicity": "low"
+  },
+  "copper_sulfate": {
+    "class": "inorganic",
+    "mode_of_action": "multi-site",
+    "reentry_interval_hours": 24,
+    "withdrawal_days": 0,
+    "toxicity": "high"
+  },
+  "neem_oil": {
+    "class": "botanical",
+    "mode_of_action": "multiple",
+    "reentry_interval_hours": 4,
+    "withdrawal_days": 0,
+    "toxicity": "low"
+  },
+  "acephate": {
+    "class": "organophosphate",
+    "mode_of_action": "acetylcholinesterase inhibitor",
+    "reentry_interval_hours": 24,
+    "withdrawal_days": 3,
+    "toxicity": "high"
+  },
+  "bifenthrin": {
+    "class": "pyrethroid",
+    "mode_of_action": "sodium channel modulator",
+    "reentry_interval_hours": 12,
+    "withdrawal_days": 1,
+    "toxicity": "moderate"
+  },
+  "potassium_bicarbonate": {
+    "class": "inorganic",
+    "mode_of_action": "cell membrane disruptor",
+    "reentry_interval_hours": 1,
+    "withdrawal_days": 0,
+    "toxicity": "low"
+  },
+  "bacillus_thuringiensis": {
+    "class": "microbial",
+    "mode_of_action": "midgut membrane disruptor",
+    "reentry_interval_hours": 4,
+    "withdrawal_days": 0,
+    "toxicity": "low"
+  }
+}

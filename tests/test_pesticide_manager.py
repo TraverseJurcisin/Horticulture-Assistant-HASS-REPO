@@ -179,4 +179,18 @@ def test_get_pesticide_price_and_cost():
     assert cost == 0.15
 
 
+def test_active_ingredient_info():
+    from plant_engine.pesticide_manager import (
+        get_active_ingredient_info,
+        list_active_ingredients,
+    )
+
+    info = get_active_ingredient_info("spinosad")
+    assert info["class"] == "spinosyn"
+    assert "mode_of_action" in info
+
+    ingredients = list_active_ingredients()
+    assert "imidacloprid" in ingredients
+
+
 

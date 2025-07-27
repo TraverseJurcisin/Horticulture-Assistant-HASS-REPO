@@ -13,6 +13,7 @@ ROTATION_FILE = "pesticide_rotation_intervals.json"
 PHYTO_FILE = "pesticide_phytotoxicity.json"
 RATE_FILE = "pesticide_application_rates.json"
 PRICE_FILE = "pesticide_prices.json"
+ACTIVE_FILE = "pesticide_active_ingredients.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
@@ -22,6 +23,7 @@ _ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
 _PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
 _RATES: Dict[str, float] = load_dataset(RATE_FILE)
 _PRICES: Dict[str, float] = load_dataset(PRICE_FILE)
+_ACTIVE: Dict[str, Dict[str, object]] = load_dataset(ACTIVE_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -44,6 +46,8 @@ __all__ = [
     "estimate_application_cost",
     "calculate_application_amount",
     "summarize_pesticide_restrictions",
+    "get_active_ingredient_info",
+    "list_active_ingredients",
 ]
 
 
@@ -314,3 +318,15 @@ def summarize_pesticide_restrictions(
     if earliest_harvest is not None:
         info["harvest_date"] = earliest_harvest
     return info
+
+
+def get_active_ingredient_info(name: str) -> Dict[str, object] | None:
+    """Return detailed info for a pesticide active ingredient."""
+
+    return _ACTIVE.get(name.lower())
+
+
+def list_active_ingredients() -> List[str]:
+    """Return sorted list of known active ingredient names."""
+
+    return sorted(_ACTIVE.keys())
