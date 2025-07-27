@@ -249,6 +249,28 @@ def test_recommend_precise_fertigation():
     assert "ppm" in diag
 
 
+def test_recommend_precise_fertigation_with_injection():
+    from plant_engine.fertigation import recommend_precise_fertigation_with_injection
+
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+
+    sched, total, breakdown, warnings, diag, inject = recommend_precise_fertigation_with_injection(
+        "tomato",
+        "vegetative",
+        10.0,
+        fertilizers=fert_map,
+        include_micro=False,
+    )
+
+    assert sched
+    assert inject
+    assert total >= 0
+
+
 def test_generate_cycle_fertigation_plan():
     from plant_engine.fertigation import generate_cycle_fertigation_plan
 
