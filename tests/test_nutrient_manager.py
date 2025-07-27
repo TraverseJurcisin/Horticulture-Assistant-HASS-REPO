@@ -192,3 +192,13 @@ def test_calculate_deficiency_index():
 
     index2 = calculate_deficiency_index(guidelines, "tomato", "fruiting")
     assert index2 == 0.0
+
+
+def test_calculate_nutrient_adjustments():
+    from plant_engine.nutrient_manager import calculate_nutrient_adjustments
+
+    current = {"N": 60, "P": 55, "K": 110}
+    adj = calculate_nutrient_adjustments(current, "tomato", "fruiting")
+    assert adj["N"] == 20
+    assert adj["P"] == 5
+    assert adj["K"] == 10
