@@ -14,6 +14,7 @@ __all__ = [
     "get_daily_uptake",
     "estimate_stage_totals",
     "estimate_total_uptake",
+    "estimate_average_daily_uptake",
     "get_uptake_ratio",
 ]
 
@@ -75,3 +76,20 @@ def estimate_total_uptake(plant_type: str) -> Dict[str, float]:
         for nutrient, mg in stage_totals.items():
             totals[nutrient] = round(totals.get(nutrient, 0.0) + mg, 2)
     return totals
+
+
+def estimate_average_daily_uptake(plant_type: str) -> Dict[str, float]:
+    """Return average daily nutrient demand for the full crop cycle."""
+
+    totals = estimate_total_uptake(plant_type)
+    if not totals:
+        return {}
+
+    from .growth_stage import get_total_cycle_duration
+
+    days = get_total_cycle_duration(plant_type)
+    if not days:
+        return {}
+
+    return {nutrient: round(mg / days, 2) for nutrient, mg in totals.items()}
+
