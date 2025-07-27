@@ -1,8 +1,12 @@
-import json
+"""Simplified irrigation trigger helper."""
+
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,10 +33,9 @@ def irrigation_trigger(
         _LOGGER.error("Plant profile file not found for plant_id: %s", plant_id)
         return False
     try:
-        with open(profile_path, "r", encoding="utf-8") as f:
-            profile_data = json.load(f)
-    except Exception as e:
-        _LOGGER.error("Failed to load profile for plant_id %s: %s", plant_id, e)
+        profile_data = load_json(str(profile_path))
+    except Exception as exc:  # pragma: no cover - log and fail gracefully
+        _LOGGER.error("Failed to load profile for plant_id %s: %s", plant_id, exc)
         return False
 
     # Check if irrigation is globally enabled for this plant
@@ -96,8 +99,18 @@ def irrigation_trigger(
 
     # Compare the current moisture against the threshold
     if current_val < threshold_val:
-        _LOGGER.info("Soil moisture below threshold for plant_id %s (%.2f < %.2f). Triggering irrigation.", plant_id, current_val, threshold_val)
+        _LOGGER.info(
+            "Soil moisture below threshold for plant_id %s (%.2f < %.2f). Triggering irrigation.",
+            plant_id,
+            current_val,
+            threshold_val,
+        )
         return True
-    else:
-        _LOGGER.info("Soil moisture sufficient for plant_id %s (%.2f >= %.2f). No irrigation needed.", plant_id, current_val, threshold_val)
-        return False
+
+    _LOGGER.info(
+        "Soil moisture sufficient for plant_id %s (%.2f >= %.2f). No irrigation needed.",
+        plant_id,
+        current_val,
+        threshold_val,
+    )
+    return False

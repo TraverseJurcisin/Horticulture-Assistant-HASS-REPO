@@ -27,6 +27,7 @@ EC_FACTOR_DATA = "ion_ec_factors.json"
 STOCK_DATA = "stock_solution_concentrations.json"
 SOLUBILITY_DATA = "fertilizer_solubility.json"
 RECIPE_DATA = "fertigation_recipes.json"
+STOCK_RECIPE_DATA = "stock_solution_recipes.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
@@ -41,6 +42,7 @@ _NUTRIENT_STOCK_MAP = {
 }
 _SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 _RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
+_STOCK_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(STOCK_RECIPE_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -103,6 +105,32 @@ def apply_fertigation_recipe(
         raise ValueError("volume_l must be positive")
     base = get_fertigation_recipe(plant_type, stage)
     return {fid: round(g * volume_l, 3) for fid, g in base.items()}
+
+
+@lru_cache(maxsize=None)
+def get_stock_solution_recipe(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return stock solution mL per liter for a plant stage."""
+    plant = _STOCK_RECIPES.get(normalize_key(plant_type), {})
+    recipe = plant.get(normalize_key(stage)) if isinstance(plant, Mapping) else None
+    if not isinstance(recipe, Mapping):
+        return {}
+    result: Dict[str, float] = {}
+    for sid, ml in recipe.items():
+        try:
+            result[sid] = float(ml)
+        except (TypeError, ValueError):
+            continue
+    return result
+
+
+def apply_stock_solution_recipe(
+    plant_type: str, stage: str, volume_l: float
+) -> Dict[str, float]:
+    """Return stock solution volumes (mL) for ``volume_l`` injection."""
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    base = get_stock_solution_recipe(plant_type, stage)
+    return {sid: round(ml * volume_l, 2) for sid, ml in base.items()}
 
 
 @lru_cache(maxsize=None)
@@ -225,6 +253,8 @@ __all__ = [
     "recommend_recovery_adjusted_schedule",
     "get_fertigation_recipe",
     "apply_fertigation_recipe",
+    "get_stock_solution_recipe",
+    "apply_stock_solution_recipe",
     "generate_fertigation_plan",
     "calculate_mix_nutrients",
     "estimate_solution_ec",

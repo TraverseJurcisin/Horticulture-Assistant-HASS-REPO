@@ -249,6 +249,7 @@ Important categories include:
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
+- **Stock solution recipes** – injection ratios for automated fertigation
 - **Fertilizer compatibility** – warnings for mixing products that react poorly
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
@@ -311,6 +312,7 @@ python scripts/train_ec_model.py samples.csv --plant-id myplant
 python scripts/profile_manager.py load-default tomato my_plant
 python scripts/profile_manager.py list-sensors my_plant
 python scripts/precision_fertigation.py tomato vegetative 10
+python scripts/precision_fertigation.py tomato vegetative 10 --use-stock-recipe
 python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
 ```
 
