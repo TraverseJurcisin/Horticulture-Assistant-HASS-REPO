@@ -2,11 +2,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, asdict
-from datetime import date
+from datetime import date, timedelta
 from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
-from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
+from .monitor_utils import (
+    get_interval as _get_interval,
+    next_date as _next_date,
+    generate_schedule as _generate_schedule,
+    calculate_risk_score,
+)
 from .disease_manager import recommend_treatments, recommend_prevention
 from . import disease_manager
 
@@ -40,6 +45,7 @@ __all__ = [
     "generate_monitoring_schedule",
     "generate_disease_report",
     "DiseaseReport",
+    "summarize_disease_management",
 ]
 
 
@@ -225,3 +231,36 @@ def generate_disease_report(plant_type: str, observations: Mapping[str, int]) ->
         severity_actions=severity_actions,
     )
     return report.as_dict()
+
+
+def summarize_disease_management(
+    plant_type: str,
+    stage: str | None,
+    observations: Mapping[str, int],
+    environment: Mapping[str, float] | None = None,
+    last_date: date | None = None,
+) -> Dict[str, object]:
+    """Return consolidated disease status and recommendations."""
+
+    report = generate_disease_report(plant_type, observations)
+
+    risk: Dict[str, str] | None = None
+    risk_score: float | None = None
+    next_date_val: date | None = None
+    interval: int | None = None
+    if environment is not None:
+        risk = estimate_adjusted_disease_risk(plant_type, environment)
+        risk_score = calculate_risk_score(risk)
+        if last_date is not None:
+            interval = risk_adjusted_monitor_interval(plant_type, stage, environment)
+            if interval is not None:
+                next_date_val = last_date + timedelta(days=interval)
+
+    data = {**report, "risk": risk or {}}
+    if risk_score is not None:
+        data["risk_score"] = risk_score
+    if interval is not None:
+        data["monitor_interval_days"] = interval
+    if next_date_val is not None:
+        data["next_monitor_date"] = next_date_val
+    return data
