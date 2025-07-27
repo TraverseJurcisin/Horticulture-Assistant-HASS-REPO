@@ -15,6 +15,7 @@ from plant_engine.pest_monitor import (
     generate_detailed_monitoring_schedule,
     risk_adjusted_monitor_interval,
     get_scouting_method,
+    get_severity_thresholds,
     summarize_pest_management,
 )
 
@@ -64,6 +65,32 @@ def test_classify_pest_severity():
     severity = classify_pest_severity("citrus", obs)
     assert severity["aphids"] == "low"
     assert severity["scale"] == "severe"
+
+
+def test_classify_pest_severity_custom_thresholds(tmp_path, monkeypatch):
+    override = tmp_path / "data"
+    override.mkdir()
+    path = override / "pest_severity_thresholds.json"
+    path.write_text('{"aphids": {"moderate": 4, "severe": 8}}')
+
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(override))
+    from plant_engine import pest_monitor
+    from plant_engine.utils import clear_dataset_cache, load_dataset
+
+    clear_dataset_cache()
+    pest_monitor._SEVERITY_THRESHOLDS = load_dataset(pest_monitor.SEVERITY_THRESHOLD_FILE)
+
+    severity = pest_monitor.classify_pest_severity("citrus", {"aphids": 9})
+    assert severity["aphids"] == "severe"
+
+    monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR")
+    clear_dataset_cache()
+    pest_monitor._SEVERITY_THRESHOLDS = load_dataset(pest_monitor.SEVERITY_THRESHOLD_FILE)
+
+
+def test_get_severity_thresholds():
+    thr = get_severity_thresholds("scale")
+    assert thr["severe"] == 4
 
 
 def test_negative_counts_raise():
