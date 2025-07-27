@@ -83,10 +83,11 @@ def test_full_flow(monkeypatch):
 
     flow = Flow()
     flow.hass = object()
-    result = asyncio.run(flow.async_step_user({"plant_name": "Tomato"}))
+    result = asyncio.run(flow.async_step_user({"plant_name": "Tomato", "zone_id": "4"}))
     assert result["type"] == "create_entry"
     assert flow.created_entry["data"]["plant_name"] == "Tomato"
     assert recorded["plant_name"] == "Tomato"
+    assert recorded["zone_id"] == "4"
     assert recorded["hass"] is flow.hass
     assert flow.created_entry["data"]["plant_id"] == "pid42"
     assert flow.created_entry["data"]["profile_generated"] is True
