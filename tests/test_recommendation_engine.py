@@ -30,6 +30,7 @@ def test_recommendation_engine_requires_approval():
     assert rec.requires_approval is True
     assert rec.fertilizers[0].product_name == "n_fert"
     assert rec.fertilizers[0].reason == "N deficit"
+    assert rec.fertilizers[0].severity == "severe"
     assert rec.irrigation.volume_liters == 0.05
     assert "check drainage" in rec.notes
 
@@ -53,3 +54,10 @@ def test_recommendation_engine_recommend_all_and_reset():
     eng.reset_state()
     assert eng.plant_profiles == {}
     assert eng._element_map == {}
+
+
+def test_fertilizer_recommendation_severity():
+    eng = _setup_engine(auto=False)
+    rec = eng.recommend("p1")
+    fert = rec.fertilizers[0]
+    assert fert.severity in {"mild", "moderate", "severe"}
