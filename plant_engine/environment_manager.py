@@ -176,7 +176,12 @@ def get_combined_environmental_targets(
 def recommend_climate_adjustments(
     current_env: Mapping[str, float], zone: str
 ) -> Dict[str, str]:
-    """Return simple adjustment suggestions for ``zone`` based on ``current_env``."""
+    """Return simple adjustment suggestions for ``zone`` based on ``current_env``.
+
+    The returned mapping may include keys ``temperature``, ``humidity``, ``light``
+    and ``co2`` with human readable instructions to raise or lower the value
+    into the recommended range for the climate zone.
+    """
 
     guide = get_climate_guidelines(zone)
     env = normalize_environment_readings(current_env)
@@ -189,6 +194,7 @@ def recommend_climate_adjustments(
                 suggestions["temperature"] = f"raise to {low}-{high}°C"
             elif temp > high:
                 suggestions["temperature"] = f"lower to {low}-{high}°C"
+
     if guide.humidity_pct is not None:
         low, high = guide.humidity_pct
         rh = env.get("humidity_pct")
@@ -197,6 +203,25 @@ def recommend_climate_adjustments(
                 suggestions["humidity"] = f"increase to {low}-{high}%"
             elif rh > high:
                 suggestions["humidity"] = f"decrease to {low}-{high}%"
+
+    if guide.light_ppfd is not None:
+        low, high = guide.light_ppfd
+        light = env.get("light_ppfd")
+        if light is not None:
+            if light < low:
+                suggestions["light"] = f"increase to {low}-{high} µmol/m²/s"
+            elif light > high:
+                suggestions["light"] = f"reduce to {low}-{high} µmol/m²/s"
+
+    if guide.co2_ppm is not None:
+        low, high = guide.co2_ppm
+        co2 = env.get("co2_ppm")
+        if co2 is not None:
+            if co2 < low:
+                suggestions["co2"] = f"raise to {low}-{high} ppm"
+            elif co2 > high:
+                suggestions["co2"] = f"lower to {low}-{high} ppm"
+
     return suggestions
 
 
