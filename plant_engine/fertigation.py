@@ -27,6 +27,7 @@ EC_FACTOR_DATA = "ion_ec_factors.json"
 STOCK_DATA = "stock_solution_concentrations.json"
 SOLUBILITY_DATA = "fertilizer_solubility.json"
 RECIPE_DATA = "fertigation_recipes.json"
+PUMP_FLOW_FILE = "pump_flow_rates.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
@@ -41,6 +42,7 @@ _NUTRIENT_STOCK_MAP = {
 }
 _SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 _RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
+_PUMP_FLOW: Dict[str, float] = load_dataset(PUMP_FLOW_FILE)
 
 
 @lru_cache(maxsize=None)
@@ -240,6 +242,8 @@ __all__ = [
     "grams_to_ppm",
     "check_solubility_limits",
     "recommend_stock_solution_injection",
+    "estimate_injection_time",
+    "get_pump_flow_rate",
     "validate_fertigation_schedule",
     "summarize_fertigation_schedule",
 ]
@@ -1212,6 +1216,25 @@ def recommend_stock_solution_injection(
         volumes[solution] = round(volumes.get(solution, 0.0) + ml, 2)
 
     return volumes
+
+
+@lru_cache(maxsize=None)
+def get_pump_flow_rate(pump_id: str) -> float | None:
+    """Return injector pump flow rate in mL per minute."""
+
+    rate = _PUMP_FLOW.get(normalize_key(pump_id))
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def estimate_injection_time(volume_ml: float, flow_rate_ml_min: float) -> float:
+    """Return minutes required to inject ``volume_ml`` at ``flow_rate_ml_min``."""
+
+    if volume_ml <= 0 or flow_rate_ml_min <= 0:
+        raise ValueError("volume_ml and flow_rate_ml_min must be positive")
+    return round(volume_ml / flow_rate_ml_min, 2)
 
 
 def validate_fertigation_schedule(

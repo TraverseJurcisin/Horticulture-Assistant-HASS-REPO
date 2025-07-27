@@ -458,3 +458,17 @@ def test_estimate_weekly_fertigation_cost():
     )
     assert cost > 0
 
+
+def test_get_pump_flow_rate():
+    from plant_engine.fertigation import get_pump_flow_rate
+    assert get_pump_flow_rate("generic_pump") == 1000
+    assert get_pump_flow_rate("unknown") is None
+
+
+def test_estimate_injection_time():
+    from plant_engine.fertigation import estimate_injection_time
+    assert estimate_injection_time(1000, 500) == 2.0
+    with pytest.raises(ValueError):
+        estimate_injection_time(0, 500)
+    with pytest.raises(ValueError):
+        estimate_injection_time(100, 0)

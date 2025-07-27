@@ -138,5 +138,7 @@
   "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
   "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products",
   "propagation_guidelines.json": "Recommended environmental conditions for plant propagation methods.",
-  "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
+  "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone.",
+  "pump_flow_rates.json": "Default flow rates for injector pumps in mL/min."
 }
+
