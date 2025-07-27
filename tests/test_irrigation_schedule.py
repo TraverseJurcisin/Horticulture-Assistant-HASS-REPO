@@ -1,4 +1,5 @@
 from custom_components.horticulture_assistant.utils.irrigation_schedule import (
+    Schedule,
     parse_schedule,
 )
 
@@ -24,4 +25,11 @@ def test_parse_schedule_pulsed():
     }
     sched = parse_schedule(data)
     assert sched.pulses == {"p1": ["08:00", "08:30"], "p2": ["12:00"]}
+
+
+def test_schedule_from_dict_and_as_dict():
+    mapping = {"method": "volume", "volume_l": "5"}
+    sched = Schedule.from_dict(mapping)
+    assert sched.volume_l == 5.0
+    assert sched.as_dict()["volume_l"] == 5.0
 

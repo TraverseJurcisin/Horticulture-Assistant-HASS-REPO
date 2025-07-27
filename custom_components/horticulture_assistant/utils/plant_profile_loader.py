@@ -294,7 +294,7 @@ def _get_sensor_container(profile: Mapping[str, Any]) -> dict:
 
 
 def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
-    """Return ``sensors`` with all values converted to lists."""
+    """Return ``sensors`` with all entries coerced to lists of strings."""
 
     normalized: dict[str, list] = {}
     for key, val in sensors.items():
@@ -302,7 +302,7 @@ def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
             normalized[key] = [val]
         else:
             try:
-                normalized[key] = list(val)
+                normalized[key] = [str(v) for v in val]
             except TypeError:
                 normalized[key] = []
     return normalized
