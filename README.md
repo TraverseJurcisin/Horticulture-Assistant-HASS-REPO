@@ -14,6 +14,7 @@ Horticulture Assistant integrates per-plant automation and crop monitoring into 
 - [Working with Plant Profiles](#working-with-plant-profiles)
   - [Profile Format](#profile-format)
   - [Plant Registry](#plant-registry)
+  - [Managing Existing Profiles](#managing-existing-profiles)
 - [Reference Data](#reference-data)
 - [Command Line Utilities](#command-line-utilities)
 - [Advanced Usage](#advanced-usage)
@@ -148,6 +149,33 @@ Multiple profiles can be indexed in `plant_registry.json` so automations can dis
 }
 ```
 Tags defined in `tags.json` allow you to group plants for dashboards and analytics.
+
+## Managing Existing Profiles
+Use `profile_manager.py` to update sensor mappings, view log history and tweak
+preferences without editing JSON files. The script lives in the `scripts/`
+directory and accepts several subcommands:
+
+```bash
+# add or remove sensor entity IDs
+python scripts/profile_manager.py attach-sensor <plant_id> <sensor_type> sensor.a sensor.b
+python scripts/profile_manager.py detach-sensor <plant_id> <sensor_type> sensor.a
+python scripts/profile_manager.py list-sensors <plant_id>
+
+# read the last entries from a log
+python scripts/profile_manager.py show-history <plant_id> events --lines 10
+
+# change preferences like automation flags
+python scripts/profile_manager.py set-pref <plant_id> auto_approve_all true
+
+# load a new local profile from a global template
+python scripts/profile_manager.py list-globals
+python scripts/profile_manager.py load-default tomato my_tomato
+
+# override default paths
+python scripts/profile_manager.py attach-sensor myplant moisture sensor.new --plants-dir /path/to/profiles \
+  --global-dir /path/to/global_templates
+```
+
 
 ---
 
