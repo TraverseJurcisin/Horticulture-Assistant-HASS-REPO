@@ -52,6 +52,7 @@ def calculate_eta(et0: float, kc: float = 1.0) -> float:
 
 
 ET0_DATA_FILE = "reference_et0.json"
+ET0_RANGE_FILE = "reference_et0_range.json"
 
 
 @lru_cache(maxsize=None)
@@ -66,10 +67,30 @@ def get_reference_et0(month: int) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
 
 
+@lru_cache(maxsize=None)
+def get_reference_et0_range(month: int) -> tuple[float, float] | None:
+    """Return (min, max) ET₀ for ``month`` if available."""
+
+    if not 1 <= month <= 12:
+        raise ValueError("month must be between 1 and 12")
+
+    data = load_dataset(ET0_RANGE_FILE)
+    value = data.get(str(month))
+    if (
+        isinstance(value, (list, tuple))
+        and len(value) >= 2
+        and all(isinstance(v, (int, float)) for v in value[:2])
+    ):
+        low, high = float(value[0]), float(value[1])
+        return (low, high) if low <= high else (high, low)
+    return None
+
+
 __all__ = [
     "calculate_et0",
     "calculate_eta",
     "get_reference_et0",
+    "get_reference_et0_range",
     "estimate_stage_et",
 ]
 
