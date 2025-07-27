@@ -38,19 +38,15 @@ _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
 
 
-def _load(obj):
-    """Return dataset contents regardless of lazy or eager storage."""
+def _load(data):
+    """Return dataset contents whether eager mapping or lazy loader."""
 
-    return obj() if callable(obj) else obj
+    return data() if callable(data) else data
+
+
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
-
-
-def _load(data):
-    """Return dataset contents supporting direct dict overrides."""
-
-    return data() if callable(data) else data
 
 __all__ = [
     "list_supported_plants",
