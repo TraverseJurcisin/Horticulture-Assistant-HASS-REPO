@@ -7,7 +7,8 @@ import os
 import math
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, Mapping, Iterable
+from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
+from os import PathLike
 
 import yaml
 
@@ -33,7 +34,14 @@ __all__ = [
 ]
 
 
-def load_json(path: str) -> Dict[str, Any]:
+PathType = Union[str, PathLike]
+
+
+def _open_text(path: Path) -> TextIO:
+    return open(path, "r", encoding="utf-8")
+
+
+def load_json(path: PathType) -> Dict[str, Any]:
     """Return the parsed JSON contents of ``path``.
 
     A :class:`FileNotFoundError` is raised if the file does not exist and a
@@ -41,38 +49,41 @@ def load_json(path: str) -> Dict[str, Any]:
     The error message always includes the file path to aid debugging.
     """
 
-    if not os.path.exists(path):
-        raise FileNotFoundError(path)
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(p)
 
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with _open_text(p) as f:
             return json.load(f)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
+        raise ValueError(f"Invalid JSON in {p}: {exc}") from exc
 
 
-def load_data(path: str) -> Any:
+def load_data(path: PathType) -> Any:
     """Return the parsed contents of ``path`` supporting JSON or YAML."""
 
-    if not os.path.exists(path):
-        raise FileNotFoundError(path)
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(p)
 
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            if path.lower().endswith((".yaml", ".yml")):
+        with _open_text(p) as f:
+            if p.suffix.lower() in {".yaml", ".yml"}:
                 return yaml.safe_load(f) or {}
             return json.load(f)
     except yaml.YAMLError as exc:
-        raise ValueError(f"Invalid YAML in {path}: {exc}") from exc
+        raise ValueError(f"Invalid YAML in {p}: {exc}") from exc
     except json.JSONDecodeError as exc:
-        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
+        raise ValueError(f"Invalid JSON in {p}: {exc}") from exc
 
 
-def save_json(path: str, data: Dict[str, Any]) -> bool:
+def save_json(path: PathType, data: Dict[str, Any]) -> bool:
     """Write ``data`` to ``path`` and return ``True`` on success."""
 
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
     return True
 

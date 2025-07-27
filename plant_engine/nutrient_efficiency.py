@@ -1,6 +1,7 @@
 """Calculate nutrient use efficiency from application and yield logs."""
 
 import os
+from pathlib import Path
 from typing import Dict, Tuple
 
 from .utils import load_json
@@ -14,8 +15,8 @@ YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     """Return total nutrients applied (mg) and total yield (g)."""
 
-    path_nutrients = os.path.join(NUTRIENT_DIR, f"{plant_id}.json")
-    if not os.path.exists(path_nutrients):
+    path_nutrients = Path(NUTRIENT_DIR) / f"{plant_id}.json"
+    if not path_nutrients.exists():
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
 
     nutrient_log = load_json(path_nutrients)
@@ -25,8 +26,8 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
         for k, v in entry.get("nutrients_mg", {}).items():
             total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
 
-    path_yield = os.path.join(YIELD_DIR, f"{plant_id}.json")
-    if not os.path.exists(path_yield):
+    path_yield = Path(YIELD_DIR) / f"{plant_id}.json"
+    if not path_yield.exists():
         raise FileNotFoundError(f"No yield record found for {plant_id}")
 
     yield_data = load_json(path_yield)

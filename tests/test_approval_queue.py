@@ -25,13 +25,13 @@ def test_queue_and_apply(tmp_path, monkeypatch):
     assert pending_data["changes"]["soil_moisture_pct"]["proposed_value"] == 35
 
     # Approve one change
-    pending = load_json(str(pending_file))
+    pending = load_json(pending_file)
     pending["changes"]["soil_moisture_pct"]["status"] = "approved"
     pending_file.write_text(json.dumps(pending))
 
     # Apply
-    approval_queue.apply_approved_thresholds(str(plant_path), str(pending_file))
-    updated = load_json(str(plant_path))
+    approval_queue.apply_approved_thresholds(plant_path, pending_file)
+    updated = load_json(plant_path)
     assert updated["thresholds"]["soil_moisture_pct"] == 35
     assert "ec" not in updated["thresholds"]
 

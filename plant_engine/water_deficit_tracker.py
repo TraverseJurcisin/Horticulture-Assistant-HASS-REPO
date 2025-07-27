@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from typing import Dict, Optional, Any
@@ -66,9 +67,9 @@ def update_water_balance(
 
     os.makedirs(storage_path, exist_ok=True)
     today = datetime.now().strftime("%Y-%m-%d")
-    file_path = os.path.join(storage_path, f"{plant_id}.json")
+    file_path = Path(storage_path) / f"{plant_id}.json"
 
-    if os.path.exists(file_path):
+    if file_path.exists():
         history = load_json(file_path)
     else:
         history = {}
@@ -117,8 +118,8 @@ def update_water_balance(
 
 def load_water_balance(plant_id: str, storage_path: str = STORAGE_PATH) -> Dict[str, Any]:
     """Return the logged water balance history for ``plant_id``."""
-    file_path = os.path.join(storage_path, f"{plant_id}.json")
-    if not os.path.exists(file_path):
+    file_path = Path(storage_path) / f"{plant_id}.json"
+    if not file_path.exists():
         return {}
     return load_json(file_path)
 

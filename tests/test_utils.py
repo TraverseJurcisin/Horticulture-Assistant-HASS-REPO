@@ -26,20 +26,20 @@ def test_normalize_key_non_string():
 def test_load_json_success(tmp_path):
     path = tmp_path / "data.json"
     path.write_text('{"a":1}')
-    assert load_json(str(path)) == {"a": 1}
+    assert load_json(path) == {"a": 1}
 
 
 def test_load_json_missing(tmp_path):
     missing = tmp_path / "missing.json"
     with pytest.raises(FileNotFoundError):
-        load_json(str(missing))
+        load_json(missing)
 
 
 def test_load_json_invalid(tmp_path):
     bad = tmp_path / "bad.json"
     bad.write_text("{oops}")
     with pytest.raises(ValueError):
-        load_json(str(bad))
+        load_json(bad)
 
 
 def test_clear_dataset_cache(monkeypatch, tmp_path):
