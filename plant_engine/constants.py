@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .utils import load_dataset, normalize_key
+from .utils import lazy_dataset, normalize_key
 
 _MULTIPLIER_FILE = "stage_multipliers.json"
 _DEFAULT_MULTIPLIERS: dict[str, float] = {
@@ -12,17 +12,19 @@ _DEFAULT_MULTIPLIERS: dict[str, float] = {
     "fruiting": 1.1,
 }
 
-try:
-    STAGE_MULTIPLIERS: dict[str, float] = (
-        load_dataset(_MULTIPLIER_FILE) or _DEFAULT_MULTIPLIERS
-    )
-except Exception:  # pragma: no cover - dataset loading should succeed
-    STAGE_MULTIPLIERS = _DEFAULT_MULTIPLIERS
+_multipliers = lazy_dataset(_MULTIPLIER_FILE)
+
+
+def stage_multipliers() -> dict[str, float]:
+    """Return cached stage multiplier mapping."""
+
+    data = _multipliers() or _DEFAULT_MULTIPLIERS
+    return {k: float(v) for k, v in data.items()}
 
 def get_stage_multiplier(stage: str) -> float:
     """Return nutrient multiplier for ``stage`` with fallback to ``1.0``."""
 
-    return float(STAGE_MULTIPLIERS.get(normalize_key(stage), 1.0))
+    return float(stage_multipliers().get(normalize_key(stage), 1.0))
 
 # Default environment readings applied when a plant profile lacks recent data.
 DEFAULT_ENV: dict[str, float] = {
@@ -34,4 +36,4 @@ DEFAULT_ENV: dict[str, float] = {
     "wind_speed_m_s": 1.2,
 }
 
-__all__ = ["STAGE_MULTIPLIERS", "get_stage_multiplier", "DEFAULT_ENV"]
+__all__ = ["stage_multipliers", "get_stage_multiplier", "DEFAULT_ENV"]

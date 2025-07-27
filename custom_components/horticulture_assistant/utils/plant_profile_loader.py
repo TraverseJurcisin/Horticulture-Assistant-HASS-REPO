@@ -211,6 +211,32 @@ def save_profile_by_id(
     return save_profile_to_path(profile, file_path)
 
 
+def profile_exists(plant_id: str, base_dir: str | Path | None = None) -> bool:
+    """Return ``True`` if a profile file exists for ``plant_id``."""
+
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    for ext in (".json", ".yaml", ".yml"):
+        if (directory / f"{plant_id}{ext}").is_file():
+            return True
+    return False
+
+
+def delete_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> bool:
+    """Delete the profile file for ``plant_id``."""
+
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    deleted = False
+    for ext in (".json", ".yaml", ".yml"):
+        path = directory / f"{plant_id}{ext}"
+        if path.is_file():
+            try:
+                path.unlink()
+                deleted = True
+            except Exception as exc:  # pragma: no cover - unexpected file errors
+                _LOGGER.error("Failed to delete profile %s: %s", path, exc)
+    return deleted
+
+
 def update_profile_sensors(
     plant_id: str,
     sensors: dict,
@@ -314,6 +340,8 @@ __all__ = [
     "list_available_profiles",
     "save_profile_to_path",
     "save_profile_by_id",
+    "profile_exists",
+    "delete_profile_by_id",
     "update_profile_sensors",
     "attach_profile_sensors",
     "detach_profile_sensors",
