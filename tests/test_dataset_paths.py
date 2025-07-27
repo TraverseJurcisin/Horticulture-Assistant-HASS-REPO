@@ -29,3 +29,15 @@ def test_clear_dataset_cache_resets_paths(monkeypatch, tmp_path):
     assert paths1 != paths2
     utils.clear_dataset_cache()
 
+
+def test_overlay_dir_cache(monkeypatch, tmp_path):
+    overlay = tmp_path / "overlay"
+    overlay.mkdir()
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
+    importlib.reload(utils)
+    assert utils.overlay_dir() == overlay
+    monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(tmp_path / "other"))
+    utils.clear_dataset_cache()
+    importlib.reload(utils)
+    assert utils.overlay_dir() != overlay
+    utils.clear_dataset_cache()
