@@ -321,6 +321,9 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.
 - `estimate_hvac_energy_series` and `estimate_hvac_cost_series` evaluate energy
   use and cost for sequential HVAC temperature setpoints.
+- `nutrient_optimizer.optimize_targets` returns pH and temperature adjusted
+  nutrient targets with optional tag modifiers. `nutrient_optimizer.recommend_adjustments`
+  computes the ppm corrections needed to hit those targets.
 
 ### Garden Summary Lovelace Card
 Add `garden-summary-card.js` as a Lovelace resource (HACS places it under
