@@ -202,3 +202,19 @@ def test_calculate_nutrient_adjustments():
     assert adj["N"] == 20
     assert adj["P"] == 5
     assert adj["K"] == 10
+
+
+def test_get_stage_adjusted_levels():
+    from plant_engine.nutrient_manager import get_stage_adjusted_levels
+
+    levels = get_stage_adjusted_levels("tomato", "fruiting")
+    assert levels["N"] == 88.0
+    assert levels["K"] == 132.0
+
+
+def test_get_all_stage_adjusted_levels():
+    from plant_engine.nutrient_manager import get_all_stage_adjusted_levels
+
+    levels = get_all_stage_adjusted_levels("tomato", "fruiting")
+    assert levels["Ca"] == 66.0
+    assert levels["N"] == 88.0
