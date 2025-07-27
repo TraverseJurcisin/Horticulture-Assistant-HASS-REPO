@@ -35,6 +35,7 @@ __all__ = [
     "list_supported_plants",
     "get_pest_thresholds",
     "assess_pest_pressure",
+    "calculate_pest_pressure_index",
     "classify_pest_severity",
     "recommend_threshold_actions",
     "recommend_biological_controls",
@@ -136,6 +137,33 @@ def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Di
             continue
         pressure[key] = count >= thresh
     return pressure
+
+
+def calculate_pest_pressure_index(plant_type: str, observations: Mapping[str, int]) -> float:
+    """Return 0-100 index of overall pest pressure severity."""
+
+    thresholds = get_pest_thresholds(plant_type)
+    if not thresholds:
+        return 0.0
+
+    total = 0.0
+    count = 0
+    for pest, limit in thresholds.items():
+        observed = float(observations.get(pest, 0))
+        try:
+            limit_val = float(limit)
+        except (TypeError, ValueError):
+            continue
+        if limit_val <= 0:
+            continue
+        ratio = min(observed / limit_val, 1.0)
+        total += ratio
+        count += 1
+
+    if count == 0:
+        return 0.0
+
+    return round((total / count) * 100, 1)
 
 
 def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
