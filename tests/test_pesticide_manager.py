@@ -155,3 +155,19 @@ def test_calculate_application_amount():
         calculate_application_amount("unknown", 1.0)
 
 
+def test_summarize_pesticide_restrictions():
+    from plant_engine.pesticide_manager import (
+        summarize_pesticide_restrictions,
+        earliest_reentry_time,
+        earliest_harvest_date,
+    )
+
+    apps = [
+        ("spinosad", datetime.datetime(2024, 6, 1, 8)),
+        ("imidacloprid", datetime.datetime(2024, 6, 2, 9)),
+    ]
+    summary = summarize_pesticide_restrictions(apps)
+    assert summary["reentry_time"] == earliest_reentry_time("imidacloprid", apps[1][1])
+    assert summary["harvest_date"] == earliest_harvest_date("imidacloprid", apps[1][1].date())
+
+
