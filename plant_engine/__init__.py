@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from importlib import import_module
 
-from . import utils, environment_tips, media_manager, ingredients
+from . import utils, environment_tips, media_manager, ingredients, reference_data
+from .reference_data import load_reference_data
 from .utils import *  # noqa: F401,F403
 from .environment_tips import *  # noqa: F401,F403
 from .media_manager import *  # noqa: F401,F403
@@ -24,6 +25,7 @@ __all__ = sorted(
     | set(environment_tips.__all__)
     | set(media_manager.__all__)
     | set(ingredients.__all__)
+    | {"load_reference_data"}
     | {
         "NutrientManagementReport",
         "generate_nutrient_management_report",
