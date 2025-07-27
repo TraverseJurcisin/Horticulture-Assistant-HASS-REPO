@@ -4,6 +4,7 @@ from plant_engine.nutrient_uptake import (
     list_supported_plants,
     get_daily_uptake,
     get_uptake_ratio,
+    estimate_average_daily_uptake,
 )
 from plant_engine.fertigation import recommend_uptake_fertigation
 
@@ -31,3 +32,8 @@ def test_recommend_uptake_fertigation():
 def test_get_uptake_ratio():
     ratio = get_uptake_ratio("citrus", "vegetative")
     assert ratio == {"N": 0.4, "P": 0.12, "K": 0.48}
+
+
+def test_estimate_average_daily_uptake():
+    avg = estimate_average_daily_uptake("tomato")
+    assert avg == {"N": 51.67, "P": 15.83, "K": 60.0}
