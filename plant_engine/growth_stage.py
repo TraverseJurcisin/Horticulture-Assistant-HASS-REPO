@@ -29,6 +29,8 @@ __all__ = [
     "stage_progress",
     "days_until_harvest",
     "predict_next_stage_date",
+    "predict_stage_end_date",
+    "stage_progress_from_dates",
     "get_germination_duration",
 ]
 
@@ -172,6 +174,31 @@ def predict_next_stage_date(
     if duration is None:
         return None
     return stage_start + timedelta(days=duration)
+
+
+def predict_stage_end_date(
+    plant_type: str, stage: str, stage_start: date
+) -> date | None:
+    """Return the expected end date of ``stage`` for ``plant_type``."""
+
+    duration = get_stage_duration(plant_type, stage)
+    if duration is None:
+        return None
+    return stage_start + timedelta(days=duration)
+
+
+def stage_progress_from_dates(
+    plant_type: str,
+    stage: str,
+    start_date: date,
+    current_date: date,
+) -> float | None:
+    """Return completion percent of ``stage`` based on dates."""
+
+    if current_date < start_date:
+        raise ValueError("current_date cannot be before start_date")
+    days = (current_date - start_date).days
+    return stage_progress(plant_type, stage, days)
 
 
 def days_until_next_stage(
