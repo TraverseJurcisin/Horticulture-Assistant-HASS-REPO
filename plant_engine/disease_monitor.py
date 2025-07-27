@@ -9,7 +9,6 @@ from .utils import load_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
 from .disease_manager import recommend_treatments, recommend_prevention
 from . import disease_manager
-from . import environment_manager
 
 DATA_FILE = "disease_thresholds.json"
 MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"

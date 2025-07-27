@@ -28,7 +28,6 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
 
 from .const import DOMAIN, PLATFORMS, SERVICE_UPDATE_SENSORS
 from .utils.entry_helpers import (
-    get_entry_plant_info,
     store_entry_data,
     remove_entry_data,
 )

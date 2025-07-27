@@ -1,7 +1,7 @@
 """Simple utilities for logging nutrient applications."""
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional, List, Iterable
+from typing import Dict, Optional, List
 from datetime import datetime, timedelta
 from collections import defaultdict
 

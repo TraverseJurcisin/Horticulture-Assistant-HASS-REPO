@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List
+from typing import List
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
 

@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.profile_helpers import write_profile_sections
 
