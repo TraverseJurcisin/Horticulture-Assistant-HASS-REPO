@@ -1,0 +1,18 @@
+{
+  "temperature": {
+    "low": "Increase heating or insulation to raise temperature gradually.",
+    "high": "Increase ventilation and shading to reduce temperature."
+  },
+  "humidity": {
+    "low": "Increase misting frequency and reduce ventilation.",
+    "high": "Use dehumidifiers and increase airflow."
+  },
+  "light": {
+    "low": "Use supplemental lighting to raise intensity.",
+    "high": "Deploy shade cloth to reduce light levels."
+  },
+  "co2": {
+    "low": "Check injection system and reduce ventilation losses.",
+    "high": "Increase ventilation or pause injection to lower CO2."
+  }
+}
