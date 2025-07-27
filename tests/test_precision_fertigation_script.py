@@ -17,3 +17,17 @@ def test_cli_json():
     assert "schedule" in data
     assert "injection_volumes" in data
 
+
+def test_cli_yaml():
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT), "tomato", "vegetative", "5", "--yaml"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    import yaml
+
+    data = yaml.safe_load(result.stdout)
+    assert "schedule" in data
+    assert "injection_volumes" in data
+

@@ -9,12 +9,14 @@ from plant_engine.dissolved_oxygen import (
 def test_get_oxygen_range():
     assert get_oxygen_range("lettuce") == (7.0, 10.0)
     assert get_oxygen_range("unknown") == (6.0, 10.0)
+    assert get_oxygen_range("citrus") == (5.0, 8.0)
 
 
 def test_evaluate_dissolved_oxygen():
     assert evaluate_dissolved_oxygen(5, "lettuce") == "low"
     assert evaluate_dissolved_oxygen(11, "lettuce") == "high"
     assert evaluate_dissolved_oxygen(8, "lettuce") is None
+    assert evaluate_dissolved_oxygen(4, "citrus") == "low"
 
 
 def test_recommend_oxygen_adjustment():

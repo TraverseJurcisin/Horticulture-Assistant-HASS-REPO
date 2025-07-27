@@ -1,3 +1,5 @@
+"""Command line tool for precise fertigation recommendations."""
+
 import argparse
 import json
 from pathlib import Path
