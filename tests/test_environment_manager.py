@@ -45,6 +45,7 @@ from plant_engine.environment_manager import (
     evaluate_stress_conditions,
     evaluate_soil_temperature_stress,
     evaluate_soil_ec_stress,
+    evaluate_soil_ph_stress,
     evaluate_leaf_temperature_stress,
     score_environment,
     score_environment_series,
@@ -70,6 +71,7 @@ from plant_engine.environment_manager import (
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
+    get_target_soil_ph,
     get_target_leaf_temperature,
     energy_optimized_setpoints,
     cost_optimized_setpoints,
@@ -840,8 +842,18 @@ def test_evaluate_soil_ec_stress():
     assert evaluate_soil_ec_stress(0.8, "lettuce", "seedling") is None
 
 
+def test_get_target_soil_ph():
+    assert get_target_soil_ph("citrus") == (6.0, 7.0)
+
+
+def test_evaluate_soil_ph_stress():
+    assert evaluate_soil_ph_stress(5.5, "citrus") == "low"
+    assert evaluate_soil_ph_stress(7.2, "citrus") == "high"
+    assert evaluate_soil_ph_stress(6.5, "citrus") is None
+
+
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12)
+    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12, 6.5)
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
@@ -850,7 +862,7 @@ def test_evaluate_stress_conditions():
     assert stress.soil_temp == "cold"
     assert stress.leaf_temp == "hot"
 
-    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, None, "citrus")
+    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, None, "citrus", soil_ph=None)
     assert stress_none.heat is None
     assert stress_none.humidity is None
     assert stress_none.soil_temp is None
