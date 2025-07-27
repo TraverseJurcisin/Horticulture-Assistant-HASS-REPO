@@ -247,3 +247,33 @@ def test_calculate_all_deficiencies_with_synergy():
     deficits = calculate_all_deficiencies_with_synergy(current, "tomato", "fruiting")
     assert deficits["P"] == 6.0
     assert round(deficits["B"], 2) == 0.03
+
+
+def test_get_interaction_adjusted_levels():
+    from plant_engine.nutrient_manager import get_interaction_adjusted_levels
+
+    levels = get_interaction_adjusted_levels("tomato", "fruiting")
+    assert levels["P"] == 66.0
+    assert levels["Ca"] == 54.0
+    assert round(levels["Zn"], 2) == 0.51
+
+
+def test_calculate_all_deficiencies_with_interactions():
+    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_interactions
+
+    current = {
+        "N": 80,
+        "P": 60,
+        "K": 120,
+        "Ca": 60,
+        "Mg": 30,
+        "Fe": 4.0,
+        "Mn": 1.2,
+        "Zn": 0.4,
+        "B": 0.5,
+        "Cu": 0.1,
+        "Mo": 0.05,
+    }
+    deficits = calculate_all_deficiencies_with_interactions(current, "tomato", "fruiting")
+    assert deficits["P"] == 6.0
+    assert round(deficits["Zn"], 2) == 0.11

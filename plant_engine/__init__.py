@@ -18,6 +18,11 @@ from .nutrient_synergy import (
     get_synergy_factor,
     apply_synergy_adjustments,
 )
+from .nutrient_antagonism import (
+    list_antagonism_pairs,
+    get_antagonism_factor,
+    apply_antagonism_adjustments,
+)
 
 __all__ = sorted(
     set(utils.__all__)
@@ -30,6 +35,9 @@ __all__ = sorted(
         "list_synergy_pairs",
         "get_synergy_factor",
         "apply_synergy_adjustments",
+        "list_antagonism_pairs",
+        "get_antagonism_factor",
+        "apply_antagonism_adjustments",
     }
 )
 

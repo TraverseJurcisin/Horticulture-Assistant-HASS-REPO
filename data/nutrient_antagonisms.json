@@ -1,0 +1,4 @@
+{
+  "k_ca": {"factor": 0.9, "message": "High potassium reduces calcium uptake"},
+  "p_zn": {"factor": 0.85, "message": "Phosphorus can inhibit zinc availability"}
+}
