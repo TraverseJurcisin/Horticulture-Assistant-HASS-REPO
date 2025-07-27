@@ -42,6 +42,7 @@ __all__ = [
     "score_nutrient_series",
     "calculate_deficiency_index",
     "recommend_ratio_adjustments",
+    "calculate_nutrient_adjustments",
     "get_tag_modifier",
     "apply_tag_modifiers",
     "get_ph_adjusted_levels",
@@ -136,6 +137,24 @@ def calculate_surplus(
         if diff > 0:
             surplus[nutrient] = diff
     return surplus
+
+
+def calculate_nutrient_adjustments(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return ppm adjustments needed to meet recommended levels."""
+
+    recommended = get_recommended_levels(plant_type, stage)
+    adjustments: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        delta = round(target - current, 2)
+        if delta != 0:
+            adjustments[nutrient] = delta
+    return adjustments
 
 
 def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
