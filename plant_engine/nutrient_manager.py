@@ -55,6 +55,8 @@ __all__ = [
     "calculate_all_deficiencies_with_ph",
     "get_temperature_adjusted_levels",
     "calculate_cycle_deficiency_index",
+    "get_synergy_adjusted_levels",
+    "calculate_all_deficiencies_with_synergy",
 ]
 
 
@@ -539,5 +541,34 @@ def calculate_cycle_deficiency_index(
     for stage, levels in stage_levels.items():
         results[stage] = calculate_deficiency_index(levels, plant_type, stage)
     return results
+
+
+def get_synergy_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return nutrient targets adjusted using synergy factors."""
+
+    levels = get_all_recommended_levels(plant_type, stage)
+    if not levels:
+        return {}
+    from .nutrient_synergy import apply_synergy_adjustments
+
+    return apply_synergy_adjustments(levels)
+
+
+def calculate_all_deficiencies_with_synergy(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return overall deficiencies using synergy-adjusted guidelines."""
+
+    targets = get_synergy_adjusted_levels(plant_type, stage)
+    deficits: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        diff = round(target - current, 2)
+        if diff > 0:
+            deficits[nutrient] = diff
+    return deficits
 
 
