@@ -17,7 +17,9 @@ convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
 list_products = fert_mod.list_products
 get_product_info = fert_mod.get_product_info
 calculate_fertilizer_cost = fert_mod.calculate_fertilizer_cost
-calculate_fertilizer_nutrients_from_mass = fert_mod.calculate_fertilizer_nutrients_from_mass
+calculate_fertilizer_nutrients_from_mass = (
+    fert_mod.calculate_fertilizer_nutrients_from_mass
+)
 calculate_fertilizer_cost_from_mass = fert_mod.calculate_fertilizer_cost_from_mass
 estimate_mix_cost = fert_mod.estimate_mix_cost
 estimate_mix_cost_per_plant = fert_mod.estimate_mix_cost_per_plant
@@ -39,6 +41,8 @@ calculate_recommended_application = fert_mod.calculate_recommended_application
 estimate_recommended_application_cost = fert_mod.estimate_recommended_application_cost
 recommend_wsda_products = fert_mod.recommend_wsda_products
 estimate_deficiency_correction_cost = fert_mod.estimate_deficiency_correction_cost
+get_package_size = fert_mod.get_package_size
+estimate_packages_required = fert_mod.estimate_packages_required
 CATALOG = fert_mod.CATALOG
 
 
@@ -94,9 +98,9 @@ def test_calculate_fertilizer_cost():
 def test_mass_helpers_match_volume_equivalents():
     mass = 9.6  # grams corresponding to 10 mL at 0.96 kg/L
     grams_output = calculate_fertilizer_nutrients_from_mass("foxfarm_grow_big", mass)
-    volume_output = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    volume_output = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)[
+        "nutrients"
+    ]
     assert grams_output == volume_output
 
     cost_mass = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", mass)
@@ -141,9 +145,9 @@ def test_calculate_mix_nutrients():
     mix = {"foxfarm_grow_big": 9.6}
     totals = calculate_mix_nutrients(mix)
 
-    reference = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    reference = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)[
+        "nutrients"
+    ]
 
     assert totals == reference
 
@@ -304,3 +308,12 @@ def test_estimate_deficiency_correction_cost():
     with pytest.raises(ValueError):
         estimate_deficiency_correction_cost(current, "citrus", "vegetative", 0)
 
+
+def test_package_size_and_count():
+    assert get_package_size("foxfarm_grow_big") == 960
+    assert get_package_size("unknown") is None
+
+    mix = {"foxfarm_grow_big": 1900, "intrepid_granular_potash_0_0_60": 2200}
+    counts = estimate_packages_required(mix)
+    assert counts["foxfarm_grow_big"] == 2
+    assert counts["intrepid_granular_potash_0_0_60"] == 1

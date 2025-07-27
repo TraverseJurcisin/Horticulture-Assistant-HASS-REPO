@@ -12,6 +12,7 @@ import datetime
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Dict, Mapping, List
+import math
 
 from plant_engine.wsda_lookup import (
     recommend_products_for_nutrient as _wsda_recommend,
@@ -23,6 +24,7 @@ from plant_engine.utils import load_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
+PACKAGE_FILE = "fertilizers/fertilizer_packages.json"
 SOLUBILITY_FILE = "fertilizer_solubility.json"
 APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
 RATE_FILE = "fertilizers/fertilizer_application_rates.json"
@@ -60,6 +62,12 @@ class FertilizerCatalog:
     @lru_cache(maxsize=None)
     def prices() -> Dict[str, float]:
         return load_dataset(PRICE_FILE)
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def packages() -> Dict[str, float]:
+        """Return package size in grams for each fertilizer."""
+        return load_dataset(PACKAGE_FILE)
 
     @staticmethod
     @lru_cache(maxsize=None)
@@ -308,7 +316,9 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
-def estimate_mix_cost_per_plant(schedule: Mapping[str, float], num_plants: int) -> float:
+def estimate_mix_cost_per_plant(
+    schedule: Mapping[str, float], num_plants: int
+) -> float:
     """Return cost per plant for ``schedule`` applied to ``num_plants``.
 
     ``num_plants`` must be positive. Costs are estimated using
@@ -373,18 +383,16 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
         if fert_id not in inventory:
             raise KeyError(f"Unknown fertilizer '{fert_id}'")
 
-        ga = convert_guaranteed_analysis(
-            inventory[fert_id].guaranteed_analysis
-        )
+        ga = convert_guaranteed_analysis(inventory[fert_id].guaranteed_analysis)
         for nutrient, pct in ga.items():
-            totals[nutrient] = round(
-                totals.get(nutrient, 0.0) + grams * pct * 1000, 2
-            )
+            totals[nutrient] = round(totals.get(nutrient, 0.0) + grams * pct * 1000, 2)
 
     return totals
 
 
-def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def calculate_mix_ppm(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
 
     ``volume_l`` is the final solution volume in liters. The returned mapping
@@ -465,7 +473,9 @@ def estimate_mix_cost_per_liter(
     return round(total / volume_l, 4)
 
 
-def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def check_solubility_limits(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
     Parameters
@@ -498,7 +508,9 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
     return warnings
 
 
-def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dict[str, str]]:
+def check_schedule_compatibility(
+    schedule: Mapping[str, float],
+) -> Dict[str, Dict[str, str]]:
     """Return fertilizer incompatibilities found in ``schedule``.
 
     The returned mapping has each conflicting fertilizer ID mapped to the
@@ -509,7 +521,7 @@ def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dic
     compat = CATALOG.compatibility()
     conflicts: Dict[str, Dict[str, str]] = {}
     for i, fid in enumerate(ferts):
-        for other in ferts[i + 1:]:
+        for other in ferts[i + 1 :]:
             reason = compat.get(fid, {}).get(other) or compat.get(other, {}).get(fid)
             if reason:
                 conflicts.setdefault(fid, {})[other] = reason
@@ -575,8 +587,6 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
         raise KeyError(f"No priced product contains nutrient '{nutrient}'")
 
     return best_id, best_cost
-
-
 
 
 def list_products() -> list[str]:
@@ -678,6 +688,25 @@ def estimate_deficiency_correction_cost(
     return round(total, 2)
 
 
+def get_package_size(fertilizer_id: str) -> float | None:
+    """Return package size in grams for ``fertilizer_id``."""
+
+    return CATALOG.packages().get(fertilizer_id)
+
+
+def estimate_packages_required(schedule: Mapping[str, float]) -> Dict[str, int]:
+    """Return number of packages needed for each fertilizer in ``schedule``."""
+
+    packages = CATALOG.packages()
+    counts: Dict[str, int] = {}
+    for fert_id, grams in schedule.items():
+        size = packages.get(fert_id)
+        if size is None or grams <= 0:
+            continue
+        counts[fert_id] = int(math.ceil(grams / size))
+    return counts
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -691,6 +720,8 @@ __all__ = [
     "estimate_cost_breakdown",
     "get_cheapest_product",
     "estimate_deficiency_correction_cost",
+    "get_package_size",
+    "estimate_packages_required",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",
@@ -709,4 +740,3 @@ __all__ = [
     "check_schedule_compatibility",
     "CATALOG",
 ]
-
