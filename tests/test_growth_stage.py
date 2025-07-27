@@ -11,6 +11,8 @@ from plant_engine.growth_stage import (
     stage_progress,
     days_until_harvest,
     predict_next_stage_date,
+    predict_stage_end_date,
+    stage_progress_from_dates,
     get_germination_duration,
     days_until_next_stage,
 )
@@ -111,5 +113,22 @@ def test_days_until_next_stage():
 def test_get_total_cycle_duration():
     assert get_total_cycle_duration("tomato") == 120
     assert get_total_cycle_duration("unknown") is None
+
+
+def test_predict_stage_end_date():
+    start = date(2025, 1, 1)
+    end = predict_stage_end_date("tomato", "seedling", start)
+    assert end == date(2025, 1, 31)
+    assert predict_stage_end_date("unknown", "seedling", start) is None
+
+
+def test_stage_progress_from_dates():
+    start = date(2025, 1, 1)
+    current = date(2025, 1, 16)
+    progress = stage_progress_from_dates("tomato", "seedling", start, current)
+    assert progress == 50.0
+
+    with pytest.raises(ValueError):
+        stage_progress_from_dates("tomato", "seedling", current, start)
 
 
