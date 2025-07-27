@@ -13,6 +13,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
+from typing import Mapping
 
 from custom_components.horticulture_assistant.utils.path_utils import (
     plants_path,
@@ -124,6 +125,64 @@ def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
     return [e for e in data if in_range(e)]
 
 
+def _summarize_irrigation(entries: list[dict]) -> dict[str, object]:
+    """Return irrigation summary from log ``entries``."""
+
+    if not entries:
+        return {}
+    total_volume = sum(e.get("volume_applied_ml", 0) for e in entries)
+    methods = {e.get("method") for e in entries if e.get("method")}
+    return {
+        "events": len(entries),
+        "total_volume_ml": total_volume,
+        "methods": list(methods),
+    }
+
+
+def _aggregate_nutrients(entries: list[dict]) -> dict[str, float]:
+    """Return total nutrients applied from ``entries``."""
+
+    totals: dict[str, float] = {}
+    for entry in entries:
+        formulation = entry.get("nutrient_formulation", {})
+        for nutrient, amount in formulation.items():
+            totals[nutrient] = totals.get(nutrient, 0.0) + amount
+    return totals
+
+
+def _average_sensor_data(entries: list[dict]) -> dict[str, float]:
+    """Return average sensor values from ``entries``."""
+
+    data: dict[str, list[float]] = {}
+    for entry in entries:
+        stype = entry.get("sensor_type")
+        val = entry.get("value")
+        if stype is None or val is None:
+            continue
+        try:
+            val = float(val)
+        except (ValueError, TypeError):
+            continue
+        data.setdefault(stype, []).append(val)
+    return {stype: round(mean(vals), 2) for stype, vals in data.items() if vals}
+
+
+def _compute_expected_uptake(
+    plant_type: str, stage: str, totals: Mapping[str, float]
+) -> tuple[dict[str, float], dict[str, float]]:
+    """Return expected nutrient uptake and remaining gap."""
+
+    expected = get_daily_uptake(plant_type, stage)
+    if not expected:
+        return {}, {}
+
+    gap: dict[str, float] = {}
+    for nutrient, target in expected.items():
+        applied = totals.get(nutrient, 0.0)
+        gap[nutrient] = round(target - applied, 2)
+    return expected, gap
+
+
 def run_daily_cycle(
     plant_id: str,
     base_path: str | None = None,
@@ -131,8 +190,9 @@ def run_daily_cycle(
 ) -> dict:
     """Return an aggregated 24h report for ``plant_id``.
 
-    The report includes irrigation, nutrients, sensor averages, environment
-    analysis and optional fertigation recommendations.
+    The report summarizes irrigation, nutrient applications, sensor data and
+    environmental conditions from the previous day.  Results are saved to a
+    dated JSON file for use by automations or dashboards.
 
     ``base_path`` and ``output_path`` default to the configured ``plants`` and
     ``data/daily_reports`` directories, respectively.
@@ -165,61 +225,30 @@ def run_daily_cycle(
     sensor_entries = _load_recent_entries(plant_dir / "sensor_reading_log.json")
     water_quality_entries = _load_recent_entries(plant_dir / "water_quality_log.json")
     yield_entries = _load_recent_entries(plant_dir / "yield_tracking_log.json")
-    # Summarize irrigation events (24h)
-    if irrigation_entries:
-        total_volume = sum(e.get("volume_applied_ml", 0) for e in irrigation_entries)
-        methods = {e.get("method") for e in irrigation_entries if e.get("method")}
-        report.irrigation_summary = {
-            "events": len(irrigation_entries),
-            "total_volume_ml": total_volume,
-            "methods": list(methods),
-        }
-    # Summarize nutrient applications (aggregate nutrients applied in 24h)
-    nutrient_totals: dict[str, float] = {}
-    if nutrient_entries:
-        for entry in nutrient_entries:
-            formulation = entry.get("nutrient_formulation", {})
-            for nutrient, amount in formulation.items():
-                nutrient_totals[nutrient] = nutrient_totals.get(nutrient, 0) + amount
+
+    report.irrigation_summary = _summarize_irrigation(irrigation_entries)
+
+    nutrient_totals = _aggregate_nutrients(nutrient_entries)
     report.nutrient_summary = nutrient_totals
 
     try:
         report.nutrient_analysis = analyze_nutrient_profile(
-            nutrient_totals,
-            plant_type,
-            stage_name or "",
+            nutrient_totals, plant_type, stage_name or ""
         )
         report.deficiency_actions = diagnose_deficiency_actions(
-            nutrient_totals,
-            plant_type,
-            stage_name or "",
+            nutrient_totals, plant_type, stage_name or ""
         )
     except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
         _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
 
-    expected_uptake = get_daily_uptake(plant_type, stage_name or "")
-    report.expected_uptake = expected_uptake
-    if expected_uptake:
-        gap: dict[str, float] = {}
-        for nutrient, target in expected_uptake.items():
-            applied = nutrient_totals.get(nutrient, 0.0)
-            gap[nutrient] = round(target - applied, 2)
-        report.uptake_gap = gap
+    expected, gap = _compute_expected_uptake(
+        plant_type, stage_name or "", nutrient_totals
+    )
+    report.expected_uptake = expected
+    report.uptake_gap = gap
+
     # Summarize sensor readings (24h average per sensor type)
-    sensor_data = {}
-    for entry in sensor_entries:
-        stype = entry.get("sensor_type")
-        val = entry.get("value")
-        if stype is None or val is None:
-            continue
-        try:
-            val = float(val)
-        except (ValueError, TypeError):
-            continue
-        sensor_data.setdefault(stype, []).append(val)
-    sensor_avg = {
-        stype: round(mean(vals), 2) for stype, vals in sensor_data.items() if vals
-    }
+    sensor_avg = _average_sensor_data(sensor_entries)
     report.sensor_summary = sensor_avg
 
     # Include water quality analysis using the most recent test
