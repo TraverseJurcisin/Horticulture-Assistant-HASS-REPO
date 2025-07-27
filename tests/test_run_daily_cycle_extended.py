@@ -18,7 +18,7 @@ def test_run_daily_cycle_extended(tmp_path):
                     "start_date": "2025-01-01",
                     "observed_pests": ["aphids"],
                     "observed_diseases": [],
-                "observed_pest_counts": {"aphids": 12}
+                    "observed_pest_counts": {"aphids": 12},
                 }
             }
         )
