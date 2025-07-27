@@ -106,6 +106,7 @@
   "climate_zone_guidelines.json": "Temperature and humidity targets for common climate zones.",
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
+  "fertilizers/fertilizer_ingredients.json": "Base nutrient content, chemical formulas, physical form and aliases for fertilizer ingredients.",
   "fertilizers/fertilizer_application_methods.json": "Recommended application methods for each fertilizer product.",
   "fertilizers/fertilizer_application_rates.json": "Recommended grams per liter of fertilizer product.",
   "fertilizers/fertilizer_compatibility.json": "Compatibility warnings for mixing fertilizer products.",

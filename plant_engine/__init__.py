@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from importlib import import_module
 
-from . import utils, environment_tips, media_manager
+from . import utils, environment_tips, media_manager, ingredients
 from .utils import *  # noqa: F401,F403
 from .environment_tips import *  # noqa: F401,F403
 from .media_manager import *  # noqa: F401,F403
+from .ingredients import *  # noqa: F401,F403
 from .nutrient_planner import (
     NutrientManagementReport,
     generate_nutrient_management_report,
@@ -22,6 +23,7 @@ __all__ = sorted(
     set(utils.__all__)
     | set(environment_tips.__all__)
     | set(media_manager.__all__)
+    | set(ingredients.__all__)
     | {
         "NutrientManagementReport",
         "generate_nutrient_management_report",
