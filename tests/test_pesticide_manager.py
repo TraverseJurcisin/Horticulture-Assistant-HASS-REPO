@@ -13,6 +13,7 @@ from plant_engine.pesticide_manager import (
     list_known_pesticides,
     get_rotation_interval,
     suggest_rotation_schedule,
+    next_rotation_date,
     suggest_rotation_plan,
 )
 
@@ -99,6 +100,13 @@ def test_suggest_rotation_schedule():
         datetime.date(2024, 1, 31),
         datetime.date(2024, 3, 1),
     ]
+
+
+def test_next_rotation_date():
+    last = datetime.date(2024, 6, 1)
+    result = next_rotation_date("spinosad", last)
+    assert result == last + datetime.timedelta(days=10)
+    assert next_rotation_date("unknown", last) is None
 
 
 def test_suggest_rotation_plan():
