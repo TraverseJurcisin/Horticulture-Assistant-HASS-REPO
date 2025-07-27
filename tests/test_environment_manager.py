@@ -536,7 +536,7 @@ def test_classify_environment_quality():
     good = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
     poor = {"temp_c": 10, "humidity_pct": 30, "light_ppfd": 50, "co2_ppm": 1500}
 
-    assert classify_environment_quality(good, "citrus", "seedling") == "good"
+    assert classify_environment_quality(good, "citrus", "seedling") == "excellent"
     assert classify_environment_quality(poor, "citrus", "seedling") == "poor"
 
 
@@ -555,7 +555,7 @@ def test_classify_environment_quality_series():
         {"temp_c": 24, "humidity_pct": 72, "light_ppfd": 260, "co2_ppm": 460},
     ]
     result = classify_environment_quality_series(series, "citrus", "seedling")
-    assert result == "good"
+    assert result == "excellent"
 
 
 def test_classify_environment_quality_series_custom():

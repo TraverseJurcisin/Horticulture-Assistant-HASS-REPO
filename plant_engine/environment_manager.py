@@ -29,6 +29,7 @@ WIND_ACTION_FILE = "wind_actions.json"
 STRATEGY_FILE = "environment_strategies.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
+QUALITY_LABELS_FILE = "environment_quality_labels.json"
 CO2_PRICE_FILE = "co2_prices.json"
 CO2_EFFICIENCY_FILE = "co2_method_efficiency.json"
 CLIMATE_DATA_FILE = "climate_zone_guidelines.json"
@@ -360,6 +361,7 @@ __all__ = [
     "humidity_for_target_vpd",
     "get_score_weight",
     "get_environment_quality_thresholds",
+    "get_environment_quality_labels",
     "recommend_light_intensity",
     "recommend_photoperiod",
     "evaluate_heat_stress",
@@ -427,6 +429,7 @@ _TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
 _ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
+_QUALITY_LABELS: Dict[str, float] = load_dataset(QUALITY_LABELS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
 _CO2_EFFICIENCY: Dict[str, float] = load_dataset(CO2_EFFICIENCY_FILE)
 _CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
@@ -451,6 +454,22 @@ def get_environment_quality_thresholds() -> Dict[str, float]:
         "good": float(_QUALITY_THRESHOLDS.get("good", 75)),
         "fair": float(_QUALITY_THRESHOLDS.get("fair", 50)),
     }
+
+
+def get_environment_quality_labels() -> list[tuple[str, float]]:
+    """Return ordered ``[(label, min_score), ...]`` for quality classification."""
+
+    data = _QUALITY_LABELS or _QUALITY_THRESHOLDS
+    labels = []
+    for label, val in data.items():
+        try:
+            labels.append((label, float(val)))
+        except (TypeError, ValueError):
+            continue
+    labels.sort(key=lambda x: x[1], reverse=True)
+    if not labels:
+        labels = [("good", 75), ("fair", 50), ("poor", 0)]
+    return labels
 
 
 def _lookup_stage_data(
@@ -1015,13 +1034,17 @@ def classify_environment_quality(
     quality bands for specific deployments.
     """
 
-    thresh = thresholds or get_environment_quality_thresholds()
+    if thresholds:
+        labels = [(k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))]
+        labels.sort(key=lambda x: x[1], reverse=True)
+    else:
+        labels = get_environment_quality_labels()
+
     score = score_environment(current, plant_type, stage)
-    if score >= thresh.get("good", 75):
-        return "good"
-    if score >= thresh.get("fair", 50):
-        return "fair"
-    return "poor"
+    for label, limit in labels:
+        if score >= limit:
+            return label
+    return labels[-1][0] if labels else "poor"
 
 
 def classify_environment_quality_series(
@@ -1032,13 +1055,17 @@ def classify_environment_quality_series(
 ) -> str:
     """Return quality classification for averaged environment ``series``."""
 
+    if thresholds:
+        labels = [(k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))]
+        labels.sort(key=lambda x: x[1], reverse=True)
+    else:
+        labels = get_environment_quality_labels()
+
     score = score_environment_series(series, plant_type, stage)
-    thresh = thresholds or get_environment_quality_thresholds()
-    if score >= thresh.get("good", 75):
-        return "good"
-    if score >= thresh.get("fair", 50):
-        return "fair"
-    return "poor"
+    for label, limit in labels:
+        if score >= limit:
+            return label
+    return labels[-1][0] if labels else "poor"
 
 
 def score_overall_environment(

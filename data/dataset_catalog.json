@@ -10,6 +10,7 @@
   "solution_guidelines.json": "Optimal nutrient solution EC, pH, temperature and dissolved oxygen ranges.",
   "environment_score_weights.json": "Weights for environment quality metrics.",
   "environment_quality_thresholds.json": "Score boundaries for good, fair and poor classifications.",
+  "environment_quality_labels.json": "Ordered mapping of quality labels to minimum scores.",
   "environment_aliases.json": "Canonical environment metric names mapped to accepted aliases.",
   "default_environment.json": "Fallback environment readings used when sensor data is missing.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",

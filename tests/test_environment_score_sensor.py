@@ -112,4 +112,4 @@ def test_environment_quality_sensor(tmp_path: Path):
         "sensor.pid_raw_co2": "800",
     }
     asyncio.run(sensor_entity.async_update())
-    assert sensor_entity.native_value in {"good", "fair", "poor"}
+    assert sensor_entity.native_value in {"excellent", "good", "fair", "poor"}
