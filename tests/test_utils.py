@@ -7,6 +7,7 @@ from plant_engine.utils import (
     load_json,
     normalize_key,
     clear_dataset_cache,
+    safe_float,
     stage_value,
     load_stage_dataset_value,
 )
@@ -87,4 +88,14 @@ def test_load_stage_dataset_value():
     assert load_stage_dataset_value(
         "soil_moisture_guidelines.json", "citrus", "missing"
     ) == [30, 50]
+
+
+def test_safe_float_valid():
+    assert safe_float("5.5") == 5.5
+    assert safe_float(10) == 10.0
+
+
+def test_safe_float_invalid():
+    assert safe_float("bad", 1.0) == 1.0
+    assert safe_float(float("nan")) is None
 

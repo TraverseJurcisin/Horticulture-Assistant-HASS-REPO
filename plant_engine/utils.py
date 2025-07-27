@@ -30,6 +30,7 @@ __all__ = [
     "list_dataset_entries",
     "parse_range",
     "deep_update",
+    "safe_float",
     "stage_value",
     "load_stage_dataset_value",
 ]
@@ -303,6 +304,18 @@ def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
         return low, high
     except (StopIteration, TypeError, ValueError):
         return None
+
+
+def safe_float(value: Any, default: float | None = None) -> float | None:
+    """Return ``value`` converted to ``float`` or ``default`` on failure."""
+
+    try:
+        num = float(value)
+        if math.isfinite(num):
+            return num
+    except (TypeError, ValueError):
+        pass
+    return default
 
 
 def stage_value(

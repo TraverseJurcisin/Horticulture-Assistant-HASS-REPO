@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Mapping
 
-from .utils import load_dataset, lazy_dataset, normalize_key
+from .utils import load_dataset, lazy_dataset, normalize_key, safe_float
 
 _MULTIPLIER_FILE = "stage_multipliers.json"
 _DEFAULT_MULTIPLIERS: dict[str, float] = {
@@ -38,12 +38,13 @@ def _load_default_env() -> dict[str, float]:
     data = load_dataset(DEFAULT_ENV_FILE)
     if not isinstance(data, Mapping):
         return dict(_DEFAULT_ENV_FALLBACK)
+
     result: dict[str, float] = {}
     for k, v in data.items():
-        try:
-            result[str(k)] = float(v)
-        except (TypeError, ValueError):
-            continue
+        val = safe_float(v)
+        if val is not None:
+            result[str(k)] = val
+
     return {**_DEFAULT_ENV_FALLBACK, **result}
 
 
@@ -51,7 +52,7 @@ def stage_multipliers() -> dict[str, float]:
     """Return cached stage multiplier mapping."""
 
     data = _multipliers() or _DEFAULT_MULTIPLIERS
-    return {k: float(v) for k, v in data.items()}
+    return {str(k): safe_float(v, 1.0) or 1.0 for k, v in data.items()}
 
 def get_stage_multiplier(stage: str) -> float:
     """Return nutrient multiplier for ``stage`` with fallback to ``1.0``."""

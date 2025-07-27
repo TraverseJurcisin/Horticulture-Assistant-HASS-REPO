@@ -37,3 +37,19 @@ def test_default_environment_overlay(tmp_path, monkeypatch):
     importlib.reload(const)
 
     assert const.DEFAULT_ENV["temp_c"] == 24
+
+
+def test_default_environment_invalid_values(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    (data_dir / "default_environment.json").write_text(
+        json.dumps({"temp_c": "bad", "rh_pct": "nan"})
+    )
+
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
+    importlib.reload(utils)
+    importlib.reload(const)
+
+    # invalid entries should fall back to defaults
+    assert const.DEFAULT_ENV["temp_c"] == 26
+    assert const.DEFAULT_ENV["rh_pct"] == 65
