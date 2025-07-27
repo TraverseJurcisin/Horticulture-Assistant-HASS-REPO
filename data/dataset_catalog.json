@@ -86,8 +86,8 @@
   "soil_ec_guidelines.json": "Recommended soil salinity EC ranges for common crops.",
   "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
   "yield_estimates.json": "Expected total yields for common cultivars.",
-  "co2_prices.json": "Cost per kg of CO₂ for enrichment.",
-  "co2_method_efficiency.json": "Relative CO₂ delivery efficiency by enrichment method.",
+  "co2_prices.json": "Cost per kg of CO\u2082 for enrichment.",
+  "co2_method_efficiency.json": "Relative CO\u2082 delivery efficiency by enrichment method.",
   "climate_zone_guidelines.json": "Temperature and humidity targets for common climate zones.",
   "fertilizers/fertilizer_prices.json": "Per-unit costs for fertilizer products.",
   "fertilizers/fertilizer_products.json": "Guaranteed analysis for fertilizers.",
@@ -95,7 +95,7 @@
   "fertilizers/fertilizer_application_rates.json": "Recommended grams per liter of fertilizer product.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
-  "canopy_area.json": "Approximate canopy area (m²) per plant stage.",
+  "canopy_area.json": "Approximate canopy area (m\u00b2) per plant stage.",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
   "nutrient_volatilization_rates.json": "Volatilization loss fractions by nutrient.",
   "nutrient_recovery_factors.json": "Fractional nutrient recovery after application.",
@@ -113,7 +113,7 @@
   "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
   "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
   "disease_severity_actions.json": "Actions to take based on disease severity level.",
-  "disease_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on disease risk level.",   
+  "disease_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on disease risk level.",
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
   "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
   "pest_scientific_names.json": "Common pests mapped to their scientific names.",
@@ -122,5 +122,6 @@
   "electricity_rates.json": "Electricity cost per kWh by region.",
   "water_costs.json": "Water cost per liter by region.",
   "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
-  "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products"
+  "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products",
+  "nutrient_use_efficiency_targets.json": "Recommended nutrient use efficiency (g yield per mg nutrient) targets by crop."
 }

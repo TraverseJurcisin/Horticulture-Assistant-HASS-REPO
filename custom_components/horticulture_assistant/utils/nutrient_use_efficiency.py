@@ -13,7 +13,11 @@ import logging
 from datetime import datetime, date
 from typing import Dict, List, Optional, Union
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path, config_path
+from custom_components.horticulture_assistant.utils.path_utils import (
+    config_path,
+    data_path,
+)
+from plant_engine.utils import load_dataset
 
 try:
     from homeassistant.core import HomeAssistant
@@ -21,6 +25,9 @@ except ImportError:
     HomeAssistant = None  # Allow usage outside Home Assistant for testing
 
 _LOGGER = logging.getLogger(__name__)
+
+TARGETS_FILE = "nutrient_use_efficiency_targets.json"
+_NUE_TARGETS: Dict[str, Dict[str, float]] = load_dataset(TARGETS_FILE)
 
 class NutrientUseEfficiency:
     """Track fertilizer usage and calculate nutrient use efficiency."""
@@ -237,6 +244,32 @@ class NutrientUseEfficiency:
             if eff:
                 output[pid] = eff
         return output
+
+    def efficiency_targets(self, plant_type: str) -> Dict[str, float]:
+        """Return NUE targets for ``plant_type`` from bundled datasets."""
+
+        data = _NUE_TARGETS.get(str(plant_type).lower(), {})
+        targets: Dict[str, float] = {}
+        for nut, val in data.items():
+            try:
+                targets[nut] = float(val)
+            except (TypeError, ValueError):
+                continue
+        return targets
+
+    def compare_to_targets(self, plant_id: str, plant_type: str) -> Dict[str, float]:
+        """Return difference between measured NUE and target values."""
+
+        eff = self.compute_efficiency(plant_id)
+        if eff is None:
+            return {}
+        targets = self.efficiency_targets(plant_type)
+        comparison: Dict[str, float] = {}
+        for nut, value in eff.items():
+            target = targets.get(nut)
+            if target is not None:
+                comparison[nut] = round(value - target, 2)
+        return comparison
 
     def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
         """
