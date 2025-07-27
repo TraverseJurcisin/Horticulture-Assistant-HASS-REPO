@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Dict, Mapping, Iterable
 
+from .constants import get_stage_multiplier
+
 from .utils import (
     load_dataset,
     normalize_key,
@@ -29,6 +31,8 @@ __all__ = [
     "list_supported_plants",
     "get_recommended_levels",
     "get_all_recommended_levels",
+    "get_stage_adjusted_levels",
+    "get_all_stage_adjusted_levels",
     "calculate_deficiencies",
     "calculate_all_deficiencies",
     "calculate_nutrient_balance",
@@ -83,6 +87,16 @@ def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     if not plant:
         return {}
     return plant.get(normalize_key(stage), {})
+
+
+def get_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return recommended levels scaled by the stage multiplier."""
+
+    levels = get_recommended_levels(plant_type, stage)
+    mult = get_stage_multiplier(stage)
+    if mult == 1.0 or not levels:
+        return levels
+    return {n: round(v * mult, 2) for n, v in levels.items()}
 
 
 def calculate_deficiencies(
@@ -281,6 +295,16 @@ def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
 
     levels.update(_micro(plant_type, stage))
     return levels
+
+
+def get_all_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+    """Return macro and micro guidelines scaled by the stage multiplier."""
+
+    levels = get_all_recommended_levels(plant_type, stage)
+    mult = get_stage_multiplier(stage)
+    if mult == 1.0 or not levels:
+        return levels
+    return {n: round(v * mult, 2) for n, v in levels.items()}
 
 
 def calculate_all_deficiencies(
