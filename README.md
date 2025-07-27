@@ -222,6 +222,7 @@ Important categories include:
 - **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
+- **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions

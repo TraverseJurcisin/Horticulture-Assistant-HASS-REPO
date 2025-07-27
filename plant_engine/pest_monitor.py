@@ -23,6 +23,7 @@ SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 # Adjustment factors for risk-based interval modifications
 RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
+SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 
 # Load once with caching
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
@@ -30,6 +31,7 @@ _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FI
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
+_SCOUTING_METHODS: Dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -43,6 +45,7 @@ __all__ = [
     "adjust_risk_with_resistance",
     "estimate_adjusted_pest_risk",
     "generate_pest_report",
+    "get_scouting_method",
     "get_severity_action",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
@@ -121,6 +124,12 @@ def get_severity_action(level: str) -> str:
     """Return recommended action for a severity ``level``."""
 
     return _SEVERITY_ACTIONS.get(level.lower(), "")
+
+
+def get_scouting_method(pest: str) -> str:
+    """Return recommended scouting approach for ``pest``."""
+
+    return _SCOUTING_METHODS.get(normalize_key(pest), "")
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:

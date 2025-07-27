@@ -12,6 +12,7 @@
   "pest_thresholds.json": "Economic threshold counts for triggering actions.",
   "pest_monitoring_intervals.json": "Recommended days between scouting events.",
   "pest_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on risk level.",
+  "pest_scouting_methods.json": "Recommended scouting techniques for common pests.",
   "ipm_guidelines.json": "Integrated pest management practices by crop.",
   "disease_guidelines.json": "Treatment guidance for common plant diseases.",
   "disease_prevention.json": "Preventative measures to reduce disease incidence.",
