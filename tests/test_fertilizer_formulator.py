@@ -324,3 +324,13 @@ def test_recommend_fertigation_plan():
     with pytest.raises(ValueError):
         fert_mod.recommend_fertigation_plan("citrus", "vegetative", 1, num_plants=0)
 
+
+def test_recommend_advanced_fertigation_plan():
+    plan = fert_mod.recommend_advanced_fertigation_plan(
+        "citrus", "vegetative", 1, ph=6.5, use_synergy=True
+    )
+    assert plan["mix"]
+    assert plan["ppm"]
+    with pytest.raises(ValueError):
+        fert_mod.recommend_advanced_fertigation_plan("citrus", "vegetative", 0)
+
