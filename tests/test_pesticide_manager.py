@@ -127,3 +127,13 @@ def test_is_safe_for_crop():
     assert is_safe_for_crop("tomato", "neem_oil")
 
 
+def test_check_mix_compatibility():
+    from plant_engine.pesticide_manager import check_mix_compatibility, is_mix_compatible
+
+    warnings = check_mix_compatibility(["copper_sulfate", "sulfur", "neem_oil"])
+    assert ("copper_sulfate", "sulfur") in warnings
+    assert warnings[("copper_sulfate", "sulfur")] == "reduced efficacy"
+    assert ("neem_oil", "sulfur") in warnings or ("sulfur", "neem_oil") in warnings
+    assert not is_mix_compatible(["copper_sulfate", "sulfur"])
+
+

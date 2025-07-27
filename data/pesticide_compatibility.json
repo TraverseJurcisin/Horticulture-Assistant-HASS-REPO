@@ -1,0 +1,9 @@
+{
+  "copper_sulfate": {
+    "sulfur": "reduced efficacy",
+    "pyrethrin": "physical incompatibility"
+  },
+  "neem_oil": {
+    "sulfur": "phytotoxic combination"
+  }
+}

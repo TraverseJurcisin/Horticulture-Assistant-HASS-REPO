@@ -11,6 +11,7 @@ REENTRY_FILE = "pesticide_reentry_intervals.json"
 MOA_FILE = "pesticide_modes.json"
 ROTATION_FILE = "pesticide_rotation_intervals.json"
 PHYTO_FILE = "pesticide_phytotoxicity.json"
+COMPAT_FILE = "pesticide_compatibility.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
@@ -18,6 +19,7 @@ _REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
 _MOA: Dict[str, str] = load_dataset(MOA_FILE)
 _ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
 _PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
+_COMPAT: Dict[str, Dict[str, str]] = load_dataset(COMPAT_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -34,6 +36,8 @@ __all__ = [
     "suggest_rotation_plan",
     "get_phytotoxicity_risk",
     "is_safe_for_crop",
+    "check_mix_compatibility",
+    "is_mix_compatible",
 ]
 
 
@@ -205,3 +209,25 @@ def is_safe_for_crop(plant_type: str, product: str) -> bool:
 
     risk = get_phytotoxicity_risk(plant_type, product)
     return risk != "high"
+
+
+def check_mix_compatibility(products: Iterable[str]) -> Dict[tuple[str, str], str]:
+    """Return incompatibility warnings for pesticide mixtures."""
+
+    names = [normalize_key(p) for p in products]
+    warnings: Dict[tuple[str, str], str] = {}
+    for i, a in enumerate(names):
+        mapping = _COMPAT.get(a, {})
+        for b in names[i + 1 :]:
+            issue = mapping.get(b)
+            if not issue:
+                issue = _COMPAT.get(b, {}).get(a)
+            if issue:
+                warnings[(a, b)] = str(issue)
+    return warnings
+
+
+def is_mix_compatible(products: Iterable[str]) -> bool:
+    """Return ``False`` if any product combination is incompatible."""
+
+    return not check_mix_compatibility(products)
