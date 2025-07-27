@@ -668,6 +668,15 @@ def test_temperature_actions():
     assert em.recommend_temperature_action(25, 50, "citrus") is None
 
 
+def test_environment_strategies():
+    from plant_engine import environment_manager as em
+
+    assert "ventilation" in em.get_environment_strategy("temperature", "high")
+    status = {"temperature": "high", "humidity": "low"}
+    rec = em.recommend_environment_strategies(status)
+    assert set(rec) == {"temperature", "humidity"}
+
+
 def test_evaluate_ph_stress():
     assert evaluate_ph_stress(5.0, "citrus") == "low"
     assert evaluate_ph_stress(7.0, "citrus") == "high"

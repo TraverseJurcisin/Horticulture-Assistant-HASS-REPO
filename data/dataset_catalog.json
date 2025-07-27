@@ -52,6 +52,7 @@
   "humidity_stress_thresholds.json": "Relative humidity levels causing stress.",
   "humidity_actions.json": "Recommended actions for low or high humidity.",
   "temperature_actions.json": "Recommended actions for hot or cold temperature stress.",
+  "environment_strategies.json": "Strategies for optimizing environment when conditions are outside targets.",
   "nutrient_deficiency_symptoms.json": "Visual cues for nutrient deficiencies.",
   "nutrient_deficiency_treatments.json": "Corrective actions for deficiencies.",
   "nutrient_deficiency_thresholds.json": "Deficiency ppm thresholds for severity classification.",

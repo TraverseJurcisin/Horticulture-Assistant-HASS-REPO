@@ -24,6 +24,7 @@ WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
 TEMPERATURE_ACTION_FILE = "temperature_actions.json"
+STRATEGY_FILE = "environment_strategies.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
@@ -274,6 +275,8 @@ __all__ = [
     "recommend_humidity_action",
     "get_temperature_action",
     "recommend_temperature_action",
+    "get_environment_strategy",
+    "recommend_environment_strategies",
     "evaluate_ph_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
@@ -313,6 +316,7 @@ _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
+_ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
@@ -1257,6 +1261,27 @@ def recommend_temperature_action(
     if evaluate_heat_stress(temp_c, humidity_pct, plant_type):
         return get_temperature_action("hot") or None
     return None
+
+
+def get_environment_strategy(parameter: str, level: str) -> str:
+    """Return optimization strategy for a parameter at a given level."""
+
+    param = normalize_key(parameter)
+    strategies = _ENV_STRATEGIES.get(param)
+    if not strategies:
+        return ""
+    return strategies.get(level.lower(), "")
+
+
+def recommend_environment_strategies(status: Mapping[str, str]) -> Dict[str, str]:
+    """Return strategies for each parameter classification in ``status``."""
+
+    rec: Dict[str, str] = {}
+    for key, level in status.items():
+        action = get_environment_strategy(key, level)
+        if action:
+            rec[key] = action
+    return rec
 
 
 def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:
