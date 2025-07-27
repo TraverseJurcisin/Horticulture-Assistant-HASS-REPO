@@ -191,8 +191,15 @@ def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
     return tuple(paths)
 
 
+@lru_cache(maxsize=None)
 def dataset_file(filename: str) -> Path | None:
-    """Return absolute path to ``filename`` if found in search paths."""
+    """Return absolute path to ``filename`` if found in search paths.
+
+    Searches the configured dataset directories and optional overlay once and
+    caches the result for faster subsequent lookups. Use
+    :func:`clear_dataset_cache` when environment variables change so the search
+    path is refreshed.
+    """
 
     for base in dataset_search_paths(include_overlay=True):
         path = base / filename
@@ -245,6 +252,7 @@ def clear_dataset_cache() -> None:
 
     global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE
     load_dataset.cache_clear()
+    dataset_file.cache_clear()
     _PATH_CACHE = None
     _ENV_STATE = None
     _OVERLAY_CACHE = None
