@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 from functools import lru_cache
+from typing import Any, Mapping
 
 from .json_io import load_json, save_json
 
@@ -243,6 +244,28 @@ def delete_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> b
     return deleted
 
 
+def validate_profile(profile: Mapping[str, Any]) -> list[str]:
+    """Return a list of missing required keys for ``profile``.
+
+    The function checks for ``plant_id``, ``display_name`` and ``stage`` at the
+    top level, along with a ``sensor_entities`` mapping either in the root or
+    under ``general``. The returned list is empty when the profile appears
+    valid.
+    """
+
+    missing: list[str] = []
+
+    for key in ("plant_id", "display_name", "stage"):
+        if key not in profile:
+            missing.append(key)
+
+    container = profile.get("general", profile)
+    if not isinstance(container, Mapping) or "sensor_entities" not in container:
+        missing.append("sensor_entities")
+
+    return missing
+
+
 def update_profile_sensors(
     plant_id: str,
     sensors: dict,
@@ -349,6 +372,7 @@ __all__ = [
     "save_profile_by_id",
     "profile_exists",
     "delete_profile_by_id",
+    "validate_profile",
     "update_profile_sensors",
     "attach_profile_sensors",
     "detach_profile_sensors",

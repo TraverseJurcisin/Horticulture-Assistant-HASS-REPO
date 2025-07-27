@@ -125,6 +125,18 @@ If multiple entity IDs are provided, their values are averaged. When more than
 two sensors are listed, the median of the available readings is used instead to
 reduce the effect of outliers.
 
+Use `validate_profile` to verify required fields before saving a profile:
+
+```python
+from custom_components.horticulture_assistant.utils import plant_profile_loader
+
+errors = plant_profile_loader.validate_profile(profile)
+if errors:
+    print("Profile missing:", errors)
+else:
+    plant_profile_loader.save_profile_by_id("myplant", profile)
+```
+
 ### Zones and Irrigation Scheduling
 Profiles can declare a `zone_id` to group plants under a common irrigation
 zone. Zones and their associated solenoids are defined in `zones.json`. Each
