@@ -1,6 +1,11 @@
-import os
+"""AI model interface for adjusting plant thresholds."""
+
+from __future__ import annotations
+
 import json
-from typing import Dict
+import os
+from dataclasses import dataclass
+from typing import Dict, Protocol
 
 try:
     import openai  # Optional, only if using OpenAI's API
@@ -13,74 +18,99 @@ USE_OPENAI = False  # Toggle between mock mode and API
 OPENAI_MODEL = "gpt-4o"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", None)  # Stored in environment variable
 
+
+@dataclass(slots=True)
+class AIModelConfig:
+    """Runtime configuration for selecting the AI implementation."""
+
+    use_openai: bool = USE_OPENAI
+    model: str = OPENAI_MODEL
+    api_key: str | None = OPENAI_API_KEY
+
+
+class BaseAIModel(Protocol):
+    """Protocol all AI implementations must follow."""
+
+    def adjust_thresholds(self, data: Dict) -> Dict:
+        """Return updated thresholds for ``data``."""
+        raise NotImplementedError
+
 # === Mock model ===
 
-def mock_adjust_thresholds(data: Dict) -> Dict:
+class MockAIModel:
     """Offline fallback / placeholder model."""
-    old_thresholds = data.get("thresholds", {})
-    lifecycle = data.get("lifecycle_stage", "")
-    adjusted = {}
 
-    for k, v in old_thresholds.items():
-        if "leaf_" in k:
-            if lifecycle == "fruiting":
-                adjusted[k] = round(v * 1.05, 2)
-            elif lifecycle == "vegetative":
-                adjusted[k] = round(v * 0.95, 2)
+    def adjust_thresholds(self, data: Dict) -> Dict:
+        old_thresholds = data.get("thresholds", {})
+        lifecycle = data.get("lifecycle_stage", "")
+        adjusted = {}
+
+        for key, value in old_thresholds.items():
+            if "leaf_" in key:
+                if lifecycle == "fruiting":
+                    adjusted[key] = round(value * 1.05, 2)
+                elif lifecycle == "vegetative":
+                    adjusted[key] = round(value * 0.95, 2)
+                else:
+                    adjusted[key] = value
             else:
-                adjusted[k] = v
-        else:
-            adjusted[k] = v
+                adjusted[key] = value
 
-    return adjusted
+        return adjusted
 
 
 # === OpenAI API wrapper ===
 
-def openai_adjust_thresholds(data: Dict) -> Dict:
-    if openai is None:
-        raise RuntimeError("openai package is not installed")
-    if not OPENAI_API_KEY:
-        raise RuntimeError("OPENAI_API_KEY not set in environment.")
+class OpenAIModel:
+    """Simple wrapper around the OpenAI API."""
 
-    openai.api_key = OPENAI_API_KEY
+    def __init__(self, config: AIModelConfig) -> None:
+        self.config = config
 
-    response = openai.ChatCompletion.create(
-        model=OPENAI_MODEL,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "You are an expert horticulturist AI. "
-                    "You receive plant data including nutrient thresholds, lifecycle stage, and sensor data. "
-                    "Return a dictionary of updated nutrient thresholds based on optimal plant performance."
-                )
-            },
-            {
-                "role": "user",
-                "content": f"Input data:\n{json.dumps(data, indent=2)}"
-            }
-        ],
-        temperature=0.3,
-    )
+    def adjust_thresholds(self, data: Dict) -> Dict:
+        if openai is None:
+            raise RuntimeError("openai package is not installed")
+        if not self.config.api_key:
+            raise RuntimeError("OPENAI_API_KEY not set in environment.")
 
-    text = response["choices"][0]["message"]["content"]
+        openai.api_key = self.config.api_key
+        response = openai.ChatCompletion.create(
+            model=self.config.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert horticulturist AI. "
+                        "You receive plant data including nutrient thresholds, lifecycle stage, and sensor data. "
+                        "Return a dictionary of updated nutrient thresholds based on optimal plant performance."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": f"Input data:\n{json.dumps(data, indent=2)}",
+                },
+            ],
+            temperature=0.3,
+        )
 
-    try:
-        updated = json.loads(text)
-        return updated
-    except json.JSONDecodeError:
-        raise ValueError("OpenAI returned non-JSON output:\n" + text)
+        text = response["choices"][0]["message"]["content"]
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
 
 
 # === Public Interface ===
 
-def analyze(data: Dict) -> Dict:
-    """
-    Perform AI analysis and return updated thresholds.
-    This is the single interface other code should use.
-    """
-    if USE_OPENAI:
-        return openai_adjust_thresholds(data)
-    else:
-        return mock_adjust_thresholds(data)
+def get_model(config: AIModelConfig | None = None) -> BaseAIModel:
+    """Return an AI model instance based on ``config``."""
+
+    cfg = config or AIModelConfig()
+    return OpenAIModel(cfg) if cfg.use_openai else MockAIModel()
+
+
+def analyze(data: Dict, config: AIModelConfig | None = None) -> Dict:
+    """Return updated thresholds using the configured AI model."""
+
+    model = get_model(config)
+    return model.adjust_thresholds(data)
