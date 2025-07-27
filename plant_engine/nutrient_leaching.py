@@ -15,6 +15,8 @@ __all__ = [
     "get_leaching_rate",
     "estimate_leaching_loss",
     "compensate_for_leaching",
+    "estimate_cumulative_leaching_loss",
+    "project_levels_after_leaching",
 ]
 
 
@@ -70,4 +72,43 @@ def compensate_for_leaching(
     for nutrient, mg in levels_mg.items():
         adjusted[nutrient] = round(float(mg) + losses.get(nutrient, 0.0), 2)
     return adjusted
+
+
+def estimate_cumulative_leaching_loss(
+    levels_mg: Mapping[str, float], plant_type: str | None, cycles: int
+) -> Dict[str, float]:
+    """Return nutrient losses after multiple leaching ``cycles``.
+
+    Losses are calculated assuming the same fractional leaching rate is
+    applied repeatedly for each cycle. A :class:`ValueError` is raised when
+    ``cycles`` is not positive.
+    """
+
+    if cycles <= 0:
+        raise ValueError("cycles must be positive")
+
+    losses: Dict[str, float] = {}
+    for nutrient, mg in levels_mg.items():
+        rate = get_leaching_rate(nutrient, plant_type)
+        if rate <= 0:
+            continue
+        fraction = 1 - (1 - rate) ** cycles
+        losses[nutrient] = round(float(mg) * fraction, 2)
+    return losses
+
+
+def project_levels_after_leaching(
+    levels_mg: Mapping[str, float], plant_type: str | None, cycles: int
+) -> Dict[str, float]:
+    """Return remaining nutrient levels after repeated leaching.
+
+    This helper simply subtracts :func:`estimate_cumulative_leaching_loss` from
+    the input ``levels_mg`` to show projected nutrient availability.
+    """
+
+    losses = estimate_cumulative_leaching_loss(levels_mg, plant_type, cycles)
+    remaining: Dict[str, float] = {}
+    for nutrient, mg in levels_mg.items():
+        remaining[nutrient] = round(float(mg) - losses.get(nutrient, 0.0), 2)
+    return remaining
 
