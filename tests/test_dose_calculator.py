@@ -49,3 +49,13 @@ def test_calculate_dilution_volume():
         DoseCalculator.calculate_dilution_volume(1000, 100, -1)
     with pytest.raises(ValueError):
         DoseCalculator.calculate_dilution_volume(500, 600, 1)
+
+
+def test_blend_solutions():
+    conc = DoseCalculator.blend_solutions(200, 1, 100, 1, "ppm")
+    assert conc == 150
+    conc = DoseCalculator.blend_solutions(0.5, 2, 1.5, 1, "g/L")
+    assert conc == pytest.approx(0.83, rel=1e-3)
+    with pytest.raises(ValueError):
+        DoseCalculator.blend_solutions(100, -1, 100, 1)
+
