@@ -13,6 +13,7 @@ from plant_engine.pest_monitor import (
     next_monitor_date,
     generate_monitoring_schedule,
     risk_adjusted_monitor_interval,
+    get_scouting_method,
     summarize_pest_management,
 )
 
@@ -139,4 +140,9 @@ def test_summarize_pest_management():
     assert summary["severity"]["aphids"] in {"moderate", "severe"}
     assert summary["risk"]["aphids"] == "high"
     assert "next_monitor_date" in summary
+
+
+def test_get_scouting_method():
+    method = get_scouting_method("mites")
+    assert "paper" in method
 
