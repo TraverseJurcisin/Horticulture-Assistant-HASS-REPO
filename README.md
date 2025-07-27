@@ -302,6 +302,8 @@ Helper scripts live in the `scripts/` directory.
 - `fertigation_plan.py` creates a JSON fertigation schedule for any crop stage.
 - `precision_fertigation.py` generates a detailed fertigation plan with stock
   solution injection volumes.
+- `environment_optimize.py` prints recommended environment adjustments for
+  current readings.
 - `monitor_schedule.py` outputs an integrated pest and disease monitoring
   schedule for a plant stage.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.

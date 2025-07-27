@@ -1,7 +1,17 @@
-import os
+"""Interactive CLI to review pending threshold updates.
+
+This helper scans ``data/pending_thresholds`` for proposed threshold changes
+and allows an operator to approve or reject each one. Approved values are
+immediately written back to the associated plant profile. The function is
+designed to run outside of Home Assistant as a maintenance task.
+"""
+
+from __future__ import annotations
+
 import json
 import logging
 import re
+from pathlib import Path
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -19,17 +29,17 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     For each pending threshold change in data/pending_thresholds, prompt user (y/n/s) and update status.
     Approved changes are applied to the plant's profile (thresholds) and all actions are logged.
     """
-    base_data_dir = data_path(hass)
-    base_plants_dir = plants_path(hass)
-    pending_dir = str(get_pending_dir(base_data_dir))
+    base_data_dir = Path(data_path(hass))
+    base_plants_dir = Path(plants_path(hass))
+    pending_dir = get_pending_dir(str(base_data_dir))
     # Pattern for pending threshold files: {plant_id}_YYYY-MM-DD.json
     file_pattern = re.compile(r"^.+_\d{4}-\d{2}-\d{2}\.json$")
-    if not os.path.isdir(pending_dir):
+    if not pending_dir.is_dir():
         _LOGGER.info("Pending thresholds directory not found at %s; no changes to approve.", pending_dir)
         print(f"No pending thresholds directory found at {pending_dir}.")
         return
     # Gather all JSON files matching the pattern
-    files = sorted(f for f in os.listdir(pending_dir) if file_pattern.match(f))
+    files = sorted(p for p in pending_dir.iterdir() if file_pattern.match(p.name))
     if not files:
         _LOGGER.info("No pending threshold update files found in %s.", pending_dir)
         print("No pending threshold changes to approve.")
@@ -37,17 +47,16 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
     total_approved = 0
     total_rejected = 0
     total_skipped = 0
-    for filename in files:
-        file_path = os.path.join(pending_dir, filename)
+    for file_path in files:
         try:
-            data = load_json(file_path)
+            data = load_json(str(file_path))
         except FileNotFoundError:
             _LOGGER.error("Pending threshold file not found: %s", file_path)
-            print(f"Pending threshold file not found: {filename}")
+            print(f"Pending threshold file not found: {file_path.name}")
             continue
         except Exception as e:
-            _LOGGER.error("Failed to parse pending threshold file %s: %s", filename, e)
-            print(f"Error reading {filename}: invalid JSON.")
+            _LOGGER.error("Failed to parse pending threshold file %s: %s", file_path.name, e)
+            print(f"Error reading {file_path.name}: invalid JSON.")
             continue
         plant_id = data.get("plant_id", "unknown")
         changes = data.get("changes")
@@ -55,7 +64,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
             _LOGGER.info("No pending threshold changes in file %s; skipping.", filename)
             # No pending entries to approve in this file
             continue
-        print(f"\nReviewing pending threshold changes for plant '{plant_id}' (file: {filename}):")
+        print(f"\nReviewing pending threshold changes for plant '{plant_id}' (file: {file_path.name}):")
         file_modified = False
         any_rejected = False
         approved_list = []
@@ -99,9 +108,9 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
         profile_update_failed = False
         if approved_list:
             # Attempt to apply approved changes to the plant's profile
-            plant_file_path = os.path.join(base_plants_dir, f"{plant_id}.json")
+            plant_file_path = base_plants_dir / f"{plant_id}.json"
             try:
-                profile = load_json(plant_file_path)
+                profile = load_json(str(plant_file_path))
             except FileNotFoundError:
                 _LOGGER.error("Plant profile file not found for '%s' at %s; cannot apply approved changes now.", plant_id, plant_file_path)
                 print(f"Warning: profile for plant '{plant_id}' not found. Approved changes will remain pending.")
@@ -126,8 +135,8 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
                     _LOGGER.info("Applied approved threshold change for plant %s: %s from %s to %s", plant_id, param, old_val, new_val)
                 profile["thresholds"] = thresholds
                 try:
-                    os.makedirs(os.path.dirname(plant_file_path), exist_ok=True)
-                    save_json(plant_file_path, profile)
+                    plant_file_path.parent.mkdir(parents=True, exist_ok=True)
+                    save_json(str(plant_file_path), profile)
                 except Exception as e:
                     _LOGGER.error("Failed to write updated profile for plant '%s': %s", plant_id, e)
                     print(f"Warning: could not write profile for plant '{plant_id}'. Approved changes will remain pending.")
