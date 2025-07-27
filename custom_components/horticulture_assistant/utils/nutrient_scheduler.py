@@ -127,19 +127,25 @@ def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) ->
     return None
 
 
+@lru_cache(maxsize=None)
+def _cached_load_profile(plant_id: str, base_dir: str | None) -> dict:
+    """Return loaded plant profile from ``base_dir`` (cached)."""
+
+    return load_profile(plant_id=plant_id, base_dir=base_dir)
+
+
 def _load_profile(plant_id: str, hass: HomeAssistant | None) -> dict:
     """Return loaded profile for ``plant_id`` using Home Assistant if provided."""
 
-    base_dir = None
     if hass is not None:
         try:
             base_dir = plants_path(hass)
         except Exception as exc:  # pragma: no cover - HA may not provide path
             _LOGGER.warning("Could not determine plants directory: %s", exc)
-            base_dir = None
+            base_dir = plants_path(None)
     else:
         base_dir = plants_path(None)
-    return load_profile(plant_id=plant_id, base_dir=base_dir)
+    return _cached_load_profile(plant_id, base_dir)
 
 
 def _stage_multiplier(profile: dict, stage_key: str) -> float:

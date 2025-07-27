@@ -172,3 +172,29 @@ def test_absorption_rates_applied(tmp_path):
     result = schedule_nutrients("lettuce", hass=hass).as_dict()
     # guideline N=80 with stage multiplier 0.5 => 40 then adjusted by absorption 1/0.6
     assert result["N"] == 66.67
+
+
+def test_profile_load_caching(tmp_path, monkeypatch):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "cache.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
+
+    hass = _hass_for(tmp_path)
+    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+
+    calls = 0
+
+    def fake_load_profile(plant_id: str, base_dir: str | None = None):
+        nonlocal calls
+        calls += 1
+        return {"general": {"plant_type": "lettuce", "stage": "seedling"}}
+
+    monkeypatch.setattr(ns, "load_profile", fake_load_profile)
+    ns._cached_load_profile.cache_clear()
+
+    ns.schedule_nutrients("cache", hass=hass)
+    ns.schedule_nutrients("cache", hass=hass)
+
+    assert calls == 1
