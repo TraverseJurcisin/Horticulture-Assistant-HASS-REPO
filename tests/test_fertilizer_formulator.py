@@ -29,6 +29,7 @@ calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
 estimate_solution_mass = fert_mod.estimate_solution_mass
 check_solubility_limits = fert_mod.check_solubility_limits
+check_schedule_compatibility = fert_mod.check_schedule_compatibility
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
 calculate_mass_for_target_ppm = fert_mod.calculate_mass_for_target_ppm
@@ -181,6 +182,16 @@ def test_check_solubility_limits():
 
     with pytest.raises(ValueError):
         check_solubility_limits(schedule, 0)
+
+
+def test_check_schedule_compatibility():
+    schedule = {
+        "calcium_nitrate": 10,
+        "magnesium_sulfate": 5,
+    }
+    issues = check_schedule_compatibility(schedule)
+    assert "calcium_nitrate" in issues
+    assert "magnesium_sulfate" in issues["calcium_nitrate"]
 
 
 def test_estimate_cost_per_nutrient():

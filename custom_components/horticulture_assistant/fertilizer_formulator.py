@@ -26,6 +26,8 @@ PRICE_FILE = "fertilizers/fertilizer_prices.json"
 SOLUBILITY_FILE = "fertilizer_solubility.json"
 APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
 RATE_FILE = "fertilizers/fertilizer_application_rates.json"
+COMPAT_FILE = "fertilizers/fertilizer_compatibility.json"
+COMPAT_FILE = "fertilizers/fertilizer_compatibility.json"
 
 
 @dataclass(frozen=True)
@@ -75,6 +77,22 @@ class FertilizerCatalog:
     def application_rates() -> Dict[str, float]:
         """Return recommended grams per liter for each fertilizer."""
         return load_dataset(RATE_FILE)
+
+    @staticmethod
+    @lru_cache(maxsize=None)
+    def compatibility() -> Dict[str, Dict[str, str]]:
+        """Return mixing compatibility mapping from the dataset."""
+        raw = load_dataset(COMPAT_FILE)
+        mapping: Dict[str, Dict[str, str]] = {}
+        for fert, info in raw.items():
+            if not isinstance(info, dict):
+                continue
+            inner: Dict[str, str] = {}
+            for other, reason in info.items():
+                inner[str(other)] = str(reason)
+            if inner:
+                mapping[fert] = inner
+        return mapping
 
     def list_products(self) -> list[str]:
         inv = self.inventory()
@@ -481,6 +499,25 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
     return warnings
 
 
+def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dict[str, str]]:
+    """Return fertilizer incompatibilities found in ``schedule``.
+
+    The returned mapping has each conflicting fertilizer ID mapped to the
+    incompatible products and a short reason from the dataset.
+    """
+
+    ferts = [fid for fid, grams in schedule.items() if grams > 0]
+    compat = CATALOG.compatibility()
+    conflicts: Dict[str, Dict[str, str]] = {}
+    for i, fid in enumerate(ferts):
+        for other in ferts[i + 1:]:
+            reason = compat.get(fid, {}).get(other) or compat.get(other, {}).get(fid)
+            if reason:
+                conflicts.setdefault(fid, {})[other] = reason
+                conflicts.setdefault(other, {})[fid] = reason
+    return conflicts
+
+
 def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
     """Return cost per gram of each nutrient in a fertilizer product."""
 
@@ -670,6 +707,7 @@ __all__ = [
     "calculate_recommended_application",
     "estimate_recommended_application_cost",
     "recommend_wsda_products",
+    "check_schedule_compatibility",
     "CATALOG",
 ]
 

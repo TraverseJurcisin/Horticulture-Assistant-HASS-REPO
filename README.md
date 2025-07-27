@@ -225,6 +225,7 @@ Important categories include:
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
+- **Fertilizer compatibility** – warnings for mixing products that react poorly
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
 
