@@ -53,6 +53,43 @@ def score_efficiency(efficiency: Mapping[str, float], plant_type: str) -> float:
         count += 1
     return round((total / count) * 100, 1) if count else 0.0
 
+
+def efficiency_report(efficiency: Mapping[str, float], plant_type: str) -> Dict[str, Dict[str, float]]:
+    """Return comparison of ``efficiency`` against reference targets.
+
+    Parameters
+    ----------
+    efficiency : Mapping[str, float]
+        Actual nutrient use efficiency values in grams yield per mg applied.
+    plant_type : str
+        Crop identifier used to look up benchmark targets.
+
+    Returns
+    -------
+    Dict[str, Dict[str, float]]
+        Mapping of nutrient codes to dictionaries with ``target``, ``actual``,
+        ``difference`` and ``pct_of_target`` keys. Nutrients without targets are
+        omitted.
+    """
+
+    targets = get_efficiency_targets(plant_type)
+    report: Dict[str, Dict[str, float]] = {}
+    for nutrient, target in targets.items():
+        actual = efficiency.get(nutrient)
+        if actual is None:
+            continue
+        if target <= 0:
+            continue
+        diff = actual - target
+        pct = (actual / target) * 100
+        report[nutrient] = {
+            "target": target,
+            "actual": actual,
+            "difference": round(diff, 2),
+            "pct_of_target": round(pct, 1),
+        }
+    return report
+
 class NutrientUseEfficiency:
     """Track fertilizer usage and calculate nutrient use efficiency."""
 
