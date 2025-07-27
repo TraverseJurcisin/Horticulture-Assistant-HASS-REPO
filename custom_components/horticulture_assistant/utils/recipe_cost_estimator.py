@@ -1,3 +1,5 @@
+"""Helpers for estimating fertigation recipe costs."""
+
 from typing import Dict
 
 
@@ -5,21 +7,30 @@ def estimate_recipe_cost(
     product_dose_rates: Dict[str, float],
     product_costs_per_unit: Dict[str, float],
     total_volume_liters: float,
-    unit_type: str = "L"
+    unit_type: str = "L",
 ) -> Dict[str, float]:
-    """
-    Estimate the cost of a recipe based on product dose rates and unit costs.
+    """Return cost estimate for a nutrient recipe.
 
-    Args:
-        product_dose_rates: {product_id: rate per liter}
-        product_costs_per_unit: {product_id: cost per unit (e.g., $/L, $/kg)}
-        total_volume_liters: total batch size in liters
-        unit_type: "L" for liquid or "kg" for solid (controls unit interpretation)
+    Parameters
+    ----------
+    product_dose_rates : Dict[str, float]
+        Mapping of product ID to application rate per liter.
+    product_costs_per_unit : Dict[str, float]
+        Mapping of product ID to cost per unit (e.g. dollars per liter or kg).
+    total_volume_liters : float
+        Volume of solution to prepare in liters. Must be positive.
+    unit_type : str, optional
+        Unit type for ``product_costs_per_unit`` (``"L"`` or ``"kg"``).
 
-    Returns:
-        Dict with cost breakdown per product and total cost.
+    Returns
+    -------
+    Dict[str, float]
+        Dictionary with ``"total_cost"`` and per-product costs.
     """
-    product_cost_breakdown = {}
+    if total_volume_liters <= 0:
+        raise ValueError("total_volume_liters must be positive")
+
+    product_cost_breakdown: Dict[str, float] = {}
     total_cost = 0.0
 
     for product_id, dose_per_liter in product_dose_rates.items():
@@ -32,5 +43,5 @@ def estimate_recipe_cost(
     return {
         "total_cost": round(total_cost, 4),
         "product_costs": product_cost_breakdown,
-        "unit_type": unit_type
+        "unit_type": unit_type,
     }
