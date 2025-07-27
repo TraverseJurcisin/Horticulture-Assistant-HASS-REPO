@@ -323,6 +323,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards and reports.
 - `recommend_nutrient_mix` computes fertilizer grams needed to hit N/P/K targets and can include micronutrients. `recommend_nutrient_mix_with_cost` returns the same schedule with estimated cost. `generate_nutrient_management_report` consolidates analysis and correction grams for a solution volume.
 - `get_pruning_instructions` provides stage-specific pruning tips from `pruning_guidelines.json`.
+- `get_training_guideline` gives training advice for each stage from `training_guidelines.json`.
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
 - `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.
 - `estimate_hvac_energy_series` and `estimate_hvac_cost_series` evaluate energy
