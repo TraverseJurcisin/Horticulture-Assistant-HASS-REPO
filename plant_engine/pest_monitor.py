@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from typing import Dict, Mapping
 
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import lazy_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import (
     get_interval as _get_interval,
     next_date as _next_date,
@@ -32,13 +32,13 @@ SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 
 # Load once with caching
-_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
-_RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
-_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
-_SEVERITY_THRESHOLDS: Dict[str, Dict[str, float]] = load_dataset(SEVERITY_THRESHOLD_FILE)
-_MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
-_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
-_SCOUTING_METHODS: Dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
+_THRESHOLDS = lazy_dataset(DATA_FILE)
+_RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
+_SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
+_SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+_MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
+_RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
+_SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -72,19 +72,20 @@ def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
     ``"citrus"`` map to the same dataset entry.
     """
 
-    return _THRESHOLDS.get(normalize_key(plant_type), {})
+    data = _THRESHOLDS()
+    return data.get(normalize_key(plant_type), {})
 
 
 def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
-    return list_dataset_entries(_THRESHOLDS)
+    return list_dataset_entries(_THRESHOLDS())
 
 
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between scouting events for a plant stage."""
 
-    return _get_interval(_MONITOR_INTERVALS, plant_type, stage)
+    return _get_interval(_MONITOR_INTERVALS(), plant_type, stage)
 
 
 def risk_adjusted_monitor_interval(
@@ -105,7 +106,8 @@ def risk_adjusted_monitor_interval(
     elif any(r == "moderate" for r in risks.values()):
         level = "moderate"
 
-    modifier = _RISK_MODIFIERS.get(level, 1.0)
+    modifiers = _RISK_MODIFIERS()
+    modifier = modifiers.get(level, 1.0)
     interval = int(round(base * modifier))
     return max(1, interval)
 
@@ -115,7 +117,7 @@ def next_monitor_date(
 ) -> date | None:
     """Return the next pest scouting date based on interval guidelines."""
 
-    return _next_date(_MONITOR_INTERVALS, plant_type, stage, last_date)
+    return _next_date(_MONITOR_INTERVALS(), plant_type, stage, last_date)
 
 
 def generate_monitoring_schedule(
@@ -126,7 +128,7 @@ def generate_monitoring_schedule(
 ) -> list[date]:
     """Return list of upcoming monitoring dates."""
 
-    return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
+    return _generate_schedule(_MONITOR_INTERVALS(), plant_type, stage, start, events)
 
 
 def generate_detailed_monitoring_schedule(
@@ -146,19 +148,22 @@ def generate_detailed_monitoring_schedule(
 def get_severity_action(level: str) -> str:
     """Return recommended action for a severity ``level``."""
 
-    return _SEVERITY_ACTIONS.get(level.lower(), "")
+    actions = _SEVERITY_ACTIONS()
+    return actions.get(level.lower(), "")
 
 
 def get_scouting_method(pest: str) -> str:
     """Return recommended scouting approach for ``pest``."""
 
-    return _SCOUTING_METHODS.get(normalize_key(pest), "")
+    methods = _SCOUTING_METHODS()
+    return methods.get(normalize_key(pest), "")
 
 
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    return _SEVERITY_THRESHOLDS.get(normalize_key(pest), {})
+    thresholds = _SEVERITY_THRESHOLDS()
+    return thresholds.get(normalize_key(pest), {})
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
@@ -231,7 +236,7 @@ def estimate_pest_risk(
 ) -> Dict[str, str]:
     """Return pest risk level based on environmental conditions."""
 
-    factors = _RISK_FACTORS.get(normalize_key(plant_type), {})
+    factors = _RISK_FACTORS().get(normalize_key(plant_type), {})
     if not factors:
         return {}
 
