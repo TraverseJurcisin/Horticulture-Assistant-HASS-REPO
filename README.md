@@ -200,6 +200,7 @@ Helper scripts live in the `scripts/` directory.
 - `load_all_profiles` validates and aggregates every profile in the `plants/` directory.
 - `list_available_profiles` quickly lists profile IDs without loading them.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
+- `profile_manager.py` manages sensors, preferences, and templates.  `attach-sensor` appends new sensors, while `detach-sensor` removes them.  Other subcommands include `list-sensors`, `set-pref`, `load-default`, `show-history`, and `list-globals`.  `--plants-dir` and `--global-dir` operate on alternate directories.
 
 Example usage:
 ```bash
@@ -207,6 +208,8 @@ python scripts/generate_plant_sensors.py <plant_id>
 python scripts/wsda_search.py "EARTH-CARE" --limit 5
 python scripts/log_runoff_ec.py <plant_id> <ec_value>
 python scripts/train_ec_model.py samples.csv --plant-id myplant
+python scripts/profile_manager.py load-default tomato my_plant
+python scripts/profile_manager.py list-sensors my_plant
 python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
 ```
 
