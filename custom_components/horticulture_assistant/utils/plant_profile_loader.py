@@ -286,25 +286,48 @@ def validate_profile(profile: Mapping[str, Any]) -> list[str]:
     return missing
 
 
+def _get_sensor_container(profile: Mapping[str, Any]) -> dict:
+    """Return profile section containing ``sensor_entities``."""
+
+    container = profile.get("general")
+    return container if isinstance(container, dict) else profile
+
+
+def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
+    """Return ``sensors`` with all values converted to lists."""
+
+    normalized: dict[str, list] = {}
+    for key, val in sensors.items():
+        if isinstance(val, str):
+            normalized[key] = [val]
+        else:
+            try:
+                normalized[key] = list(val)
+            except TypeError:
+                normalized[key] = []
+    return normalized
+
+
 def update_profile_sensors(
     plant_id: str,
-    sensors: dict,
+    sensors: Mapping[str, Any],
     base_dir: str | Path | None = None,
 ) -> bool:
-    """Update ``sensor_entities`` for ``plant_id`` and save the profile."""
-    if not isinstance(sensors, dict):
+    """Replace ``sensor_entities`` mapping for ``plant_id``."""
+
+    if not isinstance(sensors, Mapping):
         return False
+
     profile = load_profile_by_id(plant_id, base_dir)
     if not profile:
         return False
 
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
-    for key, val in sensors.items():
-        if isinstance(val, str):
-            val = [val]
-        container.setdefault("sensor_entities", {})[key] = list(val)
+    container = _get_sensor_container(profile)
+    mapping = _normalize_sensor_values(sensors)
+    if mapping:
+        container["sensor_entities"] = mapping
+    else:
+        container.pop("sensor_entities", None)
     if container is not profile:
         profile["general"] = container
 
@@ -313,26 +336,22 @@ def update_profile_sensors(
 
 def attach_profile_sensors(
     plant_id: str,
-    sensors: dict,
+    sensors: Mapping[str, Any],
     base_dir: str | Path | None = None,
 ) -> bool:
     """Append ``sensors`` entries to the profile without overwriting existing values."""
-    if not isinstance(sensors, dict):
+    if not isinstance(sensors, Mapping):
         return False
 
     profile = load_profile_by_id(plant_id, base_dir)
     if not profile:
         return False
 
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
+    container = _get_sensor_container(profile)
     mapping = container.setdefault("sensor_entities", {})
-    for key, val in sensors.items():
-        if isinstance(val, str):
-            val = [val]
+    for key, values in _normalize_sensor_values(sensors).items():
         existing = mapping.get(key, [])
-        for item in val:
+        for item in values:
             if item not in existing:
                 existing.append(item)
         mapping[key] = existing
@@ -344,29 +363,26 @@ def attach_profile_sensors(
 
 def detach_profile_sensors(
     plant_id: str,
-    sensors: dict,
+    sensors: Mapping[str, Any],
     base_dir: str | Path | None = None,
 ) -> bool:
     """Remove sensor mappings from ``plant_id`` and save the profile."""
-    if not isinstance(sensors, dict):
+    if not isinstance(sensors, Mapping):
         return False
 
     profile = load_profile_by_id(plant_id, base_dir)
     if not profile:
         return False
 
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
+    container = _get_sensor_container(profile)
     sensor_map = container.get("sensor_entities", {})
-    for key, val in sensors.items():
+    normalized = _normalize_sensor_values(sensors)
+    for key, val in normalized.items():
         if key not in sensor_map:
             continue
-        if val is None:
+        if val is None or len(val) == 0:
             sensor_map.pop(key, None)
             continue
-        if isinstance(val, str):
-            val = [val]
         sensor_map[key] = [s for s in sensor_map.get(key, []) if s not in val]
         if not sensor_map[key]:
             sensor_map.pop(key, None)
