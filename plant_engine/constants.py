@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Mapping
+from dataclasses import asdict, dataclass
+from typing import Mapping, Dict
 
 from .utils import load_dataset, lazy_dataset, normalize_key
 
@@ -28,7 +29,23 @@ _DEFAULT_ENV_FALLBACK: dict[str, float] = {
 }
 
 
-def _load_default_env() -> dict[str, float]:
+@dataclass(slots=True)
+class EnvironmentDefaults:
+    """Container for default environmental conditions."""
+
+    temp_c: float
+    temp_c_max: float
+    temp_c_min: float
+    rh_pct: float
+    par_w_m2: float
+    wind_speed_m_s: float
+
+    def as_dict(self) -> Dict[str, float]:
+        """Return the defaults as a regular dictionary."""
+        return asdict(self)
+
+
+def _load_default_env_dict() -> dict[str, float]:
     """Return default environment values from dataset with fallback.
 
     The dataset may be overridden via ``HORTICULTURE_OVERLAY_DIR``. Invalid
@@ -47,6 +64,13 @@ def _load_default_env() -> dict[str, float]:
     return {**_DEFAULT_ENV_FALLBACK, **result}
 
 
+def load_default_environment() -> EnvironmentDefaults:
+    """Return :class:`EnvironmentDefaults` loaded from the dataset."""
+
+    values = _load_default_env_dict()
+    return EnvironmentDefaults(**values)
+
+
 def stage_multipliers() -> dict[str, float]:
     """Return cached stage multiplier mapping."""
 
@@ -59,11 +83,14 @@ def get_stage_multiplier(stage: str) -> float:
     return float(stage_multipliers().get(normalize_key(stage), 1.0))
 
 # Default environment readings applied when a plant profile lacks recent data.
-DEFAULT_ENV: dict[str, float] = _load_default_env()
+DEFAULT_ENV: dict[str, float] = _load_default_env_dict()
+# Typed dataclass version for convenience
+DEFAULT_ENV_OBJ: EnvironmentDefaults = load_default_environment()
 
 __all__ = [
     "stage_multipliers",
     "get_stage_multiplier",
     "DEFAULT_ENV",
+    "DEFAULT_ENV_OBJ",
     "DEFAULT_ENV_FILE",
 ]
