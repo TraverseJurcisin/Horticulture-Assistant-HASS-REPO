@@ -5,7 +5,10 @@ from functools import lru_cache
 from typing import Dict, List, Optional
 
 from plant_engine.irrigation_manager import get_daily_irrigation_target
-from plant_engine.environment_manager import generate_environment_alerts
+from plant_engine.environment_manager import (
+    generate_environment_alerts,
+    optimize_environment,
+)
 
 
 @dataclass
@@ -27,9 +30,18 @@ class IrrigationRecommendation:
 
 
 @dataclass
+class EnvironmentRecommendation:
+    """Recommended environment adjustments and target setpoints."""
+
+    adjustments: Dict[str, str]
+    setpoints: Dict[str, float]
+
+
+@dataclass
 class RecommendationBundle:
     fertilizers: List[FertilizerRecommendation]
     irrigation: Optional[IrrigationRecommendation]
+    environment: Optional[EnvironmentRecommendation]
     notes: List[str]
     requires_approval: bool
 
@@ -140,6 +152,27 @@ class RecommendationEngine:
             return {}
         return calculate_all_deficiencies(current, plant_type, stage)
 
+    def _generate_environment_recs(
+        self, plant_id: str
+    ) -> Optional[EnvironmentRecommendation]:
+        """Return environment optimization suggestions for ``plant_id``."""
+
+        env = self.environment_data.get(plant_id)
+        profile = self.plant_profiles.get(plant_id, {})
+        plant_type = profile.get("plant_type")
+        stage = profile.get("lifecycle_stage")
+        if not env or not plant_type:
+            return None
+
+        try:
+            result = optimize_environment(env, plant_type, stage)
+            return EnvironmentRecommendation(
+                adjustments=result.get("adjustments", {}),
+                setpoints=result.get("setpoints", {}),
+            )
+        except Exception:
+            return None
+
     def _generate_fertilizer_recs(self, plant_id: str) -> List[FertilizerRecommendation]:
         """Return fertilizer recommendations based on nutrient deficiencies."""
 
@@ -182,6 +215,7 @@ class RecommendationEngine:
         ai_notes = self.ai_feedback.get(plant_id, {})
         notes: List[str] = []
         fert_recs = self._generate_fertilizer_recs(plant_id)
+        env_rec = self._generate_environment_recs(plant_id)
 
         # Basic irrigation recommendation
         irrigation = None
@@ -214,8 +248,9 @@ class RecommendationEngine:
         return RecommendationBundle(
             fertilizers=fert_recs,
             irrigation=irrigation,
+            environment=env_rec,
             notes=notes + ai_notes.get("alerts", []),
-            requires_approval=requires_approval
+            requires_approval=requires_approval,
         )
 
     def _select_best_product(self, element: str) -> Optional[str]:
