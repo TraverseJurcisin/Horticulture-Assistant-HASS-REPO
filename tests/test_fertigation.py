@@ -444,3 +444,17 @@ def test_recommend_recovery_adjusted_schedule():
     assert schedule["N"] == pytest.approx(1.667, rel=1e-3)
     assert schedule["P"] == pytest.approx(1.429, rel=1e-3)
     assert schedule["K"] == pytest.approx(1.231, rel=1e-3)
+
+
+def test_estimate_weekly_fertigation_cost():
+    from plant_engine.fertigation import estimate_weekly_fertigation_cost
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+    cost = estimate_weekly_fertigation_cost(
+        "tomato", "vegetative", 10.0, fertilizers=fert_map
+    )
+    assert cost > 0
+

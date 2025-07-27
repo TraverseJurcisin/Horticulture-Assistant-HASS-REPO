@@ -230,6 +230,7 @@ __all__ = [
     "estimate_solution_ec",
     "estimate_stage_cost",
     "estimate_cycle_cost",
+    "estimate_weekly_fertigation_cost",
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
     "optimize_fertigation_schedule",
@@ -1063,6 +1064,33 @@ def estimate_cycle_cost(
 
     schedule = _schedule_from_totals(totals, num_plants, fertilizers, purity_overrides)
     return estimate_mix_cost(schedule)
+
+
+def estimate_weekly_fertigation_cost(
+    plant_type: str,
+    stage: str,
+    daily_volume_l: float,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+) -> float:
+    """Return estimated cost for a week of fertigation at ``daily_volume_l``.
+
+    This helper uses :func:`recommend_nutrient_mix_with_cost` to calculate the
+    daily fertilizer mix and multiplies the result by seven days.
+    """
+
+    if daily_volume_l <= 0:
+        raise ValueError("daily_volume_l must be positive")
+
+    _, cost = recommend_nutrient_mix_with_cost(
+        plant_type,
+        stage,
+        daily_volume_l,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+    )
+    return round(cost * 7, 2)
 
 
 def optimize_fertigation_schedule(
