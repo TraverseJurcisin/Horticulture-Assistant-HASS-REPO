@@ -4,6 +4,7 @@ from plant_engine.pest_monitor import (
     list_supported_plants,
     get_pest_thresholds,
     assess_pest_pressure,
+    calculate_pest_pressure_index,
     recommend_threshold_actions,
     recommend_biological_controls,
     classify_pest_severity,
@@ -68,6 +69,12 @@ def test_negative_counts_raise():
         assess_pest_pressure("citrus", {"aphids": -1})
     with pytest.raises(ValueError):
         classify_pest_severity("citrus", {"aphids": -2})
+
+
+def test_calculate_pest_pressure_index():
+    obs = {"aphids": 5, "scale": 1}
+    idx = calculate_pest_pressure_index("citrus", obs)
+    assert idx == 75.0
 
 
 def test_generate_pest_report():
