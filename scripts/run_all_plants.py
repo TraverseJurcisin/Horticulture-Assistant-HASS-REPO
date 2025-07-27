@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from plant_engine import run_daily_cycle
 from plant_engine.utils import save_json
 
-PLANT_DIR = "plants"
+PLANT_DIR = os.getenv("HORTICULTURE_PLANT_DIR", "plants")
 SUMMARY_PATH = "data/reports/summary.json"
 
 def get_plant_ids():

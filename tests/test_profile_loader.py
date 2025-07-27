@@ -157,3 +157,12 @@ def test_profile_exists_and_delete(tmp_path):
     assert loader.profile_exists("p1", plants)
     assert loader.delete_profile_by_id("p1", plants)
     assert not loader.profile_exists("p1", plants)
+
+
+def test_default_base_dir_env(monkeypatch, tmp_path):
+    env_dir = tmp_path / "envplants"
+    env_dir.mkdir()
+    monkeypatch.setenv("HORTICULTURE_PLANT_DIR", str(env_dir))
+    assert loader.default_base_dir() == env_dir
+    (env_dir / "x.json").write_text("{}")
+    assert loader.get_profile_path("x") == env_dir / "x.json"

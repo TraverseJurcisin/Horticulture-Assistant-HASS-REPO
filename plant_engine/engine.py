@@ -7,6 +7,7 @@ from functools import lru_cache
 from plant_engine.utils import save_json
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile_by_id,
+    default_base_dir,
 )
 from plant_engine.ai_model import analyze
 from plant_engine.compute_transpiration import compute_transpiration
@@ -34,7 +35,7 @@ from plant_engine.growth_stage import get_stage_info
 from plant_engine.report import DailyReport
 from plant_engine.constants import get_stage_multiplier, DEFAULT_ENV
 
-PLANTS_DIR = "plants"
+PLANTS_DIR = str(default_base_dir())
 OUTPUT_DIR = "data/reports"
 
 _LOGGER = logging.getLogger(__name__)

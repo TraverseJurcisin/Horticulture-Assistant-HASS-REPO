@@ -33,6 +33,13 @@ class PlantProfile:
     def __getitem__(self, item: str) -> Any:
         return self.as_dict()[item]
 
+    def get_stage_data(self, stage: str) -> Dict[str, Any] | None:
+        """Return data for a specific growth ``stage`` if available."""
+
+        stages = self.profile_data.get("stages", {})
+        section = stages.get(stage)
+        return dict(section) if isinstance(section, dict) else None
+
 
 @lru_cache(maxsize=None)
 def load_plant_profile(

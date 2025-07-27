@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import json
+import os
 
 from scripts import ensure_repo_root_on_path
 
@@ -15,7 +16,7 @@ from custom_components.horticulture_assistant.utils import (
 )
 from custom_components.horticulture_assistant.utils.json_io import load_json
 
-DEFAULT_PLANTS_DIR = ROOT / "plants"
+DEFAULT_PLANTS_DIR = Path(os.getenv("HORTICULTURE_PLANT_DIR", ROOT / "plants"))
 DEFAULT_GLOBAL_DIR = ROOT / "data" / "global_profiles"
 
 

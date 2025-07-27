@@ -54,3 +54,12 @@ def test_profile_caching(tmp_path):
     clear_profile_cache()
     third = load_plant_profile("demo", base_path=tmp_path / "plants")
     assert third.profile_data["general"]["name"] == "second"
+
+
+def test_get_stage_data(tmp_path):
+    plant_dir = tmp_path / "plants" / "demo"
+    plant_dir.mkdir(parents=True)
+    (plant_dir / "stages.json").write_text(json.dumps({"veg": {"light": 100}}))
+    profile = load_plant_profile("demo", base_path=tmp_path / "plants")
+    assert profile.get_stage_data("veg") == {"light": 100}
+    assert profile.get_stage_data("bloom") is None

@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from typing import Dict, Mapping
 
 
-from .utils import lazy_dataset, normalize_key, list_dataset_entries
+from .utils import lazy_dataset, normalize_key, list_dataset_entries, load_dataset
 from .monitor_utils import (
     get_interval as _get_interval,
     next_date as _next_date,
@@ -35,7 +35,7 @@ SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 _THRESHOLDS = lazy_dataset(DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
-_SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+_SEVERITY_THRESHOLDS = load_dataset(SEVERITY_THRESHOLD_FILE)
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -162,7 +162,7 @@ def get_scouting_method(pest: str) -> str:
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _SEVERITY_THRESHOLDS()
+    thresholds = _SEVERITY_THRESHOLDS
     return thresholds.get(normalize_key(pest), {})
 
 

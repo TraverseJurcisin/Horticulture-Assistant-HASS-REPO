@@ -7,6 +7,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 import zipfile
+import os
 
 import sys
 
@@ -17,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
-PLANTS_DIR = ROOT / "plants"
+PLANTS_DIR = Path(os.getenv("HORTICULTURE_PLANT_DIR", ROOT / "plants"))
 REGISTRY_PATH = ROOT / "plant_registry.json"
 DEFAULT_BACKUP_DIR = ROOT / "backups"
 
@@ -27,7 +28,7 @@ def configure_root(path: Path) -> Path:
 
     global ROOT, PLANTS_DIR, REGISTRY_PATH, DEFAULT_BACKUP_DIR
     ROOT = path.resolve()
-    PLANTS_DIR = ROOT / "plants"
+    PLANTS_DIR = Path(os.getenv("HORTICULTURE_PLANT_DIR", ROOT / "plants"))
     REGISTRY_PATH = ROOT / "plant_registry.json"
     DEFAULT_BACKUP_DIR = ROOT / "backups"
     return ROOT

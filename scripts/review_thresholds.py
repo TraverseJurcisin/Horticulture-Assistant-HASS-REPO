@@ -3,7 +3,7 @@ from approval_queue import apply_approved_thresholds
 from plant_engine.utils import load_json, save_json, get_pending_dir
 
 PENDING_DIR = str(get_pending_dir())
-PLANT_DIR = "plants"
+PLANT_DIR = os.getenv("HORTICULTURE_PLANT_DIR", "plants")
 
 def review_pending_thresholds():
     print("🔍 Scanning for pending threshold files...\n")
