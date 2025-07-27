@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 from functools import lru_cache
-from typing import Any, Mapping
+from typing import Any, Mapping, Iterable
 
 from .json_io import load_json, save_json
 
@@ -20,6 +20,8 @@ _LOGGER = logging.getLogger(__name__)
 
 # Default directory containing individual plant profiles
 DEFAULT_BASE_DIR = Path("plants")
+# Supported file extensions for profile files
+PROFILE_EXTS: tuple[str, ...] = (".json", ".yaml", ".yml")
 
 REQUIRED_THRESHOLD_KEYS = {"light", "temperature", "EC"}
 REQUIRED_STAGE_KEY = "stage_duration"
@@ -59,6 +61,35 @@ def parse_basic_yaml(content: str) -> dict:
                 val = float(val) if "." in val else int(val)
         stack[-1][key] = val
     return parsed
+
+
+def get_profile_path(
+    plant_id: str, base_dir: str | Path | None = None, *, exts: Iterable[str] = PROFILE_EXTS
+) -> Path | None:
+    """Return the first existing profile path for ``plant_id``.
+
+    Parameters
+    ----------
+    plant_id : str
+        Profile identifier without extension.
+    base_dir : str | Path | None
+        Optional directory containing the profile files. Defaults to
+        :data:`DEFAULT_BASE_DIR`.
+    exts : Iterable[str]
+        File extensions to search for in order.
+
+    Returns
+    -------
+    Path | None
+        Path of the profile file if found, otherwise ``None``.
+    """
+
+    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    for ext in exts:
+        path = directory / f"{plant_id}{ext}"
+        if path.is_file():
+            return path
+    return None
 
 @lru_cache(maxsize=None)
 def load_profile_from_path(path: str | Path) -> dict:
@@ -142,22 +173,18 @@ def load_profile_from_path(path: str | Path) -> dict:
 
 @lru_cache(maxsize=None)
 def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dict:
-    """
-    Load a plant profile by plant_id. Looks for 'plant_id.json' or 'plant_id.yaml' in base_dir or current directory.
-    """
+    """Return structured profile data for ``plant_id``."""
+
+    path = get_profile_path(plant_id, base_dir)
+    if path:
+        return load_profile_from_path(path)
+
     directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
-    json_path = directory / f"{plant_id}.json"
-    yaml_path = directory / f"{plant_id}.yaml"
-    yml_path = directory / f"{plant_id}.yml"
-
-    if json_path.is_file():
-        return load_profile_from_path(str(json_path))
-    if yaml_path.is_file():
-        return load_profile_from_path(str(yaml_path))
-    if yml_path.is_file():
-        return load_profile_from_path(str(yml_path))
-
-    _LOGGER.error("No plant profile file found for plant_id '%s' in directory %s", plant_id, directory)
+    _LOGGER.error(
+        "No plant profile file found for plant_id '%s' in directory %s",
+        plant_id,
+        directory,
+    )
     return {}
 
 def load_profile(
@@ -190,11 +217,10 @@ def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
         return []
 
     plant_ids: set[str] = set()
-    for entry in directory.iterdir():
-        if not entry.is_file():
-            continue
-        if entry.suffix.lower() in {".json", ".yaml", ".yml"}:
-            plant_ids.add(entry.stem)
+    for ext in PROFILE_EXTS:
+        for path in directory.glob(f"*{ext}"):
+            if path.is_file():
+                plant_ids.add(path.stem)
 
     return sorted(plant_ids)
 
@@ -220,20 +246,14 @@ def save_profile_by_id(
 
 def profile_exists(plant_id: str, base_dir: str | Path | None = None) -> bool:
     """Return ``True`` if a profile file exists for ``plant_id``."""
-
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
-    for ext in (".json", ".yaml", ".yml"):
-        if (directory / f"{plant_id}{ext}").is_file():
-            return True
-    return False
+    return get_profile_path(plant_id, base_dir) is not None
 
 
 def delete_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> bool:
     """Delete the profile file for ``plant_id``."""
-
     directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
     deleted = False
-    for ext in (".json", ".yaml", ".yml"):
+    for ext in PROFILE_EXTS:
         path = directory / f"{plant_id}{ext}"
         if path.is_file():
             try:
@@ -364,6 +384,7 @@ def detach_profile_sensors(
 
 __all__ = [
     "parse_basic_yaml",
+    "get_profile_path",
     "load_profile_from_path",
     "load_profile_by_id",
     "load_profile",

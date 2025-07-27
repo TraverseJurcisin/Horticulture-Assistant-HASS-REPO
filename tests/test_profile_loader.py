@@ -79,6 +79,17 @@ def test_list_available_profiles(tmp_path):
     assert result == ["one", "two"]
 
 
+def test_get_profile_path(tmp_path):
+    base = tmp_path / "profiles"
+    base.mkdir()
+    file = base / "plantA.yaml"
+    file.write_text("general: {}")
+
+    path = loader.get_profile_path("plantA", base)
+    assert path == file
+    assert loader.get_profile_path("missing", base) is None
+
+
 def test_save_and_update_sensors(tmp_path):
     plants = tmp_path / "plants"
     plants.mkdir()
