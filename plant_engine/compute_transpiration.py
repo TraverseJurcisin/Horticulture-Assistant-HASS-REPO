@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from functools import lru_cache
 from typing import Dict, Mapping, Iterable
+import numpy as np
 
 from .utils import load_dataset, normalize_key
 from .constants import DEFAULT_ENV
@@ -151,33 +152,38 @@ def compute_transpiration_series(
     """
 
     env_list = list(env_series)
-    if weights is None:
-        weight_list = [1.0] * len(env_list)
-    else:
-        weight_list = list(weights)
-        if len(weight_list) != len(env_list):
-            raise ValueError("weights length must match env_series length")
-
-    total_w = 0.0
-    total_et0 = 0.0
-    total_eta = 0.0
-    total_ml = 0.0
-
-    for env, w in zip(env_list, weight_list):
-        if w <= 0:
-            continue
-        metrics = compute_transpiration(plant_profile, env)
-        total_et0 += metrics["et0_mm_day"] * w
-        total_eta += metrics["eta_mm_day"] * w
-        total_ml += metrics["transpiration_ml_day"] * w
-        total_w += w
-
-    if total_w == 0:
+    if not env_list:
         return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
 
+    if weights is None:
+        weight_arr = np.ones(len(env_list))
+    else:
+        weight_arr = np.array(list(weights), dtype=float)
+        if weight_arr.shape[0] != len(env_list):
+            raise ValueError("weights length must match env_series length")
+
+    metrics = np.array([
+        [
+            compute_transpiration(plant_profile, env)["et0_mm_day"],
+            compute_transpiration(plant_profile, env)["eta_mm_day"],
+            compute_transpiration(plant_profile, env)["transpiration_ml_day"],
+        ]
+        for env in env_list
+    ])
+
+    mask = weight_arr > 0
+    if not mask.any():
+        return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
+
+    weighted = metrics[mask] * weight_arr[mask, None]
+    sums = weighted.sum(axis=0)
+    total_w = weight_arr[mask].sum()
+
+    avg = sums / total_w
+
     return TranspirationMetrics(
-        round(total_et0 / total_w, 2),
-        round(total_eta / total_w, 2),
-        round(total_ml / total_w, 1),
+        round(avg[0], 2),
+        round(avg[1], 2),
+        round(avg[2], 1),
     ).as_dict()
 
