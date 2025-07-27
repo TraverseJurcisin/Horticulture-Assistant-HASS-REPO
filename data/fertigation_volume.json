@@ -1,0 +1,5 @@
+{
+  "tomato": {"vegetative": 250, "fruiting": 300, "optimal": 275},
+  "lettuce": {"vegetative": 150, "harvest": 120, "optimal": 150},
+  "strawberry": {"vegetative": 200, "fruiting": 250, "optimal": 225}
+}
