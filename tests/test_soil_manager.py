@@ -5,6 +5,7 @@ from plant_engine.soil_manager import (
     calculate_soil_surplus,
     score_soil_nutrients,
     calculate_soil_balance,
+    recommend_soil_amendments,
 )
 
 
@@ -42,3 +43,16 @@ def test_score_soil_nutrients():
 def test_calculate_soil_balance():
     balance = calculate_soil_balance({"N": 40, "P": 15, "K": 45}, "citrus")
     assert balance == {"N": 0.5, "P": 0.5, "K": 0.5}
+
+def test_recommend_soil_amendments():
+    rec = recommend_soil_amendments(
+        {"N": 40, "P": 15, "K": 45},
+        "citrus",
+        1000,
+        {"N": "urea", "P": "map", "K": "kcl"},
+    )
+    assert rec["urea"] > 0
+    assert rec["map"] > 0
+    assert rec["kcl"] > 0
+
+
