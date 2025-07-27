@@ -5,6 +5,7 @@
   "nutrient_ratio_guidelines.json": "Optimal NPK ratios by stage for balanced fertilization.",
   "nutrient_weights.json": "Relative importance weighting for nutrient scoring.",
   "nutrient_tag_modifiers.json": "Tag-based multipliers for nutrient targets.",
+  "nutrient_efficiency_targets.json": "Typical nutrient use efficiency (g yield per mg applied) for each crop.",
   "environment_score_weights.json": "Weights for environment quality metrics.",
   "environment_quality_thresholds.json": "Score boundaries for good, fair and poor classifications.",
   "pest_guidelines.json": "Common pest control recommendations per crop.",
