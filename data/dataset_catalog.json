@@ -138,5 +138,6 @@
   "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
   "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products",
   "propagation_guidelines.json": "Recommended environmental conditions for plant propagation methods.",
+  "drought_tolerance.json": "Relative drought tolerance and max dry days for each crop.",
   "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }
