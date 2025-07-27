@@ -184,3 +184,21 @@ def test_generate_detailed_monitoring_schedule():
     assert entry["date"] == date(2023, 1, 4)
     assert "aphids" in entry["methods"]
 
+
+def test_lifecycle_helpers():
+    from plant_engine.pest_monitor import (
+        get_lifecycle_days,
+        next_treatment_date,
+        recommend_treatment_schedule,
+    )
+
+    assert get_lifecycle_days("aphids") == 7
+    assert get_lifecycle_days("unknown") is None
+
+    last = date(2024, 1, 1)
+    assert next_treatment_date("aphids", last) == date(2024, 1, 4)
+    assert next_treatment_date("unknown", last) is None
+
+    sched = recommend_treatment_schedule(["aphids"], last, repeats=2)
+    assert sched["aphids"] == [date(2024, 1, 4), date(2024, 1, 7)]
+

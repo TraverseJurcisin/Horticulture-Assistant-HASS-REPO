@@ -248,6 +248,7 @@ Important categories include:
 - **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
+- **Pest lifecycle durations** – typical days from egg to adult used for scheduling follow-up treatments
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates

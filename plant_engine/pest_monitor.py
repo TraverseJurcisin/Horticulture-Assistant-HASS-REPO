@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import date, timedelta
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
@@ -30,25 +30,21 @@ MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
+LIFECYCLE_FILE = "pest_lifecycle_days.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
-
-
-def _load(obj):
-    """Return dataset contents regardless of lazy or eager storage."""
-
-    return obj() if callable(obj) else obj
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
+_LIFECYCLE_DAYS = lazy_dataset(LIFECYCLE_FILE)
 
 
-def _load(data):
-    """Return dataset contents supporting direct dict overrides."""
+def resolve_dataset(data):
+    """Return dataset contents whether ``data`` is a dict or loader."""
 
     return data() if callable(data) else data
 
@@ -72,6 +68,9 @@ __all__ = [
     "next_monitor_date",
     "generate_monitoring_schedule",
     "generate_detailed_monitoring_schedule",
+    "get_lifecycle_days",
+    "next_treatment_date",
+    "recommend_treatment_schedule",
     "PestReport",
     "summarize_pest_management",
 ]
@@ -84,20 +83,20 @@ def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
     ``"citrus"`` map to the same dataset entry.
     """
 
-    data = _load(_THRESHOLDS)
+    data = resolve_dataset(_THRESHOLDS)
     return data.get(normalize_key(plant_type), {})
 
 
 def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
-    return list_dataset_entries(_load(_THRESHOLDS))
+    return list_dataset_entries(resolve_dataset(_THRESHOLDS))
 
 
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between scouting events for a plant stage."""
 
-    return _get_interval(_load(_MONITOR_INTERVALS), plant_type, stage)
+    return _get_interval(resolve_dataset(_MONITOR_INTERVALS), plant_type, stage)
 
 
 def risk_adjusted_monitor_interval(
@@ -118,7 +117,7 @@ def risk_adjusted_monitor_interval(
     elif any(r == "moderate" for r in risks.values()):
         level = "moderate"
 
-    modifiers = _load(_RISK_MODIFIERS)
+    modifiers = resolve_dataset(_RISK_MODIFIERS)
     modifier = modifiers.get(level, 1.0)
     interval = int(round(base * modifier))
     return max(1, interval)
@@ -129,7 +128,7 @@ def next_monitor_date(
 ) -> date | None:
     """Return the next pest scouting date based on interval guidelines."""
 
-    return _next_date(_load(_MONITOR_INTERVALS), plant_type, stage, last_date)
+    return _next_date(resolve_dataset(_MONITOR_INTERVALS), plant_type, stage, last_date)
 
 
 def generate_monitoring_schedule(
@@ -140,7 +139,7 @@ def generate_monitoring_schedule(
 ) -> list[date]:
     """Return list of upcoming monitoring dates."""
 
-    return _generate_schedule(_load(_MONITOR_INTERVALS), plant_type, stage, start, events)
+    return _generate_schedule(resolve_dataset(_MONITOR_INTERVALS), plant_type, stage, start, events)
 
 
 def generate_detailed_monitoring_schedule(
@@ -160,21 +159,21 @@ def generate_detailed_monitoring_schedule(
 def get_severity_action(level: str) -> str:
     """Return recommended action for a severity ``level``."""
 
-    actions = _load(_SEVERITY_ACTIONS)
+    actions = resolve_dataset(_SEVERITY_ACTIONS)
     return actions.get(level.lower(), "")
 
 
 def get_scouting_method(pest: str) -> str:
     """Return recommended scouting approach for ``pest``."""
 
-    methods = _load(_SCOUTING_METHODS)
+    methods = resolve_dataset(_SCOUTING_METHODS)
     return methods.get(normalize_key(pest), "")
 
 
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _load(_SEVERITY_THRESHOLDS)
+    thresholds = resolve_dataset(_SEVERITY_THRESHOLDS)
     return thresholds.get(normalize_key(pest), {})
 
 
@@ -248,7 +247,7 @@ def estimate_pest_risk(
 ) -> Dict[str, str]:
     """Return pest risk level based on environmental conditions."""
 
-    factors = _load(_RISK_FACTORS).get(normalize_key(plant_type), {})
+    factors = resolve_dataset(_RISK_FACTORS).get(normalize_key(plant_type), {})
     if not factors:
         return {}
 
@@ -418,4 +417,45 @@ def summarize_pest_management(
     if next_date_val is not None:
         data["next_monitor_date"] = next_date_val
     return data
+
+
+def get_lifecycle_days(pest: str) -> int | None:
+    """Return average lifecycle duration in days for ``pest``."""
+
+    days = resolve_dataset(_LIFECYCLE_DAYS).get(normalize_key(pest))
+    try:
+        value = int(days)
+        return value if value > 0 else None
+    except (TypeError, ValueError):
+        return None
+
+
+def next_treatment_date(pest: str, last_date: date) -> date | None:
+    """Return recommended follow-up treatment date for ``pest``."""
+
+    lifecycle = get_lifecycle_days(pest)
+    if lifecycle is None:
+        return None
+    interval = max(lifecycle // 2, 1)
+    return last_date + timedelta(days=interval)
+
+
+def recommend_treatment_schedule(
+    pests: Iterable[str], start: date, repeats: int = 1
+) -> Dict[str, list[date]]:
+    """Return follow-up treatment dates for each pest."""
+
+    schedule: Dict[str, list[date]] = {}
+    for pest in pests:
+        days = get_lifecycle_days(pest)
+        if days is None:
+            continue
+        interval = max(days // 2, 1)
+        dates = []
+        next_date = start
+        for _ in range(repeats):
+            next_date += timedelta(days=interval)
+            dates.append(next_date)
+        schedule[normalize_key(pest)] = dates
+    return schedule
 
