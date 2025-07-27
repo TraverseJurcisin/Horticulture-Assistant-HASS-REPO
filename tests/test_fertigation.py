@@ -97,6 +97,12 @@ def test_recommend_nutrient_mix_deficit():
     assert mix["kcl"] == pytest.approx(0.4, rel=1e-2)
 
 
+def test_recommend_nutrient_mix_synergy():
+    base = recommend_nutrient_mix("tomato", "vegetative", 10.0)
+    synergized = recommend_nutrient_mix("tomato", "vegetative", 10.0, use_synergy=True)
+    assert synergized["map"] > base["map"]
+
+
 def test_recommend_fertigation_with_water():
     schedule, warnings = recommend_fertigation_with_water(
         "tomato",

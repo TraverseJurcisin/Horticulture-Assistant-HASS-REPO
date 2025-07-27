@@ -16,6 +16,7 @@ from .nutrient_manager import (
     get_all_recommended_levels,
 )
 from .utils import load_dataset, normalize_key, stage_value
+from .nutrient_synergy import apply_synergy_adjustments
 
 FOLIAR_DATA = "foliar_feed_guidelines.json"
 INTERVAL_DATA = "foliar_feed_intervals.json"
@@ -448,6 +449,7 @@ def recommend_nutrient_mix(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> Dict[str, float]:
     """Return grams of fertilizer required to meet nutrient targets.
 
@@ -473,6 +475,9 @@ def recommend_nutrient_mix(
     micro_fertilizers : Mapping[str, str] | None, optional
         Mapping of micronutrient code (e.g. ``"Fe"``) to fertilizer product
         identifiers. Only used when ``include_micro`` is ``True``.
+    use_synergy : bool, optional
+        When ``True`` nutrient amounts are adjusted using synergy factors
+        defined in :mod:`plant_engine.nutrient_synergy`.
     """
 
     if fertilizers is None:
@@ -497,6 +502,9 @@ def recommend_nutrient_mix(
             deficits = get_recommended_levels(plant_type, stage)
         else:
             deficits = calculate_deficiencies(current_levels, plant_type, stage)
+
+    if use_synergy:
+        deficits = apply_synergy_adjustments(deficits)
 
     schedule: Dict[str, float] = {}
     for nutrient, target_ppm in deficits.items():

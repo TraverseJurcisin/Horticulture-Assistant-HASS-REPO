@@ -55,7 +55,9 @@ def get_synergy_factor(n1: str, n2: str) -> float | None:
 def apply_synergy_adjustments(levels: Mapping[str, float]) -> Dict[str, float]:
     """Return ``levels`` adjusted using defined synergy factors."""
     result = {k: float(v) for k, v in levels.items()}
+    lookup = {k.lower(): k for k in levels}
     for (n1, n2), info in _SYNERGY_MAP.items():
-        if n1 in levels and n2 in levels:
-            result[n2] = round(result[n2] * info.factor, 2)
+        if n1 in lookup and n2 in lookup:
+            key = lookup[n2]
+            result[key] = round(result[key] * info.factor, 2)
     return result
