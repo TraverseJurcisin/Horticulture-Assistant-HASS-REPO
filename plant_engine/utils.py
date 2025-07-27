@@ -248,9 +248,11 @@ def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
     """
 
     try:
-        low, high = value
-        return float(low), float(high)
-    except (TypeError, ValueError):
+        iterator = iter(value)
+        low = float(next(iterator))
+        high = float(next(iterator))
+        return low, high
+    except (StopIteration, TypeError, ValueError):
         return None
 
 

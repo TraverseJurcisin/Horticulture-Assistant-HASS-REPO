@@ -11,3 +11,11 @@ def test_parse_range_tuple():
 def test_parse_range_invalid():
     assert parse_range([1]) is None
     assert parse_range("bad") is None
+
+
+def test_parse_range_extra_items():
+    assert parse_range([1, 2, 3]) == (1.0, 2.0)
+
+
+def test_parse_range_iterable():
+    assert parse_range(iter([4, "5", 6])) == (4.0, 5.0)
