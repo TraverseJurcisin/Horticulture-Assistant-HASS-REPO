@@ -9,6 +9,7 @@ RESISTANCE_FILE = "disease_resistance_ratings.json"
 
 DATA_FILE = "disease_guidelines.json"
 PREVENTION_FILE = "disease_prevention.json"
+FUNGICIDE_FILE = "fungicide_recommendations.json"
 
 
 
@@ -16,6 +17,11 @@ PREVENTION_FILE = "disease_prevention.json"
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
+_FUNGICIDES_RAW: Dict[str, list[str]] = load_dataset(FUNGICIDE_FILE)
+_FUNGICIDES: Dict[str, list[str]] = {
+    normalize_key(k): list(v) if isinstance(v, list) else []
+    for k, v in _FUNGICIDES_RAW.items()
+}
 
 
 def list_supported_plants() -> list[str]:
@@ -68,6 +74,24 @@ def get_disease_resistance(plant_type: str, disease: str) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
 
 
+def get_fungicide_options(disease: str) -> list[str]:
+    """Return recommended fungicide products for ``disease``."""
+
+    options = _FUNGICIDES.get(normalize_key(disease))
+    if isinstance(options, list):
+        return list(options)
+    return []
+
+
+def recommend_fungicides(diseases: Iterable[str]) -> Dict[str, list[str]]:
+    """Return fungicide suggestions for each disease in ``diseases``."""
+
+    recs: Dict[str, list[str]] = {}
+    for dis in diseases:
+        recs[dis] = get_fungicide_options(dis)
+    return recs
+
+
 __all__ = [
     "list_supported_plants",
     "get_disease_guidelines",
@@ -76,4 +100,6 @@ __all__ = [
     "get_disease_prevention",
     "recommend_prevention",
     "get_disease_resistance",
+    "get_fungicide_options",
+    "recommend_fungicides",
 ]

@@ -3,6 +3,8 @@ from plant_engine.disease_manager import (
     recommend_treatments,
     list_known_diseases,
     get_disease_resistance,
+    get_fungicide_options,
+    recommend_fungicides,
 )
 
 
@@ -31,3 +33,18 @@ def test_list_known_diseases():
 def test_get_disease_resistance():
     assert get_disease_resistance("citrus", "greasy_spot") == 4.0
     assert get_disease_resistance("citrus", "unknown") is None
+
+
+def test_get_fungicide_options():
+    opts = get_fungicide_options("blight")
+    assert "copper fungicide" in opts
+    assert "bacillus subtilis" in opts
+
+
+def test_recommend_fungicides():
+    recs = recommend_fungicides(["powdery mildew", "unknown"])
+    assert recs["powdery mildew"] == [
+        "sulfur spray",
+        "potassium bicarbonate",
+    ]
+    assert recs["unknown"] == []
