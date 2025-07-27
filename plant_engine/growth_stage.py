@@ -32,6 +32,7 @@ __all__ = [
     "predict_stage_end_date",
     "stage_progress_from_dates",
     "get_germination_duration",
+    "growth_stage_summary",
 ]
 
 
@@ -239,3 +240,37 @@ def get_germination_duration(plant_type: str) -> int | None:
     if isinstance(value, (int, float)):
         return int(value)
     return None
+
+
+def growth_stage_summary(
+    plant_type: str, start_date: date | None = None
+) -> Dict[str, Any]:
+    """Return growth stage durations and optional harvest date."""
+
+    stages = list_growth_stages(plant_type)
+    summary = [
+        {
+            "stage": stage,
+            "duration_days": get_stage_duration(plant_type, stage),
+        }
+        for stage in stages
+    ]
+
+    result = {"plant_type": plant_type, "stages": summary}
+
+    total = get_total_cycle_duration(plant_type)
+    if total is not None:
+        result["total_cycle_days"] = total
+
+    germ = get_germination_duration(plant_type)
+    if germ is not None:
+        result["germination_days"] = germ
+
+    if start_date and total is not None:
+        result["predicted_harvest_date"] = start_date + timedelta(days=total)
+    elif start_date:
+        harvest = predict_harvest_date(plant_type, start_date)
+        if harvest:
+            result["predicted_harvest_date"] = harvest
+
+    return result
