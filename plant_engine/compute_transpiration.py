@@ -7,6 +7,7 @@ from typing import Dict, Mapping, Iterable
 
 from .utils import load_dataset, normalize_key
 from .constants import DEFAULT_ENV
+from .canopy import estimate_canopy_area
 
 MODIFIER_FILE = "crop_coefficient_modifiers.json"
 # cached via load_dataset
@@ -114,7 +115,11 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
     kc = adjust_crop_coefficient(kc, env.get("temp_c"), env.get("rh_pct"))
     et_actual = calculate_eta(et0, kc)
 
-    canopy_m2 = plant_profile.get("canopy_m2", 0.25)
+    canopy_m2 = plant_profile.get("canopy_m2")
+    if canopy_m2 is None:
+        canopy_m2 = estimate_canopy_area(
+            plant_profile.get("plant_type"), plant_profile.get("stage")
+        )
     mm_per_day = et_actual
     ml_per_day = mm_per_day * MM_TO_ML_PER_M2 * canopy_m2
 

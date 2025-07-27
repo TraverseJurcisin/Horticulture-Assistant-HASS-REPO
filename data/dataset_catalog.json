@@ -91,6 +91,7 @@
   "fertilizers/fertilizer_application_rates.json": "Recommended grams per liter of fertilizer product.",
   "ion_ec_factors.json": "EC contribution factors for nutrient ions (uS/cm per ppm).",
   "water_usage_guidelines.json": "Typical daily water use (mL) per plant stage.",
+  "canopy_area.json": "Approximate canopy area (m²) per plant stage.",
   "nutrient_leaching_rates.json": "Leaching loss fractions by nutrient.",
   "nutrient_volatilization_rates.json": "Volatilization loss fractions by nutrient.",
   "nutrient_recovery_factors.json": "Fractional nutrient recovery after application.",

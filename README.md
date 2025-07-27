@@ -158,6 +158,7 @@ Important categories include:
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
+- **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 
