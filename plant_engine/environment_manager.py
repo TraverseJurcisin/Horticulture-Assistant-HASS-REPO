@@ -270,11 +270,17 @@ def recommend_climate_adjustments(
     return suggestions
 
 
+# Temperature unit keys normalized via :func:`normalize_environment_readings`.
+# Defined once at module load for performance.
+_TEMP_F_KEYS = {"temp_f", "soil_temp_f", "leaf_temp_f"}
+_TEMP_K_KEYS = {"temp_k", "soil_temp_k", "leaf_temp_k"}
+
+
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
     """Return ``readings`` with keys mapped to canonical environment names.
 
-    Values that cannot be converted to a finite float are ignored to avoid
-    propagating ``NaN`` or infinite measurements into calculations.
+    Values that cannot be converted to a finite ``float`` are ignored to prevent
+    propagating ``NaN`` or infinite measurements through subsequent calculations.
     """
 
     normalized: Dict[str, float] = {}
@@ -286,10 +292,10 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             continue
         if not math.isfinite(val):
             continue
-        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
+        if canonical in _TEMP_F_KEYS:
             val = (val - 32) * 5 / 9
             canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
+        elif canonical in _TEMP_K_KEYS:
             val = val - 273.15
             canonical = canonical.replace("_k", "_c")
         normalized[canonical] = val
