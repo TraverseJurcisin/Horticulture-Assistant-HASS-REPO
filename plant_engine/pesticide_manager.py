@@ -11,6 +11,7 @@ REENTRY_FILE = "pesticide_reentry_intervals.json"
 MOA_FILE = "pesticide_modes.json"
 ROTATION_FILE = "pesticide_rotation_intervals.json"
 PHYTO_FILE = "pesticide_phytotoxicity.json"
+RATE_FILE = "pesticide_application_rates.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
@@ -18,6 +19,7 @@ _REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
 _MOA: Dict[str, str] = load_dataset(MOA_FILE)
 _ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
 _PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
+_RATES: Dict[str, float] = load_dataset(RATE_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -34,6 +36,8 @@ __all__ = [
     "suggest_rotation_plan",
     "get_phytotoxicity_risk",
     "is_safe_for_crop",
+    "get_application_rate",
+    "calculate_application_amount",
 ]
 
 
@@ -205,3 +209,24 @@ def is_safe_for_crop(plant_type: str, product: str) -> bool:
 
     risk = get_phytotoxicity_risk(plant_type, product)
     return risk != "high"
+
+
+def get_application_rate(product: str) -> float | None:
+    """Return recommended grams or mL per liter for ``product``."""
+
+    rate = _RATES.get(product.lower())
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
+
+
+def calculate_application_amount(product: str, volume_l: float) -> float:
+    """Return grams or mL of ``product`` for ``volume_l`` solution."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    rate = get_application_rate(product)
+    if rate is None:
+        raise KeyError(f"Application rate for '{product}' is not defined")
+    return round(rate * volume_l, 3)

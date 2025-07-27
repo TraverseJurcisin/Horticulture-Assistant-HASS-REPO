@@ -1,4 +1,5 @@
 import datetime
+import pytest
 
 from plant_engine.pesticide_manager import (
     get_withdrawal_days,
@@ -125,5 +126,24 @@ def test_is_safe_for_crop():
 
     assert not is_safe_for_crop("tomato", "copper_sulfate")
     assert is_safe_for_crop("tomato", "neem_oil")
+
+
+def test_get_application_rate():
+    from plant_engine.pesticide_manager import get_application_rate
+
+    assert get_application_rate("neem_oil") == 5.0
+    assert get_application_rate("unknown") is None
+
+
+def test_calculate_application_amount():
+    from plant_engine.pesticide_manager import calculate_application_amount
+
+    amount = calculate_application_amount("neem_oil", 2.0)
+    assert amount == 10.0
+
+    with pytest.raises(ValueError):
+        calculate_application_amount("neem_oil", 0)
+    with pytest.raises(KeyError):
+        calculate_application_amount("unknown", 1.0)
 
 

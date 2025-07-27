@@ -115,6 +115,7 @@
   "pesticide_modes.json": "Mode of action classification for common pesticides.",
   "pesticide_rotation_intervals.json": "Recommended days to wait before reusing the same pesticide mode of action.",
   "pesticide_phytotoxicity.json": "Crop-specific phytotoxicity risk levels for pesticide products.",
+  "pesticide_application_rates.json": "Recommended pesticide application rates in ml or g per liter.",
   "risk_score_map.json": "Numeric weights for risk level scoring.",
   "silicon_guidelines.json": "Recommended silicon (Si) ppm levels for each plant stage.",
   "stock_solution_concentrations.json": "Nutrient concentrations for standard stock solutions.",
