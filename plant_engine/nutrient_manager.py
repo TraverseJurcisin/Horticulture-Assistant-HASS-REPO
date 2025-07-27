@@ -49,6 +49,7 @@ __all__ = [
     "calculate_deficiencies_with_ph",
     "get_all_ph_adjusted_levels",
     "calculate_all_deficiencies_with_ph",
+    "get_temperature_adjusted_levels",
     "calculate_cycle_deficiency_index",
 ]
 
@@ -413,6 +414,19 @@ def calculate_all_deficiencies_with_ph(
         if diff > 0:
             deficits[nutrient] = diff
     return deficits
+
+
+def get_temperature_adjusted_levels(
+    plant_type: str, stage: str, root_temp_c: float
+) -> Dict[str, float]:
+    """Return nutrient targets adjusted for root temperature uptake."""
+
+    base = get_all_recommended_levels(plant_type, stage)
+    if not base:
+        return {}
+    from .root_temperature import adjust_uptake
+
+    return adjust_uptake(base, root_temp_c)
 
 
 def recommend_ratio_adjustments(
