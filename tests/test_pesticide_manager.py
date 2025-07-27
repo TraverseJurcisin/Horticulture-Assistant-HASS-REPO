@@ -12,6 +12,7 @@ from plant_engine.pesticide_manager import (
     list_known_pesticides,
     get_rotation_interval,
     suggest_rotation_schedule,
+    suggest_rotation_plan,
 )
 
 
@@ -96,6 +97,18 @@ def test_suggest_rotation_schedule():
         datetime.date(2024, 1, 1),
         datetime.date(2024, 1, 31),
         datetime.date(2024, 3, 1),
+    ]
+
+
+def test_suggest_rotation_plan():
+    start = datetime.date(2024, 1, 1)
+    plan = suggest_rotation_plan(
+        ["imidacloprid", "spinosad", "imidacloprid"], start
+    )
+    assert plan == [
+        ("imidacloprid", start),
+        ("spinosad", start + datetime.timedelta(days=30)),
+        ("imidacloprid", start + datetime.timedelta(days=40)),
     ]
 
 
