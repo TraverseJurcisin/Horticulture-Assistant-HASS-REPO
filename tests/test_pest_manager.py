@@ -42,6 +42,20 @@ def test_recommend_beneficials():
     assert "parasitic wasps" in rec["scale"]
 
 
+def test_get_beneficial_release_rate():
+    from plant_engine.pest_manager import get_beneficial_release_rate
+
+    assert get_beneficial_release_rate("ladybugs") == 5.0
+    assert get_beneficial_release_rate("unknown") is None
+
+
+def test_recommend_release_rates():
+    from plant_engine.pest_manager import recommend_release_rates
+
+    rates = recommend_release_rates(["aphids"])
+    assert rates["aphids"]["ladybugs"] == 5.0
+
+
 def test_list_known_pests():
     pests = list_known_pests("citrus")
     assert "aphids" in pests
