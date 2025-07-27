@@ -32,6 +32,7 @@ __all__ = [
     "deep_update",
     "stage_value",
     "load_stage_dataset_value",
+    "list_dataset_files",
 ]
 
 
@@ -332,4 +333,17 @@ def load_stage_dataset_value(
     if not isinstance(data, Mapping):
         return None
     return stage_value(data, plant_type, stage, default_key)
+
+
+def list_dataset_files() -> list[str]:
+    """Return alphabetically sorted dataset files available in search paths."""
+
+    files: set[str] = set()
+    for base in dataset_search_paths(include_overlay=True):
+        if not base.is_dir():
+            continue
+        for path in base.iterdir():
+            if path.suffix.lower() in {".json", ".yaml", ".yml"} and path.is_file():
+                files.add(path.name)
+    return sorted(files)
 
