@@ -85,6 +85,8 @@ def test_invalid_inputs():
 def test_calculate_fertilizer_cost():
     cost = calculate_fertilizer_cost("foxfarm_grow_big", 10)
     assert round(cost, 2) == 0.2
+    cost2 = calculate_fertilizer_cost("calcium_nitrate", 10)
+    assert round(cost2, 2) == 1.2
     with pytest.raises(ValueError):
         calculate_fertilizer_cost("foxfarm_grow_big", -1)
     with pytest.raises(KeyError):
@@ -256,6 +258,13 @@ def test_calculate_mass_for_target_ppm():
         calculate_mass_for_target_ppm("foxfarm_grow_big", "X", 10, 1)
 
 
+def test_new_product_pricing():
+    info = get_product_info("calcium_nitrate")
+    assert info.product_name
+    costs = estimate_cost_per_nutrient("calcium_nitrate")
+    assert "N" in costs and costs["N"] > 0
+
+
 def test_get_application_method():
     assert get_application_method("foxfarm_grow_big") == "soil drench"
     assert get_application_method("magriculture") == "foliar"
@@ -264,6 +273,7 @@ def test_get_application_method():
 
 def test_get_application_rate():
     assert get_application_rate("foxfarm_grow_big") == 5.0
+    assert get_application_rate("calcium_nitrate") == 1.5
     assert get_application_rate("unknown") is None
 
 
@@ -279,6 +289,7 @@ def test_calculate_recommended_application():
 def test_catalog_lists_products():
     ids = CATALOG.list_products()
     assert "foxfarm_grow_big" in ids
+    assert "calcium_nitrate" in ids
     info = CATALOG.get_product_info("foxfarm_grow_big")
     assert info.product_name
 

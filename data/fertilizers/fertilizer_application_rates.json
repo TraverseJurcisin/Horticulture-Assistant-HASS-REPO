@@ -1,5 +1,13 @@
 {
   "foxfarm_grow_big": 5.0,
   "magriculture": 2.5,
-  "intrepid_granular_potash_0_0_60": 1.0
+  "intrepid_granular_potash_0_0_60": 1.0,
+  "earth_care_plus_5_6_6": 8.0,
+  "fertibor_15_b": 1.0,
+  "granubor_15_b": 1.0,
+  "acadian_liquid_seaweed_0_0_5": 2.0,
+  "calcium_nitrate": 1.5,
+  "magnesium_sulfate": 1.0,
+  "potassium_phosphate": 1.2,
+  "chelated_fe": 0.5
 }

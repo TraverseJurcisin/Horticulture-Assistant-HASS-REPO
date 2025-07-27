@@ -239,4 +239,29 @@
       "Calcium Sulfate (CaSO42H2O)": null
     }
   }
+
+,  "calcium_nitrate": {
+    "density_kg_per_l": 1.1,
+    "guaranteed_analysis": {"N": 0.155, "Ca": 0.19},
+    "product_name": "Calcium Nitrate 15.5-0-0",
+    "wsda_product_number": null
+  },
+  "magnesium_sulfate": {
+    "density_kg_per_l": 1.68,
+    "guaranteed_analysis": {"Mg": 0.098, "S": 0.13},
+    "product_name": "Magnesium Sulfate",
+    "wsda_product_number": null
+  },
+  "potassium_phosphate": {
+    "density_kg_per_l": 1.2,
+    "guaranteed_analysis": {"P2O5": 0.52, "K2O": 0.34},
+    "product_name": "Monopotassium Phosphate",
+    "wsda_product_number": null
+  },
+  "chelated_fe": {
+    "density_kg_per_l": 1.3,
+    "guaranteed_analysis": {"Fe": 0.06},
+    "product_name": "Chelated Iron 6%",
+    "wsda_product_number": null
+  }
 }

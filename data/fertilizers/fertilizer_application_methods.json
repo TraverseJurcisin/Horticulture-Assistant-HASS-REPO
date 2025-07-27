@@ -1,5 +1,13 @@
 {
   "foxfarm_grow_big": "soil drench",
   "magriculture": "foliar",
-  "intrepid_granular_potash_0_0_60": "broadcast"
+  "intrepid_granular_potash_0_0_60": "broadcast",
+  "earth_care_plus_5_6_6": "broadcast",
+  "fertibor_15_b": "soil",
+  "granubor_15_b": "soil",
+  "acadian_liquid_seaweed_0_0_5": "foliar",
+  "calcium_nitrate": "fertigation",
+  "magnesium_sulfate": "fertigation",
+  "potassium_phosphate": "fertigation",
+  "chelated_fe": "fertigation"
 }
