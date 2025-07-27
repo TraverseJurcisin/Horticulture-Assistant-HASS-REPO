@@ -1,0 +1,4 @@
+{
+  "n_p": {"factor": 1.1, "message": "Nitrogen improves phosphorus uptake"},
+  "ca_b": {"factor": 1.05, "message": "Calcium transport aided by boron"}
+}

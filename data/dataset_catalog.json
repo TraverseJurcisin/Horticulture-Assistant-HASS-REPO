@@ -6,6 +6,7 @@
   "nutrient_weights.json": "Relative importance weighting for nutrient scoring.",
   "nutrient_tag_modifiers.json": "Tag-based multipliers for nutrient targets.",
   "nutrient_efficiency_targets.json": "Typical nutrient use efficiency (g yield per mg applied) for each crop.",
+  "nutrient_synergies.json": "Synergy factors for nutrient pairs to adjust recommendations.",
   "solution_guidelines.json": "Optimal nutrient solution EC, pH, temperature and dissolved oxygen ranges.",
   "environment_score_weights.json": "Weights for environment quality metrics.",
   "environment_quality_thresholds.json": "Score boundaries for good, fair and poor classifications.",

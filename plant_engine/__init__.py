@@ -12,11 +12,22 @@ from .nutrient_planner import (
     NutrientManagementReport,
     generate_nutrient_management_report,
 )
+from .nutrient_synergy import (
+    list_synergy_pairs,
+    get_synergy_factor,
+    apply_synergy_adjustments,
+)
 
 __all__ = sorted(
-    set(utils.__all__) | set(environment_tips.__all__) | set(media_manager.__all__) | {
+    set(utils.__all__)
+    | set(environment_tips.__all__)
+    | set(media_manager.__all__)
+    | {
         "NutrientManagementReport",
         "generate_nutrient_management_report",
+        "list_synergy_pairs",
+        "get_synergy_factor",
+        "apply_synergy_adjustments",
     }
 )
 
