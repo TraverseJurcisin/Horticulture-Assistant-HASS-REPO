@@ -139,6 +139,7 @@ def test_summarize_pest_management():
     )
     assert summary["severity"]["aphids"] in {"moderate", "severe"}
     assert summary["risk"]["aphids"] == "high"
+    assert summary.get("risk_score") is not None
     assert "next_monitor_date" in summary
 
 

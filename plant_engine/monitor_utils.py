@@ -2,15 +2,18 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Mapping
+from typing import Mapping, Dict
 
-from .utils import normalize_key
+from functools import lru_cache
+
+from .utils import normalize_key, load_dataset
 
 __all__ = [
     "get_interval",
     "next_date",
     "generate_schedule",
     "estimate_condition_risk",
+    "calculate_risk_score",
 ]
 
 
@@ -92,3 +95,33 @@ def estimate_condition_risk(
             level = "high"
         risks[normalize_key(name)] = level
     return risks
+
+
+RISK_SCORE_FILE = "risk_score_map.json"
+
+
+@lru_cache(maxsize=1)
+def _risk_score_map() -> Dict[str, int]:
+    """Return mapping of risk levels to numeric scores."""
+    raw = load_dataset(RISK_SCORE_FILE)
+    scores: Dict[str, int] = {"low": 1, "moderate": 2, "high": 3}
+    if isinstance(raw, Mapping):
+        for key, val in raw.items():
+            try:
+                scores[str(key).lower()] = int(val)
+            except (TypeError, ValueError):
+                continue
+    return scores
+
+
+def calculate_risk_score(risk_map: Mapping[str, str]) -> float:
+    """Return average numeric risk score for ``risk_map``."""
+    if not risk_map:
+        return 0.0
+    scores = _risk_score_map()
+    total = 0
+    count = 0
+    for level in risk_map.values():
+        total += scores.get(str(level).lower(), 0)
+        count += 1
+    return round(total / count, 2) if count else 0.0
