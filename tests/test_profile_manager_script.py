@@ -57,6 +57,33 @@ def test_list_global_profiles(tmp_path: Path):
     assert profiles == ["a", "b"]
 
 
+def test_show_global_profile(tmp_path: Path):
+    global_dir = tmp_path / "data/global_profiles"
+    global_dir.mkdir(parents=True)
+    data = {"general": {"plant_type": "demo"}}
+    (global_dir / "demo.json").write_text(json.dumps(data))
+
+    result = pm.show_global_profile("demo", global_dir)
+    assert result["general"]["plant_type"] == "demo"
+
+
+def test_show_preferences_and_logs(tmp_path: Path):
+    plants_dir = tmp_path / "plants"
+    plant_home = plants_dir / "p1"
+    plant_home.mkdir(parents=True)
+    profile = {"general": {"auto_approve_all": True, "sensor_entities": {"m": ["a"]}}}
+    (plants_dir / "p1.json").write_text(json.dumps(profile))
+    (plant_home / "events.json").write_text("[]")
+    (plant_home / "metrics.json").write_text("[]")
+
+    prefs = pm.show_preferences("p1", plants_dir)
+    assert prefs["auto_approve_all"] is True
+    assert "sensor_entities" not in prefs
+
+    logs = pm.list_log_files("p1", plants_dir)
+    assert logs == ["events", "metrics"]
+
+
 def test_attach_and_detach_sensor(tmp_path: Path):
     plants_dir = tmp_path / "plants"
     plants_dir.mkdir()
