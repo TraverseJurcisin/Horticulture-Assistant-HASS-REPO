@@ -59,6 +59,7 @@
   "fungicide_recommendations.json": "Organic fungicide options for common diseases.",
   "fungicide_application_rates.json": "Recommended fungicide application rates (g/L or mL/L).",
   "gdd_requirements.json": "Growing degree day requirements by crop.",
+  "phenological_milestones.json": "GDD triggers for key phenological events.",
   "heat_stress_thresholds.json": "Temperature levels causing heat stress.",
   "humidity_stress_thresholds.json": "Relative humidity levels causing stress.",
   "humidity_actions.json": "Recommended actions for low or high humidity.",
