@@ -12,6 +12,7 @@ MOA_FILE = "pesticide_modes.json"
 ROTATION_FILE = "pesticide_rotation_intervals.json"
 PHYTO_FILE = "pesticide_phytotoxicity.json"
 RATE_FILE = "pesticide_application_rates.json"
+PRICE_FILE = "pesticide_prices.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
@@ -20,6 +21,7 @@ _MOA: Dict[str, str] = load_dataset(MOA_FILE)
 _ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
 _PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
 _RATES: Dict[str, float] = load_dataset(RATE_FILE)
+_PRICES: Dict[str, float] = load_dataset(PRICE_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -38,6 +40,8 @@ __all__ = [
     "get_phytotoxicity_risk",
     "is_safe_for_crop",
     "get_application_rate",
+    "get_pesticide_price",
+    "estimate_application_cost",
     "calculate_application_amount",
     "summarize_pesticide_restrictions",
 ]
@@ -230,6 +234,33 @@ def get_application_rate(product: str) -> float | None:
         return float(rate) if rate is not None else None
     except (TypeError, ValueError):  # pragma: no cover - defensive
         return None
+
+
+def get_pesticide_price(product: str) -> float | None:
+    """Return price per unit for ``product`` if defined."""
+
+    price = _PRICES.get(product.lower())
+    try:
+        return float(price) if price is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
+
+
+def estimate_application_cost(product: str, volume_l: float) -> float:
+    """Return cost of treating ``volume_l`` liters with ``product``."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    rate = get_application_rate(product)
+    if rate is None:
+        raise KeyError(f"Application rate for '{product}' is not defined")
+
+    price = get_pesticide_price(product)
+    if price is None:
+        raise KeyError(f"Price for '{product}' is not defined")
+
+    return round(price * rate * volume_l / 1000, 2)
 
 
 def calculate_application_amount(product: str, volume_l: float) -> float:

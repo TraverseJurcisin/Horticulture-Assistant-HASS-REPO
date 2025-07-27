@@ -15,6 +15,8 @@ from plant_engine.pesticide_manager import (
     suggest_rotation_schedule,
     next_rotation_date,
     suggest_rotation_plan,
+    get_pesticide_price,
+    estimate_application_cost,
 )
 
 
@@ -169,5 +171,12 @@ def test_summarize_pesticide_restrictions():
     summary = summarize_pesticide_restrictions(apps)
     assert summary["reentry_time"] == earliest_reentry_time("imidacloprid", apps[1][1])
     assert summary["harvest_date"] == earliest_harvest_date("imidacloprid", apps[1][1].date())
+
+
+def test_get_pesticide_price_and_cost():
+    assert get_pesticide_price("neem_oil") == 15.0
+    cost = estimate_application_cost("neem_oil", 2.0)
+    assert cost == 0.15
+
 
 
