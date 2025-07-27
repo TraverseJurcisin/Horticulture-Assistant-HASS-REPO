@@ -266,6 +266,7 @@ __all__ = [
     "optimize_fertigation_schedule",
     "recommend_precise_fertigation",
     "recommend_precise_fertigation_with_injection",
+    "recommend_cost_optimized_fertigation_with_injection",
     "recommend_rootzone_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
@@ -1157,6 +1158,37 @@ def optimize_fertigation_schedule(
 
     cost = estimate_mix_cost(schedule) if schedule else 0.0
     return schedule, cost
+
+
+def recommend_cost_optimized_fertigation_with_injection(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    include_micro: bool = False,
+) -> tuple[Dict[str, float], float, Dict[str, float]]:
+    """Return lowest cost fertigation mix and injection volumes.
+
+    This helper combines :func:`optimize_fertigation_schedule` with
+    stock solution injection calculations so the resulting schedule can
+    be applied directly by nutrient injectors.
+    """
+
+    schedule, cost = optimize_fertigation_schedule(
+        plant_type, stage, volume_l, include_micro=include_micro
+    )
+
+    if not schedule:
+        return {}, 0.0, {}
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        calculate_mix_ppm,
+    )
+
+    ppm_levels = calculate_mix_ppm(schedule, volume_l)
+    injection = recommend_stock_solution_injection(ppm_levels, volume_l)
+
+    return schedule, cost, injection
 
 
 def generate_cycle_fertigation_plan(

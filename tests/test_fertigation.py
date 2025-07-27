@@ -471,3 +471,19 @@ def test_estimate_weekly_fertigation_cost():
     )
     assert cost > 0
 
+
+def test_cost_optimized_fertigation_injection():
+    from plant_engine.fertigation import (
+        recommend_cost_optimized_fertigation_with_injection,
+    )
+
+    schedule, cost, injection = recommend_cost_optimized_fertigation_with_injection(
+        "tomato",
+        "vegetative",
+        5.0,
+    )
+
+    assert schedule
+    assert cost >= 0
+    assert injection
+

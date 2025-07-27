@@ -90,6 +90,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Daily report files summarizing environment and nutrient targets
 - Environment score and quality rating for sensor data
 - Infiltration-aware irrigation burst scheduling
+- Cost-optimized fertigation plans with injection volumes
 - Risk-adjusted pest monitoring summaries and scheduling
 - Automatic pesticide rotation planning
 - Summaries of reentry and harvest restrictions for applied pesticides
