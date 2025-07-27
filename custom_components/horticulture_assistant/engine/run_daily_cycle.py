@@ -31,6 +31,7 @@ from plant_engine.disease_manager import (
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.utils import load_dataset
+from plant_engine.nutrient_uptake import get_daily_uptake
 from plant_engine.fertigation import (
     recommend_nutrient_mix,
     recommend_nutrient_mix_with_cost,
@@ -55,6 +56,8 @@ class DailyReport:
     thresholds: dict[str, object] = field(default_factory=dict)
     irrigation_summary: dict[str, object] = field(default_factory=dict)
     nutrient_summary: dict[str, object] = field(default_factory=dict)
+    expected_uptake: dict[str, float] = field(default_factory=dict)
+    uptake_gap: dict[str, float] = field(default_factory=dict)
     nutrient_analysis: dict[str, object] = field(default_factory=dict)
     sensor_summary: dict[str, object] = field(default_factory=dict)
     environment_comparison: dict[str, object] = field(default_factory=dict)
@@ -165,26 +168,36 @@ def run_daily_cycle(
             "methods": list(methods),
         }
     # Summarize nutrient applications (aggregate nutrients applied in 24h)
+    nutrient_totals: dict[str, float] = {}
     if nutrient_entries:
-        nutrient_totals: dict[str, float] = {}
         for entry in nutrient_entries:
             formulation = entry.get("nutrient_formulation", {})
             for nutrient, amount in formulation.items():
                 nutrient_totals[nutrient] = nutrient_totals.get(nutrient, 0) + amount
-        report.nutrient_summary = nutrient_totals
-        try:
-            report.nutrient_analysis = analyze_nutrient_profile(
-                nutrient_totals,
-                plant_type,
-                stage_name or "",
-            )
-            report.deficiency_actions = diagnose_deficiency_actions(
-                nutrient_totals,
-                plant_type,
-                stage_name or "",
-            )
-        except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
-            _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
+    report.nutrient_summary = nutrient_totals
+
+    try:
+        report.nutrient_analysis = analyze_nutrient_profile(
+            nutrient_totals,
+            plant_type,
+            stage_name or "",
+        )
+        report.deficiency_actions = diagnose_deficiency_actions(
+            nutrient_totals,
+            plant_type,
+            stage_name or "",
+        )
+    except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
+        _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
+
+    expected_uptake = get_daily_uptake(plant_type, stage_name or "")
+    report.expected_uptake = expected_uptake
+    if expected_uptake:
+        gap: dict[str, float] = {}
+        for nutrient, target in expected_uptake.items():
+            applied = nutrient_totals.get(nutrient, 0.0)
+            gap[nutrient] = round(target - applied, 2)
+        report.uptake_gap = gap
     # Summarize sensor readings (24h average per sensor type)
     sensor_data = {}
     for entry in sensor_entries:
