@@ -89,6 +89,10 @@ _ALIAS_MAP: Dict[str, str] = {
     for alias in aliases
 }
 
+# canonical keys that require unit conversion from Fahrenheit or Kelvin
+FAHRENHEIT_KEYS = {"temp_f", "soil_temp_f", "leaf_temp_f"}
+KELVIN_KEYS = {"temp_k", "soil_temp_k", "leaf_temp_k"}
+
 
 def get_environment_aliases() -> Dict[str, list[str]]:
     """Return mapping of canonical environment keys to accepted aliases."""
@@ -282,17 +286,20 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
         canonical = _ALIAS_MAP.get(key, key)
         try:
             val = float(value)
+            if not math.isfinite(val):
+                continue
         except (TypeError, ValueError):
             continue
-        if not math.isfinite(val):
-            continue
-        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
+
+        if canonical in FAHRENHEIT_KEYS:
             val = (val - 32) * 5 / 9
             canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
-            val = val - 273.15
+        elif canonical in KELVIN_KEYS:
+            val -= 273.15
             canonical = canonical.replace("_k", "_c")
+
         normalized[canonical] = val
+
     return normalized
 
 
