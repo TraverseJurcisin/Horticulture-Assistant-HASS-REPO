@@ -27,6 +27,7 @@
   "irrigation_guidelines.json": "Daily irrigation volume guidelines by stage.",
   "irrigation_intervals.json": "Recommended days between irrigation events for each plant stage.",
   "irrigation_efficiency.json": "Efficiency factors for irrigation methods.",
+  "irrigation_zone_modifiers.json": "Climate zone multipliers for irrigation demand.",
   "rain_capture_efficiency.json": "Fraction of rainfall captured by different ground covers.",
   "water_quality_thresholds.json": "Maximum safe levels of common water analytes.",
   "water_quality_actions.json": "Recommended remediation steps for poor water quality.",

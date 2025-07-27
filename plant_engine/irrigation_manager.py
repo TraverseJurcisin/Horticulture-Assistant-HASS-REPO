@@ -27,6 +27,8 @@ __all__ = [
     "generate_precipitation_schedule",
     "generate_env_precipitation_schedule",
     "get_rain_capture_efficiency",
+    "get_irrigation_zone_modifier",
+    "adjust_irrigation_for_zone",
     "get_recommended_interval",
     "estimate_irrigation_time",
     "generate_cycle_irrigation_plan",
@@ -51,6 +53,9 @@ _FLOW_DATA: Dict[str, float] = load_dataset(_FLOW_FILE)
 
 _RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
 _RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
+
+_ZONE_MODIFIER_FILE = "irrigation_zone_modifiers.json"
+_ZONE_MODIFIERS: Dict[str, float] = load_dataset(_ZONE_MODIFIER_FILE)
 
 
 @dataclass(slots=True, frozen=True)
@@ -265,6 +270,24 @@ def get_rain_capture_efficiency(surface: str) -> float:
     except (TypeError, ValueError):
         eff = 1.0
     return max(0.0, min(eff, 1.0))
+
+
+def get_irrigation_zone_modifier(zone: str) -> float:
+    """Return irrigation multiplier for a climate zone."""
+    value = _ZONE_MODIFIERS.get(normalize_key(zone), 1.0)
+    try:
+        factor = float(value)
+    except (TypeError, ValueError):
+        factor = 1.0
+    return max(0.0, factor)
+
+
+def adjust_irrigation_for_zone(volume_ml: float, zone: str) -> float:
+    """Return ``volume_ml`` scaled by the zone modifier."""
+    if volume_ml < 0:
+        raise ValueError("volume_ml must be non-negative")
+    factor = get_irrigation_zone_modifier(zone)
+    return round(volume_ml * factor, 1)
 
 
 def recommend_irrigation_from_environment(
