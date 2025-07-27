@@ -84,7 +84,7 @@ def test_get_environmental_targets_case_insensitive():
 def test_recommend_environment_adjustments():
     actions = recommend_environment_adjustments(
         {
-            "temp_c": 18,
+            "temp_c": 42,
             "humidity_pct": 90,
             "light_ppfd": 100,
             "co2_ppm": 700,
@@ -92,20 +92,20 @@ def test_recommend_environment_adjustments():
         "citrus",
         "seedling",
     )
-    assert actions["temperature"] == "increase"
-    assert actions["humidity"] == "decrease"
+    assert actions["temperature"].startswith("Provide shade")
+    assert actions["humidity"].startswith("Ventilate")
     assert actions["light"] == "increase"
     assert actions["co2"] == "decrease"
 
 
 def test_recommend_environment_adjustments_aliases():
     actions = recommend_environment_adjustments(
-        {"temperature": 18, "humidity": 90, "light": 100, "co2": 700},
+        {"temperature": 42, "humidity": 90, "light": 100, "co2": 700},
         "citrus",
         "seedling",
     )
-    assert actions["temperature"] == "increase"
-    assert actions["humidity"] == "decrease"
+    assert actions["temperature"].startswith("Provide shade")
+    assert actions["humidity"].startswith("Ventilate")
     assert actions["light"] == "increase"
     assert actions["co2"] == "decrease"
 
@@ -595,7 +595,7 @@ def test_summarize_environment():
     summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True)
     assert summary["quality"] == "poor"
     assert summary["adjustments"]["temperature"] == "increase"
-    assert summary["adjustments"]["humidity"] == "decrease"
+    assert summary["adjustments"]["humidity"].startswith("Ventilate")
     assert "vpd" in summary["metrics"]
     assert "score" in summary
     assert "stress" in summary

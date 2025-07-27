@@ -652,19 +652,38 @@ def compare_environment(
 def recommend_environment_adjustments(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
 ) -> Dict[str, str]:
-    """Return adjustment suggestions for temperature, humidity, light and CO₂."""
+    """Return detailed adjustment suggestions for key environment parameters.
+
+    The returned mapping may include descriptive recommendations for
+    temperature and humidity based on stress evaluation datasets. Other keys
+    fall back to simple ``"increase"``/``"decrease"`` hints.
+    """
 
     targets = get_environmental_targets(plant_type, stage)
     if not targets:
         return {}
 
     comparison = compare_environment(current, targets)
+    readings = normalize_environment_readings(current)
     actions: Dict[str, str] = {}
     for key, status in comparison.items():
         if status == "within range":
             continue
+
         label = ACTION_LABELS.get(key, key)
-        actions[label] = "increase" if status == "below range" else "decrease"
+
+        action: str | None = None
+        if key == "temp_c":
+            action = recommend_temperature_action(
+                readings.get("temp_c"), readings.get("humidity_pct"), plant_type
+            )
+        elif key == "humidity_pct":
+            action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
+
+        if not action:
+            action = "increase" if status == "below range" else "decrease"
+
+        actions[label] = action
 
     return actions
 
