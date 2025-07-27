@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
 from typing import Dict, Mapping
 
@@ -30,12 +30,14 @@ MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
+DAMAGE_THRESHOLD_FILE = "pest_damage_thresholds.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+_DAMAGE_THRESHOLDS = lazy_dataset(DAMAGE_THRESHOLD_FILE)
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -55,6 +57,8 @@ __all__ = [
     "get_scouting_method",
     "get_severity_action",
     "get_severity_thresholds",
+    "get_damage_thresholds",
+    "classify_damage_severity",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
@@ -159,11 +163,45 @@ def get_scouting_method(pest: str) -> str:
     return methods.get(normalize_key(pest), "")
 
 
+def _severity_data() -> Mapping[str, Mapping[str, float]]:
+    """Return cached pest severity threshold mapping."""
+    data = _SEVERITY_THRESHOLDS
+    return data() if callable(data) else data
+
+
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _SEVERITY_THRESHOLDS()
+    thresholds = _severity_data()
     return thresholds.get(normalize_key(pest), {})
+
+
+def _damage_data() -> Mapping[str, Mapping[str, float]]:
+    """Return cached pest damage threshold mapping."""
+    data = _DAMAGE_THRESHOLDS
+    return data() if callable(data) else data
+
+
+def get_damage_thresholds(pest: str) -> Dict[str, float]:
+    """Return leaf damage severity thresholds for ``pest`` if defined."""
+
+    return _damage_data().get(normalize_key(pest), {})
+
+
+def classify_damage_severity(pest: str, damage_pct: float) -> str:
+    """Return ``low``, ``moderate`` or ``severe`` for leaf damage percent."""
+
+    if not 0 <= damage_pct <= 100:
+        raise ValueError("damage_pct must be between 0 and 100")
+
+    thresholds = get_damage_thresholds(pest)
+    moderate = float(thresholds.get("moderate", 10))
+    severe = float(thresholds.get("severe", 25))
+    if damage_pct >= severe:
+        return "severe"
+    if damage_pct >= moderate:
+        return "moderate"
+    return "low"
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
@@ -326,6 +364,7 @@ class PestReport:
     beneficial_insects: Dict[str, list[str]]
     prevention: Dict[str, str]
     severity_actions: Dict[str, str]
+    damage_severity: Dict[str, str] = field(default_factory=dict)
 
     def as_dict(self) -> Dict[str, object]:
         """Return report as a regular dictionary."""
@@ -333,7 +372,9 @@ class PestReport:
 
 
 def generate_pest_report(
-    plant_type: str, observations: Mapping[str, int]
+    plant_type: str,
+    observations: Mapping[str, int],
+    damage_pct: Mapping[str, float] | None = None,
 ) -> Dict[str, object]:
     """Return severity, treatment and prevention recommendations."""
 
@@ -348,6 +389,11 @@ def generate_pest_report(
 
     severity_actions = {s: get_severity_action(lvl) for s, lvl in severity.items()}
 
+    damage = {}
+    if damage_pct:
+        for pest, pct in damage_pct.items():
+            damage[normalize_key(pest)] = classify_damage_severity(pest, float(pct))
+
     report = PestReport(
         severity=severity,
         thresholds_exceeded=thresholds,
@@ -355,6 +401,7 @@ def generate_pest_report(
         beneficial_insects=beneficials,
         prevention=prevention,
         severity_actions=severity_actions,
+        damage_severity=damage,
     )
     return report.as_dict()
 
@@ -365,6 +412,8 @@ def summarize_pest_management(
     observations: Mapping[str, int],
     environment: Mapping[str, float] | None = None,
     last_date: date | None = None,
+    *,
+    damage_pct: Mapping[str, float] | None = None,
 ) -> Dict[str, object]:
     """Return consolidated pest status and recommendations.
 
@@ -382,7 +431,7 @@ def summarize_pest_management(
         Date of the previous scouting event for scheduling the next one.
     """
 
-    report = generate_pest_report(plant_type, observations)
+    report = generate_pest_report(plant_type, observations, damage_pct)
 
     risk: Dict[str, str] | None = None
     risk_score: float | None = None

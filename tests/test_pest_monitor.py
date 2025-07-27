@@ -108,12 +108,13 @@ def test_calculate_pest_pressure_index():
 
 def test_generate_pest_report():
     obs = {"aphids": 6, "scale": 3}
-    report = generate_pest_report("citrus", obs)
+    report = generate_pest_report("citrus", obs, {"aphids": 15})
     assert report["severity"]["scale"] == "moderate" or report["severity"]["scale"] == "severe"
     assert report["thresholds_exceeded"]["aphids"] is True
     assert "aphids" in report["treatments"]
     assert "aphids" in report["beneficial_insects"]
     assert report["severity_actions"]["aphids"]
+    assert report["damage_severity"]["aphids"] == "moderate"
 
 
 def test_get_monitoring_interval():
@@ -164,11 +165,13 @@ def test_summarize_pest_management():
         obs,
         environment=env,
         last_date=last,
+        damage_pct={"aphids": 30},
     )
     assert summary["severity"]["aphids"] in {"moderate", "severe"}
     assert summary["risk"]["aphids"] == "high"
     assert summary.get("risk_score") is not None
     assert "next_monitor_date" in summary
+    assert summary["damage_severity"]["aphids"] == "severe"
 
 
 def test_get_scouting_method():
@@ -183,4 +186,12 @@ def test_generate_detailed_monitoring_schedule():
     entry = plan[0]
     assert entry["date"] == date(2023, 1, 4)
     assert "aphids" in entry["methods"]
+
+
+def test_classify_damage_severity():
+    from plant_engine.pest_monitor import classify_damage_severity
+
+    assert classify_damage_severity("aphids", 12) == "moderate"
+    assert classify_damage_severity("aphids", 30) == "severe"
+    assert classify_damage_severity("unknown", 4) == "low"
 

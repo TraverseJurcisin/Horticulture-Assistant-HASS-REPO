@@ -1,0 +1,4 @@
+{
+  "aphids": {"moderate": 10, "severe": 25},
+  "mites": {"moderate": 5, "severe": 15}
+}
