@@ -313,6 +313,25 @@ class NutrientUseEfficiency:
             return 0.0
         return score_efficiency(eff, plant_type)
 
+    def compare_to_expected(
+        self, plant_id: str, plant_type: str, stage: str
+    ) -> Dict[str, float]:
+        """Return applied minus expected nutrient totals for a stage."""
+
+        from plant_engine.nutrient_uptake import estimate_stage_totals
+
+        expected = estimate_stage_totals(plant_type, stage)
+        if not expected:
+            return {}
+
+        applied = self.total_nutrients_applied(plant_id)
+        diff: Dict[str, float] = {}
+        for nut in set(expected) | set(applied):
+            exp = float(expected.get(nut, 0.0))
+            act = float(applied.get(nut, 0.0))
+            diff[nut] = round(act - exp, 2)
+        return diff
+
     def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
         """
         Summarize nutrient usage for a plant, grouped by a time period or lifecycle stage.
