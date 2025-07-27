@@ -161,7 +161,9 @@ def test_daily_irrigation_target_lookup():
 
 def test_get_recommended_interval():
     assert get_recommended_interval("citrus", "seedling") == 2
-    assert get_recommended_interval("citrus", "unknown") is None
+    # When a stage-specific interval isn't defined the value falls back to
+    # drought tolerance data for the crop.
+    assert get_recommended_interval("citrus", "unknown") == 3
 
 
 def test_generate_irrigation_schedule():

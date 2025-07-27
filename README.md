@@ -75,6 +75,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Optional OpenAI or offline models for nutrient planning
 - Irrigation and fertigation switches with approval queues
 - Configurable irrigation zones with shared solenoids
+- Watering interval defaults to drought tolerance when stage data is missing
 
 ### Data & Analytics
 - Disease and pest treatment recommendations
