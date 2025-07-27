@@ -107,3 +107,61 @@ def calculate_soil_balance(levels: Mapping[str, float], plant_type: str) -> Dict
         balance[nutrient] = round(current / target, 2)
 
     return balance
+
+
+def recommend_soil_amendments(
+    levels: Mapping[str, float],
+    plant_type: str,
+    volume_l: float,
+    fertilizers: Mapping[str, str],
+    purity_overrides: Mapping[str, float] | None = None,
+) -> Dict[str, float]:
+    """Return fertilizer grams required to meet soil nutrient targets.
+
+    Parameters
+    ----------
+    levels : Mapping[str, float]
+        Current soil test results in ppm.
+    plant_type : str
+        Crop identifier for guideline lookup.
+    volume_l : float
+        Soil volume to amend in liters.
+    fertilizers : Mapping[str, str]
+        Mapping of nutrient code to fertilizer product id.
+    purity_overrides : Mapping[str, float], optional
+        Purity fractions overriding values from ``fertilizer_purity.json``.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    deficits = calculate_soil_deficiencies(levels, plant_type)
+    if not deficits:
+        return {}
+
+    purity_data = load_dataset("fertilizer_purity.json")
+    result: Dict[str, float] = {}
+    for nutrient, ppm_needed in deficits.items():
+        fert_id = fertilizers.get(nutrient)
+        if not fert_id:
+            continue
+        purity = None
+        if purity_overrides and nutrient in purity_overrides:
+            purity = purity_overrides[nutrient]
+        else:
+            info = purity_data.get(fert_id)
+            if isinstance(info, Mapping):
+                purity = info.get(nutrient)
+        try:
+            purity_val = float(purity) if purity is not None else None
+        except (TypeError, ValueError):
+            purity_val = None
+        if purity_val is None or purity_val <= 0:
+            continue
+        grams = ppm_needed * volume_l / (1000 * purity_val)
+        if grams > 0:
+            result[fert_id] = round(result.get(fert_id, 0.0) + grams, 2)
+    return result
+
+
+__all__.append("recommend_soil_amendments")
