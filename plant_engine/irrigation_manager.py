@@ -334,7 +334,13 @@ def get_recommended_interval(plant_type: str, stage: str) -> float | None:
     value = stage_value(_INTERVAL_DATA, plant_type, stage)
     if isinstance(value, (int, float)):
         return float(value)
-    return None
+    # Fall back to drought tolerance data when stage-specific guidance
+    # is unavailable. This ensures a sensible default interval based on
+    # crop water stress tolerance.
+    from .drought_manager import recommend_watering_interval
+
+    interval = recommend_watering_interval(plant_type, default_days=0)
+    return float(interval) if interval > 0 else None
 
 
 def generate_irrigation_schedule(
