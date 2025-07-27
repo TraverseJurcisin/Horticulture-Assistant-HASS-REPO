@@ -15,11 +15,7 @@ from typing import Any, Dict
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = [
-    "PlantProfile",
-    "load_plant_profile",
-    "clear_profile_cache",
-]
+__all__ = ["PlantProfile", "load_plant_profile", "clear_profile_cache"]
 
 
 @dataclass(slots=True)
@@ -44,33 +40,32 @@ def load_plant_profile(
     base_path: str | None = None,
     *,
     include_validation_files: bool = False,
-) -> dict:
-    """
-    Load a plant's profile by reading all JSON files in the plant's directory.
+) -> PlantProfile | dict:
+    """Return a :class:`PlantProfile` for ``plant_id``.
 
-    Scans the directory `plants/<plant_id>/` (or under the given base_path) for JSON files,
-    except for ``profile_index.json`` and, by default, any files intended for
-    validation only.
-    Parses each JSON file into a dictionary and aggregates them into a single profile structure.
+    All ``*.json`` files found under ``plants/<plant_id>/`` are parsed and
+    merged into one profile. ``profile_index.json`` and, by default,
+    any files intended solely for validation are skipped. Invalid JSON files are
+    logged and ignored so that loading continues for the rest of the profile.
 
-    Returns a dictionary with the structure:
-    {
-        'plant_id': <plant_id>,
-        'profile_data': {
-            <filename_base>: <parsed JSON content as dict>,
-            ...
-        }
-    }
+    If no valid profile data is found an empty dict is returned instead of a
+    dataclass instance.
 
-    Any JSON files that fail to parse are skipped with an error logged, while loading of other files continues.
-    Logs an info-level summary with the total number of profile modules successfully loaded.
+    Parameters
+    ----------
+    plant_id: str
+        Identifier for the plant (the profile directory name).
+    base_path: str | None, optional
+        Base directory of plant profiles, default ``plants/`` in the current
+        working directory.
+    include_validation_files: bool, optional
+        When ``True`` files containing ``validate`` or ``validation`` in the
+        name are also loaded.
 
-    :param plant_id: Identifier for the plant (also the directory name under the base path).
-    :param base_path: Optional base directory for plant profiles (defaults to
-        ``plants/`` in the current working directory).
-    :param include_validation_files: If ``True``, also load files whose name
-        contains ``validate`` or ``validation``.
-    :return: A dictionary containing the plant_id and loaded profile_data sections, or an empty dict on error.
+    Returns
+    -------
+    PlantProfile | dict
+        The aggregated profile information, or ``{}`` if nothing was loaded.
     """
     # Determine the base directory and plant profile directory
     base_dir = Path(base_path) if base_path else Path("plants")

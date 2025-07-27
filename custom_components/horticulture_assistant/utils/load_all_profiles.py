@@ -16,10 +16,11 @@ from custom_components.horticulture_assistant.utils.validate_profile_structure i
 _LOGGER = logging.getLogger(__name__)
 
 
-@dataclass
+@dataclass(slots=True)
 class ProfileLoadResult:
     """Result container for :func:`load_all_profiles`."""
 
+    plant_id: str
     loaded: bool
     profile_data: dict
     issues: dict
@@ -83,6 +84,7 @@ def load_all_profiles(
                 issues = validation_issues
 
         profiles[plant_id] = ProfileLoadResult(
+            plant_id=plant_id,
             loaded=True,
             profile_data=profile_data,
             issues=issues,
