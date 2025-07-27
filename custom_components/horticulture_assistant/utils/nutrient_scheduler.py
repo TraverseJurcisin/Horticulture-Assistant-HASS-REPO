@@ -13,11 +13,15 @@ try:
 except ImportError:
     HomeAssistant = None
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_profile,
+)
+from custom_components.horticulture_assistant.utils.plant_registry import (
+    get_plant_type,
+)
 from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.utils import load_json, save_json, load_dataset
 from custom_components.horticulture_assistant.utils.path_utils import (
-    config_path,
     plants_path,
     data_path,
 )
@@ -67,9 +71,6 @@ def _tag_modifiers() -> dict[str, dict[str, float]]:
             modifiers[norm_tag] = mods
     return modifiers
 
-PLANT_REGISTRY_FILE = "plant_registry.json"
-
-
 @dataclass
 class NutrientTargets:
     """Structured nutrient targets returned by :func:`schedule_nutrients`."""
@@ -81,36 +82,21 @@ class NutrientTargets:
         return asdict(self)["values"]
 
 
-def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) -> str | None:
-    """Return plant type for ``plant_id`` from profile or registry."""
-    plant_type = profile.get("general", {}).get("plant_type")
-    if plant_type:
-        return str(plant_type).lower()
+@lru_cache(maxsize=None)
+def _load_profile(plant_id: str, base_dir: str | None) -> dict:
+    """Return cached profile data for ``plant_id`` from ``base_dir``."""
 
-    reg_path = config_path(hass, PLANT_REGISTRY_FILE)
-    try:
-        data = load_json(reg_path)
-        plant_type = data.get(plant_id, {}).get("plant_type")
-        if plant_type:
-            return str(plant_type).lower()
-    except Exception:
-        pass
-    return None
-
-
-def _load_profile(plant_id: str, hass: HomeAssistant | None) -> dict:
-    """Return loaded profile for ``plant_id`` using Home Assistant if provided."""
-
-    base_dir = None
-    if hass is not None:
-        try:
-            base_dir = plants_path(hass)
-        except Exception as exc:  # pragma: no cover - HA may not provide path
-            _LOGGER.warning("Could not determine plants directory: %s", exc)
-            base_dir = None
-    else:
-        base_dir = plants_path(None)
     return load_profile(plant_id=plant_id, base_dir=base_dir)
+
+
+def _profile_dir(hass: HomeAssistant | None) -> str | None:
+    """Return profile directory path for ``hass`` or the current working dir."""
+
+    try:
+        return plants_path(hass)
+    except Exception as exc:  # pragma: no cover
+        _LOGGER.warning("Could not determine plants directory: %s", exc)
+        return plants_path(None)
 
 
 def _stage_multiplier(profile: dict, stage_key: str) -> float:
@@ -155,7 +141,8 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTar
     ``nutrient_targets.json`` for later use.
     """
 
-    profile = _load_profile(plant_id, hass)
+    base_dir = _profile_dir(hass)
+    profile = _load_profile(plant_id, base_dir)
     if not profile:
         _LOGGER.error("Plant profile for '%s' not found or empty", plant_id)
         return NutrientTargets({})
@@ -170,7 +157,11 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTar
     stage_key = STAGE_SYNONYMS.get(str(stage).lower(), str(stage).lower())
 
     if not base_targets:
-        plant_type = _get_plant_type(plant_id, profile, hass)
+        plant_type = (
+            str(profile.get("general", {}).get("plant_type"))
+            if profile.get("general", {}).get("plant_type")
+            else get_plant_type(plant_id, hass)
+        )
         if plant_type:
             base_targets = get_recommended_levels(plant_type, stage_key)
             if base_targets:
