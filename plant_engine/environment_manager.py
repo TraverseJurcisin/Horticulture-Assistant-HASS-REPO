@@ -23,6 +23,7 @@ COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
 HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
+TEMPERATURE_ACTION_FILE = "temperature_actions.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
 CO2_PRICE_FILE = "co2_prices.json"
@@ -271,6 +272,8 @@ __all__ = [
     "evaluate_leaf_temperature_stress",
     "get_humidity_action",
     "recommend_humidity_action",
+    "get_temperature_action",
+    "recommend_temperature_action",
     "evaluate_ph_stress",
     "evaluate_stress_conditions",
     "optimize_environment",
@@ -309,6 +312,7 @@ _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
+_TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
 _CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
@@ -1233,6 +1237,26 @@ def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> st
         return None
     action = get_humidity_action(level)
     return action or None
+
+
+def get_temperature_action(level: str) -> str:
+    """Return recommended action for a temperature stress level."""
+
+    return _TEMPERATURE_ACTIONS.get(level.lower(), "")
+
+
+def recommend_temperature_action(
+    temp_c: float | None,
+    humidity_pct: float | None,
+    plant_type: str,
+) -> str | None:
+    """Return temperature adjustment recommendation if outside thresholds."""
+
+    if evaluate_cold_stress(temp_c, plant_type):
+        return get_temperature_action("cold") or None
+    if evaluate_heat_stress(temp_c, humidity_pct, plant_type):
+        return get_temperature_action("hot") or None
+    return None
 
 
 def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:
