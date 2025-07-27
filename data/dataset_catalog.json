@@ -43,6 +43,7 @@
   "beneficial_insects.json": "Natural predators for common greenhouse pests.",
   "beneficial_release_rates.json": "Recommended release rates of beneficial insects per m^2.",
   "bioinoculant_guidelines.json": "Recommended microbial inoculants for improved nutrient uptake.",
+  "bioinoculant_attributes.json": "Key attributes and usage notes for common microbial inoculants.",
   "crop_coefficients.json": "Crop coefficients for evapotranspiration models.",
   "crop_coefficient_modifiers.json": "Environmental adjustment factors for crop coefficients.",
   "disease_thresholds.json": "Severity thresholds triggering treatments.",

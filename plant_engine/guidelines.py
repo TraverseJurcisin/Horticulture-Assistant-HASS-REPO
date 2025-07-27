@@ -11,6 +11,7 @@ from . import (
     nutrient_manager,
     micro_manager,
     bioinoculant_manager,
+    bioinoculant_info,
     pest_manager,
     pest_monitor,
     disease_manager,
@@ -39,6 +40,9 @@ class GuidelineSummary:
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
     bioinoculants: List[str] = dataclass_field(default_factory=list)
+    bioinoculant_details: Dict[str, Dict[str, str]] = dataclass_field(
+        default_factory=dict
+    )
     ph_range: List[float] = dataclass_field(default_factory=list)
     ec_range: List[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
@@ -72,10 +76,17 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
             for s in growth_stage.list_growth_stages(plant_type)
         }
 
+    inoculants = bioinoculant_manager.get_recommended_inoculants(plant_type)
+    details = {name: bioinoculant_info.get_inoculant_info(name) for name in inoculants}
+
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
-        nutrients=nutrient_manager.get_recommended_levels(plant_type, stage) if stage else {},
-        micronutrients=micro_manager.get_recommended_levels(plant_type, stage) if stage else {},
+        nutrients=nutrient_manager.get_recommended_levels(plant_type, stage)
+        if stage
+        else {},
+        micronutrients=micro_manager.get_recommended_levels(plant_type, stage)
+        if stage
+        else {},
         pest_guidelines=pest_manager.get_pest_guidelines(plant_type),
         pest_prevention=pest_manager.get_pest_prevention(plant_type),
         ipm_guidelines=pest_manager.get_ipm_guidelines(plant_type),
@@ -83,7 +94,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
         pest_thresholds=thresholds,
         beneficial_insects=beneficial,
-        bioinoculants=bioinoculant_manager.get_recommended_inoculants(plant_type),
+        bioinoculants=inoculants,
+        bioinoculant_details=details,
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
         irrigation_volume_ml=(

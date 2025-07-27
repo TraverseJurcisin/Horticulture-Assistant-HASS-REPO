@@ -1,0 +1,27 @@
+{
+  "Trichoderma harzianum": {
+    "category": "fungal",
+    "preferred_environment": "soil applications at pH 5-7",
+    "mode_of_action": "competition and parasitism"
+  },
+  "Trichoderma viride": {
+    "category": "fungal",
+    "preferred_environment": "seed coating or soil drench",
+    "mode_of_action": "antagonistic to soil fungi"
+  },
+  "Bacillus subtilis": {
+    "category": "bacterial",
+    "preferred_environment": "foliar or root zone spray",
+    "mode_of_action": "produces antimicrobial compounds"
+  },
+  "Azospirillum brasilense": {
+    "category": "bacterial",
+    "preferred_environment": "root inoculation",
+    "mode_of_action": "nitrogen fixation and growth promotion"
+  },
+  "Pseudomonas fluorescens": {
+    "category": "bacterial",
+    "preferred_environment": "seed treatment or soil drench",
+    "mode_of_action": "suppresses root pathogens"
+  }
+}
