@@ -203,6 +203,15 @@ def recommend_climate_adjustments(
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
     """Return ``readings`` with keys mapped to canonical environment names."""
 
+    conversions: Dict[str, tuple[str, callable[[float], float]]] = {
+        "temp_f": ("temp_c", lambda v: (v - 32) * 5 / 9),
+        "temp_k": ("temp_c", lambda v: v - 273.15),
+        "soil_temp_f": ("soil_temp_c", lambda v: (v - 32) * 5 / 9),
+        "soil_temp_k": ("soil_temp_c", lambda v: v - 273.15),
+        "leaf_temp_f": ("leaf_temp_c", lambda v: (v - 32) * 5 / 9),
+        "leaf_temp_k": ("leaf_temp_c", lambda v: v - 273.15),
+    }
+
     normalized: Dict[str, float] = {}
     for key, value in readings.items():
         canonical = _ALIAS_MAP.get(key, key)
@@ -210,13 +219,13 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             val = float(value)
         except (TypeError, ValueError):
             continue
-        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
-            val = (val - 32) * 5 / 9
-            canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
-            val = val - 273.15
-            canonical = canonical.replace("_k", "_c")
+
+        if canonical in conversions:
+            canonical, func = conversions[canonical]
+            val = func(val)
+
         normalized[canonical] = val
+
     return normalized
 
 
@@ -309,6 +318,7 @@ __all__ = [
     "average_environment_readings",
     "calculate_environment_variance",
     "calculate_environment_stddev",
+    "calculate_environment_cv",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
@@ -456,6 +466,20 @@ def calculate_environment_stddev(series: Iterable[Mapping[str, float]]) -> Dict[
 
     variance = calculate_environment_variance(series)
     return {k: round(math.sqrt(v), 3) for k, v in variance.items()}
+
+
+def calculate_environment_cv(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+    """Return coefficient of variation (%) for normalized environment readings."""
+
+    avg = average_environment_readings(series)
+    std = calculate_environment_stddev(series)
+    cv: Dict[str, float] = {}
+    for key, sd in std.items():
+        mean = avg.get(key)
+        if mean is None or mean == 0:
+            continue
+        cv[key] = round(sd / mean * 100, 2)
+    return cv
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:

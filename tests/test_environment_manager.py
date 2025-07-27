@@ -64,6 +64,7 @@ from plant_engine.environment_manager import (
     average_environment_readings,
     calculate_environment_variance,
     calculate_environment_stddev,
+    calculate_environment_cv,
     clear_environment_cache,
     get_target_soil_temperature,
     get_target_soil_ec,
@@ -649,6 +650,17 @@ def test_calculate_environment_stddev():
     std = calculate_environment_stddev(series)
     assert std["temp_c"] == pytest.approx(math.sqrt(0.667), rel=1e-3)
     assert std["humidity_pct"] == pytest.approx(math.sqrt(2.667), rel=1e-3)
+
+
+def test_calculate_environment_cv():
+    series = [
+        {"temp_c": 20, "humidity_pct": 70},
+        {"temperature": 22, "humidity": 72},
+        {"temp_c": 21, "humidity_pct": 74},
+    ]
+    cv = calculate_environment_cv(series)
+    assert cv["temp_c"] == pytest.approx(3.89, rel=1e-2)
+    assert cv["humidity_pct"] == pytest.approx(2.27, rel=1e-2)
 
 
 def test_calculate_environment_variance_empty():
