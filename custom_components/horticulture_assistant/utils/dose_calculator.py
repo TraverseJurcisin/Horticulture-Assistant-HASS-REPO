@@ -133,3 +133,41 @@ class DoseCalculator:
 
         v1 = (desired_concentration * final_volume_l) / stock_concentration
         return round(v1, 3)
+
+    @staticmethod
+    def blend_solutions(
+        conc_a: float,
+        vol_a: float,
+        conc_b: float,
+        vol_b: float,
+        unit: Literal["mg/L", "g/L", "ppm"] = "ppm",
+    ) -> float:
+        """Return final concentration after mixing two solutions.
+
+        ``conc_a`` and ``conc_b`` are interpreted according to ``unit``.
+        Both solutions must use the same units. ``"ppm"`` is treated as
+        ``"mg/L"``. Volumes must be positive. The resulting concentration is
+        returned in the same units, rounded to two decimals.
+        """
+
+        if vol_a <= 0 or vol_b <= 0:
+            raise ValueError("Solution volumes must be positive")
+
+        u = unit
+        if u == "ppm":
+            u = "mg/L"
+
+        if u not in {"mg/L", "g/L"}:
+            raise ValueError("Unsupported unit")
+
+        # convert to mg/L for calculation
+        if u == "g/L":
+            conc_a *= 1000
+            conc_b *= 1000
+
+        total_volume = vol_a + vol_b
+        final_mg_l = (conc_a * vol_a + conc_b * vol_b) / total_volume
+
+        if unit == "g/L":
+            return round(final_mg_l / 1000, 2)
+        return round(final_mg_l, 2)
