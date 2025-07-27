@@ -301,6 +301,7 @@ __all__ = [
     "compare_environment",
     "generate_environment_alerts",
     "classify_environment_quality",
+    "classify_environment_quality_series",
     "score_overall_environment",
     "clear_environment_cache",
     "summarize_environment",
@@ -850,6 +851,23 @@ def classify_environment_quality(
 
     thresh = thresholds or get_environment_quality_thresholds()
     score = score_environment(current, plant_type, stage)
+    if score >= thresh.get("good", 75):
+        return "good"
+    if score >= thresh.get("fair", 50):
+        return "fair"
+    return "poor"
+
+
+def classify_environment_quality_series(
+    series: Iterable[Mapping[str, float]],
+    plant_type: str,
+    stage: str | None = None,
+    thresholds: Mapping[str, float] | None = None,
+) -> str:
+    """Return quality classification for averaged environment ``series``."""
+
+    score = score_environment_series(series, plant_type, stage)
+    thresh = thresholds or get_environment_quality_thresholds()
     if score >= thresh.get("good", 75):
         return "good"
     if score >= thresh.get("fair", 50):

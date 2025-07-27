@@ -55,6 +55,7 @@ from plant_engine.environment_manager import (
     _check_range,
     generate_environment_alerts,
     classify_environment_quality,
+    classify_environment_quality_series,
     score_overall_environment,
     normalize_environment_readings,
     summarize_environment,
@@ -541,6 +542,27 @@ def test_classify_environment_quality_custom():
         classify_environment_quality(good, "citrus", "seedling", thresholds)
         == "fair"
     )
+
+
+def test_classify_environment_quality_series():
+    series = [
+        {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450},
+        {"temp_c": 24, "humidity_pct": 72, "light_ppfd": 260, "co2_ppm": 460},
+    ]
+    result = classify_environment_quality_series(series, "citrus", "seedling")
+    assert result == "good"
+
+
+def test_classify_environment_quality_series_custom():
+    series = [
+        {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450},
+        {"temp_c": 24, "humidity_pct": 72, "light_ppfd": 260, "co2_ppm": 460},
+    ]
+    thresholds = {"good": 105, "fair": 80}
+    result = classify_environment_quality_series(
+        series, "citrus", "seedling", thresholds
+    )
+    assert result == "fair"
 
 
 def test_normalize_environment_readings_aliases():
