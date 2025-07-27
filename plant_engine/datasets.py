@@ -14,7 +14,11 @@ from pathlib import Path
 from typing import Dict, List
 
 from . import utils
-from .utils import get_data_dir, get_extra_dirs, get_overlay_dir
+from .utils import (
+    get_data_dir,
+    get_extra_dirs,
+    get_overlay_dir,
+)
 
 DATA_DIR = get_data_dir()
 CATALOG_FILE = DATA_DIR / "dataset_catalog.json"
@@ -40,16 +44,18 @@ class DatasetCatalog:
     overlay_dir: Path | None = field(default_factory=get_overlay_dir)
     catalog_file: Path = field(default_factory=lambda: get_data_dir() / "dataset_catalog.json")
 
+    def _iter_paths(self) -> List[Path]:
+        """Return search paths honoring init parameters."""
+        paths = [self.base_dir, *self.extra_dirs]
+        if self.overlay_dir:
+            paths.insert(0, self.overlay_dir)
+        return paths
+
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
         """Return relative paths of available dataset files."""
-
-        paths = [self.base_dir, *self.extra_dirs]
-        if self.overlay_dir:
-            paths.append(self.overlay_dir)
-
         found: dict[str, None] = {}
-        for base in paths:
+        for base in self._iter_paths():
             for path in base.rglob("*"):
                 if path.suffix not in {".json", ".yaml", ".yml"}:
                     continue
@@ -57,16 +63,12 @@ class DatasetCatalog:
                     continue
                 rel = path.relative_to(base).as_posix()
                 found[rel] = None
-
         return sorted(found.keys())
 
     @lru_cache(maxsize=None)
     def _load_catalog(self) -> Dict[str, str]:
         catalogs: Dict[str, str] = {}
-        paths = [self.base_dir, *self.extra_dirs]
-        if self.overlay_dir:
-            paths.append(self.overlay_dir)
-        for base in paths:
+        for base in self._iter_paths():
             path = base / "dataset_catalog.json"
             if not path.exists():
                 continue
@@ -121,11 +123,7 @@ class DatasetCatalog:
     def find_path(self, name: str) -> Path | None:
         """Return absolute :class:`Path` to ``name`` if it exists."""
 
-        search_paths = []
-        if self.overlay_dir:
-            search_paths.append(self.overlay_dir)
-        search_paths.extend([self.base_dir, *self.extra_dirs])
-        for base in search_paths:
+        for base in self._iter_paths():
             candidate = base / name
             if candidate.exists():
                 return candidate

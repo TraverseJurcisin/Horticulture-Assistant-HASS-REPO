@@ -101,6 +101,22 @@ def test_catalog_refresh(tmp_path):
     assert sorted(cat.list_datasets()) == ["x.json", "y.json"]
 
 
+def test_catalog_overlay_priority(monkeypatch, tmp_path):
+    base = tmp_path / "data"
+    overlay = tmp_path / "overlay"
+    base.mkdir()
+    overlay.mkdir()
+    (base / "a.json").write_text("{}")
+    (overlay / "a.json").write_text('{"x": 1}')
+
+    cat = datasets.DatasetCatalog(base_dir=base, overlay_dir=overlay)
+
+    # Only one dataset should be returned
+    assert cat.list_datasets() == ["a.json"]
+    # Path resolution prefers overlay directory
+    assert cat.find_path("a.json") == overlay / "a.json"
+
+
 def test_get_dataset_path_and_load():
     path = datasets.get_dataset_path("nutrient_guidelines.json")
     assert path and path.exists()
