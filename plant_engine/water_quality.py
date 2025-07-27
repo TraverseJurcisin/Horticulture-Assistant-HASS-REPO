@@ -21,6 +21,8 @@ __all__ = [
     "score_water_quality",
     "recommend_treatments",
     "summarize_water_profile",
+    "blend_water_profiles",
+    "max_safe_blend_ratio",
 ]
 
 
@@ -103,3 +105,54 @@ def summarize_water_profile(water_test: Mapping[str, float]) -> Dict[str, Any]:
         "rating": classify_water_quality(baseline),
         "score": score_water_quality(baseline),
     }
+
+
+def blend_water_profiles(
+    source_a: Mapping[str, float], source_b: Mapping[str, float], ratio_a: float
+) -> Dict[str, float]:
+    """Return analyte levels for a blend of two water sources.
+
+    ``ratio_a`` indicates the fraction of ``source_a`` in the final mix. Any
+    analytes absent from a source are treated as ``0.0``.
+    """
+
+    if ratio_a < 0 or ratio_a > 1:
+        raise ValueError("ratio_a must be between 0 and 1")
+
+    result: Dict[str, float] = {}
+    ions = set(source_a) | set(source_b)
+    for ion in ions:
+        val_a = float(source_a.get(ion, 0.0))
+        val_b = float(source_b.get(ion, 0.0))
+        result[ion] = val_a * ratio_a + val_b * (1 - ratio_a)
+    return result
+
+
+def max_safe_blend_ratio(source_a: Mapping[str, float], source_b: Mapping[str, float]) -> float:
+    """Return maximum fraction of ``source_a`` keeping all analytes below thresholds.
+
+    The return value is constrained to ``0.0`` - ``1.0``. When no blend can
+    satisfy the thresholds, ``0.0`` is returned.
+    """
+
+    ratio = 1.0
+    for ion, limit in _thresholds().items():
+        if ion not in source_a or ion not in source_b:
+            continue
+        a_val = float(source_a[ion])
+        b_val = float(source_b[ion])
+        if a_val <= limit and b_val <= limit:
+            continue
+        if a_val == b_val:
+            if a_val > limit:
+                ratio = 0.0
+            continue
+        try:
+            req = (limit - b_val) / (a_val - b_val)
+        except ZeroDivisionError:
+            req = 0.0
+        ratio = min(ratio, req)
+
+    if ratio < 0 or not ratio:
+        return 0.0
+    return max(0.0, min(1.0, ratio))
