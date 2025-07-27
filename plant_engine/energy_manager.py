@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Dict
+from typing import Dict, Iterable
 
 from .utils import load_dataset, normalize_key
 
@@ -24,6 +24,8 @@ __all__ = [
     "estimate_lighting_cost",
     "get_light_efficiency",
     "estimate_dli_from_power",
+    "estimate_hvac_energy_series",
+    "estimate_hvac_cost_series",
 ]
 
 
@@ -126,3 +128,52 @@ def estimate_dli_from_power(
     umol = power_watts * hours * 3600 * eff
     mol = umol / 1_000_000
     return round(mol / area_m2, 2)
+
+
+def estimate_hvac_energy_series(
+    start_temp_c: float,
+    target_temps: Iterable[float],
+    hours_per_step: float,
+    system: str,
+) -> list[float]:
+    """Return kWh estimates for sequential temperature setpoints.
+
+    Each step represents ``hours_per_step`` hours at the corresponding
+    target temperature starting from ``start_temp_c``. The current
+    temperature is updated after each step so the energy reflects the
+    difference between consecutive setpoints.
+    """
+
+    if hours_per_step <= 0:
+        raise ValueError("hours_per_step must be positive")
+
+    coeff = get_energy_coefficient(system)
+    if coeff <= 0:
+        return [0.0 for _ in target_temps]
+
+    temps = [float(t) for t in target_temps]
+    energy: list[float] = []
+    prev = float(start_temp_c)
+    for temp in temps:
+        degree_hours = abs(temp - prev) * hours_per_step
+        kwh = degree_hours * (coeff / 24)
+        energy.append(round(kwh, 2))
+        prev = temp
+
+    return energy
+
+
+def estimate_hvac_cost_series(
+    start_temp_c: float,
+    target_temps: Iterable[float],
+    hours_per_step: float,
+    system: str,
+    region: str | None = None,
+) -> list[float]:
+    """Return cost estimates for sequential HVAC setpoints."""
+
+    energies = estimate_hvac_energy_series(
+        start_temp_c, target_temps, hours_per_step, system
+    )
+    rate = get_electricity_rate(region)
+    return [round(e * rate, 2) for e in energies]

@@ -4,6 +4,8 @@ from plant_engine.energy_manager import (
     get_energy_coefficient,
     estimate_hvac_energy,
     estimate_hvac_cost,
+    estimate_hvac_energy_series,
+    estimate_hvac_cost_series,
     get_electricity_rate,
     estimate_lighting_energy,
     estimate_lighting_cost,
@@ -51,6 +53,15 @@ def test_estimate_hvac_cost():
     cost = estimate_hvac_cost(18, 20, 12, "heating", region="california")
     expected_kwh = 0.5 * (2 * 12 / 24)
     assert cost == pytest.approx(expected_kwh * 0.18, 0.01)
+
+
+def test_estimate_hvac_energy_and_cost_series():
+    temps = [20, 22, 18]
+    energy = estimate_hvac_energy_series(18, temps, 4, "heating")
+    cost = estimate_hvac_cost_series(18, temps, 4, "heating", region="california")
+    assert len(energy) == len(temps)
+    assert len(cost) == len(temps)
+    assert cost[0] == pytest.approx(energy[0] * 0.18, abs=0.005)
 
 
 def test_light_efficiency_and_dli():
