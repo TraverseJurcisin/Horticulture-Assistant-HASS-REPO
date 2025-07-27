@@ -619,6 +619,12 @@ def test_normalize_environment_readings_unknown_key():
     assert result == {"foo": 1.0}
 
 
+def test_normalize_environment_readings_skip_invalid_values():
+    data = {"temperature": float("nan"), "humidity": float("inf"), "co2": 700}
+    result = normalize_environment_readings(data)
+    assert result == {"co2_ppm": 700.0}
+
+
 def test_average_environment_readings():
     series = [
         {"temp_c": 20, "humidity_pct": 60},

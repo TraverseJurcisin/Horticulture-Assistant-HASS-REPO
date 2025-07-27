@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, asdict
 from functools import lru_cache
+import math
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 RangeTuple = Tuple[float, float]
@@ -201,7 +202,11 @@ def recommend_climate_adjustments(
 
 
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
-    """Return ``readings`` with keys mapped to canonical environment names."""
+    """Return ``readings`` with keys mapped to canonical environment names.
+
+    Values that cannot be converted to a finite float are ignored to avoid
+    propagating ``NaN`` or infinite measurements into calculations.
+    """
 
     normalized: Dict[str, float] = {}
     for key, value in readings.items():
@@ -209,6 +214,8 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
         try:
             val = float(value)
         except (TypeError, ValueError):
+            continue
+        if not math.isfinite(val):
             continue
         if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
             val = (val - 32) * 5 / 9
