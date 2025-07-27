@@ -129,3 +129,14 @@ def test_attach_profile_sensors(tmp_path):
     sensors = updated["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["a", "b"]
     assert sensors["temp_sensors"] == ["t1"]
+
+
+def test_profile_exists_and_delete(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+    profile = {}
+    loader.save_profile_by_id("p1", profile, plants)
+
+    assert loader.profile_exists("p1", plants)
+    assert loader.delete_profile_by_id("p1", plants)
+    assert not loader.profile_exists("p1", plants)
