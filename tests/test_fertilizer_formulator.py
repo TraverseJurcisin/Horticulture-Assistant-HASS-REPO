@@ -37,6 +37,7 @@ get_application_rate = fert_mod.get_application_rate
 calculate_recommended_application = fert_mod.calculate_recommended_application
 estimate_recommended_application_cost = fert_mod.estimate_recommended_application_cost
 recommend_wsda_products = fert_mod.recommend_wsda_products
+estimate_deficiency_correction_cost = fert_mod.estimate_deficiency_correction_cost
 CATALOG = fert_mod.CATALOG
 
 
@@ -281,4 +282,14 @@ def test_estimate_recommended_application_cost():
     cost = estimate_recommended_application_cost("foxfarm_grow_big", 2)
     expected = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", 10.0)
     assert cost == expected
+
+
+def test_estimate_deficiency_correction_cost():
+    current = {"N": 40, "P": 10, "K": 30, "Ca": 5, "Mg": 5}
+    cost1 = estimate_deficiency_correction_cost(current, "citrus", "vegetative", 1)
+    assert cost1 > 0
+    cost2 = estimate_deficiency_correction_cost(current, "citrus", "vegetative", 2)
+    assert abs(cost2 - cost1 * 2) < 0.05
+    with pytest.raises(ValueError):
+        estimate_deficiency_correction_cost(current, "citrus", "vegetative", 0)
 

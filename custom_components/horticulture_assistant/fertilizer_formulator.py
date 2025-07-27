@@ -17,6 +17,8 @@ from plant_engine.wsda_lookup import (
     recommend_products_for_nutrient as _wsda_recommend,
 )
 
+from plant_engine import nutrient_manager
+
 from plant_engine.utils import load_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
@@ -607,6 +609,39 @@ def recommend_wsda_products(nutrient: str, limit: int = 5) -> List[str]:
     return _wsda_recommend(nutrient, limit=limit)
 
 
+def estimate_deficiency_correction_cost(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    volume_l: float = 1.0,
+) -> float:
+    """Return estimated USD cost to correct nutrient deficiencies.
+
+    The cheapest fertilizer is selected for each deficient nutrient based on
+    :func:`get_cheapest_product`. ``volume_l`` represents the solution volume
+    used to deliver the nutrients and must be positive.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    deficits = nutrient_manager.calculate_all_deficiencies(
+        current_levels, plant_type, stage
+    )
+    total = 0.0
+    for nutrient, deficit_ppm in deficits.items():
+        if deficit_ppm <= 0:
+            continue
+        try:
+            _, cost_per_g = get_cheapest_product(nutrient)
+        except KeyError:
+            continue
+        grams = (deficit_ppm * volume_l) / 1000
+        total += grams * cost_per_g
+
+    return round(total, 2)
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -619,6 +654,7 @@ __all__ = [
     "estimate_mix_cost_per_liter",
     "estimate_cost_breakdown",
     "get_cheapest_product",
+    "estimate_deficiency_correction_cost",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",

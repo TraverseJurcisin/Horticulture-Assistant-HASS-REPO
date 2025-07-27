@@ -1,8 +1,9 @@
-"""Data structures for tracking product pricing over time."""
+"""Utilities to track product pricing and summarize costs."""
 
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from dataclasses import dataclass
 from datetime import datetime
+from collections import defaultdict
+from typing import Dict, List, Optional
 
 __all__ = ["ProductPriceEntry", "CostAnalyzer"]
 
@@ -19,26 +20,35 @@ class ProductPriceEntry:
     expiration_date: Optional[datetime] = None
 
 
-@dataclass(slots=True)
 class CostAnalyzer:
-    prices: Dict[str, List[ProductPriceEntry]] = field(default_factory=dict)
+    """Store :class:`ProductPriceEntry` objects and compute cost summaries."""
 
-    def add_price_entry(self, entry: ProductPriceEntry):
-        if entry.product_id not in self.prices:
-            self.prices[entry.product_id] = []
+    def __init__(self) -> None:
+        # ``defaultdict`` avoids key checks when adding entries
+        self.prices: Dict[str, List[ProductPriceEntry]] = defaultdict(list)
+
+    def add_price_entry(self, entry: ProductPriceEntry) -> None:
+        """Record a new :class:`ProductPriceEntry`."""
+
         self.prices[entry.product_id].append(entry)
 
     def get_latest_price_per_unit(self, product_id: str) -> Optional[float]:
-        if product_id not in self.prices or not self.prices[product_id]:
+        """Return the most recent price per package unit for ``product_id``."""
+
+        entries = self.prices.get(product_id)
+        if not entries:
             return None
-        latest = sorted(self.prices[product_id], key=lambda e: e.date_purchased)[-1]
+        latest = max(entries, key=lambda e: e.date_purchased)
         return latest.price / latest.package_size
 
     def summarize_costs(self) -> Dict[str, float]:
-        summary = {}
+        """Return average unit price for each product across all entries."""
+
+        summary: Dict[str, float] = {}
         for product_id, entries in self.prices.items():
-            if entries:
-                unit_prices = [e.price / e.package_size for e in entries]
-                summary[product_id] = sum(unit_prices) / len(unit_prices)
+            if not entries:
+                continue
+            unit_prices = [e.price / e.package_size for e in entries]
+            summary[product_id] = sum(unit_prices) / len(unit_prices)
         return summary
 
