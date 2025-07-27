@@ -942,9 +942,12 @@ def test_score_overall_environment():
 
 def test_clear_environment_cache():
     data1 = get_environmental_targets("citrus", "seedling")
+    price1 = get_co2_price("bulk_tank")
     clear_environment_cache()
     data2 = get_environmental_targets("citrus", "seedling")
+    price2 = get_co2_price("bulk_tank")
     assert data1 == data2
+    assert price1 == price2
 
 
 def test_co2_price_and_cost():

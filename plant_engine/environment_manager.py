@@ -6,7 +6,6 @@ import math
 import datetime
 from dataclasses import dataclass, asdict
 from functools import lru_cache
-import math
 from typing import Any, Dict, Mapping, Tuple, Iterable
 
 RangeTuple = Tuple[float, float]
@@ -693,9 +692,21 @@ def get_environmental_targets(
 
 
 def clear_environment_cache() -> None:
-    """Clear cached environment targets and guidelines."""
-    get_environmental_targets.cache_clear()
-    get_environment_guidelines.cache_clear()
+    """Clear cached guideline lookups."""
+
+    caches = [
+        get_environmental_targets,
+        get_environment_guidelines,
+        get_climate_guidelines,
+        get_frost_dates,
+        get_combined_environment_guidelines,
+        get_combined_environmental_targets,
+        get_co2_price,
+        get_co2_efficiency,
+    ]
+
+    for func in caches:
+        func.cache_clear()
 
 
 def classify_value_range(value: float, bounds: RangeTuple) -> str:
