@@ -12,6 +12,7 @@ from plant_engine.pest_monitor import (
     get_monitoring_interval,
     next_monitor_date,
     generate_monitoring_schedule,
+    generate_detailed_monitoring_schedule,
     risk_adjusted_monitor_interval,
     get_scouting_method,
     summarize_pest_management,
@@ -146,4 +147,13 @@ def test_summarize_pest_management():
 def test_get_scouting_method():
     method = get_scouting_method("mites")
     assert "paper" in method
+
+
+def test_generate_detailed_monitoring_schedule():
+    start = date(2023, 1, 1)
+    plan = generate_detailed_monitoring_schedule("tomato", "fruiting", start, 2)
+    assert len(plan) == 2
+    entry = plan[0]
+    assert entry["date"] == date(2023, 1, 4)
+    assert "aphids" in entry["methods"]
 

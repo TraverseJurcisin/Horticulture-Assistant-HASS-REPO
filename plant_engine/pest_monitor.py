@@ -18,6 +18,7 @@ from .pest_manager import (
     recommend_treatments,
     recommend_beneficials,
     get_pest_resistance,
+    list_known_pests,
 )
 
 DATA_FILE = "pest_thresholds.json"
@@ -55,6 +56,7 @@ __all__ = [
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
     "generate_monitoring_schedule",
+    "generate_detailed_monitoring_schedule",
     "PestReport",
     "summarize_pest_management",
 ]
@@ -122,6 +124,20 @@ def generate_monitoring_schedule(
     """Return list of upcoming monitoring dates."""
 
     return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
+
+
+def generate_detailed_monitoring_schedule(
+    plant_type: str,
+    stage: str | None,
+    start: date,
+    events: int,
+) -> list[dict[str, object]]:
+    """Return monitoring dates with scouting methods for each pest."""
+
+    dates = generate_monitoring_schedule(plant_type, stage, start, events)
+    pests = list_known_pests(plant_type)
+    methods = {p: get_scouting_method(p) for p in pests}
+    return [{"date": d, "methods": methods} for d in dates]
 
 
 def get_severity_action(level: str) -> str:
