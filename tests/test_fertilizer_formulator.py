@@ -311,3 +311,16 @@ def test_recommend_fertigation_mix():
     ppm = fert_mod.calculate_mix_ppm(mix, 1)
     assert ppm.get("N", 0) >= 80
 
+
+def test_recommend_fertigation_plan():
+    plan = fert_mod.recommend_fertigation_plan(
+        "citrus", "vegetative", 2, num_plants=2
+    )
+    assert plan["mix"]
+    assert plan["ppm"]
+    assert plan["cost_per_plant"] == round(plan["cost_total"] / 2, 4)
+    with pytest.raises(ValueError):
+        fert_mod.recommend_fertigation_plan("citrus", "vegetative", 0)
+    with pytest.raises(ValueError):
+        fert_mod.recommend_fertigation_plan("citrus", "vegetative", 1, num_plants=0)
+

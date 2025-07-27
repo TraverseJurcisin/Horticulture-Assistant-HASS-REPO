@@ -714,6 +714,40 @@ def recommend_fertigation_mix(
     return schedule
 
 
+def recommend_fertigation_plan(
+    plant_type: str, stage: str, volume_l: float, num_plants: int = 1
+) -> Dict[str, object]:
+    """Return fertigation mix with ppm and cost information.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop type used to look up nutrient guidelines.
+    stage : str
+        Growth stage for the fertigation mix.
+    volume_l : float
+        Total solution volume in liters.
+    num_plants : int, optional
+        Number of plants receiving the solution. Default is ``1``.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+
+    mix = recommend_fertigation_mix(plant_type, stage, volume_l)
+    cost = estimate_mix_cost(mix) if mix else 0.0
+    ppm = calculate_mix_ppm(mix, volume_l) if mix else {}
+
+    return {
+        "mix": mix,
+        "ppm": ppm,
+        "cost_total": cost,
+        "cost_per_plant": round(cost / num_plants, 4),
+    }
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -728,6 +762,7 @@ __all__ = [
     "get_cheapest_product",
     "estimate_deficiency_correction_cost",
     "recommend_fertigation_mix",
+    "recommend_fertigation_plan",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",
