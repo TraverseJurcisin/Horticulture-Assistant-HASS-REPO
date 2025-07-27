@@ -55,8 +55,9 @@ def test_schedule_nutrients_dataset(tmp_path, monkeypatch):
 
     result = schedule_nutrients("citrus_backyard_spring2025", hass=hass).as_dict()
     # citrus fruiting guidelines N=120, K=100 with stage multiplier 1.1
-    assert result["N"] == 132.0
-    assert result["K"] == 110.0
+    # absorption rates adjust N by 1/0.65 and K by 1/0.9
+    assert result["N"] == 203.08
+    assert result["K"] == 122.22
 
 
 def _hass_for(tmp_path: Path) -> object:
@@ -80,7 +81,7 @@ def test_stage_synonym_resolution(tmp_path):
     (plant_dir / "test.json").write_text('{"general": {"plant_type": "strawberry", "stage": "veg"}}')
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("test", hass=hass).as_dict()
-    assert result["N"] == 70
+    assert result["N"] == 93.33
 
 
 def test_tag_based_modifier(tmp_path):
@@ -89,7 +90,7 @@ def test_tag_based_modifier(tmp_path):
     (plant_dir / "tag.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling", "tags": ["high-nitrogen"]}}')
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("tag", hass=hass).as_dict()
-    assert result["N"] == 48.0
+    assert result["N"] == 80.0
 
 
 def test_dataset_override(tmp_path, monkeypatch):
@@ -115,7 +116,7 @@ def test_dataset_override(tmp_path, monkeypatch):
     )
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("tag", hass=hass).as_dict()
-    assert result["N"] == 60.0
+    assert result["N"] == 100.0
     monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR", raising=False)
 
 
@@ -160,3 +161,14 @@ def test_schedule_nutrients_bulk(tmp_path):
     result = ns.schedule_nutrients_bulk(["p1", "p2"], hass=hass)
     assert result["p1"]["N"] > 0
     assert result["p2"]["N"] > 0
+
+
+def test_absorption_rates_applied(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    # lettuce seedling profile with no explicit nutrients
+    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
+    hass = _hass_for(tmp_path)
+    result = schedule_nutrients("lettuce", hass=hass).as_dict()
+    # guideline N=80 with stage multiplier 0.5 => 40 then adjusted by absorption 1/0.6
+    assert result["N"] == 66.67

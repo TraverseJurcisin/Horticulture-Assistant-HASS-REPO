@@ -54,6 +54,7 @@ def normalize_tag(tag: str) -> str:
 # or override this mapping by providing ``nutrient_tag_modifiers.json`` in
 # the dataset overlay directory.
 TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
+ABSORPTION_FILE = "nutrient_absorption_rates.json"
 
 @lru_cache(maxsize=1)
 def _tag_modifiers() -> dict[str, dict[str, float]]:
@@ -73,6 +74,27 @@ def _tag_modifiers() -> dict[str, dict[str, float]]:
         if mods:
             modifiers[norm_tag] = mods
     return modifiers
+
+
+@lru_cache(maxsize=1)
+def _absorption_rates() -> dict[str, dict[str, float]]:
+    """Return nutrient absorption rates per stage from the dataset."""
+    raw = load_dataset(ABSORPTION_FILE)
+    rates: dict[str, dict[str, float]] = {}
+    for stage, data in raw.items():
+        if not isinstance(data, dict):
+            continue
+        normalized: dict[str, float] = {}
+        for nutrient, rate in data.items():
+            try:
+                rate_f = float(rate)
+            except (TypeError, ValueError):
+                continue
+            if rate_f > 0:
+                normalized[nutrient] = rate_f
+        if normalized:
+            rates[str(stage).lower()] = normalized
+    return rates
 
 PLANT_REGISTRY_FILE = "plant_registry.json"
 
@@ -154,6 +176,22 @@ def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
                 continue
             targets[nut] = round(targets[nut] * factor, 2)
 
+
+def _apply_absorption_rates(targets: dict[str, float], stage_key: str) -> None:
+    """Adjust ``targets`` accounting for stage-specific absorption efficiency."""
+
+    rates = _absorption_rates()
+    stage_rates = rates.get(stage_key.lower())
+    if not stage_rates:
+        return
+    for nut, rate in stage_rates.items():
+        if nut not in targets:
+            continue
+        try:
+            targets[nut] = round(targets[nut] / rate, 2)
+        except (TypeError, ValueError, ZeroDivisionError):
+            continue
+
 def _compute_nutrient_targets(
     plant_id: str, hass: HomeAssistant | None, include_micro: bool
 ) -> dict[str, float]:
@@ -208,6 +246,7 @@ def _compute_nutrient_targets(
 
     tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
+    _apply_absorption_rates(adjusted, stage_key)
 
     return adjusted
 
