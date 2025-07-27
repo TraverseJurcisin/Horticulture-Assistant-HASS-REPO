@@ -11,7 +11,7 @@ import json
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from . import utils
 from .utils import get_data_dir, get_extra_dirs, get_overlay_dir

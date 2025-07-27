@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import os
 import logging
-import math
 from datetime import datetime
 
 # Reuse the central evapotranspiration formulas from plant_engine

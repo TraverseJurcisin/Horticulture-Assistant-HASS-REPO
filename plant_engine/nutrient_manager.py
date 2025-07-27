@@ -9,7 +9,7 @@ from .utils import (
     list_dataset_entries,
     clear_dataset_cache,
 )
-from .nutrient_availability import availability_factor, availability_for_all
+from .nutrient_availability import availability_for_all
 
 DATA_FILE = "nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"

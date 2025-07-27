@@ -6,7 +6,6 @@ from dataclasses import asdict, dataclass
 from datetime import date, timedelta
 from typing import Dict, Mapping
 
-from . import environment_manager
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import (

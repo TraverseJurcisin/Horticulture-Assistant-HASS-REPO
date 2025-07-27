@@ -1,4 +1,3 @@
-import pytest
 from plant_engine.utils import parse_range
 
 def test_parse_range_valid_list():

@@ -1,4 +1,3 @@
-import json
 import pytest
 from plant_engine.utils import load_data
 

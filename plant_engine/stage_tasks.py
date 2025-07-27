@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, List, Tuple
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 

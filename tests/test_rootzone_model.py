@@ -1,4 +1,3 @@
-import json
 from plant_engine.rootzone_model import (
     estimate_rootzone_depth,
     get_default_root_depth,

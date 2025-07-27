@@ -1,6 +1,6 @@
 """Helpers to build daily nutrient uptake schedules."""
 
-from typing import Dict, Mapping
+from typing import Dict
 
 from .growth_stage import list_growth_stages, get_stage_duration
 from .irrigation_manager import get_daily_irrigation_target
