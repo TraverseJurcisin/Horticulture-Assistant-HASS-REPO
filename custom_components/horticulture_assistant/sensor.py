@@ -22,6 +22,7 @@ from .utils.state_helpers import (
     normalize_entities,
     aggregate_sensor_values,
 )
+from .utils.sensor_map import build_sensor_map
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 from plant_engine.environment_manager import (
@@ -56,26 +57,18 @@ async def async_setup_entry(
     plant_id = stored["plant_id"]
     plant_name = stored["plant_name"]
 
-    sensor_map = {
-        "moisture_sensors": normalize_entities(
-            entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
+    sensor_map = build_sensor_map(
+        entry.data,
+        plant_id,
+        keys=(
+            "moisture_sensors",
+            "temperature_sensors",
+            "humidity_sensors",
+            "light_sensors",
+            "ec_sensors",
+            "co2_sensors",
         ),
-        "temperature_sensors": normalize_entities(
-            entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
-        ),
-        "humidity_sensors": normalize_entities(
-            entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
-        ),
-        "light_sensors": normalize_entities(
-            entry.data.get("light_sensors"), f"sensor.{plant_id}_raw_light"
-        ),
-        "ec_sensors": normalize_entities(
-            entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
-        ),
-        "co2_sensors": normalize_entities(
-            entry.data.get("co2_sensors"), f"sensor.{plant_id}_raw_co2"
-        ),
-    }
+    )
 
     sensors: list[SensorEntity] = [
         SmoothedMoistureSensor(hass, plant_name, plant_id, sensor_map),
@@ -106,14 +99,7 @@ class HorticultureBaseSensor(HorticultureBaseEntity, SensorEntity):
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
         if sensor_map is None:
-            sensor_map = {
-                "moisture_sensors": [f"sensor.{plant_id}_raw_moisture"],
-                "temperature_sensors": [f"sensor.{plant_id}_raw_temperature"],
-                "humidity_sensors": [f"sensor.{plant_id}_raw_humidity"],
-                "light_sensors": [f"sensor.{plant_id}_raw_light"],
-                "ec_sensors": [f"sensor.{plant_id}_raw_ec"],
-                "co2_sensors": [f"sensor.{plant_id}_raw_co2"],
-            }
+            sensor_map = build_sensor_map({}, plant_id)
         self._sensor_map = sensor_map
 
     def _get_state_value(self, entity_id: str | list[str] | None) -> float | None:

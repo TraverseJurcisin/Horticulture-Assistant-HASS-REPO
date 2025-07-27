@@ -15,6 +15,7 @@ from .const import DOMAIN, CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
 from .utils.entry_helpers import get_entry_data, store_entry_data
 from .entity_base import HorticultureBaseEntity
 from .utils.state_helpers import normalize_entities
+from .utils.sensor_map import build_sensor_map
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,20 +30,16 @@ async def async_setup_entry(
     plant_id = stored["plant_id"]
     plant_name = stored["plant_name"]
 
-    sensor_map = {
-        "moisture_sensors": normalize_entities(
-            entry.data.get("moisture_sensors"), f"sensor.{plant_id}_raw_moisture"
+    sensor_map = build_sensor_map(
+        entry.data,
+        plant_id,
+        keys=(
+            "moisture_sensors",
+            "temperature_sensors",
+            "humidity_sensors",
+            "ec_sensors",
         ),
-        "temperature_sensors": normalize_entities(
-            entry.data.get("temperature_sensors"), f"sensor.{plant_id}_raw_temperature"
-        ),
-        "humidity_sensors": normalize_entities(
-            entry.data.get("humidity_sensors"), f"sensor.{plant_id}_raw_humidity"
-        ),
-        "ec_sensors": normalize_entities(
-            entry.data.get("ec_sensors"), f"sensor.{plant_id}_raw_ec"
-        ),
-    }
+    )
 
     sensors: list[BinarySensorEntity] = [
         SensorHealthBinarySensor(hass, plant_name, plant_id, sensor_map),
@@ -66,12 +63,16 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
         if sensor_map is None:
-            sensor_map = {
-                "moisture_sensors": [f"sensor.{plant_id}_raw_moisture"],
-                "temperature_sensors": [f"sensor.{plant_id}_raw_temperature"],
-                "humidity_sensors": [f"sensor.{plant_id}_raw_humidity"],
-                "ec_sensors": [f"sensor.{plant_id}_raw_ec"],
-            }
+            sensor_map = build_sensor_map(
+                {},
+                plant_id,
+                keys=(
+                    "moisture_sensors",
+                    "temperature_sensors",
+                    "humidity_sensors",
+                    "ec_sensors",
+                ),
+            )
         self._sensor_map = sensor_map
 
 
