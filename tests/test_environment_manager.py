@@ -561,6 +561,22 @@ def test_normalize_environment_readings_soil_temp_kelvin():
     assert result == {"soil_temp_c": 25.0}
 
 
+def test_normalize_environment_readings_leaf_temp_aliases():
+    data = {"leaf_temp": 27, "leaf_temp_f": 86, "leaf_temp_k": 300}
+    result = normalize_environment_readings(data)
+    assert "leaf_temp_c" in result
+    assert result["leaf_temp_c"] == pytest.approx(26.85, rel=1e-2)
+
+
+def test_normalize_environment_readings_light_aliases():
+    data = {"daily_light_integral": 18, "photoperiod": 14}
+    result = normalize_environment_readings(data)
+    assert result == {
+        "dli": 18.0,
+        "photoperiod_hours": 14.0,
+    }
+
+
 def test_normalize_environment_readings_unknown_key():
     result = normalize_environment_readings({"foo": 1})
     assert result == {"foo": 1.0}
