@@ -201,6 +201,7 @@ Helper scripts live in the `scripts/` directory.
 - `log_runoff_ec.py` records manual runoff EC measurements for calibration.
 - `train_ec_model.py` generates EC estimator coefficients from a CSV dataset. Use
   `--plant-id` to save a model under that plant's profile.
+- `fertigation_plan.py` outputs day-by-day fertilizer schedules for a plant stage.
 - `export_all_growth_yield.py` aggregates growth and yield data from the `analytics/` directory.
 - `load_all_profiles` validates and aggregates every profile in the `plants/` directory.
 - `list_available_profiles` quickly lists profile IDs without loading them.

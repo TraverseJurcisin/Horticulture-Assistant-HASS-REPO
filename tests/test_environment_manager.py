@@ -3,6 +3,7 @@ import pytest
 from plant_engine.environment_manager import (
     get_environmental_targets,
     recommend_environment_adjustments,
+    recommend_environment_adjustments_verbose,
     suggest_environment_setpoints,
     suggest_environment_setpoints_advanced,
     saturation_vapor_pressure,
@@ -113,6 +114,24 @@ def test_recommend_environment_adjustments_aliases():
 def test_recommend_environment_adjustments_no_data():
     actions = recommend_environment_adjustments({"temp_c": 20}, "unknown")
     assert actions == {}
+
+
+def test_recommend_environment_adjustments_verbose():
+    actions = recommend_environment_adjustments_verbose(
+        {
+            "temp_c": 18,
+            "humidity_pct": 90,
+            "light_ppfd": 100,
+            "co2_ppm": 700,
+        },
+        "citrus",
+        "seedling",
+    )
+    assert "dehumidifier" in actions["humidity"].lower()
+    assert (
+        "heating" in actions["temperature"].lower()
+        or actions["temperature"] == "increase"
+    )
 
 
 def test_suggest_environment_setpoints():

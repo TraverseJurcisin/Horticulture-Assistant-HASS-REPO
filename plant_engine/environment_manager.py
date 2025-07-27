@@ -220,6 +220,7 @@ __all__ = [
     "recommend_climate_adjustments",
     "get_environmental_targets",
     "recommend_environment_adjustments",
+    "recommend_environment_adjustments_verbose",
     "score_environment",
     "score_environment_series",
     "score_environment_components",
@@ -667,6 +668,34 @@ def recommend_environment_adjustments(
         actions[label] = "increase" if status == "below range" else "decrease"
 
     return actions
+
+
+def recommend_environment_adjustments_verbose(
+    current: Mapping[str, float], plant_type: str, stage: str | None = None
+) -> Dict[str, str]:
+    """Return detailed adjustment suggestions using action datasets."""
+
+    base = recommend_environment_adjustments(current, plant_type, stage)
+    if not base:
+        return {}
+
+    readings = normalize_environment_readings(current)
+    verbose: Dict[str, str] = {}
+
+    if "humidity" in base:
+        action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
+        verbose["humidity"] = action or base["humidity"]
+
+    if "temperature" in base:
+        action = recommend_temperature_action(
+            readings.get("temp_c"), readings.get("humidity_pct"), plant_type
+        )
+        verbose["temperature"] = action or base["temperature"]
+
+    for key, val in base.items():
+        verbose.setdefault(key, val)
+
+    return verbose
 
 
 def generate_environment_alerts(
