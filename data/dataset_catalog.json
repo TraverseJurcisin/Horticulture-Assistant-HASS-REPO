@@ -116,6 +116,7 @@
   "nutrient_recovery_factors.json": "Fractional nutrient recovery after application.",
   "fertigation_intervals.json": "Recommended days between fertigation events per stage.",
   "fertigation_recipes.json": "Recommended grams per liter of fertilizer products for each stage.",
+  "fertigation_loss_factors.json": "Default nutrient loss percentages during fertigation.",
   "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
   "companion_plants.json": "Companion planting recommendations.",
   "rotation_guidance.json": "Crop rotation families and recommended years between replanting.",

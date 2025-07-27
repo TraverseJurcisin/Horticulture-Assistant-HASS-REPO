@@ -459,6 +459,33 @@ def test_recommend_recovery_adjusted_schedule():
     assert schedule["K"] == pytest.approx(1.231, rel=1e-3)
 
 
+def test_apply_loss_factors():
+    from plant_engine.fertigation import apply_loss_factors
+
+    schedule = {"urea": 1.0, "map": 0.5}
+    adjusted = apply_loss_factors(schedule, "citrus")
+
+    assert adjusted["urea"] == pytest.approx(1.08, rel=1e-3)
+    assert adjusted["map"] == pytest.approx(0.515, rel=1e-3)
+
+
+def test_recommend_loss_adjusted_fertigation():
+    from plant_engine.fertigation import recommend_loss_adjusted_fertigation
+
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+
+    schedule, *_ = recommend_loss_adjusted_fertigation(
+        "citrus", "vegetative", 1.0, fertilizers=fert_map
+    )
+
+    assert schedule["foxfarm_grow_big"] > 0
+    assert schedule["intrepid_granular_potash_0_0_60"] > 0
+
+
 def test_estimate_weekly_fertigation_cost():
     from plant_engine.fertigation import estimate_weekly_fertigation_cost
     fert_map = {
