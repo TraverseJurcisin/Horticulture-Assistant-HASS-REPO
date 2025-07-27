@@ -5,6 +5,8 @@ from dataclasses import asdict, dataclass
 from functools import lru_cache
 from typing import Dict, Mapping, Iterable
 
+import pandas as pd
+
 from .utils import load_dataset, normalize_key
 from .constants import DEFAULT_ENV
 from .canopy import estimate_canopy_area
@@ -26,6 +28,7 @@ __all__ = [
     "lookup_crop_coefficient",
     "compute_transpiration",
     "compute_transpiration_series",
+    "compute_transpiration_dataframe",
 ]
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
 MM_TO_ML_PER_M2 = 1000
@@ -180,4 +183,24 @@ def compute_transpiration_series(
         round(total_eta / total_w, 2),
         round(total_ml / total_w, 1),
     ).as_dict()
+
+
+def compute_transpiration_dataframe(
+    plant_profile: Mapping, env_df: pd.DataFrame
+) -> pd.DataFrame:
+    """Return transpiration metrics for each row in ``env_df``.
+
+    The input DataFrame should contain the same columns accepted by
+    :func:`compute_transpiration`. The resulting DataFrame shares the
+    same index.
+    """
+
+    if not isinstance(env_df, pd.DataFrame):
+        raise TypeError("env_df must be a pandas DataFrame")
+
+    metrics = [
+        compute_transpiration(plant_profile, row)
+        for row in env_df.to_dict(orient="records")
+    ]
+    return pd.DataFrame(metrics, index=env_df.index)
 

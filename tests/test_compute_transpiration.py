@@ -1,6 +1,8 @@
+import pandas as pd
 from plant_engine.compute_transpiration import (
     compute_transpiration,
     compute_transpiration_series,
+    compute_transpiration_dataframe,
     TranspirationMetrics,
     lookup_crop_coefficient,
 )
@@ -87,3 +89,19 @@ def test_adjust_crop_coefficient():
     # high humidity should decrease kc
     adj2 = adjust_crop_coefficient(base_kc, 25.0, 90.0)
     assert adj2 < base_kc
+
+
+def test_compute_transpiration_dataframe():
+    profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
+    df = pd.DataFrame([
+        {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
+        {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420},
+    ])
+    result = compute_transpiration_dataframe(profile, df)
+    assert list(result.columns) == [
+        "et0_mm_day",
+        "eta_mm_day",
+        "transpiration_ml_day",
+    ]
+    assert len(result) == 2
+    assert result.iloc[0]["transpiration_ml_day"] > 0
