@@ -289,8 +289,21 @@ def clear_dataset_cache() -> None:
 
 
 def normalize_key(key: str) -> str:
-    """Return ``key`` normalized for case-insensitive dataset lookups."""
-    return str(key).lower().replace(" ", "_")
+    """Return ``key`` normalized for case-insensitive dataset lookups.
+
+    The function uses :meth:`str.casefold` for robust case-insensitive
+    matching and normalizes whitespace, hyphens and underscores to a single
+    underscore character. Multiple adjacent separators are collapsed to avoid
+    accidental duplication.
+    """
+
+    # ``casefold`` handles non ASCII characters better than ``lower``
+    value = str(key).casefold()
+    # Replace common separators with spaces then collapse to single underscores
+    for sep in ("_", "-"):
+        value = value.replace(sep, " ")
+    parts = [p for p in value.strip().split() if p]
+    return "_".join(parts)
 
 
 def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
