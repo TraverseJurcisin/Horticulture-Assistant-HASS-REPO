@@ -28,6 +28,7 @@ STOCK_DATA = "stock_solution_concentrations.json"
 SOLUBILITY_DATA = "fertilizer_solubility.json"
 RECIPE_DATA = "fertigation_recipes.json"
 STOCK_RECIPE_DATA = "stock_solution_recipes.json"
+LOSS_FACTOR_DATA = "fertigation_loss_factors.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
@@ -43,6 +44,7 @@ _NUTRIENT_STOCK_MAP = {
 _SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 _RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
 _STOCK_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(STOCK_RECIPE_DATA)
+_LOSS_FACTORS: Dict[str, Dict[str, float]] = load_dataset(LOSS_FACTOR_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -131,6 +133,67 @@ def apply_stock_solution_recipe(
         raise ValueError("volume_l must be positive")
     base = get_stock_solution_recipe(plant_type, stage)
     return {sid: round(ml * volume_l, 2) for sid, ml in base.items()}
+
+
+@lru_cache(maxsize=None)
+def get_loss_factors(plant_type: str) -> Dict[str, float]:
+    """Return nutrient loss adjustment factors for ``plant_type``."""
+
+    factors = {}
+    base = _LOSS_FACTORS.get("default", {})
+    crop = _LOSS_FACTORS.get(normalize_key(plant_type), {})
+    for k, v in {**base, **crop}.items():
+        try:
+            factors[k] = float(v)
+        except (TypeError, ValueError):
+            continue
+    return factors
+
+
+def apply_loss_factors(schedule: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+    """Return ``schedule`` with grams increased by loss factors."""
+
+    factors = get_loss_factors(plant_type)
+    adjusted: Dict[str, float] = {}
+    for fert, grams in schedule.items():
+        factor = factors.get(fert, 0.0)
+        adjusted[fert] = round(grams * (1.0 + factor), 3)
+    return adjusted
+
+
+def recommend_loss_adjusted_fertigation(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> tuple[
+    Dict[str, float],
+    float,
+    Dict[str, float],
+    Dict[str, Dict[str, float]],
+    Dict[str, Dict[str, float]],
+]:
+    """Return fertigation schedule adjusted for nutrient losses."""
+
+    schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
+        plant_type,
+        stage,
+        volume_l,
+        water_profile,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
+
+    adjusted = apply_loss_factors(schedule, plant_type)
+
+    return adjusted, total, breakdown, warnings, diagnostics
 
 
 @lru_cache(maxsize=None)
@@ -268,6 +331,9 @@ __all__ = [
     "recommend_precise_fertigation_with_injection",
     "recommend_cost_optimized_fertigation_with_injection",
     "recommend_rootzone_fertigation",
+    "get_loss_factors",
+    "apply_loss_factors",
+    "recommend_loss_adjusted_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
     "recommend_stock_solution_injection",
