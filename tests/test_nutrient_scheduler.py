@@ -146,6 +146,25 @@ def test_schedule_nutrient_corrections(tmp_path):
     assert adjustments["N"] > 0
 
 
+def test_schedule_nutrient_corrections_synergy(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "syn.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
+    hass = _hass_for(tmp_path)
+    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+
+    base = ns.schedule_nutrient_corrections(
+        "syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass
+    ).as_dict()
+    syn = ns.schedule_nutrient_corrections(
+        "syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass, use_synergy=True
+    ).as_dict()
+    assert syn["P"] > base.get("P", 0)
+    assert "B" in syn and syn["B"] > 0
+
+
 def test_schedule_nutrients_bulk(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
