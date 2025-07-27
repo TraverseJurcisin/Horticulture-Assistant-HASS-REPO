@@ -97,6 +97,8 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Automatic pesticide rotation planning
 - Summaries of reentry and harvest restrictions for applied pesticides
 - Automated fertigation planning with cost estimates
+- Yield-based revenue and profit projections
+- Expected profit forecasts based on estimated production costs
 
 ---
 
