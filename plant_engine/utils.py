@@ -21,6 +21,7 @@ __all__ = [
     "get_data_dir",
     "get_pending_dir",
     "get_extra_dirs",
+    "overlay_dir",
     "get_overlay_dir",
     "normalize_key",
     "list_dataset_entries",
@@ -103,6 +104,9 @@ EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 # Cached dataset search path info
 _PATH_CACHE: tuple[Path, ...] | None = None
 _ENV_STATE: tuple[str | None, str | None] | None = None
+# Cached overlay directory
+_OVERLAY_CACHE: Path | None = None
+_OVERLAY_ENV_VALUE: str | None = None
 
 # Directory name for pending threshold changes relative to the data dir
 PENDING_THRESHOLD_DIRNAME = "pending_thresholds"
@@ -122,11 +126,21 @@ def get_pending_dir(base: str | Path | None = None) -> Path:
     return base_dir / PENDING_THRESHOLD_DIRNAME
 
 
-def get_overlay_dir() -> Path | None:
-    """Return optional overlay directory defined via ``HORTICULTURE_OVERLAY_DIR``."""
+def overlay_dir() -> Path | None:
+    """Return cached overlay directory defined via ``HORTICULTURE_OVERLAY_DIR``."""
 
+    global _OVERLAY_CACHE, _OVERLAY_ENV_VALUE
     env = os.getenv(OVERLAY_ENV)
-    return Path(env).expanduser() if env else None
+    if _OVERLAY_CACHE is None or _OVERLAY_ENV_VALUE != env:
+        _OVERLAY_CACHE = Path(env).expanduser() if env else None
+        _OVERLAY_ENV_VALUE = env
+    return _OVERLAY_CACHE
+
+
+def get_overlay_dir() -> Path | None:
+    """Compatibility wrapper for :func:`overlay_dir`."""
+
+    return overlay_dir()
 
 
 def get_extra_dirs() -> tuple[Path, ...]:
@@ -177,7 +191,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
             else:
                 data = extra
 
-    overlay = get_overlay_dir()
+    overlay = overlay_dir()
     if overlay:
         overlay_path = overlay / filename
         if overlay_path.exists():
@@ -203,10 +217,12 @@ def lazy_dataset(filename: str):
 def clear_dataset_cache() -> None:
     """Clear cached dataset results loaded via :func:`load_dataset`."""
 
-    global _PATH_CACHE, _ENV_STATE
+    global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE
     load_dataset.cache_clear()
     _PATH_CACHE = None
     _ENV_STATE = None
+    _OVERLAY_CACHE = None
+    _OVERLAY_ENV_VALUE = None
 
 
 def normalize_key(key: str) -> str:
