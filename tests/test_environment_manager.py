@@ -608,6 +608,12 @@ def test_normalize_environment_readings_leaf_temp_aliases():
     assert result["leaf_temp_c"] == pytest.approx(26.85, rel=1e-2)
 
 
+def test_normalize_environment_readings_dataset_alias():
+    data = {"temp_custom": 21}
+    result = normalize_environment_readings(data)
+    assert result == {"temp_c": 21.0}
+
+
 def test_normalize_environment_readings_light_aliases():
     data = {"daily_light_integral": 18, "photoperiod": 14}
     result = normalize_environment_readings(data)
