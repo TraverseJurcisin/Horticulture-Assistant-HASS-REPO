@@ -161,8 +161,11 @@ def get_scouting_method(pest: str) -> str:
 
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
-
-    thresholds = _SEVERITY_THRESHOLDS()
+    thresholds = (
+        _SEVERITY_THRESHOLDS()
+        if callable(_SEVERITY_THRESHOLDS)
+        else _SEVERITY_THRESHOLDS
+    )
     return thresholds.get(normalize_key(pest), {})
 
 

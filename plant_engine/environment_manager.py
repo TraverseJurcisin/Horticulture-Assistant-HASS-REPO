@@ -10,7 +10,13 @@ from typing import Any, Dict, Mapping, Tuple, Iterable
 
 RangeTuple = Tuple[float, float]
 
-from .utils import load_dataset, normalize_key, list_dataset_entries, parse_range
+from .utils import (
+    load_dataset,
+    lazy_dataset,
+    normalize_key,
+    list_dataset_entries,
+    parse_range,
+)
 from . import ph_manager, water_quality
 from .growth_stage import list_growth_stages
 from .compute_transpiration import compute_transpiration
@@ -122,7 +128,7 @@ def get_environment_guidelines(
 ) -> EnvironmentGuidelines:
     """Return :class:`EnvironmentGuidelines` for the given plant stage."""
 
-    data = _lookup_stage_data(_DATA, plant_type, stage)
+    data = _lookup_stage_data(_DATA(), plant_type, stage)
     if not isinstance(data, Mapping):
         data = {}
     return EnvironmentGuidelines(
@@ -137,7 +143,7 @@ def get_environment_guidelines(
 def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     """Return environmental guidelines for a climate ``zone``."""
 
-    data = _CLIMATE_DATA.get(normalize_key(zone), {})
+    data = _CLIMATE_DATA().get(normalize_key(zone), {})
     if not isinstance(data, Mapping):
         data = {}
     return EnvironmentGuidelines(
@@ -152,7 +158,7 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
 def get_frost_dates(zone: str) -> tuple[str, str] | None:
     """Return the typical last and first frost dates for ``zone``."""
 
-    data = _FROST_DATES.get(normalize_key(zone))
+    data = _FROST_DATES().get(normalize_key(zone))
     if not isinstance(data, Mapping):
         return None
     last = data.get("last_frost")
@@ -396,35 +402,35 @@ __all__ = [
 ]
 
 
-# Load environment guidelines once. ``load_dataset`` already caches results
-_DATA: Dict[str, Any] = load_dataset(DATA_FILE)
-_DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
-_VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
-_HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
-_COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
-_PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
-_WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
-_HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
-_HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
-_WIND_ACTIONS: Dict[str, str] = load_dataset(WIND_ACTION_FILE)
-_TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
-_ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
-_SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
-_QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
-_CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
-_CO2_EFFICIENCY: Dict[str, float] = load_dataset(CO2_EFFICIENCY_FILE)
-_CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
-_MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
-_SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
-_SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
-_LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
-_FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
+# Lazily loaded datasets to reduce import overhead
+_DATA = lazy_dataset(DATA_FILE)
+_DLI_DATA = lazy_dataset(DLI_DATA_FILE)
+_VPD_DATA = lazy_dataset(VPD_DATA_FILE)
+_HEAT_THRESHOLDS = lazy_dataset(HEAT_DATA_FILE)
+_COLD_THRESHOLDS = lazy_dataset(COLD_DATA_FILE)
+_PHOTOPERIOD_DATA = lazy_dataset(PHOTOPERIOD_DATA_FILE)
+_WIND_THRESHOLDS = lazy_dataset(WIND_DATA_FILE)
+_HUMIDITY_THRESHOLDS = lazy_dataset(HUMIDITY_DATA_FILE)
+_HUMIDITY_ACTIONS = lazy_dataset(HUMIDITY_ACTION_FILE)
+_WIND_ACTIONS = lazy_dataset(WIND_ACTION_FILE)
+_TEMPERATURE_ACTIONS = lazy_dataset(TEMPERATURE_ACTION_FILE)
+_ENV_STRATEGIES = lazy_dataset(STRATEGY_FILE)
+_SCORE_WEIGHTS = lazy_dataset(SCORE_WEIGHT_FILE)
+_QUALITY_THRESHOLDS = lazy_dataset(QUALITY_THRESHOLDS_FILE)
+_CO2_PRICES = lazy_dataset(CO2_PRICE_FILE)
+_CO2_EFFICIENCY = lazy_dataset(CO2_EFFICIENCY_FILE)
+_CLIMATE_DATA = lazy_dataset(CLIMATE_DATA_FILE)
+_MOISTURE_DATA = lazy_dataset(MOISTURE_DATA_FILE)
+_SOIL_TEMP_DATA = lazy_dataset(SOIL_TEMP_DATA_FILE)
+_SOIL_EC_DATA = lazy_dataset(SOIL_EC_DATA_FILE)
+_LEAF_TEMP_DATA = lazy_dataset(LEAF_TEMP_DATA_FILE)
+_FROST_DATES = lazy_dataset(FROST_DATES_FILE)
 
 
 def get_score_weight(metric: str) -> float:
     """Return weighting factor for an environment metric."""
     try:
-        return float(_SCORE_WEIGHTS.get(metric, 1.0))
+        return float(_SCORE_WEIGHTS().get(metric, 1.0))
     except (TypeError, ValueError):
         return 1.0
 
@@ -432,8 +438,8 @@ def get_score_weight(metric: str) -> float:
 def get_environment_quality_thresholds() -> Dict[str, float]:
     """Return score thresholds for quality classification."""
     return {
-        "good": float(_QUALITY_THRESHOLDS.get("good", 75)),
-        "fair": float(_QUALITY_THRESHOLDS.get("fair", 50)),
+        "good": float(_QUALITY_THRESHOLDS().get("good", 75)),
+        "fair": float(_QUALITY_THRESHOLDS().get("fair", 50)),
     }
 
 
@@ -680,7 +686,7 @@ class EnvironmentSummary:
 
 def list_supported_plants() -> list[str]:
     """Return all plant types with available environment data."""
-    return list_dataset_entries(_DATA)
+    return list_dataset_entries(_DATA())
 
 
 @lru_cache(maxsize=None)
@@ -1329,7 +1335,7 @@ def evaluate_heat_stress(
     if temp_c is None or humidity_pct is None:
         return None
 
-    threshold = _lookup_threshold(_HEAT_THRESHOLDS, plant_type)
+    threshold = _lookup_threshold(_HEAT_THRESHOLDS(), plant_type)
     if threshold is None:
         return None
 
@@ -1346,7 +1352,7 @@ def evaluate_cold_stress(
     if temp_c is None:
         return None
 
-    threshold = _lookup_threshold(_COLD_THRESHOLDS, plant_type)
+    threshold = _lookup_threshold(_COLD_THRESHOLDS(), plant_type)
     if threshold is None:
         return None
 
@@ -1362,7 +1368,7 @@ def evaluate_wind_stress(
     if wind_m_s is None:
         return None
 
-    threshold = _lookup_threshold(_WIND_THRESHOLDS, plant_type)
+    threshold = _lookup_threshold(_WIND_THRESHOLDS(), plant_type)
     if threshold is None:
         return None
 
@@ -1378,8 +1384,9 @@ def evaluate_humidity_stress(
     if humidity_pct is None:
         return None
 
-    thresh = _HUMIDITY_THRESHOLDS.get(
-        normalize_key(plant_type), _HUMIDITY_THRESHOLDS.get("default")
+    thresholds = _HUMIDITY_THRESHOLDS()
+    thresh = thresholds.get(
+        normalize_key(plant_type), thresholds.get("default")
     )
     if not isinstance(thresh, (list, tuple)) or len(thresh) != 2:
         return None
@@ -1395,7 +1402,7 @@ def evaluate_humidity_stress(
 def get_humidity_action(level: str) -> str:
     """Return recommended action for a humidity stress level."""
 
-    return _HUMIDITY_ACTIONS.get(level.lower(), "")
+    return _HUMIDITY_ACTIONS().get(level.lower(), "")
 
 
 def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> str | None:
@@ -1411,7 +1418,7 @@ def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> st
 def get_temperature_action(level: str) -> str:
     """Return recommended action for a temperature stress level."""
 
-    return _TEMPERATURE_ACTIONS.get(level.lower(), "")
+    return _TEMPERATURE_ACTIONS().get(level.lower(), "")
 
 
 def recommend_temperature_action(
@@ -1431,7 +1438,7 @@ def recommend_temperature_action(
 def get_wind_action(level: str) -> str:
     """Return recommended action for a wind stress level."""
 
-    return _WIND_ACTIONS.get(level.lower(), "")
+    return _WIND_ACTIONS().get(level.lower(), "")
 
 
 def recommend_wind_action(wind_m_s: float | None, plant_type: str) -> str | None:
@@ -1447,7 +1454,7 @@ def get_environment_strategy(parameter: str, level: str) -> str:
     """Return optimization strategy for a parameter at a given level."""
 
     param = normalize_key(parameter)
-    strategies = _ENV_STRATEGIES.get(param)
+    strategies = _ENV_STRATEGIES().get(param)
     if not strategies:
         return ""
     return strategies.get(level.lower(), "")
@@ -1485,7 +1492,7 @@ def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = No
 def get_target_soil_moisture(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended soil moisture percentage range for a plant stage."""
 
-    return _lookup_range(_MOISTURE_DATA, plant_type, stage)
+    return _lookup_range(_MOISTURE_DATA(), plant_type, stage)
 
 
 def evaluate_moisture_stress(
@@ -1511,19 +1518,19 @@ def evaluate_moisture_stress(
 def get_target_soil_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended soil temperature range for a plant stage."""
 
-    return _lookup_range(_SOIL_TEMP_DATA, plant_type, stage)
+    return _lookup_range(_SOIL_TEMP_DATA(), plant_type, stage)
 
 
 def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended soil EC range for a plant stage."""
 
-    return _lookup_range(_SOIL_EC_DATA, plant_type, stage)
+    return _lookup_range(_SOIL_EC_DATA(), plant_type, stage)
 
 
 def get_target_leaf_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended leaf temperature range for a plant stage."""
 
-    return _lookup_range(_LEAF_TEMP_DATA, plant_type, stage)
+    return _lookup_range(_LEAF_TEMP_DATA(), plant_type, stage)
 
 
 def evaluate_soil_temperature_stress(
@@ -1708,21 +1715,21 @@ def get_target_dli(
     plant_type: str, stage: str | None = None
 ) -> tuple[float, float] | None:
     """Return recommended DLI range for a plant type and stage."""
-    return _lookup_range(_DLI_DATA, plant_type, stage)
+    return _lookup_range(_DLI_DATA(), plant_type, stage)
 
 
 def get_target_vpd(
     plant_type: str, stage: str | None = None
 ) -> tuple[float, float] | None:
     """Return recommended VPD range for a plant type and stage."""
-    return _lookup_range(_VPD_DATA, plant_type, stage)
+    return _lookup_range(_VPD_DATA(), plant_type, stage)
 
 
 def get_target_photoperiod(
     plant_type: str, stage: str | None = None
 ) -> tuple[float, float] | None:
     """Return recommended photoperiod range for a plant stage."""
-    return _lookup_range(_PHOTOPERIOD_DATA, plant_type, stage)
+    return _lookup_range(_PHOTOPERIOD_DATA(), plant_type, stage)
 
 
 def get_target_co2(
@@ -1782,7 +1789,7 @@ def get_co2_price(method: str) -> float:
     The result is cached for efficiency.
     """
     try:
-        return float(_CO2_PRICES.get(normalize_key(method), 0.0))
+        return float(_CO2_PRICES().get(normalize_key(method), 0.0))
     except (TypeError, ValueError):
         return 0.0
 
@@ -1792,7 +1799,7 @@ def get_co2_efficiency(method: str) -> float:
     """Return delivery efficiency factor for a CO₂ injection method."""
 
     try:
-        value = float(_CO2_EFFICIENCY.get(normalize_key(method), 1.0))
+        value = float(_CO2_EFFICIENCY().get(normalize_key(method), 1.0))
         return value if value > 0 else 1.0
     except (TypeError, ValueError):
         return 1.0
