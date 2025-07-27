@@ -161,8 +161,16 @@ def get_scouting_method(pest: str) -> str:
 
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
+    # Tests may replace ``_SEVERITY_THRESHOLDS`` with a dictionary directly to
+    # bypass caching.  To remain compatible, support both callables and mapping
+    # objects.
+    loader = _SEVERITY_THRESHOLDS
+    thresholds: Mapping[str, Dict[str, float]]
+    if callable(loader):
+        thresholds = loader()
+    else:
+        thresholds = loader
 
-    thresholds = _SEVERITY_THRESHOLDS()
     return thresholds.get(normalize_key(pest), {})
 
 
