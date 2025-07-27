@@ -19,6 +19,11 @@ from .nutrient_synergy import (
     get_synergy_factor,
     apply_synergy_adjustments,
 )
+from .nutrient_absorption import (
+    list_stages as list_absorption_stages,
+    get_absorption_rates,
+    apply_absorption_rates,
+)
 
 __all__ = sorted(
     set(utils.__all__)
@@ -32,6 +37,9 @@ __all__ = sorted(
         "list_synergy_pairs",
         "get_synergy_factor",
         "apply_synergy_adjustments",
+        "list_absorption_stages",
+        "get_absorption_rates",
+        "apply_absorption_rates",
     }
 )
 
