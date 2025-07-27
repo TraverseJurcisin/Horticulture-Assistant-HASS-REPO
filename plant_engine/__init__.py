@@ -12,9 +12,14 @@ from .nutrient_planner import (
     NutrientManagementReport,
     generate_nutrient_management_report,
 )
+from . import nutrient_losses
 
 __all__ = sorted(
-    set(utils.__all__) | set(environment_tips.__all__) | set(media_manager.__all__) | {
+    set(utils.__all__)
+    | set(environment_tips.__all__)
+    | set(media_manager.__all__)
+    | set(nutrient_losses.__all__)
+    | {
         "NutrientManagementReport",
         "generate_nutrient_management_report",
     }
