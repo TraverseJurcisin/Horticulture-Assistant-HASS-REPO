@@ -128,3 +128,18 @@ def test_include_micro_guidelines(tmp_path):
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("micro", hass=hass, include_micro=True).as_dict()
     assert result["Fe"] > 0
+
+
+def test_schedule_nutrient_corrections(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "corr.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
+    hass = _hass_for(tmp_path)
+    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+
+    adjustments = ns.schedule_nutrient_corrections(
+        "corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass
+    ).as_dict()
+    assert adjustments["N"] > 0

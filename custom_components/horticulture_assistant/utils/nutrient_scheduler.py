@@ -6,6 +6,7 @@ import os
 import logging
 from dataclasses import dataclass, asdict
 from functools import lru_cache
+from typing import Mapping
 
 try:
     # If running within Home Assistant, this will be available
@@ -17,6 +18,7 @@ from custom_components.horticulture_assistant.utils.plant_profile_loader import 
 from plant_engine.nutrient_manager import (
     get_recommended_levels,
     get_all_recommended_levels,
+    calculate_nutrient_adjustments,
 )
 from plant_engine.utils import load_json, save_json, load_dataset
 from custom_components.horticulture_assistant.utils.path_utils import (
@@ -234,4 +236,44 @@ def schedule_nutrients(
     return NutrientTargets(adjusted)
 
 
-__all__ = ["schedule_nutrients"]
+@dataclass
+class NutrientAdjustments:
+    """PPM adjustments needed to reach guideline targets."""
+
+    values: dict[str, float]
+
+    def as_dict(self) -> dict[str, float]:
+        return asdict(self)["values"]
+
+
+def schedule_nutrient_corrections(
+    plant_id: str,
+    current_levels: Mapping[str, float],
+    hass: HomeAssistant = None,
+) -> NutrientAdjustments:
+    """Return ppm corrections required for ``plant_id`` based on readings."""
+
+    profile = _load_profile(plant_id, hass)
+    if not profile:
+        _LOGGER.error("Plant profile for '%s' not found or empty", plant_id)
+        return NutrientAdjustments({})
+
+    stage = (
+        profile.get("general", {}).get("lifecycle_stage")
+        or profile.get("general", {}).get("stage")
+        or profile.get("stage")
+        or "unknown"
+    )
+    stage_key = STAGE_SYNONYMS.get(str(stage).lower(), str(stage).lower())
+    plant_type = _get_plant_type(plant_id, profile, hass)
+    if not plant_type:
+        _LOGGER.warning("Unable to determine plant type for '%s'", plant_id)
+        return NutrientAdjustments({})
+
+    adjustments = calculate_nutrient_adjustments(
+        current_levels, plant_type, stage_key
+    )
+    return NutrientAdjustments(adjustments)
+
+
+__all__ = ["schedule_nutrients", "schedule_nutrient_corrections"]
