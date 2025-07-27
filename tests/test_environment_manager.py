@@ -634,6 +634,12 @@ def test_normalize_environment_readings_skip_invalid_values():
     assert result == {"co2_ppm": 700.0}
 
 
+def test_normalize_environment_readings_exclude_unknown():
+    data = {"foo": 1, "temperature": 25}
+    result = normalize_environment_readings(data, include_unknown=False)
+    assert result == {"temp_c": 25.0}
+
+
 def test_average_environment_readings():
     series = [
         {"temp_c": 20, "humidity_pct": 60},

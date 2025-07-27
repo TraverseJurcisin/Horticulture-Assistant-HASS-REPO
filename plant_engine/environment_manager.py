@@ -6,7 +6,7 @@ import math
 import datetime
 from dataclasses import dataclass, asdict
 from functools import lru_cache
-from typing import Any, Dict, Mapping, Tuple, Iterable
+from typing import Any, Dict, Mapping, Tuple, Iterable, Callable
 
 RangeTuple = Tuple[float, float]
 
@@ -270,11 +270,25 @@ def recommend_climate_adjustments(
     return suggestions
 
 
-def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
-    """Return ``readings`` with keys mapped to canonical environment names.
+_TEMP_CONVERSIONS: Dict[str, tuple[str, Callable[[float], float]]] = {
+    "temp_f": ("temp_c", lambda v: (v - 32) * 5 / 9),
+    "soil_temp_f": ("soil_temp_c", lambda v: (v - 32) * 5 / 9),
+    "leaf_temp_f": ("leaf_temp_c", lambda v: (v - 32) * 5 / 9),
+    "temp_k": ("temp_c", lambda v: v - 273.15),
+    "soil_temp_k": ("soil_temp_c", lambda v: v - 273.15),
+    "leaf_temp_k": ("leaf_temp_c", lambda v: v - 273.15),
+}
 
-    Values that cannot be converted to a finite float are ignored to avoid
-    propagating ``NaN`` or infinite measurements into calculations.
+
+def normalize_environment_readings(
+    readings: Mapping[str, float], *, include_unknown: bool = True
+) -> Dict[str, float]:
+    """Return ``readings`` mapped to canonical names with unit conversion.
+
+    Any value that cannot be coerced to a finite float is skipped. Temperature
+    readings expressed in Fahrenheit or Kelvin are converted to Celsius. When
+    ``include_unknown`` is ``False`` keys without a known canonical mapping are
+    dropped from the result.
     """
 
     normalized: Dict[str, float] = {}
@@ -286,12 +300,12 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             continue
         if not math.isfinite(val):
             continue
-        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
-            val = (val - 32) * 5 / 9
-            canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
-            val = val - 273.15
-            canonical = canonical.replace("_k", "_c")
+        conv = _TEMP_CONVERSIONS.get(canonical)
+        if conv:
+            canonical, func = conv
+            val = func(val)
+        elif canonical not in ENV_ALIASES and not include_unknown:
+            continue
         normalized[canonical] = val
     return normalized
 
