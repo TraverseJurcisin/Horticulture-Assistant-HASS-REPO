@@ -8,12 +8,18 @@ from typing import Dict, List
 
 from . import nutrient_budget
 
-from .utils import load_json, save_json
+from .utils import load_json, save_json, load_dataset, normalize_key
 
 # Default yield directory. Can be overridden with the ``HORTICULTURE_YIELD_DIR``
 # environment variable to support custom data locations during testing or
 # deployment.
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
+
+# Expected total yields per crop (grams)
+YIELD_ESTIMATE_FILE = "yield_estimates.json"
+
+# Cached dataset so repeated lookups avoid disk I/O
+_YIELD_ESTIMATES: Dict[str, float] = load_dataset(YIELD_ESTIMATE_FILE)
 
 
 @dataclass(slots=True)
@@ -82,10 +88,33 @@ def get_total_nutrient_removal(plant_id: str, plant_type: str) -> nutrient_budge
     return nutrient_budget.estimate_total_removal(plant_type, total_yield_kg)
 
 
+def get_yield_estimate(plant_type: str) -> float | None:
+    """Return expected total yield for ``plant_type`` in grams if known."""
+
+    key = normalize_key(plant_type)
+    value = _YIELD_ESTIMATES.get(key)
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def estimate_yield_performance(plant_id: str, plant_type: str) -> float | None:
+    """Return harvested yield fraction compared to the expected yield."""
+
+    estimate = get_yield_estimate(plant_type)
+    if estimate is None or estimate <= 0:
+        return None
+    total = get_total_yield(plant_id)
+    return round(total / estimate, 2)
+
+
 __all__ = [
     "HarvestRecord",
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
     "get_total_nutrient_removal",
+    "get_yield_estimate",
+    "estimate_yield_performance",
 ]
