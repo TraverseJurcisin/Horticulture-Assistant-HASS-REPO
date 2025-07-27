@@ -36,6 +36,16 @@ _THRESHOLDS = lazy_dataset(DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+
+
+def _severity_dataset() -> dict:
+    """Return cached severity threshold mapping regardless of override type."""
+
+    data = _SEVERITY_THRESHOLDS
+    try:
+        return data() if callable(data) else data
+    except Exception:
+        return {}
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -162,7 +172,7 @@ def get_scouting_method(pest: str) -> str:
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _SEVERITY_THRESHOLDS()
+    thresholds = _severity_dataset()
     return thresholds.get(normalize_key(pest), {})
 
 
@@ -292,6 +302,7 @@ def classify_pest_severity(
 
     thresholds = get_pest_thresholds(plant_type)
     severity: Dict[str, str] = {}
+    severity_data = _severity_dataset()
     for pest, count in observations.items():
         if count < 0:
             raise ValueError("pest counts must be non-negative")
@@ -300,7 +311,7 @@ def classify_pest_severity(
         if base is None:
             continue
 
-        custom = get_severity_thresholds(key)
+        custom = severity_data.get(key, {})
         moderate = custom.get("moderate", base)
         severe = custom.get("severe")
         if severe is None:
