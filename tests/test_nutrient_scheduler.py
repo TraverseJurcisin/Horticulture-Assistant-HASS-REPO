@@ -143,3 +143,20 @@ def test_schedule_nutrient_corrections(tmp_path):
         "corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass
     ).as_dict()
     assert adjustments["N"] > 0
+
+
+def test_schedule_nutrients_bulk(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "p1.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
+    (plant_dir / "p2.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "harvest"}}'
+    )
+    hass = _hass_for(tmp_path)
+    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+
+    result = ns.schedule_nutrients_bulk(["p1", "p2"], hass=hass)
+    assert result["p1"]["N"] > 0
+    assert result["p2"]["N"] > 0
