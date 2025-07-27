@@ -66,11 +66,13 @@ def load_data(path: str) -> Any:
         raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
 
 
-def save_json(path: str, data: Dict[str, Any]) -> None:
-    """Write a dictionary to a JSON file, creating parent dirs if needed."""
+def save_json(path: str, data: Dict[str, Any]) -> bool:
+    """Write ``data`` to ``path`` and return ``True`` on success."""
+
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+    return True
 
 
 def deep_update(base: Dict[str, Any], other: Mapping[str, Any]) -> Dict[str, Any]:
