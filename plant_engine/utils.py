@@ -18,6 +18,7 @@ __all__ = [
     "lazy_dataset",
     "clear_dataset_cache",
     "dataset_paths",
+    "dataset_file",
     "get_data_dir",
     "get_pending_dir",
     "get_extra_dirs",
@@ -174,6 +175,23 @@ def dataset_paths() -> tuple[Path, ...]:
         _PATH_CACHE = (base, *extras)
         _ENV_STATE = env_state
     return _PATH_CACHE
+
+
+def dataset_file(filename: str) -> Path | None:
+    """Return absolute path to ``filename`` if found in search paths."""
+
+    overlay = overlay_dir()
+    if overlay:
+        path = overlay / filename
+        if path.exists():
+            return path
+
+    for base in dataset_paths():
+        path = base / filename
+        if path.exists():
+            return path
+
+    return None
 
 
 @lru_cache(maxsize=None)
