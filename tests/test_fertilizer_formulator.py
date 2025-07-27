@@ -304,3 +304,10 @@ def test_estimate_deficiency_correction_cost():
     with pytest.raises(ValueError):
         estimate_deficiency_correction_cost(current, "citrus", "vegetative", 0)
 
+
+def test_recommend_fertigation_mix():
+    mix = fert_mod.recommend_fertigation_mix("citrus", "vegetative", 1)
+    assert mix
+    ppm = fert_mod.calculate_mix_ppm(mix, 1)
+    assert ppm.get("N", 0) >= 80
+
