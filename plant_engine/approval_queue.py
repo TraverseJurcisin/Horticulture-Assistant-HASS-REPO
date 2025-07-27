@@ -56,7 +56,12 @@ def queue_threshold_updates(
     new: Mapping[str, Any],
     base_dir: Path | None = None,
 ) -> Path:
-    """Write pending threshold updates and return the file path."""
+    """Queue updates by writing a pending file and return its path.
+
+    ``old`` and ``new`` are dictionaries mapping threshold names to values. Any
+    differences are stored in ``base_dir`` (defaults to
+    :func:`get_pending_dir`).
+    """
 
     directory = base_dir or PENDING_DIR
     directory.mkdir(parents=True, exist_ok=True)
@@ -81,11 +86,25 @@ def queue_threshold_updates(
     return pending_file
 
 def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) -> int:
-    """Apply approved threshold changes to ``plant_path`` and return count."""
+    """Apply approved threshold changes to ``plant_path`` and return count.
 
-    pending = load_json(str(pending_file))
+    If ``pending_file`` or ``plant_path`` does not exist the function logs an
+    error and returns ``0`` instead of raising an exception.
+    """
 
-    plant = load_json(str(plant_path))
+    plant_p = Path(plant_path)
+    pending_p = Path(pending_file)
+
+    if not pending_p.is_file():
+        _LOGGER.error("Pending threshold file not found: %s", pending_p)
+        return 0
+    if not plant_p.is_file():
+        _LOGGER.error("Plant profile not found: %s", plant_p)
+        return 0
+
+    pending = load_json(str(pending_p))
+
+    plant = load_json(str(plant_p))
     updated = plant.get("thresholds", {})
 
     applied = 0
@@ -95,7 +114,7 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
             applied += 1
 
     plant["thresholds"] = updated
-    save_json(str(plant_path), plant)
+    save_json(str(plant_p), plant)
 
     _LOGGER.info(
         "Applied %d approved changes for %s", applied, pending.get("plant_id")
@@ -104,7 +123,7 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
 
 
 def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[str, Any] | None:
-    """Return pending changes for ``plant_id`` if a record exists."""
+    """Return pending change mapping for ``plant_id`` if a record exists."""
 
     directory = base_dir or PENDING_DIR
     path = directory / f"{plant_id}.json"

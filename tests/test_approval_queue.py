@@ -34,3 +34,20 @@ def test_queue_and_apply(tmp_path, monkeypatch):
     updated = load_json(str(plant_path))
     assert updated["thresholds"]["soil_moisture_pct"] == 35
     assert "ec" not in updated["thresholds"]
+
+
+def test_apply_approved_thresholds_missing_files(tmp_path, caplog):
+    plant_path = tmp_path / "missing.json"
+    pending_path = tmp_path / "pending.json"
+    caplog.set_level("ERROR")
+
+    count = approval_queue.apply_approved_thresholds(plant_path, pending_path)
+    assert count == 0
+    assert any("Pending threshold file not found" in r.message for r in caplog.records)
+
+    # create pending file but missing plant profile
+    pending_path.write_text("{}")
+    caplog.clear()
+    count = approval_queue.apply_approved_thresholds(plant_path, pending_path)
+    assert count == 0
+    assert any("Plant profile not found" in r.message for r in caplog.records)
