@@ -55,7 +55,13 @@ def get_synergy_factor(n1: str, n2: str) -> float | None:
 def apply_synergy_adjustments(levels: Mapping[str, float]) -> Dict[str, float]:
     """Return ``levels`` adjusted using defined synergy factors."""
     result = {k: float(v) for k, v in levels.items()}
+
+    # build mapping of lowercase nutrient keys to the original key
+    key_map = {k.lower(): k for k in levels}
+
     for (n1, n2), info in _SYNERGY_MAP.items():
-        if n1 in levels and n2 in levels:
-            result[n2] = round(result[n2] * info.factor, 2)
+        if n1.lower() in key_map and n2.lower() in key_map:
+            target = key_map[n2.lower()]
+            result[target] = round(result[target] * info.factor, 2)
+
     return result

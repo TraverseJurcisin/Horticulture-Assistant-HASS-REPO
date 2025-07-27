@@ -83,6 +83,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 - Precise pH adjustment volume calculations
 - Heat, humidity and light stress warnings
 - Stage-adjusted nutrient targets and leaf tissue analysis
+- Synergy-adjusted nutrient targets accounting for nutrient interactions
 - Nutrient deficiency severity and treatment recommendations
 - Combined nutrient management reports with correction schedules
 - Automatic fertigation mix recommendations using priced fertilizer data

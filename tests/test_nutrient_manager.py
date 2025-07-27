@@ -218,3 +218,32 @@ def test_get_all_stage_adjusted_levels():
     levels = get_all_stage_adjusted_levels("tomato", "fruiting")
     assert levels["Ca"] == 66.0
     assert levels["N"] == 88.0
+
+
+def test_get_synergy_adjusted_levels():
+    from plant_engine.nutrient_manager import get_synergy_adjusted_levels
+
+    levels = get_synergy_adjusted_levels("tomato", "fruiting")
+    assert levels["P"] == 66.0
+    assert round(levels["B"], 2) == 0.53
+
+
+def test_calculate_all_deficiencies_with_synergy():
+    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy
+
+    current = {
+        "N": 80,
+        "P": 60,
+        "K": 120,
+        "Ca": 60,
+        "Mg": 30,
+        "Fe": 4.0,
+        "Mn": 1.2,
+        "Zn": 0.6,
+        "B": 0.5,
+        "Cu": 0.1,
+        "Mo": 0.05,
+    }
+    deficits = calculate_all_deficiencies_with_synergy(current, "tomato", "fruiting")
+    assert deficits["P"] == 6.0
+    assert round(deficits["B"], 2) == 0.03
