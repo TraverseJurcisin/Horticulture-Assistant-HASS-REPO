@@ -27,5 +27,9 @@
   "blueberry": {
     "vegetative": {"N": 30, "P": 10, "K": 40},
     "fruiting": {"N": 20, "P": 15, "K": 60}
+  },
+  "kale": {
+    "vegetative": {"N": 55, "P": 25, "K": 75},
+    "harvest": {"N": 50, "P": 20, "K": 70}
   }
 }

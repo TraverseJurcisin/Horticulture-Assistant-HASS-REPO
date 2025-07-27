@@ -120,5 +120,10 @@
     "vegetative": {"duration_days": 60, "notes": "Focus on cane development."},
     "flowering": {"duration_days": 20, "notes": "Monitor for frost damage."},
     "fruiting": {"duration_days": 40, "notes": "Maintain soil acidity."}
+  },
+  "kale": {
+    "seedling": {"duration_days": 20, "notes": "Keep evenly moist."},
+    "vegetative": {"duration_days": 40, "notes": "Provide regular nitrogen."},
+    "harvest": {"duration_days": 30, "notes": "Harvest outer leaves first."}
   }
 }

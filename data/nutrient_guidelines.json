@@ -134,5 +134,9 @@
   "blueberry": {
     "vegetative": {"N": 60, "P": 20, "K": 50, "Ca": 30, "Mg": 15},
     "fruiting": {"N": 40, "P": 30, "K": 80, "Ca": 40, "Mg": 20}
+  },
+  "kale": {
+    "vegetative": {"N": 90, "P": 40, "K": 80, "Ca": 40, "Mg": 20},
+    "harvest": {"N": 70, "P": 30, "K": 100, "Ca": 40, "Mg": 20}
   }
 }
