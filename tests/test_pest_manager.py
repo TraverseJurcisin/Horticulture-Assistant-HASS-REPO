@@ -8,6 +8,7 @@ from plant_engine.pest_manager import (
     get_ipm_guidelines,
     recommend_ipm_actions,
     list_known_pests,
+    list_supported_pests,
     build_pest_management_plan,
 )
 
@@ -44,6 +45,12 @@ def test_recommend_beneficials():
 def test_list_known_pests():
     pests = list_known_pests("citrus")
     assert "aphids" in pests
+
+
+def test_list_supported_pests():
+    pests = list_supported_pests()
+    assert "aphids" in pests
+    assert "scale" in pests
 
 
 def test_get_scientific_name():

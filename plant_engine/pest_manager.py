@@ -40,6 +40,15 @@ def list_known_pests(plant_type: str) -> list[str]:
     return sorted(get_pest_guidelines(plant_type).keys())
 
 
+def list_supported_pests() -> list[str]:
+    """Return unique pest names available across all crops."""
+
+    pests: set[str] = set()
+    for guidelines in _DATA.values():
+        pests.update(guidelines.keys())
+    return sorted(pests)
+
+
 def get_scientific_name(pest: str) -> str | None:
     """Return the scientific (Latin) name for ``pest`` if known."""
     return _TAXONOMY.get(normalize_key(pest))
@@ -166,6 +175,7 @@ __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
     "list_known_pests",
+    "list_supported_pests",
     "get_scientific_name",
     "recommend_treatments",
     "get_beneficial_insects",
