@@ -10,12 +10,14 @@ DATA_FILE = "nutrient_deficiency_symptoms.json"
 TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
 MOBILITY_DATA_FILE = "nutrient_mobility.json"
 THRESHOLD_DATA_FILE = "nutrient_deficiency_thresholds.json"
+SCORE_DATA_FILE = "deficiency_severity_scores.json"
 
 # Load datasets lazily to avoid unnecessary work during import
 _symptoms = lazy_dataset(DATA_FILE)
 _treatments = lazy_dataset(TREATMENT_DATA_FILE)
 _mobility = lazy_dataset(MOBILITY_DATA_FILE)
 _thresholds = lazy_dataset(THRESHOLD_DATA_FILE)
+_scores = lazy_dataset(SCORE_DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -26,6 +28,8 @@ __all__ = [
     "get_nutrient_mobility",
     "classify_deficiency_levels",
     "assess_deficiency_severity",
+    "calculate_deficiency_index",
+    "summarize_deficiencies",
     "recommend_deficiency_treatments",
     "diagnose_deficiency_actions",
 ]
@@ -131,3 +135,38 @@ def diagnose_deficiency_actions(
             "treatment": get_deficiency_treatment(nutrient),
         }
     return actions
+
+
+def calculate_deficiency_index(severity_map: Mapping[str, str]) -> float:
+    """Return average numeric score for a deficiency severity mapping."""
+
+    if not severity_map:
+        return 0.0
+
+    scores = _scores()
+    total = 0.0
+    count = 0
+    for level in severity_map.values():
+        try:
+            total += float(scores.get(level, 0))
+            count += 1
+        except (TypeError, ValueError):
+            continue
+    return round(total / count, 2) if count else 0.0
+
+
+def summarize_deficiencies(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, object]:
+    """Return severity, treatments and index for current nutrient status."""
+
+    severity = assess_deficiency_severity(current_levels, plant_type, stage)
+    treatments = recommend_deficiency_treatments(
+        current_levels, plant_type, stage
+    )
+    index = calculate_deficiency_index(severity)
+    return {
+        "severity": severity,
+        "treatments": treatments,
+        "severity_index": index,
+    }
