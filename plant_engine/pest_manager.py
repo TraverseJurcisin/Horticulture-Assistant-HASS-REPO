@@ -194,6 +194,7 @@ def build_pest_management_plan(
             "beneficials": beneficials.get(pest, []),
             "ipm": ipm_actions.get(pest),
             "organic": organic.get(pest, []),
+            "scientific_name": get_scientific_name(pest),
         }
 
     return plan

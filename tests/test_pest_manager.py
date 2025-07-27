@@ -132,3 +132,8 @@ def test_build_pest_management_plan_includes_organic():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert "organic" in plan["aphids"]
     assert "neem oil" in plan["aphids"]["organic"]
+
+
+def test_build_pest_management_plan_includes_scientific_name():
+    plan = build_pest_management_plan("citrus", ["aphids"])
+    assert plan["aphids"]["scientific_name"] == "Aphidoidea"
