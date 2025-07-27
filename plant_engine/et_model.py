@@ -4,7 +4,7 @@ import math
 from functools import lru_cache
 from typing import Optional
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 def calculate_et0(
     temperature_c: float,
@@ -70,5 +70,37 @@ __all__ = [
     "calculate_et0",
     "calculate_eta",
     "get_reference_et0",
+    "estimate_stage_et",
 ]
+
+
+def estimate_stage_et(plant_type: str, stage: str, month: int) -> float:
+    """Return estimated daily ET for a crop stage and month.
+
+    This helper combines :data:`reference_et0.json` with
+    :data:`crop_coefficients.json` to provide a simple lookup based on
+    typical conditions when detailed environment readings are not
+    available. ``0.0`` is returned if any value is missing.
+    """
+
+    et0 = get_reference_et0(month)
+    if et0 is None:
+        return 0.0
+
+    kc_data = load_dataset("crop_coefficients.json")
+    plant = kc_data.get(normalize_key(plant_type))
+    if not isinstance(plant, dict):
+        return 0.0
+    kc = plant.get(normalize_key(stage))
+    if kc is None:
+        kc = plant.get("default")
+    if kc is None:
+        return 0.0
+
+    try:
+        kc_val = float(kc)
+    except (TypeError, ValueError):
+        return 0.0
+
+    return calculate_eta(et0, kc_val)
 
