@@ -29,6 +29,7 @@ __all__ = [
     "list_known_pesticides",
     "get_rotation_interval",
     "suggest_rotation_schedule",
+    "suggest_rotation_plan",
 ]
 
 
@@ -156,3 +157,31 @@ def suggest_rotation_schedule(product: str, start_date: date, cycles: int) -> Li
         return []
 
     return [start_date + timedelta(days=interval * i) for i in range(cycles)]
+
+
+def suggest_rotation_plan(
+    products: Iterable[str], start_date: date
+) -> List[tuple[str, date]]:
+    """Return sequential application schedule for multiple products.
+
+    Each product is scheduled after the rotation interval of the previous
+    product. Unknown products are scheduled with no additional delay.
+
+    Parameters
+    ----------
+    products:
+        Iterable of pesticide product identifiers in the desired order of
+        application.
+    start_date:
+        Date of the first application.
+    """
+
+    plan: List[tuple[str, date]] = []
+    current_date = start_date
+    for product in products:
+        plan.append((product, current_date))
+        interval = get_rotation_interval(product)
+        if interval is None:
+            interval = 0
+        current_date += timedelta(days=interval)
+    return plan
