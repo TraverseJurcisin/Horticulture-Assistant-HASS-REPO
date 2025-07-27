@@ -402,6 +402,8 @@ __all__ = [
     "average_environment_readings",
     "calculate_environment_variance",
     "calculate_environment_stddev",
+    "calculate_environment_deviation",
+    "calculate_environment_deviation_series",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
@@ -550,6 +552,64 @@ def calculate_environment_stddev(series: Iterable[Mapping[str, float]]) -> Dict[
 
     variance = calculate_environment_variance(series)
     return {k: round(math.sqrt(v), 3) for k, v in variance.items()}
+
+
+def calculate_environment_deviation(
+    current: Mapping[str, float],
+    plant_type: str,
+    stage: str | None = None,
+) -> Dict[str, float]:
+    """Return fractional deviation from target midpoints for each metric.
+
+    The deviation is ``0`` when the reading matches the midpoint of the
+    recommended range and ``1`` when it hits either boundary. Values greater
+    than ``1`` indicate the measurement exceeds the recommended range.
+    """
+
+    targets = get_environmental_targets(plant_type, stage)
+    if not targets:
+        return {}
+
+    readings = normalize_environment_readings(current)
+    deviation: Dict[str, float] = {}
+    for key, bounds in targets.items():
+        if (
+            key not in readings
+            or not isinstance(bounds, (list, tuple))
+            or len(bounds) != 2
+        ):
+            continue
+        low, high = bounds
+        width = high - low
+        if width <= 0:
+            continue
+        mid = (low + high) / 2
+        fraction = abs(float(readings[key]) - mid) / (width / 2)
+        deviation[key] = round(fraction, 2)
+
+    return deviation
+
+
+def calculate_environment_deviation_series(
+    series: Iterable[Mapping[str, float]],
+    plant_type: str,
+    stage: str | None = None,
+) -> Dict[str, float]:
+    """Return average deviation from target midpoints for a series."""
+
+    totals: Dict[str, float] = {}
+    counts: Dict[str, int] = {}
+    for reading in series:
+        dev = calculate_environment_deviation(reading, plant_type, stage)
+        for key, value in dev.items():
+            totals[key] = totals.get(key, 0.0) + value
+            counts[key] = counts.get(key, 0) + 1
+
+    return {
+        key: round(totals[key] / counts[key], 2)
+        for key in totals
+        if counts.get(key, 0)
+    }
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:

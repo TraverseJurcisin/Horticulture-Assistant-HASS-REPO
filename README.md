@@ -340,6 +340,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `get_training_guideline` gives training advice for each stage from `training_guidelines.json`.
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
 - `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.
+- `calculate_environment_deviation` measures how far readings deviate from target midpoints to highlight adjustments.
 - `estimate_hvac_energy_series` and `estimate_hvac_cost_series` evaluate energy
   use and cost for sequential HVAC temperature setpoints.
 
