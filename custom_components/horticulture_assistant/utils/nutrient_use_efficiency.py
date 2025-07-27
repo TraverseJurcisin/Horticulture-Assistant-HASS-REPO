@@ -11,9 +11,13 @@ import os
 import json
 import logging
 from datetime import datetime, date
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Mapping
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path, config_path
+from custom_components.horticulture_assistant.utils.path_utils import (
+    data_path,
+    config_path,
+)
+from plant_engine.utils import load_dataset
 
 try:
     from homeassistant.core import HomeAssistant
@@ -21,6 +25,33 @@ except ImportError:
     HomeAssistant = None  # Allow usage outside Home Assistant for testing
 
 _LOGGER = logging.getLogger(__name__)
+
+# Efficiency benchmark dataset
+EFFICIENCY_TARGET_FILE = "nutrient_efficiency_targets.json"
+_EFFICIENCY_TARGETS: Dict[str, Dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
+
+
+def get_efficiency_targets(plant_type: str) -> Dict[str, float]:
+    """Return expected nutrient use efficiency for ``plant_type``."""
+    data = _EFFICIENCY_TARGETS.get(str(plant_type).lower(), {})
+    return {k: float(v) for k, v in data.items() if isinstance(v, (int, float))}
+
+
+def score_efficiency(efficiency: Mapping[str, float], plant_type: str) -> float:
+    """Return a 0-100 score comparing ``efficiency`` to reference targets."""
+    targets = get_efficiency_targets(plant_type)
+    if not targets:
+        return 0.0
+    total = 0.0
+    count = 0
+    for nutrient, target in targets.items():
+        actual = efficiency.get(nutrient)
+        if actual is None or target <= 0:
+            continue
+        diff_ratio = abs(actual - target) / target
+        total += max(0.0, 1 - diff_ratio)
+        count += 1
+    return round((total / count) * 100, 1) if count else 0.0
 
 class NutrientUseEfficiency:
     """Track fertilizer usage and calculate nutrient use efficiency."""
@@ -237,6 +268,13 @@ class NutrientUseEfficiency:
             if eff:
                 output[pid] = eff
         return output
+
+    def efficiency_score(self, plant_id: str, plant_type: str) -> float:
+        """Return score comparing plant NUE to reference targets."""
+        eff = self.compute_efficiency(plant_id)
+        if not eff:
+            return 0.0
+        return score_efficiency(eff, plant_type)
 
     def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
         """

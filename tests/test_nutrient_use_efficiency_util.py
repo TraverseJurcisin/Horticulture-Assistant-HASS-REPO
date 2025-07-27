@@ -19,6 +19,8 @@ def test_nutrient_efficiency_basic(tmp_path, monkeypatch):
     nue = NutrientUseEfficiency()
     eff = nue.compute_efficiency("plant1")
     assert eff == {"N": 5.0}
+    score = nue.efficiency_score("plant1", "tomato")
+    assert score == 100.0
     summary = nue.get_usage_summary("plant1", "month")
     assert summary["2025-01"]["N"] == 100
 
