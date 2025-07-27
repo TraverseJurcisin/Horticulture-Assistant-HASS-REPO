@@ -71,6 +71,15 @@ def get_total_yield(plant_id: str) -> float:
     return sum(record.yield_grams for record in history)
 
 
+def get_average_yield(plant_id: str) -> float:
+    """Return average yield per harvest for the plant."""
+    history = load_yield_history(plant_id)
+    if not history:
+        return 0.0
+    total = sum(record.yield_grams for record in history)
+    return round(total / len(history), 2)
+
+
 def get_total_nutrient_removal(plant_id: str, plant_type: str) -> nutrient_budget.RemovalEstimate:
     """Return cumulative nutrient removal for ``plant_id``.
 
@@ -87,5 +96,6 @@ __all__ = [
     "load_yield_history",
     "record_harvest",
     "get_total_yield",
+    "get_average_yield",
     "get_total_nutrient_removal",
 ]

@@ -15,6 +15,9 @@ def test_record_and_total_yield(tmp_path):
     total = yield_manager.get_total_yield(plant_id)
     assert total == 180
 
+    avg = yield_manager.get_average_yield(plant_id)
+    assert avg == 90
+
 
 def test_get_total_nutrient_removal(tmp_path):
     plant_id = 'removalplant'
