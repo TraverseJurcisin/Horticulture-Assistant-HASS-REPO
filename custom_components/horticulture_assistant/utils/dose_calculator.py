@@ -171,3 +171,37 @@ class DoseCalculator:
         if unit == "g/L":
             return round(final_mg_l / 1000, 2)
         return round(final_mg_l, 2)
+
+    # ------------------------------------------------------------------
+    # Dataset assisted helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def calculate_nutrient_dose(
+        nutrient: str,
+        ppm: float,
+        volume_l: float,
+        product: str,
+    ) -> float:
+        """Return grams of ``product`` required for a nutrient concentration.
+
+        Purity factors are looked up in :data:`fertilizer_purity.json` via
+        :func:`plant_engine.fertigation.get_fertilizer_purity`. ``ppm`` should
+        be the desired nutrient concentration and ``volume_l`` the final
+        solution volume. ``ValueError`` is raised if the product purity is
+        unknown or if inputs are invalid.
+        """
+
+        if volume_l <= 0:
+            raise ValueError("volume_l must be positive")
+
+        # Import lazily so the calculator can be used without the full plant
+        # engine installed.
+        from plant_engine.fertigation import get_fertilizer_purity
+
+        purity = get_fertilizer_purity(product).get(nutrient)
+        if purity is None or purity <= 0:
+            raise ValueError("Unknown product purity for nutrient")
+
+        mg = ppm * volume_l
+        return round(mg / 1000 / purity, 3)
