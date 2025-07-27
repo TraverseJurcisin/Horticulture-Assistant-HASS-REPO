@@ -45,6 +45,8 @@ def test_recommendation_engine_environment_notes():
     eng = _setup_engine(auto=False)
     rec = eng.recommend("p1")
     assert any("temperature" in n for n in rec.notes)
+    assert rec.environment is not None
+    assert "temperature" in rec.environment.adjustments
 
 
 def test_recommendation_engine_recommend_all_and_reset():
