@@ -38,6 +38,7 @@ SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
 FROST_DATES_FILE = "frost_dates.json"
+ALIAS_DATA_FILE = "environment_aliases.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -49,14 +50,12 @@ ACTION_LABELS = {
     "soil_temp_c": "soil_temperature",
 }
 
-# aliases for environment keys used when comparing readings. This allows
-# ``compare_environment`` to match sensor names like ``temperature`` or
-# ``rh`` against dataset keys such as ``temp_c`` or ``humidity_pct``.
-ENV_ALIASES = {
+# aliases for environment keys used when comparing readings. This mapping
+# is loaded from :data:`environment_aliases.json` so deployments can customize
+# accepted sensor names without modifying code.
+DEFAULT_ENV_ALIASES = {
     "temp_c": ["temp_c", "temperature", "temp", "temperature_c"],
-    # Fahrenheit readings are converted to Celsius during normalization
     "temp_f": ["temp_f", "temperature_f", "temp_fahrenheit"],
-    # Kelvin readings are converted to Celsius during normalization
     "temp_k": ["temp_k", "temperature_k", "temp_kelvin"],
     "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct"],
     "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
@@ -66,16 +65,23 @@ ENV_ALIASES = {
     "soil_moisture_pct": ["soil_moisture_pct", "soil_moisture", "moisture", "vwc"],
     "soil_temp_c": ["soil_temp_c", "soil_temperature", "soil_temp", "root_temp"],
     "soil_temp_f": ["soil_temp_f", "soil_temp_fahrenheit"],
-    # Kelvin readings are converted to Celsius during normalization
     "soil_temp_k": ["soil_temp_k", "soil_temperature_k", "soil_temp_kelvin"],
-    # Leaf temperature aliases with unit variants
     "leaf_temp_c": ["leaf_temp_c", "leaf_temp", "leaf_temperature"],
     "leaf_temp_f": ["leaf_temp_f", "leaf_temp_fahrenheit"],
     "leaf_temp_k": ["leaf_temp_k", "leaf_temp_kelvin"],
-    # Additional common names
     "dli": ["dli", "daily_light_integral"],
     "photoperiod_hours": ["photoperiod_hours", "photoperiod", "day_length"],
 }
+
+_ALIAS_DATA: Dict[str, list[str]] = load_dataset(ALIAS_DATA_FILE)
+ENV_ALIASES = {
+    key: list(map(str, aliases))
+    for key, aliases in (
+        _ALIAS_DATA.items() if isinstance(_ALIAS_DATA, Mapping) else DEFAULT_ENV_ALIASES.items()
+    )
+}
+for key, defaults in DEFAULT_ENV_ALIASES.items():
+    ENV_ALIASES.setdefault(key, defaults)
 
 # reverse mapping for constant time alias lookups
 _ALIAS_MAP: Dict[str, str] = {
@@ -83,6 +89,12 @@ _ALIAS_MAP: Dict[str, str] = {
     for canonical, aliases in ENV_ALIASES.items()
     for alias in aliases
 }
+
+
+def get_environment_aliases() -> Dict[str, list[str]]:
+    """Return mapping of canonical environment keys to accepted aliases."""
+
+    return {k: list(v) for k, v in ENV_ALIASES.items()}
 
 
 
@@ -363,6 +375,7 @@ __all__ = [
     "EnvironmentGuidelines",
     "StressFlags",
     "WaterQualityInfo",
+    "get_environment_aliases",
     "normalize_environment_readings",
     "classify_value_range",
     "compare_environment",
