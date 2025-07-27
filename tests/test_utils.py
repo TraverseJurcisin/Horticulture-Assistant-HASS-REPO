@@ -88,3 +88,17 @@ def test_load_stage_dataset_value():
         "soil_moisture_guidelines.json", "citrus", "missing"
     ) == [30, 50]
 
+
+def test_load_datasets(monkeypatch, tmp_path):
+    base = tmp_path / "data"
+    base.mkdir()
+    (base / "one.json").write_text('{"a": 1}')
+    (base / "two.json").write_text('{"b": 2}')
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
+    clear_dataset_cache()
+    import importlib
+    import plant_engine.utils as utils
+    importlib.reload(utils)
+    data = utils.load_datasets("one.json", "two.json")
+    assert data == {"one.json": {"a": 1}, "two.json": {"b": 2}}
+

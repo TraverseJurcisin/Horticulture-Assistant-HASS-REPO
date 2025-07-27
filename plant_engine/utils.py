@@ -17,6 +17,7 @@ __all__ = [
     "save_json",
     "load_data",
     "load_dataset",
+    "load_datasets",
     "lazy_dataset",
     "clear_dataset_cache",
     "dataset_paths",
@@ -258,6 +259,20 @@ def lazy_dataset(filename: str):
         return load_dataset(filename)
 
     return _loader
+
+
+@lru_cache(maxsize=None)
+def load_datasets(*filenames: str) -> Dict[str, Dict[str, Any]]:
+    """Return multiple datasets keyed by filename.
+
+    Each file is loaded via :func:`load_dataset` and the results are cached to
+    minimize disk access when called repeatedly.
+    """
+
+    data: Dict[str, Dict[str, Any]] = {}
+    for name in filenames:
+        data[name] = load_dataset(name)
+    return data
 
 
 def clear_dataset_cache() -> None:
