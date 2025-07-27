@@ -54,16 +54,14 @@ class DatasetCatalog:
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
         """Return relative paths of available dataset files."""
-        found: dict[str, None] = {}
-        for base in self._iter_paths():
-            for path in base.rglob("*"):
-                if path.suffix not in {".json", ".yaml", ".yml"}:
-                    continue
-                if path.name == "dataset_catalog.json":
-                    continue
-                rel = path.relative_to(base).as_posix()
-                found[rel] = None
-        return sorted(found.keys())
+        exts = {".json", ".yaml", ".yml"}
+        found = {
+            p.relative_to(base).as_posix()
+            for base in self._iter_paths()
+            for p in base.rglob("*")
+            if p.suffix in exts and p.name != "dataset_catalog.json"
+        }
+        return sorted(found)
 
     @lru_cache(maxsize=None)
     def _load_catalog(self) -> Dict[str, str]:
