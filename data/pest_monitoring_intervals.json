@@ -14,5 +14,10 @@
     "seedling": 7,
     "fruiting": 3,
     "optimal": 5
+  },
+  "spinach": {
+    "vegetative": 5,
+    "harvest": 3,
+    "optimal": 4
   }
 }

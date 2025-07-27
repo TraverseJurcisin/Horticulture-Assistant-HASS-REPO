@@ -12,6 +12,7 @@ from plant_engine.pest_monitor import (
     next_monitor_date,
     generate_monitoring_schedule,
     risk_adjusted_monitor_interval,
+    summarize_pest_management,
 )
 
 
@@ -115,4 +116,20 @@ def test_risk_adjusted_monitor_interval_low():
     env = {"temperature": 10, "humidity": 55}
     interval = risk_adjusted_monitor_interval("citrus", "vegetative", env)
     assert interval == 5
+
+
+def test_summarize_pest_management():
+    obs = {"aphids": 6}
+    env = {"temperature": 26, "humidity": 80}
+    last = date(2023, 1, 1)
+    summary = summarize_pest_management(
+        "citrus",
+        "vegetative",
+        obs,
+        environment=env,
+        last_date=last,
+    )
+    assert summary["severity"]["aphids"] in {"moderate", "severe"}
+    assert summary["risk"]["aphids"] == "high"
+    assert "next_monitor_date" in summary
 
