@@ -678,6 +678,42 @@ def estimate_deficiency_correction_cost(
     return round(total, 2)
 
 
+def recommend_fertigation_mix(
+    plant_type: str, stage: str, volume_l: float
+) -> Dict[str, float]:
+    """Return fertilizer grams for ``volume_l`` solution using cheapest products.
+
+    The nutrient guidelines for ``plant_type`` and ``stage`` are loaded via
+    :mod:`plant_engine.nutrient_manager`. For each nutrient a priced fertilizer
+    product is selected using :func:`get_cheapest_product`. The amount of each
+    product required to hit the guideline ppm is calculated with
+    :func:`calculate_mass_for_target_ppm`. Nutrients lacking a priced source are
+    skipped.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    targets = nutrient_manager.get_recommended_levels(plant_type, stage)
+    if not targets:
+        return {}
+
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        if ppm <= 0:
+            continue
+        try:
+            fert_id, _ = get_cheapest_product(nutrient)
+        except KeyError:
+            # No priced product provides this nutrient
+            continue
+
+        grams = calculate_mass_for_target_ppm(fert_id, nutrient, ppm, volume_l)
+        schedule[fert_id] = round(schedule.get(fert_id, 0.0) + grams, 3)
+
+    return schedule
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -691,6 +727,7 @@ __all__ = [
     "estimate_cost_breakdown",
     "get_cheapest_product",
     "estimate_deficiency_correction_cost",
+    "recommend_fertigation_mix",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",
