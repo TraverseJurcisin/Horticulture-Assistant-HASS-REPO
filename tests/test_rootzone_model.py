@@ -1,3 +1,4 @@
+import json
 from plant_engine.rootzone_model import (
     estimate_rootzone_depth,
     get_default_root_depth,
@@ -17,6 +18,20 @@ def test_estimate_rootzone_depth():
     growth = {"vgi_total": 100}
     depth = estimate_rootzone_depth(profile, growth)
     assert 28 < depth <= 30
+
+
+def test_estimate_rootzone_depth_custom_params(monkeypatch):
+    import plant_engine.rootzone_model as rz
+    monkeypatch.setattr(
+        rz,
+        "_GROWTH_PARAMS",
+        {"tomato": {"midpoint": 70, "k": 0.05}},
+        raising=False,
+    )
+
+    profile = {"plant_type": "tomato"}
+    depth = rz.estimate_rootzone_depth(profile, {"vgi_total": 100})
+    assert 48 < depth < 50
 
 
 def test_estimate_water_capacity():

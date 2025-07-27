@@ -13,14 +13,17 @@ DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 SOIL_DATA_FILE = "soil_texture_parameters.json"
 ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
 INFILTRATION_FILE = "soil_infiltration_rates.json"
+GROWTH_PARAM_FILE = "root_growth_parameters.json"
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
 _ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
 _INFILTRATION_DATA: Dict[str, float] = load_dataset(INFILTRATION_FILE)
+_GROWTH_PARAMS: Dict[str, Mapping[str, float]] = load_dataset(GROWTH_PARAM_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
+    "get_growth_curve_params",
     "get_default_root_depth",
     "estimate_water_capacity",
     "calculate_remaining_water",
@@ -58,19 +61,33 @@ def get_default_root_depth(plant_type: str) -> float:
         return 30.0
 
 
+def get_growth_curve_params(plant_type: str) -> tuple[float, float]:
+    """Return logistic growth parameters ``(midpoint, k)`` for a plant type."""
+
+    data = _GROWTH_PARAMS.get(normalize_key(plant_type)) or {}
+    try:
+        midpoint = float(data.get("midpoint", _GROWTH_PARAMS.get("default", {}).get("midpoint", 60)))
+    except (TypeError, ValueError):
+        midpoint = 60.0
+    try:
+        k = float(data.get("k", _GROWTH_PARAMS.get("default", {}).get("k", 0.08)))
+    except (TypeError, ValueError):
+        k = 0.08
+    return midpoint, k
+
+
 def estimate_rootzone_depth(
     plant_profile: Mapping[str, float],
     growth: Mapping[str, float],
 ) -> float:
     """Estimate root depth (cm) using a logistic growth curve."""
+    plant_type = plant_profile.get("plant_type", "")
     max_depth_cm = plant_profile.get("max_root_depth_cm")
     if max_depth_cm is None:
-        plant_type = plant_profile.get("plant_type", "")
         max_depth_cm = get_default_root_depth(plant_type)
-    growth_index = growth.get("vgi_total", 0)
 
-    midpoint = 60
-    k = 0.08
+    growth_index = growth.get("vgi_total", 0)
+    midpoint, k = get_growth_curve_params(plant_type)
 
     depth = max_depth_cm / (1 + math.exp(-k * (growth_index - midpoint)))
     return round(depth, 2)
