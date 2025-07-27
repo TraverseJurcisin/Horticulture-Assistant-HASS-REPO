@@ -8,10 +8,12 @@ from .utils import load_dataset, normalize_key
 
 HVAC_FILE = "hvac_energy_coefficients.json"
 RATE_FILE = "electricity_rates.json"
+LIGHT_EFF_FILE = "light_efficiency.json"
 
 # Cache datasets via load_dataset
 _HVAC_DATA: Dict[str, Dict[str, float]] = load_dataset(HVAC_FILE)
 _RATES: Dict[str, float] = load_dataset(RATE_FILE)
+_LIGHT_EFF: Dict[str, Dict[str, float]] = load_dataset(LIGHT_EFF_FILE)
 
 __all__ = [
     "get_energy_coefficient",
@@ -20,6 +22,8 @@ __all__ = [
     "get_electricity_rate",
     "estimate_lighting_energy",
     "estimate_lighting_cost",
+    "get_light_efficiency",
+    "estimate_dli_from_power",
 ]
 
 
@@ -95,3 +99,30 @@ def estimate_hvac_cost(
     energy = estimate_hvac_energy(current_temp_c, target_temp_c, hours, system)
     rate = get_electricity_rate(region)
     return round(energy * rate, 2)
+
+
+@lru_cache(maxsize=None)
+def get_light_efficiency(fixture: str) -> float:
+    """Return µmol per joule efficiency for a lighting ``fixture``."""
+
+    entry = _LIGHT_EFF.get(normalize_key(fixture), _LIGHT_EFF.get("default", {}))
+    try:
+        return float(entry.get("umol_per_j", 0.0))
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def estimate_dli_from_power(
+    power_watts: float,
+    hours: float,
+    fixture: str,
+    area_m2: float = 1.0,
+) -> float:
+    """Return estimated DLI for ``fixture`` running at ``power_watts``."""
+
+    if power_watts <= 0 or hours <= 0 or area_m2 <= 0:
+        raise ValueError("power_watts, hours and area_m2 must be positive")
+    eff = get_light_efficiency(fixture)
+    umol = power_watts * hours * 3600 * eff
+    mol = umol / 1_000_000
+    return round(mol / area_m2, 2)

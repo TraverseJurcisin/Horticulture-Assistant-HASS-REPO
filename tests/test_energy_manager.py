@@ -7,6 +7,8 @@ from plant_engine.energy_manager import (
     get_electricity_rate,
     estimate_lighting_energy,
     estimate_lighting_cost,
+    get_light_efficiency,
+    estimate_dli_from_power,
 )
 
 
@@ -49,3 +51,10 @@ def test_estimate_hvac_cost():
     cost = estimate_hvac_cost(18, 20, 12, "heating", region="california")
     expected_kwh = 0.5 * (2 * 12 / 24)
     assert cost == pytest.approx(expected_kwh * 0.18, 0.01)
+
+
+def test_light_efficiency_and_dli():
+    assert get_light_efficiency("led") == 2.5
+    dli = estimate_dli_from_power(200, 5, "led")
+    # 200W for 5h at 2.5 umol/J over 1 m^2 -> 9 mol
+    assert dli == pytest.approx(9.0, 0.1)

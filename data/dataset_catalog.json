@@ -43,6 +43,7 @@
   "fertilizer_purity.json": "Nutrient purity factors for fertilizer products.",
   "fertilizer_solubility.json": "Solubility limits for common fertilizers.",
   "light_spectrum_guidelines.json": "Recommended red/blue light ratios for growth stages.",
+  "light_efficiency.json": "Photon efficiency (\u03bcmol/J) for common lighting types.",
   "foliar_feed_guidelines.json": "Target ppm for foliar nutrient applications.",
   "foliar_feed_intervals.json": "Recommended days between foliar feed applications.",
   "foliar_spray_volume.json": "Recommended foliar spray volume per plant in mL.",
