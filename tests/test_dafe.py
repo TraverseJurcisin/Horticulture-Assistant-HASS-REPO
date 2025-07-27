@@ -15,9 +15,9 @@ def test_generate_pulse_schedule():
 
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
-    wc = species["ideal_wc_plateau"] - 0.01
+    wc = species.ideal_wc_plateau - 0.01
     D_eff = calculate_effective_diffusion(
-        1e-5, wc, media["porosity"], media["tortuosity"]
+        1e-5, wc, media.porosity, media.tortuosity
     )
     base_volume = int(30 + D_eff * 100000)
 
@@ -52,9 +52,9 @@ def test_custom_pulse_window():
 
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
-    wc = species["ideal_wc_plateau"] - 0.01
+    wc = species.ideal_wc_plateau - 0.01
     D_eff = calculate_effective_diffusion(
-        1e-5, wc, media["porosity"], media["tortuosity"]
+        1e-5, wc, media.porosity, media.tortuosity
     )
 
     schedule = generate_pulse_schedule(

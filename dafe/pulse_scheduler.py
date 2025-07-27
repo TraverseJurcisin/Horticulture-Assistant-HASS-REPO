@@ -7,14 +7,16 @@ from datetime import datetime, timedelta
 __all__ = ["generate_pulse_schedule"]
 
 from .diffusion_model import estimate_diffusion_mass
+from .species_profiles import SpeciesProfile
+from .media_models import MediaProfile
 
 
 def generate_pulse_schedule(
     wc: float,
     ec: float,
     D_eff: float,
-    species_profile: dict,
-    media_profile: dict,
+    species_profile: SpeciesProfile,
+    media_profile: MediaProfile,
     *,
     nutrient_params: dict | None = None,
     start_hour: int = 10,
@@ -28,8 +30,10 @@ def generate_pulse_schedule(
         Current water content and EC values.
     D_eff : float
         Effective diffusion coefficient.
-    species_profile, media_profile : dict
-        Definitions of plant and substrate characteristics.
+    species_profile : SpeciesProfile
+        Plant characteristics used to adjust irrigation volumes.
+    media_profile : MediaProfile
+        Physical properties of the growth media.
     nutrient_params : dict | None, optional
         Additional parameters for :func:`estimate_diffusion_mass`.
     start_hour : int, optional
@@ -55,10 +59,10 @@ def generate_pulse_schedule(
 
     for offset in range(hours):
         hour = start_hour + offset
-        if wc < species_profile["ideal_wc_plateau"]:
+        if wc < species_profile.ideal_wc_plateau:
             pulse_volume = int(30 + D_eff * 100000)
-            ec_low = species_profile.get("ec_low", 1.5)
-            ec_high = species_profile.get("ec_high", 2.5)
+            ec_low = species_profile.ec_low
+            ec_high = species_profile.ec_high
             if ec > ec_high:
                 pulse_volume = int(pulse_volume * 0.8)
             elif ec < ec_low:
@@ -66,8 +70,8 @@ def generate_pulse_schedule(
             mass_mg = estimate_diffusion_mass(
                 D_base,
                 wc,
-                media_profile["porosity"],
-                media_profile["tortuosity"],
+                media_profile.porosity,
+                media_profile.tortuosity,
                 conc_high,
                 conc_low,
                 distance_cm,
