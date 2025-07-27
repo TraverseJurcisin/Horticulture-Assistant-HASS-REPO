@@ -137,3 +137,10 @@ def test_build_pest_management_plan_includes_organic():
 def test_build_pest_management_plan_includes_scientific_name():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert plan["aphids"]["scientific_name"] == "Aphidoidea"
+
+
+def test_calculate_release_quantities():
+    from plant_engine.pest_manager import calculate_release_quantities
+
+    qty = calculate_release_quantities(["aphids"], 10)
+    assert qty["ladybugs"] == 50

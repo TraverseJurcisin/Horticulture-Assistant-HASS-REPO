@@ -42,15 +42,11 @@ def _load(obj):
     """Return dataset contents regardless of lazy or eager storage."""
 
     return obj() if callable(obj) else obj
+
+
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
-
-
-def _load(data):
-    """Return dataset contents supporting direct dict overrides."""
-
-    return data() if callable(data) else data
 
 __all__ = [
     "list_supported_plants",

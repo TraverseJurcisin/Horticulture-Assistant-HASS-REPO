@@ -114,6 +114,22 @@ def recommend_release_rates(pests: Iterable[str]) -> Dict[str, Dict[str, float]]
     return rec
 
 
+def calculate_release_quantities(
+    pests: Iterable[str], area_m2: float
+) -> Dict[str, float]:
+    """Return total beneficial insect counts for ``area_m2`` of crop."""
+
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+
+    rates = recommend_release_rates(pests)
+    totals: Dict[str, float] = {}
+    for pest_rates in rates.values():
+        for insect, rate in pest_rates.items():
+            totals[insect] = round(totals.get(insect, 0.0) + rate * area_m2, 2)
+    return totals
+
+
 def get_organic_controls(pest: str) -> List[str]:
     """Return organic control options for ``pest``."""
 
@@ -211,6 +227,7 @@ __all__ = [
     "recommend_beneficials",
     "get_beneficial_release_rate",
     "recommend_release_rates",
+    "calculate_release_quantities",
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_prevention",
