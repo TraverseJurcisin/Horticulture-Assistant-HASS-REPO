@@ -94,6 +94,7 @@
   "soil_nutrient_guidelines.json": "Target soil nutrient levels by crop.",
   "soil_texture_parameters.json": "Typical sand, silt and clay percentages.",
   "soil_infiltration_rates.json": "Infiltration rates (mm/hr) by soil texture.",
+  "soil_water_capacity.json": "Water holding capacity (mm per 30 cm depth) by soil texture.",
   "soil_moisture_guidelines.json": "Recommended soil moisture percentages for common crops.",
   "soil_temperature_guidelines.json": "Recommended soil temperature ranges for germination and growth stages.",
   "solution_temperature_guidelines.json": "Recommended nutrient solution temperature ranges.",

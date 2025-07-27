@@ -1684,19 +1684,18 @@ def calculate_vpd_series(
     """Return average VPD from paired temperature and humidity readings.
 
     The iterables are consumed lazily so large data sets do not require
-    additional memory. An empty input yields ``0.0``.
+    additional memory. A ``ValueError`` is raised if the inputs differ in
+    length. An empty input yields ``0.0``.
     """
 
-    temp_iter = iter(temp_values)
-    hum_iter = iter(humidity_values)
+    from itertools import zip_longest
 
+    sentinel = object()
     total = 0.0
     count = 0
 
-    for t in temp_iter:
-        try:
-            h = next(hum_iter)
-        except StopIteration:
+    for t, h in zip_longest(temp_values, humidity_values, fillvalue=sentinel):
+        if sentinel in (t, h):
             raise ValueError(
                 "temperature and humidity readings must have the same length"
             )
@@ -1704,18 +1703,7 @@ def calculate_vpd_series(
         total += calculate_vpd(float(t), float(h))
         count += 1
 
-    try:
-        next(hum_iter)
-        raise ValueError(
-            "temperature and humidity readings must have the same length"
-        )
-    except StopIteration:
-        pass
-
-    if count == 0:
-        return 0.0
-
-    return round(total / count, 3)
+    return round(total / count, 3) if count else 0.0
 
 
 def get_target_dli(
