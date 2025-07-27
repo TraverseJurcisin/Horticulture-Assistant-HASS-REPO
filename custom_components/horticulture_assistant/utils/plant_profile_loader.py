@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 from functools import lru_cache
 from typing import Any, Mapping, Iterable
+from collections.abc import Iterable as _Iterable
 
 from .json_io import load_json, save_json
 
@@ -28,20 +29,22 @@ REQUIRED_STAGE_KEY = "stage_duration"
 
 
 def parse_basic_yaml(content: str) -> dict:
-    """Return a naive YAML parser used when PyYAML is unavailable.
+    """Return a minimal YAML parser used when PyYAML is unavailable.
 
-    The implementation supports the extremely small subset of YAML used in
-    unit tests: nested dictionaries through indentation and single line lists.
-    Values that look numeric are converted to ``int`` or ``float``.
+    The helper understands the very small subset of YAML used in tests: nested
+    dictionaries via indentation, single line lists, and simple scalars. Numeric
+    and boolean values are converted to native Python types. Comment lines are
+    ignored to provide a slightly more forgiving syntax.
     """
 
     parsed: dict[str, object] = {}
     stack = [parsed]
     indents = [0]
-    for line in content.splitlines():
-        if not line.strip():
+    for raw in content.splitlines():
+        line = raw.split("#", 1)[0].rstrip()
+        if not line:
             continue
-        indent = len(line) - len(line.lstrip())
+        indent = len(raw) - len(raw.lstrip())
         key, _, value = line.strip().partition(":")
         while indent <= indents[-1] and len(stack) > 1:
             stack.pop()
@@ -55,9 +58,15 @@ def parse_basic_yaml(content: str) -> dict:
         val = value.strip()
         if val.startswith("[") and val.endswith("]"):
             items = [i.strip() for i in val[1:-1].split(",") if i.strip()]
-            val = [float(i) if i.replace(".", "", 1).isdigit() else i for i in items]
+            val = [
+                (float(i) if i.replace(".", "", 1).isdigit() else i)
+                for i in items
+            ]
         else:
-            if val.replace(".", "", 1).isdigit():
+            lower = val.lower()
+            if lower in {"true", "false"}:
+                val = lower == "true"
+            elif val.replace(".", "", 1).isdigit():
                 val = float(val) if "." in val else int(val)
         stack[-1][key] = val
     return parsed
@@ -294,18 +303,21 @@ def _get_sensor_container(profile: Mapping[str, Any]) -> dict:
 
 
 def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
-    """Return ``sensors`` with all values converted to lists."""
+    """Return ``sensors`` with all values coerced to lists.
 
-    normalized: dict[str, list] = {}
-    for key, val in sensors.items():
+    Strings become single item lists while non-iterable values result in an
+    empty list. ``bytes`` objects are treated as non-iterable to avoid
+    unintentionally expanding them into integers.
+    """
+
+    def _to_list(val: Any) -> list:
         if isinstance(val, str):
-            normalized[key] = [val]
-        else:
-            try:
-                normalized[key] = list(val)
-            except TypeError:
-                normalized[key] = []
-    return normalized
+            return [val]
+        if isinstance(val, _Iterable) and not isinstance(val, (str, bytes)):
+            return list(val)
+        return []
+
+    return {key: _to_list(val) for key, val in sensors.items()}
 
 
 def update_profile_sensors(

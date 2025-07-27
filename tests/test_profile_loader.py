@@ -46,6 +46,19 @@ def test_parse_basic_yaml():
     assert result == {"a": 1, "b": {"c": 2, "d": [3, 4]}}
 
 
+def test_parse_basic_yaml_comments_booleans():
+    content = """# initial comment
+flag: true
+list: [1, 2] # trailing comment
+nested:
+  val: false
+"""
+    result = loader.parse_basic_yaml(content)
+    assert result["flag"] is True
+    assert result["list"] == [1, 2]
+    assert result["nested"]["val"] is False
+
+
 def test_load_profile_by_id_custom_dir(tmp_path):
     plants = tmp_path / "plants"
     plants.mkdir()
@@ -157,3 +170,23 @@ def test_profile_exists_and_delete(tmp_path):
     assert loader.profile_exists("p1", plants)
     assert loader.delete_profile_by_id("p1", plants)
     assert not loader.profile_exists("p1", plants)
+
+
+def test_normalize_sensor_values():
+    data = {
+        "a": "one",
+        "b": [1, 2],
+        "c": ("x", "y"),
+        "d": {"k"},
+        "e": b"foo",
+        "f": None,
+        "g": 5,
+    }
+    result = loader._normalize_sensor_values(data)
+    assert result["a"] == ["one"]
+    assert result["b"] == [1, 2]
+    assert result["c"] == ["x", "y"]
+    assert sorted(result["d"]) == ["k"]
+    assert result["e"] == []
+    assert result["f"] == []
+    assert result["g"] == []
