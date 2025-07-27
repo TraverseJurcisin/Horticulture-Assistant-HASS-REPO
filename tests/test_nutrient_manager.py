@@ -247,3 +247,15 @@ def test_calculate_all_deficiencies_with_synergy():
     deficits = calculate_all_deficiencies_with_synergy(current, "tomato", "fruiting")
     assert deficits["P"] == 6.0
     assert round(deficits["B"], 2) == 0.03
+
+
+def test_calculate_synergy_deficiency_index():
+    from plant_engine.nutrient_manager import (
+        get_synergy_adjusted_levels,
+        calculate_synergy_deficiency_index,
+    )
+
+    targets = get_synergy_adjusted_levels("tomato", "fruiting")
+    zero = {n: 0 for n in targets}
+    assert calculate_synergy_deficiency_index(zero, "tomato", "fruiting") >= 99
+    assert calculate_synergy_deficiency_index(targets, "tomato", "fruiting") == 0.0

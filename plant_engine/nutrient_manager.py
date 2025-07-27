@@ -57,6 +57,7 @@ __all__ = [
     "calculate_cycle_deficiency_index",
     "get_synergy_adjusted_levels",
     "calculate_all_deficiencies_with_synergy",
+    "calculate_synergy_deficiency_index",
 ]
 
 
@@ -254,20 +255,10 @@ def score_nutrient_series(
     return round(sum(scores) / len(scores), 1)
 
 
-def calculate_deficiency_index(
-    current_levels: Mapping[str, float], plant_type: str, stage: str
+def _deficiency_index_for_targets(
+    current_levels: Mapping[str, float], targets: Mapping[str, float]
 ) -> float:
-    """Return a weighted 0-100 index of overall nutrient deficiency severity.
-
-    A value of ``0`` indicates all nutrients meet or exceed the recommended
-    levels while ``100`` means every nutrient is completely absent. Nutrient
-    importance weights from :data:`nutrient_weights.json` are applied so more
-    critical elements have a greater influence on the index.
-    """
-
-    targets = get_all_recommended_levels(plant_type, stage)
-    if not targets:
-        return 0.0
+    """Return deficiency index for ``current_levels`` relative to ``targets``."""
 
     total_weight = 0.0
     deficit_score = 0.0
@@ -287,6 +278,24 @@ def calculate_deficiency_index(
         return 0.0
 
     return round((deficit_score / total_weight) * 100, 1)
+
+
+def calculate_deficiency_index(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> float:
+    """Return a weighted 0-100 index of overall nutrient deficiency severity.
+
+    A value of ``0`` indicates all nutrients meet or exceed the recommended
+    levels while ``100`` means every nutrient is completely absent. Nutrient
+    importance weights from :data:`nutrient_weights.json` are applied so more
+    critical elements have a greater influence on the index.
+    """
+
+    targets = get_all_recommended_levels(plant_type, stage)
+    if not targets:
+        return 0.0
+
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
@@ -570,5 +579,16 @@ def calculate_all_deficiencies_with_synergy(
         if diff > 0:
             deficits[nutrient] = diff
     return deficits
+
+
+def calculate_synergy_deficiency_index(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> float:
+    """Return deficiency index using synergy-adjusted nutrient targets."""
+
+    targets = get_synergy_adjusted_levels(plant_type, stage)
+    if not targets:
+        return 0.0
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
