@@ -37,6 +37,7 @@ MOISTURE_DATA_FILE = "soil_moisture_guidelines.json"
 SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
+SOIL_PH_DATA_FILE = "soil_ph_guidelines.json"
 FROST_DATES_FILE = "frost_dates.json"
 ALIAS_DATA_FILE = "environment_aliases.json"
 
@@ -348,6 +349,7 @@ __all__ = [
     "get_target_soil_moisture",
     "get_target_soil_temperature",
     "get_target_soil_ec",
+    "get_target_soil_ph",
     "get_target_leaf_temperature",
     "calculate_co2_injection",
     "recommend_co2_injection",
@@ -372,6 +374,7 @@ __all__ = [
     "evaluate_moisture_stress",
     "evaluate_soil_temperature_stress",
     "evaluate_soil_ec_stress",
+    "evaluate_soil_ph_stress",
     "evaluate_leaf_temperature_stress",
     "get_humidity_action",
     "recommend_humidity_action",
@@ -438,6 +441,7 @@ _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
 _LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
 _FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
+_SOIL_PH_DATA: Dict[str, Any] = load_dataset(SOIL_PH_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -681,6 +685,7 @@ class EnvironmentOptimization:
     humidity_stress: str | None = None
     moisture_stress: str | None = None
     ph_stress: str | None = None
+    soil_ph_stress: str | None = None
     soil_ec_stress: str | None = None
     quality: str | None = None
     score: float | None = None
@@ -712,6 +717,7 @@ class EnvironmentOptimization:
             "humidity_stress": self.humidity_stress,
             "moisture_stress": self.moisture_stress,
             "ph_stress": self.ph_stress,
+            "soil_ph_stress": self.soil_ph_stress,
             "soil_ec_stress": self.soil_ec_stress,
             "quality": self.quality,
             "score": self.score,
@@ -730,6 +736,7 @@ class StressFlags:
     humidity: str | None
     moisture: str | None
     ph: str | None
+    soil_ph: str | None = None
     soil_temp: str | None = None
     soil_ec: str | None = None
     leaf_temp: str | None = None
@@ -1621,6 +1628,17 @@ def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple 
     return _lookup_range(_SOIL_EC_DATA, plant_type, stage)
 
 
+def get_target_soil_ph(plant_type: str) -> RangeTuple | None:
+    """Return optimal soil pH range for ``plant_type``."""
+    rng = _SOIL_PH_DATA.get(normalize_key(plant_type))
+    if isinstance(rng, (list, tuple)) and len(rng) == 2:
+        try:
+            return float(rng[0]), float(rng[1])
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
 def get_target_leaf_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended leaf temperature range for a plant stage."""
 
@@ -1663,6 +1681,24 @@ def evaluate_soil_ec_stress(
     if soil_ec_ds_m < low:
         return "low"
     if soil_ec_ds_m > high:
+        return "high"
+    return None
+
+
+def evaluate_soil_ph_stress(soil_ph: float | None, plant_type: str) -> str | None:
+    """Return 'low' or 'high' if soil pH is outside the recommended range."""
+
+    if soil_ph is None:
+        return None
+
+    target = get_target_soil_ph(plant_type)
+    if not target:
+        return None
+
+    low, high = target
+    if soil_ph < low:
+        return "low"
+    if soil_ph > high:
         return "high"
     return None
 
@@ -1719,6 +1755,7 @@ def evaluate_stress_conditions(
     stage: str | None = None,
     soil_temp_c: float | None = None,
     soil_ec_ds_m: float | None = None,
+    soil_ph: float | None = None,
 ) -> StressFlags:
     """Return consolidated stress flags for current conditions."""
 
@@ -1733,6 +1770,7 @@ def evaluate_stress_conditions(
         ph=evaluate_ph_stress(ph, plant_type, stage),
         soil_temp=evaluate_soil_temperature_stress(soil_temp_c, plant_type, stage),
         soil_ec=evaluate_soil_ec_stress(soil_ec_ds_m, plant_type, stage),
+        soil_ph=evaluate_soil_ph_stress(soil_ph, plant_type),
     )
 
 
@@ -2098,6 +2136,7 @@ def optimize_environment(
         stage,
         readings.get("soil_temp_c"),
         readings.get("ec"),
+        readings.get("soil_ph"),
     )
 
     quality = classify_environment_quality(readings, plant_type, stage)
@@ -2127,6 +2166,7 @@ def optimize_environment(
         humidity_stress=stress.humidity,
         moisture_stress=stress.moisture,
         ph_stress=stress.ph,
+        soil_ph_stress=stress.soil_ph,
         soil_ec_stress=stress.soil_ec,
         quality=quality,
         score=score,
@@ -2183,6 +2223,7 @@ def summarize_environment(
         stage,
         readings.get("soil_temp_c"),
         readings.get("ec"),
+        readings.get("soil_ph"),
     )
 
     water_info = None
