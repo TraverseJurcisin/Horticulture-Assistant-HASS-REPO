@@ -48,6 +48,7 @@ __all__ = [
     "calculate_deficiencies_with_ph",
     "get_all_ph_adjusted_levels",
     "calculate_all_deficiencies_with_ph",
+    "calculate_cycle_deficiency_index",
 ]
 
 
@@ -469,5 +470,17 @@ def apply_tag_modifiers(
             except (TypeError, ValueError):
                 continue
     return adjusted
+
+
+def calculate_cycle_deficiency_index(
+    stage_levels: Mapping[str, Mapping[str, float]],
+    plant_type: str,
+) -> Dict[str, float]:
+    """Return deficiency index for each growth stage in a cycle."""
+
+    results: Dict[str, float] = {}
+    for stage, levels in stage_levels.items():
+        results[stage] = calculate_deficiency_index(levels, plant_type, stage)
+    return results
 
 
