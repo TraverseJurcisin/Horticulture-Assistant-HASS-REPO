@@ -1,5 +1,9 @@
 import math
-from plant_engine.et_model import calculate_et0, calculate_eta
+from plant_engine.et_model import (
+    calculate_et0,
+    calculate_eta,
+    estimate_stage_et,
+)
 
 
 def test_calculate_et0():
@@ -9,3 +13,8 @@ def test_calculate_et0():
 
 def test_calculate_eta():
     assert calculate_eta(8.54, 1.2) == 10.25
+
+
+def test_estimate_stage_et():
+    et = estimate_stage_et("tomato", "vegetative", 7)
+    assert math.isclose(et, 6.83, abs_tol=0.01)
