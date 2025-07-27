@@ -10,10 +10,13 @@ from plant_engine.environment_manager import generate_environment_alerts
 
 @dataclass
 class FertilizerRecommendation:
+    """Recommended fertilizer application for a nutrient deficit."""
+
     product_name: str
     dose_rate: float
     dose_unit: str
     reason: str
+    severity: str | None = None
 
 
 @dataclass
@@ -138,8 +141,24 @@ class RecommendationEngine:
         return calculate_all_deficiencies(current, plant_type, stage)
 
     def _generate_fertilizer_recs(self, plant_id: str) -> List[FertilizerRecommendation]:
-        """Return fertilizer recommendations based on deficiencies."""
+        """Return fertilizer recommendations based on nutrient deficiencies."""
+
         deficits = self._calculate_nutrient_deficits(plant_id)
+        if not deficits:
+            return []
+
+        # Assess deficiency severity for additional context in recommendations
+        try:
+            from plant_engine.deficiency_manager import assess_deficiency_severity
+
+            severity_map = assess_deficiency_severity(
+                self.sensor_data.get(plant_id, {}),
+                self.plant_profiles[plant_id].get("plant_type", ""),
+                self.plant_profiles[plant_id].get("lifecycle_stage", ""),
+            )
+        except Exception:
+            severity_map = {}
+
         recommendations: List[FertilizerRecommendation] = []
         for nutrient, deficit in deficits.items():
             product = self._select_best_product(nutrient)
@@ -151,6 +170,7 @@ class RecommendationEngine:
                     dose_rate=deficit,
                     dose_unit="ppm",
                     reason=f"{nutrient} deficit",
+                    severity=severity_map.get(nutrient),
                 )
             )
         return recommendations
