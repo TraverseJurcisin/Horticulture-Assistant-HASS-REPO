@@ -12,6 +12,7 @@ from plant_engine.disease_monitor import (
     next_monitor_date,
     generate_monitoring_schedule,
     get_severity_action,
+    summarize_disease_management,
 )
 
 
@@ -98,4 +99,21 @@ def test_risk_adjusted_monitor_interval():
     env = {"humidity_pct": 80, "temp_c": 25}
     interval = risk_adjusted_monitor_interval("citrus", "fruiting", env)
     assert interval == 2
+
+
+def test_summarize_disease_management():
+    obs = {"citrus greening": 2}
+    env = {"humidity_pct": 85, "temp_c": 26}
+    last = date(2023, 1, 1)
+    summary = summarize_disease_management(
+        "citrus",
+        "fruiting",
+        obs,
+        environment=env,
+        last_date=last,
+    )
+    assert summary["severity"]["citrus_greening"] in {"moderate", "severe"}
+    assert summary["risk"]["greasy_spot"] in {"low", "moderate", "high"}
+    assert summary.get("risk_score") is not None
+    assert "next_monitor_date" in summary
 
