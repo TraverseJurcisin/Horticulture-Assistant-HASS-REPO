@@ -25,6 +25,7 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     config_path,
     plants_path,
     data_path,
+    ensure_data_dir,
 )
 from plant_engine.constants import get_stage_multiplier
 
@@ -217,8 +218,7 @@ def schedule_nutrients(
     tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
 
-    data_dir = data_path(hass)
-    os.makedirs(data_dir, exist_ok=True)
+    data_dir = ensure_data_dir(hass)
     path = os.path.join(data_dir, "nutrient_targets.json")
     existing = {}
     if os.path.exists(path):
