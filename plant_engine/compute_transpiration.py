@@ -3,8 +3,9 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from functools import lru_cache
-from typing import Dict, Mapping, Iterable
+from typing import Dict, Iterable, Mapping
 
+import numpy as np
 import pandas as pd
 
 from .utils import load_dataset, normalize_key
@@ -142,46 +143,35 @@ def compute_transpiration_series(
 ) -> Dict[str, float]:
     """Return weighted average transpiration metrics for ``env_series``.
 
-    Parameters
-    ----------
-    plant_profile : Mapping
-        Plant profile dictionary used for each reading.
-    env_series : Iterable[Mapping]
-        Sequence of environment readings.
-    weights : Iterable[float] | None, optional
-        Weights applied to each reading when averaging. If provided, the
-        length must match ``env_series``. Non-positive weights are ignored.
+    ``env_series`` is converted to a :class:`~pandas.DataFrame` and processed
+    in bulk for efficiency. When ``weights`` are provided they must match the
+    length of ``env_series``. Non‑positive weights are ignored in the final
+    average.
     """
 
-    env_list = list(env_series)
+    df = pd.DataFrame(list(env_series))
+    if df.empty:
+        return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
+
+    metrics = compute_transpiration_dataframe(plant_profile, df)
+
     if weights is None:
-        weight_list = [1.0] * len(env_list)
+        weights_arr = np.ones(len(df))
     else:
-        weight_list = list(weights)
-        if len(weight_list) != len(env_list):
+        weights_arr = np.asarray(list(weights), dtype=float)
+        if len(weights_arr) != len(df):
             raise ValueError("weights length must match env_series length")
 
-    total_w = 0.0
-    total_et0 = 0.0
-    total_eta = 0.0
-    total_ml = 0.0
-
-    for env, w in zip(env_list, weight_list):
-        if w <= 0:
-            continue
-        metrics = compute_transpiration(plant_profile, env)
-        total_et0 += metrics["et0_mm_day"] * w
-        total_eta += metrics["eta_mm_day"] * w
-        total_ml += metrics["transpiration_ml_day"] * w
-        total_w += w
-
+    weights_arr = np.where(weights_arr > 0, weights_arr, 0)
+    total_w = weights_arr.sum()
     if total_w == 0:
         return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
 
+    weighted = metrics.mul(weights_arr, axis=0).sum() / total_w
     return TranspirationMetrics(
-        round(total_et0 / total_w, 2),
-        round(total_eta / total_w, 2),
-        round(total_ml / total_w, 1),
+        round(float(weighted["et0_mm_day"]), 2),
+        round(float(weighted["eta_mm_day"]), 2),
+        round(float(weighted["transpiration_ml_day"]), 1),
     ).as_dict()
 
 
@@ -198,9 +188,69 @@ def compute_transpiration_dataframe(
     if not isinstance(env_df, pd.DataFrame):
         raise TypeError("env_df must be a pandas DataFrame")
 
-    metrics = [
-        compute_transpiration(plant_profile, row)
-        for row in env_df.to_dict(orient="records")
-    ]
-    return pd.DataFrame(metrics, index=env_df.index)
+    df = env_df.copy()
+    for key, default in DEFAULT_ENV.items():
+        if key not in df:
+            df[key] = default
+        else:
+            df[key] = df[key].fillna(default)
+
+    kc = plant_profile.get("kc")
+    if kc is None:
+        plant_type = plant_profile.get("plant_type")
+        stage = plant_profile.get("stage")
+        kc = lookup_crop_coefficient(plant_type or "", stage) if plant_type else 1.0
+
+    # Vectorised adjustment of the crop coefficient using the modifier dataset
+    humidity = _MODIFIERS.get("humidity", {})
+    kc_series = pd.Series(float(kc), index=df.index)
+    low_t = humidity.get("low_threshold")
+    if low_t is not None:
+        kc_series = np.where(df["rh_pct"] < low_t, kc_series * humidity.get("low_factor", 1.0), kc_series)
+    high_t = humidity.get("high_threshold")
+    if high_t is not None:
+        kc_series = np.where(df["rh_pct"] > high_t, kc_series * humidity.get("high_factor", 1.0), kc_series)
+
+    temp_mod = _MODIFIERS.get("temperature", {})
+    low_t = temp_mod.get("low_threshold")
+    if low_t is not None:
+        kc_series = np.where(df["temp_c"] < low_t, kc_series * temp_mod.get("low_factor", 1.0), kc_series)
+    high_t = temp_mod.get("high_threshold")
+    if high_t is not None:
+        kc_series = np.where(df["temp_c"] > high_t, kc_series * temp_mod.get("high_factor", 1.0), kc_series)
+
+    solar_rad_mj = df["par_w_m2"] * 0.0864
+    gamma = 0.665e-3 * (
+        101.3 * ((293 - 0.0065 * df.get("elevation_m", 200)) / 293) ** 5.26
+    )
+    es = 0.6108 * np.exp((17.27 * df["temp_c"]) / (df["temp_c"] + 237.3))
+    ea = es * (df["rh_pct"] / 100)
+    delta = 4098 * es / ((df["temp_c"] + 237.3) ** 2)
+    rn = 0.77 * solar_rad_mj
+    wind = df.get("wind_speed_m_s", 1.0)
+
+    et0 = (
+        (0.408 * delta * rn)
+        + (gamma * 900 * wind * (es - ea) / (df["temp_c"] + 273))
+    ) / (delta + gamma * (1 + 0.34 * wind))
+    et0 = et0.round(2)
+
+    eta = (et0 * kc_series).round(2)
+
+    canopy = plant_profile.get("canopy_m2")
+    if canopy is None:
+        canopy = estimate_canopy_area(
+            plant_profile.get("plant_type"), plant_profile.get("stage")
+        )
+
+    transp_ml = (eta * MM_TO_ML_PER_M2 * canopy).round(1)
+
+    return pd.DataFrame(
+        {
+            "et0_mm_day": et0,
+            "eta_mm_day": eta,
+            "transpiration_ml_day": transp_ml,
+        },
+        index=env_df.index,
+    )
 
