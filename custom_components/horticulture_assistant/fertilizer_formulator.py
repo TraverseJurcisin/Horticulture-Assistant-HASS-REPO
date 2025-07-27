@@ -678,6 +678,70 @@ def estimate_deficiency_correction_cost(
     return round(total, 2)
 
 
+def recommend_deficiency_correction_mix(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+) -> Dict[str, float]:
+    """Return fertilizer grams needed to correct nutrient deficiencies.
+
+    Each deficient nutrient is matched with the cheapest fertilizer product
+    containing it using :func:`get_cheapest_product`. The calculated grams are
+    for the provided solution volume ``volume_l``.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    deficits = nutrient_manager.calculate_all_deficiencies(
+        current_levels, plant_type, stage
+    )
+    schedule: Dict[str, float] = {}
+    for nutrient, deficit_ppm in deficits.items():
+        if deficit_ppm <= 0:
+            continue
+        try:
+            fert_id, _ = get_cheapest_product(nutrient)
+        except KeyError:
+            continue
+        grams = calculate_mass_for_target_ppm(
+            fert_id, nutrient, deficit_ppm, volume_l
+        )
+        schedule[fert_id] = round(schedule.get(fert_id, 0.0) + grams, 3)
+
+    return schedule
+
+
+def recommend_deficiency_correction_plan(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    num_plants: int = 1,
+) -> Dict[str, object]:
+    """Return mix, ppm and cost info for correcting nutrient deficiencies."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+
+    mix = recommend_deficiency_correction_mix(
+        current_levels, plant_type, stage, volume_l
+    )
+    cost = estimate_mix_cost(mix) if mix else 0.0
+    ppm = calculate_mix_ppm(mix, volume_l) if mix else {}
+
+    return {
+        "mix": mix,
+        "ppm": ppm,
+        "cost_total": cost,
+        "cost_per_plant": round(cost / num_plants, 4),
+    }
+
+
 def recommend_fertigation_mix(
     plant_type: str, stage: str, volume_l: float
 ) -> Dict[str, float]:
@@ -830,6 +894,8 @@ __all__ = [
     "estimate_cost_breakdown",
     "get_cheapest_product",
     "estimate_deficiency_correction_cost",
+    "recommend_deficiency_correction_mix",
+    "recommend_deficiency_correction_plan",
     "recommend_fertigation_mix",
     "recommend_fertigation_plan",
     "recommend_advanced_fertigation_plan",
