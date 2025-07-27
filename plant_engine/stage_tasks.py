@@ -16,6 +16,7 @@ __all__ = [
     "list_supported_plants",
     "get_stage_tasks",
     "generate_task_schedule",
+    "generate_cycle_task_plan",
     "TaskScheduleEntry",
 ]
 
@@ -65,4 +66,31 @@ def generate_task_schedule(
     while current < start + timedelta(days=days):
         schedule.append(TaskScheduleEntry(current, tasks))
         current += timedelta(days=interval)
+    return schedule
+
+
+def generate_cycle_task_plan(
+    plant_type: str, start: date, interval: int = 7
+) -> List[TaskScheduleEntry]:
+    """Return tasks for the entire growth cycle starting at ``start``.
+
+    Stage durations from :mod:`growth_stage` are used to repeat stage tasks
+    every ``interval`` days until the next stage begins.
+    """
+
+    from . import growth_stage
+
+    schedule: List[TaskScheduleEntry] = []
+    current = start
+    for stage in growth_stage.list_growth_stages(plant_type):
+        days = growth_stage.get_stage_duration(plant_type, stage)
+        if not days or days <= 0:
+            continue
+        stage_tasks = get_stage_tasks(plant_type, stage)
+        offset = 0
+        while offset < days:
+            schedule.append(TaskScheduleEntry(current + timedelta(days=offset), stage_tasks))
+            offset += interval
+        current += timedelta(days=days)
+
     return schedule
