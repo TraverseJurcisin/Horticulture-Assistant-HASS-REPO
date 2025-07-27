@@ -8,9 +8,12 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable
 
+import yaml
+
 __all__ = [
     "load_json",
     "save_json",
+    "load_data",
     "load_dataset",
     "lazy_dataset",
     "clear_dataset_cache",
@@ -41,6 +44,23 @@ def load_json(path: str) -> Dict[str, Any]:
     try:
         with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
+
+
+def load_data(path: str) -> Any:
+    """Return the parsed contents of ``path`` supporting JSON or YAML."""
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(path)
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            if path.lower().endswith((".yaml", ".yml")):
+                return yaml.safe_load(f) or {}
+            return json.load(f)
+    except yaml.YAMLError as exc:
+        raise ValueError(f"Invalid YAML in {path}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
 
@@ -151,7 +171,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     for base in paths:
         path = base / filename
         if path.exists():
-            extra = load_json(str(path))
+            extra = load_data(str(path))
             if isinstance(extra, dict) and isinstance(data, dict):
                 deep_update(data, extra)
             else:
@@ -161,7 +181,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     if overlay:
         overlay_path = overlay / filename
         if overlay_path.exists():
-            extra = load_json(str(overlay_path))
+            extra = load_data(str(overlay_path))
             if isinstance(extra, dict) and isinstance(data, dict):
                 deep_update(data, extra)
             else:

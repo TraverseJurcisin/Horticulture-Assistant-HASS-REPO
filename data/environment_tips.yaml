@@ -1,0 +1,6 @@
+citrus:
+  high_temp: "Provide shade cloth to reduce temperature"
+  low_humidity: "Use misting system to increase humidity"
+tomato:
+  high_temp: "Increase ventilation and shading"
+  low_nutrients: "Apply balanced fertilizer" 
