@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import math
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable
@@ -263,18 +264,22 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
 
 
 def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
-    """Return a normalized ``(min, max)`` tuple or ``None`` if invalid.
+    """Return a normalized ``(low, high)`` tuple or ``None`` if invalid.
 
-    ``value`` may be any iterable with at least two numeric entries. Values are
-    cast to ``float`` and returned as a two-item tuple. If the input cannot be
-    interpreted as a pair of numbers, ``None`` is returned instead of raising an
-    exception.
+    ``value`` may be any iterable containing at least two numeric entries. The
+    numbers are converted to ``float`` and sorted so that the lower value is
+    returned first. If any conversion fails or either number is non-finite the
+    function safely returns ``None`` instead of raising an exception.
     """
 
     try:
         iterator = iter(value)
         low = float(next(iterator))
         high = float(next(iterator))
+        if not (math.isfinite(low) and math.isfinite(high)):
+            return None
+        if low > high:
+            low, high = high, low
         return low, high
     except (StopIteration, TypeError, ValueError):
         return None
