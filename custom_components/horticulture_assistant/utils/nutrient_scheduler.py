@@ -6,7 +6,7 @@ import os
 import logging
 from dataclasses import dataclass, asdict
 from functools import lru_cache
-from typing import Mapping
+from typing import Mapping, Iterable
 
 try:
     # If running within Home Assistant, this will be available
@@ -20,7 +20,7 @@ from plant_engine.nutrient_manager import (
     get_all_recommended_levels,
     calculate_nutrient_adjustments,
 )
-from plant_engine.utils import load_json, save_json, load_dataset
+from plant_engine.utils import load_json, save_json, load_dataset, normalize_key
 from custom_components.horticulture_assistant.utils.path_utils import (
     config_path,
     plants_path,
@@ -44,8 +44,9 @@ STAGE_SYNONYMS = {
 }
 
 # Normalize tags to lowercase with underscores for dataset lookups.
-def _normalize_tag(tag: str) -> str:
-    return str(tag).lower().replace(" ", "_").replace("-", "_")
+def normalize_tag(tag: str) -> str:
+    """Return normalized tag string for dataset lookups."""
+    return normalize_key(str(tag)).replace("-", "_")
 
 
 # Tag-specific nutrient modifiers loaded from a dataset.  Users can extend
@@ -59,7 +60,7 @@ def _tag_modifiers() -> dict[str, dict[str, float]]:
     raw = load_dataset(TAG_MODIFIER_FILE)
     modifiers: dict[str, dict[str, float]] = {}
     for tag, data in raw.items():
-        norm_tag = _normalize_tag(tag)
+        norm_tag = normalize_tag(tag)
         if not isinstance(data, dict):
             continue
         mods: dict[str, float] = {}
@@ -144,7 +145,7 @@ def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
 
     modifiers = _tag_modifiers()
     for tag in tags:
-        mods = modifiers.get(_normalize_tag(tag))
+        mods = modifiers.get(normalize_tag(tag))
         if not mods:
             continue
         for nut, factor in mods.items():
@@ -276,4 +277,25 @@ def schedule_nutrient_corrections(
     return NutrientAdjustments(adjustments)
 
 
-__all__ = ["schedule_nutrients", "schedule_nutrient_corrections"]
+def schedule_nutrients_bulk(
+    plant_ids: Iterable[str],
+    hass: HomeAssistant = None,
+    *,
+    include_micro: bool = False,
+) -> dict[str, dict[str, float]]:
+    """Return nutrient targets for multiple plants."""
+
+    results: dict[str, dict[str, float]] = {}
+    for pid in plant_ids:
+        targets = schedule_nutrients(pid, hass=hass, include_micro=include_micro).as_dict()
+        if targets:
+            results[pid] = targets
+    return results
+
+
+__all__ = [
+    "schedule_nutrients",
+    "schedule_nutrient_corrections",
+    "schedule_nutrients_bulk",
+    "normalize_tag",
+]
