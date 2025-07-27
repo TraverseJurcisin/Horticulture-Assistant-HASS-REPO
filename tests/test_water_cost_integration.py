@@ -1,0 +1,13 @@
+import plant_engine.water_usage as water_usage
+
+
+def test_estimate_stage_water_cost():
+    cost = water_usage.estimate_stage_water_cost("lettuce", "vegetative")
+    assert round(cost, 4) == round(0.002 * 6300 / 1000, 4)
+
+
+def test_estimate_cycle_water_cost():
+    cost = water_usage.estimate_cycle_water_cost("lettuce", "california")
+    expected_ml = water_usage.estimate_cycle_total_use("lettuce")
+    assert round(cost, 4) == round(0.003 * expected_ml / 1000, 4)
+
