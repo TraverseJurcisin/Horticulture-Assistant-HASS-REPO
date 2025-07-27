@@ -21,6 +21,7 @@ FOLIAR_DATA = "foliar_feed_guidelines.json"
 INTERVAL_DATA = "foliar_feed_intervals.json"
 FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
 FOLIAR_VOLUME_DATA = "foliar_spray_volume.json"
+FERTIGATION_VOLUME_DATA = "fertigation_volume.json"
 
 PURITY_DATA = "fertilizer_purity.json"
 EC_FACTOR_DATA = "ion_ec_factors.json"
@@ -35,6 +36,7 @@ _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
     FERTIGATION_INTERVAL_DATA
 )
 _FOLIAR_VOLUME: Dict[str, Dict[str, float]] = load_dataset(FOLIAR_VOLUME_DATA)
+_FERTIGATION_VOLUME: Dict[str, Dict[str, float]] = load_dataset(FERTIGATION_VOLUME_DATA)
 _STOCK_SOLUTIONS: Dict[str, Dict[str, float]] = load_dataset(STOCK_DATA)
 _NUTRIENT_STOCK_MAP = {
     nutrient: sid
@@ -271,6 +273,30 @@ def estimate_spray_solution_volume(
 
 
 @lru_cache(maxsize=None)
+def get_fertigation_volume(plant_type: str, stage: str | None = None) -> float | None:
+    """Return recommended fertigation volume per plant in milliliters."""
+
+    value = stage_value(_FERTIGATION_VOLUME, plant_type, stage)
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def estimate_fertigation_solution_volume(
+    num_plants: int, plant_type: str, stage: str | None = None
+) -> float | None:
+    """Return total fertigation solution volume in liters for ``num_plants``."""
+
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+    per_plant = get_fertigation_volume(plant_type, stage)
+    if per_plant is None:
+        return None
+    total_ml = per_plant * num_plants
+    return round(total_ml / 1000, 2)
+
+
+@lru_cache(maxsize=None)
 def get_fertigation_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between fertigation events."""
 
@@ -300,6 +326,8 @@ __all__ = [
     "next_foliar_feed_date",
     "get_foliar_spray_volume",
     "estimate_spray_solution_volume",
+    "get_fertigation_volume",
+    "estimate_fertigation_solution_volume",
     "get_fertigation_interval",
     "next_fertigation_date",
     "recommend_fertigation_schedule",
