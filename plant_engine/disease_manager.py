@@ -10,6 +10,7 @@ RESISTANCE_FILE = "disease_resistance_ratings.json"
 DATA_FILE = "disease_guidelines.json"
 PREVENTION_FILE = "disease_prevention.json"
 FUNGICIDE_FILE = "fungicide_recommendations.json"
+RATE_FILE = "fungicide_application_rates.json"
 
 
 
@@ -18,9 +19,15 @@ _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
 _PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _FUNGICIDES_RAW: Dict[str, list[str]] = load_dataset(FUNGICIDE_FILE)
+_RATES_RAW: Dict[str, float] = load_dataset(RATE_FILE)
 _FUNGICIDES: Dict[str, list[str]] = {
     normalize_key(k): list(v) if isinstance(v, list) else []
     for k, v in _FUNGICIDES_RAW.items()
+}
+_RATES: Dict[str, float] = {
+    normalize_key(k): float(v)
+    for k, v in _RATES_RAW.items()
+    if isinstance(v, (int, float))
 }
 
 
@@ -83,6 +90,28 @@ def get_fungicide_options(disease: str) -> list[str]:
     return []
 
 
+def get_fungicide_application_rate(product: str) -> float | None:
+    """Return recommended application rate for a fungicide product."""
+
+    value = _RATES.get(normalize_key(product))
+    return float(value) if isinstance(value, (int, float)) else None
+
+
+def calculate_fungicide_mix(disease: str, volume_l: float) -> Dict[str, float]:
+    """Return fungicide grams for treating ``volume_l`` solution."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    mix: Dict[str, float] = {}
+    for product in get_fungicide_options(disease):
+        rate = get_fungicide_application_rate(product)
+        if rate is None:
+            continue
+        mix[product] = round(rate * volume_l, 2)
+    return mix
+
+
 def recommend_fungicides(diseases: Iterable[str]) -> Dict[str, list[str]]:
     """Return fungicide suggestions for each disease in ``diseases``."""
 
@@ -101,5 +130,7 @@ __all__ = [
     "recommend_prevention",
     "get_disease_resistance",
     "get_fungicide_options",
+    "get_fungicide_application_rate",
+    "calculate_fungicide_mix",
     "recommend_fungicides",
 ]

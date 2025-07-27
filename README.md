@@ -79,6 +79,7 @@ Plant profiles are stored in the `plants/` directory and can be created through 
 ### Data & Analytics
 - Disease and pest treatment recommendations
 - Organic fungicide suggestions for common diseases
+- Fungicide application rate calculations for spray mixes
 - Environment optimization suggestions with pH guidance
 - Precise pH adjustment volume calculations
 - Heat, humidity and light stress warnings

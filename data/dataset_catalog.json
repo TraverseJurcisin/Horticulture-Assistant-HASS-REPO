@@ -56,6 +56,7 @@
   "foliar_feed_intervals.json": "Recommended days between foliar feed applications.",
   "foliar_spray_volume.json": "Recommended foliar spray volume per plant in mL.",
   "fungicide_recommendations.json": "Organic fungicide options for common diseases.",
+  "fungicide_application_rates.json": "Recommended fungicide application rates (g/L or mL/L).",
   "gdd_requirements.json": "Growing degree day requirements by crop.",
   "heat_stress_thresholds.json": "Temperature levels causing heat stress.",
   "humidity_stress_thresholds.json": "Relative humidity levels causing stress.",
