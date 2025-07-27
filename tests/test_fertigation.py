@@ -359,6 +359,19 @@ def test_recommend_stock_solution_injection():
     assert result["stock_b"] == pytest.approx(10.0, rel=1e-3)
 
 
+def test_stock_solution_recipes():
+    from plant_engine.fertigation import (
+        get_stock_solution_recipe,
+        apply_stock_solution_recipe,
+    )
+
+    recipe = get_stock_solution_recipe("tomato", "vegetative")
+    assert recipe == {"stock_a": 2.0, "stock_b": 1.0}
+
+    scaled = apply_stock_solution_recipe("tomato", "vegetative", 5.0)
+    assert scaled == {"stock_a": 10.0, "stock_b": 5.0}
+
+
 def test_check_solubility_limits():
     from plant_engine.fertigation import check_solubility_limits
 

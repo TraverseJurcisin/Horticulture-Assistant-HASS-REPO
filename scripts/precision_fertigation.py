@@ -29,6 +29,7 @@ def main(argv=None):
     parser.add_argument("volume_l", type=float)
     parser.add_argument("--water-profile")
     parser.add_argument("--include-micro", action="store_true")
+    parser.add_argument("--use-stock-recipe", action="store_true", help="Include preset stock solution ratios")
     parser.add_argument("--yaml", action="store_true", dest="as_yaml")
     args = parser.parse_args(argv)
 
@@ -49,6 +50,16 @@ def main(argv=None):
         include_micro=args.include_micro,
     )
 
+    recipe_injection = None
+    if args.use_stock_recipe:
+        from plant_engine.fertigation import apply_stock_solution_recipe
+
+        recipe_injection = apply_stock_solution_recipe(
+            args.plant_type,
+            args.stage,
+            args.volume_l,
+        )
+
     result = {
         "schedule": schedule,
         "cost_total": total,
@@ -56,6 +67,7 @@ def main(argv=None):
         "warnings": warnings,
         "diagnostics": diag,
         "injection_volumes": injection,
+        "recipe_injection": recipe_injection,
     }
 
     if args.as_yaml:
