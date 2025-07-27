@@ -22,6 +22,7 @@ def test_load_all_profiles_basic(tmp_path):
     assert "demo" in result
     res = result["demo"]
     assert isinstance(res, ProfileLoadResult)
+    assert res.plant_id == "demo"
     assert res.loaded
     assert "general" in res.profile_data
     assert res.issues == {}
@@ -37,6 +38,7 @@ def test_load_all_profiles_pattern(tmp_path):
     result = load_all_profiles(base_path=tmp_path / "plants", pattern="data_*.json")
     assert "test" in result
     res = result["test"]
+    assert res.plant_id == "test"
     assert "data_one" in res.profile_data
     assert "skip" not in res.profile_data
 
