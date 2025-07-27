@@ -15,6 +15,6 @@ def test_push_to_approval_queue(tmp_path):
     assert record["plant_id"] == "foo"
     path = data_dir / "foo.json"
     assert path.exists()
-    saved = load_json(str(path))
+    saved = load_json(path)
     assert saved["changes"]["ec"]["proposed_value"] == 2.0
     assert saved["changes"]["ec"]["previous_value"] == 1.5

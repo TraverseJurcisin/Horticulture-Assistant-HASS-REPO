@@ -1,6 +1,7 @@
 import os
 import logging
 from typing import Dict, Mapping, Any
+from pathlib import Path
 
 from functools import lru_cache
 
@@ -176,7 +177,7 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
 
     # Step 9: Write daily report JSON
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    out_path = os.path.join(OUTPUT_DIR, f"{plant_id}.json")
+    out_path = Path(OUTPUT_DIR) / f"{plant_id}.json"
     save_json(out_path, report)
     _LOGGER.info("Daily report saved for %s", plant_id)
 

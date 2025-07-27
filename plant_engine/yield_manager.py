@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Dict, List
@@ -34,15 +35,16 @@ class HarvestRecord:
         return asdict(self)
 
 
-def _yield_path(plant_id: str) -> str:
+def _yield_path(plant_id: str) -> Path:
     """Return file path for the plant yield history."""
-    return os.path.join(YIELD_DIR, f"{plant_id}.json")
+    return Path(YIELD_DIR) / f"{plant_id}.json"
 
 
 def _load_raw_history(plant_id: str) -> Dict[str, List[Dict[str, object]]]:
     """Return raw history mapping from disk."""
-    if os.path.exists(_yield_path(plant_id)):
-        return load_json(_yield_path(plant_id))
+    path = _yield_path(plant_id)
+    if path.exists():
+        return load_json(path)
     return {"harvests": []}
 
 

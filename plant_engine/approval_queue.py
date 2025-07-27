@@ -80,7 +80,7 @@ def queue_threshold_updates(
         changes=changes,
     )
 
-    save_json(str(pending_file), record.as_dict())
+    save_json(pending_file, record.as_dict())
 
     _LOGGER.info("Queued %d threshold changes for %s", len(changes), plant_id)
     return pending_file
@@ -102,9 +102,9 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
         _LOGGER.error("Plant profile not found: %s", plant_p)
         return 0
 
-    pending = load_json(str(pending_p))
+    pending = load_json(pending_p)
 
-    plant = load_json(str(plant_p))
+    plant = load_json(plant_p)
     updated = plant.get("thresholds", {})
 
     applied = 0
@@ -114,7 +114,7 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
             applied += 1
 
     plant["thresholds"] = updated
-    save_json(str(plant_p), plant)
+    save_json(plant_p, plant)
 
     _LOGGER.info(
         "Applied %d approved changes for %s", applied, pending.get("plant_id")
@@ -129,5 +129,5 @@ def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[st
     path = directory / f"{plant_id}.json"
     if not path.exists():
         return None
-    return load_json(str(path))
+    return load_json(path)
 
