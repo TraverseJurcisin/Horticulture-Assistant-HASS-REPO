@@ -15,9 +15,9 @@ def test_generate_pulse_schedule():
 
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
-    wc = species["ideal_wc_plateau"] - 0.01
+    wc = species.ideal_wc_plateau - 0.01
     D_eff = calculate_effective_diffusion(
-        1e-5, wc, media["porosity"], media["tortuosity"]
+        1e-5, wc, media.porosity, media.tortuosity
     )
     base_volume = int(30 + D_eff * 100000)
 
@@ -52,9 +52,9 @@ def test_custom_pulse_window():
 
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
-    wc = species["ideal_wc_plateau"] - 0.01
+    wc = species.ideal_wc_plateau - 0.01
     D_eff = calculate_effective_diffusion(
-        1e-5, wc, media["porosity"], media["tortuosity"]
+        1e-5, wc, media.porosity, media.tortuosity
     )
 
     schedule = generate_pulse_schedule(
@@ -107,3 +107,12 @@ def test_main_json_output():
     m1 = data1[0]["mass_mg"]
     m2 = data2[0]["mass_mg"]
     assert m2 > m1 * 5.9 and m2 < m1 * 6.1
+
+
+def test_recommend_fertigation_schedule():
+    from dafe import recommend_fertigation_schedule
+
+    schedule = recommend_fertigation_schedule("citrus", "vegetative", 10)
+    assert schedule["N"] == 0.8
+    assert schedule["P"] == 0.3
+    assert schedule["K"] == 0.6
