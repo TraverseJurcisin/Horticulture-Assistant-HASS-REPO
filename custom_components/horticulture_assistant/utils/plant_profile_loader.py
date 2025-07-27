@@ -236,6 +236,77 @@ def update_profile_sensors(
     return save_profile_by_id(plant_id, profile, base_dir)
 
 
+def attach_profile_sensors(
+    plant_id: str,
+    sensors: dict,
+    base_dir: str | Path | None = None,
+) -> bool:
+    """Append ``sensors`` entries to the profile without overwriting existing values."""
+    if not isinstance(sensors, dict):
+        return False
+
+    profile = load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return False
+
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    mapping = container.setdefault("sensor_entities", {})
+    for key, val in sensors.items():
+        if isinstance(val, str):
+            val = [val]
+        existing = mapping.get(key, [])
+        for item in val:
+            if item not in existing:
+                existing.append(item)
+        mapping[key] = existing
+    if container is not profile:
+        profile["general"] = container
+
+    return save_profile_by_id(plant_id, profile, base_dir)
+
+
+def detach_profile_sensors(
+    plant_id: str,
+    sensors: dict,
+    base_dir: str | Path | None = None,
+) -> bool:
+    """Remove sensor mappings from ``plant_id`` and save the profile."""
+    if not isinstance(sensors, dict):
+        return False
+
+    profile = load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return False
+
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    sensor_map = container.get("sensor_entities", {})
+    for key, val in sensors.items():
+        if key not in sensor_map:
+            continue
+        if val is None:
+            sensor_map.pop(key, None)
+            continue
+        if isinstance(val, str):
+            val = [val]
+        sensor_map[key] = [s for s in sensor_map.get(key, []) if s not in val]
+        if not sensor_map[key]:
+            sensor_map.pop(key, None)
+
+    if sensor_map:
+        container["sensor_entities"] = sensor_map
+    else:
+        container.pop("sensor_entities", None)
+
+    if container is not profile:
+        profile["general"] = container
+
+    return save_profile_by_id(plant_id, profile, base_dir)
+
+
 __all__ = [
     "load_profile_from_path",
     "load_profile_by_id",
@@ -244,4 +315,6 @@ __all__ = [
     "save_profile_to_path",
     "save_profile_by_id",
     "update_profile_sensors",
+    "attach_profile_sensors",
+    "detach_profile_sensors",
 ]

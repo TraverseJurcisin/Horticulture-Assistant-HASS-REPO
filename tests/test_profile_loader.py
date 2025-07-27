@@ -97,3 +97,35 @@ def test_update_profile_sensors_missing(tmp_path):
 
     result = loader.update_profile_sensors("missing", {"moisture_sensors": ["x"]}, plants)
     assert result is False
+
+
+def test_detach_profile_sensors(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+    profile = {
+        "general": {"sensor_entities": {"moisture_sensors": ["a", "b"], "temp_sensors": ["t1"]}}
+    }
+    loader.save_profile_by_id("p1", profile, plants)
+
+    loader.detach_profile_sensors("p1", {"moisture_sensors": ["a"]}, plants)
+
+    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    sensors = updated["general"]["sensor_entities"]
+    assert sensors["moisture_sensors"] == ["b"]
+    assert sensors["temp_sensors"] == ["t1"]
+
+
+def test_attach_profile_sensors(tmp_path):
+    plants = tmp_path / "plants"
+    plants.mkdir()
+    profile = {
+        "general": {"sensor_entities": {"moisture_sensors": ["a"], "temp_sensors": ["t1"]}}
+    }
+    loader.save_profile_by_id("p1", profile, plants)
+
+    loader.attach_profile_sensors("p1", {"moisture_sensors": ["b"]}, plants)
+
+    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    sensors = updated["general"]["sensor_entities"]
+    assert sensors["moisture_sensors"] == ["a", "b"]
+    assert sensors["temp_sensors"] == ["t1"]

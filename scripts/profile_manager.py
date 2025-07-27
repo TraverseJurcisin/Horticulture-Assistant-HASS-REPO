@@ -1,0 +1,219 @@
+from __future__ import annotations
+
+"""Utility helpers for editing plant profiles from the command line."""
+
+import argparse
+from pathlib import Path
+import json
+
+from scripts import ensure_repo_root_on_path
+
+ROOT = ensure_repo_root_on_path()
+
+from custom_components.horticulture_assistant.utils import (
+    plant_profile_loader as loader,
+)
+from custom_components.horticulture_assistant.utils.json_io import load_json
+
+DEFAULT_PLANTS_DIR = ROOT / "plants"
+DEFAULT_GLOBAL_DIR = ROOT / "data" / "global_profiles"
+
+
+def attach_sensor(
+    plant_id: str,
+    sensor_type: str,
+    entity_ids: list[str],
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+) -> bool:
+    """Attach sensors to a plant profile without overwriting existing ones."""
+    return loader.attach_profile_sensors(plant_id, {sensor_type: entity_ids}, base_dir)
+
+
+def detach_sensor(
+    plant_id: str,
+    sensor_type: str,
+    entity_ids: list[str] | None = None,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+) -> bool:
+    """Detach sensors from a plant profile."""
+    return loader.detach_profile_sensors(plant_id, {sensor_type: entity_ids}, base_dir)
+
+
+def set_preference(
+    plant_id: str, key: str, value: object, base_dir: Path = DEFAULT_PLANTS_DIR
+) -> bool:
+    """Set a preference on the plant profile."""
+    profile = loader.load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return False
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    container[key] = value
+    if container is not profile:
+        profile["general"] = container
+    return loader.save_profile_by_id(plant_id, profile, base_dir)
+
+
+def load_default_profile(
+    plant_type: str,
+    plant_id: str,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+    global_dir: Path = DEFAULT_GLOBAL_DIR,
+) -> bool:
+    """Create a new profile ``plant_id`` from a global ``plant_type`` template."""
+    template_path = Path(global_dir) / f"{plant_type}.json"
+    if not template_path.is_file():
+        return False
+    data = load_json(str(template_path))
+    if not isinstance(data, dict):
+        return False
+    general = data.get("general", {})
+    general["plant_id"] = plant_id
+    general.setdefault("display_name", plant_id.replace("_", " ").title())
+    data["general"] = general
+    return loader.save_profile_by_id(plant_id, data, base_dir)
+
+
+def show_history(
+    plant_id: str, log_name: str, base_dir: Path = DEFAULT_PLANTS_DIR, lines: int = 5
+) -> list[object]:
+    """Return the last ``lines`` entries from a log file."""
+    log_path = Path(base_dir) / plant_id / f"{log_name}.json"
+    if not log_path.is_file():
+        return []
+    try:
+        entries = load_json(str(log_path))
+    except Exception:
+        return []
+    if not isinstance(entries, list):
+        return []
+    return entries[-lines:]
+
+
+def list_profile_sensors(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> dict:
+    """Return the ``sensor_entities`` mapping for ``plant_id``."""
+    profile = loader.load_profile_by_id(plant_id, base_dir)
+    if not profile:
+        return {}
+    container = (
+        profile.get("general") if isinstance(profile.get("general"), dict) else profile
+    )
+    sensors = container.get("sensor_entities")
+    return sensors or {}
+
+
+def list_global_profiles(global_dir: Path = DEFAULT_GLOBAL_DIR) -> list[str]:
+    """List available global profile templates."""
+    path = Path(global_dir)
+    if not path.is_dir():
+        return []
+    return sorted(p.stem for p in path.iterdir() if p.is_file() and p.suffix == ".json")
+
+
+def main(argv: list[str] | None = None) -> None:
+    root_parser = argparse.ArgumentParser(add_help=False)
+    root_parser.add_argument(
+        "--plants-dir",
+        type=Path,
+        default=DEFAULT_PLANTS_DIR,
+        help="directory containing plant profiles",
+    )
+    root_parser.add_argument(
+        "--global-dir",
+        type=Path,
+        default=DEFAULT_GLOBAL_DIR,
+        help="directory containing global profile templates",
+    )
+
+    parser = argparse.ArgumentParser(
+        description="Manage plant profiles",
+        parents=[root_parser],
+    )
+    sub = parser.add_subparsers(dest="cmd")
+
+    attach = sub.add_parser("attach-sensor", help="attach sensors")
+    attach.add_argument("plant_id")
+    attach.add_argument("sensor_type")
+    attach.add_argument("entity_ids", nargs="+")
+
+    detach = sub.add_parser("detach-sensor", help="detach sensors")
+    detach.add_argument("plant_id")
+    detach.add_argument("sensor_type")
+    detach.add_argument("entity_ids", nargs="*")
+
+    pref = sub.add_parser("set-pref", help="set preference")
+    pref.add_argument("plant_id")
+    pref.add_argument("key")
+    pref.add_argument("value")
+
+    load = sub.add_parser("load-default", help="load default profile")
+    load.add_argument("plant_type")
+    load.add_argument("plant_id")
+
+    hist = sub.add_parser("show-history", help="show log entries")
+    hist.add_argument("plant_id")
+    hist.add_argument("log_name")
+    hist.add_argument("--lines", type=int, default=5)
+
+    list_sensors_cmd = sub.add_parser("list-sensors", help="list sensors for a plant")
+    list_sensors_cmd.add_argument("plant_id")
+
+    list_global_cmd = sub.add_parser(
+        "list-globals", help="list available global profiles"
+    )
+
+    root_args, remaining = root_parser.parse_known_args(argv)
+
+    plants_dir = root_args.plants_dir
+    globals_dir = root_args.global_dir
+
+    args = parser.parse_args(remaining)
+    if args.cmd == "attach-sensor":
+        ok = attach_sensor(
+            args.plant_id,
+            args.sensor_type,
+            args.entity_ids,
+            base_dir=plants_dir,
+        )
+        print("success" if ok else "failed")
+    elif args.cmd == "detach-sensor":
+        ok = detach_sensor(
+            args.plant_id,
+            args.sensor_type,
+            args.entity_ids or None,
+            base_dir=plants_dir,
+        )
+        print("success" if ok else "failed")
+    elif args.cmd == "set-pref":
+        val = json.loads(args.value) if isinstance(args.value, str) else args.value
+        ok = set_preference(args.plant_id, args.key, val, base_dir=plants_dir)
+        print("success" if ok else "failed")
+    elif args.cmd == "load-default":
+        ok = load_default_profile(
+            args.plant_type,
+            args.plant_id,
+            base_dir=plants_dir,
+            global_dir=globals_dir,
+        )
+        print("success" if ok else "failed")
+    elif args.cmd == "show-history":
+        entries = show_history(
+            args.plant_id,
+            args.log_name,
+            base_dir=plants_dir,
+            lines=args.lines,
+        )
+        print(json.dumps(entries, indent=2))
+    elif args.cmd == "list-sensors":
+        sensors = list_profile_sensors(args.plant_id, base_dir=plants_dir)
+        print(json.dumps(sensors, indent=2))
+    elif args.cmd == "list-globals":
+        profiles = list_global_profiles(globals_dir)
+        print("\n".join(profiles))
+    else:
+        parser.print_help()
+
+
+if __name__ == "__main__":  # pragma: no cover - manual usage
+    main()

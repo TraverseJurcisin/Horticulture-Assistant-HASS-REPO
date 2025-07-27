@@ -1,0 +1,18 @@
+{
+  "general": {
+    "plant_type": "basil",
+    "cultivar": "generic",
+    "auto_lifecycle_mode": false,
+    "auto_approve_all": false,
+    "sensor_entities": {
+      "moisture_sensors": [],
+      "temperature_sensors": []
+    }
+  },
+  "thresholds": {
+    "soil_moisture_pct": 25
+  },
+  "stages": {
+    "vegetative": {"stage_duration": 20}
+  }
+}
