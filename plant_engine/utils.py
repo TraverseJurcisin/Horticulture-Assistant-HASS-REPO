@@ -31,6 +31,7 @@ __all__ = [
     "parse_range",
     "deep_update",
     "stage_value",
+    "load_stage_dataset_value",
 ]
 
 
@@ -318,3 +319,17 @@ def stage_value(
         if value is not None:
             return value
     return plant.get(default_key)
+
+def load_stage_dataset_value(
+    filename: str, plant_type: str, stage: str | None, default_key: str = "optimal"
+) -> Any:
+    """Return a stage value from ``filename`` for ``plant_type`` and ``stage``.
+
+    Combines :func:`load_dataset` and :func:`stage_value` for convenience. If the
+    dataset file does not exist or is not a mapping, ``None`` is returned.
+    """
+    data = load_dataset(filename)
+    if not isinstance(data, Mapping):
+        return None
+    return stage_value(data, plant_type, stage, default_key)
+
