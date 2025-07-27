@@ -14,7 +14,10 @@ except ImportError:
     HomeAssistant = None
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
-from plant_engine.nutrient_manager import get_recommended_levels
+from plant_engine.nutrient_manager import (
+    get_recommended_levels,
+    get_all_recommended_levels,
+)
 from plant_engine.utils import load_json, save_json, load_dataset
 from custom_components.horticulture_assistant.utils.path_utils import (
     config_path,
@@ -147,12 +150,18 @@ def _apply_tag_modifiers(targets: dict[str, float], tags: list[str]) -> None:
                 continue
             targets[nut] = round(targets[nut] * factor, 2)
 
-def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTargets:
+def schedule_nutrients(
+    plant_id: str,
+    hass: HomeAssistant = None,
+    *,
+    include_micro: bool = False,
+) -> NutrientTargets:
     """Return adjusted nutrient targets for ``plant_id``.
 
     Targets are loaded from the plant profile and adjusted using stage
-    multipliers and tag-based modifiers. Final values are persisted to
-    ``nutrient_targets.json`` for later use.
+    multipliers and tag-based modifiers. When ``include_micro`` is ``True``
+    any missing micronutrients are filled in from the bundled datasets. Final
+    values are persisted to ``nutrient_targets.json`` for later use.
     """
 
     profile = _load_profile(plant_id, hass)
@@ -169,15 +178,30 @@ def schedule_nutrients(plant_id: str, hass: HomeAssistant = None) -> NutrientTar
     )
     stage_key = STAGE_SYNONYMS.get(str(stage).lower(), str(stage).lower())
 
-    if not base_targets:
-        plant_type = _get_plant_type(plant_id, profile, hass)
-        if plant_type:
-            base_targets = get_recommended_levels(plant_type, stage_key)
-            if base_targets:
-                _LOGGER.info("Using nutrient guidelines for %s (%s stage)", plant_type, stage_key)
-        if not base_targets:
-            _LOGGER.warning("No nutrient targets for '%s' and no guidelines found", plant_id)
+    plant_type = _get_plant_type(plant_id, profile, hass)
+    if plant_type and (include_micro or not base_targets):
+        guideline_func = (
+            get_all_recommended_levels if include_micro else get_recommended_levels
+        )
+        guidelines = guideline_func(plant_type, stage_key)
+        if guidelines:
+            if not base_targets:
+                _LOGGER.info(
+                    "Using nutrient guidelines for %s (%s stage)",
+                    plant_type,
+                    stage_key,
+                )
+            for nut, val in guidelines.items():
+                base_targets.setdefault(nut, val)
+        elif not base_targets:
+            _LOGGER.warning(
+                "No nutrient targets for '%s' and no guidelines found",
+                plant_id,
+            )
             return NutrientTargets({})
+    elif not base_targets:
+        _LOGGER.warning("No nutrient targets for '%s' and no guidelines found", plant_id)
+        return NutrientTargets({})
 
     mult = _stage_multiplier(profile, stage_key)
     adjusted: dict[str, float] = {}

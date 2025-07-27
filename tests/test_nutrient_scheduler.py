@@ -117,3 +117,14 @@ def test_dataset_override(tmp_path, monkeypatch):
     result = schedule_nutrients("tag", hass=hass).as_dict()
     assert result["N"] == 60.0
     monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR", raising=False)
+
+
+def test_include_micro_guidelines(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "micro.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
+    hass = _hass_for(tmp_path)
+    result = schedule_nutrients("micro", hass=hass, include_micro=True).as_dict()
+    assert result["Fe"] > 0
