@@ -748,6 +748,75 @@ def recommend_fertigation_plan(
     }
 
 
+def recommend_advanced_fertigation_plan(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    num_plants: int = 1,
+    ph: float | None = None,
+    use_synergy: bool = False,
+) -> Dict[str, object]:
+    """Return fertigation plan accounting for pH and nutrient synergy.
+
+    Parameters
+    ----------
+    plant_type : str
+        Plant type used to look up nutrient guidelines.
+    stage : str
+        Growth stage for the fertigation mix.
+    volume_l : float
+        Total solution volume in liters.
+    num_plants : int, optional
+        Number of plants receiving the solution. Default ``1``.
+    ph : float, optional
+        Solution pH used to adjust nutrient availability.
+    use_synergy : bool, optional
+        When ``True`` nutrient synergy factors are applied to the targets.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
+    if ph is not None and not 0 < ph <= 14:
+        raise ValueError("ph must be between 0 and 14")
+
+    if ph is not None:
+        targets = nutrient_manager.get_all_ph_adjusted_levels(plant_type, stage, ph)
+    else:
+        targets = nutrient_manager.get_all_recommended_levels(plant_type, stage)
+
+    if use_synergy and targets:
+        from plant_engine.nutrient_synergy import apply_synergy_adjustments
+
+        targets = apply_synergy_adjustments(targets)
+
+    if not targets:
+        return {"mix": {}, "ppm": {}, "cost_total": 0.0, "cost_per_plant": 0.0}
+
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        if ppm <= 0:
+            continue
+        try:
+            fert_id, _ = get_cheapest_product(nutrient)
+        except KeyError:
+            continue
+        grams = calculate_mass_for_target_ppm(fert_id, nutrient, ppm, volume_l)
+        schedule[fert_id] = round(schedule.get(fert_id, 0.0) + grams, 3)
+
+    cost = estimate_mix_cost(schedule) if schedule else 0.0
+    ppm = calculate_mix_ppm(schedule, volume_l) if schedule else {}
+
+    return {
+        "mix": schedule,
+        "ppm": ppm,
+        "cost_total": cost,
+        "cost_per_plant": round(cost / num_plants, 4),
+    }
+
+
 __all__ = [
     "calculate_fertilizer_nutrients",
     "calculate_fertilizer_nutrients_from_mass",
@@ -763,6 +832,7 @@ __all__ = [
     "estimate_deficiency_correction_cost",
     "recommend_fertigation_mix",
     "recommend_fertigation_plan",
+    "recommend_advanced_fertigation_plan",
     "calculate_mix_nutrients",
     "calculate_mix_density",
     "estimate_solution_mass",
