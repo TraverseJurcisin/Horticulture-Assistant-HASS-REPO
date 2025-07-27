@@ -1,6 +1,9 @@
 """Helpers for calculating nutrient dosing volumes and concentrations."""
 
-from typing import Literal
+from __future__ import annotations
+
+from enum import Enum
+from typing import Iterable, Literal, Sequence, Tuple
 
 try:
     from .unit_utils import convert
@@ -17,6 +20,22 @@ except ImportError:  # pragma: no cover - fallback for direct execution
     convert = mod.convert  # type: ignore
 
 
+class ConcentrationUnit(str, Enum):
+    """Supported units for nutrient concentration."""
+
+    MG_L = "mg/L"
+    G_L = "g/L"
+    OZ_GAL = "oz/gal"
+    PPM = "ppm"
+
+    @classmethod
+    def normalize(cls, unit: str) -> "ConcentrationUnit":
+        """Return enum member for ``unit`` allowing ``ppm`` as ``mg/L``."""
+        if unit == cls.PPM.value:
+            return cls.MG_L
+        return cls(unit)
+
+
 class DoseCalculator:
     """Utility helpers for nutrient dosing calculations.
 
@@ -31,37 +50,29 @@ class DoseCalculator:
     def calculate_mass_dose(
         concentration: float,
         solution_volume: float,
-        concentration_unit: Literal["mg/L", "g/L", "oz/gal", "ppm"]
+        concentration_unit: Literal["mg/L", "g/L", "oz/gal", "ppm"],
     ) -> float:
-        """Return grams of fertilizer for a target concentration.
+        """Return grams of fertilizer for a target concentration."""
 
-        ``concentration`` is interpreted according to ``concentration_unit``.
-        The alias ``"ppm"`` is accepted and treated as ``"mg/L"``.
-        """
+        unit = ConcentrationUnit.normalize(concentration_unit)
 
-        unit = concentration_unit
-        if unit == "ppm":
-            unit = "mg/L"
+        converters = {
+            ConcentrationUnit.MG_L: lambda c, v: c * v / 1000,
+            ConcentrationUnit.G_L: lambda c, v: c * v,
+            ConcentrationUnit.OZ_GAL: lambda c, v: c * v * 28.3495,
+        }
 
-        if unit == "mg/L":
-            return round(concentration * solution_volume / 1000, 3)
-        if unit == "g/L":
-            return round(concentration * solution_volume, 3)
-        if unit == "oz/gal":
-            return round(concentration * solution_volume * 28.3495, 3)
-        raise ValueError(f"Unsupported concentration unit: {concentration_unit}")
+        if unit not in converters:
+            raise ValueError(f"Unsupported concentration unit: {concentration_unit}")
+
+        return round(converters[unit](concentration, solution_volume), 3)
 
     @staticmethod
     def calculate_volume_dose(
         mass_dose: float,
         product_density: float
     ) -> float:
-        """
-        Converts a solid dose mass into volume dose for liquid fertilizer.
-        :param mass_dose: dose in grams
-        :param product_density: in g/mL
-        :return: dose volume in mL
-        """
+        """Convert a solid dose mass into a liquid volume in milliliters."""
         if product_density <= 0:
             raise ValueError("Product density must be greater than 0")
         return round(mass_dose / product_density, 3)
@@ -72,18 +83,13 @@ class DoseCalculator:
         solution_volume: float,
         concentration_unit: Literal["g/L", "mg/L", "ppm"]
     ) -> float:
-        """Return the concentration derived from ``mass_dose``.
+        """Return the concentration of ``mass_dose`` in the given units."""
 
-        The alias ``"ppm"`` may be provided and is treated as ``"mg/L"``.
-        """
+        unit = ConcentrationUnit.normalize(concentration_unit)
 
-        unit = concentration_unit
-        if unit == "ppm":
-            unit = "mg/L"
-
-        if unit == "mg/L":
+        if unit == ConcentrationUnit.MG_L:
             return round((mass_dose * 1000) / solution_volume, 2)
-        if unit == "g/L":
+        if unit == ConcentrationUnit.G_L:
             return round(mass_dose / solution_volume, 3)
         raise ValueError("Unsupported unit")
 
@@ -122,10 +128,8 @@ class DoseCalculator:
         if final_volume_l <= 0:
             raise ValueError("final_volume_l must be positive")
 
-        u = unit
-        if u == "ppm":
-            u = "mg/L"
-        if u not in {"mg/L", "g/L"}:
+        u = ConcentrationUnit.normalize(unit)
+        if u not in {ConcentrationUnit.MG_L, ConcentrationUnit.G_L}:
             raise ValueError("Unsupported unit")
 
         if desired_concentration >= stock_concentration:
@@ -142,32 +146,37 @@ class DoseCalculator:
         vol_b: float,
         unit: Literal["mg/L", "g/L", "ppm"] = "ppm",
     ) -> float:
-        """Return final concentration after mixing two solutions.
+        """Return final concentration after mixing two solutions."""
 
-        ``conc_a`` and ``conc_b`` are interpreted according to ``unit``.
-        Both solutions must use the same units. ``"ppm"`` is treated as
-        ``"mg/L"``. Volumes must be positive. The resulting concentration is
-        returned in the same units, rounded to two decimals.
+        return DoseCalculator.blend_multiple_solutions(
+            [(conc_a, vol_a), (conc_b, vol_b)], unit
+        )
+
+    @staticmethod
+    def blend_multiple_solutions(
+        solutions: Sequence[Tuple[float, float]],
+        unit: Literal["mg/L", "g/L", "ppm"] = "ppm",
+    ) -> float:
+        """Return concentration after mixing many solutions.
+
+        Each item in ``solutions`` is ``(concentration, volume)`` using ``unit``.
+        ``ppm`` is treated as ``mg/L``. All volumes must be positive.
         """
 
-        if vol_a <= 0 or vol_b <= 0:
+        if not solutions:
+            raise ValueError("No solutions provided")
+        if any(v <= 0 for _, v in solutions):
             raise ValueError("Solution volumes must be positive")
 
-        u = unit
-        if u == "ppm":
-            u = "mg/L"
-
-        if u not in {"mg/L", "g/L"}:
+        u = ConcentrationUnit.normalize(unit)
+        if u not in {ConcentrationUnit.MG_L, ConcentrationUnit.G_L}:
             raise ValueError("Unsupported unit")
 
         # convert to mg/L for calculation
-        if u == "g/L":
-            conc_a *= 1000
-            conc_b *= 1000
+        def to_mg_l(c: float) -> float:
+            return c * 1000 if u == ConcentrationUnit.G_L else c
 
-        total_volume = vol_a + vol_b
-        final_mg_l = (conc_a * vol_a + conc_b * vol_b) / total_volume
+        total_volume = sum(v for _, v in solutions)
+        final_mg_l = sum(to_mg_l(c) * v for c, v in solutions) / total_volume
 
-        if unit == "g/L":
-            return round(final_mg_l / 1000, 2)
-        return round(final_mg_l, 2)
+        return round(final_mg_l / 1000, 2) if unit == "g/L" else round(final_mg_l, 2)

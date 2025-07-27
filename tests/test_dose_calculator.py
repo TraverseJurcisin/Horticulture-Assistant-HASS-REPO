@@ -59,3 +59,16 @@ def test_blend_solutions():
     with pytest.raises(ValueError):
         DoseCalculator.blend_solutions(100, -1, 100, 1)
 
+
+def test_blend_multiple_solutions():
+    conc = DoseCalculator.blend_multiple_solutions(
+        [(200, 1), (100, 1), (50, 2)], "ppm"
+    )
+    assert conc == 100
+    conc = DoseCalculator.blend_multiple_solutions(
+        [(1.0, 1), (0.5, 1)], "g/L"
+    )
+    assert conc == 0.75
+    with pytest.raises(ValueError):
+        DoseCalculator.blend_multiple_solutions([])
+
