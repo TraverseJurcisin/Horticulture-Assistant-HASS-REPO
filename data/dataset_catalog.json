@@ -47,7 +47,7 @@
   "fertilizer_purity.json": "Nutrient purity factors for fertilizer products.",
   "fertilizer_solubility.json": "Solubility limits for common fertilizers.",
   "light_spectrum_guidelines.json": "Recommended red/blue light ratios for growth stages.",
-  "light_efficiency.json": "Photon efficiency (\u03bcmol/J) for common lighting types.",
+  "light_efficiency.json": "Photon efficiency (μmol/J) for common lighting types.",
   "foliar_feed_guidelines.json": "Target ppm for foliar nutrient applications.",
   "foliar_feed_intervals.json": "Recommended days between foliar feed applications.",
   "foliar_spray_volume.json": "Recommended foliar spray volume per plant in mL.",
@@ -123,7 +123,7 @@
   "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
   "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
   "disease_severity_actions.json": "Actions to take based on disease severity level.",
-  "disease_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on disease risk level.",   
+  "disease_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on disease risk level.",
   "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
   "root_temperature_uptake.json": "Relative nutrient uptake efficiency by root zone temperature.",
   "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
@@ -133,5 +133,6 @@
   "electricity_rates.json": "Electricity cost per kWh by region.",
   "water_costs.json": "Water cost per liter by region.",
   "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
-  "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products"
+  "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products",
+  "propagation_guidelines.json": "Recommended environmental conditions for plant propagation methods."
 }
