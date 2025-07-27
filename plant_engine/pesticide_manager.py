@@ -4,18 +4,20 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 from typing import Dict, Iterable, List
 
-from .utils import load_dataset
+from .utils import load_dataset, normalize_key
 
 DATA_FILE = "pesticide_withdrawal_days.json"
 REENTRY_FILE = "pesticide_reentry_intervals.json"
 MOA_FILE = "pesticide_modes.json"
 ROTATION_FILE = "pesticide_rotation_intervals.json"
+PHYTO_FILE = "pesticide_phytotoxicity.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA: Dict[str, int] = load_dataset(DATA_FILE)
 _REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
 _MOA: Dict[str, str] = load_dataset(MOA_FILE)
 _ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
+_PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -30,6 +32,8 @@ __all__ = [
     "get_rotation_interval",
     "suggest_rotation_schedule",
     "suggest_rotation_plan",
+    "get_phytotoxicity_risk",
+    "is_safe_for_crop",
 ]
 
 
@@ -185,3 +189,19 @@ def suggest_rotation_plan(
             interval = 0
         current_date += timedelta(days=interval)
     return plan
+
+
+def get_phytotoxicity_risk(plant_type: str, product: str) -> str | None:
+    """Return phytotoxicity risk level for ``product`` on ``plant_type``."""
+
+    crop = _PHYTO.get(normalize_key(plant_type))
+    if not isinstance(crop, dict):
+        return None
+    return crop.get(product.lower())
+
+
+def is_safe_for_crop(plant_type: str, product: str) -> bool:
+    """Return ``False`` if ``product`` is marked high risk for ``plant_type``."""
+
+    risk = get_phytotoxicity_risk(plant_type, product)
+    return risk != "high"

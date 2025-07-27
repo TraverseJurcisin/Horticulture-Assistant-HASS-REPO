@@ -112,3 +112,18 @@ def test_suggest_rotation_plan():
     ]
 
 
+def test_get_phytotoxicity_risk():
+    from plant_engine.pesticide_manager import get_phytotoxicity_risk
+
+    assert get_phytotoxicity_risk("tomato", "copper_sulfate") == "high"
+    assert get_phytotoxicity_risk("lettuce", "neem_oil") == "low"
+    assert get_phytotoxicity_risk("tomato", "unknown") is None
+
+
+def test_is_safe_for_crop():
+    from plant_engine.pesticide_manager import is_safe_for_crop
+
+    assert not is_safe_for_crop("tomato", "copper_sulfate")
+    assert is_safe_for_crop("tomato", "neem_oil")
+
+

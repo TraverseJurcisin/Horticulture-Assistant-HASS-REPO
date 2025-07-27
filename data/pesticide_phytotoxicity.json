@@ -1,0 +1,10 @@
+{
+  "tomato": {
+    "copper_sulfate": "high",
+    "neem_oil": "low"
+  },
+  "lettuce": {
+    "copper_sulfate": "moderate",
+    "neem_oil": "low"
+  }
+}
