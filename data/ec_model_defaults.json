@@ -1,0 +1,9 @@
+{
+  "intercept": 0.0,
+  "coeffs": {
+    "moisture": 0.02,
+    "temperature": 0.05,
+    "irrigation_ml": 0.001,
+    "solution_ec": 0.8
+  }
+}

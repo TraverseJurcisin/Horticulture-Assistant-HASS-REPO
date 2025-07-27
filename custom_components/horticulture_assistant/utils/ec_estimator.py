@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-"""Root zone EC estimation utilities."""
+"""Utilities for estimating root zone electrical conductivity."""
 
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Mapping, Optional
+from typing import Iterable, Mapping
+
+from functools import lru_cache
 
 import logging
 import numpy as np
@@ -17,6 +19,7 @@ except Exception:  # pragma: no cover - Home Assistant not installed in tests
 
 from plant_engine import ec_manager
 from plant_engine.fertigation import estimate_solution_ec
+from plant_engine.utils import load_dataset
 
 from .json_io import load_json, save_json
 from .path_utils import plants_path, data_path
@@ -25,6 +28,7 @@ from .plant_profile_loader import load_profile_by_id
 _LOGGER = logging.getLogger(__name__)
 
 MODEL_FILE = Path(data_path(None, "ec_model.json"))
+DEFAULT_DATA_FILE = "ec_model_defaults.json"
 
 
 def _model_path(
@@ -59,17 +63,25 @@ class ECEstimator:
         return {"intercept": self.intercept, "coeffs": dict(self.coeffs)}
 
 
+_default_data = load_dataset(DEFAULT_DATA_FILE)
+_default_coeffs = _default_data.get("coeffs", {}) if isinstance(
+    _default_data, Mapping
+) else {}
+if not isinstance(_default_coeffs, Mapping):
+    _default_coeffs = {}
 DEFAULT_MODEL = ECEstimator(
-    0.0,
+    float(_default_data.get("intercept", 0.0)),
     {
         "moisture": 0.02,
         "temperature": 0.05,
         "irrigation_ml": 0.001,
         "solution_ec": 0.8,
+        **{k: float(v) for k, v in _default_coeffs.items()},
     },
 )
 
 
+@lru_cache(maxsize=None)
 def load_model(
     path: str | Path | None = None,
     *,
@@ -85,9 +97,11 @@ def load_model(
         if not isinstance(coeffs, Mapping):
             raise ValueError("invalid coeffs")
         return ECEstimator(intercept, {k: float(v) for k, v in coeffs.items()})
-    except Exception:  # pragma: no cover - fallback uses defaults
-        _LOGGER.debug("Using default EC estimator coefficients")
-        return DEFAULT_MODEL
+    except FileNotFoundError:
+        _LOGGER.debug("EC model not found at %s, using defaults", model_path)
+    except Exception as exc:  # pragma: no cover - logging only
+        _LOGGER.warning("Failed to load EC model %s: %s", model_path, exc)
+    return DEFAULT_MODEL
 
 
 def save_model(
@@ -100,6 +114,7 @@ def save_model(
     """Persist estimator coefficients to ``path``."""
     out_path = Path(path) if path is not None else _model_path(plant_id, base_path=base_path)
     save_json(str(out_path), model.as_dict())
+    load_model.cache_clear()
 
 
 def estimate_ec_from_values(
@@ -328,3 +343,9 @@ def train_ec_model(
         base_path=base_path,
     )
     return model
+
+
+def clear_model_cache() -> None:
+    """Clear any cached EC models."""
+
+    load_model.cache_clear()
