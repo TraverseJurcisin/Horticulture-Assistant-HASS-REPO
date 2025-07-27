@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from pathlib import Path
 from functools import lru_cache
 from typing import Any, Mapping
@@ -18,8 +19,17 @@ except ImportError:
 
 _LOGGER = logging.getLogger(__name__)
 
-# Default directory containing individual plant profiles
-DEFAULT_BASE_DIR = Path("plants")
+# Environment variable name for overriding the default profile directory
+_ENV_PLANT_DIR = "HORTICULTURE_PLANT_DIR"
+
+
+def get_default_base_dir() -> Path:
+    """Return the base directory used for plant profiles."""
+
+    return Path(os.getenv(_ENV_PLANT_DIR, "plants"))
+
+
+DEFAULT_BASE_DIR = get_default_base_dir()
 
 REQUIRED_THRESHOLD_KEYS = {"light", "temperature", "EC"}
 REQUIRED_STAGE_KEY = "stage_duration"
@@ -145,7 +155,7 @@ def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dic
     """
     Load a plant profile by plant_id. Looks for 'plant_id.json' or 'plant_id.yaml' in base_dir or current directory.
     """
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = Path(base_dir) if base_dir else get_default_base_dir()
     json_path = directory / f"{plant_id}.json"
     yaml_path = directory / f"{plant_id}.yaml"
     yml_path = directory / f"{plant_id}.yml"
@@ -185,7 +195,7 @@ def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
     not exist an empty list is returned.
     """
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = Path(base_dir) if base_dir else get_default_base_dir()
     if not directory.is_dir():
         return []
 
@@ -213,7 +223,7 @@ def save_profile_by_id(
     plant_id: str, profile: dict, base_dir: str | Path | None = None
 ) -> bool:
     """Write profile for ``plant_id`` under ``base_dir``."""
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = Path(base_dir) if base_dir else get_default_base_dir()
     file_path = directory / f"{plant_id}.json"
     return save_profile_to_path(profile, file_path)
 
@@ -221,7 +231,7 @@ def save_profile_by_id(
 def profile_exists(plant_id: str, base_dir: str | Path | None = None) -> bool:
     """Return ``True`` if a profile file exists for ``plant_id``."""
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = Path(base_dir) if base_dir else get_default_base_dir()
     for ext in (".json", ".yaml", ".yml"):
         if (directory / f"{plant_id}{ext}").is_file():
             return True
@@ -231,7 +241,7 @@ def profile_exists(plant_id: str, base_dir: str | Path | None = None) -> bool:
 def delete_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> bool:
     """Delete the profile file for ``plant_id``."""
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = Path(base_dir) if base_dir else get_default_base_dir()
     deleted = False
     for ext in (".json", ".yaml", ".yml"):
         path = directory / f"{plant_id}{ext}"
@@ -363,6 +373,7 @@ def detach_profile_sensors(
 
 
 __all__ = [
+    "get_default_base_dir",
     "parse_basic_yaml",
     "load_profile_from_path",
     "load_profile_by_id",

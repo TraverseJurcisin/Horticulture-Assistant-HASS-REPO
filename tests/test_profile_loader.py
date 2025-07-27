@@ -4,6 +4,11 @@ import json
 from custom_components.horticulture_assistant.utils import plant_profile_loader as loader
 
 
+def test_default_base_dir_env(monkeypatch, tmp_path):
+    monkeypatch.setenv("HORTICULTURE_PLANT_DIR", str(tmp_path))
+    assert loader.get_default_base_dir() == tmp_path
+
+
 def test_load_profile_from_json(tmp_path):
     data = {
         "general": {"plant_type": "test"},
@@ -55,16 +60,11 @@ def test_load_profile_by_id_custom_dir(tmp_path):
     assert profile == {"general": {}, "thresholds": {}, "stages": {}, "nutrients": {}}
 
 
-def test_load_profile_missing(tmp_path):
+def test_load_profile_missing(tmp_path, monkeypatch):
     plants = tmp_path / "plants"
     plants.mkdir()
-    monkeypatch_dir = plants
-    orig = loader.DEFAULT_BASE_DIR
-    try:
-        loader.DEFAULT_BASE_DIR = monkeypatch_dir
-        profile = loader.load_profile_by_id("missing")
-    finally:
-        loader.DEFAULT_BASE_DIR = orig
+    monkeypatch.setenv("HORTICULTURE_PLANT_DIR", str(plants))
+    profile = loader.load_profile_by_id("missing")
     assert profile == {}
 
 
