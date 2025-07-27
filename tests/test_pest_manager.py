@@ -132,3 +132,12 @@ def test_build_pest_management_plan_includes_organic():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert "organic" in plan["aphids"]
     assert "neem oil" in plan["aphids"]["organic"]
+
+
+def test_check_pest_thresholds():
+    from plant_engine.pest_manager import check_pest_thresholds
+
+    counts = {"aphids": 6, "scale": 1}
+    exceeded = check_pest_thresholds("citrus", counts)
+    assert exceeded["aphids"] is True
+    assert exceeded.get("scale") is False

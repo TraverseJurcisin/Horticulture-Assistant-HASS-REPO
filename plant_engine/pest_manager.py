@@ -1,7 +1,7 @@
 """Pest management guideline utilities."""
 from __future__ import annotations
 
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -13,6 +13,7 @@ RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
 RELEASE_RATE_FILE = "beneficial_release_rates.json"
+THRESHOLD_FILE = "pest_thresholds.json"
 
 
 
@@ -25,6 +26,7 @@ _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
 _TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
+_THRESHOLDS: Dict[str, Dict[str, float]] = load_dataset(THRESHOLD_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -67,6 +69,24 @@ def get_pest_resistance(plant_type: str, pest: str) -> float | None:
     data = _RESISTANCE.get(normalize_key(plant_type), {})
     value = data.get(normalize_key(pest))
     return float(value) if isinstance(value, (int, float)) else None
+
+
+def check_pest_thresholds(
+    plant_type: str, counts: Mapping[str, float]
+) -> Dict[str, bool]:
+    """Return mapping of pests exceeding economic thresholds."""
+
+    thresholds = _THRESHOLDS.get(normalize_key(plant_type), {})
+    exceeded: Dict[str, bool] = {}
+    for pest, count in counts.items():
+        thresh = thresholds.get(normalize_key(pest))
+        if thresh is None:
+            continue
+        try:
+            exceeded[pest] = float(count) >= float(thresh)
+        except (TypeError, ValueError):
+            continue
+    return exceeded
 
 
 def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
@@ -217,5 +237,6 @@ __all__ = [
     "get_ipm_guidelines",
     "recommend_ipm_actions",
     "get_pest_resistance",
+    "check_pest_thresholds",
     "build_pest_management_plan",
 ]
