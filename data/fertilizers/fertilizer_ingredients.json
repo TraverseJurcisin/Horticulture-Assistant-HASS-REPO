@@ -1,0 +1,227 @@
+{
+  "ammonium_nitrate": {
+    "aliases": [
+      "Ammonium Nitrate"
+    ],
+    "chemical_formula": "NH4NO3",
+    "form": "solid",
+    "nutrient_content": {
+      "N": 0.34
+    }
+  },
+  "ammonium_phosphate": {
+    "aliases": [
+      "Ammonium Phosphate"
+    ],
+    "chemical_formula": "(NH4)3PO4",
+    "form": "solid",
+    "nutrient_content": {
+      "N": 0.11,
+      "P": 0.088
+    }
+  },
+  "boric_acid": {
+    "aliases": [
+      "Boric Acid"
+    ],
+    "chemical_formula": "H3BO3",
+    "form": "solid",
+    "nutrient_content": {
+      "B": 0.175
+    }
+  },
+  "calcium_nitrate": {
+    "aliases": [
+      "Calcium Nitrate"
+    ],
+    "chemical_formula": "Ca(NO3)2·4H2O",
+    "form": "solid",
+    "nutrient_content": {
+      "Ca": 0.19,
+      "N": 0.155
+    }
+  },
+  "copper_edta": {
+    "aliases": [
+      "Copper EDTA",
+      "Cu EDTA",
+      "chelated_cu"
+    ],
+    "chemical_formula": "C10H12N2O8CuNa2",
+    "form": "solid",
+    "nutrient_content": {
+      "Cu": 0.15
+    }
+  },
+  "iron_edta": {
+    "aliases": [
+      "Iron EDTA",
+      "Fe EDTA",
+      "chelated_fe"
+    ],
+    "chemical_formula": "C10H12N2O8FeNa",
+    "form": "solid",
+    "nutrient_content": {
+      "Fe": 0.12
+    }
+  },
+  "magnesium_nitrate": {
+    "aliases": [
+      "Magnesium Nitrate"
+    ],
+    "chemical_formula": "Mg(NO3)2·6H2O",
+    "form": "solid",
+    "nutrient_content": {
+      "Mg": 0.095,
+      "N": 0.109
+    }
+  },
+  "magnesium_sulfate": {
+    "aliases": [
+      "Magnesium Sulfate Heptahydrate",
+      "Magnesium Sulfate",
+      "Epsom Salt"
+    ],
+    "chemical_formula": "MgSO4·7H2O",
+    "form": "solid",
+    "nutrient_content": {
+      "Mg": 0.098,
+      "S": 0.129
+    }
+  },
+  "manganese_edta": {
+    "aliases": [
+      "Manganese EDTA",
+      "Mn EDTA",
+      "chelated_mn"
+    ],
+    "chemical_formula": "C10H12N2O8MnNa2",
+    "form": "solid",
+    "nutrient_content": {
+      "Mn": 0.13
+    }
+  },
+  "monoammonium_phosphate": {
+    "aliases": [
+      "Monoammonium Phosphate",
+      "MAP"
+    ],
+    "chemical_formula": "NH4H2PO4",
+    "form": "solid",
+    "nutrient_content": {
+      "N": 0.11,
+      "P": 0.22
+    }
+  },
+  "monopotassium_phosphate": {
+    "aliases": [
+      "Monopotassium Phosphate"
+    ],
+    "chemical_formula": "KH2PO4",
+    "form": "solid",
+    "nutrient_content": {
+      "K": 0.287,
+      "P": 0.227
+    }
+  },
+  "phosphoric_acid": {
+    "aliases": [
+      "Phosphoric Acid"
+    ],
+    "chemical_formula": "H3PO4",
+    "form": "liquid",
+    "nutrient_content": {
+      "P": 0.52
+    }
+  },
+  "potassium_chloride": {
+    "aliases": [
+      "Potassium Chloride",
+      "KCl"
+    ],
+    "chemical_formula": "KCl",
+    "form": "solid",
+    "nutrient_content": {
+      "K": 0.5
+    }
+  },
+  "potassium_nitrate": {
+    "aliases": [
+      "Potassium Nitrate"
+    ],
+    "chemical_formula": "KNO3",
+    "form": "solid",
+    "nutrient_content": {
+      "K": 0.38,
+      "N": 0.13
+    }
+  },
+  "potassium_sulfate": {
+    "aliases": [
+      "Potassium Sulfate"
+    ],
+    "chemical_formula": "K2SO4",
+    "form": "solid",
+    "nutrient_content": {
+      "K": 0.449,
+      "S": 0.184
+    }
+  },
+  "protein_hydrolysate": {
+    "aliases": [
+      "Protein Hydrolysate"
+    ],
+    "form": "liquid",
+    "nutrient_content": {}
+  },
+  "sea_kelp": {
+    "aliases": [
+      "Sea Kelp",
+      "Seaweed"
+    ],
+    "form": "liquid",
+    "nutrient_content": {}
+  },
+  "sodium_borate": {
+    "aliases": [
+      "Sodium Borate"
+    ],
+    "chemical_formula": "Na2B4O7·10H2O",
+    "form": "solid",
+    "nutrient_content": {
+      "B": 0.113
+    }
+  },
+  "sodium_molybdate": {
+    "aliases": [
+      "Sodium Molybdate"
+    ],
+    "chemical_formula": "Na2MoO4·2H2O",
+    "form": "solid",
+    "nutrient_content": {
+      "Mo": 0.396
+    }
+  },
+  "urea": {
+    "aliases": [
+      "Urea"
+    ],
+    "chemical_formula": "CO(NH2)2",
+    "form": "solid",
+    "nutrient_content": {
+      "N": 0.46
+    }
+  },
+  "zinc_edta": {
+    "aliases": [
+      "Zinc EDTA",
+      "Zn EDTA",
+      "chelated_zn"
+    ],
+    "chemical_formula": "C10H12N2O8ZnNa2",
+    "form": "solid",
+    "nutrient_content": {
+      "Zn": 0.14
+    }
+  }
+}
