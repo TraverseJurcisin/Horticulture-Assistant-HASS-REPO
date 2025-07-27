@@ -1,0 +1,4 @@
+{
+  "winter": {"temp_c": -2, "humidity_pct": 5},
+  "summer": {"temp_c": 2, "humidity_pct": -5}
+}

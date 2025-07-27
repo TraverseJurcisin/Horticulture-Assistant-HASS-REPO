@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 import datetime
 from dataclasses import dataclass, asdict
 from functools import lru_cache
@@ -38,6 +37,7 @@ SOIL_TEMP_DATA_FILE = "soil_temperature_guidelines.json"
 SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
 FROST_DATES_FILE = "frost_dates.json"
+SEASONAL_MOD_FILE = "seasonal_environment_modifiers.json"
 
 # map of dataset keys to human readable labels used when recommending
 # adjustments. defined here once to avoid recreating each call.
@@ -198,6 +198,58 @@ def get_combined_environment_guidelines(
     )
 
 
+def _apply_seasonal_modifiers(
+    guide: EnvironmentGuidelines, season: str | None
+) -> EnvironmentGuidelines:
+    """Return ``guide`` adjusted by seasonal modifiers if available."""
+
+    if not season:
+        return guide
+    mods = _SEASONAL_MODIFIERS.get(normalize_key(season))
+    if not mods:
+        return guide
+
+    def shift(range_val: RangeTuple | None, key: str) -> RangeTuple | None:
+        if range_val is None:
+            return None
+        delta = mods.get(key)
+        if delta is None:
+            return range_val
+        return range_val[0] + float(delta), range_val[1] + float(delta)
+
+    return EnvironmentGuidelines(
+        temp_c=shift(guide.temp_c, "temp_c"),
+        humidity_pct=shift(guide.humidity_pct, "humidity_pct"),
+        light_ppfd=shift(guide.light_ppfd, "light_ppfd"),
+        co2_ppm=shift(guide.co2_ppm, "co2_ppm"),
+    )
+
+
+def get_seasonal_environment_guidelines(
+    plant_type: str,
+    stage: str | None = None,
+    zone: str | None = None,
+    season: str | None = None,
+) -> EnvironmentGuidelines:
+    """Return combined guidelines adjusted for ``season``."""
+
+    guide = get_combined_environment_guidelines(plant_type, stage, zone)
+    return _apply_seasonal_modifiers(guide, season)
+
+
+def get_seasonal_environmental_targets(
+    plant_type: str,
+    stage: str | None = None,
+    zone: str | None = None,
+    season: str | None = None,
+) -> Dict[str, Any]:
+    """Return seasonal environment targets as ``dict``."""
+
+    return get_seasonal_environment_guidelines(
+        plant_type, stage, zone, season
+    ).as_dict()
+
+
 @lru_cache(maxsize=None)
 def get_combined_environmental_targets(
     plant_type: str, stage: str | None = None, zone: str | None = None
@@ -292,7 +344,9 @@ __all__ = [
     "get_frost_dates",
     "is_frost_free",
     "get_combined_environment_guidelines",
+    "get_seasonal_environment_guidelines",
     "get_combined_environmental_targets",
+    "get_seasonal_environmental_targets",
     "recommend_climate_adjustments",
     "get_environmental_targets",
     "recommend_environment_adjustments",
@@ -407,6 +461,7 @@ _SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
 _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
 _LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
 _FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
+_SEASONAL_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(SEASONAL_MOD_FILE)
 
 
 def get_score_weight(metric: str) -> float:
