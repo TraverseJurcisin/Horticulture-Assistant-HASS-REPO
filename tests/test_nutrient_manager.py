@@ -13,6 +13,7 @@ from plant_engine.nutrient_manager import (
     get_stage_ratio,
     score_nutrient_levels,
     score_nutrient_series,
+    calculate_deficiency_index,
 )
 
 
@@ -181,3 +182,13 @@ def test_calculate_all_deficiencies_with_ph():
     deficits = calculate_all_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
     assert deficits["P"] > 0
     assert deficits["Fe"] > 0
+
+
+def test_calculate_deficiency_index():
+    guidelines = get_all_recommended_levels("tomato", "fruiting")
+    current = {n: 0 for n in guidelines}
+    index = calculate_deficiency_index(current, "tomato", "fruiting")
+    assert 99 <= index <= 100
+
+    index2 = calculate_deficiency_index(guidelines, "tomato", "fruiting")
+    assert index2 == 0.0
