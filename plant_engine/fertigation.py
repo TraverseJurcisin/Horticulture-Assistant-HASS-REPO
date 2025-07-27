@@ -234,6 +234,7 @@ __all__ = [
     "generate_cycle_fertigation_plan_with_cost",
     "optimize_fertigation_schedule",
     "recommend_precise_fertigation",
+    "recommend_precise_fertigation_with_injection",
     "recommend_rootzone_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
@@ -755,11 +756,63 @@ def recommend_precise_fertigation(
         estimate_cost_breakdown,
     )
 
-    total = estimate_mix_cost(schedule)
-    breakdown = estimate_cost_breakdown(schedule)
+    try:
+        total = estimate_mix_cost(schedule)
+        breakdown = estimate_cost_breakdown(schedule)
+    except KeyError:
+        total = 0.0
+        breakdown = {}
     diagnostics = validate_fertigation_schedule(schedule, volume_l, plant_type)
 
     return schedule, total, breakdown, warnings, diagnostics
+
+
+def recommend_precise_fertigation_with_injection(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    water_profile: Mapping[str, float] | None = None,
+    *,
+    fertilizers: Mapping[str, str] | None = None,
+    purity_overrides: Mapping[str, float] | None = None,
+    include_micro: bool = False,
+    micro_fertilizers: Mapping[str, str] | None = None,
+) -> tuple[
+    Dict[str, float],
+    float,
+    Dict[str, float],
+    Dict[str, Dict[str, float]],
+    Dict[str, Dict[str, float]],
+    Dict[str, float],
+]:
+    """Return precise fertigation plan with stock solution injection volumes."""
+
+    schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
+        plant_type,
+        stage,
+        volume_l,
+        water_profile,
+        fertilizers=fertilizers,
+        purity_overrides=purity_overrides,
+        include_micro=include_micro,
+        micro_fertilizers=micro_fertilizers,
+    )
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        calculate_mix_ppm,
+    )
+
+    ppm_levels = calculate_mix_ppm(schedule, volume_l)
+    injection = recommend_stock_solution_injection(ppm_levels, volume_l)
+
+    return (
+        schedule,
+        total,
+        breakdown,
+        warnings,
+        diagnostics,
+        injection,
+    )
 
 
 def recommend_rootzone_fertigation(
