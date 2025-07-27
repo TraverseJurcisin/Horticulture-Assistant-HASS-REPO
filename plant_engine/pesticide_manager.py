@@ -33,6 +33,7 @@ __all__ = [
     "list_known_pesticides",
     "get_rotation_interval",
     "suggest_rotation_schedule",
+    "next_rotation_date",
     "suggest_rotation_plan",
     "get_phytotoxicity_risk",
     "is_safe_for_crop",
@@ -165,6 +166,15 @@ def suggest_rotation_schedule(product: str, start_date: date, cycles: int) -> Li
         return []
 
     return [start_date + timedelta(days=interval * i) for i in range(cycles)]
+
+
+def next_rotation_date(product: str, last_date: date) -> date | None:
+    """Return the next application date after ``last_date``."""
+
+    interval = get_rotation_interval(product)
+    if interval is None:
+        return None
+    return last_date + timedelta(days=interval)
 
 
 def suggest_rotation_plan(
