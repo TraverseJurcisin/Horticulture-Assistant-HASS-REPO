@@ -1,7 +1,7 @@
 """Dataset discovery utilities.
 
-This module exposes helpers for listing available JSON datasets bundled with
-the project. A :class:`DatasetCatalog` dataclass manages dataset paths and uses
+This module exposes helpers for listing available datasets bundled with
+the project (JSON or YAML). A :class:`DatasetCatalog` dataclass manages dataset paths and uses
 ``lru_cache`` so repeated lookups avoid hitting the filesystem.
 """
 
@@ -13,6 +13,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List
 
+from . import utils
 from .utils import get_data_dir, get_extra_dirs, get_overlay_dir
 
 DATA_DIR = get_data_dir()
@@ -41,7 +42,7 @@ class DatasetCatalog:
 
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
-        """Return relative paths of available JSON datasets."""
+        """Return relative paths of available dataset files."""
 
         paths = [self.base_dir, *self.extra_dirs]
         if self.overlay_dir:
@@ -49,7 +50,9 @@ class DatasetCatalog:
 
         found: dict[str, None] = {}
         for base in paths:
-            for path in base.rglob("*.json"):
+            for path in base.rglob("*"):
+                if path.suffix not in {".json", ".yaml", ".yml"}:
+                    continue
                 if path.name == "dataset_catalog.json":
                     continue
                 rel = path.relative_to(base).as_posix()
@@ -130,7 +133,7 @@ class DatasetCatalog:
 
     @lru_cache(maxsize=None)
     def load(self, name: str) -> object | None:
-        """Return parsed JSON contents of ``name`` or ``None`` if missing.
+        """Return parsed data contents of ``name`` or ``None`` if missing.
 
         Results are cached to avoid repeated disk reads. Call
         :meth:`refresh` to clear the cache when underlying files may have
@@ -140,8 +143,7 @@ class DatasetCatalog:
         path = self.find_path(name)
         if not path:
             return None
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+        return utils.load_data(str(path))
 
     def refresh(self) -> None:
         """Clear cached results so subsequent calls reload data."""
@@ -157,7 +159,7 @@ DEFAULT_CATALOG = DatasetCatalog()
 
 
 def list_datasets() -> List[str]:
-    """Return relative paths of available JSON datasets."""
+    """Return relative paths of available dataset files."""
 
     return DEFAULT_CATALOG.list_datasets()
 
@@ -193,7 +195,7 @@ def get_dataset_path(name: str) -> Path | None:
 
 
 def load_dataset_file(name: str) -> object | None:
-    """Return parsed JSON contents of ``name`` using the default catalog."""
+    """Return parsed contents of ``name`` using the default catalog."""
 
     return DEFAULT_CATALOG.load(name)
 

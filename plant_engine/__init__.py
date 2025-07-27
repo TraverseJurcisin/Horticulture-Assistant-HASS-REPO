@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from importlib import import_module
 
-from . import utils
+from . import utils, environment_tips
 from .utils import *  # noqa: F401,F403
+from .environment_tips import *  # noqa: F401,F403
 
-__all__ = sorted(set(utils.__all__))
+__all__ = sorted(set(utils.__all__) | set(environment_tips.__all__))
 
 
 def __getattr__(name: str):
