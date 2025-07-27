@@ -57,6 +57,7 @@ __all__ = [
     "calculate_cycle_deficiency_index",
     "get_synergy_adjusted_levels",
     "calculate_all_deficiencies_with_synergy",
+    "calculate_all_deficiencies_with_ph_and_synergy",
 ]
 
 
@@ -562,6 +563,39 @@ def calculate_all_deficiencies_with_synergy(
     targets = get_synergy_adjusted_levels(plant_type, stage)
     deficits: Dict[str, float] = {}
     for nutrient, target in targets.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        diff = round(target - current, 2)
+        if diff > 0:
+            deficits[nutrient] = diff
+    return deficits
+
+
+def calculate_all_deficiencies_with_ph_and_synergy(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    ph: float,
+) -> Dict[str, float]:
+    """Return deficiencies using synergy- and pH-adjusted targets."""
+
+    if not 0 < ph <= 14:
+        raise ValueError("ph must be between 0 and 14")
+
+    targets = get_synergy_adjusted_levels(plant_type, stage)
+    if not targets:
+        targets = get_all_recommended_levels(plant_type, stage)
+
+    factors = availability_for_all(ph)
+    adjusted: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        factor = factors.get(nutrient, 1.0)
+        adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
+
+    deficits: Dict[str, float] = {}
+    for nutrient, target in adjusted.items():
         try:
             current = float(current_levels.get(nutrient, 0.0))
         except (TypeError, ValueError):

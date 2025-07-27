@@ -247,3 +247,24 @@ def test_calculate_all_deficiencies_with_synergy():
     deficits = calculate_all_deficiencies_with_synergy(current, "tomato", "fruiting")
     assert deficits["P"] == 6.0
     assert round(deficits["B"], 2) == 0.03
+
+
+def test_calculate_all_deficiencies_with_ph_and_synergy():
+    from plant_engine.nutrient_manager import (
+        calculate_all_deficiencies_with_ph_and_synergy,
+    )
+
+    current = {
+        "N": 80,
+        "P": 60,
+        "K": 120,
+        "Fe": 4.0,
+        "B": 0.5,
+    }
+
+    deficits = calculate_all_deficiencies_with_ph_and_synergy(
+        current, "tomato", "fruiting", 7.5
+    )
+
+    assert deficits["P"] > 0
+    assert deficits["Fe"] > 0
