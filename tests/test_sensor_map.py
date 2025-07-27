@@ -8,7 +8,11 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.sensor_map import build_sensor_map, DEFAULT_SENSORS
+from custom_components.horticulture_assistant.utils.sensor_map import (
+    build_sensor_map,
+    merge_sensor_maps,
+    DEFAULT_SENSORS,
+)
 
 
 def test_build_sensor_map_defaults():
@@ -27,3 +31,21 @@ def test_build_sensor_map_custom_entries():
         "moisture_sensors": ["sensor.a", "sensor.b"],
         "ec_sensors": ["sensor.ec1", "sensor.ec2"],
     }
+
+
+def test_merge_sensor_maps():
+    base = {"moisture_sensors": ["a"], "ec_sensors": ["ec1"]}
+    update = {"moisture_sensors": ["b", "a"], "temperature_sensors": ["t1"]}
+    result = merge_sensor_maps(base, update)
+    assert result == {
+        "moisture_sensors": ["a", "b"],
+        "ec_sensors": ["ec1"],
+        "temperature_sensors": ["t1"],
+    }
+
+
+def test_merge_sensor_maps_ignore_empty():
+    base = {"moisture_sensors": ["a"]}
+    update = {"moisture_sensors": []}
+    result = merge_sensor_maps(base, update)
+    assert result == {"moisture_sensors": ["a"]}

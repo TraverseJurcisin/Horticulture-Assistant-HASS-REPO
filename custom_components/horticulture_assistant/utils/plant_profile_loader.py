@@ -23,6 +23,42 @@ DEFAULT_BASE_DIR = Path("plants")
 REQUIRED_THRESHOLD_KEYS = {"light", "temperature", "EC"}
 REQUIRED_STAGE_KEY = "stage_duration"
 
+
+def parse_basic_yaml(content: str) -> dict:
+    """Return a naive YAML parser used when PyYAML is unavailable.
+
+    The implementation supports the extremely small subset of YAML used in
+    unit tests: nested dictionaries through indentation and single line lists.
+    Values that look numeric are converted to ``int`` or ``float``.
+    """
+
+    parsed: dict[str, object] = {}
+    stack = [parsed]
+    indents = [0]
+    for line in content.splitlines():
+        if not line.strip():
+            continue
+        indent = len(line) - len(line.lstrip())
+        key, _, value = line.strip().partition(":")
+        while indent <= indents[-1] and len(stack) > 1:
+            stack.pop()
+            indents.pop()
+        if value.strip() == "":
+            obj = {}
+            stack[-1][key] = obj
+            stack.append(obj)
+            indents.append(indent)
+            continue
+        val = value.strip()
+        if val.startswith("[") and val.endswith("]"):
+            items = [i.strip() for i in val[1:-1].split(",") if i.strip()]
+            val = [float(i) if i.replace(".", "", 1).isdigit() else i for i in items]
+        else:
+            if val.replace(".", "", 1).isdigit():
+                val = float(val) if "." in val else int(val)
+        stack[-1][key] = val
+    return parsed
+
 @lru_cache(maxsize=None)
 def load_profile_from_path(path: str | Path) -> dict:
     """
@@ -35,41 +71,11 @@ def load_profile_from_path(path: str | Path) -> dict:
         return {}
     ext = path_obj.suffix.lower()
 
-    def _basic_yaml_parse(content: str) -> dict:
-        """Parse a tiny subset of YAML used in tests when PyYAML is missing."""
-
-        parsed: dict[str, object] = {}
-        stack = [parsed]
-        indents = [0]
-        for line in content.splitlines():
-            if not line.strip():
-                continue
-            indent = len(line) - len(line.lstrip())
-            key, _, value = line.strip().partition(":")
-            while indent <= indents[-1] and len(stack) > 1:
-                stack.pop()
-                indents.pop()
-            if value.strip() == "":
-                obj = {}
-                stack[-1][key] = obj
-                stack.append(obj)
-                indents.append(indent)
-                continue
-            val = value.strip()
-            if val.startswith("[") and val.endswith("]"):
-                items = [i.strip() for i in val[1:-1].split(",") if i.strip()]
-                val = [float(i) if i.replace(".", "", 1).isdigit() else i for i in items]
-            else:
-                if val.replace(".", "", 1).isdigit():
-                    val = float(val) if "." in val else int(val)
-            stack[-1][key] = val
-        return parsed
-
     def _load_yaml(fp: Path) -> dict:
         content = fp.read_text(encoding="utf-8")
         if yaml is not None:
             return yaml.safe_load(content) or {}
-        return _basic_yaml_parse(content)
+        return parse_basic_yaml(content)
 
     try:
         if ext == ".json":
@@ -334,6 +340,7 @@ def detach_profile_sensors(
 
 
 __all__ = [
+    "parse_basic_yaml",
     "load_profile_from_path",
     "load_profile_by_id",
     "load_profile",

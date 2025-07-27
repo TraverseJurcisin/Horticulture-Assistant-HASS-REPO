@@ -40,6 +40,12 @@ def test_load_profile_from_yaml(tmp_path):
     assert profile["stages"]["seedling"]["stage_duration"] == 14
 
 
+def test_parse_basic_yaml():
+    content = "a: 1\nb:\n  c: 2\n  d: [3, 4]"
+    result = loader.parse_basic_yaml(content)
+    assert result == {"a": 1, "b": {"c": 2, "d": [3, 4]}}
+
+
 def test_load_profile_by_id_custom_dir(tmp_path):
     plants = tmp_path / "plants"
     plants.mkdir()

@@ -14,7 +14,7 @@ DEFAULT_SENSORS = {
     "co2_sensors": "sensor.{plant_id}_raw_co2",
 }
 
-__all__ = ["build_sensor_map", "DEFAULT_SENSORS"]
+__all__ = ["build_sensor_map", "merge_sensor_maps", "DEFAULT_SENSORS"]
 
 
 def build_sensor_map(
@@ -35,3 +35,22 @@ def build_sensor_map(
             entry_data.get(key), default.format(plant_id=plant_id)
         )
     return result
+
+
+def merge_sensor_maps(
+    base: Mapping[str, Iterable[str]], update: Mapping[str, Iterable[str]]
+) -> Dict[str, list[str]]:
+    """Return ``base`` merged with ``update`` with duplicates removed."""
+
+    merged: Dict[str, list[str]] = {k: list(v) for k, v in base.items()}
+    for key, values in update.items():
+        if not values:
+            continue
+        if isinstance(values, str):
+            values = [values]
+        existing = merged.get(key, [])
+        for item in values:
+            if item not in existing:
+                existing.append(item)
+        merged[key] = existing
+    return merged
