@@ -40,6 +40,12 @@ _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
 
+
+def _load(data):
+    """Return dataset contents supporting direct dict overrides."""
+
+    return data() if callable(data) else data
+
 __all__ = [
     "list_supported_plants",
     "get_pest_thresholds",
@@ -72,20 +78,20 @@ def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
     ``"citrus"`` map to the same dataset entry.
     """
 
-    data = _THRESHOLDS()
+    data = _load(_THRESHOLDS)
     return data.get(normalize_key(plant_type), {})
 
 
 def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
-    return list_dataset_entries(_THRESHOLDS())
+    return list_dataset_entries(_load(_THRESHOLDS))
 
 
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return recommended days between scouting events for a plant stage."""
 
-    return _get_interval(_MONITOR_INTERVALS(), plant_type, stage)
+    return _get_interval(_load(_MONITOR_INTERVALS), plant_type, stage)
 
 
 def risk_adjusted_monitor_interval(
@@ -106,7 +112,7 @@ def risk_adjusted_monitor_interval(
     elif any(r == "moderate" for r in risks.values()):
         level = "moderate"
 
-    modifiers = _RISK_MODIFIERS()
+    modifiers = _load(_RISK_MODIFIERS)
     modifier = modifiers.get(level, 1.0)
     interval = int(round(base * modifier))
     return max(1, interval)
@@ -117,7 +123,7 @@ def next_monitor_date(
 ) -> date | None:
     """Return the next pest scouting date based on interval guidelines."""
 
-    return _next_date(_MONITOR_INTERVALS(), plant_type, stage, last_date)
+    return _next_date(_load(_MONITOR_INTERVALS), plant_type, stage, last_date)
 
 
 def generate_monitoring_schedule(
@@ -128,7 +134,7 @@ def generate_monitoring_schedule(
 ) -> list[date]:
     """Return list of upcoming monitoring dates."""
 
-    return _generate_schedule(_MONITOR_INTERVALS(), plant_type, stage, start, events)
+    return _generate_schedule(_load(_MONITOR_INTERVALS), plant_type, stage, start, events)
 
 
 def generate_detailed_monitoring_schedule(
@@ -148,21 +154,21 @@ def generate_detailed_monitoring_schedule(
 def get_severity_action(level: str) -> str:
     """Return recommended action for a severity ``level``."""
 
-    actions = _SEVERITY_ACTIONS()
+    actions = _load(_SEVERITY_ACTIONS)
     return actions.get(level.lower(), "")
 
 
 def get_scouting_method(pest: str) -> str:
     """Return recommended scouting approach for ``pest``."""
 
-    methods = _SCOUTING_METHODS()
+    methods = _load(_SCOUTING_METHODS)
     return methods.get(normalize_key(pest), "")
 
 
 def get_severity_thresholds(pest: str) -> Dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
-    thresholds = _SEVERITY_THRESHOLDS()
+    thresholds = _load(_SEVERITY_THRESHOLDS)
     return thresholds.get(normalize_key(pest), {})
 
 
@@ -236,7 +242,7 @@ def estimate_pest_risk(
 ) -> Dict[str, str]:
     """Return pest risk level based on environmental conditions."""
 
-    factors = _RISK_FACTORS().get(normalize_key(plant_type), {})
+    factors = _load(_RISK_FACTORS).get(normalize_key(plant_type), {})
     if not factors:
         return {}
 
