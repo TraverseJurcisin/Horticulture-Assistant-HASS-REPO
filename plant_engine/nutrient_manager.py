@@ -25,7 +25,11 @@ clear_dataset_cache()
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
 _WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
-_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
+_RAW_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
+# Normalize modifier keys for consistent lookups regardless of hyphen/space use
+_TAG_MODIFIERS: Dict[str, Dict[str, float]] = {
+    normalize_key(k): v for k, v in _RAW_TAG_MODIFIERS.items()
+} if isinstance(_RAW_TAG_MODIFIERS, dict) else {}
 
 __all__ = [
     "list_supported_plants",

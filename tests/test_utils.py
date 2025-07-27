@@ -20,6 +20,11 @@ def test_normalize_key_spaces_replaced():
     assert normalize_key("My Plant") == "my_plant"
 
 
+def test_normalize_key_hyphen_and_extra_whitespace():
+    """Hyphens and repeated separators collapse to single underscores."""
+    assert normalize_key("My-Plant  Name") == "my_plant_name"
+
+
 def test_normalize_key_non_string():
     assert normalize_key(123) == "123"
 
