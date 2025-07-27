@@ -4,7 +4,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 from typing import Dict, Iterable, List
 
-from .utils import load_dataset, normalize_key
+from .utils import lazy_dataset, normalize_key
 
 DATA_FILE = "pesticide_withdrawal_days.json"
 REENTRY_FILE = "pesticide_reentry_intervals.json"
@@ -16,14 +16,14 @@ PRICE_FILE = "pesticide_prices.json"
 ACTIVE_FILE = "pesticide_active_ingredients.json"
 
 # Cached withdrawal data mapping product names to waiting days
-_DATA: Dict[str, int] = load_dataset(DATA_FILE)
-_REENTRY: Dict[str, float] = load_dataset(REENTRY_FILE)
-_MOA: Dict[str, str] = load_dataset(MOA_FILE)
-_ROTATION: Dict[str, int] = load_dataset(ROTATION_FILE)
-_PHYTO: Dict[str, Dict[str, str]] = load_dataset(PHYTO_FILE)
-_RATES: Dict[str, float] = load_dataset(RATE_FILE)
-_PRICES: Dict[str, float] = load_dataset(PRICE_FILE)
-_ACTIVE: Dict[str, Dict[str, object]] = load_dataset(ACTIVE_FILE)
+_DATA = lazy_dataset(DATA_FILE)
+_REENTRY = lazy_dataset(REENTRY_FILE)
+_MOA = lazy_dataset(MOA_FILE)
+_ROTATION = lazy_dataset(ROTATION_FILE)
+_PHYTO = lazy_dataset(PHYTO_FILE)
+_RATES = lazy_dataset(RATE_FILE)
+_PRICES = lazy_dataset(PRICE_FILE)
+_ACTIVE = lazy_dataset(ACTIVE_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -64,7 +64,7 @@ def get_withdrawal_days(product: str) -> int | None:
     int | None
         Days to wait before harvesting or ``None`` if unknown.
     """
-    return _DATA.get(product.lower())
+    return _DATA().get(product.lower())
 
 
 def earliest_harvest_date(product: str, application_date: date) -> date | None:
@@ -102,7 +102,7 @@ def adjust_harvest_date(
 
 def get_reentry_hours(product: str) -> float | None:
     """Return reentry interval in hours for ``product``."""
-    return _REENTRY.get(product.lower())
+    return _REENTRY().get(product.lower())
 
 
 def earliest_reentry_time(product: str, application_time: datetime) -> datetime | None:
@@ -141,13 +141,13 @@ def calculate_harvest_window(applications: Iterable[tuple[str, date]]) -> date |
 def get_mode_of_action(product: str) -> str | None:
     """Return the mode of action classification for ``product`` if known."""
 
-    return _MOA.get(product.lower())
+    return _MOA().get(product.lower())
 
 
 def list_known_pesticides() -> List[str]:
     """Return alphabetically sorted list of pesticides with MOA data."""
 
-    return sorted(_MOA.keys())
+    return sorted(_MOA().keys())
 
 
 def get_rotation_interval(product: str) -> int | None:
@@ -160,7 +160,7 @@ def get_rotation_interval(product: str) -> int | None:
     moa = get_mode_of_action(product)
     if moa is None:
         return None
-    days = _ROTATION.get(moa.lower())
+    days = _ROTATION().get(moa.lower())
     return int(days) if isinstance(days, (int, float)) else None
 
 
@@ -217,7 +217,7 @@ def suggest_rotation_plan(
 def get_phytotoxicity_risk(plant_type: str, product: str) -> str | None:
     """Return phytotoxicity risk level for ``product`` on ``plant_type``."""
 
-    crop = _PHYTO.get(normalize_key(plant_type))
+    crop = _PHYTO().get(normalize_key(plant_type))
     if not isinstance(crop, dict):
         return None
     return crop.get(product.lower())
@@ -233,7 +233,7 @@ def is_safe_for_crop(plant_type: str, product: str) -> bool:
 def get_application_rate(product: str) -> float | None:
     """Return recommended grams or mL per liter for ``product``."""
 
-    rate = _RATES.get(product.lower())
+    rate = _RATES().get(product.lower())
     try:
         return float(rate) if rate is not None else None
     except (TypeError, ValueError):  # pragma: no cover - defensive
@@ -243,7 +243,7 @@ def get_application_rate(product: str) -> float | None:
 def get_pesticide_price(product: str) -> float | None:
     """Return price per unit for ``product`` if defined."""
 
-    price = _PRICES.get(product.lower())
+    price = _PRICES().get(product.lower())
     try:
         return float(price) if price is not None else None
     except (TypeError, ValueError):  # pragma: no cover - defensive
@@ -323,10 +323,10 @@ def summarize_pesticide_restrictions(
 def get_active_ingredient_info(name: str) -> Dict[str, object] | None:
     """Return detailed info for a pesticide active ingredient."""
 
-    return _ACTIVE.get(name.lower())
+    return _ACTIVE().get(name.lower())
 
 
 def list_active_ingredients() -> List[str]:
     """Return sorted list of known active ingredient names."""
 
-    return sorted(_ACTIVE.keys())
+    return sorted(_ACTIVE().keys())
