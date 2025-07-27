@@ -72,6 +72,8 @@ ENV_ALIASES = {
     # Additional common names
     "dli": ["dli", "daily_light_integral"],
     "photoperiod_hours": ["photoperiod_hours", "photoperiod", "day_length"],
+    # Vapor pressure deficit measured in kiloPascals
+    "vpd": ["vpd", "vpd_kpa"],
 }
 
 # reverse mapping for constant time alias lookups
@@ -201,7 +203,19 @@ def recommend_climate_adjustments(
 
 
 def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, float]:
-    """Return ``readings`` with keys mapped to canonical environment names."""
+    """Return ``readings`` normalized to canonical environment keys.
+
+    Keys listed in :data:`ENV_ALIASES` are mapped to their canonical form.
+    Temperature values suffixed with ``_f`` or ``_k`` are converted from
+    Fahrenheit or Kelvin to Celsius respectively. Invalid values are ignored.
+    """
+
+    def _convert_temp(value: float, key: str) -> tuple[str, float]:
+        if key.endswith("_f"):
+            return key.replace("_f", "_c"), (value - 32) * 5 / 9
+        if key.endswith("_k"):
+            return key.replace("_k", "_c"), value - 273.15
+        return key, value
 
     normalized: Dict[str, float] = {}
     for key, value in readings.items():
@@ -210,12 +224,7 @@ def normalize_environment_readings(readings: Mapping[str, float]) -> Dict[str, f
             val = float(value)
         except (TypeError, ValueError):
             continue
-        if canonical in {"temp_f", "soil_temp_f", "leaf_temp_f"}:
-            val = (val - 32) * 5 / 9
-            canonical = canonical.replace("_f", "_c")
-        elif canonical in {"temp_k", "soil_temp_k", "leaf_temp_k"}:
-            val = val - 273.15
-            canonical = canonical.replace("_k", "_c")
+        canonical, val = _convert_temp(val, canonical)
         normalized[canonical] = val
     return normalized
 

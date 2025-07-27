@@ -619,6 +619,12 @@ def test_normalize_environment_readings_unknown_key():
     assert result == {"foo": 1.0}
 
 
+def test_normalize_environment_readings_vpd_alias():
+    data = {"vpd_kpa": 1.2}
+    result = normalize_environment_readings(data)
+    assert result == {"vpd": 1.2}
+
+
 def test_average_environment_readings():
     series = [
         {"temp_c": 20, "humidity_pct": 60},
