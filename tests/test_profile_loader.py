@@ -157,3 +157,9 @@ def test_profile_exists_and_delete(tmp_path):
     assert loader.profile_exists("p1", plants)
     assert loader.delete_profile_by_id("p1", plants)
     assert not loader.profile_exists("p1", plants)
+
+
+def test_normalize_sensor_values():
+    data = {"a": "one", "b": ["two", "three"], "c": 5}
+    result = loader._normalize_sensor_values(data)
+    assert result == {"a": ["one"], "b": ["two", "three"], "c": []}
