@@ -71,3 +71,12 @@ def test_medium_ph_functions():
     assert ph_manager.recommend_medium_ph_adjustment(6.5, "soil") is None
     assert ph_manager.recommended_ph_for_medium("coco") == 6.0
     assert ph_manager.get_medium_ph_range("unknown") == []
+
+
+def test_soil_ph_functions():
+    rng = ph_manager.get_soil_ph_range("citrus")
+    assert rng == [6.0, 7.0]
+    assert ph_manager.recommend_soil_ph_adjustment(5.5, "citrus") == "increase"
+    assert ph_manager.recommend_soil_ph_adjustment(7.2, "citrus") == "decrease"
+    assert ph_manager.recommend_soil_ph_adjustment(6.5, "citrus") is None
+    assert ph_manager.get_soil_ph_range("unknown") == []

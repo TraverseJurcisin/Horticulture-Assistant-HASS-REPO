@@ -4,16 +4,18 @@ from __future__ import annotations
 
 from typing import Dict, Iterable
 
-from .utils import list_dataset_entries, load_dataset, stage_value
+from .utils import list_dataset_entries, load_dataset, stage_value, normalize_key
 
 DATA_FILE = "ph_guidelines.json"
 ADJUST_FILE = "ph_adjustment_factors.json"
 MEDIUM_FILE = "growth_medium_ph_ranges.json"
+SOIL_PH_FILE = "soil_ph_guidelines.json"
 
 # Cached dataset loaded once
 _DATA: Dict[str, Dict[str, Iterable[float]]] = load_dataset(DATA_FILE)
 _ADJUST: Dict[str, Dict[str, float]] = load_dataset(ADJUST_FILE)
 _MEDIUM: Dict[str, Iterable[float]] = load_dataset(MEDIUM_FILE)
+_SOIL: Dict[str, Iterable[float]] = load_dataset(SOIL_PH_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -27,6 +29,8 @@ __all__ = [
     "get_medium_ph_range",
     "recommend_medium_ph_adjustment",
     "recommended_ph_for_medium",
+    "get_soil_ph_range",
+    "recommend_soil_ph_adjustment",
 ]
 
 
@@ -212,3 +216,30 @@ def recommended_ph_for_medium(medium: str) -> float | None:
     if not rng:
         return None
     return round((rng[0] + rng[1]) / 2, 2)
+
+
+def get_soil_ph_range(plant_type: str) -> list[float]:
+    """Return optimal soil pH range for ``plant_type``."""
+
+    rng = _SOIL.get(normalize_key(plant_type))
+    if isinstance(rng, Iterable):
+        vals = list(rng)
+        if len(vals) == 2:
+            return [float(vals[0]), float(vals[1])]
+    return []
+
+
+def recommend_soil_ph_adjustment(current_ph: float, plant_type: str) -> str | None:
+    """Return soil pH adjustment recommendation for ``plant_type``."""
+
+    if current_ph <= 0:
+        raise ValueError("current_ph must be positive")
+    rng = get_soil_ph_range(plant_type)
+    if not rng:
+        return None
+    low, high = rng
+    if current_ph < low:
+        return "increase"
+    if current_ph > high:
+        return "decrease"
+    return None

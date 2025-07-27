@@ -159,6 +159,7 @@ Important categories include:
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
+- **Soil pH guidelines** – optimal soil pH ranges for supported crops
 
 The WSDA fertilizer dataset resides under `feature/wsda_refactored_sharded/` which contains an
 `index_sharded/` directory of `.jsonl` shards and a `detail/` directory of per-product records.
