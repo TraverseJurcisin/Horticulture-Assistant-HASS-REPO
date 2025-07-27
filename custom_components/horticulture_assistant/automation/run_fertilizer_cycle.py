@@ -1,15 +1,29 @@
+"""Automated nutrient management based on plant profile data."""
+
 import logging
 from pathlib import Path
 from datetime import datetime
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
-from .helpers import iter_profiles, append_json_log
+from .helpers import append_json_log, iter_profiles
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _latest_env(profile: dict) -> dict:
+    """Return most recent environment readings from ``profile``."""
+
+    data = {}
+    gen = profile.get("general")
+    if isinstance(gen, dict):
+        data = gen.get("latest_env", {}) or {}
+    if not data:
+        data = profile.get("latest_env", {})
+    return data if isinstance(data, dict) else {}
 
 def run_fertilizer_cycle(base_path: str | None = None) -> None:
     """
@@ -31,12 +45,11 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
         _LOGGER.error("Plants directory not found: %s", plants_dir)
         return
 
-    profiles = list(iter_profiles(base_path))
-    if not profiles:
-        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)
-        return
+    profiles = iter_profiles(base_path)
+    found = False
 
     for plant_id, profile_data in profiles:
+        found = True
 
         # Check if fertilization is enabled for this plant
         fertilizer_enabled = True
@@ -48,12 +61,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
             continue
 
         # Get the latest sensor data for this plant (nutrient levels, EC, etc.)
-        sensor_data = {}
-        if isinstance(profile_data.get("general"), dict):
-            sensor_data = profile_data["general"].get("latest_env", {}) or {}
-        if not sensor_data:
-            # Also allow top-level latest_env if profile stores it at top level
-            sensor_data = profile_data.get("latest_env", {})
+        sensor_data = _latest_env(profile_data)
         if not sensor_data:
             _LOGGER.warning("No latest sensor data found for plant %s. Skipping.", plant_id)
             continue
@@ -154,4 +162,10 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
                 break
 
         if not triggered:
-            _LOGGER.info("All monitored nutrient levels are within thresholds for plant %s. No fertilization needed.", plant_id)
+            _LOGGER.info(
+                "All monitored nutrient levels are within thresholds for plant %s. No fertilization needed.",
+                plant_id,
+            )
+
+    if not found:
+        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)

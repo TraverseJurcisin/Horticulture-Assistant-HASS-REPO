@@ -1,4 +1,10 @@
-"""Simple irrigation automation using local plant profiles."""
+"""Simple irrigation automation using local plant profiles.
+
+The module scans the ``plants`` directory for profile files and triggers
+irrigation actuators when the current soil moisture reading falls below the
+configured threshold.  It is intentionally lightweight so that it can be used
+as a standalone script or invoked from Home Assistant services.
+"""
 
 from __future__ import annotations
 
@@ -47,8 +53,8 @@ def _get_moisture_threshold(profile: dict) -> float | None:
     return None
 
 
-def _get_current_moisture(profile: dict) -> float | None:
-    """Return latest soil moisture reading from profile data."""
+def _latest_env(profile: dict) -> dict:
+    """Return the most recent environment readings from ``profile``."""
 
     data = {}
     gen = profile.get("general")
@@ -56,6 +62,13 @@ def _get_current_moisture(profile: dict) -> float | None:
         data = gen.get("latest_env", {}) or {}
     if not data:
         data = profile.get("latest_env", {})
+    return data if isinstance(data, dict) else {}
+
+
+def _get_current_moisture(profile: dict) -> float | None:
+    """Return latest soil moisture reading from profile data."""
+
+    data = _latest_env(profile)
     for key in ("soil_moisture", "soil_moisture_pct", "moisture", "vwc"):
         if key in data:
             try:
@@ -92,12 +105,11 @@ def run_automation_cycle(base_path: str | None = None) -> None:
         _LOGGER.error("Plants directory not found: %s", plants_dir)
         return
 
-    profiles = list(iter_profiles(base_path))
-    if not profiles:
-        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)
-        return
+    profiles = iter_profiles(base_path)
+    found = False
 
     for plant_id, profile_data in profiles:
+        found = True
         if not _irrigation_enabled(profile_data):
             _LOGGER.info("Irrigation disabled for plant %s. Skipping.", plant_id)
             continue
@@ -121,11 +133,15 @@ def run_automation_cycle(base_path: str | None = None) -> None:
             try:
                 import custom_components.horticulture_assistant.automation.irrigation_actuator as irrigation_actuator
                 irrigation_actuator.trigger_irrigation_actuator(
-                    plant_id=plant_id, trigger=True, base_path=base_path
+                    plant_id=plant_id,
+                    trigger=True,
+                    base_path=base_path,
                 )
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:  # noqa: BLE001 - best effort logging
                 _LOGGER.error(
-                    "Failed to trigger irrigation actuator for plant %s: %s", plant_id, e
+                    "Failed to trigger irrigation actuator for plant %s: %s",
+                    plant_id,
+                    e,
                 )
             else:
                 triggered = True
@@ -143,5 +159,8 @@ def run_automation_cycle(base_path: str | None = None) -> None:
         log_file = plants_dir / str(plant_id) / "irrigation_log.json"
         try:
             append_json_log(log_file, entry)
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:  # noqa: BLE001 - log and continue
             _LOGGER.error("Failed to write irrigation log for plant %s: %s", plant_id, e)
+
+    if not found:
+        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)

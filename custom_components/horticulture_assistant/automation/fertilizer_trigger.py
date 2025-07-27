@@ -143,5 +143,8 @@ def fertilizer_trigger(
             return True
 
     # If we reach here, no nutrient was below its threshold
-    _LOGGER.info("All monitored nutrient levels are within thresholds for plant_id %s. No fertilization needed.", plant_id)
+    _LOGGER.info(
+        "All monitored nutrient levels are within thresholds for plant_id %s. No fertilization needed.",
+        plant_id,
+    )
     return False
