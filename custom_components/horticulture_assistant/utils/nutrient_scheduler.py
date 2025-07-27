@@ -201,7 +201,13 @@ def _apply_absorption_rates(targets: dict[str, float], stage_key: str) -> None:
 def _compute_nutrient_targets(
     plant_id: str, hass: HomeAssistant | None, include_micro: bool
 ) -> dict[str, float]:
-    """Return nutrient targets for ``plant_id`` without saving them."""
+    """Return nutrient targets for ``plant_id`` without persisting them.
+
+    This helper consolidates profile data and guideline defaults to produce
+    stage-adjusted nutrient targets. Tag modifiers and absorption rates from
+    datasets are applied automatically. When ``include_micro`` is ``True``
+    micronutrient guidelines are also merged into the result.
+    """
 
     profile = _load_profile(plant_id, hass)
     if not profile:
@@ -300,8 +306,22 @@ def schedule_nutrient_corrections(
     plant_id: str,
     current_levels: Mapping[str, float],
     hass: HomeAssistant = None,
+    *,
+    use_synergy: bool = False,
 ) -> NutrientAdjustments:
-    """Return ppm corrections required for ``plant_id`` based on readings."""
+    """Return ppm corrections required for ``plant_id`` based on readings.
+
+    Parameters
+    ----------
+    plant_id:
+        Identifier for the plant profile to evaluate.
+    current_levels:
+        Mapping of current nutrient levels in ppm.
+    hass:
+        Optional Home Assistant instance for path resolution.
+    use_synergy:
+        When ``True`` guidelines adjusted by nutrient synergy factors are used.
+    """
 
     profile = _load_profile(plant_id, hass)
     if not profile:
@@ -320,9 +340,14 @@ def schedule_nutrient_corrections(
         _LOGGER.warning("Unable to determine plant type for '%s'", plant_id)
         return NutrientAdjustments({})
 
-    adjustments = calculate_nutrient_adjustments(
-        current_levels, plant_type, stage_key
-    )
+    if use_synergy:
+        from plant_engine.nutrient_manager import (
+            calculate_all_deficiencies_with_synergy as _calc,
+        )
+    else:
+        from plant_engine.nutrient_manager import calculate_nutrient_adjustments as _calc
+
+    adjustments = _calc(current_levels, plant_type, stage_key)
     return NutrientAdjustments(adjustments)
 
 
