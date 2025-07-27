@@ -1,6 +1,11 @@
 from datetime import date
 
-from plant_engine.monitor_utils import get_interval, next_date, generate_schedule
+from plant_engine.monitor_utils import (
+    get_interval,
+    next_date,
+    generate_schedule,
+    calculate_risk_score,
+)
 
 DATA = {
     "citrus": {"fruiting": 4, "optimal": 5},
@@ -24,3 +29,9 @@ def test_generate_schedule():
     sched = generate_schedule(DATA, "citrus", "fruiting", start, 3)
     assert sched == [date(2023, 1, 5), date(2023, 1, 9), date(2023, 1, 13)]
     assert generate_schedule(DATA, "unknown", None, start, 2) == []
+
+
+def test_calculate_risk_score():
+    risks = {"a": "low", "b": "high", "c": "moderate"}
+    score = calculate_risk_score(risks)
+    assert 1.0 < score < 3.1

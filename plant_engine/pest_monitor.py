@@ -9,7 +9,12 @@ from typing import Dict, Mapping
 from . import environment_manager
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
-from .monitor_utils import get_interval as _get_interval, next_date as _next_date, generate_schedule as _generate_schedule
+from .monitor_utils import (
+    get_interval as _get_interval,
+    next_date as _next_date,
+    generate_schedule as _generate_schedule,
+    calculate_risk_score,
+)
 from .pest_manager import (
     recommend_treatments,
     recommend_beneficials,
@@ -343,10 +348,12 @@ def summarize_pest_management(
     report = generate_pest_report(plant_type, observations)
 
     risk: Dict[str, str] | None = None
+    risk_score: float | None = None
     next_date_val: date | None = None
     interval: int | None = None
     if environment is not None:
         risk = estimate_adjusted_pest_risk(plant_type, environment)
+        risk_score = calculate_risk_score(risk)
         if last_date is not None:
             interval = risk_adjusted_monitor_interval(
                 plant_type, stage, environment
@@ -354,10 +361,9 @@ def summarize_pest_management(
             if interval is not None:
                 next_date_val = last_date + timedelta(days=interval)
 
-    data = {
-        **report,
-        "risk": risk or {},
-    }
+    data = {**report, "risk": risk or {}}
+    if risk_score is not None:
+        data["risk_score"] = risk_score
     if interval is not None:
         data["monitor_interval_days"] = interval
     if next_date_val is not None:
