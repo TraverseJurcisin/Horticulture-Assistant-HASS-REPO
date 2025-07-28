@@ -32,6 +32,7 @@ __all__ = [
     "list_datasets_by_category",
     "list_dataset_info_by_category",
     "get_dataset_path",
+    "dataset_exists",
     "load_dataset_file",
     "validate_all_datasets",
     "refresh_datasets",
@@ -212,6 +213,12 @@ def get_dataset_path(name: str) -> Path | None:
     """Return absolute path to ``name`` if found in the catalog."""
 
     return DEFAULT_CATALOG.find_path(name)
+
+
+def dataset_exists(name: str) -> bool:
+    """Return ``True`` if ``name`` resolves to a dataset file."""
+
+    return DEFAULT_CATALOG.find_path(name) is not None
 
 
 def load_dataset_file(name: str) -> object | None:
