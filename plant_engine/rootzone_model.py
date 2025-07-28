@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from functools import lru_cache
 
 from dataclasses import dataclass, asdict
 from typing import Dict, Mapping, Any
@@ -76,19 +77,31 @@ def get_default_root_depth(plant_type: str) -> float:
         return 30.0
 
 
+@lru_cache(maxsize=None)
 def get_growth_curve_params(plant_type: str) -> tuple[float, float]:
-    """Return logistic growth parameters ``(midpoint, k)`` for a plant type."""
+    """Return logistic growth curve parameters for ``plant_type``.
 
-    data = _GROWTH_PARAMS.get(normalize_key(plant_type)) or {}
+    The returned tuple ``(midpoint, k)`` defines the inflection point and growth
+    rate used by :func:`estimate_rootzone_depth`. Values are loaded from
+    :data:`root_growth_parameters.json` with graceful fallbacks to defaults when
+    missing or invalid. Results are cached for efficiency.
+    """
+
+    key = normalize_key(plant_type)
+    params = _GROWTH_PARAMS.get(key, _GROWTH_PARAMS.get("default", {}))
+
+    midpoint = params.get("midpoint", 60)
+    k = params.get("k", 0.08)
     try:
-        midpoint = float(data.get("midpoint", _GROWTH_PARAMS.get("default", {}).get("midpoint", 60)))
+        midpoint_f = float(midpoint)
     except (TypeError, ValueError):
-        midpoint = 60.0
+        midpoint_f = 60.0
     try:
-        k = float(data.get("k", _GROWTH_PARAMS.get("default", {}).get("k", 0.08)))
+        k_f = float(k)
     except (TypeError, ValueError):
-        k = 0.08
-    return midpoint, k
+        k_f = 0.08
+
+    return midpoint_f, k_f
 
 
 def estimate_rootzone_depth(
@@ -101,7 +114,12 @@ def estimate_rootzone_depth(
     if max_depth_cm is None:
         max_depth_cm = get_default_root_depth(plant_type)
 
-    growth_index = growth.get("vgi_total", 0)
+    try:
+        growth_index = float(growth.get("vgi_total", 0))
+    except (TypeError, ValueError):
+        growth_index = 0.0
+    if growth_index < 0:
+        growth_index = 0.0
     midpoint, k = get_growth_curve_params(plant_type)
 
     depth = max_depth_cm / (1 + math.exp(-k * (growth_index - midpoint)))

@@ -119,3 +119,42 @@ def test_estimate_infiltration_time():
     # custom rate overrides dataset lookup
     assert estimate_infiltration_time(1000, 1.0, infiltration_rate=5) == 0.2
 
+
+def test_get_growth_curve_params_defaults(monkeypatch):
+    import plant_engine.rootzone_model as rz
+
+    monkeypatch.setattr(
+        rz,
+        "_GROWTH_PARAMS",
+        {"default": {"midpoint": 50, "k": 0.1}},
+        raising=False,
+    )
+    rz.get_growth_curve_params.cache_clear()
+    midpoint, k = rz.get_growth_curve_params("unknown")
+    assert midpoint == 50
+    assert k == 0.1
+
+
+def test_get_growth_curve_params_specific(monkeypatch):
+    import plant_engine.rootzone_model as rz
+
+    monkeypatch.setattr(
+        rz,
+        "_GROWTH_PARAMS",
+        {
+            "default": {"midpoint": 60, "k": 0.08},
+            "tomato": {"midpoint": 55, "k": 0.1},
+        },
+        raising=False,
+    )
+    rz.get_growth_curve_params.cache_clear()
+    params = rz.get_growth_curve_params("tomato")
+    assert params == (55.0, 0.1)
+
+
+def test_estimate_rootzone_depth_negative_growth():
+    profile = {"max_root_depth_cm": 30}
+    base = estimate_rootzone_depth(profile, {"vgi_total": 0})
+    neg = estimate_rootzone_depth(profile, {"vgi_total": -10})
+    assert neg == base
+
