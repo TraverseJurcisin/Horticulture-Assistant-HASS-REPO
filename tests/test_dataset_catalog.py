@@ -78,6 +78,16 @@ def test_list_datasets_by_category():
     assert "nutrient_guidelines.json" in cats["root"]
 
 
+def test_list_dataset_info_by_category():
+    info = datasets.list_dataset_info_by_category()
+    assert "fertilizers" in info
+    fert = info["fertilizers"]
+    assert "fertilizers/fertilizer_products.json" in fert
+    root_info = info["root"]
+    assert "nutrient_guidelines.json" in root_info
+    assert isinstance(root_info["nutrient_guidelines.json"], str)
+
+
 def test_catalog_custom_dir(tmp_path):
     data_dir = tmp_path / "data"
     data_dir.mkdir()

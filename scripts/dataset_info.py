@@ -17,6 +17,8 @@ ROOT = ensure_repo_root_on_path()
 from plant_engine.datasets import (
     list_datasets,
     list_dataset_info,
+    list_datasets_by_category,
+    list_dataset_info_by_category,
     search_datasets,
 )
 
@@ -35,6 +37,13 @@ def main(argv: list[str] | None = None) -> None:
     search_parser = sub.add_parser("search", help="search dataset names")
     search_parser.add_argument("term", help="search term")
 
+    cat_parser = sub.add_parser("categories", help="list datasets grouped by directory")
+    cat_parser.add_argument(
+        "--describe",
+        action="store_true",
+        help="include dataset descriptions in output",
+    )
+
     args = parser.parse_args(argv)
 
     if args.command == "list":
@@ -52,6 +61,22 @@ def main(argv: list[str] | None = None) -> None:
         for name, desc in results.items():
             line = f"{name}: {desc}" if desc else name
             print(line)
+        return
+
+    if args.command == "categories":
+        if args.describe:
+            groups = list_dataset_info_by_category()
+            for cat, mapping in groups.items():
+                print(f"[{cat}]")
+                for name, desc in mapping.items():
+                    line = f"  {name}: {desc}" if desc else f"  {name}"
+                    print(line)
+        else:
+            groups = list_datasets_by_category()
+            for cat, names in groups.items():
+                print(f"[{cat}]")
+                for name in names:
+                    print(f"  {name}")
         return
 
 

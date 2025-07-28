@@ -316,6 +316,7 @@ Helper scripts live in the `scripts/` directory.
   current readings.
 - `monitor_schedule.py` outputs an integrated pest and disease monitoring
   schedule for a plant stage.
+- `dataset_info.py` lists available datasets and categories.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
 - `profile_manager.py` manages sensors, preferences, templates and history files. `attach-sensor` appends new sensors, while `detach-sensor` removes them. Other subcommands include `list-sensors`, `show-prefs`, `list-logs`, `set-pref`, `load-default`, `show-history`, `show-global`, and `list-globals`. `--plants-dir` and `--global-dir` operate on alternate directories.
 
