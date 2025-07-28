@@ -30,6 +30,7 @@ __all__ = [
     "list_dataset_info",
     "search_datasets",
     "list_datasets_by_category",
+    "list_dataset_info_by_category",
     "get_dataset_path",
     "load_dataset_file",
 ]
@@ -40,9 +41,13 @@ class DatasetCatalog:
     """Helper object for discovering bundled datasets."""
 
     base_dir: Path = field(default_factory=get_data_dir)
-    extra_dirs: tuple[Path, ...] = field(default_factory=lambda: tuple(get_extra_dirs()))
+    extra_dirs: tuple[Path, ...] = field(
+        default_factory=lambda: tuple(get_extra_dirs())
+    )
     overlay_dir: Path | None = field(default_factory=get_overlay_dir)
-    catalog_file: Path = field(default_factory=lambda: get_data_dir() / "dataset_catalog.json")
+    catalog_file: Path = field(
+        default_factory=lambda: get_data_dir() / "dataset_catalog.json"
+    )
 
     def _iter_paths(self) -> List[Path]:
         """Return search paths honoring init parameters."""
@@ -184,6 +189,17 @@ def list_datasets_by_category() -> Dict[str, List[str]]:
     return DEFAULT_CATALOG.list_by_category()
 
 
+def list_dataset_info_by_category() -> Dict[str, Dict[str, str]]:
+    """Return dataset descriptions grouped by top-level directory."""
+
+    by_cat = DEFAULT_CATALOG.list_by_category()
+    info = DEFAULT_CATALOG.list_info()
+    result: Dict[str, Dict[str, str]] = {}
+    for cat, names in by_cat.items():
+        result[cat] = {n: info.get(n, "") for n in names}
+    return result
+
+
 def get_dataset_path(name: str) -> Path | None:
     """Return absolute path to ``name`` if found in the catalog."""
 
@@ -204,4 +220,3 @@ def refresh_datasets() -> None:
     from .utils import clear_dataset_cache
 
     clear_dataset_cache()
-
