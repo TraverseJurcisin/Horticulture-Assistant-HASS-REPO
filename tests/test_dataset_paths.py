@@ -52,3 +52,20 @@ def test_dataset_search_paths_includes_overlay(monkeypatch, tmp_path):
     assert paths[0] == overlay
     assert base in paths
     utils.clear_dataset_cache()
+
+def test_dataset_search_paths_env_change(monkeypatch, tmp_path):
+    base1 = tmp_path / "d1"
+    base2 = tmp_path / "d2"
+    base1.mkdir()
+    base2.mkdir()
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base1))
+    import importlib
+    importlib.reload(utils)
+    paths1 = utils.dataset_search_paths()
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base2))
+    # calling again without clearing cache should reflect new env
+    paths2 = utils.dataset_search_paths()
+    assert paths2[0] == base2
+    assert paths1 != paths2
+    utils.clear_dataset_cache()
+
