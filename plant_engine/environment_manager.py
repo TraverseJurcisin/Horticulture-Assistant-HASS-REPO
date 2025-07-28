@@ -913,6 +913,10 @@ def recommend_environment_adjustments(
             action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
 
         if not action:
+            level = "low" if status == "below range" else "high"
+            action = get_environment_strategy(label, level)
+
+        if not action:
             action = "increase" if status == "below range" else "decrease"
 
         actions[label] = action
