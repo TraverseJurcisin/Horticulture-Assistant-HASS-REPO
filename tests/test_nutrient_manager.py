@@ -270,6 +270,16 @@ def test_calculate_all_deficiencies_with_ph_and_synergy():
     assert deficits["Fe"] > 0
 
 
+def test_get_ph_synergy_adjusted_levels():
+    from plant_engine.nutrient_manager import get_ph_synergy_adjusted_levels
+
+    levels = get_ph_synergy_adjusted_levels("tomato", "fruiting", 5.0)
+    # synergy increases P to 66 then pH adjustment (>90)
+    assert levels["P"] > 90
+    # Ca also adjusted upward due to synergy with B and low pH
+    assert levels["Ca"] > 60
+
+
 def test_calculate_deficiency_index_with_synergy():
     from plant_engine.nutrient_manager import (
         calculate_deficiency_index_with_synergy,

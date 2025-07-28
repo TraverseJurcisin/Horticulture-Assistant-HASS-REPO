@@ -60,6 +60,7 @@ __all__ = [
     "get_temperature_adjusted_levels",
     "calculate_cycle_deficiency_index",
     "get_synergy_adjusted_levels",
+    "get_ph_synergy_adjusted_levels",
     "calculate_all_deficiencies_with_synergy",
     "calculate_all_deficiencies_with_ph_and_synergy",
     "calculate_deficiency_index_with_synergy",
@@ -560,6 +561,26 @@ def get_synergy_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]
     return apply_synergy_adjustments(levels)
 
 
+def get_ph_synergy_adjusted_levels(
+    plant_type: str, stage: str, ph: float
+) -> Dict[str, float]:
+    """Return nutrient targets adjusted for synergy and solution pH."""
+
+    if not 0 < ph <= 14:
+        raise ValueError("ph must be between 0 and 14")
+
+    levels = get_synergy_adjusted_levels(plant_type, stage)
+    if not levels:
+        levels = get_all_recommended_levels(plant_type, stage)
+
+    factors = availability_for_all(ph)
+    adjusted: Dict[str, float] = {}
+    for nutrient, ppm in levels.items():
+        factor = factors.get(nutrient, 1.0)
+        adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
+    return adjusted
+
+
 def calculate_all_deficiencies_with_synergy(
     current_levels: Mapping[str, float], plant_type: str, stage: str
 ) -> Dict[str, float]:
@@ -586,21 +607,10 @@ def calculate_all_deficiencies_with_ph_and_synergy(
 ) -> Dict[str, float]:
     """Return deficiencies using synergy- and pH-adjusted targets."""
 
-    if not 0 < ph <= 14:
-        raise ValueError("ph must be between 0 and 14")
-
-    targets = get_synergy_adjusted_levels(plant_type, stage)
-    if not targets:
-        targets = get_all_recommended_levels(plant_type, stage)
-
-    factors = availability_for_all(ph)
-    adjusted: Dict[str, float] = {}
-    for nutrient, ppm in targets.items():
-        factor = factors.get(nutrient, 1.0)
-        adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
+    targets = get_ph_synergy_adjusted_levels(plant_type, stage, ph)
 
     deficits: Dict[str, float] = {}
-    for nutrient, target in adjusted.items():
+    for nutrient, target in targets.items():
         try:
             current = float(current_levels.get(nutrient, 0.0))
         except (TypeError, ValueError):
