@@ -11,6 +11,8 @@ from plant_engine.disease_monitor import (
     risk_adjusted_monitor_interval,
     next_monitor_date,
     generate_monitoring_schedule,
+    generate_detailed_monitoring_schedule,
+    get_scouting_method,
     get_severity_action,
     summarize_disease_management,
 )
@@ -117,3 +119,15 @@ def test_summarize_disease_management():
     assert summary.get("risk_score") is not None
     assert "next_monitor_date" in summary
 
+
+def test_get_scouting_method():
+    method = get_scouting_method("powdery mildew")
+    assert "powdery" in method.lower()
+
+def test_generate_detailed_monitoring_schedule():
+    start = date(2023, 1, 1)
+    plan = generate_detailed_monitoring_schedule("citrus", "fruiting", start, 2)
+    assert len(plan) == 2
+    entry = plan[0]
+    assert entry["date"] == date(2023, 1, 5)
+    assert "citrus greening" in entry["methods"]

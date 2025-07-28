@@ -20,6 +20,7 @@ MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
 RISK_DATA_FILE = "disease_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "disease_severity_actions.json"
 RISK_INTERVAL_MOD_FILE = "disease_risk_interval_modifiers.json"
+SCOUTING_METHOD_FILE = "disease_scouting_methods.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
@@ -28,6 +29,7 @@ _MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FI
 _RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 _RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
+_SCOUTING_METHODS: Dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -43,8 +45,10 @@ __all__ = [
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
     "generate_monitoring_schedule",
+    "generate_detailed_monitoring_schedule",
     "generate_disease_report",
     "DiseaseReport",
+    "get_scouting_method",
     "summarize_disease_management",
 ]
 
@@ -196,10 +200,30 @@ def generate_monitoring_schedule(
     return _generate_schedule(_MONITOR_INTERVALS, plant_type, stage, start, events)
 
 
+def generate_detailed_monitoring_schedule(
+    plant_type: str,
+    stage: str | None,
+    start: date,
+    events: int,
+) -> list[dict[str, object]]:
+    """Return monitoring dates with scouting methods for each disease."""
+
+    dates = generate_monitoring_schedule(plant_type, stage, start, events)
+    diseases = disease_manager.list_known_diseases(plant_type)
+    methods = {d: get_scouting_method(d) for d in diseases}
+    return [{"date": d, "methods": methods} for d in dates]
+
+
 def get_severity_action(level: str) -> str:
     """Return recommended action for a severity ``level``."""
 
     return _SEVERITY_ACTIONS.get(level.lower(), "")
+
+
+def get_scouting_method(disease: str) -> str:
+    """Return recommended scouting approach for ``disease``."""
+
+    return _SCOUTING_METHODS.get(normalize_key(disease), "")
 
 
 @dataclass

@@ -21,6 +21,7 @@
     "ipm_guidelines.json": "Integrated pest management practices by crop.",
     "disease_guidelines.json": "Treatment guidance for common plant diseases.",
     "disease_prevention.json": "Preventative measures to reduce disease incidence.",
+    "disease_scouting_methods.json": "Recommended scouting techniques for common diseases.",
     "growth_stages.json": "Expected duration and notes for each growth stage.",
     "stage_tasks.json": "Common tasks to perform during each growth stage.",
     "germination_duration.json": "Typical days from sowing to germination by crop.",
@@ -164,5 +165,5 @@
     "species_cation_profiles.json": "Relative cation extraction multipliers by species.",
     "species_precipitation_risk.json": "Species-specific mineral precipitation risks due to nutrient interactions.",
     "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
-    "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone.",
+    "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }
