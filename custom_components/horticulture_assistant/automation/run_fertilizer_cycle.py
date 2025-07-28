@@ -6,24 +6,12 @@ from datetime import datetime
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
-from .helpers import append_json_log, iter_profiles
+from .helpers import append_json_log, iter_profiles, latest_env
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
 
 _LOGGER = logging.getLogger(__name__)
-
-
-def _latest_env(profile: dict) -> dict:
-    """Return most recent environment readings from ``profile``."""
-
-    data = {}
-    gen = profile.get("general")
-    if isinstance(gen, dict):
-        data = gen.get("latest_env", {}) or {}
-    if not data:
-        data = profile.get("latest_env", {})
-    return data if isinstance(data, dict) else {}
 
 def run_fertilizer_cycle(base_path: str | None = None) -> None:
     """
@@ -61,7 +49,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
             continue
 
         # Get the latest sensor data for this plant (nutrient levels, EC, etc.)
-        sensor_data = _latest_env(profile_data)
+        sensor_data = latest_env(profile_data)
         if not sensor_data:
             _LOGGER.warning("No latest sensor data found for plant %s. Skipping.", plant_id)
             continue

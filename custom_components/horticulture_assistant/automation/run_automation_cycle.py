@@ -15,7 +15,7 @@ from datetime import datetime
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
-from .helpers import iter_profiles, append_json_log
+from .helpers import iter_profiles, append_json_log, latest_env
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
@@ -53,22 +53,10 @@ def _get_moisture_threshold(profile: dict) -> float | None:
     return None
 
 
-def _latest_env(profile: dict) -> dict:
-    """Return the most recent environment readings from ``profile``."""
-
-    data = {}
-    gen = profile.get("general")
-    if isinstance(gen, dict):
-        data = gen.get("latest_env", {}) or {}
-    if not data:
-        data = profile.get("latest_env", {})
-    return data if isinstance(data, dict) else {}
-
-
 def _get_current_moisture(profile: dict) -> float | None:
     """Return latest soil moisture reading from profile data."""
 
-    data = _latest_env(profile)
+    data = latest_env(profile)
     for key in ("soil_moisture", "soil_moisture_pct", "moisture", "vwc"):
         if key in data:
             try:

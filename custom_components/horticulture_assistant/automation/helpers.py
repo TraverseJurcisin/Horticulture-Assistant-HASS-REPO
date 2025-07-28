@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Iterable, Tuple
+from typing import Any, Dict, Iterable, Mapping, Tuple
 
 from ..utils.json_io import load_json, save_json
 
@@ -34,4 +34,17 @@ def append_json_log(log_path: Path, entry: Dict) -> None:
             pass
     log_entries.append(entry)
     save_json(str(log_path), log_entries)
+
+
+def latest_env(profile: Mapping[str, Any]) -> Dict[str, Any]:
+    """Return the most recent environment readings from ``profile``."""
+
+    data: Mapping[str, Any] = {}
+    general = profile.get("general")
+    if isinstance(general, Mapping):
+        data = general.get("latest_env") or {}
+    if not data:
+        data = profile.get("latest_env") or {}
+    return dict(data) if isinstance(data, Mapping) else {}
+
 
