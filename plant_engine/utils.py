@@ -19,6 +19,7 @@ __all__ = [
     "load_dataset",
     "load_datasets",
     "lazy_dataset",
+    "load_dataset_df",
     "clear_dataset_cache",
     "dataset_paths",
     "dataset_search_paths",
@@ -282,6 +283,23 @@ def lazy_dataset(filename: str):
         return load_dataset(filename)
 
     return _loader
+
+
+def load_dataset_df(filename: str) -> "pd.DataFrame":
+    """Return dataset ``filename`` as a :class:`pandas.DataFrame`.
+
+    Dictionaries are treated as row mappings and lists as row sequences.
+    Unsupported data structures raise ``ValueError``.
+    """
+
+    import pandas as pd
+
+    data = load_dataset(filename)
+    if isinstance(data, Mapping):
+        return pd.DataFrame.from_dict(data, orient="index")
+    if isinstance(data, list):
+        return pd.DataFrame(data)
+    raise ValueError(f"Dataset {filename} is not tabular")
 
 
 @lru_cache(maxsize=None)

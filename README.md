@@ -296,7 +296,7 @@ Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_DATA_DIR` to change the base data directory
 - `HORTICULTURE_OVERLAY_DIR` to merge in custom files
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
-Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately.
+Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately. Use `plant_engine.utils.load_dataset_df()` to quickly load any dataset into a `pandas.DataFrame` for analysis.
 
 See [docs/custom_data_dirs.md](docs/custom_data_dirs.md) for examples of how to
 structure overlay and extra dataset directories.
