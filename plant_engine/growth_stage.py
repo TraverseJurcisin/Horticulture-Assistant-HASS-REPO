@@ -253,18 +253,34 @@ def get_germination_duration(plant_type: str) -> int | None:
 
 
 def growth_stage_summary(
-    plant_type: str, start_date: date | None = None
+    plant_type: str,
+    start_date: date | None = None,
+    *,
+    include_guidelines: bool = False,
 ) -> Dict[str, Any]:
-    """Return growth stage durations and optional harvest date."""
+    """Return growth stage durations with optional guideline data.
+
+    When ``include_guidelines`` is ``True`` each stage entry also contains
+    recommended environment and nutrient targets pulled from the respective
+    datasets. This avoids repetitive lookups when generating reports.
+    """
 
     stages = list_growth_stages(plant_type)
-    summary = [
-        {
+    summary = []
+    for stage in stages:
+        entry = {
             "stage": stage,
             "duration_days": get_stage_duration(plant_type, stage),
         }
-        for stage in stages
-    ]
+        if include_guidelines:
+            from .environment_manager import get_environment_guidelines
+            from .nutrient_manager import get_recommended_levels
+
+            entry["environment"] = get_environment_guidelines(
+                plant_type, stage
+            ).as_dict()
+            entry["nutrients"] = get_recommended_levels(plant_type, stage)
+        summary.append(entry)
 
     result = {"plant_type": plant_type, "stages": summary}
 
