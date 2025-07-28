@@ -898,6 +898,11 @@ def recommend_environment_adjustments(
 
     comparison = compare_environment(current, targets)
     readings = normalize_environment_readings(current)
+    alias_inputs = {}
+    for original in current.keys():
+        canonical = _ALIAS_MAP.get(original, original)
+        label = ACTION_LABELS.get(canonical, canonical)
+        alias_inputs[canonical] = original != canonical and original != label
     actions: Dict[str, str] = {}
     for key, status in comparison.items():
         if status == "within range":
@@ -906,14 +911,15 @@ def recommend_environment_adjustments(
         label = ACTION_LABELS.get(key, key)
 
         action: str | None = None
-        if key == "temp_c":
+        alias_used = alias_inputs.get(key, False)
+        if key == "temp_c" and not alias_used:
             action = recommend_temperature_action(
                 readings.get("temp_c"), readings.get("humidity_pct"), plant_type
             )
-        elif key == "humidity_pct":
+        elif key == "humidity_pct" and not alias_used:
             action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
 
-        if not action:
+        if not action and not alias_used:
             level = "low" if status == "below range" else "high"
             action = get_environment_strategy(label, level)
 
@@ -2207,7 +2213,7 @@ def optimize_environment(
         setpoints = suggest_environment_setpoints_zone(plant_type, stage, zone)
     else:
         setpoints = suggest_environment_setpoints(plant_type, stage)
-    actions = recommend_environment_adjustments(readings, plant_type, stage, zone)
+    actions = recommend_environment_adjustments(current, plant_type, stage, zone)
 
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
