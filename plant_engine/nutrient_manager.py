@@ -62,6 +62,7 @@ __all__ = [
     "get_synergy_adjusted_levels",
     "calculate_all_deficiencies_with_synergy",
     "calculate_all_deficiencies_with_ph_and_synergy",
+    "calculate_deficiency_index_with_synergy",
 ]
 
 
@@ -608,5 +609,34 @@ def calculate_all_deficiencies_with_ph_and_synergy(
         if diff > 0:
             deficits[nutrient] = diff
     return deficits
+
+
+def calculate_deficiency_index_with_synergy(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> float:
+    """Return deficiency index using synergy-adjusted nutrient targets."""
+
+    targets = get_synergy_adjusted_levels(plant_type, stage)
+    if not targets:
+        return calculate_deficiency_index(current_levels, plant_type, stage)
+
+    total_weight = 0.0
+    deficit_score = 0.0
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0) / target
+        weight = get_nutrient_weight(nutrient)
+        deficit_score += weight * deficit
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((deficit_score / total_weight) * 100, 1)
 
 

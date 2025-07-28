@@ -88,6 +88,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Heat, humidity and light stress warnings
 - Stage-adjusted nutrient targets and leaf tissue analysis
 - Synergy-adjusted nutrient targets accounting for nutrient interactions
+- Synergy-based deficiency index for more accurate nutrient diagnosis
 - Nutrient deficiency severity and treatment recommendations
 - Combined nutrient management reports with correction schedules
 - Automatic fertigation mix recommendations using priced fertilizer data
