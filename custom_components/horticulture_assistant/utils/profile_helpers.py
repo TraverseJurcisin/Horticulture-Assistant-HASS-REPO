@@ -46,6 +46,7 @@ def write_profile_sections(
         _LOGGER.error("Failed to create directory %s: %s", plant_dir, err)
         return ""
 
+    success = True
     for filename, data in sections.items():
         file_path = plant_dir / filename
         if file_path.exists() and not overwrite:
@@ -59,6 +60,10 @@ def write_profile_sections(
                 _LOGGER.info("Created file: %s", file_path)
         except Exception as err:  # pragma: no cover - unexpected errors
             _LOGGER.error("Failed to write %s: %s", file_path, err)
+            success = False
 
-    _LOGGER.info("Profile files prepared for '%s' at %s", plant_id, plant_dir)
-    return plant_id
+    if success:
+        _LOGGER.info("Profile files prepared for '%s' at %s", plant_id, plant_dir)
+        return plant_id
+
+    return ""

@@ -28,3 +28,16 @@ def test_write_profile_sections_overwrite(tmp_path):
     assert pid == "demo"
     with open(base / "general.json", "r", encoding="utf-8") as f:
         assert json.load(f)["name"] == "updated"
+
+
+def test_write_profile_sections_error(tmp_path, monkeypatch):
+    def fail_save(path, data):
+        raise OSError("boom")
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.utils.profile_helpers.save_json",
+        fail_save,
+    )
+
+    pid = write_profile_sections("demo", {"a.json": {}}, base_path=tmp_path)
+    assert pid == ""
