@@ -261,6 +261,9 @@ Important categories include:
 - **Fertilizer ingredient profiles** – nutrient content, chemical formulas, physical form and aliases for raw salts. Use `plant_engine.ingredients.get_ingredient_profile()` to access them programmatically
 - **Stock solution recipes** – injection ratios for automated fertigation
 - **Fertilizer compatibility** – warnings for mixing products that react poorly
+- **pH adjustment factors** – acid/base volumes for correcting solution pH
+- **Nutrient synergy factors** – multipliers accounting for nutrient interactions
+- **Pest prevention guidelines** – cultural practices to reduce pest pressure
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
 - **Media properties** – recommended pH range and water retention for common substrates
