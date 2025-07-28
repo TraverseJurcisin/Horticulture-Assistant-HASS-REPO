@@ -11,6 +11,7 @@ from plant_engine.utils import load_dataset
 from custom_components.horticulture_assistant.fertilizer_formulator import (
     convert_guaranteed_analysis,
 )
+from .nutrient_requirements import get_requirements
 
 @dataclass(slots=True)
 class NutrientEntry:
@@ -125,14 +126,15 @@ class NutrientTracker:
     def _records_for(self, plant_id: Optional[str]) -> Iterable[NutrientDeliveryRecord]:
         """Return delivery records optionally filtered by ``plant_id``."""
 
-        if plant_id:
-            stored = self._log_by_plant.get(plant_id)
-            if stored and len(stored) == sum(1 for r in self.delivery_log if r.plant_id == plant_id):
-                return stored
-            records = [r for r in self.delivery_log if r.plant_id == plant_id]
-            self._log_by_plant[plant_id] = records
-            return records
-        return self.delivery_log
+        if plant_id is None:
+            return self.delivery_log
+
+        stored = self._log_by_plant.get(plant_id)
+        actual_count = sum(1 for r in self.delivery_log if r.plant_id == plant_id)
+        if stored is None or len(stored) != actual_count:
+            stored = [r for r in self.delivery_log if r.plant_id == plant_id]
+            self._log_by_plant[plant_id] = stored
+        return stored
 
     def summarize_nutrients(self, plant_id: Optional[str] = None) -> Dict[str, float]:
         """Return total ppm delivered across all logged applications."""
@@ -195,6 +197,39 @@ class NutrientTracker:
             for element, ppm in record.ppm_delivered.items():
                 daily[key][element] += ppm * record.volume_l
         return {day: dict(values) for day, values in daily.items()}
+
+    def calculate_remaining_requirements(
+        self,
+        plant_type: str,
+        days: int,
+        plant_id: Optional[str] = None,
+        *,
+        now: Optional[datetime] = None,
+    ) -> Dict[str, float]:
+        """Return unmet nutrient requirements for ``plant_type`` over ``days``.
+
+        The calculation uses :func:`nutrient_requirements.get_requirements` to
+        look up daily target values (in milligrams per plant). Logged
+        applications for ``plant_id`` are summarized over the same period and
+        subtracted from the targets. Only positive deficits are returned.
+        """
+
+        if days <= 0:
+            raise ValueError("days must be positive")
+
+        requirements = get_requirements(plant_type)
+        if not requirements:
+            return {}
+
+        delivered = self.summarize_mg_since(days, plant_id, now=now)
+        deficits: Dict[str, float] = {}
+        target_span = {k: v * days for k, v in requirements.items()}
+        for nutrient, total_needed in target_span.items():
+            applied = delivered.get(nutrient, 0.0)
+            remaining = round(total_needed - applied, 2)
+            if remaining > 0:
+                deficits[nutrient] = remaining
+        return deficits
 
 
 def register_fertilizers_from_dataset(
