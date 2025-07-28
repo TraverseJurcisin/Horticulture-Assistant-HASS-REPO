@@ -110,8 +110,8 @@ def test_recommend_environment_adjustments():
     )
     assert actions["temperature"].startswith("Provide shade")
     assert actions["humidity"].startswith("Ventilate")
-    assert actions["light"] == "increase"
-    assert actions["co2"] == "decrease"
+    assert actions["light"].startswith("Use supplemental")
+    assert actions["co2"].startswith("Increase ventilation")
 
 
 def test_recommend_environment_adjustments_aliases():
@@ -122,8 +122,8 @@ def test_recommend_environment_adjustments_aliases():
     )
     assert actions["temperature"].startswith("Provide shade")
     assert actions["humidity"].startswith("Ventilate")
-    assert actions["light"] == "increase"
-    assert actions["co2"] == "decrease"
+    assert actions["light"].startswith("Use supplemental")
+    assert actions["co2"].startswith("Increase ventilation")
 
 
 def test_recommend_environment_adjustments_no_data():
@@ -246,7 +246,7 @@ def test_optimize_environment():
         "seedling",
     )
     assert result["setpoints"]["temp_c"] == 24
-    assert result["adjustments"]["temperature"] == "increase"
+    assert result["adjustments"]["temperature"].startswith("Increase heating")
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
@@ -298,7 +298,7 @@ def test_optimize_environment_aliases():
         "seedling",
     )
     assert result["setpoints"]["temp_c"] == 24
-    assert result["adjustments"]["temperature"] == "increase"
+    assert result["adjustments"]["temperature"].startswith("Increase heating")
 
 
 def test_optimize_environment_zone():
@@ -758,7 +758,7 @@ def test_summarize_environment():
         {"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True
     )
     assert summary["quality"] == "poor"
-    assert summary["adjustments"]["temperature"] == "increase"
+    assert summary["adjustments"]["temperature"].startswith("Increase heating")
     assert summary["adjustments"]["humidity"].startswith("Ventilate")
     assert "vpd" in summary["metrics"]
     assert "score" in summary
