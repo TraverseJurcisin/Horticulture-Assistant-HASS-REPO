@@ -26,6 +26,7 @@ DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
 VPD_DATA_FILE = "vpd_guidelines.json"
 PHOTOPERIOD_DATA_FILE = "photoperiod_guidelines.json"
+PHOTOPERIOD_ACTION_FILE = "photoperiod_actions.json"
 HEAT_DATA_FILE = "heat_stress_thresholds.json"
 COLD_DATA_FILE = "cold_stress_thresholds.json"
 WIND_DATA_FILE = "wind_stress_thresholds.json"
@@ -57,6 +58,7 @@ ACTION_LABELS = {
     "light_ppfd": "light",
     "co2_ppm": "co2",
     "soil_temp_c": "soil_temperature",
+    "photoperiod_hours": "photoperiod",
 }
 
 # aliases for environment keys used when comparing readings. This mapping
@@ -114,6 +116,7 @@ class EnvironmentGuidelines:
     humidity_pct: RangeTuple | None = None
     light_ppfd: RangeTuple | None = None
     co2_ppm: RangeTuple | None = None
+    photoperiod_hours: RangeTuple | None = None
 
     def as_dict(self) -> Dict[str, list[float]]:
         """Return guidelines as a dictionary with list values."""
@@ -138,6 +141,7 @@ def get_environment_guidelines(
         humidity_pct=parse_range(data.get("humidity_pct")),
         light_ppfd=parse_range(data.get("light_ppfd")),
         co2_ppm=parse_range(data.get("co2_ppm")),
+        photoperiod_hours=get_target_photoperiod(plant_type, stage),
     )
 
 
@@ -153,6 +157,7 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
         humidity_pct=parse_range(data.get("humidity_pct")),
         light_ppfd=parse_range(data.get("light_ppfd")),
         co2_ppm=parse_range(data.get("co2_ppm")),
+        photoperiod_hours=parse_range(data.get("photoperiod_hours")),
     )
 
 
@@ -212,6 +217,9 @@ def get_combined_environment_guidelines(
         humidity_pct=_intersect_range(plant.humidity_pct, climate.humidity_pct),
         light_ppfd=_intersect_range(plant.light_ppfd, climate.light_ppfd),
         co2_ppm=_intersect_range(plant.co2_ppm, climate.co2_ppm),
+        photoperiod_hours=_intersect_range(
+            plant.photoperiod_hours, climate.photoperiod_hours
+        ),
     )
 
 
@@ -377,6 +385,8 @@ __all__ = [
     "evaluate_vpd",
     "get_vpd_action",
     "recommend_vpd_action",
+    "get_photoperiod_action",
+    "recommend_photoperiod_action",
     "get_environment_strategy",
     "recommend_environment_strategies",
     "evaluate_ph_stress",
@@ -419,6 +429,7 @@ _VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
 _HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
 _COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
 _PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
+_PHOTOPERIOD_ACTIONS: Dict[str, str] = load_dataset(PHOTOPERIOD_ACTION_FILE)
 _WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
 _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
@@ -912,6 +923,10 @@ def recommend_environment_adjustments(
             )
         elif key == "humidity_pct":
             action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
+        elif key == "photoperiod_hours":
+            action = recommend_photoperiod_action(
+                readings.get("photoperiod_hours"), plant_type, stage
+            )
 
         if not action:
             level = "low" if status == "below range" else "high"
@@ -1600,6 +1615,28 @@ def recommend_vpd_action(
         return None
     action = get_vpd_action(level)
     return action or None
+
+
+def get_photoperiod_action(level: str) -> str:
+    """Return recommended action for a photoperiod stress level."""
+
+    return _PHOTOPERIOD_ACTIONS.get(level.lower(), "")
+
+
+def recommend_photoperiod_action(
+    photoperiod_hours: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
+    """Return adjustment suggestion when photoperiod is out of range."""
+
+    target = get_target_photoperiod(plant_type, stage)
+    if not target or photoperiod_hours is None:
+        return None
+    low, high = target
+    if photoperiod_hours < low:
+        return get_photoperiod_action("short") or None
+    if photoperiod_hours > high:
+        return get_photoperiod_action("long") or None
+    return None
 
 
 def get_environment_strategy(parameter: str, level: str) -> str:
