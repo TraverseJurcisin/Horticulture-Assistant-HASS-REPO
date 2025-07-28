@@ -60,6 +60,11 @@ class ConfigSubentryFlowBase:
         return {"type": "create_entry", **kwargs}
 ha.config_entries.ConfigSubentryFlow = ConfigSubentryFlowBase
 ha.config_entries.SubentryFlowResult = dict
+ha.core = sys.modules.get("homeassistant.core", types.ModuleType("homeassistant.core"))
+def callback(func):
+    return func
+ha.core.callback = callback
+sys.modules["homeassistant.core"] = ha.core
 class OptionsFlowBase:
     def async_show_form(self, **kwargs):
         return {"type": "form", **kwargs}
