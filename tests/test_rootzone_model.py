@@ -57,6 +57,7 @@ def test_get_soil_parameters():
     params = get_soil_parameters("loam")
     assert params["field_capacity"] == 0.25
     assert params["mad_fraction"] == 0.45
+    assert params["infiltration_rate_mm_hr"] == 10
 
 
 def test_get_default_root_depth():
@@ -114,4 +115,7 @@ def test_estimate_infiltration_time():
     assert estimate_infiltration_time(1000, 1.0, "unknown") is None
     with pytest.raises(ValueError):
         estimate_infiltration_time(-1, 1.0, "loam")
+
+    # custom rate overrides dataset lookup
+    assert estimate_infiltration_time(1000, 1.0, infiltration_rate=5) == 0.2
 
