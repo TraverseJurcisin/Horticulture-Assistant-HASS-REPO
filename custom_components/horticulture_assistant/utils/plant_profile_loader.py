@@ -30,37 +30,54 @@ REQUIRED_STAGE_KEY = "stage_duration"
 def parse_basic_yaml(content: str) -> dict:
     """Return a naive YAML parser used when PyYAML is unavailable.
 
-    The implementation supports the extremely small subset of YAML used in
-    unit tests: nested dictionaries through indentation and single line lists.
-    Values that look numeric are converted to ``int`` or ``float``.
+    The parser understands only the limited subset of YAML present in the
+    unit test fixtures: nested mappings using indentation and single line
+    lists. Numeric values are converted to ``int`` or ``float`` when
+    possible.
     """
 
     parsed: dict[str, object] = {}
-    stack = [parsed]
-    indents = [0]
-    for raw in content.splitlines():
-        line = raw.split("#", 1)[0]
-        if not line.strip():
+    node_stack = [parsed]
+    indent_stack = [0]
+
+    for raw_line in content.splitlines():
+        line = raw_line.split("#", 1)[0].rstrip()
+        if not line:
             continue
-        indent = len(line) - len(line.lstrip())
-        key, _, value = line.strip().partition(":")
-        while indent <= indents[-1] and len(stack) > 1:
-            stack.pop()
-            indents.pop()
-        if value.strip() == "":
-            obj = {}
-            stack[-1][key] = obj
-            stack.append(obj)
-            indents.append(indent)
+
+        indent = len(raw_line) - len(raw_line.lstrip())
+        key, _, value = line.lstrip().partition(":")
+
+        # adjust the stack to the current indentation level
+        while indent <= indent_stack[-1] and len(node_stack) > 1:
+            node_stack.pop()
+            indent_stack.pop()
+
+        if not value:
+            obj: dict = {}
+            node_stack[-1][key] = obj
+            node_stack.append(obj)
+            indent_stack.append(indent)
             continue
-        val = value.strip()
-        if val.startswith("[") and val.endswith("]"):
-            items = [i.strip() for i in val[1:-1].split(",") if i.strip()]
-            val = [float(i) if i.replace(".", "", 1).isdigit() else i for i in items]
+
+        value = value.strip()
+        if value.startswith("[") and value.endswith("]"):
+            items = [i.strip() for i in value[1:-1].split(",") if i.strip()]
+            parsed_items = []
+            for item in items:
+                if item.replace(".", "", 1).isdigit():
+                    parsed_items.append(float(item) if "." in item else int(item))
+                else:
+                    parsed_items.append(item)
+            parsed_value = parsed_items
         else:
-            if val.replace(".", "", 1).isdigit():
-                val = float(val) if "." in val else int(val)
-        stack[-1][key] = val
+            if value.replace(".", "", 1).isdigit():
+                parsed_value = float(value) if "." in value else int(value)
+            else:
+                parsed_value = value
+
+        node_stack[-1][key] = parsed_value
+
     return parsed
 
 
