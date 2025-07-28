@@ -19,3 +19,5 @@ def test_get_plant_overview():
     assert "environment" in overview
     assert "nutrients" in overview
     assert isinstance(overview["environment"], dict)
+    assert "water_usage" in overview
+    assert overview["water_usage"]["fruiting"] == 320

@@ -19,6 +19,7 @@ def test_get_guideline_summary():
     assert "general" in data["ipm_guidelines"]
     assert data["irrigation_volume_ml"] == 300
     assert "irrigation_interval_days" in data
+    assert data["water_daily_ml"] == 0.0
     # citrus has no task entries so all lists should be empty
     assert all(len(t) == 0 for t in data["stage_tasks"].values())
     assert data["height_range"] is None
@@ -42,3 +43,4 @@ def test_guideline_summary_bioinoculants():
     assert "fruiting" in data["stage_tasks"]
     assert "Maintain high potassium" in data["stage_tasks"]["fruiting"][1]
     assert data["height_range"] == [80.0, 150.0]
+    assert data["water_daily_ml"] == 320
