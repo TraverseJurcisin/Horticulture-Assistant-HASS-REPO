@@ -19,7 +19,7 @@ from plant_engine.wsda_lookup import (
 
 from plant_engine import nutrient_manager
 
-from plant_engine.utils import load_dataset
+from plant_engine.utils import load_dataset, lazy_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
@@ -28,8 +28,15 @@ APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
 RATE_FILE = "fertilizers/fertilizer_application_rates.json"
 COMPAT_FILE = "fertilizers/fertilizer_compatibility.json"
 
+_DATA = lazy_dataset(DATA_FILE)
+_PRICES = lazy_dataset(PRICE_FILE)
+_SOLUBILITY = lazy_dataset(SOLUBILITY_FILE)
+_APPLICATION = lazy_dataset(APPLICATION_FILE)
+_RATES = lazy_dataset(RATE_FILE)
+_COMPAT = lazy_dataset(COMPAT_FILE)
 
-@dataclass(frozen=True)
+
+@dataclass(frozen=True, slots=True)
 class Fertilizer:
     """Fertilizer product information."""
 
@@ -45,7 +52,7 @@ class FertilizerCatalog:
     @staticmethod
     @lru_cache(maxsize=None)
     def inventory() -> Dict[str, Fertilizer]:
-        data = load_dataset(DATA_FILE)
+        data = _DATA()
         inv: Dict[str, Fertilizer] = {}
         for name, info in data.items():
             inv[name] = Fertilizer(
@@ -59,29 +66,29 @@ class FertilizerCatalog:
     @staticmethod
     @lru_cache(maxsize=None)
     def prices() -> Dict[str, float]:
-        return load_dataset(PRICE_FILE)
+        return _PRICES()
 
     @staticmethod
     @lru_cache(maxsize=None)
     def solubility() -> Dict[str, float]:
-        return load_dataset(SOLUBILITY_FILE)
+        return _SOLUBILITY()
 
     @staticmethod
     @lru_cache(maxsize=None)
     def application_methods() -> Dict[str, str]:
-        return load_dataset(APPLICATION_FILE)
+        return _APPLICATION()
 
     @staticmethod
     @lru_cache(maxsize=None)
     def application_rates() -> Dict[str, float]:
         """Return recommended grams per liter for each fertilizer."""
-        return load_dataset(RATE_FILE)
+        return _RATES()
 
     @staticmethod
     @lru_cache(maxsize=None)
     def compatibility() -> Dict[str, Dict[str, str]]:
         """Return mixing compatibility mapping from the dataset."""
-        raw = load_dataset(COMPAT_FILE)
+        raw = _COMPAT()
         mapping: Dict[str, Dict[str, str]] = {}
         for fert, info in raw.items():
             if not isinstance(info, dict):
