@@ -143,6 +143,12 @@ def test_growth_stage_summary():
     assert stages["seedling"] == 30
 
 
+def test_growth_stage_summary_with_guidelines():
+    data = growth_stage_summary("citrus", include_guidelines=True)
+    first = data["stages"][0]
+    assert "environment" in first and "nutrients" in first
+
+
 def test_growth_stage_summary_unknown():
     result = growth_stage_summary("unknown")
     assert result["stages"] == []
