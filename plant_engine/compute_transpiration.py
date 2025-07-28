@@ -93,11 +93,21 @@ def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
 def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str, float]:
     """Return evapotranspiration metrics for a single plant profile.
 
+    ``env_data`` may contain aliases such as ``temperature`` or ``humidity``
+    which are normalized using :func:`environment_manager.normalize_environment_readings`.
     Missing environment values fall back to :data:`DEFAULT_ENV` so callers can
     provide partial readings without raising ``KeyError``.
     """
 
-    env = {**DEFAULT_ENV, **env_data}
+    from .environment_manager import normalize_environment_readings
+
+    env = normalize_environment_readings(env_data)
+    if "humidity_pct" in env and "rh_pct" not in env:
+        env["rh_pct"] = env.pop("humidity_pct")
+    if "light_ppfd" in env and "par_w_m2" not in env:
+        env["par_w_m2"] = env.pop("light_ppfd")
+
+    env = {**DEFAULT_ENV, **env}
 
     et0 = calculate_et0(
         temperature_c=env["temp_c"],

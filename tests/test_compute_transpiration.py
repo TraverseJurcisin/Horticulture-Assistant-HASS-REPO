@@ -105,3 +105,10 @@ def test_compute_transpiration_dataframe():
     ]
     assert len(result) == 2
     assert result.iloc[0]["transpiration_ml_day"] > 0
+
+
+def test_compute_transpiration_alias_support():
+    profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
+    env = {"temperature": 25, "humidity": 50, "par": 400}
+    result = compute_transpiration(profile, env)
+    assert result["transpiration_ml_day"] > 0
