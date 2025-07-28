@@ -1,0 +1,5 @@
+{
+  "aphids": {"egg": 3, "nymph": 7, "adult": 10},
+  "thrips": {"egg": 2, "larva": 4, "pupa": 2, "adult": 30},
+  "whiteflies": {"egg": 4, "nymph": 7, "pupa": 3, "adult": 7}
+}

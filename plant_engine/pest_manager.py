@@ -1,7 +1,7 @@
 """Pest management guideline utilities."""
 from __future__ import annotations
 
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
@@ -13,6 +13,7 @@ RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
 RELEASE_RATE_FILE = "beneficial_release_rates.json"
+LIFECYCLE_FILE = "pest_lifecycle_durations.json"
 
 
 
@@ -25,6 +26,7 @@ _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
 _TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
+_LIFECYCLE: Dict[str, Dict[str, int]] = load_dataset(LIFECYCLE_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -126,6 +128,21 @@ def recommend_organic_controls(pests: Iterable[str]) -> Dict[str, List[str]]:
     return {p: get_organic_controls(p) for p in pests}
 
 
+def get_pest_lifecycle(pest: str) -> Dict[str, int]:
+    """Return lifecycle stage durations in days for ``pest``."""
+
+    data = _LIFECYCLE.get(normalize_key(pest))
+    if not isinstance(data, Mapping):
+        return {}
+    result: Dict[str, int] = {}
+    for stage, days in data.items():
+        try:
+            result[stage] = int(days)
+        except (TypeError, ValueError):
+            continue
+    return result
+
+
 def get_pest_prevention(plant_type: str) -> Dict[str, str]:
     """Return pest prevention guidelines for ``plant_type``."""
     return _PREVENTION.get(normalize_key(plant_type), {})
@@ -195,6 +212,7 @@ def build_pest_management_plan(
             "ipm": ipm_actions.get(pest),
             "organic": organic.get(pest, []),
             "scientific_name": get_scientific_name(pest),
+            "lifecycle": get_pest_lifecycle(pest),
         }
 
     return plan
@@ -213,6 +231,7 @@ __all__ = [
     "recommend_release_rates",
     "get_organic_controls",
     "recommend_organic_controls",
+    "get_pest_lifecycle",
     "get_pest_prevention",
     "recommend_prevention",
     "get_ipm_guidelines",
