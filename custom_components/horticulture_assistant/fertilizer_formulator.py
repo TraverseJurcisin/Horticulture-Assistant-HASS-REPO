@@ -113,9 +113,22 @@ MOLAR_MASS_CONVERSIONS = {
 }
 
 
-def convert_guaranteed_analysis(ga: dict) -> dict:
-    """Return GA with P₂O₅/K₂O converted to elemental P and K."""
+@lru_cache(maxsize=None)
+def _convert_ga_cached(items: tuple) -> dict:
     result: dict[str, float] = {}
+    for k, v in items:
+        if k in MOLAR_MASS_CONVERSIONS:
+            element, factor = MOLAR_MASS_CONVERSIONS[k]
+            result[element] = result.get(element, 0) + v * factor
+        else:
+            result[k] = result.get(k, 0) + v
+    return result
+
+
+def convert_guaranteed_analysis(ga: Mapping[str, float]) -> dict:
+    """Return GA with P₂O₅/K₂O converted to elemental P and K."""
+
+    items = []
     for k, v in ga.items():
         if v is None:
             continue
@@ -123,12 +136,9 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
             val = float(v)
         except (TypeError, ValueError):
             continue
-        if k in MOLAR_MASS_CONVERSIONS:
-            element, factor = MOLAR_MASS_CONVERSIONS[k]
-            result[element] = result.get(element, 0) + val * factor
-        else:
-            result[k] = result.get(k, 0) + val
-    return result
+        items.append((str(k), val))
+
+    return _convert_ga_cached(tuple(sorted(items)))
 
 
 def calculate_fertilizer_nutrients(
