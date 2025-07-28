@@ -160,5 +160,6 @@
   "propagation_guidelines.json": "Recommended environmental conditions for plant propagation methods.",
   "drought_tolerance.json": "Relative drought tolerance and max dry days for each crop.",
   "species_cation_profiles.json": "Relative cation extraction multipliers by species.",
+  "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
   "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }

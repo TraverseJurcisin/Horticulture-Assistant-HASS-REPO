@@ -1,0 +1,30 @@
+{
+  "citrus": {
+    "night_activity": "growth",
+    "irrigate": true,
+    "temperature_drop_c": 2,
+    "fan_cycles": "normal",
+    "fertigation_stop_hours": 0
+  },
+  "avocado": {
+    "night_activity": "growth",
+    "irrigate": true,
+    "temperature_drop_c": 2,
+    "fan_cycles": "normal",
+    "fertigation_stop_hours": 0
+  },
+  "iris": {
+    "night_activity": "rest",
+    "irrigate": false,
+    "temperature_drop_c": 5,
+    "fan_cycles": "low",
+    "fertigation_stop_hours": 0
+  },
+  "begonia": {
+    "night_activity": "rest",
+    "irrigate": false,
+    "temperature_drop_c": 5,
+    "fan_cycles": "low",
+    "fertigation_stop_hours": 2
+  }
+}
