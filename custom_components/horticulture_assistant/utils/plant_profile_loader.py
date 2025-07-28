@@ -38,7 +38,8 @@ def parse_basic_yaml(content: str) -> dict:
     parsed: dict[str, object] = {}
     stack = [parsed]
     indents = [0]
-    for line in content.splitlines():
+    for raw in content.splitlines():
+        line = raw.split("#", 1)[0]
         if not line.strip():
             continue
         indent = len(line) - len(line.lstrip())
@@ -296,15 +297,23 @@ def _get_sensor_container(profile: Mapping[str, Any]) -> dict:
 def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
     """Return ``sensors`` with all entries coerced to lists of strings."""
 
-    normalized: dict[str, list] = {}
+    normalized: dict[str, list[str]] = {}
     for key, val in sensors.items():
-        if isinstance(val, str):
-            normalized[key] = [val]
+        if isinstance(val, str) or not isinstance(val, Iterable):
+            values = [val]
         else:
+            values = list(val)
+
+        items: list[str] = []
+        for item in values:
             try:
-                normalized[key] = [str(v) for v in val]
-            except TypeError:
-                normalized[key] = []
+                text = str(item)
+            except Exception:
+                continue
+            if text not in items:
+                items.append(text)
+        normalized[key] = items
+
     return normalized
 
 
