@@ -194,6 +194,7 @@ def dataset_paths() -> tuple[Path, ...]:
     return _PATH_CACHE
 
 
+@lru_cache(maxsize=None)
 def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
     """Return dataset search paths optionally including overlay first."""
 
@@ -282,6 +283,7 @@ def clear_dataset_cache() -> None:
     global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE
     load_dataset.cache_clear()
     dataset_file.cache_clear()
+    dataset_search_paths.cache_clear()
     _PATH_CACHE = None
     _ENV_STATE = None
     _OVERLAY_CACHE = None
