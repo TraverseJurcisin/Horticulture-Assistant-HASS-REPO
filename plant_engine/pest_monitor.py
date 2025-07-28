@@ -49,6 +49,8 @@ _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
 __all__ = [
     "list_supported_plants",
     "get_pest_thresholds",
+    "get_pest_threshold",
+    "is_threshold_exceeded",
     "assess_pest_pressure",
     "calculate_pest_pressure_index",
     "classify_pest_severity",
@@ -80,6 +82,28 @@ def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
 
     data = _resolve(_THRESHOLDS)
     return data.get(normalize_key(plant_type), {})
+
+
+def get_pest_threshold(plant_type: str, pest: str) -> int | None:
+    """Return the threshold count for ``pest`` on ``plant_type`` if defined."""
+
+    data = get_pest_thresholds(plant_type)
+    value = data.get(normalize_key(pest))
+    try:
+        return int(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def is_threshold_exceeded(plant_type: str, pest: str, count: int) -> bool | None:
+    """Return ``True`` if ``count`` meets or exceeds the action threshold."""
+
+    if count < 0:
+        raise ValueError("count must be non-negative")
+    thresh = get_pest_threshold(plant_type, pest)
+    if thresh is None:
+        return None
+    return count >= thresh
 
 
 def list_supported_plants() -> list[str]:
