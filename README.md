@@ -260,6 +260,7 @@ Important categories include:
 - **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Stage-specific pest thresholds** – economic thresholds for each growth stage
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
+- **Water usage guidelines** – typical daily irrigation volumes by stage
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
 - **Fertilizer ingredient profiles** – nutrient content, chemical formulas, physical form and aliases for raw salts. Use `plant_engine.ingredients.get_ingredient_profile()` to access them programmatically

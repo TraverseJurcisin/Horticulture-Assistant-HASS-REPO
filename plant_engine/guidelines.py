@@ -21,6 +21,7 @@ from . import (
     growth_stage,
     stage_tasks,
     height_manager,
+    water_usage,
 )
 
 __all__ = ["GuidelineSummary", "get_guideline_summary"]
@@ -48,6 +49,7 @@ class GuidelineSummary:
     ec_range: List[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
     irrigation_interval_days: float | None = None
+    water_daily_ml: float | None = None
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
     stage_tasks: Dict[str, List[str]] = dataclass_field(default_factory=dict)
@@ -111,6 +113,9 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
             irrigation_manager.get_recommended_interval(plant_type, stage)
             if stage
             else None
+        ),
+        water_daily_ml=(
+            water_usage.get_daily_use(plant_type, stage) if stage else None
         ),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
