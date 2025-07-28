@@ -1,6 +1,11 @@
 citrus:
-  high_temp: "Provide shade cloth to reduce temperature"
-  low_humidity: "Use misting system to increase humidity"
+  default:
+    high_temp: "Provide shade cloth to reduce temperature"
+    low_humidity: "Use misting system to increase humidity"
+  fruiting:
+    low_temp: "Use heaters during cool nights"
+
 tomato:
-  high_temp: "Increase ventilation and shading"
-  low_nutrients: "Apply balanced fertilizer" 
+  default:
+    high_temp: "Increase ventilation and shading"
+    low_nutrients: "Apply balanced fertilizer"

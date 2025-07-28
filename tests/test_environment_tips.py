@@ -7,6 +7,11 @@ def test_environment_tips_basic():
     assert "citrus" in list_supported_plants()
 
 
+def test_environment_tips_stage_specific():
+    tips = get_environment_tips("citrus", "fruiting")
+    assert tips["low_temp"].startswith("Use heaters")
+
+
 def test_environment_tips_unknown():
     assert get_environment_tips("unknown") == {}
 
