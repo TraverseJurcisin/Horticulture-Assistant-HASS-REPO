@@ -400,8 +400,12 @@ def list_dataset_files() -> list[str]:
     for base in dataset_search_paths(include_overlay=True):
         if not base.is_dir():
             continue
-        for path in base.iterdir():
-            if path.suffix.lower() in {".json", ".yaml", ".yml"} and path.is_file():
-                files.add(path.name)
+        for path in base.rglob("*"):
+            if (
+                path.suffix.lower() in {".json", ".yaml", ".yml"}
+                and path.is_file()
+                and path.name != "dataset_catalog.json"
+            ):
+                files.add(path.relative_to(base).as_posix())
     return sorted(files)
 
