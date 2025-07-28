@@ -535,3 +535,24 @@ def test_calculate_injection_volumes():
     with pytest.raises(KeyError):
         calculate_injection_volumes({"unknown": 1.0}, 10.0, "dosatron_1pct")
 
+
+def test_loss_adjusted_fertigation_with_synergy():
+    """Ensure synergy adjustments integrate with loss calculations."""
+    from plant_engine.fertigation import recommend_loss_adjusted_fertigation
+
+    fert_map = {
+        "N": "foxfarm_grow_big",
+        "P": "foxfarm_grow_big",
+        "K": "intrepid_granular_potash_0_0_60",
+    }
+
+    schedule, *_ = recommend_loss_adjusted_fertigation(
+        "citrus",
+        "vegetative",
+        1.0,
+        fertilizers=fert_map,
+        use_synergy=True,
+    )
+
+    assert schedule["foxfarm_grow_big"] > 0
+

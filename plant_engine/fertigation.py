@@ -163,7 +163,8 @@ def apply_loss_factors(schedule: Mapping[str, float], plant_type: str) -> Dict[s
     adjusted: Dict[str, float] = {}
     for fert, grams in schedule.items():
         factor = factors.get(fert, 0.0)
-    adjusted[fert] = round(grams * (1.0 + factor), 3)
+        adjusted[fert] = round(grams * (1.0 + factor), 3)
+
     return adjusted
 
 
@@ -226,6 +227,7 @@ def recommend_loss_adjusted_fertigation(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[
     Dict[str, float],
     float,
@@ -233,7 +235,29 @@ def recommend_loss_adjusted_fertigation(
     Dict[str, Dict[str, float]],
     Dict[str, Dict[str, float]],
 ]:
-    """Return fertigation schedule adjusted for nutrient losses."""
+    """Return fertigation schedule adjusted for nutrient losses.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop identifier for guideline lookup.
+    stage : str
+        Growth stage identifier.
+    volume_l : float
+        Total solution volume in liters.
+    water_profile : Mapping[str, float] | None, optional
+        Nutrient concentration of the irrigation water.
+    fertilizers : Mapping[str, str] | None, optional
+        Mapping of nutrient codes to fertilizer product IDs.
+    purity_overrides : Mapping[str, float] | None, optional
+        Overrides for fertilizer purity fractions.
+    include_micro : bool, optional
+        Include micronutrient recommendations if ``True``.
+    micro_fertilizers : Mapping[str, str] | None, optional
+        Micronutrient fertilizer mapping, used when ``include_micro`` is ``True``.
+    use_synergy : bool, optional
+        Adjust guidelines using nutrient synergy factors before calculations.
+    """
 
     schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
         plant_type,
