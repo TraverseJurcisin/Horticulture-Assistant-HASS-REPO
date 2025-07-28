@@ -336,6 +336,7 @@ __all__ = [
     "get_target_vpd",
     "get_target_photoperiod",
     "get_target_co2",
+    "get_target_light_intensity",
     "get_target_light_ratio",
     "get_target_soil_moisture",
     "get_target_soil_temperature",
@@ -1930,6 +1931,23 @@ def get_target_photoperiod(
 ) -> tuple[float, float] | None:
     """Return recommended photoperiod range for a plant stage."""
     return _lookup_range(_PHOTOPERIOD_DATA, plant_type, stage)
+
+
+def get_target_light_intensity(
+    plant_type: str, stage: str | None = None
+) -> tuple[float, float] | None:
+    """Return recommended light intensity (PPFD) for a plant stage."""
+
+    data = _lookup_stage_data(_DATA, plant_type, stage)
+    if not isinstance(data, Mapping):
+        return None
+    vals = data.get("light_ppfd")
+    if isinstance(vals, (list, tuple)) and len(vals) == 2:
+        try:
+            return float(vals[0]), float(vals[1])
+        except (TypeError, ValueError):
+            return None
+    return None
 
 
 def get_target_co2(

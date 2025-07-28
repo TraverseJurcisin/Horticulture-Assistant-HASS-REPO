@@ -24,6 +24,7 @@ from plant_engine.environment_manager import (
     get_target_vpd,
     get_target_photoperiod,
     get_target_co2,
+    get_target_light_intensity,
     get_target_light_ratio,
     calculate_co2_injection,
     recommend_co2_injection,
@@ -497,6 +498,11 @@ def test_get_target_co2():
 def test_get_target_light_ratio():
     assert get_target_light_ratio("lettuce", "seedling") == 0.67
     assert get_target_light_ratio("unknown", "seedling") is None
+
+
+def test_get_target_light_intensity():
+    assert get_target_light_intensity("citrus", "seedling") == (150, 300)
+    assert get_target_light_intensity("unknown") is None
 
 
 def test_calculate_co2_injection():
