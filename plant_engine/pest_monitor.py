@@ -65,6 +65,7 @@ __all__ = [
     "get_scouting_method",
     "get_severity_action",
     "get_severity_thresholds",
+    "calculate_pest_management_index",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
@@ -324,6 +325,25 @@ def estimate_adjusted_pest_risk(
     if not risk:
         return {}
     return adjust_risk_with_resistance(plant_type, risk)
+
+
+def calculate_pest_management_index(
+    plant_type: str,
+    observations: Mapping[str, int],
+    environment: Mapping[str, float] | None = None,
+) -> float:
+    """Return 0-100 index combining pressure and environmental risk."""
+
+    pressure = calculate_pest_pressure_index(plant_type, observations)
+    if environment is None:
+        return pressure
+
+    risk = estimate_adjusted_pest_risk(plant_type, environment)
+    if not risk:
+        return pressure
+    risk_score = calculate_risk_score(risk)
+    risk_index = (risk_score / 3.0) * 100 if risk_score else 0.0
+    return round((pressure + risk_index) / 2, 1)
 
 
 def classify_pest_severity(

@@ -19,6 +19,7 @@ from plant_engine.pest_monitor import (
     get_scouting_method,
     get_severity_thresholds,
     summarize_pest_management,
+    calculate_pest_management_index,
 )
 
 
@@ -201,4 +202,13 @@ def test_generate_detailed_monitoring_schedule():
     entry = plan[0]
     assert entry["date"] == date(2023, 1, 4)
     assert "aphids" in entry["methods"]
+
+
+def test_calculate_pest_management_index():
+    obs = {"aphids": 6}
+    env = {"temperature": 26, "humidity": 80}
+    idx = calculate_pest_management_index("citrus", obs, env)
+    assert 66 <= idx <= 67
+    base = calculate_pest_pressure_index("citrus", obs)
+    assert calculate_pest_management_index("citrus", obs) == base
 
