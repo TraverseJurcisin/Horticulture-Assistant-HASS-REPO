@@ -151,3 +151,34 @@ def test_build_pest_management_plan_includes_lifecycle():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert "lifecycle" in plan["aphids"]
     assert plan["aphids"]["lifecycle"]["egg"] == 3
+
+
+def test_get_monitoring_interval():
+    from plant_engine.pest_manager import get_monitoring_interval
+
+    assert get_monitoring_interval("citrus", "vegetative") == 5
+    # Unknown stage falls back to the optimal value
+    assert get_monitoring_interval("citrus", "unknown") == 5
+
+
+def test_get_pest_threshold():
+    from plant_engine.pest_manager import get_pest_threshold
+
+    assert get_pest_threshold("tomato", "aphids", "vegetative") == 10
+    assert get_pest_threshold("citrus", "aphids") == 5
+    assert get_pest_threshold("tomato", "unknown") is None
+
+
+def test_recommend_monitoring_interval():
+    from plant_engine.pest_manager import recommend_monitoring_interval
+
+    assert recommend_monitoring_interval("citrus", "fruiting", "high") == 2
+
+
+def test_build_monitoring_plan():
+    from plant_engine.pest_manager import build_monitoring_plan
+
+    plan = build_monitoring_plan("citrus", ["aphids"], "fruiting", "moderate")
+    assert plan["interval_days"] == 2
+    assert plan["thresholds"]["aphids"] == 5
+    assert "inspect" in plan["methods"]["aphids"].lower()
