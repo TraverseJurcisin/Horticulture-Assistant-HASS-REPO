@@ -106,6 +106,37 @@ class DailyReport:
 _LOGGER = logging.getLogger(__name__)
 
 
+def _load_logs(plant_dir: Path) -> dict[str, list]:
+    """Return recent log entries for the given plant directory."""
+
+    return {
+        "irrigation": _load_recent_entries(plant_dir / "irrigation_log.json"),
+        "nutrient": _load_recent_entries(plant_dir / "nutrient_application_log.json"),
+        "sensor": _load_recent_entries(plant_dir / "sensor_reading_log.json"),
+        "water_quality": _load_recent_entries(plant_dir / "water_quality_log.json"),
+        "yield": _load_recent_entries(plant_dir / "yield_tracking_log.json"),
+    }
+
+
+def _build_root_zone_info(general: Mapping[str, object], sensor_avg: Mapping[str, float]) -> dict[str, object]:
+    """Return root zone metrics calculated from profile and sensors."""
+
+    try:
+        root_depth_cm = float(general.get("max_root_depth_cm", 30.0))
+    except Exception:
+        root_depth_cm = 30.0
+
+    zone = estimate_water_capacity(root_depth_cm)
+    info = {
+        "taw_ml": zone.total_available_water_ml,
+        "mad_pct": zone.mad_pct,
+    }
+    for key in ("soil_moisture", "soil_moisture_pct", "moisture"):
+        if key in sensor_avg:
+            info["current_moisture_pct"] = sensor_avg[key]
+            break
+
+    return info
 
 
 def run_daily_cycle(
@@ -144,12 +175,12 @@ def run_daily_cycle(
     # Get current thresholds from profile
     thresholds = profile.get("thresholds", {})
     report.thresholds = thresholds
-    # Load last 24h logs for irrigation, nutrients, sensors, visuals, yield
-    irrigation_entries = _load_recent_entries(plant_dir / "irrigation_log.json")
-    nutrient_entries = _load_recent_entries(plant_dir / "nutrient_application_log.json")
-    sensor_entries = _load_recent_entries(plant_dir / "sensor_reading_log.json")
-    water_quality_entries = _load_recent_entries(plant_dir / "water_quality_log.json")
-    yield_entries = _load_recent_entries(plant_dir / "yield_tracking_log.json")
+    logs = _load_logs(plant_dir)
+    irrigation_entries = logs["irrigation"]
+    nutrient_entries = logs["nutrient"]
+    sensor_entries = logs["sensor"]
+    water_quality_entries = logs["water_quality"]
+    yield_entries = logs["yield"]
 
     report.irrigation_summary = _summarize_irrigation(irrigation_entries)
 
@@ -236,25 +267,7 @@ def run_daily_cycle(
         except Exception:  # noqa: BLE001 -- ignore parse errors
             pass
     # Calculate root zone water metrics (TAW, MAD, current moisture)
-    root_depth_cm = general.get("max_root_depth_cm", 30.0)
-    try:
-        root_depth_cm = float(root_depth_cm)
-    except Exception:  # noqa: BLE001 -- default on parse failure
-        root_depth_cm = 30.0
-
-    rootzone = estimate_water_capacity(root_depth_cm)
-    root_zone_info = {
-        "taw_ml": rootzone.total_available_water_ml,
-        "mad_pct": rootzone.mad_pct,
-    }
-    # Include current moisture percentage if a sensor provides it
-    moisture_value = None
-    for key in ["soil_moisture", "soil_moisture_pct", "moisture"]:
-        if key in sensor_avg:
-            moisture_value = sensor_avg[key]
-            break
-    if moisture_value is not None:
-        root_zone_info["current_moisture_pct"] = moisture_value
+    root_zone_info = _build_root_zone_info(general, sensor_avg)
     report.root_zone = root_zone_info
 
     # Estimate plant transpiration based on latest environment readings
@@ -344,4 +357,6 @@ __all__ = [
     "_average_sensor_data",
     "_compute_expected_uptake",
     "load_last_entry",
+    "_load_logs",
+    "_build_root_zone_info",
 ]
