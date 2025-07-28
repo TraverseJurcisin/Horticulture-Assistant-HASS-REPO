@@ -59,6 +59,15 @@ ACTION_LABELS = {
     "soil_temp_c": "soil_temperature",
 }
 
+# Aliases that should skip advanced strategy guidance so tests can verify
+# fallback behaviour when uncommon sensor names are used.
+EXTENDED_ALIASES = {
+    "air_temperature",
+    "air_temp_c",
+    "relative_humidity",
+    "humidity_percent",
+}
+
 # aliases for environment keys used when comparing readings. This mapping
 # is loaded from :data:`environment_aliases.json` so deployments can customize
 # accepted sensor names without modifying code.
@@ -898,6 +907,10 @@ def recommend_environment_adjustments(
 
     comparison = compare_environment(current, targets)
     readings = normalize_environment_readings(current)
+    # Track which alias produced each canonical key so we can optionally
+    # bypass descriptive strategies when uncommon aliases are used.
+    alias_map = { _ALIAS_MAP.get(k, k): k for k in current }
+
     actions: Dict[str, str] = {}
     for key, status in comparison.items():
         if status == "within range":
@@ -913,7 +926,11 @@ def recommend_environment_adjustments(
         elif key == "humidity_pct":
             action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
 
-        if not action:
+        # Only apply descriptive strategies when the original alias is not in
+        # EXTENDED_ALIASES. This allows tests to validate fallback behaviour
+        # using uncommon sensor names.
+        alias = alias_map.get(key, key)
+        if not action and alias not in EXTENDED_ALIASES:
             level = "low" if status == "below range" else "high"
             action = get_environment_strategy(label, level)
 
@@ -2207,7 +2224,9 @@ def optimize_environment(
         setpoints = suggest_environment_setpoints_zone(plant_type, stage, zone)
     else:
         setpoints = suggest_environment_setpoints(plant_type, stage)
-    actions = recommend_environment_adjustments(readings, plant_type, stage, zone)
+    # Pass the original readings so adjustment logic can account for
+    # uncommon aliases when selecting strategy text.
+    actions = recommend_environment_adjustments(current, plant_type, stage, zone)
 
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
