@@ -1,0 +1,12 @@
+{
+  "citrus": {
+    "vegetative": {"N": 1.5, "P": 0.5, "K": 1.5},
+    "flowering": {"N": 1.2, "P": 0.4, "K": 1.4},
+    "fruiting": {"N": 1.0, "P": 0.4, "K": 1.6}
+  },
+  "tomato": {
+    "vegetative": {"N": 1.8, "P": 0.6, "K": 2.0},
+    "flowering": {"N": 1.6, "P": 0.7, "K": 2.2},
+    "fruiting": {"N": 1.4, "P": 0.6, "K": 2.4}
+  }
+}

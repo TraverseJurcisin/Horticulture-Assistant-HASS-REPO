@@ -255,6 +255,7 @@ Important categories include:
 - **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Total nutrient requirements** – daily NPK needs for common crops
+- **Stage nutrient requirements** – daily needs for each growth stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
