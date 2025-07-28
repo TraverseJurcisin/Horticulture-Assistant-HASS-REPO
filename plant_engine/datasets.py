@@ -49,12 +49,17 @@ class DatasetCatalog:
         default_factory=lambda: get_data_dir() / "dataset_catalog.json"
     )
 
-    def _iter_paths(self) -> List[Path]:
-        """Return search paths honoring init parameters."""
+    @lru_cache(maxsize=None)
+    def paths(self) -> tuple[Path, ...]:
+        """Return dataset search paths including overlay when set."""
         paths = [self.base_dir, *self.extra_dirs]
         if self.overlay_dir:
             paths.insert(0, self.overlay_dir)
-        return paths
+        return tuple(paths)
+
+    def _iter_paths(self) -> List[Path]:
+        """Return search paths as a list for backward compatibility."""
+        return list(self.paths())
 
     @lru_cache(maxsize=None)
     def list_datasets(self) -> List[str]:
@@ -154,6 +159,7 @@ class DatasetCatalog:
         self.list_info.cache_clear()
         self.list_by_category.cache_clear()
         self.load.cache_clear()
+        self.paths.cache_clear()
 
 
 DEFAULT_CATALOG = DatasetCatalog()
