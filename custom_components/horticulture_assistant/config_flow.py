@@ -24,6 +24,41 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def __init__(self) -> None:
         self._data: dict = {}
 
+    async def async_step_init(self, user_input: str | None = None) -> FlowResult:
+        """Show menu to add or manage entries from the integration page."""
+        if user_input is None:
+            return self.async_show_menu(
+                step_id="init",
+                menu_options=["add_entry", "manage_entries"],
+            )
+
+        if user_input == "add_entry":
+            return await self.async_step_user()
+
+        if user_input == "manage_entries":
+            entries = self.hass.config_entries.async_entries(DOMAIN)
+            if not entries:
+                return self.async_abort(reason="no_entries")
+
+            options = {
+                entry.entry_id: entry.data.get("plant_name", entry.entry_id)
+                for entry in entries
+            }
+            self._entry_map = options
+            return self.async_show_form(
+                step_id="select_entry",
+                data_schema=vol.Schema({vol.Required("entry_id"): vol.In(options)}),
+            )
+        return self.async_abort(reason="invalid_menu_selection")
+
+    async def async_step_select_entry(self, user_input: dict) -> FlowResult:
+        """Abort with placeholder when an entry is chosen."""
+        entry_id = user_input.get("entry_id")
+        return self.async_abort(
+            reason="existing_entry",
+            description_placeholders={"entry_id": entry_id},
+        )
+
     async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
         """Collect minimal information and create the entry."""
         data_schema = vol.Schema({
