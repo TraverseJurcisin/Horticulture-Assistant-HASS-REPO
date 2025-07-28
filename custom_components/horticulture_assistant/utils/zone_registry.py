@@ -22,6 +22,7 @@ __all__ = [
     "detach_plants",
     "attach_solenoids",
     "detach_solenoids",
+    "remove_zone",
 ]
 
 
@@ -147,5 +148,15 @@ def detach_solenoids(zone_id: str, solenoids: List[str], hass=None) -> bool:
     if not zone:
         return False
     zone.solenoids = [sid for sid in zone.solenoids if sid not in solenoids]
+    return save_zones(zones, hass)
+
+
+def remove_zone(zone_id: str, hass=None) -> bool:
+    """Delete ``zone_id`` from the registry and persist changes."""
+
+    zones = load_zones(hass)
+    if str(zone_id) not in zones:
+        return False
+    zones.pop(str(zone_id))
     return save_zones(zones, hass)
 
