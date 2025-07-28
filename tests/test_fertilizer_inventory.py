@@ -38,9 +38,12 @@ def test_product_price_and_usage():
     product.add_price_entry("B", 2.0, "1kg")
     latest = product.get_latest_price()
     assert latest.vendor == "B"
+    assert product.average_price_per_unit() == 1.5
 
     product.log_usage(100, "g", "GH1")
-    assert len(product.usage_log) == 1
+    product.log_usage(50, "g", "GH1")
+    assert len(product.usage_log) == 2
     assert not product.is_expired()
+    assert product.total_usage() == 150
 
 
