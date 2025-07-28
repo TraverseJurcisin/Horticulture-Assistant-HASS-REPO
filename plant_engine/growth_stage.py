@@ -42,10 +42,12 @@ __all__ = [
     "predict_harvest_date",
     "get_total_cycle_duration",
     "stage_progress",
+    "cycle_progress",
     "days_until_harvest",
     "predict_next_stage_date",
     "predict_stage_end_date",
     "stage_progress_from_dates",
+    "cycle_progress_from_dates",
     "get_germination_duration",
     "growth_stage_summary",
     "stage_bounds",
@@ -149,6 +151,18 @@ def stage_progress(plant_type: str, stage: str, days_elapsed: int) -> float | No
     return round(progress * 100, 1)
 
 
+def cycle_progress(plant_type: str, days_since_start: int) -> float | None:
+    """Return percent completion of the entire growth cycle."""
+
+    total = get_total_cycle_duration(plant_type)
+    if total is None:
+        return None
+    if days_since_start < 0:
+        raise ValueError("days_since_start must be non-negative")
+    progress = min(max(days_since_start / total, 0.0), 1.0)
+    return round(progress * 100, 1)
+
+
 def days_until_harvest(
     plant_type: str, start_date: date, current_date: date
 ) -> int | None:
@@ -210,6 +224,17 @@ def stage_progress_from_dates(
         raise ValueError("current_date cannot be before start_date")
     days = (current_date - start_date).days
     return stage_progress(plant_type, stage, days)
+
+
+def cycle_progress_from_dates(
+    plant_type: str, start_date: date, current_date: date
+) -> float | None:
+    """Return completion percent of the entire growth cycle based on dates."""
+
+    if current_date < start_date:
+        raise ValueError("current_date cannot be before start_date")
+    days = (current_date - start_date).days
+    return cycle_progress(plant_type, days)
 
 
 def days_until_next_stage(
