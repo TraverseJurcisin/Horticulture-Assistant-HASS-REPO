@@ -234,7 +234,14 @@ def recommend_loss_adjusted_fertigation(
     Dict[str, Dict[str, float]],
     Dict[str, Dict[str, float]],
 ]:
-    """Return fertigation schedule adjusted for nutrient losses."""
+    """Return fertigation schedule adjusted for nutrient losses.
+
+    Parameters
+    ----------
+    use_synergy : bool, optional
+        When ``True`` nutrient synergy factors are applied before loss
+        adjustments.
+    """
 
     schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
         plant_type,

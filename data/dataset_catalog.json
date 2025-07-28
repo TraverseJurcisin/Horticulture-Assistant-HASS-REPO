@@ -141,6 +141,7 @@
     "pesticide_application_rates.json": "Recommended pesticide application rates in ml or g per liter.",
     "pesticide_prices.json": "Cost per unit of pesticide product.",
     "pesticide_active_ingredients.json": "Key properties for common pesticide active ingredients.",
+    "pesticide_efficacy.json": "Relative effectiveness ratings of pesticides against specific pests.",
     "risk_score_map.json": "Numeric weights for risk level scoring.",
     "silicon_guidelines.json": "Recommended silicon (Si) ppm levels for each plant stage.",
     "stock_solution_concentrations.json": "Nutrient concentrations for standard stock solutions.",
