@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from typing import Dict
 
-from .growth_stage import list_growth_stages
+from .growth_stage import list_growth_stages, get_stage_duration
+from .plant_density import get_spacing_cm
 
 from .utils import load_dataset, list_dataset_entries
 
@@ -19,6 +20,8 @@ __all__ = [
     "estimate_cumulative_uptake",
     "estimate_average_daily_uptake",
     "get_uptake_ratio",
+    "estimate_area_daily_uptake",
+    "estimate_area_stage_uptake",
 ]
 
 
@@ -113,4 +116,37 @@ def estimate_cumulative_uptake(plant_type: str, stage: str) -> Dict[str, float]:
             break
 
     return totals
+
+
+def estimate_area_daily_uptake(
+    plant_type: str, stage: str, area_m2: float
+) -> Dict[str, float]:
+    """Return daily nutrient demand for ``area_m2`` of crop."""
+
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+
+    spacing = get_spacing_cm(plant_type)
+    if spacing is None or spacing <= 0:
+        return {}
+
+    plants = area_m2 / ((spacing / 100) ** 2)
+    daily = get_daily_uptake(plant_type, stage)
+    return {n: round(val * plants, 2) for n, val in daily.items()}
+
+
+def estimate_area_stage_uptake(
+    plant_type: str, stage: str, area_m2: float
+) -> Dict[str, float]:
+    """Return total nutrient demand for an area during ``stage``."""
+
+    daily_totals = estimate_area_daily_uptake(plant_type, stage, area_m2)
+    if not daily_totals:
+        return {}
+
+    duration = get_stage_duration(plant_type, stage)
+    if not duration:
+        return {}
+
+    return {n: round(val * duration, 2) for n, val in daily_totals.items()}
 
