@@ -4,6 +4,7 @@ import pytest
 from custom_components.horticulture_assistant.utils.nutrient_tracker import (
     NutrientTracker,
     NutrientDeliveryRecord,
+    register_fertilizers_from_dataset,
 )
 
 
@@ -44,3 +45,21 @@ def test_summarize_mg_since():
 
     with pytest.raises(ValueError):
         tracker.summarize_mg_since(-1)
+
+
+def test_summarize_daily_totals_and_dataset_registration():
+    tracker = NutrientTracker()
+    register_fertilizers_from_dataset(tracker)
+    assert "foxfarm_grow_big" in tracker.product_profiles
+
+    profile = tracker.product_profiles["foxfarm_grow_big"]
+    n_entry = profile.nutrient_map.get("N")
+    assert n_entry and n_entry.value_mg_per_kg == pytest.approx(60000, abs=1)
+
+    now = datetime.now()
+    tracker.delivery_log.append(
+        NutrientDeliveryRecord("p", "b1", now, {"N": 100}, 2.0)
+    )
+    totals = tracker.summarize_daily_totals("p")
+    today = now.date().isoformat()
+    assert totals[today]["N"] == 200.0
