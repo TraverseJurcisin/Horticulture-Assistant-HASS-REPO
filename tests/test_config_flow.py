@@ -48,6 +48,23 @@ class ConfigFlowBase:
     def _abort_if_unique_id_configured(self):
         pass
 ha.config_entries.ConfigFlow = ConfigFlowBase
+class ConfigSubentryFlowBase:
+    def __init__(self) -> None:
+        self.created_entry = None
+
+    def async_show_form(self, **kwargs):
+        return {"type": "form", **kwargs}
+
+    def async_create_entry(self, **kwargs):
+        self.created_entry = kwargs
+        return {"type": "create_entry", **kwargs}
+ha.config_entries.ConfigSubentryFlow = ConfigSubentryFlowBase
+ha.config_entries.SubentryFlowResult = dict
+ha.core = sys.modules.get("homeassistant.core", types.ModuleType("homeassistant.core"))
+def callback(func):
+    return func
+ha.core.callback = callback
+sys.modules["homeassistant.core"] = ha.core
 class OptionsFlowBase:
     def async_show_form(self, **kwargs):
         return {"type": "form", **kwargs}

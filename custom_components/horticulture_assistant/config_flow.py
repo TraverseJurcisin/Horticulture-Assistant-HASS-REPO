@@ -5,6 +5,7 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.core import callback
 from homeassistant.helpers.selector import (
     BooleanSelector,
     TextSelector,
@@ -141,3 +142,39 @@ async def async_get_options_flow(
 ) -> HorticultureAssistantOptionsFlow:
     """Return the options flow handler."""
     return HorticultureAssistantOptionsFlow(config_entry)
+
+
+class PlantProfileSubEntryFlow(config_entries.ConfigSubentryFlow):
+    """Handle subentry flows for additional plant profiles."""
+
+    async def async_step_user(self, user_input: dict | None = None) -> config_entries.SubentryFlowResult:
+        """Create a new plant profile entry."""
+        data_schema = vol.Schema({
+            vol.Required("plant_name"): TextSelector(),
+            vol.Optional("zone_id"): TextSelector(),
+        })
+
+        if user_input is not None:
+            plant_id = generate_profile(user_input, self.hass)
+            if plant_id:
+                user_input["profile_generated"] = True
+                user_input["plant_id"] = plant_id
+            else:
+                user_input["profile_generated"] = False
+                user_input["plant_id"] = f"pending_{uuid4().hex}"
+            return self.async_create_entry(
+                title=user_input["plant_name"],
+                data=user_input,
+                unique_id=user_input["plant_id"],
+            )
+
+        return self.async_show_form(step_id="user", data_schema=data_schema)
+
+
+@callback
+def async_get_supported_subentry_types(
+    config_entry: config_entries.ConfigEntry,
+) -> dict[str, type[config_entries.ConfigSubentryFlow]]:
+    """Return the subentry flow handler mapping."""
+    return {"plant": PlantProfileSubEntryFlow}
+

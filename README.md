@@ -49,7 +49,7 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
 
-Once you have at least one plant configured, open **Settings → Devices & Services → Horticulture Assistant**. From here you can manage existing plant entries or choose **Add Plant** to create another entry without returning to the integrations list.
+Once you have at least one plant configured, open **Settings → Devices & Services → Horticulture Assistant**. Here you can edit existing plant profiles and use the **Add Plant** button to create new ones without returning to the integrations list.
 
 ---
 

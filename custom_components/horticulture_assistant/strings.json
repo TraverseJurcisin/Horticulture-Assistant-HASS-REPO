@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add Plant Profile",
+        "data": {
+          "plant_name": "Plant Name",
+          "zone_id": "Zone ID"
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "plant": {
+      "initiate_flow": {
+        "user": "Add Plant Profile"
+      }
+    }
+  }
+}
