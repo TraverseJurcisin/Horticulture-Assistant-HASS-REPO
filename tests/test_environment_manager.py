@@ -309,7 +309,7 @@ def test_optimize_environment_extended_aliases():
         "seedling",
     )
     assert result["setpoints"]["temp_c"] == 24
-    assert result["adjustments"]["temperature"] == "increase"
+    assert result["adjustments"]["temperature"].startswith("Increase heating")
 
 
 def test_optimize_environment_zone():
