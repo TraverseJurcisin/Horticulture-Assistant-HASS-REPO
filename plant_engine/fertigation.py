@@ -163,7 +163,7 @@ def apply_loss_factors(schedule: Mapping[str, float], plant_type: str) -> Dict[s
     adjusted: Dict[str, float] = {}
     for fert, grams in schedule.items():
         factor = factors.get(fert, 0.0)
-    adjusted[fert] = round(grams * (1.0 + factor), 3)
+        adjusted[fert] = round(grams * (1.0 + factor), 3)
     return adjusted
 
 
@@ -226,6 +226,7 @@ def recommend_loss_adjusted_fertigation(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[
     Dict[str, float],
     float,
