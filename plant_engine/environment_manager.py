@@ -14,6 +14,7 @@ from .utils import load_dataset, normalize_key, list_dataset_entries, parse_rang
 from . import ph_manager, water_quality
 from .growth_stage import list_growth_stages
 from .compute_transpiration import compute_transpiration
+from .light_spectrum import get_red_blue_ratio
 
 DATA_FILE = "environment_guidelines.json"
 DLI_DATA_FILE = "light_dli_guidelines.json"
@@ -329,6 +330,7 @@ __all__ = [
     "get_target_vpd",
     "get_target_photoperiod",
     "get_target_co2",
+    "get_target_light_ratio",
     "get_target_soil_moisture",
     "get_target_soil_temperature",
     "get_target_soil_ec",
@@ -668,6 +670,7 @@ class EnvironmentOptimization:
     target_vpd: tuple[float, float] | None = None
     target_photoperiod: tuple[float, float] | None = None
     target_co2: tuple[float, float] | None = None
+    target_light_ratio: float | None = None
     photoperiod_hours: float | None = None
     heat_stress: bool | None = None
     cold_stress: bool | None = None
@@ -700,6 +703,7 @@ class EnvironmentOptimization:
             "target_vpd": self.target_vpd,
             "target_photoperiod": self.target_photoperiod,
             "target_co2": self.target_co2,
+            "target_light_ratio": self.target_light_ratio,
             "photoperiod_hours": self.photoperiod_hours,
             "heat_stress": self.heat_stress,
             "cold_stress": self.cold_stress,
@@ -1932,6 +1936,13 @@ def get_target_co2(
     return guide.co2_ppm
 
 
+def get_target_light_ratio(plant_type: str, stage: str | None = None) -> float | None:
+    """Return recommended red:blue light ratio for a plant stage."""
+    if stage is None:
+        return None
+    return get_red_blue_ratio(plant_type, stage)
+
+
 # Approximate mass of CO₂ in milligrams required per m³ to raise
 # concentration by 1 ppm at 25°C. Used for enrichment calculations.
 CO2_MG_PER_M3_PER_PPM = 1.98
@@ -2179,6 +2190,7 @@ def optimize_environment(
     target_vpd = get_target_vpd(plant_type, stage)
     target_photoperiod = get_target_photoperiod(plant_type, stage)
     target_co2 = get_target_co2(plant_type, stage)
+    target_light_ratio = get_target_light_ratio(plant_type, stage)
     photoperiod_hours = None
     if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
@@ -2232,6 +2244,7 @@ def optimize_environment(
         target_vpd=target_vpd,
         target_photoperiod=target_photoperiod,
         target_co2=target_co2,
+        target_light_ratio=target_light_ratio,
         photoperiod_hours=photoperiod_hours,
         heat_stress=stress.heat,
         cold_stress=stress.cold,

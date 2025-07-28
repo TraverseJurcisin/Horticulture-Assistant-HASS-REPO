@@ -24,6 +24,7 @@ from plant_engine.environment_manager import (
     get_target_vpd,
     get_target_photoperiod,
     get_target_co2,
+    get_target_light_ratio,
     calculate_co2_injection,
     recommend_co2_injection,
     get_co2_price,
@@ -259,6 +260,7 @@ def test_optimize_environment():
     assert result["photoperiod_hours"] is None
     assert result["target_photoperiod"] == (16, 18)
     assert result["target_co2"] == (400, 600)
+    assert result["target_light_ratio"] is None
 
     result2 = optimize_environment(
         {"temp_c": 18, "humidity_pct": 90, "ph": 7.2},
@@ -271,6 +273,7 @@ def test_optimize_environment():
     assert result2["photoperiod_hours"] is None
     assert result2["target_vpd"] == (0.6, 0.8)
     assert result2["target_co2"] == (400, 600)
+    assert result2["target_light_ratio"] is None
 
 
 def test_optimize_environment_with_dli():
@@ -285,6 +288,7 @@ def test_optimize_environment_with_dli():
     assert result["photoperiod_hours"] == expected_hours
     assert result["target_photoperiod"] == (18, 20)
     assert result["target_co2"] == (400, 600)
+    assert result["target_light_ratio"] == 1.22
 
 
 def test_optimize_environment_aliases():
@@ -460,6 +464,11 @@ def test_get_target_photoperiod():
 def test_get_target_co2():
     assert get_target_co2("citrus", "seedling") == (400, 600)
     assert get_target_co2("unknown") is None
+
+
+def test_get_target_light_ratio():
+    assert get_target_light_ratio("lettuce", "seedling") == 0.67
+    assert get_target_light_ratio("unknown", "seedling") is None
 
 
 def test_calculate_co2_injection():
