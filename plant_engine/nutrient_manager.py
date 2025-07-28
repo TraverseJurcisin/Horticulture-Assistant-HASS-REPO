@@ -38,6 +38,7 @@ __all__ = [
     "get_stage_adjusted_levels",
     "get_all_stage_adjusted_levels",
     "calculate_deficiencies",
+    "calculate_deficiency_percentages",
     "calculate_all_deficiencies",
     "calculate_nutrient_balance",
     "calculate_surplus",
@@ -129,6 +130,31 @@ def calculate_deficiencies(
         if diff > 0:
             deficiencies[nutrient] = diff
     return deficiencies
+
+
+def calculate_deficiency_percentages(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, float]:
+    """Return percent deficiency for each nutrient relative to guidelines.
+
+    The returned values are clipped to the ``0-100`` range. A value of
+    ``0`` means the recommended level is met or exceeded while ``100``
+    indicates the nutrient is completely absent.
+    """
+
+    recommended = get_recommended_levels(plant_type, stage)
+    percentages: Dict[str, float] = {}
+    for nutrient, target in recommended.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0)
+        pct = (deficit / target) * 100
+        percentages[nutrient] = round(min(max(pct, 0.0), 100.0), 1)
+    return percentages
 
 
 def calculate_nutrient_balance(

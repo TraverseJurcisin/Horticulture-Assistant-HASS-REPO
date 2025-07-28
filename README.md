@@ -90,6 +90,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Synergy-adjusted nutrient targets accounting for nutrient interactions
 - Synergy-based deficiency index for more accurate nutrient diagnosis
 - Nutrient deficiency severity and treatment recommendations
+- Percent deficiency calculations for each nutrient
 - Combined nutrient management reports with correction schedules
 - Automatic fertigation mix recommendations using priced fertilizer data
 - Daily report files summarizing environment and nutrient targets

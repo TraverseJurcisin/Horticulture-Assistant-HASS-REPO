@@ -47,6 +47,23 @@ def test_calculate_surplus():
     assert surplus["K"] == 10
 
 
+def test_calculate_deficiency_percentages():
+    from plant_engine.nutrient_manager import calculate_deficiency_percentages
+
+    current = {"N": 40, "P": 30, "K": 60}
+    pct = calculate_deficiency_percentages(current, "tomato", "fruiting")
+    assert pct["N"] == 50.0
+    assert pct["P"] == 50.0
+    assert pct["K"] == 50.0
+
+    pct2 = calculate_deficiency_percentages(
+        {"N": 100, "P": 60, "K": 120}, "tomato", "fruiting"
+    )
+    assert pct2["N"] == 0.0
+    assert pct2["P"] == 0.0
+    assert pct2["K"] == 0.0
+
+
 def test_get_recommended_levels_case_insensitive():
     levels = get_recommended_levels("Citrus", "FRUITING")
     assert levels["N"] == 120
