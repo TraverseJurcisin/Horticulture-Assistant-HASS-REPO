@@ -38,5 +38,9 @@
   "blueberry": {
     "fruitworms": "Prune to improve airflow and remove weeds.",
     "spotted wing drosophila": "Pick fruit promptly and use traps."
+  },
+  "mint": {
+    "aphids": "Encourage beneficial insects and avoid excess nitrogen.",
+    "spider mites": "Mist plants regularly and remove infested leaves."
   }
 }

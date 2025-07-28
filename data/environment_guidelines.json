@@ -318,5 +318,25 @@
       "light_ppfd": [200, 400],
       "co2_ppm": [500, 900]
     }
+  },
+  "mint": {
+    "optimal": {
+      "temp_c": [18, 24],
+      "humidity_pct": [50, 70],
+      "light_ppfd": [200, 450],
+      "co2_ppm": [400, 800]
+    },
+    "vegetative": {
+      "temp_c": [18, 24],
+      "humidity_pct": [50, 70],
+      "light_ppfd": [200, 450],
+      "co2_ppm": [400, 800]
+    },
+    "harvest": {
+      "temp_c": [16, 20],
+      "humidity_pct": [50, 65],
+      "light_ppfd": [250, 450],
+      "co2_ppm": [600, 1200]
+    }
   }
 }

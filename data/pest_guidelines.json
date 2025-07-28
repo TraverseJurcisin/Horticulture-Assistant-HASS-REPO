@@ -38,5 +38,9 @@
   "blueberry": {
     "fruitworms": "Apply Bacillus thuringiensis when larvae appear.",
     "spotted wing drosophila": "Use traps and pick fruit frequently."
+  },
+  "mint": {
+    "aphids": "Use insecticidal soap or introduce ladybugs.",
+    "spider mites": "Increase humidity and apply horticultural oil."
   }
 }

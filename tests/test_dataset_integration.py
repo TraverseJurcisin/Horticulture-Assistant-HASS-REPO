@@ -19,6 +19,7 @@ def test_list_supported_plants():
     assert "pepper" in plants
     assert "arugula" in plants
     assert "blueberry" in plants
+    assert "mint" in plants
 
     pest_plants = pest_manager.list_supported_plants()
     assert "lettuce" in pest_plants
@@ -26,6 +27,7 @@ def test_list_supported_plants():
     assert "pepper" in pest_plants
     assert "arugula" in pest_plants
     assert "blueberry" in pest_plants
+    assert "mint" in pest_plants
 
     disease_plants = disease_manager.list_supported_plants()
     assert "lettuce" in disease_plants
@@ -36,6 +38,7 @@ def test_list_supported_plants():
     assert "pepper" in disease_plants
     assert "arugula" in disease_plants
     assert "blueberry" in disease_plants
+    assert "mint" in disease_plants
 
     purity = fertigation.get_fertilizer_purity("map")
     assert purity["P"] == 0.22
@@ -65,6 +68,9 @@ def test_list_supported_plants():
     blue_env = environment_manager.get_environmental_targets("blueberry")
     assert blue_env["humidity_pct"] == [60, 80]
 
+    mint_env = environment_manager.get_environmental_targets("mint")
+    assert mint_env["temp_c"] == [18, 24]
+
 
 def test_lettuce_stage_info():
     stages = growth_stage.list_growth_stages("lettuce")
@@ -86,6 +92,9 @@ def test_lettuce_stage_info():
 
     blue_info = growth_stage.get_stage_info("blueberry", "fruiting")
     assert blue_info["duration_days"] == 40
+
+    mint_info = growth_stage.get_stage_info("mint", "harvest")
+    assert mint_info["duration_days"] == 20
 
 
 def test_nutrient_guidelines_lettuce():
@@ -112,6 +121,9 @@ def test_nutrient_guidelines_lettuce():
 
     blue_levels = nutrient_manager.get_recommended_levels("blueberry", "vegetative")
     assert blue_levels["N"] == 60
+
+    mint_levels = nutrient_manager.get_recommended_levels("mint", "harvest")
+    assert mint_levels["K"] == 90
 
 
 def test_treatment_guidelines_lettuce():
@@ -162,6 +174,15 @@ def test_treatment_guidelines_lettuce():
 
     blue_dis = disease_manager.recommend_treatments("blueberry", ["mummy berry"])
     assert "mummified" in blue_dis["mummy berry"].lower()
+
+    mint_pests = pest_manager.recommend_treatments("mint", ["aphids"])
+    assert "ladybugs" in mint_pests["aphids"].lower()
+
+    mint_dis = disease_manager.recommend_treatments("mint", ["powdery mildew"])
+    assert "air circulation" in mint_dis["powdery mildew"].lower()
+
+    mint_prev = disease_manager.recommend_prevention("mint", ["rust"])
+    assert "sulfur" in mint_prev["rust"].lower()
 
     prev = disease_manager.recommend_prevention("lettuce", ["lettuce drop"])
     assert prev["lettuce drop"].startswith("Use clean transplants")

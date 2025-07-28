@@ -38,5 +38,9 @@
   "blueberry": {
     "mummy berry": "Remove mummified fruit and apply fungicide early.",
     "botrytis": "Prune for airflow and remove infected berries."
+  },
+  "mint": {
+    "powdery mildew": "Provide good air circulation and avoid overhead watering.",
+    "rust": "Remove infected leaves and apply sulfur spray."
   }
 }

@@ -34,5 +34,9 @@
   "blueberry": {
     "mummy berry": "Rake and destroy mummified fruit to break the cycle.",
     "botrytis": "Prune regularly to increase airflow."
+  },
+  "mint": {
+    "powdery mildew": "Space plants well and avoid overhead watering.",
+    "rust": "Remove infected leaves promptly and apply sulfur."
   }
 }
