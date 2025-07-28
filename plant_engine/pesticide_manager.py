@@ -15,6 +15,7 @@ RATE_FILE = "pesticide_application_rates.json"
 PRICE_FILE = "pesticide_prices.json"
 ACTIVE_FILE = "pesticide_active_ingredients.json"
 EFFICACY_FILE = "pesticide_efficacy.json"
+PEST_ROTATION_FILE = "pest_rotation_moas.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA = lazy_dataset(DATA_FILE)
@@ -26,6 +27,7 @@ _RATES = lazy_dataset(RATE_FILE)
 _PRICES = lazy_dataset(PRICE_FILE)
 _ACTIVE = lazy_dataset(ACTIVE_FILE)
 _EFFICACY = lazy_dataset(EFFICACY_FILE)
+_PEST_ROTATION = lazy_dataset(PEST_ROTATION_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -52,6 +54,7 @@ __all__ = [
     "list_active_ingredients",
     "get_pesticide_efficacy",
     "list_effective_pesticides",
+    "recommend_rotation_products",
 ]
 
 
@@ -365,3 +368,46 @@ def list_effective_pesticides(pest: str) -> List[tuple[str, float]]:
         results.append((product, val))
     results.sort(key=lambda x: x[1], reverse=True)
     return results
+
+
+def _products_for_moa(moa: str) -> list[str]:
+    """Return products classified under the mode of action ``moa``."""
+
+    key = normalize_key(moa)
+    return [p for p, m in _MOA().items() if normalize_key(m) == key]
+
+
+def recommend_rotation_products(pest: str, count: int = 3) -> list[str]:
+    """Return up to ``count`` pesticide products rotated by MOA for ``pest``."""
+
+    if count <= 0:
+        raise ValueError("count must be positive")
+
+    moas = _PEST_ROTATION().get(normalize_key(pest))
+    if not isinstance(moas, Iterable):
+        return []
+
+    pest_key = normalize_key(pest)
+    efficacies = _EFFICACY()
+    chosen: list[str] = []
+    for moa in moas:
+        candidates = [
+            p
+            for p in _products_for_moa(moa)
+            if isinstance(efficacies.get(p), Mapping)
+            and pest_key in efficacies[p]
+        ]
+        if not candidates:
+            continue
+        candidates.sort(
+            key=lambda p: float(efficacies[p][pest_key]),
+            reverse=True,
+        )
+        for prod in candidates:
+            if prod not in chosen:
+                chosen.append(prod)
+                break
+        if len(chosen) >= count:
+            break
+
+    return chosen
