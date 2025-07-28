@@ -4,6 +4,8 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Tuple
 
+from .constants import get_stage_multiplier
+
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "ec_guidelines.json"
@@ -17,6 +19,7 @@ __all__ = [
     "list_supported_plants",
     "get_ec_range",
     "get_optimal_ec",
+    "get_stage_adjusted_ec_range",
     "classify_ec_level",
     "recommend_ec_adjustment",
 ]
@@ -51,6 +54,19 @@ def get_optimal_ec(plant_type: str, stage: str | None = None) -> float | None:
         return None
     low, high = rng
     return round((low + high) / 2, 2)
+
+
+def get_stage_adjusted_ec_range(
+    plant_type: str, stage: str | None = None
+) -> Tuple[float, float] | None:
+    """Return EC range scaled by the stage multiplier if available."""
+
+    rng = get_ec_range(plant_type, stage)
+    if not rng:
+        return None
+    low, high = rng
+    mult = get_stage_multiplier(stage or "")
+    return round(low * mult, 2), round(high * mult, 2)
 
 
 def classify_ec_level(ec_ds_m: float, plant_type: str, stage: str | None = None) -> str:
