@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import date, timedelta
-from typing import Dict, Mapping
+from typing import Dict, Mapping, Iterable
 
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
@@ -61,6 +61,7 @@ __all__ = [
     "estimate_pest_risk",
     "adjust_risk_with_resistance",
     "estimate_adjusted_pest_risk",
+    "estimate_adjusted_pest_risk_series",
     "generate_pest_report",
     "get_scouting_method",
     "get_severity_action",
@@ -325,6 +326,24 @@ def estimate_adjusted_pest_risk(
     if not risk:
         return {}
     return adjust_risk_with_resistance(plant_type, risk)
+
+
+def estimate_adjusted_pest_risk_series(
+    plant_type: str, series: Iterable[Mapping[str, float]]
+) -> Dict[str, str]:
+    """Return combined pest risk across multiple environment readings."""
+
+    levels = {"low": 1, "moderate": 2, "high": 3}
+    combined: Dict[str, int] = {}
+    for env in series:
+        risk = estimate_adjusted_pest_risk(plant_type, env)
+        for pest, level in risk.items():
+            rank = levels.get(level, 0)
+            if rank > combined.get(pest, 0):
+                combined[pest] = rank
+
+    inv_levels = {v: k for k, v in levels.items()}
+    return {p: inv_levels[r] for p, r in combined.items()}
 
 
 def calculate_pest_management_index(
