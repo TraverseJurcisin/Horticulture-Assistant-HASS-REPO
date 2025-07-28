@@ -42,3 +42,13 @@ def test_plan_fertigation_missing_profile(tmp_path):
     plan = plan_fertigation_from_profile("missing", 5.0, hass)
     assert plan.schedule == {}
     assert plan.cost_total == 0.0
+
+
+def test_plan_fertigation_synergy(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
+    hass = _hass_for(tmp_path)
+    plan_basic = plan_fertigation_from_profile("lettuce", 1.0, hass)
+    plan_syn = plan_fertigation_from_profile("lettuce", 1.0, hass, use_synergy=True)
+    assert plan_syn.cost_total >= plan_basic.cost_total

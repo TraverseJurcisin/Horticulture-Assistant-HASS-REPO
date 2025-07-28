@@ -46,6 +46,7 @@ def plan_fertigation_from_profile(
     water_profile: Mapping[str, float] | None = None,
     include_micro: bool = False,
     fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> FertigationPlan:
     """Return a fertigation plan using profile data and dataset guidelines."""
 
@@ -83,6 +84,7 @@ def plan_fertigation_from_profile(
         water_profile,
         fertilizers=fertilizers,
         include_micro=include_micro,
+        use_synergy=use_synergy,
     )
 
     return FertigationPlan(schedule, total, breakdown, warnings, diagnostics)
