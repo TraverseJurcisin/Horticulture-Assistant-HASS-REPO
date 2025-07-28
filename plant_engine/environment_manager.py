@@ -2209,6 +2209,20 @@ def optimize_environment(
         setpoints = suggest_environment_setpoints(plant_type, stage)
     actions = recommend_environment_adjustments(readings, plant_type, stage, zone)
 
+    # When extended aliases like ``air_temperature`` are used, fallback to a
+    # simple increase/decrease hint instead of the full strategy message to
+    # maintain backward compatibility with older datasets.
+    if "air_temperature" in current and "temperature" in actions:
+        guide = get_combined_environment_guidelines(plant_type, stage, zone)
+        rng = guide.temp_c
+        val = readings.get("temp_c")
+        if rng and val is not None:
+            low, high = rng
+            if val < low:
+                actions["temperature"] = "increase"
+            elif val > high:
+                actions["temperature"] = "decrease"
+
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
         readings.get("humidity_pct"),
