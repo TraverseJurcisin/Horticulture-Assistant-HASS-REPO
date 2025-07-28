@@ -21,6 +21,7 @@ _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 __all__ = [
     "list_known_nutrients",
     "get_recovery_factor",
+    "get_recovery_factors",
     "estimate_recovered_amounts",
     "adjust_for_recovery",
 ]
@@ -53,6 +54,36 @@ def get_recovery_factor(nutrient: str, plant_type: str | None = None) -> float:
         return float(_DATA.get("default", {}).get(nutrient, 0.0))
     except (TypeError, ValueError):
         return 0.0
+
+
+def get_recovery_factors(plant_type: str | None = None) -> Dict[str, float]:
+    """Return mapping of recovery factors for ``plant_type``.
+
+    When ``plant_type`` is ``None`` or no crop-specific data exists, the
+    default factors are returned. Crop overrides supplement the defaults so
+    missing values fall back to the generic definitions.
+    """
+
+    defaults = _DATA.get("default", {})
+    factors: Dict[str, float] = {}
+
+    if plant_type:
+        crop = _DATA.get(plant_type.lower())
+        if isinstance(crop, Mapping):
+            for nutrient, value in crop.items():
+                try:
+                    factors[nutrient] = float(value)
+                except (TypeError, ValueError):
+                    continue
+
+    for nutrient, value in defaults.items():
+        if nutrient not in factors:
+            try:
+                factors[nutrient] = float(value)
+            except (TypeError, ValueError):
+                continue
+
+    return factors
 
 
 def estimate_recovered_amounts(levels_mg: Mapping[str, float], plant_type: str | None = None) -> Dict[str, float]:
