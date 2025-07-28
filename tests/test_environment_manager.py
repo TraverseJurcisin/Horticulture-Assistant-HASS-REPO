@@ -41,6 +41,8 @@ from plant_engine.environment_manager import (
     get_wind_action,
     recommend_wind_action,
     evaluate_humidity_stress,
+    evaluate_vpd,
+    recommend_vpd_action,
     evaluate_ph_stress,
     evaluate_stress_conditions,
     evaluate_soil_temperature_stress,
@@ -169,9 +171,7 @@ def test_energy_optimized_setpoints_invalid():
 
 def test_cost_optimized_setpoints():
     normal = suggest_environment_setpoints("citrus", "seedling")
-    result = cost_optimized_setpoints(
-        "citrus", "seedling", 20, 12, region="default"
-    )
+    result = cost_optimized_setpoints("citrus", "seedling", 20, 12, region="default")
     assert result["temp_c"] == 22
     for key, value in normal.items():
         if key != "temp_c":
@@ -387,6 +387,21 @@ def test_humidity_for_target_vpd():
         humidity_for_target_vpd(20, 3.0)
 
 
+def test_vpd_evaluation_and_action():
+    low = evaluate_vpd(18, 90, "citrus", "seedling")
+    assert low == "low"
+    action_low = recommend_vpd_action(18, 90, "citrus", "seedling")
+    assert "humidity" in action_low.lower() or "temperature" in action_low.lower()
+
+    assert evaluate_vpd(22, 70, "citrus", "seedling") is None
+    assert recommend_vpd_action(22, 70, "citrus", "seedling") is None
+
+    high = evaluate_vpd(30, 30, "citrus", "seedling")
+    assert high == "high"
+    action_high = recommend_vpd_action(30, 30, "citrus", "seedling")
+    assert "humidity" in action_high.lower() or "temperature" in action_high.lower()
+
+
 def test_score_environment():
     current = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
     score = score_environment(current, "citrus", "seedling")
@@ -546,8 +561,7 @@ def test_classify_environment_quality_custom():
     good = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
     thresholds = {"good": 105, "fair": 80}
     assert (
-        classify_environment_quality(good, "citrus", "seedling", thresholds)
-        == "fair"
+        classify_environment_quality(good, "citrus", "seedling", thresholds) == "fair"
     )
 
 
@@ -582,10 +596,12 @@ def test_normalize_environment_readings_aliases():
         "ec": 1.2,
     }
 
+
 def test_normalize_environment_readings_temp_fahrenheit():
     data = {"temperature_f": 86}
     result = normalize_environment_readings(data)
     assert result == {"temp_c": 30.0}
+
 
 def test_normalize_environment_readings_soil_temp_fahrenheit():
     data = {"soil_temp_f": 77}
@@ -698,7 +714,9 @@ def test_calculate_environment_variance_empty():
 
 
 def test_summarize_environment():
-    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True)
+    summary = summarize_environment(
+        {"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True
+    )
     assert summary["quality"] == "poor"
     assert summary["adjustments"]["temperature"] == "increase"
     assert summary["adjustments"]["humidity"].startswith("Ventilate")
@@ -853,7 +871,9 @@ def test_evaluate_soil_ph_stress():
 
 
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12, 6.5)
+    stress = evaluate_stress_conditions(
+        32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12, 6.5
+    )
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
@@ -862,7 +882,9 @@ def test_evaluate_stress_conditions():
     assert stress.soil_temp == "cold"
     assert stress.leaf_temp == "hot"
 
-    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, None, "citrus", soil_ph=None)
+    stress_none = evaluate_stress_conditions(
+        None, None, None, None, None, None, None, "citrus", soil_ph=None
+    )
     assert stress_none.heat is None
     assert stress_none.humidity is None
     assert stress_none.soil_temp is None
@@ -870,7 +892,9 @@ def test_evaluate_stress_conditions():
 
 
 def test_score_environment_components():
-    scores = score_environment_components({"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling")
+    scores = score_environment_components(
+        {"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling"
+    )
     assert scores["temp_c"] == 100.0
     assert scores["humidity_pct"] == 100.0
 
@@ -899,9 +923,7 @@ def test_calculate_vpd_series_generator():
         for h in [70, 65, 60]:
             yield h
 
-    expected = sum(
-        calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60])
-    ) / 3
+    expected = sum(calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60])) / 3
     assert calculate_vpd_series(temps(), hums()) == round(expected, 3)
 
 
@@ -935,7 +957,9 @@ def test_summarize_environment_series():
         {"temp_c": 22, "humidity_pct": 74},
     ]
     summary = summarize_environment_series(series, "citrus", "seedling")
-    avg = summarize_environment({"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling")
+    avg = summarize_environment(
+        {"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling"
+    )
     assert summary["quality"] == avg["quality"]
     assert summary["metrics"]["vpd"] == avg["metrics"]["vpd"]
 
@@ -991,7 +1015,9 @@ def test_co2_price_and_cost():
     assert get_co2_price("bulk_tank") == 0.7
     assert estimate_co2_cost(1000, "bulk_tank") == 0.7
     assert get_co2_efficiency("cartridge") == 0.85
-    grams, cost = recommend_co2_injection_with_cost(300, "citrus", "seedling", 100.0, "cartridge")
+    grams, cost = recommend_co2_injection_with_cost(
+        300, "citrus", "seedling", 100.0, "cartridge"
+    )
     assert grams > 0
     assert cost == estimate_co2_cost(grams, "cartridge")
 

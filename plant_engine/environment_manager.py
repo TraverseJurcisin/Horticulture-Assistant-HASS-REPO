@@ -26,6 +26,7 @@ HUMIDITY_DATA_FILE = "humidity_stress_thresholds.json"
 HUMIDITY_ACTION_FILE = "humidity_actions.json"
 TEMPERATURE_ACTION_FILE = "temperature_actions.json"
 WIND_ACTION_FILE = "wind_actions.json"
+VPD_ACTION_FILE = "vpd_actions.json"
 STRATEGY_FILE = "environment_strategies.json"
 SCORE_WEIGHT_FILE = "environment_score_weights.json"
 QUALITY_THRESHOLDS_FILE = "environment_quality_thresholds.json"
@@ -78,7 +79,9 @@ _ALIAS_DATA: Dict[str, list[str]] = load_dataset(ALIAS_DATA_FILE)
 ENV_ALIASES = {
     key: list(map(str, aliases))
     for key, aliases in (
-        _ALIAS_DATA.items() if isinstance(_ALIAS_DATA, Mapping) else DEFAULT_ENV_ALIASES.items()
+        _ALIAS_DATA.items()
+        if isinstance(_ALIAS_DATA, Mapping)
+        else DEFAULT_ENV_ALIASES.items()
     )
 }
 for key, defaults in DEFAULT_ENV_ALIASES.items():
@@ -86,9 +89,7 @@ for key, defaults in DEFAULT_ENV_ALIASES.items():
 
 # reverse mapping for constant time alias lookups
 _ALIAS_MAP: Dict[str, str] = {
-    alias: canonical
-    for canonical, aliases in ENV_ALIASES.items()
-    for alias in aliases
+    alias: canonical for canonical, aliases in ENV_ALIASES.items() for alias in aliases
 }
 
 
@@ -96,8 +97,6 @@ def get_environment_aliases() -> Dict[str, list[str]]:
     """Return mapping of canonical environment keys to accepted aliases."""
 
     return {k: list(v) for k, v in ENV_ALIASES.items()}
-
-
 
 
 @dataclass(slots=True, frozen=True)
@@ -181,9 +180,7 @@ def is_frost_free(date: datetime.date, zone: str) -> bool:
     return not (first < date < last)
 
 
-def _intersect_range(
-    a: RangeTuple | None, b: RangeTuple | None
-) -> RangeTuple | None:
+def _intersect_range(a: RangeTuple | None, b: RangeTuple | None) -> RangeTuple | None:
     """Return the overlapping portion of two ranges."""
 
     if a is None:
@@ -382,6 +379,9 @@ __all__ = [
     "recommend_temperature_action",
     "get_wind_action",
     "recommend_wind_action",
+    "evaluate_vpd",
+    "get_vpd_action",
+    "recommend_vpd_action",
     "get_environment_strategy",
     "recommend_environment_strategies",
     "evaluate_ph_stress",
@@ -429,6 +429,7 @@ _HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
 _HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
 _WIND_ACTIONS: Dict[str, str] = load_dataset(WIND_ACTION_FILE)
 _TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
+_VPD_ACTIONS: Dict[str, str] = load_dataset(VPD_ACTION_FILE)
 _ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
 _SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
 _QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
@@ -520,7 +521,9 @@ def _lookup_threshold(dataset: Mapping[str, Any], plant_type: str) -> float | No
         return None
 
 
-def average_environment_readings(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+def average_environment_readings(
+    series: Iterable[Mapping[str, float]],
+) -> Dict[str, float]:
     """Return the average of normalized environment readings.
 
     Each mapping in ``series`` may use any of the aliases supported by
@@ -541,7 +544,9 @@ def average_environment_readings(series: Iterable[Mapping[str, float]]) -> Dict[
     return {k: v / count for k, v in totals.items()}
 
 
-def calculate_environment_variance(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+def calculate_environment_variance(
+    series: Iterable[Mapping[str, float]],
+) -> Dict[str, float]:
     """Return variance for normalized environment readings."""
 
     values: Dict[str, list[float]] = {}
@@ -570,7 +575,9 @@ def calculate_environment_variance(series: Iterable[Mapping[str, float]]) -> Dic
     return {k: round(v, 3) for k, v in variance.items()}
 
 
-def calculate_environment_stddev(series: Iterable[Mapping[str, float]]) -> Dict[str, float]:
+def calculate_environment_stddev(
+    series: Iterable[Mapping[str, float]],
+) -> Dict[str, float]:
     """Return standard deviation for normalized environment readings."""
 
     variance = calculate_environment_variance(series)
@@ -629,9 +636,7 @@ def calculate_environment_deviation_series(
             counts[key] = counts.get(key, 0) + 1
 
     return {
-        key: round(totals[key] / counts[key], 2)
-        for key in totals
-        if counts.get(key, 0)
+        key: round(totals[key] / counts[key], 2) for key in totals if counts.get(key, 0)
     }
 
 
@@ -721,7 +726,9 @@ class EnvironmentOptimization:
             "soil_ec_stress": self.soil_ec_stress,
             "quality": self.quality,
             "score": self.score,
-            "water_quality": self.water_quality.as_dict() if self.water_quality else None,
+            "water_quality": (
+                self.water_quality.as_dict() if self.water_quality else None
+            ),
         }
 
 
@@ -774,7 +781,9 @@ class EnvironmentSummary:
             "metrics": self.metrics.as_dict(),
             "score": self.score,
             "stress": self.stress.as_dict(),
-            "water_quality": self.water_quality.as_dict() if self.water_quality else None,
+            "water_quality": (
+                self.water_quality.as_dict() if self.water_quality else None
+            ),
         }
 
 
@@ -1042,7 +1051,9 @@ def classify_environment_quality(
     """
 
     if thresholds:
-        labels = [(k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))]
+        labels = [
+            (k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))
+        ]
         labels.sort(key=lambda x: x[1], reverse=True)
     else:
         labels = get_environment_quality_labels()
@@ -1063,7 +1074,9 @@ def classify_environment_quality_series(
     """Return quality classification for averaged environment ``series``."""
 
     if thresholds:
-        labels = [(k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))]
+        labels = [
+            (k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))
+        ]
         labels.sort(key=lambda x: x[1], reverse=True)
     else:
         labels = get_environment_quality_labels()
@@ -1146,17 +1159,11 @@ def suggest_environment_setpoints_advanced(
         targets = get_environmental_targets(plant_type, stage)
         temp = targets.get("temp_c")
         vpd = get_target_vpd(plant_type, stage)
-        if (
-            isinstance(temp, (list, tuple))
-            and len(temp) == 2
-            and vpd is not None
-        ):
+        if isinstance(temp, (list, tuple)) and len(temp) == 2 and vpd is not None:
             temp_mid = (float(temp[0]) + float(temp[1])) / 2
             vpd_mid = (vpd[0] + vpd[1]) / 2
             try:
-                setpoints["humidity_pct"] = humidity_for_target_vpd(
-                    temp_mid, vpd_mid
-                )
+                setpoints["humidity_pct"] = humidity_for_target_vpd(temp_mid, vpd_mid)
             except ValueError:
                 pass
     return setpoints
@@ -1244,7 +1251,9 @@ def suggest_environment_setpoints_zone(
     return _midpoint_setpoints(targets, plant_type, stage)
 
 
-def generate_zone_environment_plan(plant_type: str, zone: str) -> Dict[str, Dict[str, float]]:
+def generate_zone_environment_plan(
+    plant_type: str, zone: str
+) -> Dict[str, Dict[str, float]]:
     """Return environment setpoints for each stage adjusted for ``zone``."""
 
     plan: Dict[str, Dict[str, float]] = {}
@@ -1506,7 +1515,9 @@ def get_humidity_action(level: str) -> str:
     return _HUMIDITY_ACTIONS.get(level.lower(), "")
 
 
-def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> str | None:
+def recommend_humidity_action(
+    humidity_pct: float | None, plant_type: str
+) -> str | None:
     """Return humidity adjustment recommendation if outside thresholds."""
 
     level = evaluate_humidity_stress(humidity_pct, plant_type)
@@ -1551,6 +1562,51 @@ def recommend_wind_action(wind_m_s: float | None, plant_type: str) -> str | None
     return None
 
 
+def evaluate_vpd(
+    temp_c: float | None,
+    humidity_pct: float | None,
+    plant_type: str,
+    stage: str | None = None,
+) -> str | None:
+    """Return 'low' or 'high' if VPD is outside the recommended range."""
+
+    if temp_c is None or humidity_pct is None:
+        return None
+
+    target = get_target_vpd(plant_type, stage)
+    if not target:
+        return None
+
+    vpd = calculate_vpd(float(temp_c), float(humidity_pct))
+    low, high = target
+    if vpd < low:
+        return "low"
+    if vpd > high:
+        return "high"
+    return None
+
+
+def get_vpd_action(level: str) -> str:
+    """Return recommended action for a VPD stress level."""
+
+    return _VPD_ACTIONS.get(level.lower(), "")
+
+
+def recommend_vpd_action(
+    temp_c: float | None,
+    humidity_pct: float | None,
+    plant_type: str,
+    stage: str | None = None,
+) -> str | None:
+    """Return adjustment suggestion when VPD is out of range."""
+
+    level = evaluate_vpd(temp_c, humidity_pct, plant_type, stage)
+    if level is None:
+        return None
+    action = get_vpd_action(level)
+    return action or None
+
+
 def get_environment_strategy(parameter: str, level: str) -> str:
     """Return optimization strategy for a parameter at a given level."""
 
@@ -1572,7 +1628,9 @@ def recommend_environment_strategies(status: Mapping[str, str]) -> Dict[str, str
     return rec
 
 
-def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:
+def evaluate_ph_stress(
+    ph: float | None, plant_type: str, stage: str | None = None
+) -> str | None:
     """Return 'low' or 'high' if pH is outside the recommended range."""
 
     if ph is None:
@@ -1590,7 +1648,9 @@ def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = No
     return None
 
 
-def get_target_soil_moisture(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+def get_target_soil_moisture(
+    plant_type: str, stage: str | None = None
+) -> RangeTuple | None:
     """Return recommended soil moisture percentage range for a plant stage."""
 
     return _lookup_range(_MOISTURE_DATA, plant_type, stage)
@@ -1616,7 +1676,9 @@ def evaluate_moisture_stress(
     return None
 
 
-def get_target_soil_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+def get_target_soil_temperature(
+    plant_type: str, stage: str | None = None
+) -> RangeTuple | None:
     """Return recommended soil temperature range for a plant stage."""
 
     return _lookup_range(_SOIL_TEMP_DATA, plant_type, stage)
@@ -1639,7 +1701,9 @@ def get_target_soil_ph(plant_type: str) -> RangeTuple | None:
     return None
 
 
-def get_target_leaf_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
+def get_target_leaf_temperature(
+    plant_type: str, stage: str | None = None
+) -> RangeTuple | None:
     """Return recommended leaf temperature range for a plant stage."""
 
     return _lookup_range(_LEAF_TEMP_DATA, plant_type, stage)
@@ -1972,9 +2036,7 @@ def calculate_co2_injection_series(
 
     injections: list[float] = []
     for ppm in ppm_series:
-        injections.append(
-            calculate_co2_injection(float(ppm), target, volume_m3)
-        )
+        injections.append(calculate_co2_injection(float(ppm), target, volume_m3))
 
     return injections
 
@@ -2023,8 +2085,12 @@ def calculate_environment_metrics(
         et_env = {
             "temp_c": temp_c,
             "rh_pct": humidity_pct,
-            "par_w_m2": env.get("par_w_m2") or env.get("par") or env.get("light_ppfd", 0),
-            "wind_speed_m_s": env.get("wind_speed_m_s") or env.get("wind_m_s") or env.get("wind", 1.0),
+            "par_w_m2": env.get("par_w_m2")
+            or env.get("par")
+            or env.get("light_ppfd", 0),
+            "wind_speed_m_s": env.get("wind_speed_m_s")
+            or env.get("wind_m_s")
+            or env.get("wind", 1.0),
             "elevation_m": env.get("elevation_m", 200),
         }
         try:
@@ -2229,13 +2295,13 @@ def summarize_environment(
     water_info = None
     if water_test is not None:
         summary = water_quality.summarize_water_profile(water_test)
-        water_info = WaterQualityInfo(
-            rating=summary["rating"], score=summary["score"]
-        )
+        water_info = WaterQualityInfo(rating=summary["rating"], score=summary["score"])
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
-        adjustments=recommend_environment_adjustments(readings, plant_type, stage, zone),
+        adjustments=recommend_environment_adjustments(
+            readings, plant_type, stage, zone
+        ),
         metrics=metrics,
         score=score_environment(readings, plant_type, stage),
         stress=stress,
