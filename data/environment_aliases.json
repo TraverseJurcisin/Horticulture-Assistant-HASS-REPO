@@ -1,8 +1,8 @@
 {
-  "temp_c": ["temp_c", "temperature", "temp", "temperature_c", "temp_custom"],
+  "temp_c": ["temp_c", "temperature", "temp", "temperature_c", "temp_custom", "air_temperature", "air_temp_c"],
   "temp_f": ["temp_f", "temperature_f", "temp_fahrenheit"],
   "temp_k": ["temp_k", "temperature_k", "temp_kelvin"],
-  "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct"],
+  "humidity_pct": ["humidity_pct", "humidity", "rh", "rh_pct", "humidity_percent", "relative_humidity"],
   "light_ppfd": ["light_ppfd", "light", "par", "par_w_m2"],
   "co2_ppm": ["co2_ppm", "co2"],
   "ec": ["ec", "EC"],
