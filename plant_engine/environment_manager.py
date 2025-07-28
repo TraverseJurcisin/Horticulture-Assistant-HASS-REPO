@@ -426,6 +426,7 @@ __all__ = [
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
+    "generate_stage_growth_plan",
     "suggest_environment_setpoints_zone",
     "generate_zone_environment_plan",
 ]
@@ -1286,6 +1287,24 @@ def generate_zone_environment_plan(
     plan: Dict[str, Dict[str, float]] = {}
     for stage in list_growth_stages(plant_type):
         plan[stage] = suggest_environment_setpoints_zone(plant_type, stage, zone)
+    return plan
+
+
+def generate_stage_growth_plan(plant_type: str) -> Dict[str, Dict[str, Any]]:
+    """Return environment setpoints, nutrient needs and tasks per stage."""
+
+    from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
+        get_stage_requirements,
+    )
+    from .stage_tasks import get_stage_tasks
+
+    plan: Dict[str, Dict[str, Any]] = {}
+    for stage in list_growth_stages(plant_type):
+        plan[stage] = {
+            "environment": suggest_environment_setpoints(plant_type, stage),
+            "nutrients": get_stage_requirements(plant_type, stage),
+            "tasks": get_stage_tasks(plant_type, stage),
+        }
     return plan
 
 
