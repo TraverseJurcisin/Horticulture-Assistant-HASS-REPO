@@ -33,6 +33,8 @@ __all__ = [
     "list_dataset_info_by_category",
     "get_dataset_path",
     "load_dataset_file",
+    "validate_all_datasets",
+    "refresh_datasets",
 ]
 
 
@@ -226,3 +228,15 @@ def refresh_datasets() -> None:
     from .utils import clear_dataset_cache
 
     clear_dataset_cache()
+
+
+def validate_all_datasets() -> list[str]:
+    """Return names of datasets that fail to load."""
+
+    bad: list[str] = []
+    for name in list_datasets():
+        try:
+            load_dataset_file(name)
+        except Exception:
+            bad.append(name)
+    return bad
