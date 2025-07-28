@@ -1,9 +1,25 @@
 {
   "plant_id": "citrus_backyard_spring2025",
   "display_name": "Backyard Citrus Spring 2025",
+  "plant_type": "citrus",
+  "cultivar": "meyer_lemon",
+  "species": "Citrus × meyeri",
+  "location": "Backyard",
+  "zone_id": "5b",
+  "start_date": "2025-03-15",
   "lifecycle_stage": "fruiting",
   "auto_lifecycle_mode": true,
   "auto_approve_all": true,
+  "tags": [
+    "citrus",
+    "meyer_lemon",
+    "fruiting",
+    "acid-loving",
+    "zone_5b",
+    "edible",
+    "backyard",
+    "spring_2025"
+  ],
   "sensor_entities": {
     "soil_moisture": "sensor.citrus_backyard_soil_moisture",
     "leaf_nitrogen": "sensor.citrus_backyard_leaf_nitrogen_ppm",
@@ -31,6 +47,14 @@
     "irrigation_switch": "switch.citrus_backyard_irrigation_valve",
     "fertilizer_switch": "switch.citrus_backyard_fertilizer_pump"
   },
+  "environment": {
+    "light": null,
+    "temperature": null,
+    "humidity": null,
+    "hardiness_zone": "5b",
+    "EC": null,
+    "pH": null
+  },
   "thresholds": {
     "soil_moisture_pct": 35.0,
     "leaf_nitrogen_ppm": 20.0,
@@ -53,5 +77,11 @@
     "leaf_nickel_ppm": 0.02,
     "leaf_cobalt_ppm": 0.05,
     "leaf_selenium_ppm": 0.01
+  },
+  "stages": {
+    "fruiting": {
+      "stage_duration": null,
+      "notes": "TBD"
+    }
   }
 }

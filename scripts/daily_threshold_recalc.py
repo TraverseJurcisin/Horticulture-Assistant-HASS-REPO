@@ -3,6 +3,9 @@ from datetime import datetime
 from typing import Any, Dict
 from water_deficit_tracker import update_water_balance
 from plant_engine.utils import load_json, save_json
+from custom_components.horticulture_assistant.utils.load_plant_profile import (
+    load_plant_profile,
+)
 
 
 # === CONFIGURATION ===
@@ -15,20 +18,29 @@ AUTO_APPROVE_FIELD = "auto_approve_all"
 
 # === HELPER FUNCTIONS ===
 def generate_daily_report(plant_id: str, profile: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Mock version of AI input data packaging.
-    This would eventually query live sensor data (via Home Assistant API or InfluxDB).
-    """
+    """Return a simple report dictionary for ``plant_id`` based on ``profile``."""
+
     now = datetime.now()
+
+    general = profile.get("general", profile)
+
+    # Aggregate thresholds from possible sections
+    thresholds = profile.get("thresholds")
+    if thresholds is None:
+        thresholds = {}
+        for section in ("irrigation", "nutrition"):
+            if section in profile and isinstance(profile[section], dict):
+                thresholds.update(profile[section])
+
     return {
         "plant_id": plant_id,
         "timestamp": now.isoformat(),
-        "lifecycle_stage": profile.get("lifecycle_stage"),
-        "sensor_entities": profile.get("sensor_entities"),
-        "thresholds": profile.get("thresholds"),
-        "tags": profile.get("tags", []),
-        "yield": profile.get("last_yield", None),
-        "ai_feedback_required": not profile.get(AUTO_APPROVE_FIELD, False)
+        "lifecycle_stage": general.get("lifecycle_stage"),
+        "sensor_entities": general.get("sensor_entities"),
+        "thresholds": thresholds,
+        "tags": general.get("tags", []),
+        "yield": general.get("last_yield"),
+        "ai_feedback_required": not general.get(AUTO_APPROVE_FIELD, False),
     }
 
 
@@ -48,9 +60,22 @@ def mock_threshold_adjustments(thresholds: Dict[str, float]) -> Dict[str, float]
 
 
 def update_plant_profile(plant_path: str, updated_thresholds: Dict[str, float]) -> None:
-    profile = load_json(plant_path)
-    profile["thresholds"] = updated_thresholds
-    save_json(plant_path, profile)
+    """Write ``updated_thresholds`` back to the profile file(s)."""
+
+    if os.path.isdir(plant_path):
+        irr_path = os.path.join(plant_path, "irrigation.json")
+        nut_path = os.path.join(plant_path, "nutrition.json")
+        irrigation = load_json(irr_path) if os.path.exists(irr_path) else {}
+        nutrition = load_json(nut_path) if os.path.exists(nut_path) else {}
+        if "soil_moisture_pct" in updated_thresholds:
+            irrigation["soil_moisture_pct"] = updated_thresholds.pop("soil_moisture_pct")
+        nutrition.update(updated_thresholds)
+        save_json(irr_path, irrigation)
+        save_json(nut_path, nutrition)
+    else:
+        profile = load_json(plant_path)
+        profile["thresholds"] = updated_thresholds
+        save_json(plant_path, profile)
 
 
 # === MAIN ORCHESTRATOR ===
@@ -64,11 +89,17 @@ def run_daily_threshold_updates():
         print(f"\n🌿 Processing plant: {plant_id}")
         profile_path = meta["profile_path"]
 
-        if not os.path.exists(profile_path):
-            print(f"❌ Profile not found: {profile_path}")
-            continue
-
-        profile = load_json(profile_path)
+        if os.path.isdir(profile_path):
+            profile_obj = load_plant_profile(plant_id, base_path=PLANT_PROFILE_DIR)
+            if not profile_obj:
+                print(f"❌ Profile not found: {profile_path}")
+                continue
+            profile = profile_obj.profile_data
+        else:
+            if not os.path.exists(profile_path):
+                print(f"❌ Profile not found: {profile_path}")
+                continue
+            profile = load_json(profile_path)
         # Step 1: Generate base report
         report = generate_daily_report(plant_id, profile)
         
