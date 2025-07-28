@@ -36,8 +36,23 @@ __all__ = [
 
 
 def get_soil_parameters(texture: str) -> Dict[str, float]:
-    """Return soil parameters for ``texture`` if available."""
-    return _SOIL_DATA.get(normalize_key(texture), {})
+    """Return soil parameters for ``texture`` if available.
+
+    The returned mapping always contains the ``field_capacity`` and
+    ``mad_fraction`` values when known.  If infiltration rate data is
+    available it is included under ``infiltration_rate_mm_hr`` so callers
+    can avoid a second lookup.
+    """
+
+    key = normalize_key(texture)
+    params = dict(_SOIL_DATA.get(key, {}))
+    infil = _INFILTRATION_DATA.get(key)
+    try:
+        if infil is not None:
+            params.setdefault("infiltration_rate_mm_hr", float(infil))
+    except (TypeError, ValueError):
+        pass
+    return params
 
 
 def get_infiltration_rate(texture: str) -> float | None:
@@ -187,13 +202,26 @@ def estimate_water_capacity(
 
 
 def estimate_infiltration_time(
-    volume_ml: float, area_m2: float, texture: str
+    volume_ml: float,
+    area_m2: float,
+    texture: str | None = None,
+    *,
+    infiltration_rate: float | None = None,
 ) -> float | None:
-    """Return hours required for ``volume_ml`` to infiltrate given soil texture."""
+    """Return hours required for ``volume_ml`` to infiltrate.
+
+    ``texture`` is used to look up the infiltration rate from
+    :data:`soil_infiltration_rates.json` if ``infiltration_rate`` is not
+    provided.  This allows callers to supply a custom rate without a dataset
+    lookup.  ``None`` is returned when no rate information is available.
+    """
+
     if volume_ml < 0 or area_m2 <= 0:
         raise ValueError("volume_ml must be non-negative and area_m2 positive")
 
-    rate = get_infiltration_rate(texture)
+    rate = infiltration_rate
+    if rate is None and texture is not None:
+        rate = get_infiltration_rate(texture)
     if rate is None or rate <= 0:
         return None
 
