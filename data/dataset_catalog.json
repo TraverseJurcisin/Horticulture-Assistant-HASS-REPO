@@ -161,6 +161,7 @@
   "drought_tolerance.json": "Relative drought tolerance and max dry days for each crop.",
   "chill_sensitivity.json": "Early warning temperature buffer for chilling injury risk.",
   "species_cation_profiles.json": "Relative cation extraction multipliers by species.",
+  "species_precipitation_risk.json": "Species-specific mineral precipitation risks due to nutrient interactions.",
   "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
   "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }
