@@ -14,6 +14,8 @@ from plant_engine.growth_stage import (
     predict_next_stage_date,
     predict_stage_end_date,
     stage_progress_from_dates,
+    cycle_progress,
+    cycle_progress_from_dates,
     get_germination_duration,
     days_until_next_stage,
     growth_stage_summary,
@@ -169,5 +171,21 @@ def test_generate_stage_schedule():
     assert schedule[0]["end_date"] == date(2025, 1, 31)
     assert schedule[-1]["stage"] == "fruiting"
     assert schedule[-1]["end_date"] == date(2025, 5, 1)
+
+
+def test_cycle_progress():
+    assert cycle_progress("tomato", 60) == 50.0
+    assert cycle_progress("tomato", 200) == 100.0
+    assert cycle_progress("unknown", 10) is None
+    with pytest.raises(ValueError):
+        cycle_progress("tomato", -1)
+
+
+def test_cycle_progress_from_dates():
+    start = date(2025, 1, 1)
+    current = date(2025, 3, 2)  # 60 days later
+    assert cycle_progress_from_dates("tomato", start, current) == 50.0
+    with pytest.raises(ValueError):
+        cycle_progress_from_dates("tomato", current, start)
 
 
