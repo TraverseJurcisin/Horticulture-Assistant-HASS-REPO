@@ -135,6 +135,7 @@
     "fertigation_loss_factors.json": "Default nutrient loss percentages during fertigation.",
     "fertigation_volume.json": "Recommended nutrient solution volume in mL per plant per event.",
     "emitter_flow_rates.json": "Typical emitter flow rates in L/h.",
+    "fertigation_injectors.json": "Injection ratios (parts water to stock solution).",
     "companion_plants.json": "Companion planting recommendations.",
     "rotation_guidance.json": "Crop rotation families and recommended years between replanting.",
     "pesticide_withdrawal_days.json": "Mandatory days to wait after pesticide application before harvest.",
