@@ -23,6 +23,7 @@
     "ipm_guidelines.json": "Integrated pest management practices by crop.",
     "disease_guidelines.json": "Treatment guidance for common plant diseases.",
     "disease_prevention.json": "Preventative measures to reduce disease incidence.",
+    "disease_scouting_methods.json": "Recommended scouting techniques for common diseases.",
     "growth_stages.json": "Expected duration and notes for each growth stage.",
     "stage_tasks.json": "Common tasks to perform during each growth stage.",
     "germination_duration.json": "Typical days from sowing to germination by crop.",
