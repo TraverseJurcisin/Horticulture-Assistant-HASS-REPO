@@ -17,6 +17,7 @@ from plant_engine.growth_stage import (
     get_germination_duration,
     days_until_next_stage,
     growth_stage_summary,
+    generate_stage_schedule,
 )
 
 
@@ -152,5 +153,15 @@ def test_stage_bounds():
     bounds = stage_bounds("tomato")
     assert bounds[0] == ("seedling", 30)
     assert bounds[-1][1] == 120
+
+
+def test_generate_stage_schedule():
+    start = date(2025, 1, 1)
+    schedule = generate_stage_schedule("tomato", start)
+    assert schedule[0]["stage"] == "seedling"
+    assert schedule[0]["start_date"] == start
+    assert schedule[0]["end_date"] == date(2025, 1, 31)
+    assert schedule[-1]["stage"] == "fruiting"
+    assert schedule[-1]["end_date"] == date(2025, 5, 1)
 
 
