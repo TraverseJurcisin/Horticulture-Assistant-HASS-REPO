@@ -137,3 +137,17 @@ def test_build_pest_management_plan_includes_organic():
 def test_build_pest_management_plan_includes_scientific_name():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert plan["aphids"]["scientific_name"] == "Aphidoidea"
+
+
+def test_get_pest_lifecycle():
+    from plant_engine.pest_manager import get_pest_lifecycle
+
+    data = get_pest_lifecycle("aphids")
+    assert data["egg"] == 3
+    assert data["adult"] == 10
+
+
+def test_build_pest_management_plan_includes_lifecycle():
+    plan = build_pest_management_plan("citrus", ["aphids"])
+    assert "lifecycle" in plan["aphids"]
+    assert plan["aphids"]["lifecycle"]["egg"] == 3
