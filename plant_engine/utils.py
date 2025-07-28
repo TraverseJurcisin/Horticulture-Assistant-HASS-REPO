@@ -288,11 +288,18 @@ def lazy_dataset(filename: str):
 def load_dataset_df(filename: str) -> "pd.DataFrame":
     """Return dataset ``filename`` as a :class:`pandas.DataFrame`.
 
+    JSON/YAML files are loaded via :func:`load_dataset`. CSV/TSV files are read
+    directly if located in one of the configured dataset directories.
     Dictionaries are treated as row mappings and lists as row sequences.
     Unsupported data structures raise ``ValueError``.
     """
 
     import pandas as pd
+
+    path = dataset_file(filename)
+    if path and path.suffix.lower() in {".csv", ".tsv"}:
+        sep = "\t" if path.suffix.lower() == ".tsv" else ","
+        return pd.read_csv(path, sep=sep)
 
     data = load_dataset(filename)
     if isinstance(data, Mapping):
