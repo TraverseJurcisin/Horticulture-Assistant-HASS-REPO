@@ -107,6 +107,7 @@
     "solution_temperature_guidelines.json": "Recommended nutrient solution temperature ranges.",
     "dissolved_oxygen_guidelines.json": "Recommended dissolved oxygen ppm for nutrient solutions.",
     "soil_ec_guidelines.json": "Recommended soil salinity EC ranges for common crops.",
+    "soil_ph_guidelines.json": "Recommended soil pH ranges by crop.",
     "wind_stress_thresholds.json": "Wind speeds that cause physical damage.",
     "wind_actions.json": "Recommended actions for high wind speeds.",
     "yield_estimates.json": "Expected total yields for common cultivars.",

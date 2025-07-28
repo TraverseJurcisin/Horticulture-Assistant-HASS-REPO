@@ -80,3 +80,10 @@ def test_soil_ph_functions():
     assert ph_manager.recommend_soil_ph_adjustment(7.2, "citrus") == "decrease"
     assert ph_manager.recommend_soil_ph_adjustment(6.5, "citrus") is None
     assert ph_manager.get_soil_ph_range("unknown") == []
+
+
+def test_classify_soil_ph():
+    assert ph_manager.classify_soil_ph(5.5, "citrus") == "low"
+    assert ph_manager.classify_soil_ph(7.2, "citrus") == "high"
+    assert ph_manager.classify_soil_ph(6.5, "citrus") == "optimal"
+    assert ph_manager.classify_soil_ph(6.5, "unknown") is None

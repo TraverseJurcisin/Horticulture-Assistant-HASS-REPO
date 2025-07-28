@@ -31,6 +31,7 @@ __all__ = [
     "recommended_ph_for_medium",
     "get_soil_ph_range",
     "recommend_soil_ph_adjustment",
+    "classify_soil_ph",
 ]
 
 
@@ -243,3 +244,19 @@ def recommend_soil_ph_adjustment(current_ph: float, plant_type: str) -> str | No
     if current_ph > high:
         return "decrease"
     return None
+
+
+def classify_soil_ph(current_ph: float, plant_type: str) -> str | None:
+    """Return 'low', 'optimal' or 'high' classification for soil pH."""
+
+    if current_ph <= 0:
+        raise ValueError("current_ph must be positive")
+    rng = get_soil_ph_range(plant_type)
+    if not rng:
+        return None
+    low, high = rng
+    if current_ph < low:
+        return "low"
+    if current_ph > high:
+        return "high"
+    return "optimal"
