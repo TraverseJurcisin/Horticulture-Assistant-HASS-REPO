@@ -15,6 +15,7 @@
     "default_environment.json": "Fallback environment readings used when sensor data is missing.",
     "pest_guidelines.json": "Common pest control recommendations per crop.",
     "pest_thresholds.json": "Economic threshold counts for triggering actions.",
+    "pest_thresholds_by_stage.json": "Stage-specific pest count thresholds for scouting decisions.",
     "pest_monitoring_intervals.json": "Recommended days between scouting events.",
     "pest_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on risk level.",
     "pest_scouting_methods.json": "Recommended scouting techniques for common pests.",

@@ -256,6 +256,7 @@ Important categories include:
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
+- **Stage-specific pest thresholds** – economic thresholds for each growth stage
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
