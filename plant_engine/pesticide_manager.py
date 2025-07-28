@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, Mapping
 
 from .utils import lazy_dataset, normalize_key
 
@@ -14,6 +14,7 @@ PHYTO_FILE = "pesticide_phytotoxicity.json"
 RATE_FILE = "pesticide_application_rates.json"
 PRICE_FILE = "pesticide_prices.json"
 ACTIVE_FILE = "pesticide_active_ingredients.json"
+EFFICACY_FILE = "pesticide_efficacy.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA = lazy_dataset(DATA_FILE)
@@ -24,6 +25,7 @@ _PHYTO = lazy_dataset(PHYTO_FILE)
 _RATES = lazy_dataset(RATE_FILE)
 _PRICES = lazy_dataset(PRICE_FILE)
 _ACTIVE = lazy_dataset(ACTIVE_FILE)
+_EFFICACY = lazy_dataset(EFFICACY_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -48,6 +50,8 @@ __all__ = [
     "summarize_pesticide_restrictions",
     "get_active_ingredient_info",
     "list_active_ingredients",
+    "get_pesticide_efficacy",
+    "list_effective_pesticides",
 ]
 
 
@@ -330,3 +334,34 @@ def list_active_ingredients() -> List[str]:
     """Return sorted list of known active ingredient names."""
 
     return sorted(_ACTIVE().keys())
+
+
+def get_pesticide_efficacy(product: str, pest: str) -> float | None:
+    """Return efficacy rating of ``product`` against ``pest`` if available."""
+
+    data = _EFFICACY().get(product.lower())
+    if not isinstance(data, Mapping):
+        return None
+    value = data.get(pest.lower())
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - invalid data
+        return None
+
+
+def list_effective_pesticides(pest: str) -> List[tuple[str, float]]:
+    """Return products with efficacy ratings for ``pest`` sorted high to low."""
+
+    results: list[tuple[str, float]] = []
+    key = pest.lower()
+    for product, ratings in _EFFICACY().items():
+        if not isinstance(ratings, Mapping):
+            continue
+        rating = ratings.get(key)
+        try:
+            val = float(rating)
+        except (TypeError, ValueError):
+            continue
+        results.append((product, val))
+    results.sort(key=lambda x: x[1], reverse=True)
+    return results

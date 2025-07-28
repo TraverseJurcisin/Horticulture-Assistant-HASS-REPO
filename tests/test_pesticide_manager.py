@@ -193,4 +193,19 @@ def test_active_ingredient_info():
     assert "imidacloprid" in ingredients
 
 
+def test_pesticide_efficacy_helpers():
+    from plant_engine.pesticide_manager import (
+        get_pesticide_efficacy,
+        list_effective_pesticides,
+    )
+
+    assert get_pesticide_efficacy("imidacloprid", "aphids") == 5
+    assert get_pesticide_efficacy("pyrethrin", "spider mites") == 2
+    assert get_pesticide_efficacy("unknown", "aphids") is None
+
+    ranking = list_effective_pesticides("aphids")
+    assert ranking[0][0] == "imidacloprid"
+    assert ranking[0][1] >= ranking[-1][1]
+
+
 
