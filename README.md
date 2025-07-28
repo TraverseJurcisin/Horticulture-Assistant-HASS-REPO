@@ -98,6 +98,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Cost-optimized fertigation plans with injection volumes
 - Risk-adjusted pest monitoring summaries and scheduling
 - Automatic pesticide rotation planning
+- Root uptake factor calculation from soil temperature
 - Summaries of reentry and harvest restrictions for applied pesticides
 - Automated fertigation planning with cost estimates
 - Yield-based revenue and profit projections

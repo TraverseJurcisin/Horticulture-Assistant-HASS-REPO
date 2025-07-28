@@ -347,6 +347,24 @@ def test_environment_metrics_with_transpiration():
     assert metrics.transpiration_ml_day == 2242.5
 
 
+def test_environment_metrics_root_uptake_factor():
+    env = {
+        "temp_c": 25,
+        "humidity_pct": 50,
+        "soil_temp_c": 15,
+        "par_w_m2": 400,
+        "wind_speed_m_s": 1.0,
+    }
+    metrics = calculate_environment_metrics(
+        25,
+        50,
+        env=env,
+        plant_type="tomato",
+        stage="vegetative",
+    )
+    assert metrics.root_uptake_factor == 0.7
+
+
 def test_calculate_dli():
     dli = calculate_dli(500, 16)
     assert round(dli, 1) == 28.8

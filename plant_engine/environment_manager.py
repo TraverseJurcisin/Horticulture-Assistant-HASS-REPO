@@ -651,6 +651,7 @@ class EnvironmentMetrics:
     et0_mm_day: float | None = None
     eta_mm_day: float | None = None
     transpiration_ml_day: float | None = None
+    root_uptake_factor: float | None = None
 
     def as_dict(self) -> Dict[str, float | None]:
         """Return metrics as a regular dictionary."""
@@ -2083,7 +2084,12 @@ def calculate_environment_metrics(
     plant_type: str | None = None,
     stage: str | None = None,
 ) -> EnvironmentMetrics:
-    """Return :class:`EnvironmentMetrics` including transpiration when possible."""
+    """Return :class:`EnvironmentMetrics` including transpiration when possible.
+
+    When ``env`` contains ``soil_temp_c`` or ``root_temp_c`` the returned metrics
+    include a ``root_uptake_factor`` estimating relative nutrient uptake
+    efficiency based on :mod:`plant_engine.root_temperature` data.
+    """
 
     if temp_c is None or humidity_pct is None:
         return EnvironmentMetrics(None, None, None, None)
@@ -2120,6 +2126,17 @@ def calculate_environment_metrics(
             metrics.et0_mm_day = transp.get("et0_mm_day")
             metrics.eta_mm_day = transp.get("eta_mm_day")
             metrics.transpiration_ml_day = transp.get("transpiration_ml_day")
+
+    soil_temp = None
+    if env is not None:
+        soil_temp = env.get("soil_temp_c") or env.get("root_temp_c")
+    if soil_temp is not None:
+        from .root_temperature import get_uptake_factor
+
+        try:
+            metrics.root_uptake_factor = get_uptake_factor(float(soil_temp))
+        except Exception:
+            metrics.root_uptake_factor = None
 
     return metrics
 
