@@ -12,7 +12,6 @@ import logging
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from statistics import mean
 from typing import Mapping
 
 from custom_components.horticulture_assistant.utils.path_utils import (
@@ -36,8 +35,16 @@ from plant_engine.disease_manager import (
 )
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.pest_monitor import classify_pest_severity
+import plant_engine.pest_monitor as pest_monitor
 from plant_engine.utils import load_dataset
-from plant_engine.nutrient_uptake import get_daily_uptake
+from .cycle_helpers import (
+    load_recent_entries as _load_recent_entries,
+    load_last_entry,
+    summarize_irrigation as _summarize_irrigation,
+    aggregate_nutrients as _aggregate_nutrients,
+    average_sensor_data as _average_sensor_data,
+    compute_expected_uptake as _compute_expected_uptake,
+)
 from plant_engine.fertigation import (
     recommend_nutrient_mix,
     recommend_nutrient_mix_with_cost,
@@ -75,6 +82,7 @@ class DailyReport:
     deficiency_actions: dict[str, dict[str, str]] = field(default_factory=dict)
     beneficial_insects: dict[str, list[str]] = field(default_factory=dict)
     pest_severity: dict[str, str] = field(default_factory=dict)
+    next_pest_monitor_date: str | None = None
     root_zone: dict[str, object] = field(default_factory=dict)
     transpiration: dict[str, float] = field(default_factory=dict)
     water_quality_summary: dict[str, object] = field(default_factory=dict)
@@ -98,89 +106,6 @@ class DailyReport:
 _LOGGER = logging.getLogger(__name__)
 
 
-def _load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
-    """Return log entries from ``log_path`` within the last ``hours``."""
-
-    try:
-        with log_path.open("r", encoding="utf-8") as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        _LOGGER.info("Log file not found: %s", log_path)
-        return []
-    except Exception as exc:  # noqa: BLE001 -- log any failure
-        _LOGGER.warning("Failed to read %s: %s", log_path, exc)
-        return []
-
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
-
-    def in_range(entry: dict) -> bool:
-        ts = entry.get("timestamp")
-        if not ts:
-            return False
-        try:
-            return datetime.fromisoformat(ts) >= cutoff
-        except Exception:
-            return False
-
-    return [e for e in data if in_range(e)]
-
-
-def _summarize_irrigation(entries: list[dict]) -> dict[str, object]:
-    """Return irrigation summary from log ``entries``."""
-
-    if not entries:
-        return {}
-    total_volume = sum(e.get("volume_applied_ml", 0) for e in entries)
-    methods = {e.get("method") for e in entries if e.get("method")}
-    return {
-        "events": len(entries),
-        "total_volume_ml": total_volume,
-        "methods": list(methods),
-    }
-
-
-def _aggregate_nutrients(entries: list[dict]) -> dict[str, float]:
-    """Return total nutrients applied from ``entries``."""
-
-    totals: dict[str, float] = {}
-    for entry in entries:
-        formulation = entry.get("nutrient_formulation", {})
-        for nutrient, amount in formulation.items():
-            totals[nutrient] = totals.get(nutrient, 0.0) + amount
-    return totals
-
-
-def _average_sensor_data(entries: list[dict]) -> dict[str, float]:
-    """Return average sensor values from ``entries``."""
-
-    data: dict[str, list[float]] = {}
-    for entry in entries:
-        stype = entry.get("sensor_type")
-        val = entry.get("value")
-        if stype is None or val is None:
-            continue
-        try:
-            val = float(val)
-        except (ValueError, TypeError):
-            continue
-        data.setdefault(stype, []).append(val)
-    return {stype: round(mean(vals), 2) for stype, vals in data.items() if vals}
-
-
-def _compute_expected_uptake(
-    plant_type: str, stage: str, totals: Mapping[str, float]
-) -> tuple[dict[str, float], dict[str, float]]:
-    """Return expected nutrient uptake and remaining gap."""
-
-    expected = get_daily_uptake(plant_type, stage)
-    if not expected:
-        return {}, {}
-
-    gap: dict[str, float] = {}
-    for nutrient, target in expected.items():
-        applied = totals.get(nutrient, 0.0)
-        gap[nutrient] = round(target - applied, 2)
-    return expected, gap
 
 
 def run_daily_cycle(
@@ -288,6 +213,17 @@ def run_daily_cycle(
             report.pest_severity = classify_pest_severity(plant_type, observed_counts)
         except Exception:  # noqa: BLE001 -- classification failure not critical
             _LOGGER.debug("Failed to classify pest severity", exc_info=True)
+
+    # Determine next recommended pest scouting date
+    last_scout = load_last_entry(plant_dir / "pest_scouting_log.json")
+    if last_scout and "timestamp" in last_scout:
+        try:
+            last_date = datetime.fromisoformat(last_scout["timestamp"]).date()
+            next_date = pest_monitor.next_monitor_date(plant_type, stage_name, last_date)
+            if next_date:
+                report.next_pest_monitor_date = next_date.isoformat()
+        except Exception:  # noqa: BLE001 -- optional
+            _LOGGER.debug("Failed to parse pest scouting log", exc_info=True)
 
     # Predict harvest date if a start date is provided
     start_date_str = general.get("start_date")
@@ -397,3 +333,15 @@ def run_daily_cycle(
     except Exception as e:  # noqa: BLE001 -- log write failures
         _LOGGER.error("Failed to write report for %s: %s", plant_id, e)
     return report.as_dict()
+
+
+__all__ = [
+    "DailyReport",
+    "run_daily_cycle",
+    "_load_recent_entries",
+    "_summarize_irrigation",
+    "_aggregate_nutrients",
+    "_average_sensor_data",
+    "_compute_expected_uptake",
+    "load_last_entry",
+]
