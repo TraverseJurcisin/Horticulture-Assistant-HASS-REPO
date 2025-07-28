@@ -315,7 +315,8 @@ Helper scripts live in the `scripts/` directory.
 - `list_available_profiles` quickly lists profile IDs without loading them.
 - `fertigation_plan.py` creates a JSON fertigation schedule for any crop stage.
 - `precision_fertigation.py` generates a detailed fertigation plan with stock
-  solution injection volumes.
+  solution injection volumes. Use `--use-synergy` to apply nutrient synergy
+  adjustments.
 - `environment_optimize.py` prints recommended environment adjustments for
   current readings.
 - `monitor_schedule.py` outputs an integrated pest and disease monitoring
@@ -335,6 +336,7 @@ python scripts/profile_manager.py load-default tomato my_plant
 python scripts/profile_manager.py list-sensors my_plant
 python scripts/precision_fertigation.py tomato vegetative 10
 python scripts/precision_fertigation.py tomato vegetative 10 --use-stock-recipe
+python scripts/precision_fertigation.py tomato vegetative 10 --use-synergy
 python -m custom_components.horticulture_assistant.analytics.export_all_growth_yield
 ```
 

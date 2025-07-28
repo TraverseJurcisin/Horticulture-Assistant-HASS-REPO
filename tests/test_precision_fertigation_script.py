@@ -17,3 +17,22 @@ def test_cli_json():
     assert "schedule" in data
     assert "injection_volumes" in data
 
+
+def test_cli_synergy():
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "tomato",
+            "vegetative",
+            "5",
+            "--use-synergy",
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    data = json.loads(result.stdout)
+    assert "schedule" in data
+
+

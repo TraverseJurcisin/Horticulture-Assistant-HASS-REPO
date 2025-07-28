@@ -29,6 +29,11 @@ def main(argv=None):
     parser.add_argument("volume_l", type=float)
     parser.add_argument("--water-profile")
     parser.add_argument("--include-micro", action="store_true")
+    parser.add_argument(
+        "--use-synergy",
+        action="store_true",
+        help="Apply nutrient synergy adjustments",
+    )
     parser.add_argument("--use-stock-recipe", action="store_true", help="Include preset stock solution ratios")
     parser.add_argument("--yaml", action="store_true", dest="as_yaml")
     args = parser.parse_args(argv)
@@ -48,6 +53,7 @@ def main(argv=None):
         water,
         fertilizers=fert_map,
         include_micro=args.include_micro,
+        use_synergy=args.use_synergy,
     )
 
     recipe_injection = None
