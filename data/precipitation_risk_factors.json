@@ -1,0 +1,8 @@
+{
+  "iris": {
+    "Fe_P": {
+      "ph_gt": 6.4,
+      "message": "FePO4 precipitation at pH > 6.4 - use FeEDDHA instead of FeEDTA"
+    }
+  }
+}
