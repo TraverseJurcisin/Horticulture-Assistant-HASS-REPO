@@ -78,6 +78,23 @@ class FertilizerProduct:
     def needs_temp_protection(self, current_temp: float) -> bool:
         return any(current_temp < 5 or current_temp > 30 for _ in self.temp_sensitive_ingredients)
 
+    def average_price_per_unit(self) -> float | None:
+        """Return the mean unit price from ``price_history`` if available."""
+
+        if not self.price_history:
+            return None
+        total = sum(p.unit_price for p in self.price_history)
+        return round(total / len(self.price_history), 2)
+
+    def total_usage(self, unit: str | None = None) -> float:
+        """Return cumulative amount used optionally filtered by ``unit``."""
+
+        total = 0.0
+        for record in self.usage_log:
+            if unit is None or record.unit == unit:
+                total += record.amount_used
+        return round(total, 3)
+
 
 @dataclass
 class FertilizerInventory:
