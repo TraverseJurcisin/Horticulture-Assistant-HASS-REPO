@@ -35,6 +35,9 @@ class ConfigFlowBase:
     def async_show_form(self, **kwargs):
         return {"type": "form", **kwargs}
 
+    def async_show_menu(self, **kwargs):
+        return {"type": "menu", **kwargs}
+
     def async_create_entry(self, **kwargs):
         self.created_entry = kwargs
         return {"type": "create_entry", **kwargs}
@@ -141,3 +144,12 @@ def test_options_flow(monkeypatch):
     assert recorded["enable_auto_approve"] is True
     assert opt_flow._data["profile_generated"] is True
     assert opt_flow._data["plant_id"] == "pid1"
+
+
+def test_init_menu(monkeypatch):
+    flow = Flow()
+    entries = [types.SimpleNamespace(entry_id="eid1", data={"plant_name": "Tom"})]
+    hass = types.SimpleNamespace(config_entries=types.SimpleNamespace(async_entries=lambda domain: entries))
+    flow.hass = hass
+    result = asyncio.run(flow.async_step_init())
+    assert result["type"] == "menu"
