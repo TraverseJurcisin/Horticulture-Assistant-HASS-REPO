@@ -29,6 +29,7 @@
     "stage_tasks.json": "Common tasks to perform during each growth stage.",
     "germination_duration.json": "Typical days from sowing to germination by crop.",
     "stage_multipliers.json": "Scaling factors for nutrient targets by stage.",
+    "stage_nutrient_requirements.json": "Daily nutrient needs per plant stage.",
     "light_dli_guidelines.json": "Daily Light Integral targets for growth stages.",
     "vpd_guidelines.json": "Vapor pressure deficit targets for growth stages.",
     "vpd_actions.json": "Recommended actions when VPD is outside the target range.",
