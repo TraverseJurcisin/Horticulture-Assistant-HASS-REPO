@@ -53,6 +53,7 @@ def calculate_eta(et0: float, kc: float = 1.0) -> float:
 
 ET0_DATA_FILE = "reference_et0.json"
 ET0_RANGE_FILE = "reference_et0_range.json"
+ET0_ZONE_FILE = "climate_zone_et0.json"
 
 
 @lru_cache(maxsize=None)
@@ -86,11 +87,28 @@ def get_reference_et0_range(month: int) -> tuple[float, float] | None:
     return None
 
 
+@lru_cache(maxsize=None)
+def get_zone_reference_et0(zone: str, month: int) -> float | None:
+    """Return reference ET₀ for a climate ``zone`` and ``month`` if known."""
+
+    if not 1 <= month <= 12:
+        raise ValueError("month must be between 1 and 12")
+
+    data = load_dataset(ET0_ZONE_FILE)
+    zone_data = data.get(normalize_key(zone))
+    if isinstance(zone_data, (list, tuple)) and len(zone_data) >= month:
+        value = zone_data[month - 1]
+        if isinstance(value, (int, float)):
+            return float(value)
+    return None
+
+
 __all__ = [
     "calculate_et0",
     "calculate_eta",
     "get_reference_et0",
     "get_reference_et0_range",
+    "get_zone_reference_et0",
     "estimate_stage_et",
 ]
 

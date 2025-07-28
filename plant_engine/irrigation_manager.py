@@ -17,6 +17,7 @@ __all__ = [
     "get_crop_coefficient",
     "estimate_irrigation_demand",
     "estimate_irrigation_from_month",
+    "estimate_irrigation_from_zone_month",
     "recommend_irrigation_from_environment",
     "list_supported_plants",
     "get_daily_irrigation_target",
@@ -221,6 +222,25 @@ def estimate_irrigation_from_month(
     et0 = get_reference_et0(month)
     if et0 is None:
         return 0.0
+    return estimate_irrigation_demand(plant_type, stage, et0, area_m2)
+
+
+def estimate_irrigation_from_zone_month(
+    plant_type: str,
+    stage: str,
+    zone: str,
+    month: int,
+    area_m2: float = 1.0,
+) -> float:
+    """Return irrigation demand using climate zone reference ET₀."""
+
+    from .et_model import get_zone_reference_et0, get_reference_et0
+
+    et0 = get_zone_reference_et0(zone, month)
+    if et0 is None:
+        et0 = get_reference_et0(month)
+        if et0 is None:
+            return 0.0
     return estimate_irrigation_demand(plant_type, stage, et0, area_m2)
 
 

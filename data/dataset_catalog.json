@@ -172,5 +172,6 @@
     "species_cation_profiles.json": "Relative cation extraction multipliers by species.",
     "species_precipitation_risk.json": "Species-specific mineral precipitation risks due to nutrient interactions.",
     "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
+    "climate_zone_et0.json": "Monthly reference ET\u2080 values by climate zone.",
     "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }

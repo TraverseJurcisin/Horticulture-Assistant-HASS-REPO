@@ -22,6 +22,7 @@ REFERENCE_FILES: dict[str, str] = {
     # newly exposed reference datasets
     "nutrient_synergies": "nutrient_synergies.json",
     "disease_guidelines": "disease_guidelines.json",
+    "climate_zone_et0": "climate_zone_et0.json",
 }
 
 __all__ = [
