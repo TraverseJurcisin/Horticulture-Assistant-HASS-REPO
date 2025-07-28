@@ -321,6 +321,8 @@ Helper scripts live in the `scripts/` directory.
 - `precision_fertigation.py` generates a detailed fertigation plan with stock
   solution injection volumes. Use `--use-synergy` to apply nutrient synergy
   adjustments.
+- `growth_stage_targets.py` prints stage durations with environment and nutrient
+  targets plus an optional harvest prediction.
 - `environment_optimize.py` prints recommended environment adjustments for
   current readings.
 - `monitor_schedule.py` outputs an integrated pest and disease monitoring
