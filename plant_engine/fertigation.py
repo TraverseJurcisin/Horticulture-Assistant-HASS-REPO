@@ -30,6 +30,7 @@ SOLUBILITY_DATA = "fertilizer_solubility.json"
 RECIPE_DATA = "fertigation_recipes.json"
 STOCK_RECIPE_DATA = "stock_solution_recipes.json"
 LOSS_FACTOR_DATA = "fertigation_loss_factors.json"
+INJECTOR_DATA = "fertigation_injectors.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
@@ -47,6 +48,7 @@ _SOLUBILITY_LIMITS: Dict[str, float] = load_dataset(SOLUBILITY_DATA)
 _RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
 _STOCK_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(STOCK_RECIPE_DATA)
 _LOSS_FACTORS: Dict[str, Dict[str, float]] = load_dataset(LOSS_FACTOR_DATA)
+_INJECTORS: Dict[str, float] = load_dataset(INJECTOR_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -159,8 +161,57 @@ def apply_loss_factors(schedule: Mapping[str, float], plant_type: str) -> Dict[s
     adjusted: Dict[str, float] = {}
     for fert, grams in schedule.items():
         factor = factors.get(fert, 0.0)
-        adjusted[fert] = round(grams * (1.0 + factor), 3)
+    adjusted[fert] = round(grams * (1.0 + factor), 3)
     return adjusted
+
+
+@lru_cache(maxsize=None)
+def get_injection_ratio(injector: str) -> float | None:
+    """Return dilution ratio for an injector model if known."""
+
+    ratio = _INJECTORS.get(normalize_key(injector))
+    try:
+        return float(ratio) if ratio is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
+
+
+def calculate_injection_volumes(
+    schedule: Mapping[str, float], volume_l: float, injector: str
+) -> Dict[str, float]:
+    """Return injection volumes (mL) for a fertilizer schedule.
+
+    ``schedule`` maps fertilizer IDs to total grams required for ``volume_l`` of
+    solution. ``injector`` is looked up in :data:`INJECTOR_DATA` to obtain the
+    dilution ratio. Pure fertilizer volumes are calculated using the inventory
+    density and divided by the ratio to determine the injected amount.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    ratio = get_injection_ratio(injector)
+    if ratio is None or ratio <= 0:
+        raise KeyError(f"Unknown injector '{injector}'")
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        CATALOG,
+    )
+
+    inventory = CATALOG.inventory()
+    volumes: Dict[str, float] = {}
+    for fert_id, grams in schedule.items():
+        if grams <= 0:
+            continue
+        if fert_id not in inventory:
+            raise KeyError(f"Unknown fertilizer '{fert_id}'")
+        density = inventory[fert_id].density_kg_per_l
+        if density <= 0:
+            raise ValueError(f"Invalid density for '{fert_id}'")
+        liters = grams / (density * 1000)
+        volumes[fert_id] = round(liters * 1000 / ratio, 3)
+
+    return volumes
 
 
 def recommend_loss_adjusted_fertigation(
@@ -361,6 +412,8 @@ __all__ = [
     "recommend_rootzone_fertigation",
     "get_loss_factors",
     "apply_loss_factors",
+    "get_injection_ratio",
+    "calculate_injection_volumes",
     "recommend_loss_adjusted_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",

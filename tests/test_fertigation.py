@@ -514,3 +514,24 @@ def test_cost_optimized_fertigation_injection():
     assert cost >= 0
     assert injection
 
+
+def test_get_injection_ratio():
+    from plant_engine.fertigation import get_injection_ratio
+
+    assert get_injection_ratio("dosatron_1pct") == 100
+    assert get_injection_ratio("unknown") is None
+
+
+def test_calculate_injection_volumes():
+    from plant_engine.fertigation import calculate_injection_volumes
+
+    schedule = {"foxfarm_grow_big": 20.0}
+    volumes = calculate_injection_volumes(schedule, 10.0, "dosatron_1pct")
+    expected = round(20.0 / (0.96 * 1000) * 1000 / 100, 3)
+    assert volumes["foxfarm_grow_big"] == expected
+
+    with pytest.raises(KeyError):
+        calculate_injection_volumes(schedule, 10.0, "unknown")
+    with pytest.raises(KeyError):
+        calculate_injection_volumes({"unknown": 1.0}, 10.0, "dosatron_1pct")
+
