@@ -14,6 +14,8 @@ from .nutrient_manager import (
     get_recommended_levels,
     calculate_all_deficiencies,
     get_all_recommended_levels,
+    get_synergy_adjusted_levels,
+    calculate_all_deficiencies_with_synergy,
 )
 from .utils import load_dataset, normalize_key, stage_value
 
@@ -191,6 +193,7 @@ def recommend_loss_adjusted_fertigation(
         purity_overrides=purity_overrides,
         include_micro=include_micro,
         micro_fertilizers=micro_fertilizers,
+        use_synergy=use_synergy,
     )
 
     adjusted = apply_loss_factors(schedule, plant_type)
@@ -573,6 +576,7 @@ def recommend_nutrient_mix(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> Dict[str, float]:
     """Return grams of fertilizer required to meet nutrient targets.
 
@@ -598,6 +602,9 @@ def recommend_nutrient_mix(
     micro_fertilizers : Mapping[str, str] | None, optional
         Mapping of micronutrient code (e.g. ``"Fe"``) to fertilizer product
         identifiers. Only used when ``include_micro`` is ``True``.
+    use_synergy : bool, optional
+        When ``True`` nutrient guidelines are adjusted using synergy factors
+        before calculating deficits.
     """
 
     if fertilizers is None:
@@ -612,11 +619,24 @@ def recommend_nutrient_mix(
             "Mo": "sodium_molybdate",
         }
 
-    if include_micro:
+    if include_micro or use_synergy:
         if current_levels is None:
-            deficits = get_all_recommended_levels(plant_type, stage)
+            if use_synergy:
+                deficits = get_synergy_adjusted_levels(plant_type, stage)
+            else:
+                deficits = get_all_recommended_levels(plant_type, stage)
         else:
-            deficits = calculate_all_deficiencies(current_levels, plant_type, stage)
+            if use_synergy:
+                deficits = calculate_all_deficiencies_with_synergy(
+                    current_levels, plant_type, stage
+                )
+            else:
+                deficits = calculate_all_deficiencies(
+                    current_levels, plant_type, stage
+                )
+        if not include_micro:
+            macros = {"N", "P", "K", "Ca", "Mg", "S"}
+            deficits = {n: v for n, v in deficits.items() if n in macros}
     else:
         if current_levels is None:
             deficits = get_recommended_levels(plant_type, stage)
@@ -652,6 +672,7 @@ def recommend_nutrient_mix_with_water(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
     """Return fertilizer mix adjusted for nutrients in the irrigation water."""
 
@@ -667,6 +688,7 @@ def recommend_nutrient_mix_with_water(
         purity_overrides=purity_overrides,
         include_micro=include_micro,
         micro_fertilizers=micro_fertilizers,
+        use_synergy=use_synergy,
     )
 
     return schedule, warnings
@@ -742,6 +764,7 @@ def recommend_nutrient_mix_with_cost(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[Dict[str, float], float]:
     """Return fertigation mix and estimated cost for a plant stage."""
 
@@ -754,6 +777,7 @@ def recommend_nutrient_mix_with_cost(
         purity_overrides=purity_overrides,
         include_micro=include_micro,
         micro_fertilizers=micro_fertilizers,
+        use_synergy=use_synergy,
     )
 
     from custom_components.horticulture_assistant.fertilizer_formulator import (
@@ -774,6 +798,7 @@ def recommend_nutrient_mix_with_cost_breakdown(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[Dict[str, float], float, Dict[str, float]]:
     """Return fertigation mix with total and per-nutrient cost estimates."""
 
@@ -786,6 +811,7 @@ def recommend_nutrient_mix_with_cost_breakdown(
         purity_overrides=purity_overrides,
         include_micro=include_micro,
         micro_fertilizers=micro_fertilizers,
+        use_synergy=use_synergy,
     )
 
     from custom_components.horticulture_assistant.fertilizer_formulator import (
@@ -844,6 +870,7 @@ def recommend_precise_fertigation(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[
     Dict[str, float],
     float,
@@ -863,6 +890,7 @@ def recommend_precise_fertigation(
             purity_overrides=purity_overrides,
             include_micro=include_micro,
             micro_fertilizers=micro_fertilizers,
+            use_synergy=use_synergy,
         )
     else:
         schedule = recommend_nutrient_mix(
@@ -874,6 +902,7 @@ def recommend_precise_fertigation(
             purity_overrides=purity_overrides,
             include_micro=include_micro,
             micro_fertilizers=micro_fertilizers,
+            use_synergy=use_synergy,
         )
         warnings = {}
 
@@ -903,6 +932,7 @@ def recommend_precise_fertigation_with_injection(
     purity_overrides: Mapping[str, float] | None = None,
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
+    use_synergy: bool = False,
 ) -> tuple[
     Dict[str, float],
     float,
@@ -922,6 +952,7 @@ def recommend_precise_fertigation_with_injection(
         purity_overrides=purity_overrides,
         include_micro=include_micro,
         micro_fertilizers=micro_fertilizers,
+        use_synergy=use_synergy,
     )
 
     from custom_components.horticulture_assistant.fertilizer_formulator import (
@@ -1198,6 +1229,7 @@ def estimate_weekly_fertigation_cost(
     *,
     fertilizers: Mapping[str, str] | None = None,
     purity_overrides: Mapping[str, float] | None = None,
+    use_synergy: bool = False,
 ) -> float:
     """Return estimated cost for a week of fertigation at ``daily_volume_l``.
 
@@ -1214,6 +1246,7 @@ def estimate_weekly_fertigation_cost(
         daily_volume_l,
         fertilizers=fertilizers,
         purity_overrides=purity_overrides,
+        use_synergy=use_synergy,
     )
     return round(cost * 7, 2)
 
