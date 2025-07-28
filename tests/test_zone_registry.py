@@ -9,6 +9,7 @@ from custom_components.horticulture_assistant.utils.zone_registry import (
     detach_plants,
     attach_solenoids,
     detach_solenoids,
+    remove_zone,
 )
 
 
@@ -63,4 +64,22 @@ def test_zone_registry_modify(tmp_path, monkeypatch):
 
     assert detach_solenoids("3", ["x"])
     assert load_zones()["3"].solenoids == ["y"]
+
+
+def test_zone_registry_remove(tmp_path, monkeypatch):
+    file_path = tmp_path / "zones.json"
+    file_path.write_text("{}")
+
+    def fake_config_path(hass, *parts):
+        return str(file_path)
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.utils.zone_registry.config_path",
+        fake_config_path,
+    )
+
+    assert add_zone("10", ["a"], ["p10"])
+    assert "10" in load_zones()
+    assert remove_zone("10")
+    assert "10" not in load_zones()
 
