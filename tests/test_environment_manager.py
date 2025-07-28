@@ -46,6 +46,8 @@ from plant_engine.environment_manager import (
     evaluate_humidity_stress,
     evaluate_vpd,
     recommend_vpd_action,
+    recommend_photoperiod_action,
+    get_photoperiod_action,
     evaluate_ph_stress,
     evaluate_stress_conditions,
     evaluate_soil_temperature_stress,
@@ -113,6 +115,21 @@ def test_recommend_environment_adjustments():
     assert actions["humidity"].startswith("Ventilate")
     assert actions["light"].startswith("Use supplemental")
     assert actions["co2"].startswith("Increase ventilation")
+
+
+def test_recommend_environment_adjustments_photoperiod():
+    actions = recommend_environment_adjustments(
+        {
+            "temp_c": 22,
+            "humidity_pct": 70,
+            "light_ppfd": 250,
+            "co2_ppm": 450,
+            "photoperiod_hours": 10,
+        },
+        "lettuce",
+        "seedling",
+    )
+    assert "photoperiod" in actions
 
 
 def test_recommend_environment_adjustments_aliases():
@@ -446,6 +463,18 @@ def test_vpd_evaluation_and_action():
     assert high == "high"
     action_high = recommend_vpd_action(30, 30, "citrus", "seedling")
     assert "humidity" in action_high.lower() or "temperature" in action_high.lower()
+
+
+def test_photoperiod_actions():
+    short = recommend_photoperiod_action(10, "lettuce", "seedling")
+    assert "lighting" in short.lower() or "increase" in short.lower()
+
+    assert recommend_photoperiod_action(17, "lettuce", "seedling") is None
+
+    long = recommend_photoperiod_action(22, "lettuce", "seedling")
+    assert "blackout" in long.lower() or "reduce" in long.lower()
+
+    assert get_photoperiod_action("short")
 
 
 def test_score_environment():
