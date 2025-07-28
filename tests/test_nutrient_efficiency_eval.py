@@ -22,3 +22,15 @@ def test_evaluate_plant_nue(tmp_path, monkeypatch):
     assert result["N"]["status"] == "above target"
     assert result["K"]["status"] == "above target"
 
+
+def test_recommend_nue_improvements(tmp_path, monkeypatch):
+    n_dir, y_dir = setup_data(tmp_path)
+    monkeypatch.setattr(ne, "NUTRIENT_DIR", str(n_dir))
+    monkeypatch.setattr(ne, "YIELD_DIR", str(y_dir))
+    monkeypatch.setattr(ne, "_TIPS", {"N": "tip"})
+    monkeypatch.setattr(ne, "load_dataset", lambda _: {"tomato": {"N": 10}})
+    eval_map = ne.evaluate_plant_nue("plant", "tomato")
+    eval_map["N"]["status"] = "below target"
+    tips = ne.recommend_nue_improvements(eval_map)
+    assert tips["N"] == "tip"
+

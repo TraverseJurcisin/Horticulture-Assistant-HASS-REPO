@@ -11,10 +11,15 @@ __all__ = [
     "calculate_nue_for_nutrient",
     "evaluate_nue",
     "evaluate_plant_nue",
+    "recommend_nue_improvements",
 ]
 
 # Dataset containing NUE targets per crop
 TARGET_FILE = "nutrient_efficiency_targets.json"
+TIPS_FILE = "nutrient_efficiency_tips.json"
+
+# Load datasets once
+_TIPS: Dict[str, str] = load_dataset(TIPS_FILE)
 
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
@@ -120,4 +125,17 @@ def evaluate_plant_nue(plant_id: str, plant_type: str, tolerance: float = 0.1) -
     info = calculate_nue(plant_id)
     nue_map = info.get("nue", {})
     return evaluate_nue(nue_map, plant_type, tolerance)
+
+
+def recommend_nue_improvements(nue_eval: Mapping[str, Mapping[str, Any]]) -> Dict[str, str]:
+    """Return improvement tips for nutrients below target NUE."""
+
+    suggestions: Dict[str, str] = {}
+    for nutrient, info in nue_eval.items():
+        status = str(info.get("status", "")).lower()
+        if status == "below target":
+            tip = _TIPS.get(nutrient)
+            if tip:
+                suggestions[nutrient] = tip
+    return suggestions
 
