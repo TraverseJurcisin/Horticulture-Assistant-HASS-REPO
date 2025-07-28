@@ -721,6 +721,20 @@ def test_calculate_environment_variance():
     assert var["humidity_pct"] == pytest.approx(2.667, rel=1e-3)
 
 
+def test_calculate_environment_variance_no_numpy(monkeypatch):
+    series = [
+        {"temp_c": 20, "humidity_pct": 70},
+        {"temperature": 22, "humidity": 72},
+        {"temp_c": 21, "humidity_pct": 74},
+    ]
+    from plant_engine import environment_manager as em
+
+    monkeypatch.setattr(em, "_np", None)
+    var = em.calculate_environment_variance(series)
+    assert var["temp_c"] == pytest.approx(0.667, rel=1e-3)
+    assert var["humidity_pct"] == pytest.approx(2.667, rel=1e-3)
+
+
 def test_calculate_environment_stddev():
     series = [
         {"temp_c": 20, "humidity_pct": 70},

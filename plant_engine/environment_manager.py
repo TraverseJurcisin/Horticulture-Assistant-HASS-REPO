@@ -7,6 +7,12 @@ import datetime
 from dataclasses import dataclass, asdict
 from functools import lru_cache
 from typing import Any, Dict, Mapping, Tuple, Iterable, Callable
+from statistics import pvariance
+
+try:  # Optional numpy for faster variance calculations
+    import numpy as _np  # type: ignore
+except Exception:  # pragma: no cover - numpy missing
+    _np = None
 
 RangeTuple = Tuple[float, float]
 
@@ -542,23 +548,16 @@ def calculate_environment_variance(
         for key, value in normalize_environment_readings(reading).items():
             values.setdefault(key, []).append(float(value))
 
-    try:
-        import numpy as np  # type: ignore
-
-        variance = {
-            key: float(np.var(np.array(vals, dtype=float)))
-            for key, vals in values.items()
-            if vals
-        }
-    except Exception:  # pragma: no cover - numpy unavailable
-        variance = {}
+    variance: Dict[str, float] = {}
+    if _np is not None:
         for key, vals in values.items():
-            n = len(vals)
-            if n == 0:
-                continue
-            mean = sum(vals) / n
-            var = sum((v - mean) ** 2 for v in vals) / n
-            variance[key] = var
+            if vals:
+                arr = _np.array(vals, dtype=float)
+                variance[key] = float(_np.var(arr))
+    else:  # pragma: no cover - fallback when numpy missing
+        for key, vals in values.items():
+            if vals:
+                variance[key] = float(pvariance(vals))
 
     return {k: round(v, 3) for k, v in variance.items()}
 
