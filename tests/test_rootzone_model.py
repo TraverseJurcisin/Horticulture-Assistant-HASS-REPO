@@ -7,6 +7,7 @@ from plant_engine.rootzone_model import (
     soil_moisture_pct,
     get_infiltration_rate,
     estimate_infiltration_time,
+    calculate_infiltration_volume,
     RootZone,
 )
 import pytest
@@ -118,4 +119,15 @@ def test_estimate_infiltration_time():
 
     # custom rate overrides dataset lookup
     assert estimate_infiltration_time(1000, 1.0, infiltration_rate=5) == 0.2
+
+
+def test_calculate_infiltration_volume():
+    vol = calculate_infiltration_volume(0.2, 1.0, "loam")
+    assert vol == 2000.0
+    assert calculate_infiltration_volume(0.2, 1.0, "unknown") is None
+    with pytest.raises(ValueError):
+        calculate_infiltration_volume(-1, 1.0, "loam")
+
+    # custom rate overrides dataset lookup
+    assert calculate_infiltration_volume(0.2, 1.0, infiltration_rate=5) == 1000.0
 

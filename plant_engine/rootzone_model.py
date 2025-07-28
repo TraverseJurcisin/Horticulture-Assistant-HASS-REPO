@@ -31,6 +31,7 @@ __all__ = [
     "get_soil_parameters",
     "get_infiltration_rate",
     "estimate_infiltration_time",
+    "calculate_infiltration_volume",
     "RootZone",
 ]
 
@@ -228,6 +229,34 @@ def estimate_infiltration_time(
     depth_mm = volume_ml / 1000 / area_m2
     hours = depth_mm / rate
     return round(hours, 2)
+
+
+def calculate_infiltration_volume(
+    time_hr: float,
+    area_m2: float,
+    texture: str | None = None,
+    *,
+    infiltration_rate: float | None = None,
+) -> float | None:
+    """Return water volume (mL) infiltrated over ``time_hr`` hours.
+
+    The ``texture`` parameter behaves the same as in
+    :func:`estimate_infiltration_time`.  ``None`` is returned when no
+    infiltration rate information is available.
+    """
+
+    if time_hr < 0 or area_m2 <= 0:
+        raise ValueError("time_hr must be non-negative and area_m2 positive")
+
+    rate = infiltration_rate
+    if rate is None and texture is not None:
+        rate = get_infiltration_rate(texture)
+    if rate is None or rate <= 0:
+        return None
+
+    depth_mm = rate * time_hr
+    volume_ml = depth_mm * area_m2 * 1000
+    return round(volume_ml, 1)
 
 
 def calculate_remaining_water(
