@@ -47,6 +47,12 @@ def test_calculate_surplus():
     assert surplus["K"] == 10
 
 
+def test_calculate_surplus_invalid_values():
+    current = {"N": "a", "P": None, "K": 130}
+    surplus = calculate_surplus(current, "tomato", "fruiting")
+    assert surplus == {"K": 10}
+
+
 def test_get_recommended_levels_case_insensitive():
     levels = get_recommended_levels("Citrus", "FRUITING")
     assert levels["N"] == 120

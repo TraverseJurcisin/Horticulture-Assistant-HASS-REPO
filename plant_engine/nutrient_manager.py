@@ -69,6 +69,43 @@ __all__ = [
 ]
 
 
+def _calc_diff(
+    current_levels: Mapping[str, float],
+    targets: Mapping[str, float],
+    *,
+    mode: str,
+) -> Dict[str, float]:
+    """Return positive ppm differences between ``current_levels`` and ``targets``."""
+
+    result: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        delta = round(target - current, 2)
+        if mode == "deficit" and delta > 0:
+            result[nutrient] = delta
+        elif mode == "surplus" and delta < 0:
+            result[nutrient] = -delta
+    return result
+
+
+def _calc_balance(current_levels: Mapping[str, float], targets: Mapping[str, float]) -> Dict[str, float]:
+    """Return ratio of ``current_levels`` to ``targets`` values."""
+
+    ratios: Dict[str, float] = {}
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        ratios[nutrient] = round(current / target, 2)
+    return ratios
+
+
 def get_nutrient_weight(nutrient: str) -> float:
     """Return importance weight for a nutrient.
 
@@ -111,7 +148,7 @@ def get_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
 
 
 def calculate_deficiencies(
-    current_levels: Dict[str, float],
+    current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
 ) -> Dict[str, float]:
@@ -121,48 +158,30 @@ def calculate_deficiencies(
     needed (ppm) to reach the target.
     """
 
-    recommended = get_recommended_levels(plant_type, stage)
-    deficiencies: Dict[str, float] = {}
-    for nutrient, target in recommended.items():
-        current = current_levels.get(nutrient, 0.0)
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficiencies[nutrient] = diff
-    return deficiencies
+    targets = get_recommended_levels(plant_type, stage)
+    return _calc_diff(current_levels, targets, mode="deficit")
 
 
 def calculate_nutrient_balance(
-    current_levels: Dict[str, float],
+    current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
 ) -> Dict[str, float]:
     """Return ratio of current to recommended nutrient levels."""
 
-    recommended = get_recommended_levels(plant_type, stage)
-    ratios: Dict[str, float] = {}
-    for nutrient, target in recommended.items():
-        if target <= 0:
-            continue
-        current = current_levels.get(nutrient, 0.0)
-        ratios[nutrient] = round(current / target, 2)
-    return ratios
+    targets = get_recommended_levels(plant_type, stage)
+    return _calc_balance(current_levels, targets)
 
 
 def calculate_surplus(
-    current_levels: Dict[str, float],
+    current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
 ) -> Dict[str, float]:
     """Return nutrient amounts exceeding recommendations."""
 
-    recommended = get_recommended_levels(plant_type, stage)
-    surplus: Dict[str, float] = {}
-    for nutrient, target in recommended.items():
-        current = current_levels.get(nutrient, 0.0)
-        diff = round(current - target, 2)
-        if diff > 0:
-            surplus[nutrient] = diff
-    return surplus
+    targets = get_recommended_levels(plant_type, stage)
+    return _calc_diff(current_levels, targets, mode="surplus")
 
 
 def calculate_nutrient_adjustments(
@@ -319,7 +338,7 @@ def get_all_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, floa
 
 
 def calculate_all_deficiencies(
-    current_levels: Dict[str, float], plant_type: str, stage: str
+    current_levels: Mapping[str, float], plant_type: str, stage: str
 ) -> Dict[str, float]:
     """Return overall nutrient deficiencies including micronutrients."""
 
@@ -331,7 +350,7 @@ def calculate_all_deficiencies(
 
 
 def calculate_all_surplus(
-    current_levels: Dict[str, float], plant_type: str, stage: str
+    current_levels: Mapping[str, float], plant_type: str, stage: str
 ) -> Dict[str, float]:
     """Return overall nutrient surplus including micronutrients."""
 
@@ -347,17 +366,8 @@ def calculate_all_nutrient_balance(
 ) -> Dict[str, float]:
     """Return ratio of current to recommended levels for all nutrients."""
 
-    recommended = get_all_recommended_levels(plant_type, stage)
-    ratios: Dict[str, float] = {}
-    for nutrient, target in recommended.items():
-        if target <= 0:
-            continue
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            continue
-        ratios[nutrient] = round(current / target, 2)
-    return ratios
+    targets = get_all_recommended_levels(plant_type, stage)
+    return _calc_balance(current_levels, targets)
 
 
 def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
@@ -400,16 +410,7 @@ def calculate_deficiencies_with_ph(
     """Return deficiencies using pH-adjusted nutrient targets."""
 
     targets = get_ph_adjusted_levels(plant_type, stage, ph)
-    deficits: Dict[str, float] = {}
-    for nutrient, target in targets.items():
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficits[nutrient] = diff
-    return deficits
+    return _calc_diff(current_levels, targets, mode="deficit")
 
 
 def get_all_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
@@ -439,16 +440,7 @@ def calculate_all_deficiencies_with_ph(
     """Return overall deficiencies using pH-adjusted guidelines."""
 
     targets = get_all_ph_adjusted_levels(plant_type, stage, ph)
-    deficits: Dict[str, float] = {}
-    for nutrient, target in targets.items():
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficits[nutrient] = diff
-    return deficits
+    return _calc_diff(current_levels, targets, mode="deficit")
 
 
 def get_temperature_adjusted_levels(
@@ -589,16 +581,7 @@ def calculate_all_deficiencies_with_synergy(
     """Return overall deficiencies using synergy-adjusted guidelines."""
 
     targets = get_synergy_adjusted_levels(plant_type, stage)
-    deficits: Dict[str, float] = {}
-    for nutrient, target in targets.items():
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficits[nutrient] = diff
-    return deficits
+    return _calc_diff(current_levels, targets, mode="deficit")
 
 
 def calculate_all_deficiencies_with_ph_and_synergy(
@@ -611,16 +594,7 @@ def calculate_all_deficiencies_with_ph_and_synergy(
 
     targets = get_ph_synergy_adjusted_levels(plant_type, stage, ph)
 
-    deficits: Dict[str, float] = {}
-    for nutrient, target in targets.items():
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficits[nutrient] = diff
-    return deficits
+    return _calc_diff(current_levels, targets, mode="deficit")
 
 
 def calculate_deficiency_index_with_synergy(
