@@ -59,6 +59,7 @@ __all__ = [
     "calculate_all_deficiencies_with_ph",
     "get_temperature_adjusted_levels",
     "calculate_cycle_deficiency_index",
+    "calculate_deficiency_index_with_temperature",
     "get_synergy_adjusted_levels",
     "get_ph_synergy_adjusted_levels",
     "calculate_all_deficiencies_with_synergy",
@@ -104,6 +105,27 @@ def _calc_balance(current_levels: Mapping[str, float], targets: Mapping[str, flo
             current = 0.0
         ratios[nutrient] = round(current / target, 2)
     return ratios
+
+
+def _deficiency_index_for_targets(current_levels: Mapping[str, float], targets: Mapping[str, float]) -> float:
+    """Return deficiency index for ``current_levels`` against ``targets``."""
+
+    total_weight = 0.0
+    deficit_score = 0.0
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0) / target
+        weight = get_nutrient_weight(nutrient)
+        deficit_score += weight * deficit
+        total_weight += weight
+    if total_weight == 0:
+        return 0.0
+    return round((deficit_score / total_weight) * 100, 1)
 
 
 def get_nutrient_weight(nutrient: str) -> float:
@@ -297,24 +319,7 @@ def calculate_deficiency_index(
     if not targets:
         return 0.0
 
-    total_weight = 0.0
-    deficit_score = 0.0
-    for nutrient, target in targets.items():
-        if target <= 0:
-            continue
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        deficit = max(target - current, 0.0) / target
-        weight = get_nutrient_weight(nutrient)
-        deficit_score += weight * deficit
-        total_weight += weight
-
-    if total_weight == 0:
-        return 0.0
-
-    return round((deficit_score / total_weight) * 100, 1)
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
@@ -454,6 +459,21 @@ def get_temperature_adjusted_levels(
     from .root_temperature import adjust_uptake
 
     return adjust_uptake(base, root_temp_c)
+
+
+def calculate_deficiency_index_with_temperature(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    root_temp_c: float,
+) -> float:
+    """Return deficiency index using temperature-adjusted nutrient targets."""
+
+    targets = get_temperature_adjusted_levels(plant_type, stage, root_temp_c)
+    if not targets:
+        return calculate_deficiency_index(current_levels, plant_type, stage)
+
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
 def recommend_ratio_adjustments(
@@ -606,24 +626,7 @@ def calculate_deficiency_index_with_synergy(
     if not targets:
         return calculate_deficiency_index(current_levels, plant_type, stage)
 
-    total_weight = 0.0
-    deficit_score = 0.0
-    for nutrient, target in targets.items():
-        if target <= 0:
-            continue
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        deficit = max(target - current, 0.0) / target
-        weight = get_nutrient_weight(nutrient)
-        deficit_score += weight * deficit
-        total_weight += weight
-
-    if total_weight == 0:
-        return 0.0
-
-    return round((deficit_score / total_weight) * 100, 1)
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
 def calculate_deficiency_index_with_ph(
@@ -638,24 +641,7 @@ def calculate_deficiency_index_with_ph(
     if not targets:
         return calculate_deficiency_index(current_levels, plant_type, stage)
 
-    total_weight = 0.0
-    deficit_score = 0.0
-    for nutrient, target in targets.items():
-        if target <= 0:
-            continue
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        deficit = max(target - current, 0.0) / target
-        weight = get_nutrient_weight(nutrient)
-        deficit_score += weight * deficit
-        total_weight += weight
-
-    if total_weight == 0:
-        return 0.0
-
-    return round((deficit_score / total_weight) * 100, 1)
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
 def calculate_deficiency_index_with_ph_and_synergy(
@@ -670,23 +656,6 @@ def calculate_deficiency_index_with_ph_and_synergy(
     if not targets:
         return calculate_deficiency_index(current_levels, plant_type, stage)
 
-    total_weight = 0.0
-    deficit_score = 0.0
-    for nutrient, target in targets.items():
-        if target <= 0:
-            continue
-        try:
-            current = float(current_levels.get(nutrient, 0.0))
-        except (TypeError, ValueError):
-            current = 0.0
-        deficit = max(target - current, 0.0) / target
-        weight = get_nutrient_weight(nutrient)
-        deficit_score += weight * deficit
-        total_weight += weight
-
-    if total_weight == 0:
-        return 0.0
-
-    return round((deficit_score / total_weight) * 100, 1)
+    return _deficiency_index_for_targets(current_levels, targets)
 
 
