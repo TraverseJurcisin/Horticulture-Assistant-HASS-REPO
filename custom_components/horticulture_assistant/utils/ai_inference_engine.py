@@ -65,6 +65,7 @@ class AIInferenceEngine:
             env = package.environment_data.get(plant_id, {})
             plant_type = pdata.get("plant_type", "default")
             self._check_environment(env, plant_type, issues, recs)
+            self._check_pest_risk(env, plant_type, issues, recs)
 
             confidence = max(0.1, 1.0 - len(issues) * 0.1)
             results.append(
@@ -132,6 +133,31 @@ class AIInferenceEngine:
         if evaluate_cold_stress(temp, plant_type):
             issues.append("Cold stress detected")
             recs.append("Provide heating or protection")
+
+    def _check_pest_risk(
+        self,
+        env: Mapping[str, Any],
+        plant_type: str,
+        issues: List[str],
+        recs: List[str],
+    ) -> None:
+        """Append pest risk warnings based on current environment."""
+
+        if not env or not plant_type:
+            return
+        try:
+            from plant_engine.pest_monitor import estimate_adjusted_pest_risk
+        except Exception:  # pragma: no cover - optional dependency
+            return
+
+        risk = estimate_adjusted_pest_risk(plant_type, env)
+        if not risk:
+            return
+
+        for pest, level in risk.items():
+            if level in {"high", "moderate"}:
+                issues.append(f"Potential {pest} outbreak: {level}")
+                recs.append(f"Monitor for {pest} ({level} risk)")
 
     # ------------------------------------------------------------------
     # Utilities
