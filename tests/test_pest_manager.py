@@ -199,3 +199,13 @@ def test_plan_beneficial_releases():
     interval = min(get_beneficial_effective_days(i) for i in insects)
     assert schedule[1]["date"] == start + timedelta(days=interval)
     assert "ladybugs" in schedule[0]["releases"]
+
+
+def test_predict_lifecycle_dates():
+    from datetime import date
+    from plant_engine.pest_manager import predict_lifecycle_dates
+
+    dates = predict_lifecycle_dates("aphids", date(2024, 1, 1))
+    assert dates["egg"] == date(2024, 1, 1)
+    assert dates["nymph"] == date(2024, 1, 4)
+    assert dates["adult"] == date(2024, 1, 11)

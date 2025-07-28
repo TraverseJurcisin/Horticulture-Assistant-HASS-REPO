@@ -99,6 +99,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Risk-adjusted pest monitoring summaries and scheduling
 - Automatic pesticide rotation planning
 - Root uptake factor calculation from soil temperature
+- Lifecycle date predictions for common pests
 - Summaries of reentry and harvest restrictions for applied pesticides
 - Automated fertigation planning with cost estimates
 - Yield-based revenue and profit projections
@@ -259,6 +260,7 @@ Important categories include:
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Stage-specific pest thresholds** – economic thresholds for each growth stage
+- **Pest lifecycle durations** – typical number of days in each development stage
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions

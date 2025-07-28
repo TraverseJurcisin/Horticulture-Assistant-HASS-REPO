@@ -201,6 +201,35 @@ def get_pest_lifecycle(pest: str) -> Dict[str, int]:
     return result
 
 
+def predict_lifecycle_dates(pest: str, start: date | str) -> Dict[str, date]:
+    """Return estimated start dates for each life stage of ``pest``.
+
+    Parameters
+    ----------
+    pest : str
+        Pest name to look up in :data:`pest_lifecycle_durations.json`.
+    start : date | str
+        Observation date of the first listed stage. A date string in
+        ``YYYY-MM-DD`` format is also accepted.
+    """
+
+    if isinstance(start, str):
+        start_date = date.fromisoformat(start)
+    else:
+        start_date = start
+
+    durations = get_pest_lifecycle(pest)
+    if not durations:
+        return {}
+
+    result: Dict[str, date] = {}
+    cumulative = 0
+    for stage, days in durations.items():
+        result[stage] = start_date + timedelta(days=cumulative)
+        cumulative += days
+    return result
+
+
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
     """Return scouting interval in days for a plant stage."""
 
@@ -364,6 +393,7 @@ __all__ = [
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_lifecycle",
+    "predict_lifecycle_dates",
     "get_monitoring_interval",
     "get_pest_threshold",
     "get_scouting_method",
