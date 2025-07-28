@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Mapping, Dict, Any
 
 from .utils import load_dataset, normalize_key, stage_value
@@ -167,8 +168,12 @@ def recommend_irrigation_interval(
     return round(max(days, 0.0), 2)
 
 
+@lru_cache(maxsize=None)
 def get_crop_coefficient(plant_type: str, stage: str) -> float:
-    """Return crop coefficient for ``plant_type`` and ``stage``."""
+    """Return crop coefficient for ``plant_type`` and ``stage``.
+
+    The result is cached since coefficients are static reference data.
+    """
     coeffs = _KC_DATA.get(normalize_key(plant_type), {})
     return coeffs.get(normalize_key(stage), 1.0)
 
@@ -262,8 +267,12 @@ def estimate_irrigation_time(
     return round(hours, 2)
 
 
+@lru_cache(maxsize=None)
 def get_rain_capture_efficiency(surface: str) -> float:
-    """Return fraction of rainfall captured for ``surface``."""
+    """Return fraction of rainfall captured for ``surface``.
+
+    Results are cached to avoid repeated normalization and dataset lookups.
+    """
     value = _RAIN_EFFICIENCY_DATA.get(normalize_key(surface), 1.0)
     try:
         eff = float(value)
@@ -272,8 +281,12 @@ def get_rain_capture_efficiency(surface: str) -> float:
     return max(0.0, min(eff, 1.0))
 
 
+@lru_cache(maxsize=None)
 def get_irrigation_zone_modifier(zone: str) -> float:
-    """Return irrigation multiplier for a climate zone."""
+    """Return irrigation multiplier for a climate zone.
+
+    Cached to reduce repeated dataset parsing when scheduling many plants.
+    """
     value = _ZONE_MODIFIERS.get(normalize_key(zone), 1.0)
     try:
         factor = float(value)
