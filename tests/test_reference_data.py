@@ -21,3 +21,25 @@ def test_get_plant_overview():
     assert isinstance(overview["environment"], dict)
     assert "water_usage" in overview
     assert overview["water_usage"]["fruiting"] == 320
+
+
+def test_refresh_reference_data(tmp_path, monkeypatch):
+    sample = tmp_path / "dummy.json"
+    sample.write_text('{"tomato": {"fruiting": 999}}')
+
+    monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR", raising=False)
+    monkeypatch.setitem(ref.REFERENCE_FILES, "dummy_dataset", str(sample))
+    ref.refresh_reference_data()
+    data1 = ref.load_reference_data()
+    assert data1["dummy_dataset"]["tomato"]["fruiting"] == 999
+
+    new_file = tmp_path / "dummy2.json"
+    new_file.write_text('{"tomato": {"fruiting": 500}}')
+    data2 = ref.load_reference_data()
+    # cached value should remain
+    assert data2["dummy_dataset"]["tomato"]["fruiting"] == 999
+
+    monkeypatch.setitem(ref.REFERENCE_FILES, "dummy_dataset", str(new_file))
+    ref.refresh_reference_data()
+    data3 = ref.load_reference_data()
+    assert data3["dummy_dataset"]["tomato"]["fruiting"] == 500

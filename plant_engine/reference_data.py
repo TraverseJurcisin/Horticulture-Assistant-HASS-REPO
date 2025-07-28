@@ -5,7 +5,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Any, Dict
 
-from .utils import load_dataset, normalize_key
+from .utils import load_dataset, normalize_key, clear_dataset_cache
 
 # Mapping of logical keys to dataset file names used across the project.
 # Additional datasets can be appended here without altering code that
@@ -30,6 +30,7 @@ __all__ = [
     "load_reference_data",
     "get_reference_dataset",
     "get_plant_overview",
+    "refresh_reference_data",
     "REFERENCE_FILES",
 ]
 
@@ -85,3 +86,10 @@ def get_plant_overview(plant_type: str) -> Dict[str, Any]:
         "tasks": entry("stage_tasks"),
         "water_usage": entry("water_usage_guidelines"),
     }
+
+
+def refresh_reference_data() -> None:
+    """Clear cached datasets so they are reloaded on next access."""
+
+    load_reference_data.cache_clear()
+    clear_dataset_cache()
