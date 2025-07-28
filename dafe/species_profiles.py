@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
+from plant_engine.utils import load_dataset
+
+# Dataset file residing under ``data/`` used to populate known species profiles.
+DATA_FILE = "dafe_species_profiles.json"
 
 __all__ = ["SpeciesProfile", "get_species_profile"]
 
@@ -22,23 +26,17 @@ class SpeciesProfile:
     ec_high: float
 
 
+def _profile_data() -> dict:
+    """Return cached species profile data from :data:`DATA_FILE`."""
+
+    return load_dataset(DATA_FILE)
+
+
 @lru_cache(maxsize=None)
 def get_species_profile(species_name: str) -> SpeciesProfile | None:
-    """Return a :class:`SpeciesProfile` or ``None`` if ``species_name`` unknown."""
+    """Return a :class:`SpeciesProfile` for ``species_name`` if available."""
 
-    data = {
-        "Cannabis_sativa": {
-            "root_depth": "shallow",
-            "dryback_tolerance": "medium",
-            "oxygen_min": 8.0,
-            "ideal_wc_plateau": 0.42,
-            "generative_threshold": 0.035,
-            "ec_low": 1.5,
-            "ec_high": 2.5,
-        }
-    }.get(species_name)
-
+    data = _profile_data().get(species_name)
     if not data:
         return None
-
     return SpeciesProfile(species_name, **data)
