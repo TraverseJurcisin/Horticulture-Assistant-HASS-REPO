@@ -39,13 +39,18 @@ def generate_nutrient_management_report(
         Growth stage for guideline lookup.
     volume_l : float
         Solution volume in liters used to compute corrections.
+        Must be a positive value.
     purity : Mapping[str, float], optional
         Purity fractions per nutrient. Overrides values from ``product``.
     product : str, optional
         Fertilizer product identifier for purity lookup.
     """
 
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
     analysis = analyze_nutrient_profile(current_levels, plant_type, stage)
+
     corrections = recommend_correction_schedule(
         current_levels,
         plant_type,
@@ -54,4 +59,5 @@ def generate_nutrient_management_report(
         purity,
         product=product,
     )
+
     return NutrientManagementReport(analysis=analysis, corrections_g=corrections)

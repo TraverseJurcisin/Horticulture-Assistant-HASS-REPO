@@ -1,3 +1,4 @@
+import pytest
 from plant_engine.nutrient_planner import (
     generate_nutrient_management_report,
     NutrientManagementReport,
@@ -17,3 +18,13 @@ def test_generate_nutrient_management_report():
     assert report.analysis.recommended["N"] == 80
     assert report.corrections_g["N"] > 0
     assert report.analysis.deficiencies
+
+
+def test_generate_nutrient_management_report_invalid_volume():
+    with pytest.raises(ValueError):
+        generate_nutrient_management_report(
+            {"N": 50},
+            "lettuce",
+            "seedling",
+            volume_l=0,
+        )
