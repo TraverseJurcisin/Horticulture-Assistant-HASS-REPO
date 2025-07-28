@@ -229,42 +229,27 @@ def recommend_climate_adjustments(
 
     guide = get_climate_guidelines(zone)
     env = normalize_environment_readings(current_env)
+
     suggestions: Dict[str, str] = {}
-    if guide.temp_c is not None:
-        low, high = guide.temp_c
-        temp = env.get("temp_c")
-        if temp is not None:
-            if temp < low:
-                suggestions["temperature"] = f"raise to {low}-{high}°C"
-            elif temp > high:
-                suggestions["temperature"] = f"lower to {low}-{high}°C"
+    guide_map = {
+        "temp_c": ("temperature", "°C", "raise", "lower"),
+        "humidity_pct": ("humidity", "%", "increase", "decrease"),
+        "light_ppfd": ("light", " µmol/m²/s", "increase", "reduce"),
+        "co2_ppm": ("co2", " ppm", "raise", "lower"),
+    }
 
-    if guide.humidity_pct is not None:
-        low, high = guide.humidity_pct
-        rh = env.get("humidity_pct")
-        if rh is not None:
-            if rh < low:
-                suggestions["humidity"] = f"increase to {low}-{high}%"
-            elif rh > high:
-                suggestions["humidity"] = f"decrease to {low}-{high}%"
-
-    if guide.light_ppfd is not None:
-        low, high = guide.light_ppfd
-        light = env.get("light_ppfd")
-        if light is not None:
-            if light < low:
-                suggestions["light"] = f"increase to {low}-{high} µmol/m²/s"
-            elif light > high:
-                suggestions["light"] = f"reduce to {low}-{high} µmol/m²/s"
-
-    if guide.co2_ppm is not None:
-        low, high = guide.co2_ppm
-        co2 = env.get("co2_ppm")
-        if co2 is not None:
-            if co2 < low:
-                suggestions["co2"] = f"raise to {low}-{high} ppm"
-            elif co2 > high:
-                suggestions["co2"] = f"lower to {low}-{high} ppm"
+    for attr, (label, unit, low_word, high_word) in guide_map.items():
+        bounds = getattr(guide, attr)
+        if bounds is None:
+            continue
+        low, high = bounds
+        value = env.get(attr)
+        if value is None:
+            continue
+        if value < low:
+            suggestions[label] = f"{low_word} to {low}-{high}{unit}"
+        elif value > high:
+            suggestions[label] = f"{high_word} to {low}-{high}{unit}"
 
     return suggestions
 
