@@ -27,6 +27,10 @@ def test_guideline_summary_no_stage():
     data = get_guideline_summary("citrus")
     assert "stages" in data and "vegetative" in data["stages"]
 
+    # ensure stage thresholds fallback correctly
+    thresh = get_guideline_summary("tomato", "seedling")["pest_thresholds"]
+    assert thresh["aphids"] == 5
+
 
 def test_guideline_summary_bioinoculants():
     data = get_guideline_summary("tomato", "fruiting")

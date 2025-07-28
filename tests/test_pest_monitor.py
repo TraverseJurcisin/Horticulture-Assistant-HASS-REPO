@@ -28,6 +28,9 @@ def test_get_pest_thresholds():
     thresh2 = get_pest_thresholds("CiTrUs")
     assert thresh2 == thresh
 
+    stage_thresh = get_pest_thresholds("tomato", "seedling")
+    assert stage_thresh["aphids"] == 5
+
 
 def test_assess_pest_pressure():
     obs = {"aphids": 6, "scale": 1}

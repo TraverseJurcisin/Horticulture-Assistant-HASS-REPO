@@ -65,7 +65,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
     richer automation data.
     """
 
-    thresholds = pest_monitor.get_pest_thresholds(plant_type)
+    thresholds = pest_monitor.get_pest_thresholds(plant_type, stage)
     beneficial = {p: pest_manager.get_beneficial_insects(p) for p in thresholds}
 
     if stage:

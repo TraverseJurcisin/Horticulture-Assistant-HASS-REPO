@@ -15,6 +15,7 @@
     "default_environment.json": "Fallback environment readings used when sensor data is missing.",
     "pest_guidelines.json": "Common pest control recommendations per crop.",
     "pest_thresholds.json": "Economic threshold counts for triggering actions.",
+    "pest_thresholds_by_stage.json": "Stage-specific pest count thresholds for scouting decisions.",
     "pest_monitoring_intervals.json": "Recommended days between scouting events.",
     "pest_risk_interval_modifiers.json": "Multipliers adjusting monitoring frequency based on risk level.",
     "pest_scouting_methods.json": "Recommended scouting techniques for common pests.",
@@ -164,5 +165,5 @@
     "species_cation_profiles.json": "Relative cation extraction multipliers by species.",
     "species_precipitation_risk.json": "Species-specific mineral precipitation risks due to nutrient interactions.",
     "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
-    "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone.",
+    "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone."
 }

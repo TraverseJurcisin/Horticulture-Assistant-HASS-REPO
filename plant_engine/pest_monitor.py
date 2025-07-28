@@ -22,6 +22,7 @@ from .pest_manager import (
 )
 
 DATA_FILE = "pest_thresholds.json"
+STAGE_DATA_FILE = "pest_thresholds_by_stage.json"
 RISK_DATA_FILE = "pest_risk_factors.json"
 SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 # Recommended days between scouting events
@@ -33,6 +34,7 @@ SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
+_STAGE_THRESHOLDS = lazy_dataset(STAGE_DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
@@ -71,21 +73,36 @@ __all__ = [
 ]
 
 
-def get_pest_thresholds(plant_type: str) -> Dict[str, int]:
-    """Return pest count thresholds for ``plant_type``.
+def get_pest_thresholds(plant_type: str, stage: str | None = None) -> Dict[str, int]:
+    """Return pest count thresholds for ``plant_type`` and optional ``stage``.
 
     Lookup is case-insensitive and spaces are ignored so ``"Citrus"`` and
-    ``"citrus"`` map to the same dataset entry.
+    ``"citrus"`` map to the same dataset entry. Stage-specific thresholds are
+    loaded from :data:`pest_thresholds_by_stage.json` when available and fall
+    back to base values from :data:`pest_thresholds.json`.
     """
 
-    data = _resolve(_THRESHOLDS)
-    return data.get(normalize_key(plant_type), {})
+    key = normalize_key(plant_type)
+    base = _resolve(_THRESHOLDS).get(key, {})
+
+    if stage:
+        stage_data = _resolve(_STAGE_THRESHOLDS).get(key, {})
+        thresh = stage_data.get(normalize_key(stage))
+        if isinstance(thresh, Mapping):
+            # merge with base thresholds so partial definitions inherit defaults
+            merged = dict(base)
+            merged.update(thresh)
+            return merged
+
+    return base
 
 
 def list_supported_plants() -> list[str]:
     """Return plant types with pest threshold definitions."""
 
-    return list_dataset_entries(_resolve(_THRESHOLDS))
+    union = set(list_dataset_entries(_resolve(_THRESHOLDS)))
+    union.update(list_dataset_entries(_resolve(_STAGE_THRESHOLDS)))
+    return sorted(union)
 
 
 def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
