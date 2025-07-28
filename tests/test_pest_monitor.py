@@ -3,6 +3,8 @@ import pytest
 from plant_engine.pest_monitor import (
     list_supported_plants,
     get_pest_thresholds,
+    get_pest_threshold,
+    is_threshold_exceeded,
     assess_pest_pressure,
     calculate_pest_pressure_index,
     recommend_threshold_actions,
@@ -30,6 +32,19 @@ def test_get_pest_thresholds():
 
     stage_thresh = get_pest_thresholds("tomato", "seedling")
     assert stage_thresh["aphids"] == 5
+
+
+def test_get_pest_threshold():
+    assert get_pest_threshold("citrus", "aphids") == 5
+    assert get_pest_threshold("citrus", "unknown") is None
+
+
+def test_is_threshold_exceeded():
+    assert is_threshold_exceeded("citrus", "aphids", 6) is True
+    assert is_threshold_exceeded("citrus", "aphids", 4) is False
+    assert is_threshold_exceeded("citrus", "unknown", 1) is None
+    with pytest.raises(ValueError):
+        is_threshold_exceeded("citrus", "aphids", -1)
 
 
 def test_assess_pest_pressure():
