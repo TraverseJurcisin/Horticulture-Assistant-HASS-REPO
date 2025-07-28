@@ -46,6 +46,12 @@ def test_parse_basic_yaml():
     assert result == {"a": 1, "b": {"c": 2, "d": [3, 4]}}
 
 
+def test_parse_basic_yaml_comments():
+    content = "a: 1  # comment\nb:\n  c: 2 # note\n  # ignored line\n  d: [3, 4]"
+    result = loader.parse_basic_yaml(content)
+    assert result == {"a": 1, "b": {"c": 2, "d": [3, 4]}}
+
+
 def test_load_profile_by_id_custom_dir(tmp_path):
     plants = tmp_path / "plants"
     plants.mkdir()
@@ -162,4 +168,4 @@ def test_profile_exists_and_delete(tmp_path):
 def test_normalize_sensor_values():
     data = {"a": "one", "b": ["two", "three"], "c": 5}
     result = loader._normalize_sensor_values(data)
-    assert result == {"a": ["one"], "b": ["two", "three"], "c": []}
+    assert result == {"a": ["one"], "b": ["two", "three"], "c": ["5"]}
