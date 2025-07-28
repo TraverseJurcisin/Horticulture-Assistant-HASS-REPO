@@ -21,6 +21,7 @@ def test_get_guideline_summary():
     assert "irrigation_interval_days" in data
     # citrus has no task entries so all lists should be empty
     assert all(len(t) == 0 for t in data["stage_tasks"].values())
+    assert data["height_range"] is None
 
 
 def test_guideline_summary_no_stage():
@@ -40,3 +41,4 @@ def test_guideline_summary_bioinoculants():
     # stage tasks should include entries for the requested stage
     assert "fruiting" in data["stage_tasks"]
     assert "Maintain high potassium" in data["stage_tasks"]["fruiting"][1]
+    assert data["height_range"] == [80.0, 150.0]
