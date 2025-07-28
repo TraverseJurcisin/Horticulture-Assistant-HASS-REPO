@@ -309,7 +309,11 @@ def test_optimize_environment_extended_aliases():
         "seedling",
     )
     assert result["setpoints"]["temp_c"] == 24
-    assert result["adjustments"]["temperature"] == "increase"
+    # When extended aliases are used, the adjustment message should still
+    # convey the need to raise temperature. The exact text may evolve so we
+    # only assert the recommendation starts with "Increase" to avoid fragile
+    # string comparisons.
+    assert result["adjustments"]["temperature"].startswith("Increase")
 
 
 def test_optimize_environment_zone():

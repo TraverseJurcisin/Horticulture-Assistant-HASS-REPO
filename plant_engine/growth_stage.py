@@ -35,6 +35,7 @@ for plant, stages in _DATA.items():
 
 __all__ = [
     "get_stage_info",
+    "get_stage_notes",
     "list_growth_stages",
     "get_stage_duration",
     "estimate_stage_from_age",
@@ -73,6 +74,14 @@ def get_stage_duration(plant_type: str, stage: str) -> int | None:
     if isinstance(duration, (int, float)):
         return int(duration)
     return None
+
+
+def get_stage_notes(plant_type: str, stage: str) -> str | None:
+    """Return descriptive notes for the growth stage if available."""
+
+    info = get_stage_info(plant_type, stage)
+    notes = info.get("notes")
+    return str(notes) if isinstance(notes, str) else None
 
 
 def get_total_cycle_duration(plant_type: str) -> int | None:

@@ -3,6 +3,7 @@ import pytest
 from datetime import date
 from plant_engine.growth_stage import (
     get_stage_info,
+    get_stage_notes,
     get_stage_duration,
     estimate_stage_from_age,
     estimate_stage_from_date,
@@ -40,6 +41,11 @@ def test_get_stage_duration():
 
 def test_get_stage_duration_case_insensitive():
     assert get_stage_duration("ToMaTo", "FlOwErInG") == 20
+
+
+def test_get_stage_notes():
+    assert get_stage_notes("tomato", "seedling") == "Provide ample light."
+    assert get_stage_notes("tomato", "unknown") is None
 
 
 def test_estimate_stage_from_age():
