@@ -1,9 +1,11 @@
 """Utilities for tracking nutrient applications and generating summaries."""
 
-from dataclasses import dataclass, field
-from typing import Dict, Optional, List, Iterable, Mapping
+from dataclasses import dataclass, field, asdict
+from typing import Dict, Optional, List, Iterable, Mapping, Any
 from datetime import datetime, timedelta
 from collections import defaultdict
+import json
+from pathlib import Path
 
 from plant_engine.utils import load_dataset
 from custom_components.horticulture_assistant.fertilizer_formulator import (
@@ -50,6 +52,24 @@ class NutrientDeliveryRecord:
     ppm_delivered: Dict[str, float]
     volume_l: float
 
+    def as_dict(self) -> Dict[str, Any]:
+        """Return dictionary suitable for JSON serialization."""
+        data = asdict(self)
+        data["timestamp"] = self.timestamp.isoformat()
+        data["ppm_delivered"] = dict(self.ppm_delivered)
+        return data
+
+    @staticmethod
+    def from_dict(data: Mapping[str, Any]) -> "NutrientDeliveryRecord":
+        """Create record from ``data`` loaded from JSON."""
+        return NutrientDeliveryRecord(
+            plant_id=str(data.get("plant_id", "")),
+            batch_id=str(data.get("batch_id", "")),
+            timestamp=datetime.fromisoformat(str(data["timestamp"])),
+            ppm_delivered={k: float(v) for k, v in data.get("ppm_delivered", {}).items()},
+            volume_l=float(data.get("volume_l", 0.0)),
+        )
+
 @dataclass(slots=True)
 class NutrientTracker:
     """Track nutrient deliveries and summarize totals."""
@@ -83,6 +103,24 @@ class NutrientTracker:
         )
         self.delivery_log.append(record)
         self._log_by_plant[plant_id].append(record)
+
+    def save_log(self, path: str) -> None:
+        """Save delivery log to ``path`` as JSON."""
+        data = [rec.as_dict() for rec in self.delivery_log]
+        Path(path).write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+    def load_log(self, path: str) -> None:
+        """Load delivery records from ``path`` if it exists."""
+        p = Path(path)
+        if not p.is_file():
+            return
+        records = json.loads(p.read_text(encoding="utf-8"))
+        self.delivery_log.clear()
+        self._log_by_plant.clear()
+        for item in records:
+            rec = NutrientDeliveryRecord.from_dict(item)
+            self.delivery_log.append(rec)
+            self._log_by_plant[rec.plant_id].append(rec)
 
     def _records_for(self, plant_id: Optional[str]) -> Iterable[NutrientDeliveryRecord]:
         """Return delivery records optionally filtered by ``plant_id``."""

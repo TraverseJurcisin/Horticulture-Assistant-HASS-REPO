@@ -63,3 +63,22 @@ def test_summarize_daily_totals_and_dataset_registration():
     totals = tracker.summarize_daily_totals("p")
     today = now.date().isoformat()
     assert totals[today]["N"] == 200.0
+
+
+def test_save_and_load_log(tmp_path):
+    tracker = NutrientTracker()
+    when = datetime(2022, 1, 1, 12, 0)
+    tracker.delivery_log.append(
+        NutrientDeliveryRecord("p", "b1", when, {"N": 50}, 1.0)
+    )
+    path = tmp_path / "log.json"
+    tracker.save_log(path)
+
+    new_tracker = NutrientTracker()
+    new_tracker.load_log(path)
+
+    assert len(new_tracker.delivery_log) == 1
+    rec = new_tracker.delivery_log[0]
+    assert rec.timestamp == when
+    assert rec.ppm_delivered["N"] == 50
+
