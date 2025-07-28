@@ -20,6 +20,7 @@ from . import (
     irrigation_manager,
     growth_stage,
     stage_tasks,
+    height_manager,
 )
 
 __all__ = ["GuidelineSummary", "get_guideline_summary"]
@@ -50,6 +51,7 @@ class GuidelineSummary:
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
     stage_tasks: Dict[str, List[str]] = dataclass_field(default_factory=dict)
+    height_range: List[float] | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         """Return guidelines as a regular dictionary."""
@@ -78,6 +80,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     inoculants = bioinoculant_manager.get_recommended_inoculants(plant_type)
     details = {name: bioinoculant_info.get_inoculant_info(name) for name in inoculants}
+
+    height_rng = height_manager.get_height_range(plant_type, stage) if stage else None
 
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
@@ -111,6 +115,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
         stage_tasks=tasks,
+        height_range=list(height_rng) if height_rng else None,
     )
 
     return summary.as_dict()
