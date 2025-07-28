@@ -64,7 +64,13 @@ class AIInferenceEngine:
             self._check_ec(pdata, issues, recs)
             env = package.environment_data.get(plant_id, {})
             plant_type = pdata.get("plant_type", "default")
+            stage = pdata.get("stage")
+
             self._check_environment(env, plant_type, issues, recs)
+            self._check_environment_range(env, plant_type, issues, recs)
+            fert = package.fertigation_data.get(plant_id)
+            if fert:
+                self._check_nutrient_levels(fert, plant_type, stage, issues, recs)
             self._check_pest_risk(env, plant_type, issues, recs)
 
             confidence = max(0.1, 1.0 - len(issues) * 0.1)
@@ -84,7 +90,9 @@ class AIInferenceEngine:
     # Individual checks
     # ------------------------------------------------------------------
 
-    def _check_growth(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+    def _check_growth(
+        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
+    ) -> None:
         growth = data.get("growth_rate")
         expected = data.get("expected_growth")
         if growth is not None and expected is not None:
@@ -92,7 +100,9 @@ class AIInferenceEngine:
                 issues.append("Low growth rate detected")
                 recs.append("Evaluate nutrient delivery and light levels")
 
-    def _check_yield(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+    def _check_yield(
+        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
+    ) -> None:
         observed = data.get("yield")
         expected = data.get("expected_yield")
         if observed is not None and expected is not None:
@@ -100,7 +110,9 @@ class AIInferenceEngine:
                 issues.append("Yield below expected threshold")
                 recs.append("Check fertigation accuracy and media saturation")
 
-    def _check_ec(self, data: Mapping[str, Any], issues: List[str], recs: List[str]) -> None:
+    def _check_ec(
+        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
+    ) -> None:
         ec = data.get("ec")
         if ec is not None and ec > self.HIGH_EC_THRESHOLD:
             issues.append("High EC detected")
@@ -134,6 +146,37 @@ class AIInferenceEngine:
             issues.append("Cold stress detected")
             recs.append("Provide heating or protection")
 
+    def _check_environment_range(
+        self,
+        env: Mapping[str, Any],
+        plant_type: str,
+        issues: List[str],
+        recs: List[str],
+    ) -> None:
+        """Flag readings outside recommended ranges."""
+
+        if not env or not plant_type:
+            return
+        try:
+            from plant_engine.environment_manager import (
+                get_environmental_targets,
+                compare_environment,
+            )
+        except Exception:  # pragma: no cover - optional dependency
+            return
+
+        targets = get_environmental_targets(plant_type)
+        if not targets:
+            return
+
+        comparison = compare_environment(env, targets)
+        for key, status in comparison.items():
+            if status == "within range":
+                continue
+            issues.append(f"{key} {status.replace('_', ' ')}")
+            action = "increase" if status == "below range" else "decrease"
+            recs.append(f"{action} {key}")
+
     def _check_pest_risk(
         self,
         env: Mapping[str, Any],
@@ -159,6 +202,28 @@ class AIInferenceEngine:
                 issues.append(f"Potential {pest} outbreak: {level}")
                 recs.append(f"Monitor for {pest} ({level} risk)")
 
+    def _check_nutrient_levels(
+        self,
+        current: Mapping[str, Any],
+        plant_type: str,
+        stage: str | None,
+        issues: List[str],
+        recs: List[str],
+    ) -> None:
+        """Flag nutrient deficiencies using dataset guidelines."""
+
+        if not current or not plant_type or not stage:
+            return
+        try:
+            from plant_engine.nutrient_manager import calculate_deficiencies
+        except Exception:  # pragma: no cover - optional dependency
+            return
+
+        deficits = calculate_deficiencies(current, plant_type, stage)
+        for nutrient, amount in deficits.items():
+            issues.append(f"{nutrient} deficiency {amount}ppm")
+            recs.append(f"Add {amount}ppm {nutrient}")
+
     # ------------------------------------------------------------------
     # Utilities
     # ------------------------------------------------------------------
@@ -172,4 +237,3 @@ class AIInferenceEngine:
         """Clear stored inference results."""
 
         self.history.clear()
-
