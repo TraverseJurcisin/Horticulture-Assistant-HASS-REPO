@@ -3,7 +3,12 @@ from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List, Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import (
+    load_dataset,
+    normalize_key,
+    list_dataset_entries,
+    stage_value,
+)
 
 DATA_FILE = "pest_guidelines.json"
 BENEFICIAL_FILE = "beneficial_insects.json"
@@ -14,6 +19,11 @@ ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
 RELEASE_RATE_FILE = "beneficial_release_rates.json"
 LIFECYCLE_FILE = "pest_lifecycle_durations.json"
+MONITOR_FILE = "pest_monitoring_intervals.json"
+THRESHOLD_FILE = "pest_thresholds.json"
+STAGE_THRESHOLD_FILE = "pest_thresholds_by_stage.json"
+RISK_MOD_FILE = "pest_risk_interval_modifiers.json"
+SCOUTING_FILE = "pest_scouting_methods.json"
 
 
 
@@ -27,6 +37,13 @@ _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
 _TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
 _LIFECYCLE: Dict[str, Dict[str, int]] = load_dataset(LIFECYCLE_FILE)
+_MONITORING: Dict[str, Dict[str, int]] = load_dataset(MONITOR_FILE)
+_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(THRESHOLD_FILE)
+_STAGE_THRESHOLDS: Dict[str, Dict[str, Dict[str, int]]] = load_dataset(
+    STAGE_THRESHOLD_FILE
+)
+_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_MOD_FILE)
+_SCOUT_METHODS: Dict[str, str] = load_dataset(SCOUTING_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -143,6 +160,78 @@ def get_pest_lifecycle(pest: str) -> Dict[str, int]:
     return result
 
 
+def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | None:
+    """Return scouting interval in days for a plant stage."""
+
+    value = stage_value(_MONITORING, plant_type, stage)
+    return int(value) if isinstance(value, (int, float)) else None
+
+
+def get_pest_threshold(
+    plant_type: str, pest: str, stage: str | None = None
+) -> int | None:
+    """Return pest count threshold triggering action."""
+
+    if stage:
+        crop = _STAGE_THRESHOLDS.get(normalize_key(plant_type), {})
+        stage_data = crop.get(normalize_key(stage))
+        if isinstance(stage_data, Mapping):
+            value = stage_data.get(normalize_key(pest))
+            if isinstance(value, (int, float)):
+                return int(value)
+
+    crop = _THRESHOLDS.get(normalize_key(plant_type), {})
+    value = crop.get(normalize_key(pest))
+    return int(value) if isinstance(value, (int, float)) else None
+
+
+def get_scouting_method(pest: str) -> str | None:
+    """Return recommended scouting method for ``pest``."""
+
+    return _SCOUT_METHODS.get(normalize_key(pest))
+
+
+def recommend_monitoring_interval(
+    plant_type: str,
+    stage: str | None = None,
+    risk_level: str | None = None,
+) -> int | None:
+    """Return scouting interval adjusted for risk level."""
+
+    base = get_monitoring_interval(plant_type, stage)
+    if base is None:
+        return None
+    if risk_level:
+        factor = _RISK_MODIFIERS.get(normalize_key(risk_level))
+        if isinstance(factor, (int, float)) and factor > 0:
+            base = round(base * float(factor))
+    return int(base)
+
+
+def build_monitoring_plan(
+    plant_type: str,
+    pests: Iterable[str],
+    stage: str | None = None,
+    risk_level: str | None = None,
+) -> Dict[str, Any]:
+    """Return monitoring interval, thresholds and methods for ``pests``."""
+
+    interval = recommend_monitoring_interval(plant_type, stage, risk_level)
+    thresholds: Dict[str, int] = {}
+    methods: Dict[str, str] = {}
+    for p in pests:
+        thresh = get_pest_threshold(plant_type, p, stage)
+        if thresh is not None:
+            thresholds[p] = thresh
+        methods[p] = get_scouting_method(p) or "Visual inspection"
+
+    return {
+        "interval_days": interval,
+        "thresholds": thresholds,
+        "methods": methods,
+    }
+
+
 def get_pest_prevention(plant_type: str) -> Dict[str, str]:
     """Return pest prevention guidelines for ``plant_type``."""
     return _PREVENTION.get(normalize_key(plant_type), {})
@@ -232,6 +321,11 @@ __all__ = [
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_lifecycle",
+    "get_monitoring_interval",
+    "get_pest_threshold",
+    "get_scouting_method",
+    "recommend_monitoring_interval",
+    "build_monitoring_plan",
     "get_pest_prevention",
     "recommend_prevention",
     "get_ipm_guidelines",
