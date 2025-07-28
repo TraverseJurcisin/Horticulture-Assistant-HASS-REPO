@@ -293,3 +293,12 @@ def test_calculate_deficiency_index_with_synergy():
 
     idx2 = calculate_deficiency_index_with_synergy(guidelines, "tomato", "fruiting")
     assert idx2 == 0.0
+
+
+def test__calculate_deficits_internal():
+    import plant_engine.nutrient_manager as nm
+
+    targets = {"N": 80, "P": 60}
+    current = {"N": 70, "P": 80}
+    deficits = nm._calculate_deficits(current, targets)
+    assert deficits == {"N": 10}
