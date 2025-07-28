@@ -208,4 +208,13 @@ def test_pesticide_efficacy_helpers():
     assert ranking[0][1] >= ranking[-1][1]
 
 
+def test_estimate_mix_toxicity():
+    from plant_engine.pesticide_manager import estimate_mix_toxicity
+
+    assert estimate_mix_toxicity(["neem_oil", "spinosad"]) == "low"
+    assert estimate_mix_toxicity(["neem_oil", "imidacloprid"]) == "moderate"
+    assert estimate_mix_toxicity(["copper_sulfate", "neem_oil"]) == "high"
+    assert estimate_mix_toxicity(["unknown"]) == "unknown"
+
+
 

@@ -52,6 +52,7 @@ __all__ = [
     "list_active_ingredients",
     "get_pesticide_efficacy",
     "list_effective_pesticides",
+    "estimate_mix_toxicity",
 ]
 
 
@@ -365,3 +366,21 @@ def list_effective_pesticides(pest: str) -> List[tuple[str, float]]:
         results.append((product, val))
     results.sort(key=lambda x: x[1], reverse=True)
     return results
+
+
+def estimate_mix_toxicity(products: Iterable[str]) -> str:
+    """Return overall toxicity level for a mix of pesticides."""
+
+    levels = ["low", "moderate", "high"]
+    highest = -1
+    data = _ACTIVE()
+    for product in products:
+        info = data.get(product.lower())
+        if not isinstance(info, Mapping):
+            continue
+        tox = str(info.get("toxicity", "")).lower()
+        if tox in levels:
+            idx = levels.index(tox)
+            if idx > highest:
+                highest = idx
+    return levels[highest] if highest >= 0 else "unknown"
