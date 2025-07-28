@@ -288,6 +288,7 @@ def clear_dataset_cache() -> None:
     _ENV_STATE = None
     _OVERLAY_CACHE = None
     _OVERLAY_ENV_VALUE = None
+    list_dataset_files.cache_clear()
 
 
 def normalize_key(key: str) -> str:
@@ -365,8 +366,14 @@ def load_stage_dataset_value(
     return stage_value(data, plant_type, stage, default_key)
 
 
+@lru_cache(maxsize=None)
 def list_dataset_files() -> list[str]:
-    """Return alphabetically sorted dataset files available in search paths."""
+    """Return alphabetically sorted dataset files available in search paths.
+
+    Results are cached to avoid repeated directory scans which can be
+    expensive on slower storage. Call :func:`clear_dataset_cache` when the
+    underlying files may have changed so the cache is refreshed.
+    """
 
     files: set[str] = set()
     for base in dataset_search_paths(include_overlay=True):
