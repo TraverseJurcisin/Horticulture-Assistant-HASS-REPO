@@ -127,6 +127,25 @@ def test_catalog_overlay_priority(monkeypatch, tmp_path):
     assert cat.find_path("a.json") == overlay / "a.json"
 
 
+def test_catalog_paths_cached(tmp_path):
+    base = tmp_path / "data"
+    extra = tmp_path / "extra"
+    overlay = tmp_path / "overlay"
+    base.mkdir()
+    extra.mkdir()
+    overlay.mkdir()
+
+    cat = datasets.DatasetCatalog(
+        base_dir=base, extra_dirs=(extra,), overlay_dir=overlay
+    )
+
+    first = cat.paths()
+    second = cat.paths()
+    assert first is second
+    assert first[0] == overlay
+    assert base in first and extra in first
+
+
 def test_get_dataset_path_and_load():
     path = datasets.get_dataset_path("nutrient_guidelines.json")
     assert path and path.exists()
