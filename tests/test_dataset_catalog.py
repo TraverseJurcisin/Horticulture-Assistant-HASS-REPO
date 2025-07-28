@@ -132,3 +132,8 @@ def test_get_dataset_path_and_load():
     assert path and path.exists()
     data = datasets.load_dataset_file("nutrient_guidelines.json")
     assert isinstance(data, dict)
+
+
+def test_dataset_exists():
+    assert datasets.dataset_exists("nutrient_guidelines.json")
+    assert not datasets.dataset_exists("does_not_exist.json")

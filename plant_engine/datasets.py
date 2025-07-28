@@ -33,6 +33,7 @@ __all__ = [
     "list_dataset_info_by_category",
     "get_dataset_path",
     "load_dataset_file",
+    "dataset_exists",
 ]
 
 
@@ -75,8 +76,12 @@ class DatasetCatalog:
             path = base / "dataset_catalog.json"
             if not path.exists():
                 continue
-            with open(path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except json.JSONDecodeError:
+                # Skip malformed catalog files instead of failing on import
+                continue
             if isinstance(data, dict):
                 catalogs.update({str(k): str(v) for k, v in data.items()})
         return catalogs
@@ -204,6 +209,12 @@ def get_dataset_path(name: str) -> Path | None:
     """Return absolute path to ``name`` if found in the catalog."""
 
     return DEFAULT_CATALOG.find_path(name)
+
+
+def dataset_exists(name: str) -> bool:
+    """Return ``True`` if the dataset ``name`` is available."""
+
+    return get_dataset_path(name) is not None
 
 
 def load_dataset_file(name: str) -> object | None:
