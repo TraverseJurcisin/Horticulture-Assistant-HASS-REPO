@@ -301,6 +301,16 @@ def test_optimize_environment_aliases():
     assert result["adjustments"]["temperature"].startswith("Increase heating")
 
 
+def test_optimize_environment_extended_aliases():
+    result = optimize_environment(
+        {"air_temperature": 18, "relative_humidity": 90},
+        "citrus",
+        "seedling",
+    )
+    assert result["setpoints"]["temp_c"] == 24
+    assert result["adjustments"]["temperature"] == "increase"
+
+
 def test_optimize_environment_zone():
     result = optimize_environment(
         {"temp_c": 20, "humidity_pct": 70},
