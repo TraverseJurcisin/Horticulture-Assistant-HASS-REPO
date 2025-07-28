@@ -23,6 +23,7 @@ __all__ = [
     "generate_irrigation_schedule",
     "generate_irrigation_schedule_with_runtime",
     "summarize_irrigation_schedule",
+    "estimate_schedule_cost",
     "adjust_irrigation_for_efficiency",
     "generate_env_irrigation_schedule",
     "generate_precipitation_schedule",
@@ -555,6 +556,35 @@ def summarize_irrigation_schedule(
         "total_volume_ml": round(total_volume, 1),
         "total_runtime_h": round(total_runtime, 2),
     }
+
+
+def estimate_schedule_cost(
+    schedule: Mapping[int, Mapping[str, float | None] | float],
+    region: str | None = None,
+) -> float:
+    """Return estimated water cost for an irrigation schedule.
+
+    The ``schedule`` mapping may contain volumes only or dictionaries with a
+    ``"volume_ml"`` key as produced by :func:`generate_irrigation_schedule` and
+    related helpers.  All volumes are summed then converted to liters for cost
+    calculation via :func:`plant_engine.water_costs.estimate_water_cost`.
+    """
+
+    from .water_costs import estimate_water_cost
+
+    total_ml = 0.0
+    for entry in schedule.values():
+        if isinstance(entry, Mapping):
+            volume = float(entry.get("volume_ml", 0.0) or 0.0)
+        else:
+            try:
+                volume = float(entry)
+            except (TypeError, ValueError):
+                volume = 0.0
+        total_ml += volume
+
+    total_l = total_ml / 1000.0
+    return estimate_water_cost(total_l, region)
 
 
 def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float]]:

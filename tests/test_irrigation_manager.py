@@ -12,6 +12,7 @@ from plant_engine.irrigation_manager import (
     generate_irrigation_schedule,
     generate_irrigation_schedule_with_runtime,
     summarize_irrigation_schedule,
+    estimate_schedule_cost,
     generate_cycle_irrigation_plan,
     adjust_irrigation_for_efficiency,
     estimate_irrigation_time,
@@ -26,6 +27,7 @@ from plant_engine.irrigation_manager import (
 )
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
 from plant_engine.compute_transpiration import compute_transpiration
+import plant_engine.water_costs
 
 
 def test_recommend_irrigation_volume_basic():
@@ -300,6 +302,20 @@ def test_summarize_irrigation_schedule():
     assert summary["events"] == 1
     assert summary["total_volume_ml"] > 0
     assert summary["total_runtime_h"] > 0
+
+
+def test_estimate_schedule_cost():
+    zone = RootZone(
+        root_depth_cm=10,
+        root_volume_cm3=1000,
+        total_available_water_ml=200.0,
+        readily_available_water_ml=100.0,
+    )
+    schedule = generate_irrigation_schedule(zone, 150.0, [30.0, 30.0])
+    cost = estimate_schedule_cost(schedule, region="california")
+    total_ml = sum(schedule.values())
+    expected = plant_engine.water_costs.estimate_water_cost(total_ml / 1000.0, "california")
+    assert cost == expected
 
 
 def test_generate_cycle_irrigation_plan():
