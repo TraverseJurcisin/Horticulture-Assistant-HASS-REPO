@@ -347,6 +347,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `generate_cycle_irrigation_plan` returns stage irrigation volumes using guideline intervals and durations.
 - `calculate_environment_stddev` computes standard deviation of environment sensor series for tighter control.
 - `calculate_environment_deviation` measures how far readings deviate from target midpoints to highlight adjustments.
+- `calculate_heat_index_series` averages heat index across sequential temperature and humidity readings.
 - `estimate_hvac_energy_series` and `estimate_hvac_cost_series` evaluate energy
   use and cost for sequential HVAC temperature setpoints.
 
