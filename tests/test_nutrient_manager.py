@@ -293,3 +293,37 @@ def test_calculate_deficiency_index_with_synergy():
 
     idx2 = calculate_deficiency_index_with_synergy(guidelines, "tomato", "fruiting")
     assert idx2 == 0.0
+
+
+def test_calculate_deficiency_index_with_ph():
+    from plant_engine.nutrient_manager import (
+        calculate_deficiency_index_with_ph,
+        get_all_ph_adjusted_levels,
+    )
+
+    guidelines = get_all_ph_adjusted_levels("tomato", "fruiting", 6.0)
+    current = {n: 0 for n in guidelines}
+    idx = calculate_deficiency_index_with_ph(current, "tomato", "fruiting", 6.0)
+    assert 99 <= idx <= 100
+
+    idx2 = calculate_deficiency_index_with_ph(guidelines, "tomato", "fruiting", 6.0)
+    assert idx2 == 0.0
+
+
+def test_calculate_deficiency_index_with_ph_and_synergy():
+    from plant_engine.nutrient_manager import (
+        calculate_deficiency_index_with_ph_and_synergy,
+        get_ph_synergy_adjusted_levels,
+    )
+
+    guidelines = get_ph_synergy_adjusted_levels("tomato", "fruiting", 6.5)
+    current = {n: 0 for n in guidelines}
+    idx = calculate_deficiency_index_with_ph_and_synergy(
+        current, "tomato", "fruiting", 6.5
+    )
+    assert 99 <= idx <= 100
+
+    idx2 = calculate_deficiency_index_with_ph_and_synergy(
+        guidelines, "tomato", "fruiting", 6.5
+    )
+    assert idx2 == 0.0

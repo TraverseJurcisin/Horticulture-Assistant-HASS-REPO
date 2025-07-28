@@ -64,6 +64,8 @@ __all__ = [
     "calculate_all_deficiencies_with_synergy",
     "calculate_all_deficiencies_with_ph_and_synergy",
     "calculate_deficiency_index_with_synergy",
+    "calculate_deficiency_index_with_ph",
+    "calculate_deficiency_index_with_ph_and_synergy",
 ]
 
 
@@ -627,6 +629,70 @@ def calculate_deficiency_index_with_synergy(
     """Return deficiency index using synergy-adjusted nutrient targets."""
 
     targets = get_synergy_adjusted_levels(plant_type, stage)
+    if not targets:
+        return calculate_deficiency_index(current_levels, plant_type, stage)
+
+    total_weight = 0.0
+    deficit_score = 0.0
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0) / target
+        weight = get_nutrient_weight(nutrient)
+        deficit_score += weight * deficit
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((deficit_score / total_weight) * 100, 1)
+
+
+def calculate_deficiency_index_with_ph(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    ph: float,
+) -> float:
+    """Return deficiency index using pH-adjusted nutrient targets."""
+
+    targets = get_all_ph_adjusted_levels(plant_type, stage, ph)
+    if not targets:
+        return calculate_deficiency_index(current_levels, plant_type, stage)
+
+    total_weight = 0.0
+    deficit_score = 0.0
+    for nutrient, target in targets.items():
+        if target <= 0:
+            continue
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        deficit = max(target - current, 0.0) / target
+        weight = get_nutrient_weight(nutrient)
+        deficit_score += weight * deficit
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+
+    return round((deficit_score / total_weight) * 100, 1)
+
+
+def calculate_deficiency_index_with_ph_and_synergy(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    ph: float,
+) -> float:
+    """Return deficiency index using synergy and pH adjusted targets."""
+
+    targets = get_ph_synergy_adjusted_levels(plant_type, stage, ph)
     if not targets:
         return calculate_deficiency_index(current_levels, plant_type, stage)
 
