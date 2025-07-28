@@ -12,6 +12,7 @@ from plant_engine.environment_manager import (
     calculate_vpd,
     calculate_dew_point,
     calculate_heat_index,
+    calculate_heat_index_series,
     relative_humidity_from_dew_point,
     calculate_absolute_humidity,
     calculate_dli,
@@ -216,6 +217,18 @@ def test_calculate_heat_index():
 def test_calculate_heat_index_invalid():
     with pytest.raises(ValueError):
         calculate_heat_index(25, -10)
+
+
+def test_calculate_heat_index_series():
+    temps = [30, 32, 28]
+    humidity = [70, 65, 80]
+    expected = sum(
+        calculate_heat_index(t, h) for t, h in zip(temps, humidity)
+    ) / len(temps)
+    assert calculate_heat_index_series(temps, humidity) == round(expected, 2)
+
+    with pytest.raises(ValueError):
+        calculate_heat_index_series([30], [50, 60])
 
 
 def test_relative_humidity_from_dew_point():

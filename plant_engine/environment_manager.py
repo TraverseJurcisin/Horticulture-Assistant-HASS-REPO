@@ -324,6 +324,7 @@ __all__ = [
     "ppfd_for_target_dli",
     "calculate_dli_series",
     "calculate_vpd_series",
+    "calculate_heat_index_series",
     "get_target_dli",
     "get_target_vpd",
     "get_target_photoperiod",
@@ -1878,6 +1879,28 @@ def calculate_vpd_series(
         count += 1
 
     return round(total / count, 3) if count else 0.0
+
+
+def calculate_heat_index_series(
+    temp_values: Iterable[float], humidity_values: Iterable[float]
+) -> float:
+    """Return average heat index from temperature and humidity pairs."""
+
+    from itertools import zip_longest
+
+    sentinel = object()
+    total = 0.0
+    count = 0
+
+    for t, h in zip_longest(temp_values, humidity_values, fillvalue=sentinel):
+        if sentinel in (t, h):
+            raise ValueError(
+                "temperature and humidity readings must have the same length"
+            )
+        total += calculate_heat_index(float(t), float(h))
+        count += 1
+
+    return round(total / count, 2) if count else 0.0
 
 
 def get_target_dli(
