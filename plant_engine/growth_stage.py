@@ -49,6 +49,7 @@ __all__ = [
     "get_germination_duration",
     "growth_stage_summary",
     "stage_bounds",
+    "generate_stage_schedule",
 ]
 
 
@@ -283,3 +284,23 @@ def growth_stage_summary(
             result["predicted_harvest_date"] = harvest
 
     return result
+
+
+def generate_stage_schedule(plant_type: str, start_date: date) -> list[dict[str, date]]:
+    """Return ordered stage schedule with start and end dates."""
+
+    stages = list_growth_stages(plant_type)
+    if not stages:
+        return []
+
+    schedule: list[dict[str, date]] = []
+    current = start_date
+    for stage in stages:
+        duration = get_stage_duration(plant_type, stage)
+        if duration is None:
+            break
+        end_date = current + timedelta(days=duration)
+        schedule.append({"stage": stage, "start_date": current, "end_date": end_date})
+        current = end_date
+
+    return schedule
