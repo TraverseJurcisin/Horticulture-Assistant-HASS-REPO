@@ -290,6 +290,9 @@ Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
 Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately.
 
+See [docs/custom_data_dirs.md](docs/custom_data_dirs.md) for examples of how to
+structure overlay and extra dataset directories.
+
 ---
 
 ## Command Line Utilities
