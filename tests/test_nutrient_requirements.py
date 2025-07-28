@@ -1,6 +1,7 @@
 from custom_components.horticulture_assistant.utils.nutrient_requirements import (
     get_requirements,
     calculate_deficit,
+    calculate_daily_area_requirements,
 )
 
 
@@ -15,4 +16,9 @@ def test_calculate_deficit():
     assert deficits["N"] == 50
     assert deficits["P"] == 30
     assert deficits["K"] == 150
+
+
+def test_calculate_daily_area_requirements():
+    req = calculate_daily_area_requirements("citrus", 10, "fruiting")
+    assert req == {"N": 726.0, "P": 242.0, "K": 726.0}
 

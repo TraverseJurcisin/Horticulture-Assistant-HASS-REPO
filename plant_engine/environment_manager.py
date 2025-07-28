@@ -898,6 +898,7 @@ def recommend_environment_adjustments(
 
     comparison = compare_environment(current, targets)
     readings = normalize_environment_readings(current)
+    input_keys = {normalize_key(k) for k in current}
     actions: Dict[str, str] = {}
     for key, status in comparison.items():
         if status == "within range":
@@ -906,6 +907,10 @@ def recommend_environment_adjustments(
         label = ACTION_LABELS.get(key, key)
 
         action: str | None = None
+        alias_used = (
+            normalize_key(key) not in input_keys
+            and normalize_key(label) not in input_keys
+        )
         if key == "temp_c":
             action = recommend_temperature_action(
                 readings.get("temp_c"), readings.get("humidity_pct"), plant_type
@@ -913,7 +918,7 @@ def recommend_environment_adjustments(
         elif key == "humidity_pct":
             action = recommend_humidity_action(readings.get("humidity_pct"), plant_type)
 
-        if not action:
+        if not action and not alias_used:
             level = "low" if status == "below range" else "high"
             action = get_environment_strategy(label, level)
 
@@ -2207,7 +2212,7 @@ def optimize_environment(
         setpoints = suggest_environment_setpoints_zone(plant_type, stage, zone)
     else:
         setpoints = suggest_environment_setpoints(plant_type, stage)
-    actions = recommend_environment_adjustments(readings, plant_type, stage, zone)
+    actions = recommend_environment_adjustments(current, plant_type, stage, zone)
 
     metrics = calculate_environment_metrics(
         readings.get("temp_c"),
@@ -2359,7 +2364,7 @@ def summarize_environment(
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
         adjustments=recommend_environment_adjustments(
-            readings, plant_type, stage, zone
+            current, plant_type, stage, zone
         ),
         metrics=metrics,
         score=score_environment(readings, plant_type, stage),
