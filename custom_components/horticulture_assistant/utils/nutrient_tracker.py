@@ -1,9 +1,14 @@
 """Utilities for tracking nutrient applications and generating summaries."""
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional, List, Iterable
+from typing import Dict, Optional, List, Iterable, Mapping
 from datetime import datetime, timedelta
 from collections import defaultdict
+
+from plant_engine.utils import load_dataset
+from custom_components.horticulture_assistant.fertilizer_formulator import (
+    convert_guaranteed_analysis,
+)
 
 @dataclass(slots=True)
 class NutrientEntry:
@@ -138,3 +143,48 @@ class NutrientTracker:
         ref = now or datetime.now()
         start = ref - timedelta(days=days)
         return self.summarize_mg_for_period(start, ref, plant_id)
+
+    def summarize_daily_totals(
+        self, plant_id: Optional[str] = None
+    ) -> Dict[str, Dict[str, float]]:
+        """Return milligram totals grouped by day."""
+
+        daily: Dict[str, Dict[str, float]] = defaultdict(
+            lambda: defaultdict(float)
+        )
+        for record in self._records_for(plant_id):
+            key = record.timestamp.date().isoformat()
+            for element, ppm in record.ppm_delivered.items():
+                daily[key][element] += ppm * record.volume_l
+        return {day: dict(values) for day, values in daily.items()}
+
+
+def register_fertilizers_from_dataset(
+    tracker: "NutrientTracker",
+    dataset_file: str = "fertilizers/fertilizer_products.json",
+) -> None:
+    """Load fertilizer product data and register nutrient profiles."""
+
+    data = load_dataset(dataset_file)
+    for product_id, info in data.items():
+        if not isinstance(info, Mapping):
+            continue
+        ga = convert_guaranteed_analysis(info.get("guaranteed_analysis", {}))
+        profile = ProductNutrientProfile(product_id=product_id)
+        for element, fraction in ga.items():
+            try:
+                mg_per_kg = float(fraction) * 1_000_000
+            except (TypeError, ValueError):
+                continue
+            profile.add_element(element, mg_per_kg)
+        if profile.nutrient_map:
+            tracker.register_product(profile)
+
+
+__all__ = [
+    "NutrientEntry",
+    "ProductNutrientProfile",
+    "NutrientDeliveryRecord",
+    "NutrientTracker",
+    "register_fertilizers_from_dataset",
+]
