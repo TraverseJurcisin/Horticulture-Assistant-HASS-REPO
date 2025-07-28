@@ -19,7 +19,7 @@ def _sample_package():
             }
         },
         environment_data={
-            "p1": {"temp_c": 42, "humidity_pct": 60}
+            "p1": {"temp_c": 26, "humidity_pct": 80}
         },
         fertigation_data={},
     )
@@ -33,7 +33,7 @@ def test_ai_inference_engine_detects_issues():
     assert "Low growth rate detected" in res.flagged_issues
     assert "Yield below expected threshold" in res.flagged_issues
     assert "High EC detected" in res.flagged_issues
-    assert "Heat stress detected" in res.flagged_issues
+    assert any("whiteflies" in issue for issue in res.flagged_issues)
     assert res.confidence < 1.0
 
 
