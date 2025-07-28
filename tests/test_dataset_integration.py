@@ -19,6 +19,7 @@ def test_list_supported_plants():
     assert "pepper" in plants
     assert "arugula" in plants
     assert "blueberry" in plants
+    assert "broccoli" in plants
 
     pest_plants = pest_manager.list_supported_plants()
     assert "lettuce" in pest_plants
@@ -64,6 +65,8 @@ def test_list_supported_plants():
 
     blue_env = environment_manager.get_environmental_targets("blueberry")
     assert blue_env["humidity_pct"] == [60, 80]
+    broc_env = environment_manager.get_environmental_targets("broccoli")
+    assert broc_env["temp_c"] == [18, 24]
 
 
 def test_lettuce_stage_info():
@@ -86,6 +89,8 @@ def test_lettuce_stage_info():
 
     blue_info = growth_stage.get_stage_info("blueberry", "fruiting")
     assert blue_info["duration_days"] == 40
+    broc_info = growth_stage.get_stage_info("broccoli", "vegetative")
+    assert broc_info["duration_days"] == 50
 
 
 def test_nutrient_guidelines_lettuce():
@@ -112,6 +117,8 @@ def test_nutrient_guidelines_lettuce():
 
     blue_levels = nutrient_manager.get_recommended_levels("blueberry", "vegetative")
     assert blue_levels["N"] == 60
+    broc_levels = nutrient_manager.get_recommended_levels("broccoli", "vegetative")
+    assert broc_levels["K"] == 80
 
 
 def test_treatment_guidelines_lettuce():

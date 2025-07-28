@@ -125,5 +125,10 @@
     "seedling": {"duration_days": 20, "notes": "Keep evenly moist."},
     "vegetative": {"duration_days": 40, "notes": "Provide regular nitrogen."},
     "harvest": {"duration_days": 30, "notes": "Harvest outer leaves first."}
+  },
+  "broccoli": {
+    "seedling": {"duration_days": 30, "notes": "Maintain consistent moisture."},
+    "vegetative": {"duration_days": 50, "notes": "Provide balanced nutrition."},
+    "harvest": {"duration_days": 30, "notes": "Cut heads before flower opens."}
   }
 }
