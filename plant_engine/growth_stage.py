@@ -15,6 +15,7 @@ GERMINATION_FILE = "germination_duration.json"
 # Load growth stage dataset once. ``load_dataset`` handles caching.
 _DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
 _GERMINATION: Dict[str, int] = load_dataset(GERMINATION_FILE)
+_IMAGES: Dict[str, Dict[str, str]] = load_dataset("growth_stage_images.json")
 
 # Precompute cumulative stage end days for quick lookups
 _STAGE_BOUNDS: Dict[str, List[Tuple[str, int]]] = {}
@@ -50,6 +51,7 @@ __all__ = [
     "growth_stage_summary",
     "stage_bounds",
     "generate_stage_schedule",
+    "get_stage_image",
 ]
 
 
@@ -250,6 +252,14 @@ def get_germination_duration(plant_type: str) -> int | None:
     if isinstance(value, (int, float)):
         return int(value)
     return None
+
+
+def get_stage_image(plant_type: str, stage: str) -> str | None:
+    """Return example image URL for ``plant_type`` and ``stage`` if available."""
+
+    plant = _IMAGES.get(normalize_key(plant_type), {})
+    value = plant.get(normalize_key(stage))
+    return str(value) if isinstance(value, str) else None
 
 
 def growth_stage_summary(

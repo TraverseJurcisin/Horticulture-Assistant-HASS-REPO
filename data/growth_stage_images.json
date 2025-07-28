@@ -1,0 +1,13 @@
+{
+  "tomato": {
+    "seedling": "https://example.com/tomato_seedling.jpg",
+    "vegetative": "https://example.com/tomato_vegetative.jpg",
+    "flowering": "https://example.com/tomato_flowering.jpg",
+    "fruiting": "https://example.com/tomato_fruiting.jpg"
+  },
+  "basil": {
+    "seedling": "https://example.com/basil_seedling.jpg",
+    "vegetative": "https://example.com/basil_vegetative.jpg",
+    "harvest": "https://example.com/basil_harvest.jpg"
+  }
+}

@@ -29,13 +29,17 @@ from .precipitation_risk import (
     estimate_precipitation_risk,
 )
 
+_MODULE_ALL = (
+    utils.__all__
+    + environment_tips.__all__
+    + media_manager.__all__
+    + ingredients.__all__
+)
+
 __all__ = sorted(
-    set(utils.__all__)
-    | set(environment_tips.__all__)
-    | set(media_manager.__all__)
-    | set(ingredients.__all__)
-    | {"load_reference_data"}
+    set(_MODULE_ALL)
     | {
+        "load_reference_data",
         "NutrientManagementReport",
         "generate_nutrient_management_report",
         "list_synergy_pairs",
@@ -50,21 +54,16 @@ __all__ = sorted(
 )
 
 
+_LAZY_MODULES = {
+    "nutrient_diffusion",
+    "phenology",
+    "thermal_time",
+}
+
+
 def __getattr__(name: str):
-    if name == "nutrient_diffusion":
-        module = import_module(".nutrient_diffusion", __name__)
-        globals()[name] = module
-        __all__.append(name)
-        __all__.extend(getattr(module, "__all__", []))
-        return module
-    if name == "phenology":
-        module = import_module(".phenology", __name__)
-        globals()[name] = module
-        __all__.append(name)
-        __all__.extend(getattr(module, "__all__", []))
-        return module
-    if name == "thermal_time":
-        module = import_module(".thermal_time", __name__)
+    if name in _LAZY_MODULES:
+        module = import_module(f".{name}", __name__)
         globals()[name] = module
         __all__.append(name)
         __all__.extend(getattr(module, "__all__", []))
