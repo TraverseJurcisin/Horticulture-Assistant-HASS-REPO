@@ -7,6 +7,8 @@ from plant_engine.rootzone_model import (
     soil_moisture_pct,
     get_infiltration_rate,
     estimate_infiltration_time,
+    moisture_threshold_volume,
+    moisture_threshold_pct,
     RootZone,
 )
 import pytest
@@ -114,4 +116,12 @@ def test_estimate_infiltration_time():
     assert estimate_infiltration_time(1000, 1.0, "unknown") is None
     with pytest.raises(ValueError):
         estimate_infiltration_time(-1, 1.0, "loam")
+
+
+def test_moisture_threshold_helpers():
+    rz = estimate_water_capacity(10, area_cm2=100, texture="loam")
+    assert moisture_threshold_volume(rz) == rz.readily_available_water_ml
+    pct = moisture_threshold_pct(rz)
+    expected = (rz.readily_available_water_ml / rz.total_available_water_ml) * 100
+    assert pct == round(expected, 1)
 

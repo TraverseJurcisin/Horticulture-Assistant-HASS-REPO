@@ -28,6 +28,8 @@ __all__ = [
     "estimate_water_capacity",
     "calculate_remaining_water",
     "soil_moisture_pct",
+    "moisture_threshold_volume",
+    "moisture_threshold_pct",
     "get_soil_parameters",
     "get_infiltration_rate",
     "estimate_infiltration_time",
@@ -220,4 +222,21 @@ def soil_moisture_pct(rootzone: RootZone, available_ml: float) -> float:
     """Return current soil moisture as a percentage of capacity."""
 
     return rootzone.moisture_pct(available_ml)
+
+
+def moisture_threshold_volume(rootzone: RootZone) -> float:
+    """Return available water volume that triggers irrigation."""
+
+    return float(rootzone.readily_available_water_ml)
+
+
+def moisture_threshold_pct(rootzone: RootZone) -> float:
+    """Return soil moisture percentage that triggers irrigation."""
+
+    if rootzone.total_available_water_ml <= 0:
+        return 0.0
+    pct = (
+        rootzone.readily_available_water_ml / rootzone.total_available_water_ml
+    ) * 100
+    return round(pct, 1)
 
