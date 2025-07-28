@@ -182,3 +182,20 @@ def test_build_monitoring_plan():
     assert plan["interval_days"] == 2
     assert plan["thresholds"]["aphids"] == 5
     assert "inspect" in plan["methods"]["aphids"].lower()
+
+
+def test_plan_beneficial_releases():
+    from datetime import date, timedelta
+    from plant_engine.pest_manager import (
+        plan_beneficial_releases,
+        get_beneficial_effective_days,
+    )
+
+    start = date(2024, 1, 1)
+    schedule = plan_beneficial_releases(["aphids"], start, cycles=2)
+    assert len(schedule) == 2
+    assert schedule[0]["date"] == start
+    insects = ["ladybugs", "lacewings"]
+    interval = min(get_beneficial_effective_days(i) for i in insects)
+    assert schedule[1]["date"] == start + timedelta(days=interval)
+    assert "ladybugs" in schedule[0]["releases"]

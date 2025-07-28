@@ -47,6 +47,7 @@
     "plant_density_guidelines.json": "Recommended plant spacing for common crops.",
     "beneficial_insects.json": "Natural predators for common greenhouse pests.",
     "beneficial_release_rates.json": "Recommended release rates of beneficial insects per m^2.",
+    "beneficial_effective_days.json": "Typical days beneficial insects remain effective after release.",
     "bioinoculant_guidelines.json": "Recommended microbial inoculants for improved nutrient uptake.",
     "bioinoculant_attributes.json": "Key attributes and usage notes for common microbial inoculants.",
     "crop_coefficients.json": "Crop coefficients for evapotranspiration models.",

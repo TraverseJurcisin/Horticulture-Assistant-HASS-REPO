@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List, Mapping
+from datetime import date, timedelta
 
 from .utils import (
     load_dataset,
@@ -24,6 +25,7 @@ THRESHOLD_FILE = "pest_thresholds.json"
 STAGE_THRESHOLD_FILE = "pest_thresholds_by_stage.json"
 RISK_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_FILE = "pest_scouting_methods.json"
+EFFECTIVE_FILE = "beneficial_effective_days.json"
 
 
 
@@ -44,6 +46,7 @@ _STAGE_THRESHOLDS: Dict[str, Dict[str, Dict[str, int]]] = load_dataset(
 )
 _RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_MOD_FILE)
 _SCOUT_METHODS: Dict[str, str] = load_dataset(SCOUTING_FILE)
+_EFFECTIVE_DAYS: Dict[str, int] = load_dataset(EFFECTIVE_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -131,6 +134,44 @@ def recommend_release_rates(pests: Iterable[str]) -> Dict[str, Dict[str, float]]
         if rates:
             rec[pest] = rates
     return rec
+
+
+def get_beneficial_effective_days(insect: str) -> int | None:
+    """Return expected effective duration in days for a beneficial insect."""
+
+    days = _EFFECTIVE_DAYS.get(normalize_key(insect))
+    try:
+        return int(days) if days is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def plan_beneficial_releases(
+    pests: Iterable[str], start: date, cycles: int = 3
+) -> list[dict[str, object]]:
+    """Return recurring beneficial insect release schedule."""
+
+    insects: set[str] = set()
+    for pest in pests:
+        insects.update(get_beneficial_insects(pest))
+    if not insects:
+        return []
+
+    # Default to weekly releases if no data available
+    interval = min(
+        (get_beneficial_effective_days(i) or 7 for i in insects),
+        default=7,
+    )
+
+    schedule: list[dict[str, object]] = []
+    for idx in range(cycles):
+        releases = {
+            insect: get_beneficial_release_rate(insect) or 0.0
+            for insect in insects
+        }
+        schedule.append({"date": start + timedelta(days=idx * interval), "releases": releases})
+
+    return schedule
 
 
 def get_organic_controls(pest: str) -> List[str]:
@@ -318,6 +359,8 @@ __all__ = [
     "recommend_beneficials",
     "get_beneficial_release_rate",
     "recommend_release_rates",
+    "get_beneficial_effective_days",
+    "plan_beneficial_releases",
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_lifecycle",
