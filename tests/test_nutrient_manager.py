@@ -268,3 +268,18 @@ def test_calculate_all_deficiencies_with_ph_and_synergy():
 
     assert deficits["P"] > 0
     assert deficits["Fe"] > 0
+
+
+def test_calculate_deficiency_index_with_synergy():
+    from plant_engine.nutrient_manager import (
+        calculate_deficiency_index_with_synergy,
+        get_synergy_adjusted_levels,
+    )
+
+    guidelines = get_synergy_adjusted_levels("tomato", "fruiting")
+    current = {n: 0 for n in guidelines}
+    idx = calculate_deficiency_index_with_synergy(current, "tomato", "fruiting")
+    assert 99 <= idx <= 100
+
+    idx2 = calculate_deficiency_index_with_synergy(guidelines, "tomato", "fruiting")
+    assert idx2 == 0.0
