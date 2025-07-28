@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Mapping, Dict, Optional
 
-from .nutrient_analysis import analyze_nutrient_profile
+from .nutrient_analysis import analyze_nutrient_profile, NutrientAnalysis
 from .fertigation import recommend_correction_schedule
 
 __all__ = ["NutrientManagementReport", "generate_nutrient_management_report"]
@@ -14,7 +14,7 @@ __all__ = ["NutrientManagementReport", "generate_nutrient_management_report"]
 class NutrientManagementReport:
     """Combined nutrient analysis and correction schedule."""
 
-    analysis: Dict[str, object]
+    analysis: NutrientAnalysis
     corrections_g: Dict[str, float]
 
 

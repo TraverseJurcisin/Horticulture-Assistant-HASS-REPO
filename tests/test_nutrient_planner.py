@@ -14,6 +14,6 @@ def test_generate_nutrient_management_report():
         purity={"N": 0.2, "P": 0.2, "K": 0.2},
     )
     assert isinstance(report, NutrientManagementReport)
-    assert report.analysis["recommended"]["N"] == 80
+    assert report.analysis.recommended["N"] == 80
     assert report.corrections_g["N"] > 0
-    assert "deficiencies" in report.analysis
+    assert report.analysis.deficiencies

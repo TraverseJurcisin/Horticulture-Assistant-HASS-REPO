@@ -234,7 +234,7 @@ def run_daily_cycle(
     try:
         report.nutrient_analysis = analyze_nutrient_profile(
             nutrient_totals, plant_type, stage_name or ""
-        )
+        ).as_dict()
         report.deficiency_actions = diagnose_deficiency_actions(
             nutrient_totals, plant_type, stage_name or ""
         )
