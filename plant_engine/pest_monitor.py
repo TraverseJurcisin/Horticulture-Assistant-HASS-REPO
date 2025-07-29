@@ -31,6 +31,7 @@ MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
 RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
+DAMAGE_THRESHOLD_FILE = "pest_damage_thresholds.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
@@ -38,12 +39,15 @@ _STAGE_THRESHOLDS = lazy_dataset(STAGE_DATA_FILE)
 _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
+_DAMAGE_THRESHOLDS = lazy_dataset(DAMAGE_THRESHOLD_FILE)
 
 
 def _resolve(data):
     """Return dataset contents from a mapping or callable loader."""
 
     return data() if callable(data) else data
+
+
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -66,6 +70,8 @@ __all__ = [
     "get_scouting_method",
     "get_severity_action",
     "get_severity_thresholds",
+    "get_damage_threshold",
+    "is_damage_severe",
     "calculate_pest_management_index",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
@@ -177,7 +183,9 @@ def generate_monitoring_schedule(
 ) -> list[date]:
     """Return list of upcoming monitoring dates."""
 
-    return _generate_schedule(_resolve(_MONITOR_INTERVALS), plant_type, stage, start, events)
+    return _generate_schedule(
+        _resolve(_MONITOR_INTERVALS), plant_type, stage, start, events
+    )
 
 
 def generate_detailed_monitoring_schedule(
@@ -215,7 +223,30 @@ def get_severity_thresholds(pest: str) -> Dict[str, float]:
     return thresholds.get(normalize_key(pest), {})
 
 
-def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
+def get_damage_threshold(pest: str) -> float | None:
+    """Return percent leaf damage threshold for ``pest`` if defined."""
+
+    value = _resolve(_DAMAGE_THRESHOLDS).get(normalize_key(pest))
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
+def is_damage_severe(pest: str, percent: float) -> bool | None:
+    """Return ``True`` if ``percent`` meets or exceeds the damage threshold."""
+
+    if percent < 0:
+        raise ValueError("percent must be non-negative")
+    thresh = get_damage_threshold(pest)
+    if thresh is None:
+        return None
+    return percent >= thresh
+
+
+def assess_pest_pressure(
+    plant_type: str, observations: Mapping[str, int]
+) -> Dict[str, bool]:
     """Return mapping of pests to ``True`` if threshold exceeded."""
 
     thresholds = get_pest_thresholds(plant_type)
@@ -231,7 +262,9 @@ def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Di
     return pressure
 
 
-def calculate_pest_pressure_index(plant_type: str, observations: Mapping[str, int]) -> float:
+def calculate_pest_pressure_index(
+    plant_type: str, observations: Mapping[str, int]
+) -> float:
     """Return 0-100 index of overall pest pressure severity."""
 
     thresholds = get_pest_thresholds(plant_type)
@@ -258,7 +291,9 @@ def calculate_pest_pressure_index(plant_type: str, observations: Mapping[str, in
     return round((total / count) * 100, 1)
 
 
-def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
+def recommend_threshold_actions(
+    plant_type: str, observations: Mapping[str, int]
+) -> Dict[str, str]:
     """Return treatment actions for pests exceeding thresholds."""
 
     pressure = assess_pest_pressure(plant_type, observations)
@@ -478,9 +513,7 @@ def summarize_pest_management(
         risk = estimate_adjusted_pest_risk(plant_type, environment)
         risk_score = calculate_risk_score(risk)
         if last_date is not None:
-            interval = risk_adjusted_monitor_interval(
-                plant_type, stage, environment
-            )
+            interval = risk_adjusted_monitor_interval(plant_type, stage, environment)
             if interval is not None:
                 next_date_val = last_date + timedelta(days=interval)
 
@@ -492,4 +525,3 @@ def summarize_pest_management(
     if next_date_val is not None:
         data["next_monitor_date"] = next_date_val
     return data
-

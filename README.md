@@ -261,6 +261,7 @@ Important categories include:
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
+- **Pest damage thresholds** – percent leaf damage that warrants treatment
 - **Stage-specific pest thresholds** – economic thresholds for each growth stage
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Water usage guidelines** – typical daily irrigation volumes by stage
