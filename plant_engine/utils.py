@@ -195,38 +195,33 @@ def dataset_paths() -> tuple[Path, ...]:
     return _PATH_CACHE
 
 
-_DS_SEARCH_CACHE: dict[tuple[bool, tuple[str | None, str | None, str | None]], tuple[Path, ...]] = {}
 
 
 def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
-    """Return dataset search paths optionally including overlay first.
-
-    The result is cached per current environment variables so updates to
-    ``HORTICULTURE_DATA_DIR``, ``HORTICULTURE_EXTRA_DATA_DIRS`` or
-    ``HORTICULTURE_OVERLAY_DIR`` automatically refresh when calling
-    :func:`clear_dataset_cache` or when variables change between calls.
-    """
+    """Return dataset search paths optionally including the overlay directory."""
 
     env_state = (
         os.getenv("HORTICULTURE_DATA_DIR"),
         os.getenv(EXTRA_ENV),
         os.getenv(OVERLAY_ENV),
     )
-    key = (include_overlay, env_state)
-    cached = _DS_SEARCH_CACHE.get(key)
-    if cached is not None:
-        return cached
+    return _dataset_search_paths(include_overlay, *env_state)
 
+
+@lru_cache(maxsize=None)
+def _dataset_search_paths(
+    include_overlay: bool,
+    data_env: str | None,
+    extra_env: str | None,
+    overlay_env: str | None,
+) -> tuple[Path, ...]:
     paths = []
     if include_overlay:
         ov = overlay_dir()
         if ov:
             paths.append(ov)
     paths.extend(dataset_paths())
-
-    result = tuple(paths)
-    _DS_SEARCH_CACHE[key] = result
-    return result
+    return tuple(paths)
 
 
 @lru_cache(maxsize=None)
@@ -326,10 +321,10 @@ def load_datasets(*filenames: str) -> Dict[str, Dict[str, Any]]:
 def clear_dataset_cache() -> None:
     """Clear cached dataset results loaded via :func:`load_dataset`."""
 
-    global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE, _DS_SEARCH_CACHE
+    global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE
     load_dataset.cache_clear()
     dataset_file.cache_clear()
-    _DS_SEARCH_CACHE.clear()
+    _dataset_search_paths.cache_clear()
     _PATH_CACHE = None
     _ENV_STATE = None
     _OVERLAY_CACHE = None
