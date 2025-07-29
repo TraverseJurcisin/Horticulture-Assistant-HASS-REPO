@@ -9,6 +9,13 @@ DATA_FILE = "total_nutrient_requirements.json"
 
 
 @lru_cache(maxsize=None)
+def list_supported_plants() -> tuple[str, ...]:
+    """Return plant types with defined nutrient requirements."""
+    data = load_dataset(DATA_FILE)
+    return tuple(sorted(data.keys()))
+
+
+@lru_cache(maxsize=None)
 def get_requirements(plant_type: str) -> Dict[str, float]:
     """Return daily nutrient requirements for ``plant_type``.
 
@@ -40,4 +47,8 @@ def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> D
     return deficit
 
 
-__all__ = ["get_requirements", "calculate_deficit"]
+__all__ = [
+    "get_requirements",
+    "calculate_deficit",
+    "list_supported_plants",
+]
