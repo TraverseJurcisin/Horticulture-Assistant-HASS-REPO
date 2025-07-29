@@ -223,3 +223,15 @@ def test_estimate_adjusted_pest_risk_series():
     assert risk.get("aphids") == "high"
     assert risk.get("mites") == "moderate"
 
+
+def test_calculate_pest_risk_index():
+    from plant_engine.pest_monitor import calculate_pest_risk_index
+
+    env = {"temperature": 26, "humidity": 80}
+    idx = calculate_pest_risk_index("citrus", env)
+    assert 83 <= idx <= 84
+
+    env2 = {"temperature": 25, "humidity": 80}
+    idx2 = calculate_pest_risk_index("tomato", env2)
+    assert 66 <= idx2 <= 67
+

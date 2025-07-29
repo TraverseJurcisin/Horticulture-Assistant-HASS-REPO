@@ -62,6 +62,7 @@ __all__ = [
     "adjust_risk_with_resistance",
     "estimate_adjusted_pest_risk",
     "estimate_adjusted_pest_risk_series",
+    "calculate_pest_risk_index",
     "generate_pest_report",
     "get_scouting_method",
     "get_severity_action",
@@ -344,6 +345,25 @@ def estimate_adjusted_pest_risk_series(
 
     inv_levels = {v: k for k, v in levels.items()}
     return {p: inv_levels[r] for p, r in combined.items()}
+
+
+def calculate_pest_risk_index(
+    plant_type: str, environment: Mapping[str, float]
+) -> float:
+    """Return 0-100 risk index for a crop's common pests.
+
+    The calculation uses :func:`estimate_adjusted_pest_risk` to classify each
+    pest based on the current environment and crop resistance ratings. The
+    resulting risk levels are converted to numeric scores and averaged. A value
+    of ``0`` indicates minimal risk while ``100`` represents maximum risk for
+    all pests.
+    """
+
+    risk = estimate_adjusted_pest_risk(plant_type, environment)
+    if not risk:
+        return 0.0
+    score = calculate_risk_score(risk)
+    return round((score / 3.0) * 100, 1)
 
 
 def calculate_pest_management_index(

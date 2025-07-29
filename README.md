@@ -262,6 +262,7 @@ Important categories include:
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests
 - **Stage-specific pest thresholds** – economic thresholds for each growth stage
+- **Pest risk factors** – environment ranges for calculating risk via `pest_monitor.calculate_pest_risk_index`
 - **Irrigation and water quality** – daily volume guidelines, quality thresholds and cost estimates
 - **Water usage guidelines** – typical daily irrigation volumes by stage
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
