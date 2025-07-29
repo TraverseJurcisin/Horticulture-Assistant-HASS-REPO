@@ -1,5 +1,7 @@
 {
   "n_p": {"factor": 1.1, "message": "Nitrogen improves phosphorus uptake"},
   "ca_b": {"factor": 1.05, "message": "Calcium transport aided by boron"},
-  "k_mg": {"factor": 0.95, "message": "High potassium reduces magnesium uptake"}
+  "k_mg": {"factor": 0.95, "message": "High potassium reduces magnesium uptake"},
+  "n_ca": {"factor": 1.05, "message": "Nitrogen boosts calcium uptake"},
+  "fe_mn": {"factor": 0.85, "message": "High manganese suppresses iron uptake"}
 }

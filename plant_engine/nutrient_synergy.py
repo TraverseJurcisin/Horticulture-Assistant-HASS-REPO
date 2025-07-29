@@ -32,6 +32,7 @@ __all__ = [
     "list_synergy_pairs",
     "get_synergy_info",
     "get_synergy_factor",
+    "has_synergy_pair",
     "apply_synergy_adjustments",
     "apply_synergy_adjustments_verbose",
 ]
@@ -53,6 +54,13 @@ def get_synergy_factor(n1: str, n2: str) -> float | None:
     n2_key = n2.casefold()
     info = _SYNERGY_MAP.get((n1_key, n2_key)) or _SYNERGY_MAP.get((n2_key, n1_key))
     return info.factor if info else None
+
+
+def has_synergy_pair(n1: str, n2: str) -> bool:
+    """Return ``True`` if synergy data exists for the nutrient pair."""
+    n1_key = n1.casefold()
+    n2_key = n2.casefold()
+    return (n1_key, n2_key) in _SYNERGY_MAP or (n2_key, n1_key) in _SYNERGY_MAP
 
 
 def apply_synergy_adjustments(levels: Mapping[str, float]) -> Dict[str, float]:

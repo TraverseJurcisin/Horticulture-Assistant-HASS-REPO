@@ -258,6 +258,7 @@ Important categories include:
 - **Environment guidelines** – optimal temperature, humidity, light and CO₂ ranges
 - **Environment actions** – recommended steps when temperature or humidity are out of range
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
+- **Nutrient synergies** – factors adjusting uptake when specific elements are present together
 - **Total nutrient requirements** – daily NPK needs for common crops
 - **Stage nutrient requirements** – daily needs for each growth stage
 - **Pest and disease references** – thresholds, prevention tips and treatment options

@@ -1,6 +1,7 @@
 from plant_engine.nutrient_synergy import (
     list_synergy_pairs,
     get_synergy_factor,
+    has_synergy_pair,
     apply_synergy_adjustments,
     apply_synergy_adjustments_verbose,
 )
@@ -34,4 +35,11 @@ def test_apply_synergy_adjustments_verbose():
     adjusted, notes = apply_synergy_adjustments_verbose(levels)
     assert adjusted["mg"] == 9.5
     assert "k/mg" in notes
+
+
+def test_has_synergy_pair():
+    assert has_synergy_pair("N", "Ca")
+    assert has_synergy_pair("Fe", "Mn")
+    assert not has_synergy_pair("Cu", "Zn")
+
 
