@@ -2,10 +2,18 @@ from __future__ import annotations
 
 """Utilities for estimating root zone electrical conductivity."""
 
-from dataclasses import dataclass
+"""Utilities for estimating root zone electrical conductivity (EC).
+
+This module provides a lightweight linear estimator that can be trained
+on historical data and later used to infer EC values from recent sensor
+logs.  The functions are intentionally dependency free so they can be
+executed during unit tests without a Home Assistant install.
+"""
+
+from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Iterable, Mapping
+from typing import Iterable, Mapping, MutableMapping
 
 from functools import lru_cache
 
@@ -38,6 +46,15 @@ def _model_path(
     if plant_id:
         return Path(base_path or plants_path(None)) / plant_id / "ec_model.json"
     return Path(base_path or MODEL_FILE)
+
+
+def _float_or_none(val: object) -> float | None:
+    """Return ``val`` cast to ``float`` or ``None`` on failure."""
+
+    try:
+        return float(val)
+    except (TypeError, ValueError):
+        return None
 
 
 @dataclass
@@ -81,6 +98,40 @@ DEFAULT_MODEL = ECEstimator(
 )
 
 
+@dataclass(slots=True)
+class ECFeatures:
+    """Container for features used by :class:`ECEstimator`."""
+
+    moisture: float
+    temperature: float
+    irrigation_ml: float
+    solution_ec: float
+    ambient_temp: float | None = None
+    humidity: float | None = None
+    target_ec: float | None = None
+    nutrient_ec: float | None = None
+    media_factor: float | None = None
+
+    def asdict(self) -> MutableMapping[str, float]:
+        data: MutableMapping[str, float] = {
+            "moisture": self.moisture,
+            "temperature": self.temperature,
+            "irrigation_ml": self.irrigation_ml,
+            "solution_ec": self.solution_ec,
+        }
+        optional = {
+            "ambient_temp": self.ambient_temp,
+            "humidity": self.humidity,
+            "target_ec": self.target_ec,
+            "nutrient_ec": self.nutrient_ec,
+            "media_factor": self.media_factor,
+        }
+        for key, value in optional.items():
+            if value is not None:
+                data[key] = float(value)
+        return data
+
+
 @lru_cache(maxsize=None)
 def load_model(
     path: str | Path | None = None,
@@ -88,7 +139,11 @@ def load_model(
     plant_id: str | None = None,
     base_path: str | Path | None = None,
 ) -> ECEstimator:
-    """Return estimator coefficients from ``path`` or defaults."""
+    """Return an :class:`ECEstimator` from ``path`` or defaults.
+
+    A cached instance is returned to avoid repeatedly reading from disk.
+    Use :func:`clear_model_cache` to invalidate the cache.
+    """
     model_path = Path(path) if path is not None else _model_path(plant_id, base_path=base_path)
     try:
         data = load_json(str(model_path))
@@ -111,7 +166,7 @@ def save_model(
     plant_id: str | None = None,
     base_path: str | Path | None = None,
 ) -> None:
-    """Persist estimator coefficients to ``path``."""
+    """Persist ``model`` to ``path`` and refresh the cache."""
     out_path = Path(path) if path is not None else _model_path(plant_id, base_path=base_path)
     save_json(str(out_path), model.as_dict())
     load_model.cache_clear()
@@ -129,17 +184,20 @@ def estimate_ec_from_values(
     plant_id: str | None = None,
     base_path: str | Path | None = None,
 ) -> float:
-    """Estimate EC directly from feature values."""
-    features = {
-        "moisture": moisture,
-        "temperature": temperature,
-        "irrigation_ml": irrigation_ml,
-        "solution_ec": solution_ec,
-    }
+    """Estimate EC directly from raw feature values."""
+
+    feat = ECFeatures(
+        moisture=moisture,
+        temperature=temperature,
+        irrigation_ml=irrigation_ml,
+        solution_ec=solution_ec,
+    )
     if extra_features:
-        features.update(extra_features)
+        for key, value in extra_features.items():
+            setattr(feat, key, value)
+
     mdl = model or load_model(plant_id=plant_id, base_path=base_path)
-    return mdl.predict(features, runoff_ec)
+    return mdl.predict(feat.asdict(), runoff_ec)
 
 
 def log_runoff_ec(
@@ -171,13 +229,9 @@ def _latest_log_value(
 ) -> float | None:
     """Return the most recent numeric ``key`` value from log ``entries``."""
     for entry in reversed(list(entries)):
-        val = entry.get(key)
-        if val is None:
-            continue
-        try:
-            return float(val)
-        except (TypeError, ValueError):
-            continue
+        val = _float_or_none(entry.get(key))
+        if val is not None:
+            return val
     return None
 
 
@@ -188,27 +242,24 @@ def _latest_sensor_value(
     for entry in reversed(list(entries)):
         stype = str(entry.get("sensor_type", "")).lower()
         if stype in names_l or any(n in stype for n in names_l):
-            val = entry.get("value")
-            if val is None:
-                continue
-            try:
-                return float(val)
-            except (TypeError, ValueError):
-                continue
+            val = _float_or_none(entry.get("value"))
+            if val is not None:
+                return val
     return None
 
 
 def _env_value(env: Mapping[str, object], names: Iterable[str]) -> float | None:
     for n in names:
         if n in env:
-            try:
-                return float(env[n])
-            except Exception:
-                continue
+            val = _float_or_none(env[n])
+            if val is not None:
+                return val
     return None
 
 
 def _load_recent_entries(log_path: Path, limit: int = 10) -> list[dict]:
+    """Return up to ``limit`` records from ``log_path`` if it exists."""
+
     try:
         data = load_json(str(log_path))
         if isinstance(data, list):
@@ -280,28 +331,20 @@ def estimate_ec(
         _LOGGER.info("Insufficient sensor data for EC estimate of %s", plant_id)
         return None
 
-    extra = {}
-    if ambient_temp is not None:
-        extra["ambient_temp"] = ambient_temp
-    if humidity is not None:
-        extra["humidity"] = humidity
-    if target_ec is not None:
-        extra["target_ec"] = target_ec
-    if nutrient_ec:
-        extra["nutrient_ec"] = nutrient_ec
-    if media_factor:
-        extra["media_factor"] = media_factor
-
-    features = {
-        "moisture": moisture,
-        "temperature": temperature,
-        "irrigation_ml": irrigation_ml,
-        "solution_ec": solution_ec,
-    }
-    features.update(extra)
+    features = ECFeatures(
+        moisture=moisture,
+        temperature=temperature,
+        irrigation_ml=irrigation_ml,
+        solution_ec=solution_ec,
+        ambient_temp=ambient_temp,
+        humidity=humidity,
+        target_ec=target_ec,
+        nutrient_ec=nutrient_ec if nutrient_ec else None,
+        media_factor=media_factor if media_factor else None,
+    )
 
     model = load_model(plant_id=plant_id, base_path=base_path)
-    return model.predict(features, runoff_ec)
+    return model.predict(features.asdict(), runoff_ec)
 
 
 def train_ec_model(
@@ -311,7 +354,11 @@ def train_ec_model(
     plant_id: str | None = None,
     base_path: str | Path | None = None,
 ) -> ECEstimator:
-    """Train a linear EC estimation model from ``samples``."""
+    """Return a linear :class:`ECEstimator` trained from ``samples``.
+
+    ``samples`` should contain feature values and an ``observed_ec`` field.
+    The resulting model is written to ``output_path`` if provided.
+    """
 
     feature_names: set[str] = set()
     for row in samples:
