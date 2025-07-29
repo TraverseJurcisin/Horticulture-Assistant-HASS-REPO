@@ -25,6 +25,10 @@ def test_get_plant_overview():
     assert overview["total_requirements"]["N"] == 180
     assert "stage_requirements" in overview
     assert overview["stage_requirements"]["vegetative"]["N"] == 1.8
+    assert "ipm" in overview
+    assert isinstance(overview["ipm"], dict)
+    assert "pest_management" in overview
+    assert isinstance(overview["pest_management"], dict)
 
 
 def test_refresh_reference_data(tmp_path, monkeypatch):
