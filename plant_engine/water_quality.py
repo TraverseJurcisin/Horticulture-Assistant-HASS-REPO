@@ -5,14 +5,16 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Dict, Tuple, Mapping, Any
 
-from .utils import lazy_dataset
+from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
 DATA_FILE = "water_quality_thresholds.json"
 ACTION_FILE = "water_quality_actions.json"
+SALINITY_FILE = "water_salinity_tolerance.json"
 
 # Cached thresholds loaded once via :func:`load_dataset`
 _thresholds = lazy_dataset(DATA_FILE)
 _actions = lazy_dataset(ACTION_FILE)
+_salinity_limits = lazy_dataset(SALINITY_FILE)
 
 __all__ = [
     "list_analytes",
@@ -24,6 +26,8 @@ __all__ = [
     "summarize_water_profile",
     "blend_water_profiles",
     "max_safe_blend_ratio",
+    "list_salinity_plants",
+    "get_salinity_limit",
     "WaterProfileSummary",
 ]
 
@@ -171,3 +175,19 @@ def max_safe_blend_ratio(source_a: Mapping[str, float], source_b: Mapping[str, f
     if ratio < 0 or not ratio:
         return 0.0
     return max(0.0, min(1.0, ratio))
+
+
+def list_salinity_plants() -> list[str]:
+    """Return plant types with irrigation water salinity data."""
+
+    return list_dataset_entries(_salinity_limits())
+
+
+def get_salinity_limit(plant_type: str) -> float | None:
+    """Return maximum EC for irrigation water tolerated by ``plant_type``."""
+
+    value = _salinity_limits().get(normalize_key(plant_type))
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
