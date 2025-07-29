@@ -186,5 +186,6 @@
     "species_precipitation_risk.json": "Species-specific mineral precipitation risks due to nutrient interactions.",
     "nighttime_strategies.json": "Nighttime growth habits and irrigation guidance by species.",
     "frost_dates.json": "Typical last and first frost dates by USDA hardiness zone.",
-    "hardiness_zone_temperatures.json": "Minimum winter temperature (\u00b0C) for USDA hardiness zones."
+    "hardiness_zone_temperatures.json": "Minimum winter temperature (\u00b0C) for USDA hardiness zones.",
+    "plant_hardiness_zones.json": "Recommended USDA hardiness zone range for each crop."
 }
