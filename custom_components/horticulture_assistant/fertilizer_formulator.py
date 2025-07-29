@@ -9,8 +9,6 @@ for each nutrient based on the inventory and price datasets.
 from __future__ import annotations
 
 import datetime
-from dataclasses import dataclass
-from functools import lru_cache
 from typing import Dict, Mapping, List
 
 from plant_engine.wsda_lookup import (
@@ -19,99 +17,7 @@ from plant_engine.wsda_lookup import (
 
 from plant_engine import nutrient_manager
 
-from plant_engine.utils import load_dataset, lazy_dataset
-
-DATA_FILE = "fertilizers/fertilizer_products.json"
-PRICE_FILE = "fertilizers/fertilizer_prices.json"
-SOLUBILITY_FILE = "fertilizer_solubility.json"
-APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
-RATE_FILE = "fertilizers/fertilizer_application_rates.json"
-COMPAT_FILE = "fertilizers/fertilizer_compatibility.json"
-
-_DATA = lazy_dataset(DATA_FILE)
-_PRICES = lazy_dataset(PRICE_FILE)
-_SOLUBILITY = lazy_dataset(SOLUBILITY_FILE)
-_APPLICATION = lazy_dataset(APPLICATION_FILE)
-_RATES = lazy_dataset(RATE_FILE)
-_COMPAT = lazy_dataset(COMPAT_FILE)
-
-
-@dataclass(frozen=True, slots=True)
-class Fertilizer:
-    """Fertilizer product information."""
-
-    density_kg_per_l: float
-    guaranteed_analysis: Dict[str, float]
-    product_name: str | None = None
-    wsda_product_number: str | None = None
-
-
-class FertilizerCatalog:
-    """Cached access to fertilizer datasets."""
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def inventory() -> Dict[str, Fertilizer]:
-        data = _DATA()
-        inv: Dict[str, Fertilizer] = {}
-        for name, info in data.items():
-            inv[name] = Fertilizer(
-                density_kg_per_l=info.get("density_kg_per_l", 1.0),
-                guaranteed_analysis=info.get("guaranteed_analysis", {}),
-                product_name=info.get("product_name"),
-                wsda_product_number=info.get("wsda_product_number"),
-            )
-        return inv
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def prices() -> Dict[str, float]:
-        return _PRICES()
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def solubility() -> Dict[str, float]:
-        return _SOLUBILITY()
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def application_methods() -> Dict[str, str]:
-        return _APPLICATION()
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def application_rates() -> Dict[str, float]:
-        """Return recommended grams per liter for each fertilizer."""
-        return _RATES()
-
-    @staticmethod
-    @lru_cache(maxsize=None)
-    def compatibility() -> Dict[str, Dict[str, str]]:
-        """Return mixing compatibility mapping from the dataset."""
-        raw = _COMPAT()
-        mapping: Dict[str, Dict[str, str]] = {}
-        for fert, info in raw.items():
-            if not isinstance(info, dict):
-                continue
-            inner: Dict[str, str] = {}
-            for other, reason in info.items():
-                inner[str(other)] = str(reason)
-            if inner:
-                mapping[fert] = inner
-        return mapping
-
-    def list_products(self) -> list[str]:
-        inv = self.inventory()
-        return sorted(inv.keys(), key=lambda pid: inv[pid].product_name or pid)
-
-    def get_product_info(self, fertilizer_id: str) -> Fertilizer:
-        inv = self.inventory()
-        if fertilizer_id not in inv:
-            raise KeyError(f"Unknown fertilizer '{fertilizer_id}'")
-        return inv[fertilizer_id]
-
-
-CATALOG = FertilizerCatalog()
+from .catalog import CATALOG, Fertilizer
 
 
 MOLAR_MASS_CONVERSIONS = {
@@ -502,6 +408,24 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
         grams_per_l = grams / volume_l
         if grams_per_l > max_g_l:
             warnings[fert_id] = round(grams_per_l - max_g_l, 2)
+    return warnings
+
+
+def check_dilution_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+    """Return grams per liter exceeding recommended dilution limits."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    limits = CATALOG.dilution_limits()
+    warnings: Dict[str, float] = {}
+    for fert_id, grams in schedule.items():
+        limit = limits.get(fert_id)
+        if limit is None:
+            continue
+        grams_per_l = grams / volume_l
+        if grams_per_l > limit:
+            warnings[fert_id] = round(grams_per_l - limit, 2)
     return warnings
 
 
@@ -910,6 +834,7 @@ __all__ = [
     "calculate_mix_density",
     "estimate_solution_mass",
     "check_solubility_limits",
+    "check_dilution_limits",
     "estimate_cost_per_nutrient",
     "calculate_mass_for_target_ppm",
     "list_products",
@@ -923,5 +848,6 @@ __all__ = [
     "recommend_wsda_products",
     "check_schedule_compatibility",
     "CATALOG",
+    "Fertilizer",
 ]
 
