@@ -13,7 +13,7 @@ import logging
 from datetime import datetime, date
 from typing import Dict, List, Optional, Union, Mapping
 
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     data_path,
     config_path,
 )

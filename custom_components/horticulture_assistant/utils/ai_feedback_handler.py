@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 
 from ..engine import ai_model
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     plants_path,
     data_path,
 )

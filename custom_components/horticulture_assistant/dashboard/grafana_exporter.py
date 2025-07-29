@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from ..utils.json_io import load_json, save_json
+from ..utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 

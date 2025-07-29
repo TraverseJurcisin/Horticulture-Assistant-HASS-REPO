@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from ..utils.json_io import load_json
+from ..utils import load_json
 
 try:
     from homeassistant.core import HomeAssistant

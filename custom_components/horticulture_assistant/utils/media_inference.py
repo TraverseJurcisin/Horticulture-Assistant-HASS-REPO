@@ -10,7 +10,7 @@ import json
 import logging
 from typing import Optional, Dict
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path
+from custom_components.horticulture_assistant.utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 

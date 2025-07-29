@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     plants_path,
     data_path,
 )
@@ -12,7 +12,7 @@ from custom_components.horticulture_assistant.utils.path_utils import (
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_plant_profile,
 )
-from ..utils.json_io import load_json, save_json
+from ..utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 

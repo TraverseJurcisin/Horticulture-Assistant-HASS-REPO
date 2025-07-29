@@ -21,7 +21,7 @@ from plant_engine.nutrient_manager import (
     calculate_nutrient_adjustments,
 )
 from plant_engine.utils import load_json, save_json, load_dataset, normalize_key
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     config_path,
     plants_path,
     data_path,

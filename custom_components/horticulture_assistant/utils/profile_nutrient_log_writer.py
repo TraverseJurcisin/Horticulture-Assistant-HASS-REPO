@@ -6,7 +6,7 @@ except ImportError:  # pragma: no cover - outside Home Assistant
     HomeAssistant = None
 
 from .profile_helpers import write_profile_sections
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from custom_components.horticulture_assistant.utils import plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

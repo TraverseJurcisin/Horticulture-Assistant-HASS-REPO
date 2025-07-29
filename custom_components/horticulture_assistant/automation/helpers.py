@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Tuple
 
-from ..utils.json_io import load_json, save_json
+from ..utils import load_json, save_json
 
 
 def iter_profiles(base_path: str) -> Iterable[Tuple[str, Dict]]:

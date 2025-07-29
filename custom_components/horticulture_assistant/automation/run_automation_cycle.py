@@ -13,7 +13,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from custom_components.horticulture_assistant.utils import plants_path
 
 from .helpers import iter_profiles, append_json_log, latest_env
 

@@ -14,7 +14,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Mapping
 
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     plants_path,
     data_path,
 )

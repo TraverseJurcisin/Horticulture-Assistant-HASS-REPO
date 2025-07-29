@@ -32,7 +32,7 @@ from .utils.entry_helpers import (
     remove_entry_data,
 )
 from .utils.plant_profile_loader import update_profile_sensors
-from .utils.path_utils import plants_path
+from .utils import plants_path
 
 
 _LOGGER = logging.getLogger(__name__)

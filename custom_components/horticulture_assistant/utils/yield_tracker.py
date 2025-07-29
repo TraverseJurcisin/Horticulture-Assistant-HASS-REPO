@@ -6,7 +6,7 @@ import logging
 from datetime import datetime, date
 from typing import List, Dict, Optional, Union
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path
+from custom_components.horticulture_assistant.utils import data_path
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:

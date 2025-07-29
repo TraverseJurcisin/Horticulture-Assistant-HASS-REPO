@@ -16,7 +16,7 @@ from .state_helpers import (
     aggregate_sensor_values,
 )
 from .json_io import load_json, save_json
-from custom_components.horticulture_assistant.utils.path_utils import (
+from custom_components.horticulture_assistant.utils import (
     config_path,
     plants_path,
     data_path,

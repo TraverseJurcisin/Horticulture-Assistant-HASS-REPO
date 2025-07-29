@@ -4,7 +4,7 @@ import json
 import logging
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from custom_components.horticulture_assistant.utils import plants_path
 
 try:
     from homeassistant.core import HomeAssistant

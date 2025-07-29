@@ -9,7 +9,7 @@ import os
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path
+from custom_components.horticulture_assistant.utils import data_path
 from typing import Dict, Iterable, List
 
 try:
@@ -17,7 +17,7 @@ try:
 except Exception:  # pragma: no cover - fallback when PyYAML is missing
     yaml = None
 
-from custom_components.horticulture_assistant.utils.json_io import load_json
+from custom_components.horticulture_assistant.utils import load_json
 
 
 DEFAULT_OUTPUT_DIR = Path("templates/generated")
