@@ -22,6 +22,8 @@ __all__ = [
     "get_uptake_ratio",
     "estimate_area_daily_uptake",
     "estimate_area_stage_uptake",
+    "estimate_area_total_uptake",
+    "estimate_area_cumulative_uptake",
 ]
 
 
@@ -149,4 +151,36 @@ def estimate_area_stage_uptake(
         return {}
 
     return {n: round(val * duration, 2) for n, val in daily_totals.items()}
+
+
+def estimate_area_total_uptake(plant_type: str, area_m2: float) -> Dict[str, float]:
+    """Return nutrient demand for the entire crop cycle over ``area_m2``."""
+
+    totals = estimate_total_uptake(plant_type)
+    if not totals:
+        return {}
+
+    spacing = get_spacing_cm(plant_type)
+    if spacing is None or spacing <= 0:
+        return {}
+
+    plants = area_m2 / ((spacing / 100) ** 2)
+    return {n: round(val * plants, 2) for n, val in totals.items()}
+
+
+def estimate_area_cumulative_uptake(
+    plant_type: str, stage: str, area_m2: float
+) -> Dict[str, float]:
+    """Return cumulative nutrient demand up to ``stage`` over ``area_m2``."""
+
+    totals = estimate_cumulative_uptake(plant_type, stage)
+    if not totals:
+        return {}
+
+    spacing = get_spacing_cm(plant_type)
+    if spacing is None or spacing <= 0:
+        return {}
+
+    plants = area_m2 / ((spacing / 100) ** 2)
+    return {n: round(val * plants, 2) for n, val in totals.items()}
 
