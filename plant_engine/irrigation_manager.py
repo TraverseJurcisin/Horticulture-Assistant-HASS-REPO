@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Mapping, Dict, Any
 
-from .utils import load_dataset, normalize_key, stage_value
+from .utils import lazy_dataset, normalize_key, stage_value
 from .et_model import calculate_eta
 
 from .rootzone_model import RootZone, calculate_remaining_water
@@ -39,25 +39,25 @@ __all__ = [
 ]
 
 _KC_DATA_FILE = "crop_coefficients.json"
-_KC_DATA = load_dataset(_KC_DATA_FILE)
+_KC_DATA = lazy_dataset(_KC_DATA_FILE)
 
 _IRRIGATION_FILE = "irrigation_guidelines.json"
-_IRRIGATION_DATA: Dict[str, Dict[str, float]] = load_dataset(_IRRIGATION_FILE)
+_IRRIGATION_DATA = lazy_dataset(_IRRIGATION_FILE)
 
 _INTERVAL_FILE = "irrigation_intervals.json"
-_INTERVAL_DATA: Dict[str, Dict[str, float]] = load_dataset(_INTERVAL_FILE)
+_INTERVAL_DATA = lazy_dataset(_INTERVAL_FILE)
 
 _EFFICIENCY_FILE = "irrigation_efficiency.json"
-_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_EFFICIENCY_FILE)
+_EFFICIENCY_DATA = lazy_dataset(_EFFICIENCY_FILE)
 
 _FLOW_FILE = "emitter_flow_rates.json"
-_FLOW_DATA: Dict[str, float] = load_dataset(_FLOW_FILE)
+_FLOW_DATA = lazy_dataset(_FLOW_FILE)
 
 _RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
-_RAIN_EFFICIENCY_DATA: Dict[str, float] = load_dataset(_RAIN_EFFICIENCY_FILE)
+_RAIN_EFFICIENCY_DATA = lazy_dataset(_RAIN_EFFICIENCY_FILE)
 
 _ZONE_MODIFIER_FILE = "irrigation_zone_modifiers.json"
-_ZONE_MODIFIERS: Dict[str, float] = load_dataset(_ZONE_MODIFIER_FILE)
+_ZONE_MODIFIERS = lazy_dataset(_ZONE_MODIFIER_FILE)
 
 
 @dataclass(slots=True, frozen=True)
@@ -175,7 +175,7 @@ def get_crop_coefficient(plant_type: str, stage: str) -> float:
 
     The result is cached since coefficients are static reference data.
     """
-    coeffs = _KC_DATA.get(normalize_key(plant_type), {})
+    coeffs = _KC_DATA().get(normalize_key(plant_type), {})
     return coeffs.get(normalize_key(stage), 1.0)
 
 
@@ -237,7 +237,7 @@ def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
     if volume_ml < 0:
         raise ValueError("volume_ml must be non-negative")
 
-    eff = _EFFICIENCY_DATA.get(normalize_key(method))
+    eff = _EFFICIENCY_DATA().get(normalize_key(method))
     if isinstance(eff, (int, float)) and 0 < eff <= 1:
         return round(volume_ml / eff, 1)
     return volume_ml
@@ -259,7 +259,7 @@ def estimate_irrigation_time(
     if emitters <= 0:
         raise ValueError("emitters must be positive")
 
-    rate_l_h = _FLOW_DATA.get(normalize_key(emitter_type))
+    rate_l_h = _FLOW_DATA().get(normalize_key(emitter_type))
     if not isinstance(rate_l_h, (int, float)) or rate_l_h <= 0:
         return 0.0
 
@@ -274,7 +274,7 @@ def get_rain_capture_efficiency(surface: str) -> float:
 
     Results are cached to avoid repeated normalization and dataset lookups.
     """
-    value = _RAIN_EFFICIENCY_DATA.get(normalize_key(surface), 1.0)
+    value = _RAIN_EFFICIENCY_DATA().get(normalize_key(surface), 1.0)
     try:
         eff = float(value)
     except (TypeError, ValueError):
@@ -288,7 +288,7 @@ def get_irrigation_zone_modifier(zone: str) -> float:
 
     Cached to reduce repeated dataset parsing when scheduling many plants.
     """
-    value = _ZONE_MODIFIERS.get(normalize_key(zone), 1.0)
+    value = _ZONE_MODIFIERS().get(normalize_key(zone), 1.0)
     try:
         factor = float(value)
     except (TypeError, ValueError):
@@ -330,14 +330,13 @@ def recommend_irrigation_from_environment(
 
 def list_supported_plants() -> list[str]:
     """Return plant types with irrigation guidelines."""
-
-    return sorted(_IRRIGATION_DATA.keys())
+    return sorted(_IRRIGATION_DATA().keys())
 
 
 def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
     """Return recommended daily irrigation volume in milliliters."""
 
-    plant = _IRRIGATION_DATA.get(normalize_key(plant_type), {})
+    plant = _IRRIGATION_DATA().get(normalize_key(plant_type), {})
     value = plant.get(normalize_key(stage))
     return float(value) if isinstance(value, (int, float)) else 0.0
 
@@ -345,7 +344,7 @@ def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
 def get_recommended_interval(plant_type: str, stage: str) -> float | None:
     """Return days between irrigation events for a plant stage if known."""
 
-    value = stage_value(_INTERVAL_DATA, plant_type, stage)
+    value = stage_value(_INTERVAL_DATA(), plant_type, stage)
     if isinstance(value, (int, float)):
         return float(value)
     # Fall back to drought tolerance data when stage-specific guidance
