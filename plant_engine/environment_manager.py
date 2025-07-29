@@ -124,6 +124,16 @@ def resolve_environment_alias(key: str) -> str | None:
     return _ALIAS_MAP.get(key)
 
 
+def add_environment_alias(canonical: str, alias: str) -> None:
+    """Register ``alias`` as an alternative for ``canonical``."""
+
+    canon = normalize_key(canonical)
+    aliases = ENV_ALIASES.setdefault(canon, [canon])
+    if alias not in aliases:
+        aliases.append(alias)
+    _ALIAS_MAP[alias] = canon
+
+
 @dataclass(slots=True, frozen=True)
 class EnvironmentGuidelines:
     """Environmental target ranges for a plant stage."""
@@ -418,6 +428,7 @@ __all__ = [
     "WaterQualityInfo",
     "get_environment_aliases",
     "resolve_environment_alias",
+    "add_environment_alias",
     "normalize_environment_readings",
     "classify_value_range",
     "compare_environment",
@@ -933,7 +944,7 @@ def recommend_environment_adjustments(
     readings = normalize_environment_readings(current)
     # Track which alias produced each canonical key so we can optionally
     # bypass descriptive strategies when uncommon aliases are used.
-    alias_map = { _ALIAS_MAP.get(k, k): k for k in current }
+    alias_map = {_ALIAS_MAP.get(k, k): k for k in current}
 
     actions: Dict[str, str] = {}
     for key, status in comparison.items():
@@ -1099,11 +1110,7 @@ def score_environment_dataframe(
     scores = pd.DataFrame(index=df.index)
     weights = []
     for key, bounds in targets.items():
-        if (
-            key not in df
-            or not isinstance(bounds, (list, tuple))
-            or len(bounds) != 2
-        ):
+        if key not in df or not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
             continue
         low, high = float(bounds[0]), float(bounds[1])
         width = high - low
@@ -1123,9 +1130,7 @@ def score_environment_dataframe(
 
     weight_arr = np.array(weights)
     weighted = scores.mul(weight_arr, axis=1)
-    total_weight = (
-        (~scores.isna()).astype(float).mul(weight_arr, axis=1)
-    ).sum(axis=1)
+    total_weight = ((~scores.isna()).astype(float).mul(weight_arr, axis=1)).sum(axis=1)
     total_weight = total_weight.replace(0, np.nan)
     result = weighted.sum(axis=1) / total_weight
     return result.fillna(0.0).round(1)
@@ -2139,9 +2144,7 @@ def get_target_light_ratio(plant_type: str, stage: str | None = None) -> float |
     return get_red_blue_ratio(plant_type, stage)
 
 
-def get_target_airflow(
-    plant_type: str, stage: str | None = None
-) -> RangeTuple | None:
+def get_target_airflow(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended airflow range (CFM per m²) for a plant stage."""
 
     return _lookup_range(_AIRFLOW_DATA, plant_type, stage)
