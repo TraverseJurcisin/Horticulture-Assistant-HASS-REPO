@@ -535,3 +535,20 @@ def test_calculate_injection_volumes():
     with pytest.raises(KeyError):
         calculate_injection_volumes({"unknown": 1.0}, 10.0, "dosatron_1pct")
 
+
+def test_get_injector_flow_rate():
+    from plant_engine.fertigation import get_injector_flow_rate
+
+    assert get_injector_flow_rate("dosatron_1pct") == 1.0
+    assert get_injector_flow_rate("unknown") is None
+
+
+def test_estimate_injection_duration():
+    from plant_engine.fertigation import estimate_injection_duration
+
+    schedule = {"foxfarm_grow_big": 20.0}
+    expected_volume = round(20.0 / (0.96 * 1000) * 1000 / 100, 3)
+    expected_time = round(expected_volume / (1.0 * 1000), 3)
+    duration = estimate_injection_duration(schedule, 10.0, "dosatron_1pct")
+    assert duration == expected_time
+

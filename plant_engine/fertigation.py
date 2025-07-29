@@ -33,6 +33,7 @@ RECIPE_DATA = "fertigation_recipes.json"
 STOCK_RECIPE_DATA = "stock_solution_recipes.json"
 LOSS_FACTOR_DATA = "fertigation_loss_factors.json"
 INJECTOR_DATA = "fertigation_injectors.json"
+FLOW_RATE_DATA = "fertigation_injector_flow_rates.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(
@@ -51,6 +52,7 @@ _RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(RECIPE_DATA)
 _STOCK_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(STOCK_RECIPE_DATA)
 _LOSS_FACTORS: Dict[str, Dict[str, float]] = load_dataset(LOSS_FACTOR_DATA)
 _INJECTORS: Dict[str, float] = load_dataset(INJECTOR_DATA)
+_INJECTOR_FLOW_RATES: Dict[str, float] = load_dataset(FLOW_RATE_DATA)
 
 
 @lru_cache(maxsize=None)
@@ -214,6 +216,34 @@ def calculate_injection_volumes(
         volumes[fert_id] = round(liters * 1000 / ratio, 3)
 
     return volumes
+
+
+@lru_cache(maxsize=None)
+def get_injector_flow_rate(injector: str) -> float | None:
+    """Return stock solution flow rate for an injector in L/min."""
+
+    rate = _INJECTOR_FLOW_RATES.get(normalize_key(injector))
+    try:
+        return float(rate) if rate is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
+
+
+def estimate_injection_duration(
+    schedule: Mapping[str, float], volume_l: float, injector: str
+) -> float:
+    """Return estimated minutes to inject ``schedule`` using ``injector``."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    rate = get_injector_flow_rate(injector)
+    if rate is None or rate <= 0:
+        raise KeyError(f"Unknown injector '{injector}'")
+
+    volumes = calculate_injection_volumes(schedule, volume_l, injector)
+    total_ml = sum(volumes.values())
+    return round(total_ml / (rate * 1000), 3)
 
 
 def recommend_loss_adjusted_fertigation(
@@ -425,6 +455,8 @@ __all__ = [
     "apply_loss_factors",
     "get_injection_ratio",
     "calculate_injection_volumes",
+    "get_injector_flow_rate",
+    "estimate_injection_duration",
     "recommend_loss_adjusted_fertigation",
     "grams_to_ppm",
     "check_solubility_limits",
