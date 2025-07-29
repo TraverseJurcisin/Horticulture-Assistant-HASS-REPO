@@ -269,6 +269,7 @@ Important categories include:
 - **Nutrient synergies** – factors adjusting uptake when specific elements are present together
 - **Total nutrient requirements** – daily NPK needs for common crops
 - **Stage nutrient requirements** – daily needs for each growth stage
+- **Stage light requirements** – recommended PPFD levels for each stage
 - **Cumulative nutrient estimation** – `calculate_cumulative_requirements()`
   multiplies daily values by a number of days to help plan feeding schedules
 - **Pest and disease references** – thresholds, prevention tips and treatment options
