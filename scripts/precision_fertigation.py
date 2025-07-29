@@ -1,3 +1,7 @@
+"""Generate a precise fertigation plan with injection volumes."""
+
+from __future__ import annotations
+
 import argparse
 import json
 from pathlib import Path
@@ -15,15 +19,30 @@ import yaml
 
 
 def load_water_profile(path: str) -> dict:
+    """Return water quality data from ``path`` if it exists.
+
+    The file may contain JSON or YAML. An empty mapping is returned when
+    the file does not exist or cannot be parsed.
+    """
+
+    file_path = Path(path)
+    if not file_path.is_file():
+        return {}
     try:
-        with open(path, "r") as f:
-            return json.load(f)
+        text = file_path.read_text()
+        if file_path.suffix.lower() in {".yaml", ".yml"}:
+            return yaml.safe_load(text) or {}
+        return json.loads(text)
     except Exception:
         return {}
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description="Generate precise fertigation plan")
+def main(argv: list[str] | None = None) -> None:
+    """Entry point for the ``precision_fertigation.py`` script."""
+
+    parser = argparse.ArgumentParser(
+        description="Generate precise fertigation plan"
+    )
     parser.add_argument("plant_type")
     parser.add_argument("stage")
     parser.add_argument("volume_l", type=float)

@@ -311,7 +311,8 @@ structure overlay and extra dataset directories.
 ---
 
 ## Command Line Utilities
-Helper scripts live in the `scripts/` directory.
+Helper scripts live in the `scripts/` directory. A quick overview of the most
+useful commands is available in [`docs/scripts_overview.md`](docs/scripts_overview.md).
 
 - `generate_plant_sensors.py` converts daily reports into Home Assistant template sensor YAML.
 - `generate_guideline_summary.py` outputs consolidated environment, nutrient and pest guidance for a crop stage.
