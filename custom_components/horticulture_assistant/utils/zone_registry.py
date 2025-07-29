@@ -23,6 +23,7 @@ __all__ = [
     "attach_solenoids",
     "detach_solenoids",
     "remove_zone",
+    "zones_for_plant",
 ]
 
 
@@ -72,6 +73,15 @@ def list_zones(hass=None) -> List[str]:
     """Return all known zone IDs sorted alphabetically."""
 
     return sorted(load_zones(hass).keys())
+
+
+def zones_for_plant(plant_id: str, hass=None) -> List[str]:
+    """Return zone IDs containing ``plant_id`` sorted alphabetically."""
+
+    pid = str(plant_id)
+    return sorted(
+        zid for zid, zone in load_zones(hass).items() if pid in zone.plant_ids
+    )
 
 
 def save_zones(zones: Dict[str, ZoneConfig], hass=None) -> bool:

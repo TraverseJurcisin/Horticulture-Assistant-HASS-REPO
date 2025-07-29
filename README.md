@@ -170,6 +170,7 @@ from custom_components.horticulture_assistant.utils import zone_registry
 zone_registry.add_zone("3", ["switch.valve_3a", "switch.valve_3b"])
 zone_registry.attach_plants("3", ["plant_a", "plant_b"])
 zone_registry.attach_solenoids("3", ["switch.extra_valve"])
+print(zone_registry.zones_for_plant("plant_a"))  # ["3"]
 ```
 
 Irrigation settings are placed under `irrigation_schedule` with a `method`
