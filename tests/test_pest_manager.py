@@ -199,3 +199,30 @@ def test_plan_beneficial_releases():
     interval = min(get_beneficial_effective_days(i) for i in insects)
     assert schedule[1]["date"] == start + timedelta(days=interval)
     assert "ladybugs" in schedule[0]["releases"]
+
+
+def test_pest_severity_tools():
+    from plant_engine.pest_manager import (
+        get_severity_thresholds,
+        classify_pest_severity,
+        assess_pest_severity,
+        calculate_severity_index,
+        recommend_severity_actions,
+    )
+
+    thresh = get_severity_thresholds("spider mites")
+    assert thresh["moderate"] == 3
+    assert thresh["severe"] == 6
+    assert classify_pest_severity(1, "spider mites") == "low"
+    assert classify_pest_severity(3, "spider mites") == "moderate"
+    assert classify_pest_severity(6, "spider mites") == "severe"
+
+    counts = {"spider mites": 4, "unknown": 1}
+    severity = assess_pest_severity(counts)
+    assert severity["spider mites"] == "moderate"
+    assert severity["unknown"] == "low"
+    index = calculate_severity_index(severity)
+    assert index > 1.0
+    actions = recommend_severity_actions(counts)
+    assert "spider mites" in actions
+    assert actions["spider mites"]

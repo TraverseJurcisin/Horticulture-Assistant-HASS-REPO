@@ -28,6 +28,9 @@ STAGE_THRESHOLD_FILE = "pest_thresholds_by_stage.json"
 RISK_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_FILE = "pest_scouting_methods.json"
 EFFECTIVE_FILE = "beneficial_effective_days.json"
+SEVERITY_THRESHOLDS_FILE = "pest_severity_thresholds.json"
+SEVERITY_SCORES_FILE = "pest_severity_scores.json"
+SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
 
 
 
@@ -49,6 +52,12 @@ _STAGE_THRESHOLDS: Dict[str, Dict[str, Dict[str, int]]] = load_dataset(
 _RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_MOD_FILE)
 _SCOUT_METHODS: Dict[str, str] = load_dataset(SCOUTING_FILE)
 _EFFECTIVE_DAYS: Dict[str, int] = load_dataset(EFFECTIVE_FILE)
+_RAW_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(SEVERITY_THRESHOLDS_FILE)
+_SEVERITY_THRESHOLDS: Dict[str, Dict[str, int]] = {
+    normalize_key(k): v for k, v in _RAW_THRESHOLDS.items()
+}
+_SEVERITY_SCORES: Dict[str, float] = load_dataset(SEVERITY_SCORES_FILE)
+_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -91,6 +100,67 @@ def get_pest_resistance(plant_type: str, pest: str) -> float | None:
     data = _RESISTANCE.get(normalize_key(plant_type), {})
     value = data.get(normalize_key(pest))
     return float(value) if isinstance(value, (int, float)) else None
+
+
+def get_severity_thresholds(pest: str | None = None) -> Dict[str, int]:
+    """Return severity thresholds for ``pest`` or the default scale."""
+
+    key = normalize_key(pest) if pest else "scale"
+    data = _SEVERITY_THRESHOLDS.get(key)
+    if not isinstance(data, Mapping):
+        data = _SEVERITY_THRESHOLDS.get("scale", {})
+    result: Dict[str, int] = {}
+    for k in ("moderate", "severe"):
+        v = data.get(k)
+        if isinstance(v, (int, float)):
+            result[k] = int(v)
+    return result
+
+
+def classify_pest_severity(count: int, pest: str | None = None) -> str:
+    """Return ``low``, ``moderate`` or ``severe`` based on ``count``."""
+
+    thresholds = get_severity_thresholds(pest)
+    moderate = thresholds.get("moderate", float("inf"))
+    severe = thresholds.get("severe", float("inf"))
+    if count >= severe:
+        return "severe"
+    if count >= moderate:
+        return "moderate"
+    return "low"
+
+
+def assess_pest_severity(counts: Mapping[str, int]) -> Dict[str, str]:
+    """Return severity classification for each pest count entry."""
+
+    return {p: classify_pest_severity(int(c), p) for p, c in counts.items()}
+
+
+def calculate_severity_index(severity_map: Mapping[str, str]) -> float:
+    """Return average numeric severity score for ``severity_map``."""
+
+    if not severity_map:
+        return 0.0
+
+    total = 0.0
+    count = 0
+    for level in severity_map.values():
+        try:
+            total += float(_SEVERITY_SCORES.get(level, 0))
+            count += 1
+        except (TypeError, ValueError):
+            continue
+    return total / count if count else 0.0
+
+
+def recommend_severity_actions(counts: Mapping[str, int]) -> Dict[str, str]:
+    """Return actions based on assessed pest population severity."""
+
+    severity = assess_pest_severity(counts)
+    actions: Dict[str, str] = {}
+    for pest, level in severity.items():
+        actions[pest] = _SEVERITY_ACTIONS.get(level, "")
+    return actions
 
 
 def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
@@ -407,6 +477,11 @@ __all__ = [
     "get_organic_controls",
     "recommend_organic_controls",
     "get_pest_lifecycle",
+    "get_severity_thresholds",
+    "classify_pest_severity",
+    "assess_pest_severity",
+    "calculate_severity_index",
+    "recommend_severity_actions",
     "get_monitoring_interval",
     "get_pest_threshold",
     "get_scouting_method",
