@@ -6,6 +6,10 @@ def test_environment_tips_basic():
     assert tips["high_temp"].startswith("Provide shade")
     assert "citrus" in list_supported_plants()
 
+    lettuce = get_environment_tips("lettuce")
+    assert lettuce["high_temp"].startswith("Provide shade")
+    assert "lettuce" in list_supported_plants()
+
 
 def test_environment_tips_stage_specific():
     tips = get_environment_tips("citrus", "fruiting")
