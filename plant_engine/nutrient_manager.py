@@ -49,6 +49,7 @@ __all__ = [
     "score_nutrient_levels",
     "score_nutrient_series",
     "calculate_deficiency_index",
+    "calculate_deficiency_index_series",
     "recommend_ratio_adjustments",
     "calculate_nutrient_adjustments",
     "get_tag_modifier",
@@ -326,6 +327,17 @@ def calculate_deficiency_index(
         return 0.0
 
     return _deficiency_index_for_targets(current_levels, targets)
+
+
+def calculate_deficiency_index_series(
+    series: Iterable[Mapping[str, float]], plant_type: str, stage: str
+) -> float:
+    """Return the average deficiency index for a sequence of readings."""
+
+    indices = [calculate_deficiency_index(s, plant_type, stage) for s in series]
+    if not indices:
+        return 0.0
+    return round(sum(indices) / len(indices), 1)
 
 
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
