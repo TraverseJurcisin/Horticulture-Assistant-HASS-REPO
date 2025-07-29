@@ -1,6 +1,12 @@
-"""Calculate nutrient use efficiency from application and yield logs."""
+"""Nutrient use efficiency helpers.
+
+This module calculates nutrient use efficiency (NUE) from recorded nutrient
+applications and crop yield logs.  It also compares computed values to
+recommended targets loaded from :data:`nutrient_efficiency_targets.json`.
+"""
 
 import os
+from functools import lru_cache
 from pathlib import Path
 from typing import Dict, Tuple, Mapping, Any
 
@@ -19,13 +25,13 @@ TARGET_FILE = "nutrient_efficiency_targets.json"
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
 # repository's ``data`` directory is not writable.
-NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
-YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
+NUTRIENT_DIR = Path(os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied"))
+YIELD_DIR = Path(os.getenv("HORTICULTURE_YIELD_DIR", "data/yield"))
 
 def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     """Return total nutrients applied (mg) and total yield (g)."""
 
-    path_nutrients = Path(NUTRIENT_DIR) / f"{plant_id}.json"
+    path_nutrients = NUTRIENT_DIR / f"{plant_id}.json"
     if not path_nutrients.exists():
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
 
@@ -36,7 +42,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
         for k, v in entry.get("nutrients_mg", {}).items():
             total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
 
-    path_yield = Path(YIELD_DIR) / f"{plant_id}.json"
+    path_yield = YIELD_DIR / f"{plant_id}.json"
     if not path_yield.exists():
         raise FileNotFoundError(f"No yield record found for {plant_id}")
 
@@ -71,8 +77,14 @@ def calculate_nue_for_nutrient(plant_id: str, nutrient: str) -> float | None:
     return round(total_yield_g / g_applied, 2) if g_applied else None
 
 
+@lru_cache(maxsize=None)
 def _load_targets(plant_type: str) -> Dict[str, float]:
-    """Return NUE targets for ``plant_type`` from the dataset."""
+    """Return NUE targets for ``plant_type`` from the dataset.
+
+    Results are cached so repeated evaluations avoid disk access. Call
+    :func:`functools.lru_cache`.cache_clear() on this function if underlying
+    datasets change during runtime.
+    """
 
     data = load_dataset(TARGET_FILE)
     return data.get(normalize_key(plant_type), {}) if isinstance(data, Mapping) else {}
