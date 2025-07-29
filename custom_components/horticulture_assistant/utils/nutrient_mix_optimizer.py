@@ -1,6 +1,8 @@
 """Helpers for cost-optimized nutrient mix generation."""
 from __future__ import annotations
 
+"""Helpers for computing cost optimised fertigation mixes."""
+
 from dataclasses import dataclass
 from typing import Dict, Any, Mapping
 
@@ -34,7 +36,8 @@ DEFAULT_FERTILIZERS = {
 
 
 def _compute_totals(targets: Mapping[str, float], volume_l: float) -> Dict[str, float]:
-    """Return total nutrient mass (mg) for ppm targets."""
+    """Return total nutrient mass (mg) for ``volume_l`` of solution."""
+
     return {nut: ppm * volume_l for nut, ppm in targets.items()}
 
 
@@ -43,13 +46,42 @@ def optimize_mix(
     stage: str,
     volume_l: float,
     *,
+    num_plants: int = 1,
     ph: float | None = None,
     root_temp_c: float | None = None,
     use_synergy: bool = False,
     fertilizers: Mapping[str, str] | None = None,
     purity_overrides: Mapping[str, float] | None = None,
 ) -> OptimizedMix:
-    """Return fertigation plan adjusted for environment conditions."""
+    """Return optimized fertigation schedule and estimated cost.
+
+    Parameters
+    ----------
+    plant_type : str
+        Crop identifier used for guideline lookup.
+    stage : str
+        Growth stage name (e.g. ``"vegetative"``).
+    volume_l : float
+        Total solution volume in liters. Must be positive.
+    num_plants : int, optional
+        Number of plants the solution is shared between. Defaults to ``1``.
+    ph : float, optional
+        Current nutrient solution pH used for adjustments.
+    root_temp_c : float, optional
+        Root zone temperature in Celsius for adjustment.
+    use_synergy : bool, optional
+        When ``True`` nutrient synergy factors are applied.
+    fertilizers : Mapping[str, str] | None, optional
+        Mapping of nutrient code to fertilizer identifier. Defaults to
+        :data:`DEFAULT_FERTILIZERS`.
+    purity_overrides : Mapping[str, float] | None, optional
+        Override nutrient purity fractions when provided.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    if num_plants <= 0:
+        raise ValueError("num_plants must be positive")
 
     targets = get_environment_adjusted_levels(
         plant_type,
@@ -63,7 +95,7 @@ def optimize_mix(
 
     totals = _compute_totals(targets, volume_l)
     ferts = fertilizers or DEFAULT_FERTILIZERS
-    schedule = _schedule_from_totals(totals, 1, ferts, purity_overrides)
+    schedule = _schedule_from_totals(totals, num_plants, ferts, purity_overrides)
 
     from custom_components.horticulture_assistant.fertilizer_formulator import estimate_mix_cost
 
@@ -71,6 +103,7 @@ def optimize_mix(
     diagnostics = {
         "targets_ppm": targets,
         "volume_l": volume_l,
+        "num_plants": num_plants,
     }
     return OptimizedMix(schedule, cost, diagnostics)
 
