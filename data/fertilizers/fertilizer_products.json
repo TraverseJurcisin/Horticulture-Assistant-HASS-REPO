@@ -238,5 +238,157 @@
       "Magnesium Carbonate (MgCO3)": null,
       "Calcium Sulfate (CaSO42H2O)": null
     }
+  },
+  "cyco_grow_a": {
+    "product_name": "Cyco Grow A 2-0-0",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.0
+    }
+  },
+  "cyco_grow_b": {
+    "product_name": "Cyco Grow B 2-2-6",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  "cyco_bloom_a": {
+    "product_name": "Cyco Bloom A 3-0-2",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 2.0
+    }
+  },
+  "cyco_bloom_b": {
+    "product_name": "Cyco Bloom B 1-5-6",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  "cyco_b1_boost": {
+    "product_name": "Cyco B1 Boost 2-1-4",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 4.0
+    }
+  },
+  "cyco_dr_repair": {
+    "product_name": "Cyco Dr. Repair 3-0-0",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.0
+    }
+  },
+  "cyco_potash_plus": {
+    "product_name": "Cyco Potash Plus 0-4-6",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 6.0
+    }
+  },
+  "cyco_ryzofuel": {
+    "product_name": "Cyco Ryzofuel 0-0-0.2",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.2
+    }
+  },
+  "cyco_silica": {
+    "product_name": "Cyco Silica 0-0-3",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 3.0
+    }
+  },
+  "cyco_swell": {
+    "product_name": "Cyco Swell 1-5-3",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 3.0
+    }
+  },
+  "cyco_suga_rush": {
+    "product_name": "Cyco Suga Rush 0-0.5-0.3",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.5,
+      "Soluble Potash (K2O)": 0.3
+    }
+  },
+  "cyco_supa_stiky": {
+    "product_name": "Cyco Supa Stiky 0.6-3-2",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.6,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 2.0
+    }
+  },
+  "cyco_uptake": {
+    "product_name": "Cyco Uptake 0-0-0",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.0
+    }
+  },
+  "cyco_kleanse": {
+    "product_name": "Cyco Kleanse 0-0-0",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.0
+    }
+  },
+  "cyco_zyme": {
+    "product_name": "Cyco Zyme 0.01-0.3-0.2",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.01,
+      "Available Phosphoric Acid (P2O5)": 0.3,
+      "Soluble Potash (K2O)": 0.2
+    }
+  },
+  "cyco_commercial_grow": {
+    "product_name": "Cyco Commercial Grow 10-5-13",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 13.0
+    }
+  },
+  "cyco_commercial_bloom": {
+    "product_name": "Cyco Commercial Bloom 8-6-11",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 11.0
+    }
+  },
+  "cyclone_rooting_gel": {
+    "product_name": "Cyclone Rooting Gel",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 0.0,
+      "Soluble Potash (K2O)": 0.0
+    }
+  },
+  "cyco_xl": {
+    "product_name": "Cyco XL 0-40-0",
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.0,
+      "Available Phosphoric Acid (P2O5)": 40.0,
+      "Soluble Potash (K2O)": 0.0
+    }
   }
 }
