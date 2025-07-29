@@ -5,6 +5,7 @@ from __future__ import annotations
 from functools import lru_cache
 from datetime import date, timedelta
 from typing import Dict, Mapping, Iterable
+from dataclasses import dataclass
 
 from .nutrient_interactions import check_imbalances
 from .toxicity_manager import check_toxicities
@@ -53,6 +54,26 @@ _STOCK_RECIPES: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(STOCK_R
 _LOSS_FACTORS: Dict[str, Dict[str, float]] = load_dataset(LOSS_FACTOR_DATA)
 _INJECTORS: Dict[str, float] = load_dataset(INJECTOR_DATA)
 _INJECTOR_FLOW_RATES: Dict[str, float] = load_dataset(FLOW_RATE_DATA)
+
+
+@dataclass(slots=True)
+class FertigationResult:
+    """Structured result from :func:`recommend_precise_fertigation_with_injection`."""
+
+    schedule: Dict[str, float]
+    cost_total: float
+    cost_breakdown: Dict[str, float]
+    warnings: Dict[str, Dict[str, float]]
+    diagnostics: Dict[str, Dict[str, float]]
+    injection_volumes: Dict[str, float]
+
+    def __iter__(self):
+        yield self.schedule
+        yield self.cost_total
+        yield self.cost_breakdown
+        yield self.warnings
+        yield self.diagnostics
+        yield self.injection_volumes
 
 
 @lru_cache(maxsize=None)
@@ -447,6 +468,7 @@ __all__ = [
     "generate_cycle_fertigation_plan",
     "generate_cycle_fertigation_plan_with_cost",
     "optimize_fertigation_schedule",
+    "FertigationResult",
     "recommend_precise_fertigation",
     "recommend_precise_fertigation_with_injection",
     "recommend_cost_optimized_fertigation_with_injection",
@@ -1026,14 +1048,7 @@ def recommend_precise_fertigation_with_injection(
     include_micro: bool = False,
     micro_fertilizers: Mapping[str, str] | None = None,
     use_synergy: bool = False,
-) -> tuple[
-    Dict[str, float],
-    float,
-    Dict[str, float],
-    Dict[str, Dict[str, float]],
-    Dict[str, Dict[str, float]],
-    Dict[str, float],
-]:
+) -> FertigationResult:
     """Return precise fertigation plan with stock solution injection volumes."""
 
     schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
@@ -1055,13 +1070,13 @@ def recommend_precise_fertigation_with_injection(
     ppm_levels = calculate_mix_ppm(schedule, volume_l)
     injection = recommend_stock_solution_injection(ppm_levels, volume_l)
 
-    return (
-        schedule,
-        total,
-        breakdown,
-        warnings,
-        diagnostics,
-        injection,
+    return FertigationResult(
+        schedule=schedule,
+        cost_total=total,
+        cost_breakdown=breakdown,
+        warnings=warnings,
+        diagnostics=diagnostics,
+        injection_volumes=injection,
     )
 
 

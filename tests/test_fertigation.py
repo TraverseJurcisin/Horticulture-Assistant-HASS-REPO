@@ -258,7 +258,7 @@ def test_recommend_precise_fertigation_with_injection():
         "K": "intrepid_granular_potash_0_0_60",
     }
 
-    sched, total, breakdown, warnings, diag, inject = recommend_precise_fertigation_with_injection(
+    result = recommend_precise_fertigation_with_injection(
         "tomato",
         "vegetative",
         10.0,
@@ -266,8 +266,11 @@ def test_recommend_precise_fertigation_with_injection():
         include_micro=False,
     )
 
-    assert sched
-    assert inject
+    # tuple unpacking remains supported
+    sched, total, *_ = result
+    assert sched == result.schedule
+    assert result.injection_volumes
+    assert total == result.cost_total
     assert total >= 0
 
 

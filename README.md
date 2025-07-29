@@ -332,7 +332,8 @@ useful commands is available in [`docs/scripts_overview.md`](docs/scripts_overvi
 - `fertigation_plan.py` creates a JSON fertigation schedule for any crop stage.
 - `precision_fertigation.py` generates a detailed fertigation plan with stock
   solution injection volumes. Use `--use-synergy` to apply nutrient synergy
-  adjustments.
+  adjustments. The output is now returned as a `FertigationResult` dataclass
+  containing schedule, cost and injection details.
 - `growth_stage_targets.py` prints stage durations with environment and nutrient
   targets plus an optional harvest prediction.
 - `environment_optimize.py` prints recommended environment adjustments for
