@@ -40,6 +40,10 @@ class BaseAIModel(Protocol):
         """Return updated thresholds for ``data``."""
         raise NotImplementedError
 
+    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+        """Asynchronously return updated thresholds for ``data``."""
+        return self.adjust_thresholds(data)
+
 # === Mock model ===
 
 class MockAIModel:
@@ -62,6 +66,10 @@ class MockAIModel:
                 adjusted[key] = value
 
         return adjusted
+
+    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+        """Asynchronous wrapper for :meth:`adjust_thresholds`."""
+        return self.adjust_thresholds(data)
 
 
 # === OpenAI API wrapper ===
@@ -104,6 +112,39 @@ class OpenAIModel:
         except json.JSONDecodeError as exc:
             raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
 
+    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+        """Asynchronously return updated thresholds via OpenAI."""
+        if openai is None:
+            raise RuntimeError("openai package is not installed")
+        if not self.config.api_key:
+            raise RuntimeError("OPENAI_API_KEY not set in environment.")
+
+        openai.api_key = self.config.api_key
+        response = await openai.ChatCompletion.acreate(
+            model=self.config.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert horticulturist AI. "
+                        "You receive plant data including nutrient thresholds, lifecycle stage, and sensor data. "
+                        "Return a dictionary of updated nutrient thresholds based on optimal plant performance."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": f"Input data:\n{json.dumps(data, indent=2)}",
+                },
+            ],
+            temperature=self.config.temperature,
+        )
+
+        text = response["choices"][0]["message"]["content"]
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
+
 
 # === Public Interface ===
 
@@ -119,3 +160,10 @@ def analyze(data: Dict, config: AIModelConfig | None = None) -> Dict:
 
     model = get_model(config)
     return model.adjust_thresholds(data)
+
+
+async def analyze_async(data: Dict, config: AIModelConfig | None = None) -> Dict:
+    """Asynchronously return updated thresholds using the configured AI model."""
+
+    model = get_model(config)
+    return await model.adjust_thresholds_async(data)

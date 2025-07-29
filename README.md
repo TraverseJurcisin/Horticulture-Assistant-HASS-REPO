@@ -77,6 +77,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 ### Automation & AI
 - Dynamic thresholds based on growth stage history
 - Optional OpenAI or offline models for nutrient planning
+- Async API helpers for non-blocking AI analysis
 - Irrigation and fertigation switches with approval queues
 - Configurable irrigation zones with shared solenoids
 - Watering interval defaults to drought tolerance when stage data is missing
