@@ -9,6 +9,8 @@ time span.
 from functools import lru_cache
 from typing import Dict, Mapping
 
+from plant_engine.root_temperature import get_uptake_factor
+
 from plant_engine.utils import load_dataset, normalize_key
 
 DATA_FILE = "total_nutrient_requirements.json"
@@ -60,4 +62,38 @@ def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, f
     return {nutrient: round(value * days, 2) for nutrient, value in daily.items()}
 
 
-__all__ = ["get_requirements", "calculate_deficit", "calculate_cumulative_requirements"]
+def get_temperature_adjusted_requirements(
+    plant_type: str, root_temp_c: float
+) -> Dict[str, float]:
+    """Return daily requirements adjusted for root zone temperature."""
+
+    base = get_requirements(plant_type)
+    if not base:
+        return {}
+
+    factor = get_uptake_factor(root_temp_c, plant_type)
+    if factor <= 0:
+        return {nutrient: 0.0 for nutrient in base}
+
+    return {nutrient: round(value / factor, 2) for nutrient, value in base.items()}
+
+
+def calculate_temperature_adjusted_cumulative_requirements(
+    plant_type: str, days: int, root_temp_c: float
+) -> Dict[str, float]:
+    """Return total nutrient needs adjusted for root zone temperature."""
+
+    if days <= 0:
+        return {}
+
+    daily = get_temperature_adjusted_requirements(plant_type, root_temp_c)
+    return {nutrient: round(value * days, 2) for nutrient, value in daily.items()}
+
+
+__all__ = [
+    "get_requirements",
+    "calculate_deficit",
+    "calculate_cumulative_requirements",
+    "get_temperature_adjusted_requirements",
+    "calculate_temperature_adjusted_cumulative_requirements",
+]
