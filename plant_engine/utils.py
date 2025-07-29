@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import math
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
@@ -361,14 +362,30 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
     return sorted(str(k) for k in dataset.keys())
 
 
-def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
+def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     """Return a normalized ``(low, high)`` tuple or ``None`` if invalid.
 
-    ``value`` may be any iterable containing at least two numeric entries. The
-    numbers are converted to ``float`` and sorted so that the lower value is
-    returned first. If any conversion fails or either number is non-finite the
-    function safely returns ``None`` instead of raising an exception.
+    ``value`` may be an iterable with at least two numeric entries or a string
+    containing two numbers separated by non-numeric characters.  The numbers are
+    converted to ``float`` and returned in ascending order.  If conversion fails
+    or either number is non-finite the function safely returns ``None`` instead
+    of raising an exception.
     """
+
+    # Support simple string formats like ``"1-2"`` or ``"1 to 2"``
+    if isinstance(value, str):
+        parts = re.findall(r"(?<!\d)-?\d+(?:\.\d+)?", value)
+        if len(parts) >= 2:
+            try:
+                low, high = float(parts[0]), float(parts[1])
+            except ValueError:
+                return None
+            if not (math.isfinite(low) and math.isfinite(high)):
+                return None
+            if low > high:
+                low, high = high, low
+            return low, high
+        return None
 
     try:
         iterator = iter(value)

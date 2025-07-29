@@ -13,6 +13,14 @@ def test_parse_range_invalid():
     assert parse_range("bad") is None
 
 
+def test_parse_range_string_dash():
+    assert parse_range("1-3") == (1.0, 3.0)
+
+
+def test_parse_range_string_words():
+    assert parse_range("4 to 6") == (4.0, 6.0)
+
+
 def test_parse_range_extra_items():
     assert parse_range([1, 2, 3]) == (1.0, 2.0)
 
