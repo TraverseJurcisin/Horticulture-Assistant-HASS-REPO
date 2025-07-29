@@ -56,6 +56,7 @@ from plant_engine.environment_manager import (
     evaluate_leaf_temperature_stress,
     score_environment,
     score_environment_series,
+    score_environment_dataframe,
     score_environment_components,
     optimize_environment,
     calculate_environment_metrics,
@@ -1148,3 +1149,18 @@ def test_get_frost_dates_and_is_frost_free():
 
     assert is_frost_free(datetime.date(2024, 5, 1), "zone_6")
     assert not is_frost_free(datetime.date(2024, 3, 1), "zone_6")
+
+
+def test_score_environment_dataframe():
+    import pandas as pd
+
+    df = pd.DataFrame(
+        [
+            {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450},
+            {"temp_c": 18, "humidity_pct": 50, "light_ppfd": 100, "co2_ppm": 800},
+        ]
+    )
+    scores = score_environment_dataframe(df, "citrus", "seedling")
+    assert len(scores) == 2
+    assert scores.iloc[0] > scores.iloc[1]
+
