@@ -106,7 +106,11 @@ def calculate_toxicity_index(
     if not thresholds:
         return 0.0
 
-    from .nutrient_manager import get_nutrient_weight
+    # Reload nutrient manager so weight lookups honor any overlay changes
+    import importlib
+    from . import nutrient_manager as nm
+    nm = importlib.reload(nm)
+    get_nutrient_weight = nm.get_nutrient_weight
 
     total_weight = 0.0
     score = 0.0
