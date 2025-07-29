@@ -19,6 +19,7 @@ __all__ = [
     "save_json",
     "load_data",
     "load_dataset",
+    "async_load_dataset",
     "load_datasets",
     "lazy_dataset",
     "load_dataset_df",
@@ -272,6 +273,14 @@ def load_dataset(filename: str) -> Dict[str, Any]:
                 data = extra
 
     return data
+
+
+async def async_load_dataset(filename: str) -> Dict[str, Any]:
+    """Asynchronously load dataset ``filename`` in a thread."""
+
+    import asyncio
+
+    return await asyncio.to_thread(load_dataset, filename)
 
 
 def lazy_dataset(filename: str):
