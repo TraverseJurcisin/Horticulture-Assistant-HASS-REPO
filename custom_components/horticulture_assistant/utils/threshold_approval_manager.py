@@ -11,7 +11,7 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     plants_path,
     data_path,
 )
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, Iterable
 
 from homeassistant.core import HomeAssistant
 
@@ -33,6 +33,8 @@ def _load_json(path: str | Path) -> Any:
 
 
 def _load_pending(path: str) -> Tuple[Dict[str, Any], Any]:
+    """Return normalized mapping of pending approvals and the raw data."""
+
     data = _load_json(path)
     if not data:
         return {}, data
@@ -58,20 +60,30 @@ def _save_json(path: str | Path, data: Any) -> None:
     _strict_save_json(str(path), data)
 
 
-def _save_pending(path: str, pending: Dict[str, Any], original: Any) -> None:
-    """Write updated ``pending`` mapping back to ``path`` preserving format."""
+def _serialize_pending(pending: Dict[str, Any], original: Any) -> Any:
+    """Return ``pending`` converted to the same structure as ``original``.
+
+    ``pending`` is stored as a mapping keyed by plant ID internally but the
+    on-disk representation may be a list of entries or a single object. This
+    helper ensures the updated mapping is written back in the same format it was
+    loaded from so tooling using either style continues to work.
+    """
 
     if isinstance(original, list):
-        data = list(pending.values())
-    elif isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
-        data = next(iter(pending.values()), {})
-    else:
-        data = pending
-    _save_json(path, data)
+        return list(pending.values())
+    if isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
+        return next(iter(pending.values()), {})
+    return pending
 
 
-def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
-    """Apply approved threshold changes from pending approvals to plant profiles."""
+def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
+    """Apply approved threshold changes from ``pending_approvals.json``.
+
+    Returns the number of threshold values that were updated across all
+    plant profiles. The location of ``pending_approvals.json`` and the plant
+    profiles directory are derived from ``hass`` when provided, mirroring the
+    path helpers used by the integration.
+    """
     base_data_dir = Path(data_path(hass))
     base_plants_dir = Path(plants_path(hass))
     pending_file_path = base_data_dir / "pending_approvals.json"
@@ -149,17 +161,7 @@ def apply_threshold_approvals(hass: HomeAssistant = None) -> None:
 
     # Write the updated pending approvals back to file (removing applied changes)
     try:
-        # Determine output structure type (same format as original)
-        output_data = None
-        if isinstance(pending_data, list):
-            output_data = list(pending_dict.values())
-        elif isinstance(pending_data, dict) and any(
-            k in ("plant_id", "changes", "timestamp") for k in pending_data.keys()
-        ):
-            output_data = next(iter(pending_dict.values())) if pending_dict else {}
-        else:
-            output_data = pending_dict
-
+        output_data = _serialize_pending(pending_dict, pending_data)
         _save_json(pending_file_path, output_data)
     except Exception as e:  # pragma: no cover - unexpected errors
         _LOGGER.error("Failed to update pending approvals file: %s", e)
