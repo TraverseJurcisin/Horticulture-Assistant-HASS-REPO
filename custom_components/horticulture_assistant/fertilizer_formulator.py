@@ -15,7 +15,7 @@ from plant_engine.wsda_lookup import (
     recommend_products_for_nutrient as _wsda_recommend,
 )
 
-from plant_engine import nutrient_manager
+from plant_engine import nutrient_manager, fertilizer_limits
 
 from .catalog import CATALOG, Fertilizer
 
@@ -414,19 +414,7 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
 def check_dilution_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
     """Return grams per liter exceeding recommended dilution limits."""
 
-    if volume_l <= 0:
-        raise ValueError("volume_l must be positive")
-
-    limits = CATALOG.dilution_limits()
-    warnings: Dict[str, float] = {}
-    for fert_id, grams in schedule.items():
-        limit = limits.get(fert_id)
-        if limit is None:
-            continue
-        grams_per_l = grams / volume_l
-        if grams_per_l > limit:
-            warnings[fert_id] = round(grams_per_l - limit, 2)
-    return warnings
+    return fertilizer_limits.check_schedule(schedule, volume_l)
 
 
 def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dict[str, str]]:

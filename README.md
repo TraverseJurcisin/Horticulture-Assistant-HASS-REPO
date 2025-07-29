@@ -279,7 +279,7 @@ Important categories include:
 - **Water usage guidelines** – typical daily irrigation volumes by stage
 - **Canopy area** – approximate canopy area by growth stage for transpiration calculations
 - **Fertilizer and product data** – WSDA fertilizer database and recipe suggestions
-- **Fertilizer dilution limits** – recommended maximum grams per liter for common products
+- **Fertilizer dilution limits** – recommended maximum grams per liter for common products, including the General Hydroponics Flora series
 - **Fertilizer ingredient profiles** – nutrient content, chemical formulas, physical form and aliases for raw salts. Use `plant_engine.ingredients.get_ingredient_profile()` to access them programmatically
 - **Stock solution recipes** – injection ratios for automated fertigation
 - **Fertilizer compatibility** – warnings for mixing products that react poorly
