@@ -41,6 +41,7 @@
     "rain_capture_efficiency.json": "Fraction of rainfall captured by different ground covers.",
     "water_quality_thresholds.json": "Maximum safe levels of common water analytes.",
     "water_quality_actions.json": "Recommended remediation steps for poor water quality.",
+    "water_salinity_tolerance.json": "Max EC of irrigation water tolerated by common crops.",
     "leaf_tissue_targets.json": "Optimal nutrient ranges for leaf tissue analysis.",
     "leaf_tissue_score_weights.json": "Scoring weights for leaf tissue nutrients.",
     "leaf_temperature_guidelines.json": "Recommended leaf temperature ranges for optimal photosynthesis.",

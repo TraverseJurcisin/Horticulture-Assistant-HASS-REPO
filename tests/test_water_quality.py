@@ -69,3 +69,11 @@ def test_max_safe_blend_ratio():
     b = {"Na": 20, "Cl": 20}
     ratio = water_quality.max_safe_blend_ratio(a, b)
     assert 0.49 <= ratio <= 0.51
+
+
+def test_salinity_limits():
+    plants = water_quality.list_salinity_plants()
+    assert "tomato" in plants
+    limit = water_quality.get_salinity_limit("tomato")
+    assert limit == 1.5
+    assert water_quality.get_salinity_limit("unknown") is None
