@@ -169,3 +169,9 @@ def test_normalize_sensor_values():
     data = {"a": "one", "b": ["two", "three"], "c": 5}
     result = loader._normalize_sensor_values(data)
     assert result == {"a": ["one"], "b": ["two", "three"], "c": ["5"]}
+
+
+def test_profile_base_dir_env(monkeypatch, tmp_path):
+    monkeypatch.setenv("HORTICULTURE_PROFILE_DIR", str(tmp_path))
+    assert loader.profile_base_dir() == tmp_path
+    monkeypatch.delenv("HORTICULTURE_PROFILE_DIR")

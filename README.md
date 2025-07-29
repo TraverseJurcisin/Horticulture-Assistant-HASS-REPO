@@ -157,6 +157,10 @@ else:
     plant_profile_loader.save_profile_by_id("myplant", profile)
 ```
 
+Profiles are loaded from the `plants/` directory by default. Set the
+`HORTICULTURE_PROFILE_DIR` environment variable to use a custom location without
+changing your code.
+
 ### Zones and Irrigation Scheduling
 Profiles can declare a `zone_id` to group plants under a common irrigation
 zone. Zones and their associated solenoids are defined in `zones.json`. Each

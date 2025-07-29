@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 from functools import lru_cache
+import os
 from typing import Any, Mapping, Iterable
 
 from .json_io import load_json, save_json
@@ -20,6 +21,16 @@ _LOGGER = logging.getLogger(__name__)
 
 # Default directory containing individual plant profiles
 DEFAULT_BASE_DIR = Path("plants")
+# Environment variable override for the profile directory
+PROFILE_DIR_ENV = "HORTICULTURE_PROFILE_DIR"
+
+
+def profile_base_dir(base_dir: str | Path | None = None) -> Path:
+    """Return the directory used for plant profiles."""
+    if base_dir is not None:
+        return Path(base_dir)
+    env = os.getenv(PROFILE_DIR_ENV)
+    return Path(env).expanduser() if env else DEFAULT_BASE_DIR
 # Supported file extensions for profile files
 PROFILE_EXTS: tuple[str, ...] = (".json", ".yaml", ".yml")
 
@@ -102,7 +113,7 @@ def get_profile_path(
         Path of the profile file if found, otherwise ``None``.
     """
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = profile_base_dir(base_dir)
     for ext in exts:
         path = directory / f"{plant_id}{ext}"
         if path.is_file():
@@ -197,7 +208,7 @@ def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dic
     if path:
         return load_profile_from_path(path)
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = profile_base_dir(base_dir)
     _LOGGER.error(
         "No plant profile file found for plant_id '%s' in directory %s",
         plant_id,
@@ -230,7 +241,7 @@ def list_available_profiles(base_dir: str | Path | None = None) -> list[str]:
     not exist an empty list is returned.
     """
 
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = profile_base_dir(base_dir)
     if not directory.is_dir():
         return []
 
@@ -257,7 +268,7 @@ def save_profile_by_id(
     plant_id: str, profile: dict, base_dir: str | Path | None = None
 ) -> bool:
     """Write profile for ``plant_id`` under ``base_dir``."""
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = profile_base_dir(base_dir)
     file_path = directory / f"{plant_id}.json"
     return save_profile_to_path(profile, file_path)
 
@@ -269,7 +280,7 @@ def profile_exists(plant_id: str, base_dir: str | Path | None = None) -> bool:
 
 def delete_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> bool:
     """Delete the profile file for ``plant_id``."""
-    directory = Path(base_dir) if base_dir else DEFAULT_BASE_DIR
+    directory = profile_base_dir(base_dir)
     deleted = False
     for ext in PROFILE_EXTS:
         path = directory / f"{plant_id}{ext}"
@@ -439,4 +450,5 @@ __all__ = [
     "update_profile_sensors",
     "attach_profile_sensors",
     "detach_profile_sensors",
+    "profile_base_dir",
 ]
