@@ -1,3 +1,5 @@
+"""Simplified daily processing pipeline for individual plant profiles."""
+
 import os
 import logging
 from typing import Dict, Mapping, Any
@@ -67,6 +69,42 @@ def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
     return {k: float(v) for k, v in normalized.items() if k in keys}
 
 
+def _generate_environment_actions(profile: Mapping[str, Any], env: Mapping[str, Any]) -> tuple[dict, dict, dict]:
+    """Return environment, pest and disease action recommendations."""
+
+    plant_type = profile.get("plant_type", "")
+    stage = profile.get("stage")
+
+    env_actions = recommend_environment_adjustments(env, plant_type, stage)
+    pest_actions = recommend_pest_treatments(plant_type, profile.get("observed_pests", []))
+    disease_actions = recommend_disease_treatments(plant_type, profile.get("observed_diseases", []))
+
+    return env_actions, pest_actions, disease_actions
+
+
+def _get_nutrient_targets(profile: Mapping[str, Any]) -> tuple[dict, dict]:
+    """Return guideline nutrient levels and stage-adjusted targets."""
+
+    plant_type = profile.get("plant_type", "")
+    stage_name = str(profile.get("stage", ""))
+
+    guidelines = get_recommended_levels(plant_type, stage_name)
+    mult = get_stage_multiplier(stage_name)
+    targets = {n: round(v * mult, 2) for n, v in guidelines.items()} if guidelines else {}
+
+    return guidelines, targets
+
+
+def _write_report(plant_id: str, report: Mapping[str, Any]) -> None:
+    """Persist ``report`` to the ``OUTPUT_DIR`` directory."""
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    out_path = Path(OUTPUT_DIR) / f"{plant_id}.json"
+    save_json(out_path, report)
+    _LOGGER.info("Daily report saved for %s", plant_id)
+
+
+
 def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     """Return a consolidated daily report for ``plant_id``.
 
@@ -85,16 +123,8 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     transp = compute_transpiration(profile, env)
     transp_ml = transp["transpiration_ml_day"]
 
-    # Step 2: Environmental actions
-    env_actions = recommend_environment_adjustments(
-        env, profile.get("plant_type", ""), profile.get("stage")
-    )
-    pest_actions = recommend_pest_treatments(
-        profile.get("plant_type", ""), profile.get("observed_pests", [])
-    )
-    disease_actions = recommend_disease_treatments(
-        profile.get("plant_type", ""), profile.get("observed_diseases", [])
-    )
+    # Step 2: Environment, pest and disease actions
+    env_actions, pest_actions, disease_actions = _generate_environment_actions(profile, env)
 
     # Step 3: Growth index
     growth = update_growth_index(plant_id, env, transp_ml)
@@ -122,16 +152,7 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
         nue = {}
 
     # Step 6: Recommended nutrient levels
-    guidelines = get_recommended_levels(
-        profile.get("plant_type", ""),
-        profile.get("stage", "")
-    )
-
-    stage_name = str(profile.get("stage", ""))
-    stage_mult = get_stage_multiplier(stage_name)
-    nutrient_targets = {
-        n: round(v * stage_mult, 2) for n, v in guidelines.items()
-    } if guidelines else {}
+    guidelines, nutrient_targets = _get_nutrient_targets(profile)
 
     env_current = _normalize_env(env)
     env_opt = optimize_environment(
@@ -176,9 +197,6 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
         queue_threshold_updates(plant_id, profile["thresholds"], recommendations)
 
     # Step 9: Write daily report JSON
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    out_path = Path(OUTPUT_DIR) / f"{plant_id}.json"
-    save_json(out_path, report)
-    _LOGGER.info("Daily report saved for %s", plant_id)
+    _write_report(plant_id, report)
 
     return report
