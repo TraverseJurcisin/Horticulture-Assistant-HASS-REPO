@@ -314,6 +314,8 @@ Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
 - `OPENAI_API_KEY` and `OPENAI_TEMPERATURE` configure the AI integration if you prefer not to store these values in the config file
 Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately. Use `plant_engine.utils.load_dataset_df()` to quickly load any dataset into a `pandas.DataFrame` for analysis. JSON, YAML and now CSV/TSV files are supported.
+For asynchronous applications, `plant_engine.utils.async_load_dataset()`
+returns the merged dataset without blocking the event loop.
 
 See [docs/custom_data_dirs.md](docs/custom_data_dirs.md) for examples of how to
 structure overlay and extra dataset directories.
