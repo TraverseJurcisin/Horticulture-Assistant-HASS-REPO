@@ -16,6 +16,7 @@ PRICE_FILE = "pesticide_prices.json"
 ACTIVE_FILE = "pesticide_active_ingredients.json"
 EFFICACY_FILE = "pesticide_efficacy.json"
 PEST_ROTATION_FILE = "pest_rotation_moas.json"
+CARRIER_FILE = "pesticide_carrier_volumes.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA = lazy_dataset(DATA_FILE)
@@ -28,6 +29,7 @@ _PRICES = lazy_dataset(PRICE_FILE)
 _ACTIVE = lazy_dataset(ACTIVE_FILE)
 _EFFICACY = lazy_dataset(EFFICACY_FILE)
 _PEST_ROTATION = lazy_dataset(PEST_ROTATION_FILE)
+_CARRIER = lazy_dataset(CARRIER_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -57,6 +59,8 @@ __all__ = [
     "recommend_rotation_products",
     "estimate_rotation_plan_cost",
     "suggest_pest_rotation_plan",
+    "get_carrier_volume",
+    "calculate_application_volume",
 ]
 
 
@@ -285,6 +289,27 @@ def calculate_application_amount(product: str, volume_l: float) -> float:
     if rate is None:
         raise KeyError(f"Application rate for '{product}' is not defined")
     return round(rate * volume_l, 3)
+
+
+def get_carrier_volume(product: str) -> float | None:
+    """Return recommended spray solution volume (L/ha) for ``product``."""
+
+    value = _CARRIER().get(product.lower())
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - invalid data
+        return None
+
+
+def calculate_application_volume(product: str, area_m2: float) -> float:
+    """Return liters of spray solution needed for ``area_m2``."""
+
+    if area_m2 <= 0:
+        raise ValueError("area_m2 must be positive")
+    carrier = get_carrier_volume(product)
+    if carrier is None:
+        raise KeyError(f"Carrier volume for '{product}' is not defined")
+    return round(carrier * (area_m2 / 10000.0), 2)
 
 
 def summarize_pesticide_restrictions(

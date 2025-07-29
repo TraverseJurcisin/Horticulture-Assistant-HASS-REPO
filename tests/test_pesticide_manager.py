@@ -159,6 +159,22 @@ def test_calculate_application_amount():
         calculate_application_amount("unknown", 1.0)
 
 
+def test_carrier_volume_helpers():
+    from plant_engine.pesticide_manager import (
+        get_carrier_volume,
+        calculate_application_volume,
+    )
+
+    assert get_carrier_volume("spinosad") == 500
+    volume = calculate_application_volume("spinosad", 2000)
+    assert volume == 100.0
+
+    with pytest.raises(ValueError):
+        calculate_application_volume("spinosad", 0)
+    with pytest.raises(KeyError):
+        calculate_application_volume("unknown", 100)
+
+
 def test_summarize_pesticide_restrictions():
     from plant_engine.pesticide_manager import (
         summarize_pesticide_restrictions,
