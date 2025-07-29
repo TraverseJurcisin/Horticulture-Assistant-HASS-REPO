@@ -25,13 +25,24 @@ TARGET_FILE = "nutrient_efficiency_targets.json"
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
 # repository's ``data`` directory is not writable.
-NUTRIENT_DIR = Path(os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied"))
-YIELD_DIR = Path(os.getenv("HORTICULTURE_YIELD_DIR", "data/yield"))
+NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
+YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
+
+
+def _to_path(value: str | Path) -> Path:
+    """Return ``value`` as a :class:`Path`.
+
+    Tests monkeypatch :data:`NUTRIENT_DIR` and :data:`YIELD_DIR` with raw strings.
+    This helper normalizes both strings and :class:`Path` instances to ``Path``
+    objects to avoid type errors when performing path operations.
+    """
+
+    return value if isinstance(value, Path) else Path(value)
 
 def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     """Return total nutrients applied (mg) and total yield (g)."""
 
-    path_nutrients = NUTRIENT_DIR / f"{plant_id}.json"
+    path_nutrients = _to_path(NUTRIENT_DIR) / f"{plant_id}.json"
     if not path_nutrients.exists():
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
 
@@ -42,7 +53,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
         for k, v in entry.get("nutrients_mg", {}).items():
             total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
 
-    path_yield = YIELD_DIR / f"{plant_id}.json"
+    path_yield = _to_path(YIELD_DIR) / f"{plant_id}.json"
     if not path_yield.exists():
         raise FileNotFoundError(f"No yield record found for {plant_id}")
 
