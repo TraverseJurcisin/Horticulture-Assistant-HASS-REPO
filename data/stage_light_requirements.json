@@ -1,0 +1,13 @@
+{
+  "citrus": {
+    "vegetative": 500,
+    "flowering": 700,
+    "fruiting": 800
+  },
+  "tomato": {
+    "seedling": 200,
+    "vegetative": 400,
+    "flowering": 600,
+    "fruiting": 650
+  }
+}
