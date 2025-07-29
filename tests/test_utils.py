@@ -107,3 +107,10 @@ def test_load_datasets(monkeypatch, tmp_path):
     data = utils.load_datasets("one.json", "two.json")
     assert data == {"one.json": {"a": 1}, "two.json": {"b": 2}}
 
+
+@pytest.mark.asyncio
+async def test_async_load_dataset():
+    data = await utils.async_load_dataset("soil_moisture_guidelines.json")
+    assert isinstance(data, dict)
+    assert "citrus" in data
+

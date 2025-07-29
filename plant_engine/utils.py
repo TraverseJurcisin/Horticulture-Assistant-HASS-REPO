@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import math
+import asyncio
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
@@ -17,6 +18,7 @@ __all__ = [
     "save_json",
     "load_data",
     "load_dataset",
+    "async_load_dataset",
     "load_datasets",
     "lazy_dataset",
     "load_dataset_df",
@@ -273,6 +275,12 @@ def load_dataset(filename: str) -> Dict[str, Any]:
                 data = extra
 
     return data
+
+
+async def async_load_dataset(filename: str) -> Dict[str, Any]:
+    """Asynchronously return dataset ``filename`` using a thread executor."""
+
+    return await asyncio.to_thread(load_dataset, filename)
 
 
 def lazy_dataset(filename: str):
