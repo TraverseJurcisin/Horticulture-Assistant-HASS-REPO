@@ -243,9 +243,9 @@ def test_calculate_heat_index_invalid():
 def test_calculate_heat_index_series():
     temps = [30, 32, 28]
     humidity = [70, 65, 80]
-    expected = sum(
-        calculate_heat_index(t, h) for t, h in zip(temps, humidity)
-    ) / len(temps)
+    expected = sum(calculate_heat_index(t, h) for t, h in zip(temps, humidity)) / len(
+        temps
+    )
     assert calculate_heat_index_series(temps, humidity) == round(expected, 2)
 
     with pytest.raises(ValueError):
@@ -1170,3 +1170,17 @@ def test_score_environment_dataframe():
     assert len(scores) == 2
     assert scores.iloc[0] > scores.iloc[1]
 
+
+def test_add_environment_alias():
+    from plant_engine import environment_manager as em
+
+    em.add_environment_alias("temp_c", "air_temp")
+    try:
+        assert em.resolve_environment_alias("air_temp") == "temp_c"
+        data = em.normalize_environment_readings(
+            {"air_temp": 20}, include_unknown=False
+        )
+        assert data["temp_c"] == 20
+    finally:
+        em.ENV_ALIASES["temp_c"].remove("air_temp")
+        em._ALIAS_MAP.pop("air_temp", None)
