@@ -1,8 +1,9 @@
-"""Generate nutrient schedules across growth stages."""
+"""Helpers to generate nutrient schedules across growth stages."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Dict, List
 
 from plant_engine import growth_stage
@@ -18,6 +19,7 @@ class StageNutrientTotals:
     totals: Dict[str, float]
 
 
+@lru_cache(maxsize=None)
 def generate_nutrient_schedule(plant_type: str) -> List[StageNutrientTotals]:
     """Return per-stage nutrient totals for ``plant_type``.
 
@@ -35,7 +37,7 @@ def generate_nutrient_schedule(plant_type: str) -> List[StageNutrientTotals]:
         daily = stage_nutrient_requirements.get_stage_requirements(
             plant_type, stage
         )
-        totals = {n: round(v * duration, 2) for n, v in daily.items()}
+        totals = {nut: round(val * duration, 2) for nut, val in daily.items()}
         schedule.append(StageNutrientTotals(stage, duration, totals))
     return schedule
 
