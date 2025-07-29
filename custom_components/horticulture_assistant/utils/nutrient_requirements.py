@@ -45,6 +45,21 @@ def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> D
     }
 
 
+def calculate_surplus(current_totals: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+    """Return nutrient amounts exceeding the recommended totals."""
+
+    required = get_requirements(plant_type)
+    surplus: Dict[str, float] = {}
+    for nutrient, target in required.items():
+        try:
+            current = float(current_totals.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        if current > target:
+            surplus[nutrient] = round(current - target, 2)
+    return surplus
+
+
 def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, float]:
     """Return total nutrient needs over ``days``.
 
@@ -60,4 +75,9 @@ def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, f
     return {nutrient: round(value * days, 2) for nutrient, value in daily.items()}
 
 
-__all__ = ["get_requirements", "calculate_deficit", "calculate_cumulative_requirements"]
+__all__ = [
+    "get_requirements",
+    "calculate_deficit",
+    "calculate_surplus",
+    "calculate_cumulative_requirements",
+]

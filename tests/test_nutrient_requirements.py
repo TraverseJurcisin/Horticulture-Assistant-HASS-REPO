@@ -1,6 +1,7 @@
 from custom_components.horticulture_assistant.utils.nutrient_requirements import (
     get_requirements,
     calculate_deficit,
+    calculate_surplus,
     calculate_cumulative_requirements,
 )
 
@@ -23,6 +24,11 @@ def test_calculate_deficit():
     assert deficits["N"] == 50
     assert deficits["P"] == 30
     assert deficits["K"] == 150
+
+
+def test_calculate_surplus():
+    surplus = calculate_surplus({"N": 200, "P": 70, "K": 150}, "citrus")
+    assert surplus == {"N": 50, "P": 20}
 
 
 def test_cumulative_requirements():
