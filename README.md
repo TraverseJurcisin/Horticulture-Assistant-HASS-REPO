@@ -282,6 +282,7 @@ Important categories include:
 - **Fertilizer compatibility** – warnings for mixing products that react poorly
 - **Soil pH guidelines** – optimal soil pH ranges for supported crops
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
+- **Root temperature optima** – recommended ideal root zone temperature by crop
 - **Media properties** – recommended pH range and water retention for common substrates
 - **Drought tolerance** – maximum days plants can remain dry before watering
 - **Hardiness zone temperatures** – minimum winter temperatures by USDA zone
