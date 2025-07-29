@@ -17,6 +17,10 @@ except ModuleNotFoundError:  # pragma: no cover - optional dependency
 USE_OPENAI = False  # Toggle between mock mode and API
 OPENAI_MODEL = "gpt-4o"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", None)  # Stored in environment variable
+try:
+    OPENAI_TEMPERATURE = float(os.getenv("OPENAI_TEMPERATURE", "0.3"))
+except (TypeError, ValueError):
+    OPENAI_TEMPERATURE = 0.3
 
 
 @dataclass(slots=True)
@@ -26,6 +30,7 @@ class AIModelConfig:
     use_openai: bool = USE_OPENAI
     model: str = OPENAI_MODEL
     api_key: str | None = OPENAI_API_KEY
+    temperature: float = OPENAI_TEMPERATURE
 
 
 class BaseAIModel(Protocol):
@@ -90,7 +95,7 @@ class OpenAIModel:
                     "content": f"Input data:\n{json.dumps(data, indent=2)}",
                 },
             ],
-            temperature=0.3,
+            temperature=self.config.temperature,
         )
 
         text = response["choices"][0]["message"]["content"]

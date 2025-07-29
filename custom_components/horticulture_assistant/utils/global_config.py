@@ -13,6 +13,7 @@ DEFAULTS: Dict[str, Any] = {
     "use_openai": False,
     "openai_api_key": "",
     "openai_model": "gpt-4o",
+    "openai_temperature": 0.3,
     "default_threshold_mode": "profile",
 }
 

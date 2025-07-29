@@ -17,6 +17,7 @@ CONF_DEFAULT_THRESHOLD_MODE = "default_threshold_mode"
 CONF_USE_OPENAI = "use_openai"
 CONF_OPENAI_MODEL = "openai_model"
 CONF_OPENAI_API_KEY = "openai_api_key"
+CONF_OPENAI_TEMPERATURE = "openai_temperature"
 
 # Threshold modes
 THRESHOLD_MODE_MANUAL = "manual"

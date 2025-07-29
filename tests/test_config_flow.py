@@ -189,6 +189,7 @@ def test_settings_flow(tmp_path):
                 "use_openai": True,
                 "openai_api_key": "key",
                 "openai_model": "model",
+                "openai_temperature": 0.7,
                 "default_threshold_mode": config_flow.THRESHOLD_MODE_MANUAL,
             }
         )
@@ -198,6 +199,7 @@ def test_settings_flow(tmp_path):
     assert cfg["use_openai"] is True
     assert cfg["openai_api_key"] == "key"
     assert cfg["openai_model"] == "model"
+    assert cfg["openai_temperature"] == 0.7
     assert cfg["default_threshold_mode"] == config_flow.THRESHOLD_MODE_MANUAL
 
 
