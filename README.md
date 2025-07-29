@@ -107,6 +107,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Root uptake factor calculation from soil temperature
 - Summaries of reentry and harvest restrictions for applied pesticides
 - Automated fertigation planning with cost estimates
+- Holistic crop advice combining environment, nutrient and pest recommendations
 - Yield-based revenue and profit projections
 - Expected profit forecasts based on estimated production costs
 - ET₀-based daily water usage estimates using crop coefficients

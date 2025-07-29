@@ -41,6 +41,7 @@ from .nutrient_conversion import (
     get_conversion_factors,
     oxide_to_elemental,
 )
+from .crop_advisor import CropAdvice, generate_crop_advice
 from .growth_rate_manager import (
     list_supported_plants as list_growth_rate_plants,
     get_daily_growth_rate,
@@ -72,6 +73,8 @@ __all__ = sorted(
         "estimate_growth",
         "get_conversion_factors",
         "oxide_to_elemental",
+        "CropAdvice",
+        "generate_crop_advice",
     }
 )
 
