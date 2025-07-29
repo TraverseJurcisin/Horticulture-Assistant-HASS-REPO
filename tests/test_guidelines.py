@@ -22,6 +22,7 @@ def test_get_guideline_summary():
     assert data["water_daily_ml"] == 0.0
     assert data["disease_thresholds"]["citrus_greening"] == 1
     assert data["pest_monitor_interval_days"] == 3
+    assert data["pest_sample_size"] == 25
     assert data["disease_monitor_interval_days"] == 4
     # citrus has no task entries so all lists should be empty
     assert all(len(t) == 0 for t in data["stage_tasks"].values())
