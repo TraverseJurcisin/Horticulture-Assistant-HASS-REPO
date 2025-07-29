@@ -25,6 +25,10 @@ from .nutrient_absorption import (
     get_absorption_rates,
     apply_absorption_rates,
 )
+from .nutrient_mobilization import (
+    get_mobilization_factor,
+    apply_mobilization,
+)
 from .precipitation_risk import (
     list_supported_plants as list_precipitation_plants,
     estimate_precipitation_risk,
@@ -47,6 +51,8 @@ __all__ = sorted(
         "list_absorption_stages",
         "get_absorption_rates",
         "apply_absorption_rates",
+        "get_mobilization_factor",
+        "apply_mobilization",
         "list_precipitation_plants",
         "estimate_precipitation_risk",
         "generate_fertigation_plan",

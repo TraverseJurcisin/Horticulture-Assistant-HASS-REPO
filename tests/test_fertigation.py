@@ -535,3 +535,16 @@ def test_calculate_injection_volumes():
     with pytest.raises(KeyError):
         calculate_injection_volumes({"unknown": 1.0}, 10.0, "dosatron_1pct")
 
+
+def test_correction_schedule_with_mobilization():
+    result = recommend_correction_schedule(
+        {"N": 50},
+        "citrus",
+        "vegetative",
+        volume_l=5.0,
+        purity={"N": 1.0},
+        use_mobilization=True,
+    )
+    # deficit 30 ppm × 5L = 150 mg; mobilization factor 0.8 → 187.5 mg
+    assert result["N"] == pytest.approx(0.19, rel=1e-2)
+

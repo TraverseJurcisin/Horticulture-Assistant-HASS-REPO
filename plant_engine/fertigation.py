@@ -576,6 +576,7 @@ def recommend_correction_schedule(
     purity: Mapping[str, float] | None,
     *,
     product: str | None = None,
+    use_mobilization: bool = False,
 ) -> Dict[str, float]:
     """Return grams of fertilizer needed to correct deficiencies.
 
@@ -590,6 +591,12 @@ def recommend_correction_schedule(
         corrections[nutrient] = _ppm_to_grams(
             ppm, volume_l, purity_map.get(nutrient, 1.0)
         )
+
+    if use_mobilization and corrections:
+        from .nutrient_mobilization import apply_mobilization
+
+        corrections = apply_mobilization(corrections, plant_type)
+
     return corrections
 
 
