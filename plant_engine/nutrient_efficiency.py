@@ -6,9 +6,10 @@ recommended targets loaded from :data:`nutrient_efficiency_targets.json`.
 """
 
 import os
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Dict, Tuple, Mapping, Any
+from typing import Any, Dict, Mapping, Tuple
 
 from .utils import load_json, load_dataset, normalize_key
 
@@ -17,6 +18,8 @@ __all__ = [
     "calculate_nue_for_nutrient",
     "evaluate_nue",
     "evaluate_plant_nue",
+    "NUEReport",
+    "calculate_nue_report",
 ]
 
 # Dataset containing NUE targets per crop
@@ -25,13 +28,13 @@ TARGET_FILE = "nutrient_efficiency_targets.json"
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the
 # repository's ``data`` directory is not writable.
-NUTRIENT_DIR = Path(os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied"))
-YIELD_DIR = Path(os.getenv("HORTICULTURE_YIELD_DIR", "data/yield"))
+NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
+YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
 def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     """Return total nutrients applied (mg) and total yield (g)."""
 
-    path_nutrients = NUTRIENT_DIR / f"{plant_id}.json"
+    path_nutrients = Path(NUTRIENT_DIR) / f"{plant_id}.json"
     if not path_nutrients.exists():
         raise FileNotFoundError(f"No nutrient record found for {plant_id}")
 
@@ -42,7 +45,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
         for k, v in entry.get("nutrients_mg", {}).items():
             total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
 
-    path_yield = YIELD_DIR / f"{plant_id}.json"
+    path_yield = Path(YIELD_DIR) / f"{plant_id}.json"
     if not path_yield.exists():
         raise FileNotFoundError(f"No yield record found for {plant_id}")
 
@@ -132,4 +135,34 @@ def evaluate_plant_nue(plant_id: str, plant_type: str, tolerance: float = 0.1) -
     info = calculate_nue(plant_id)
     nue_map = info.get("nue", {})
     return evaluate_nue(nue_map, plant_type, tolerance)
+
+
+@dataclass(slots=True)
+class NUEReport:
+    """Structured NUE result with optional evaluation."""
+
+    plant_id: str
+    total_yield_g: float
+    nue: Dict[str, float | None]
+    evaluation: Dict[str, Dict[str, Any]] | None = None
+
+
+def calculate_nue_report(
+    plant_id: str,
+    plant_type: str | None = None,
+    tolerance: float = 0.1,
+) -> NUEReport:
+    """Return :class:`NUEReport` including optional evaluation."""
+
+    result = calculate_nue(plant_id)
+    evaluation = (
+        evaluate_nue(result["nue"], plant_type, tolerance) if plant_type else None
+    )
+    return NUEReport(
+        plant_id=str(result.get("plant_id")),
+        total_yield_g=float(result.get("total_yield_g", 0.0)),
+        nue=dict(result.get("nue", {})),
+        evaluation=evaluation,
+    )
+
 

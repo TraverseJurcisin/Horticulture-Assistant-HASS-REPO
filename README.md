@@ -101,6 +101,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Infiltration-aware irrigation burst scheduling
 - Cost-optimized fertigation plans with injection volumes
 - Risk-adjusted pest monitoring summaries and scheduling
+- Nutrient use efficiency reports with target comparisons
 - Automatic pesticide rotation planning
 - Root uptake factor calculation from soil temperature
 - Summaries of reentry and harvest restrictions for applied pesticides
