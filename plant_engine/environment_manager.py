@@ -48,6 +48,7 @@ SOIL_EC_DATA_FILE = "soil_ec_guidelines.json"
 LEAF_TEMP_DATA_FILE = "leaf_temperature_guidelines.json"
 SOIL_PH_DATA_FILE = "soil_ph_guidelines.json"
 FROST_DATES_FILE = "frost_dates.json"
+AIRFLOW_DATA_FILE = "airflow_guidelines.json"
 ALIAS_DATA_FILE = "environment_aliases.json"
 
 # map of dataset keys to human readable labels used when recommending
@@ -355,6 +356,7 @@ __all__ = [
     "get_target_co2",
     "get_target_light_intensity",
     "get_target_light_ratio",
+    "get_target_airflow",
     "get_target_soil_moisture",
     "get_target_soil_temperature",
     "get_target_soil_ec",
@@ -460,6 +462,7 @@ _SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
 _LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
 _FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
 _SOIL_PH_DATA: Dict[str, Any] = load_dataset(SOIL_PH_DATA_FILE)
+_AIRFLOW_DATA: Dict[str, Any] = load_dataset(AIRFLOW_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -2072,6 +2075,14 @@ def get_target_light_ratio(plant_type: str, stage: str | None = None) -> float |
     if stage is None:
         return None
     return get_red_blue_ratio(plant_type, stage)
+
+
+def get_target_airflow(
+    plant_type: str, stage: str | None = None
+) -> RangeTuple | None:
+    """Return recommended airflow range (CFM per m²) for a plant stage."""
+
+    return _lookup_range(_AIRFLOW_DATA, plant_type, stage)
 
 
 # Approximate mass of CO₂ in milligrams required per m³ to raise

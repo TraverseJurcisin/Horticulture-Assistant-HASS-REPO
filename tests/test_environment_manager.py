@@ -26,6 +26,7 @@ from plant_engine.environment_manager import (
     get_target_co2,
     get_target_light_intensity,
     get_target_light_ratio,
+    get_target_airflow,
     calculate_co2_injection,
     recommend_co2_injection,
     get_co2_price,
@@ -532,6 +533,11 @@ def test_get_target_light_ratio():
 def test_get_target_light_intensity():
     assert get_target_light_intensity("citrus", "seedling") == (150, 300)
     assert get_target_light_intensity("unknown") is None
+
+
+def test_get_target_airflow():
+    assert get_target_airflow("citrus", "seedling") == (0.5, 1.0)
+    assert get_target_airflow("unknown") is None
 
 
 def test_calculate_co2_injection():
