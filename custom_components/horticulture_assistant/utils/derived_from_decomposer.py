@@ -1,8 +1,9 @@
+"""Estimate fertilizer ingredients from a guaranteed analysis."""
+
 from typing import Dict, List, Tuple
 
-
-# Hypothetical molecular weights for common ingredients
-MOLECULAR_WEIGHTS = {
+# Simplified molecular weight fractions of common fertilizer ingredients.
+MOLECULAR_WEIGHTS: Dict[str, Dict[str, float]] = {
     "Ammonium Nitrate": {"N": 0.33},
     "Potassium Sulfate": {"K": 0.45, "S": 0.18},
     "Magnesium Sulfate Heptahydrate": {"Mg": 0.098, "S": 0.13},
@@ -16,49 +17,45 @@ MOLECULAR_WEIGHTS = {
     "Manganese EDTA": {"Mn": 0.10},
     "Sodium Borate": {"B": 0.11},
     "Sodium Molybdate": {"Mo": 0.39},
-    "EDTA": {"N": 0.00},  # Placeholder
-    # Add more as needed
+    "EDTA": {"N": 0.00},
 }
 
 
 def decompose_derived_from(
     guaranteed_analysis: Dict[str, float],
-    candidate_ingredients: List[str]
+    candidate_ingredients: List[str],
 ) -> List[Tuple[str, float]]:
-    """
-    Given a guaranteed analysis and a list of possible derived-from ingredients,
-    attempt to infer the ingredient breakdown.
+    """Return estimated ingredient fractions for a fertilizer label.
 
-    Returns:
-        List of tuples (ingredient, estimated inclusion rate as decimal fraction).
+    The ``candidate_ingredients`` list should contain possible "derived from"
+    ingredients in the order they appear on the label. For each ingredient the
+    function determines the limiting nutrient element and subtracts its
+    contribution from the remaining nutrients. The result is a list of tuples
+    ``(ingredient, fraction)`` where ``fraction`` represents the estimated
+    inclusion rate as a decimal fraction.
     """
-    estimated_composition = []
 
-    remaining_elements = guaranteed_analysis.copy()
+    estimated: List[Tuple[str, float]] = []
+    remaining = guaranteed_analysis.copy()
 
     for ingredient in candidate_ingredients:
-        if ingredient not in MOLECULAR_WEIGHTS:
+        weights = MOLECULAR_WEIGHTS.get(ingredient)
+        if not weights:
             continue
 
-        element_weights = MOLECULAR_WEIGHTS[ingredient]
+        limiting_ratio = float("inf")
+        for element, ratio in weights.items():
+            if element in remaining and ratio > 0:
+                possible = remaining[element] / ratio
+                if possible < limiting_ratio:
+                    limiting_ratio = possible
 
-        # Find the limiting element
-        limiting_element = None
-        limiting_ratio = float('inf')
+        if limiting_ratio is float("inf"):
+            continue
 
-        for element, ratio in element_weights.items():
-            if element in remaining_elements and ratio > 0:
-                possible_ratio = remaining_elements[element] / ratio
-                if possible_ratio < limiting_ratio:
-                    limiting_ratio = possible_ratio
-                    limiting_element = element
+        estimated.append((ingredient, round(limiting_ratio, 4)))
+        for element, ratio in weights.items():
+            if element in remaining:
+                remaining[element] = max(0.0, remaining[element] - ratio * limiting_ratio)
 
-        if limiting_element:
-            estimated_composition.append((ingredient, round(limiting_ratio, 4)))
-            # Subtract contribution
-            for element, ratio in element_weights.items():
-                if element in remaining_elements:
-                    contribution = ratio * limiting_ratio
-                    remaining_elements[element] = max(0, remaining_elements[element] - contribution)
-
-    return estimated_composition
+    return estimated
