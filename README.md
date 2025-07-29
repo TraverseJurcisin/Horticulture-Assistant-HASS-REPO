@@ -95,6 +95,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Combined nutrient management reports with correction schedules
 - Automatic fertigation mix recommendations using priced fertilizer data
 - Daily report files summarizing environment and nutrient targets
+- Growth stage nutrient schedules for precise fertilization planning
 - Environment score and quality rating for sensor data
 - Infiltration-aware irrigation burst scheduling
 - Cost-optimized fertigation plans with injection volumes
