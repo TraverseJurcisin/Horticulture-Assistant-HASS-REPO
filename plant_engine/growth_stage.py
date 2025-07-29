@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Dict, Any, List, Tuple
 from datetime import date, timedelta
 
+import pandas as pd
+
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "growth_stages.json"
@@ -52,6 +54,7 @@ __all__ = [
     "growth_stage_summary",
     "stage_bounds",
     "generate_stage_schedule",
+    "stage_schedule_df",
 ]
 
 
@@ -345,3 +348,15 @@ def generate_stage_schedule(plant_type: str, start_date: date) -> list[dict[str,
         current = end_date
 
     return schedule
+
+
+def stage_schedule_df(plant_type: str, start_date: date) -> "pd.DataFrame":
+    """Return stage schedule as a :class:`pandas.DataFrame`."""
+
+    schedule = generate_stage_schedule(plant_type, start_date)
+    if not schedule:
+        return pd.DataFrame()
+    df = pd.DataFrame(schedule)
+    df["start_date"] = pd.to_datetime(df["start_date"])  # type: ignore[arg-type]
+    df["end_date"] = pd.to_datetime(df["end_date"])  # type: ignore[arg-type]
+    return df
