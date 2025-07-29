@@ -10,6 +10,7 @@ stored in JSON for easy inspection and further analysis.
 import os
 import json
 import logging
+from dataclasses import dataclass, asdict
 from datetime import datetime, date
 from typing import Dict, List, Optional, Union, Mapping
 
@@ -29,6 +30,60 @@ _LOGGER = logging.getLogger(__name__)
 # Efficiency benchmark dataset
 EFFICIENCY_TARGET_FILE = "nutrient_efficiency_targets.json"
 _EFFICIENCY_TARGETS: Dict[str, Dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
+
+
+@dataclass(slots=True)
+class ApplicationRecord:
+    """Single fertilizer application log entry."""
+
+    date: date
+    nutrients: Dict[str, float]
+    stage: str
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, object]) -> "ApplicationRecord":
+        d = str(data.get("date")) if data.get("date") else date.today().isoformat()
+        try:
+            dt = datetime.strptime(d, "%Y-%m-%d").date()
+        except Exception:
+            dt = date.today()
+        raw = data.get("nutrients", {})
+        nutrients: Dict[str, float] = {}
+        if isinstance(raw, Mapping):
+            for k, v in raw.items():
+                try:
+                    nutrients[k] = float(v)
+                except (TypeError, ValueError):
+                    continue
+        stage = str(data.get("stage", "unknown"))
+        return cls(dt, nutrients, stage)
+
+    def as_dict(self) -> Dict[str, object]:
+        return {"date": self.date.isoformat(), "nutrients": self.nutrients, "stage": self.stage}
+
+
+@dataclass(slots=True)
+class YieldRecord:
+    """Yield entry used when computing efficiency."""
+
+    date: date
+    weight: float
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, object]) -> "YieldRecord":
+        d = str(data.get("date")) if data.get("date") else date.today().isoformat()
+        try:
+            dt = datetime.strptime(d, "%Y-%m-%d").date()
+        except Exception:
+            dt = date.today()
+        try:
+            weight = float(data.get("weight", 0.0))
+        except (TypeError, ValueError):
+            weight = 0.0
+        return cls(dt, weight)
+
+    def as_dict(self) -> Dict[str, object]:
+        return {"date": self.date.isoformat(), "weight": self.weight}
 
 
 def get_efficiency_targets(plant_type: str) -> Dict[str, float]:
@@ -372,12 +427,43 @@ class NutrientUseEfficiency:
                 summary[key][nut] = summary[key].get(nut, 0.0) + amt_val
         return summary
 
+    def average_weekly_usage(self, plant_id: str) -> Dict[str, float]:
+        """Return average weekly nutrient application for ``plant_id``."""
+
+        if plant_id not in self._usage_logs or not self._usage_logs[plant_id]:
+            return {}
+
+        records = [ApplicationRecord.from_dict(e) for e in self._usage_logs[plant_id]]
+        records.sort(key=lambda r: r.date)
+        start = records[0].date
+        end = records[-1].date
+        weeks = max(1, ((end - start).days // 7) + 1)
+        totals: Dict[str, float] = {}
+        for rec in records:
+            for nutrient, amt in rec.nutrients.items():
+                totals[nutrient] = totals.get(nutrient, 0.0) + amt
+        return {n: round(v / weeks, 2) for n, v in totals.items()}
+
     def _save_to_file(self) -> None:
         """Persist usage logs to ``self._data_file``."""
         os.makedirs(os.path.dirname(self._data_file) or ".", exist_ok=True)
         try:
             with open(self._data_file, "w", encoding="utf-8") as f:
-                json.dump(self._usage_logs, f, indent=2)
+                serializable = {}
+                for pid, entries in self._usage_logs.items():
+                    out: List[Dict[str, object]] = []
+                    for e in entries:
+                        if isinstance(e, dict):
+                            out.append(e)
+                        elif isinstance(e, ApplicationRecord):
+                            out.append(e.as_dict())
+                        else:
+                            try:
+                                out.append(asdict(e))
+                            except Exception:
+                                continue
+                    serializable[pid] = out
+                json.dump(serializable, f, indent=2)
         except Exception as e:
             _LOGGER.error(
                 "Failed to write nutrient use logs to %s: %s", self._data_file, e

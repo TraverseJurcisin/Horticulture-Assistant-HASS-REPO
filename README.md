@@ -101,6 +101,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - DataFrame-based environment metrics for bulk analysis
 - Infiltration-aware irrigation burst scheduling
 - Cost-optimized fertigation plans with injection volumes
+- Weekly nutrient usage metrics for efficiency tracking
 - Risk-adjusted pest monitoring summaries and scheduling
 - Automatic pesticide rotation planning
 - Root uptake factor calculation from soil temperature
