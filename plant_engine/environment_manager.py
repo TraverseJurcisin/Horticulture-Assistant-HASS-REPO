@@ -447,6 +447,7 @@ __all__ = [
     "calculate_environment_deviation_series",
     "EnvironmentSummary",
     "calculate_environment_metrics_series",
+    "calculate_environment_metrics_dataframe",
     "generate_stage_environment_plan",
     "generate_stage_growth_plan",
     "generate_cycle_growth_plan",
@@ -2389,6 +2390,42 @@ def calculate_environment_metrics_series(
         plant_type=plant_type,
         stage=stage,
     )
+
+
+def calculate_environment_metrics_dataframe(
+    df: "pd.DataFrame",
+    plant_type: str | None = None,
+    stage: str | None = None,
+) -> "pd.DataFrame":
+    """Return :class:`EnvironmentMetrics` for each row of ``df``.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DataFrame containing ``temp_c`` and ``humidity_pct`` columns along with
+        optional additional environment readings.
+    plant_type : str, optional
+        Plant type used for calculations involving transpiration.
+    stage : str, optional
+        Growth stage for stage-specific parameters.
+    """
+
+    import pandas as pd
+
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
+
+    def _row_metrics(row: pd.Series) -> dict[str, float | None]:
+        metrics = calculate_environment_metrics(
+            row.get("temp_c"),
+            row.get("humidity_pct"),
+            env=row,
+            plant_type=plant_type,
+            stage=stage,
+        )
+        return metrics.as_dict()
+
+    return df.apply(_row_metrics, axis=1, result_type="expand")
 
 
 def optimize_environment(
