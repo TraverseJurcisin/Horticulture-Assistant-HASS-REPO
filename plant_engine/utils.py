@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import math
+import time
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
@@ -275,12 +276,39 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     return data
 
 
-def lazy_dataset(filename: str):
-    """Return a cached loader callable for dataset ``filename``."""
+def lazy_dataset(filename: str, *, ttl: float | None = None):
+    """Return a cached loader callable for dataset ``filename``.
 
-    @lru_cache(maxsize=None)
-    def _loader():
-        return load_dataset(filename)
+    Parameters
+    ----------
+    filename : str
+        Name of the dataset file.
+    ttl : float | None, optional
+        Optional time-to-live in seconds. When provided the cached dataset is
+        automatically reloaded when ``ttl`` seconds have elapsed or when the
+        underlying file's modification time changes. This allows long running
+        processes to pick up dataset updates without restarting.
+    """
+
+    cache_data: Dict[str, Any] | None = None
+    cache_mtime: float | None = None
+    cache_timestamp: float | None = None
+
+    def _loader() -> Dict[str, Any]:
+        nonlocal cache_data, cache_mtime, cache_timestamp
+        path = dataset_file(filename)
+        mtime = path.stat().st_mtime if path else None
+        now = time.time()
+        if (
+            cache_data is None
+            or (ttl is not None and cache_timestamp is not None and now - cache_timestamp > ttl)
+            or mtime != cache_mtime
+        ):
+            load_dataset.cache_clear()
+            cache_data = load_dataset(filename)
+            cache_mtime = mtime
+            cache_timestamp = now
+        return cache_data  # type: ignore[return-value]
 
     return _loader
 

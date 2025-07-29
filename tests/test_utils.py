@@ -1,6 +1,7 @@
 import pytest
 
 import importlib
+import time
 
 import plant_engine.utils as utils
 from plant_engine.utils import (
@@ -106,4 +107,21 @@ def test_load_datasets(monkeypatch, tmp_path):
     importlib.reload(utils)
     data = utils.load_datasets("one.json", "two.json")
     assert data == {"one.json": {"a": 1}, "two.json": {"b": 2}}
+
+
+def test_lazy_dataset_ttl_refresh(monkeypatch, tmp_path):
+    base = tmp_path / "data"
+    base.mkdir()
+    data_file = base / "sample.json"
+    data_file.write_text('{"a":1}')
+    monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
+    clear_dataset_cache()
+    import importlib
+    import plant_engine.utils as utils
+    importlib.reload(utils)
+    loader = utils.lazy_dataset("sample.json", ttl=0.1)
+    assert loader()["a"] == 1
+    data_file.write_text('{"a":2}')
+    time.sleep(0.2)
+    assert loader()["a"] == 2
 
