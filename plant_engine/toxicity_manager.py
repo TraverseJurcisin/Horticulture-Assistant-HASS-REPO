@@ -28,6 +28,7 @@ __all__ = [
     "diagnose_toxicities",
     "get_toxicity_treatment",
     "recommend_toxicity_treatments",
+    "calculate_toxicity_index",
 ]
 
 
@@ -88,3 +89,39 @@ def recommend_toxicity_treatments(
     """Return treatments for diagnosed nutrient toxicities."""
     excess = check_toxicities(current_levels, plant_type)
     return {n: get_toxicity_treatment(n) for n in excess}
+
+
+def calculate_toxicity_index(
+    current_levels: Mapping[str, float], plant_type: str
+) -> float:
+    """Return weighted toxicity index for current nutrient levels.
+
+    The index is 0 when all nutrients are within safe limits and increases
+    proportionally to how far levels exceed their toxicity thresholds.
+    Nutrient weights from :data:`nutrient_weights.json` are applied so
+    more important elements contribute more to the score.
+    """
+
+    thresholds = get_toxicity_thresholds(plant_type)
+    if not thresholds:
+        return 0.0
+
+    from .nutrient_manager import get_nutrient_weight
+
+    total_weight = 0.0
+    score = 0.0
+    for nutrient, limit in thresholds.items():
+        try:
+            current = float(current_levels.get(nutrient, 0.0))
+        except (TypeError, ValueError):
+            current = 0.0
+        if current <= limit:
+            continue
+        ratio = (current - limit) / limit
+        weight = get_nutrient_weight(nutrient)
+        score += weight * ratio
+        total_weight += weight
+
+    if total_weight == 0:
+        return 0.0
+    return round((score / total_weight) * 100, 1)
