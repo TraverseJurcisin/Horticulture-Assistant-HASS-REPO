@@ -14,6 +14,9 @@ PLATFORMS = ["sensor", "binary_sensor", "switch"]
 # Configuration
 CONF_ENABLE_AUTO_APPROVE = "enable_auto_approve"
 CONF_DEFAULT_THRESHOLD_MODE = "default_threshold_mode"
+CONF_USE_OPENAI = "use_openai"
+CONF_OPENAI_MODEL = "openai_model"
+CONF_OPENAI_API_KEY = "openai_api_key"
 
 # Threshold modes
 THRESHOLD_MODE_MANUAL = "manual"

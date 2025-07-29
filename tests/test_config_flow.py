@@ -172,6 +172,35 @@ def test_init_menu(monkeypatch):
     assert result["type"] == "menu"
 
 
+def test_settings_flow(tmp_path):
+    hass = types.SimpleNamespace(
+        config_entries=types.SimpleNamespace(async_entries=lambda domain: []),
+        config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts))),
+    )
+    flow = Flow()
+    flow.hass = hass
+
+    form = asyncio.run(flow.async_step_settings())
+    assert form["type"] == "form"
+
+    result = asyncio.run(
+        flow.async_step_settings(
+            {
+                "use_openai": True,
+                "openai_api_key": "key",
+                "openai_model": "model",
+                "default_threshold_mode": config_flow.THRESHOLD_MODE_MANUAL,
+            }
+        )
+    )
+    assert result["type"] == "menu"
+    cfg = config_flow.global_config.load_config(hass)
+    assert cfg["use_openai"] is True
+    assert cfg["openai_api_key"] == "key"
+    assert cfg["openai_model"] == "model"
+    assert cfg["default_threshold_mode"] == config_flow.THRESHOLD_MODE_MANUAL
+
+
 def test_subentry_flow(monkeypatch):
     recorded = {}
 

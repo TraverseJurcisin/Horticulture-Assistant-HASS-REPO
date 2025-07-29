@@ -45,7 +45,8 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 5. Open the entry's **Options** anytime to update the zone, enable auto‑approve or link sensors.
 6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
 7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
-8. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
+8. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage or the default threshold mode. These settings are stored in `<config>/data/horticulture_global_config.json`.
+9. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
 Each newly generated profile is also cached under `data/profile_cache/` so it can be uploaded to a public database in a future release. When you're ready to share new profiles, run the `upload_profile_cache.py` script to send them to the external service.

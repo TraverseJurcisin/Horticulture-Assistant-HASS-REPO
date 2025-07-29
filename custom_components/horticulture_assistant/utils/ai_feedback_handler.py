@@ -3,7 +3,13 @@ import json
 import logging
 from datetime import datetime
 
-from ..engine import ai_model
+from plant_engine import ai_model
+from ..const import (
+    CONF_OPENAI_API_KEY,
+    CONF_OPENAI_MODEL,
+    CONF_USE_OPENAI,
+)
+from . import global_config
 from custom_components.horticulture_assistant.utils.path_utils import (
     plants_path,
     data_path,
@@ -34,9 +40,15 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
     if "thresholds" not in daily_report:
         _LOGGER.warning("Daily report for plant %s is missing 'thresholds' data", plant_id)
         daily_report["thresholds"] = {}
-    # Call AI model to analyze the report
+    # Call AI model to analyze the report using global settings
+    cfg = global_config.load_config()
+    model_cfg = ai_model.AIModelConfig(
+        use_openai=cfg.get(CONF_USE_OPENAI, ai_model.USE_OPENAI),
+        model=cfg.get(CONF_OPENAI_MODEL, ai_model.OPENAI_MODEL),
+        api_key=cfg.get(CONF_OPENAI_API_KEY) or ai_model.OPENAI_API_KEY,
+    )
     try:
-        result = ai_model.analyze(daily_report)
+        result = ai_model.analyze(daily_report, model_cfg)
     except Exception as e:
         _LOGGER.error("AI model analysis failed for plant %s: %s", plant_id, e)
         return ""
