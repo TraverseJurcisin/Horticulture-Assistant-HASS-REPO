@@ -162,6 +162,8 @@
     "nutrient_availability_ph.json": "Relative nutrient availability by solution pH.",
     "nutrient_absorption_rates.json": "Estimated nutrient absorption rates for each growth stage.",
     "root_temperature_uptake.json": "Relative nutrient uptake efficiency by root zone temperature.",
+    "root_temperature_optima.json": "Optimal root zone temperature by crop."
+
     "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
     "pest_scientific_names.json": "Common pests mapped to their scientific names.",
     "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
