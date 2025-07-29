@@ -159,6 +159,7 @@
     "silicon_guidelines.json": "Recommended silicon (Si) ppm levels for each plant stage.",
     "stock_solution_concentrations.json": "Nutrient concentrations for standard stock solutions.",
     "stock_solution_recipes.json": "Recommended stock solution injection ratios by plant stage.",
+    "ec_adjustment_factors.json": "EC change per ml of stock solution per liter of nutrient mix.",
     "cold_stress_thresholds.json": "Temperature levels causing cold stress.",
     "disease_monitoring_intervals.json": "Recommended days between disease scouting events.",
     "disease_severity_actions.json": "Actions to take based on disease severity level.",
