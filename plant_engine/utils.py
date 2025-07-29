@@ -361,26 +361,46 @@ def list_dataset_entries(dataset: Mapping[str, Any]) -> list[str]:
     return sorted(str(k) for k in dataset.keys())
 
 
-def parse_range(value: Iterable[float]) -> tuple[float, float] | None:
+def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     """Return a normalized ``(low, high)`` tuple or ``None`` if invalid.
 
-    ``value`` may be any iterable containing at least two numeric entries. The
-    numbers are converted to ``float`` and sorted so that the lower value is
-    returned first. If any conversion fails or either number is non-finite the
-    function safely returns ``None`` instead of raising an exception.
+    ``value`` may be an iterable containing numeric entries or a string in the
+    form ``"low-high"``. The first two numbers found are converted to ``float``
+    and sorted so that the lower value is returned first. If conversion fails or
+    either number is non-finite the function safely returns ``None`` instead of
+    raising an exception.
     """
 
-    try:
-        iterator = iter(value)
-        low = float(next(iterator))
-        high = float(next(iterator))
-        if not (math.isfinite(low) and math.isfinite(high)):
+    numbers: list[float] = []
+    if isinstance(value, str):
+        import re
+
+        cleaned = re.sub(r"(?i)\bto\b", " ", value)
+        pattern = re.compile(r"(?<!\d)[-+]?\d*\.?\d+(?:e[-+]?\d+)?")
+        for match in pattern.finditer(cleaned):
+            try:
+                numbers.append(float(match.group()))
+            except ValueError:
+                continue
+            if len(numbers) == 2:
+                break
+    else:
+        try:
+            iterator = iter(value)
+            numbers.append(float(next(iterator)))
+            numbers.append(float(next(iterator)))
+        except (StopIteration, TypeError, ValueError):
             return None
-        if low > high:
-            low, high = high, low
-        return low, high
-    except (StopIteration, TypeError, ValueError):
+
+    if len(numbers) < 2:
         return None
+
+    low, high = numbers[0], numbers[1]
+    if not (math.isfinite(low) and math.isfinite(high)):
+        return None
+    if low > high:
+        low, high = high, low
+    return low, high
 
 
 def stage_value(
