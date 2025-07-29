@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import Dict, Mapping, Iterable
+import os
 
 from .constants import get_stage_multiplier
 
@@ -24,7 +25,8 @@ clear_dataset_cache()
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
-_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
+_WEIGHTS_CACHE: Dict[str, float] | None = None
+_WEIGHTS_ENV: tuple[str | None, str | None, str | None] | None = None
 _RAW_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
 # Normalize modifier keys for consistent lookups regardless of hyphen/space use
 _TAG_MODIFIERS: Dict[str, Dict[str, float]] = {
@@ -70,6 +72,21 @@ __all__ = [
     "get_environment_adjusted_levels",
     "calculate_deficiency_index_environment_adjusted",
 ]
+
+
+def _load_weights() -> Dict[str, float]:
+    """Return nutrient weight mapping reloaded if environment changed."""
+    global _WEIGHTS_CACHE, _WEIGHTS_ENV
+    env = (
+        os.getenv("HORTICULTURE_DATA_DIR"),
+        os.getenv("HORTICULTURE_EXTRA_DATA_DIRS"),
+        os.getenv("HORTICULTURE_OVERLAY_DIR"),
+    )
+    if _WEIGHTS_CACHE is None or _WEIGHTS_ENV != env:
+        clear_dataset_cache()
+        _WEIGHTS_CACHE = load_dataset(WEIGHT_DATA_FILE)
+        _WEIGHTS_ENV = env
+    return _WEIGHTS_CACHE or {}
 
 
 def _calc_diff(
@@ -137,7 +154,7 @@ def get_nutrient_weight(nutrient: str) -> float:
     """
 
     try:
-        return float(_WEIGHTS.get(nutrient, 1.0))
+        return float(_load_weights().get(nutrient, 1.0))
     except (TypeError, ValueError):
         return 1.0
 
