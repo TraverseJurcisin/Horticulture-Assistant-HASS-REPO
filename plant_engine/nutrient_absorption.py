@@ -5,7 +5,12 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import (
+    load_dataset,
+    normalize_key,
+    list_dataset_entries,
+    clean_float_map,
+)
 
 DATA_FILE = "nutrient_absorption_rates.json"
 
@@ -19,14 +24,7 @@ def _rates() -> Dict[str, Dict[str, float]]:
         if not isinstance(data, Mapping):
             continue
         stage_key = normalize_key(stage)
-        stage_rates: Dict[str, float] = {}
-        for nutrient, value in data.items():
-            try:
-                rate = float(value)
-            except (TypeError, ValueError):
-                continue
-            if rate > 0:
-                stage_rates[nutrient] = rate
+        stage_rates = clean_float_map(data)
         if stage_rates:
             rates[stage_key] = stage_rates
     return rates

@@ -9,6 +9,7 @@ from plant_engine.utils import (
     clear_dataset_cache,
     stage_value,
     load_stage_dataset_value,
+    clean_float_map,
 )
 
 
@@ -106,4 +107,9 @@ def test_load_datasets(monkeypatch, tmp_path):
     importlib.reload(utils)
     data = utils.load_datasets("one.json", "two.json")
     assert data == {"one.json": {"a": 1}, "two.json": {"b": 2}}
+
+
+def test_clean_float_map():
+    raw = {"a": "1", "b": 2, "c": "bad", "d": -1}
+    assert clean_float_map(raw) == {"a": 1.0, "b": 2.0}
 
