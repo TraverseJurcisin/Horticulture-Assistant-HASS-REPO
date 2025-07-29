@@ -24,7 +24,8 @@ clear_dataset_cache()
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
-_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
+def _load_weights() -> Dict[str, float]:
+    return load_dataset(WEIGHT_DATA_FILE)
 _RAW_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
 # Normalize modifier keys for consistent lookups regardless of hyphen/space use
 _TAG_MODIFIERS: Dict[str, Dict[str, float]] = {
@@ -136,8 +137,9 @@ def get_nutrient_weight(nutrient: str) -> float:
     If no weight is defined the default ``1.0`` is returned.
     """
 
+    weights = _load_weights()
     try:
-        return float(_WEIGHTS.get(nutrient, 1.0))
+        return float(weights.get(nutrient, 1.0))
     except (TypeError, ValueError):
         return 1.0
 

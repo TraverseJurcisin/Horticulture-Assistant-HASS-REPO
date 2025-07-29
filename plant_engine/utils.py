@@ -229,30 +229,52 @@ def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
     return result
 
 
-@lru_cache(maxsize=None)
+_DATASET_FILE_CACHE: dict[tuple[str, tuple[Path, ...]], Path | None] = {}
+
+
 def dataset_file(filename: str) -> Path | None:
-    """Return absolute path to ``filename`` if found in search paths.
+    """Return absolute path to ``filename`` honoring current search paths."""
 
-    Searches the configured dataset directories and optional overlay once and
-    caches the result for faster subsequent lookups. Use
-    :func:`clear_dataset_cache` when environment variables change so the search
-    path is refreshed.
-    """
+    paths = dataset_paths()
+    overlay = overlay_dir()
+    search_paths = (overlay, *paths) if overlay else paths
+    key = (filename, search_paths)
+    cached = _DATASET_FILE_CACHE.get(key)
+    if cached is not None:
+        return cached
 
-    for base in dataset_search_paths(include_overlay=True):
+    for base in search_paths:
         path = base / filename
         if path.exists():
+            _DATASET_FILE_CACHE[key] = path
             return path
 
+    _DATASET_FILE_CACHE[key] = None
     return None
 
 
-@lru_cache(maxsize=None)
+def _clear_dataset_file_cache() -> None:
+    _DATASET_FILE_CACHE.clear()
+
+
+dataset_file.cache_clear = _clear_dataset_file_cache  # type: ignore[attr-defined]
+
+
+_DATASET_CACHE: dict[tuple[str, tuple[Path, ...]], Dict[str, Any]] = {}
+
+
 def load_dataset(filename: str) -> Dict[str, Any]:
     """Return dataset ``filename`` merged with any overlay data."""
 
-    data: Dict[str, Any] = {}
     paths = dataset_paths()
+    overlay = overlay_dir()
+    search_paths = (*paths, overlay) if overlay else paths
+    key = (filename, search_paths)
+    cached = _DATASET_CACHE.get(key)
+    if cached is not None:
+        return cached
+
+    data: Dict[str, Any] = {}
     for base in paths:
         path = base / filename
         if path.exists():
@@ -262,17 +284,24 @@ def load_dataset(filename: str) -> Dict[str, Any]:
             else:
                 data = extra
 
-    overlay = overlay_dir()
     if overlay:
-        overlay_path = overlay / filename
-        if overlay_path.exists():
-            extra = load_data(str(overlay_path))
+        o_path = overlay / filename
+        if o_path.exists():
+            extra = load_data(str(o_path))
             if isinstance(extra, dict) and isinstance(data, dict):
                 deep_update(data, extra)
             else:
                 data = extra
 
+    _DATASET_CACHE[key] = data
     return data
+
+
+def _clear_dataset_cache() -> None:
+    _DATASET_CACHE.clear()
+
+
+load_dataset.cache_clear = _clear_dataset_cache  # type: ignore[attr-defined]
 
 
 def lazy_dataset(filename: str):
@@ -327,8 +356,8 @@ def clear_dataset_cache() -> None:
     """Clear cached dataset results loaded via :func:`load_dataset`."""
 
     global _PATH_CACHE, _ENV_STATE, _OVERLAY_CACHE, _OVERLAY_ENV_VALUE, _DS_SEARCH_CACHE
-    load_dataset.cache_clear()
-    dataset_file.cache_clear()
+    _clear_dataset_cache()
+    _clear_dataset_file_cache()
     _DS_SEARCH_CACHE.clear()
     _PATH_CACHE = None
     _ENV_STATE = None
