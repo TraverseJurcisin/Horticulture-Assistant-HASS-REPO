@@ -106,7 +106,11 @@ def calculate_toxicity_index(
     if not thresholds:
         return 0.0
 
-    from .nutrient_manager import get_nutrient_weight
+    from .utils import clear_dataset_cache, load_dataset
+
+    # Reload weights to honor any environment changes that may have occurred
+    clear_dataset_cache()
+    weights: Mapping[str, float] = load_dataset("nutrient_weights.json") or {}
 
     total_weight = 0.0
     score = 0.0
@@ -118,7 +122,10 @@ def calculate_toxicity_index(
         if current <= limit:
             continue
         ratio = (current - limit) / limit
-        weight = get_nutrient_weight(nutrient)
+        try:
+            weight = float(weights.get(nutrient, 1.0))
+        except (TypeError, ValueError):
+            weight = 1.0
         score += weight * ratio
         total_weight += weight
 
