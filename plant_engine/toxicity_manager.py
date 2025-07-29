@@ -10,14 +10,20 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key
 
+# Nutrient weightings are loaded separately from :mod:`nutrient_manager` so
+# calculations are not affected if that module is reloaded with overlay data
+# during testing.  This keeps the toxicity index stable across the test suite.
+
 DATA_FILE = "nutrient_toxicity_thresholds.json"
 SYMPTOMS_FILE = "nutrient_toxicity_symptoms.json"
 TREATMENTS_FILE = "nutrient_toxicity_treatments.json"
+WEIGHTS_FILE = "nutrient_weights.json"
 
 # Loaded once using cached loader
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 _SYMPTOMS: Dict[str, str] = load_dataset(SYMPTOMS_FILE)
 _TREATMENTS: Dict[str, str] = load_dataset(TREATMENTS_FILE)
+_WEIGHTS: Dict[str, float] = load_dataset(WEIGHTS_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -106,8 +112,6 @@ def calculate_toxicity_index(
     if not thresholds:
         return 0.0
 
-    from .nutrient_manager import get_nutrient_weight
-
     total_weight = 0.0
     score = 0.0
     for nutrient, limit in thresholds.items():
@@ -118,7 +122,7 @@ def calculate_toxicity_index(
         if current <= limit:
             continue
         ratio = (current - limit) / limit
-        weight = get_nutrient_weight(nutrient)
+        weight = float(_WEIGHTS.get(nutrient, 1.0))
         score += weight * ratio
         total_weight += weight
 
