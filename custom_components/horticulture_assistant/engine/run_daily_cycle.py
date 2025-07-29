@@ -223,7 +223,15 @@ def run_daily_cycle(
     if last_scout and "timestamp" in last_scout:
         try:
             last_date = datetime.fromisoformat(last_scout["timestamp"]).date()
-            next_date = pest_monitor.next_monitor_date(plant_type, stage_name, last_date)
+            interval = pest_monitor.risk_adjusted_monitor_interval(
+                plant_type, stage_name, current_env
+            )
+            if interval is not None:
+                next_date = last_date + timedelta(days=interval)
+            else:
+                next_date = pest_monitor.next_monitor_date(
+                    plant_type, stage_name, last_date
+                )
             if next_date:
                 report.next_pest_monitor_date = next_date.isoformat()
         except Exception:  # noqa: BLE001 -- optional
