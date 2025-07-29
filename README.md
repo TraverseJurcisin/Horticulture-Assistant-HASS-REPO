@@ -48,6 +48,7 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 8. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
+Each newly generated profile is also cached under `data/profile_cache/` so it can be uploaded to a public database in a future release. When you're ready to share new profiles, run the `upload_profile_cache.py` script to send them to the external service.
 
 Once you have at least one plant configured, open **Settings → Devices & Services → Horticulture Assistant**. Here you can edit existing plant profiles and use the **Add Plant** button to create new ones without returning to the integrations list.
 
@@ -330,6 +331,7 @@ Helper scripts live in the `scripts/` directory.
 - `dataset_info.py` lists available datasets and categories.
 - `validate_datasets.py` verifies that all dataset files can be parsed.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
+- `upload_profile_cache.py` sends cached profiles in `data/profile_cache/` to a remote service for training future models. Add `--delete` to remove files after upload.
 - `profile_manager.py` manages sensors, preferences, templates and history files. `attach-sensor` appends new sensors, while `detach-sensor` removes them. Other subcommands include `list-sensors`, `show-prefs`, `list-logs`, `set-pref`, `load-default`, `show-history`, `show-global`, and `list-globals`. `--plants-dir` and `--global-dir` operate on alternate directories.
 
 Example usage:
