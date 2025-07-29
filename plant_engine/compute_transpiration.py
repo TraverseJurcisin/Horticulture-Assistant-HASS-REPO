@@ -16,7 +16,11 @@ MODIFIER_FILE = "crop_coefficient_modifiers.json"
 # cached via load_dataset
 _MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(MODIFIER_FILE)
 
-from plant_engine.et_model import calculate_et0, calculate_eta
+from plant_engine.et_model import (
+    calculate_et0,
+    calculate_eta,
+    calculate_et0_series,
+)
 
 DATA_FILE = "crop_coefficients.json"
 # cached via load_dataset
@@ -216,21 +220,13 @@ def compute_transpiration_dataframe(
     if high_t is not None:
         kc_series = np.where(df["temp_c"] > high_t, kc_series * temp_mod.get("high_factor", 1.0), kc_series)
 
-    solar_rad_mj = df["par_w_m2"] * 0.0864
-    gamma = 0.665e-3 * (
-        101.3 * ((293 - 0.0065 * df.get("elevation_m", 200)) / 293) ** 5.26
+    et0 = calculate_et0_series(
+        df["temp_c"],
+        df["rh_pct"],
+        df["par_w_m2"],
+        df.get("wind_speed_m_s", 1.0),
+        df.get("elevation_m", 200),
     )
-    es = 0.6108 * np.exp((17.27 * df["temp_c"]) / (df["temp_c"] + 237.3))
-    ea = es * (df["rh_pct"] / 100)
-    delta = 4098 * es / ((df["temp_c"] + 237.3) ** 2)
-    rn = 0.77 * solar_rad_mj
-    wind = df.get("wind_speed_m_s", 1.0)
-
-    et0 = (
-        (0.408 * delta * rn)
-        + (gamma * 900 * wind * (es - ea) / (df["temp_c"] + 273))
-    ) / (delta + gamma * (1 + 0.34 * wind))
-    et0 = et0.round(2)
 
     eta = (et0 * kc_series).round(2)
 
