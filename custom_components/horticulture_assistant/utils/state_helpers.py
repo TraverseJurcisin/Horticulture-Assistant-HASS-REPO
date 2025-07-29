@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from collections.abc import Iterable
 from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
@@ -14,6 +15,7 @@ __all__ = ["get_numeric_state", "normalize_entities", "aggregate_sensor_values"]
 # avoids recompiling the regex for every state lookup and handles optional
 # sign and decimal point.
 _NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
+
 
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """Return the numeric state of ``entity_id`` or ``None`` if unavailable.
@@ -43,20 +45,37 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         return None
 
 
-def normalize_entities(val: str | list[str] | None, default: str) -> list[str]:
-    """Return a list of entity IDs from ``val`` or the ``default``."""
+def normalize_entities(val: str | Iterable[str] | None, default: str) -> list[str]:
+    """Return a list of entity IDs from ``val`` or ``default``.
+
+    String inputs may be comma or semicolon separated. Any whitespace is
+    stripped and duplicate entries removed while preserving order.
+    """
+
     if not val:
         return [default]
+
+    entities: Iterable[str]
     if isinstance(val, str):
-        return [v.strip() for v in val.split(";") if v.strip()] if ";" in val else [v.strip() for v in val.split(",") if v.strip()]
-    return list(val)
+        entities = [p.strip() for p in re.split(r"[;,]", val) if p.strip()]
+    else:
+        entities = [str(v).strip() for v in val if str(v).strip()]
+
+    seen: set[str] = set()
+    result: list[str] = []
+    for ent in entities:
+        if ent not in seen:
+            seen.add(ent)
+            result.append(ent)
+    return result if result else [default]
 
 
 def aggregate_sensor_values(
-    hass: HomeAssistant, entity_ids: str | list[str]
+    hass: HomeAssistant, entity_ids: str | Iterable[str]
 ) -> float | None:
-    """Return the average or median of numeric sensor states."""
-    ids = entity_ids if isinstance(entity_ids, list) else [entity_ids]
+    """Return the average or median value of multiple sensors."""
+
+    ids = [entity_ids] if isinstance(entity_ids, str) else list(entity_ids)
     values = [get_numeric_state(hass, eid) for eid in ids]
     values = [v for v in values if v is not None]
     if not values:

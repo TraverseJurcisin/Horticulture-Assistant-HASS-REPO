@@ -8,14 +8,21 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.state_helpers import get_numeric_state
+from custom_components.horticulture_assistant.utils.state_helpers import (
+    get_numeric_state,
+    normalize_entities,
+    aggregate_sensor_values,
+)
+
 
 class DummyStates:
     def __init__(self):
         self._data = {}
+
     def get(self, entity_id):
         val = self._data.get(entity_id)
         return types.SimpleNamespace(state=val) if val is not None else None
+
 
 class DummyHass:
     def __init__(self):
@@ -46,3 +53,21 @@ def test_get_numeric_state_invalid():
     assert get_numeric_state(hass, "sensor.bad") is None
     hass.states._data["sensor.bad"] = "foo"
     assert get_numeric_state(hass, "sensor.bad") is None
+
+
+def test_normalize_entities_split_and_unique():
+    result = normalize_entities("sensor.a, sensor.b; sensor.a", "sensor.default")
+    assert result == ["sensor.a", "sensor.b"]
+
+
+def test_aggregate_sensor_values_average_and_median():
+    hass = DummyHass()
+    hass.states._data = {
+        "sensor.one": "10",
+        "sensor.two": "20",
+        "sensor.three": "30",
+    }
+    avg = aggregate_sensor_values(hass, ["sensor.one", "sensor.two"])
+    assert avg == 15.0
+    med = aggregate_sensor_values(hass, ["sensor.one", "sensor.two", "sensor.three"])
+    assert med == 20.0

@@ -279,6 +279,7 @@ Important categories include:
 - **Root temperature uptake factors** – relative nutrient uptake efficiency by root zone temperature
 - **Media properties** – recommended pH range and water retention for common substrates
 - **Drought tolerance** – maximum days plants can remain dry before watering
+- **Hardiness zone temperatures** – minimum winter temperatures by USDA zone
 - **DAFE species profiles** – growth and EC parameters used by the fertigation engine
 - **DAFE media profiles** – porosity and retention factors for supported substrates
 
