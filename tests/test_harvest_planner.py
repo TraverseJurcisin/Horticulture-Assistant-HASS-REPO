@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.harvest_planner import build_stage_schedule
+from plant_engine.harvest_planner import build_stage_schedule, estimate_harvest_date
 
 
 def test_build_stage_schedule():
@@ -13,3 +13,9 @@ def test_build_stage_schedule():
     # ensure durations sum to 120 days from dataset
     total = sum(entry["duration_days"] for entry in schedule)
     assert total == 120
+
+
+def test_estimate_harvest_date():
+    start = date(2025, 1, 1)
+    harvest = estimate_harvest_date("tomato", start)
+    assert harvest.isoformat() == "2025-05-01"

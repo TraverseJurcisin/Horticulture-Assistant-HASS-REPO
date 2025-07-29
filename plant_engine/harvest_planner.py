@@ -1,12 +1,12 @@
 """Utilities for planning growth stage schedules."""
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date
 from typing import Dict, List
 
-from .growth_stage import list_growth_stages, get_stage_duration
+from .growth_stage import generate_stage_schedule, predict_harvest_date
 
-__all__ = ["build_stage_schedule"]
+__all__ = ["build_stage_schedule", "estimate_harvest_date"]
 
 
 def build_stage_schedule(plant_type: str, start_date: date) -> List[Dict[str, object]]:
@@ -25,19 +25,17 @@ def build_stage_schedule(plant_type: str, start_date: date) -> List[Dict[str, ob
         Each dictionary contains ``stage``, ``start_date``, ``end_date`` and
         ``duration_days`` keys. ``end_date`` is exclusive.
     """
-    stages = list_growth_stages(plant_type)
+    base = generate_stage_schedule(plant_type, start_date)
     schedule: List[Dict[str, object]] = []
-    current = start_date
-    for stage in stages:
-        duration = get_stage_duration(plant_type, stage) or 0
-        end = current + timedelta(days=duration)
-        schedule.append(
-            {
-                "stage": stage,
-                "start_date": current,
-                "end_date": end,
-                "duration_days": duration,
-            }
-        )
-        current = end
+    for entry in base:
+        start = entry["start_date"]
+        end = entry["end_date"]
+        duration = (end - start).days
+        schedule.append({**entry, "duration_days": duration})
     return schedule
+
+
+def estimate_harvest_date(plant_type: str, start_date: date) -> date | None:
+    """Return the predicted harvest date for the crop cycle."""
+
+    return predict_harvest_date(plant_type, start_date)
