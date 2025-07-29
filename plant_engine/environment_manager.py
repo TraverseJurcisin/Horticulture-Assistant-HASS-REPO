@@ -117,6 +117,12 @@ def get_environment_aliases() -> Dict[str, list[str]]:
     return {k: list(v) for k, v in ENV_ALIASES.items()}
 
 
+def resolve_environment_alias(key: str) -> str | None:
+    """Return canonical environment key for ``key`` when known."""
+
+    return _ALIAS_MAP.get(key)
+
+
 @dataclass(slots=True, frozen=True)
 class EnvironmentGuidelines:
     """Environmental target ranges for a plant stage."""
@@ -408,6 +414,7 @@ __all__ = [
     "StressFlags",
     "WaterQualityInfo",
     "get_environment_aliases",
+    "resolve_environment_alias",
     "normalize_environment_readings",
     "classify_value_range",
     "compare_environment",
