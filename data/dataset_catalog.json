@@ -93,6 +93,7 @@
     "disease_risk_factors.json": "Environmental factors increasing disease risk.",
     "pest_severity_actions.json": "Actions to take based on pest severity level.",
     "pest_severity_thresholds.json": "Population levels defining pest severity categories.",
+    "pest_severity_scores.json": "Numeric scores for pest severity levels.",
     "ph_adjustment_factors.json": "Acid/base amounts for pH corrections.",
     "ph_guidelines.json": "Optimal pH ranges for nutrient uptake.",
     "growth_medium_ph_ranges.json": "Recommended pH ranges for common growing media.",
