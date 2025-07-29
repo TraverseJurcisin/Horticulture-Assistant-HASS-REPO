@@ -1,6 +1,7 @@
 import importlib.util
 import sys
 from pathlib import Path
+import pytest
 
 PACKAGE = "custom_components.horticulture_assistant.utils"
 MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
@@ -63,3 +64,13 @@ def test_plan_fertigation_default_volume(tmp_path):
     hass = _hass_for(tmp_path)
     plan = plan_fertigation_from_profile("tom", hass=hass)
     assert plan.schedule
+
+
+def test_plan_fertigation_negative_volume(tmp_path):
+    (tmp_path / "plants").mkdir()
+    (tmp_path / "plants/test.json").write_text(
+        '{"general": {"plant_type": "citrus", "stage": "vegetative"}}'
+    )
+    hass = _hass_for(tmp_path)
+    with pytest.raises(ValueError):
+        plan_fertigation_from_profile("test", -1.0, hass)
