@@ -1,12 +1,12 @@
-from plant_engine.nutrient_schedule import generate_daily_uptake_plan
+from custom_components.horticulture_assistant.utils.nutrient_schedule import (
+    generate_nutrient_schedule,
+)
 
 
-def test_generate_daily_uptake_plan_strawberry():
-    plan = generate_daily_uptake_plan("strawberry")
-    assert "vegetative" in plan
-    veg = plan["vegetative"]
-    assert len(veg) == 60
-    first_day = veg[1]
-    assert first_day["N"] == 14.0
-    assert first_day["P"] == 6.0
-    assert first_day["K"] == 16.0
+def test_generate_nutrient_schedule():
+    schedule = generate_nutrient_schedule("citrus")
+    assert schedule
+    first = schedule[0]
+    assert first.stage == "seedling"
+    assert first.duration_days == 60
+    assert abs(first.totals["N"] - 75 * 60) < 0.01

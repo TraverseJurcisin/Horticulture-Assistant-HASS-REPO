@@ -1,0 +1,43 @@
+"""Generate nutrient schedules across growth stages."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Dict, List
+
+from plant_engine import growth_stage
+from custom_components.horticulture_assistant.utils import (
+    stage_nutrient_requirements,
+)
+
+
+@dataclass(slots=True)
+class StageNutrientTotals:
+    stage: str
+    duration_days: int
+    totals: Dict[str, float]
+
+
+def generate_nutrient_schedule(plant_type: str) -> List[StageNutrientTotals]:
+    """Return per-stage nutrient totals for ``plant_type``.
+
+    The schedule is computed from :mod:`stage_nutrient_requirements` and
+    :mod:`plant_engine.growth_stage` data. Each stage entry includes the
+    duration in days and total nutrient requirement amounts in milligrams.
+    Unknown stages or missing data are skipped gracefully.
+    """
+
+    schedule: List[StageNutrientTotals] = []
+    for stage in growth_stage.list_growth_stages(plant_type):
+        duration = growth_stage.get_stage_duration(plant_type, stage)
+        if not duration:
+            continue
+        daily = stage_nutrient_requirements.get_stage_requirements(
+            plant_type, stage
+        )
+        totals = {n: round(v * duration, 2) for n, v in daily.items()}
+        schedule.append(StageNutrientTotals(stage, duration, totals))
+    return schedule
+
+
+__all__ = ["StageNutrientTotals", "generate_nutrient_schedule"]
