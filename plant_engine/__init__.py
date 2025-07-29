@@ -5,7 +5,7 @@ from __future__ import annotations
 from importlib import import_module
 
 from . import utils, environment_tips, media_manager, ingredients, reference_data
-from . import height_manager
+from . import height_manager, daily_optimizer
 from .reference_data import load_reference_data, refresh_reference_data
 from .utils import *  # noqa: F401,F403
 from .environment_tips import *  # noqa: F401,F403
@@ -29,6 +29,7 @@ from .precipitation_risk import (
     list_supported_plants as list_precipitation_plants,
     estimate_precipitation_risk,
 )
+from .daily_optimizer import DailyPlan, build_daily_plan
 
 __all__ = sorted(
     set(utils.__all__)
@@ -48,6 +49,8 @@ __all__ = sorted(
         "apply_absorption_rates",
         "list_precipitation_plants",
         "estimate_precipitation_risk",
+        "DailyPlan",
+        "build_daily_plan",
     }
 )
 
