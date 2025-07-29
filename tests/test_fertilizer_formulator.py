@@ -1,16 +1,12 @@
-import importlib.util
+import importlib
 import sys
 from pathlib import Path
 import pytest
 
-module_path = (
-    Path(__file__).resolve().parents[1]
-    / "custom_components/horticulture_assistant/fertilizer_formulator.py"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+fert_mod = importlib.import_module(
+    "custom_components.horticulture_assistant.fertilizer_formulator"
 )
-spec = importlib.util.spec_from_file_location("fertilizer_formulator", module_path)
-fert_mod = importlib.util.module_from_spec(spec)
-sys.modules[spec.name] = fert_mod
-spec.loader.exec_module(fert_mod)
 
 calculate_fertilizer_nutrients = fert_mod.calculate_fertilizer_nutrients
 convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
@@ -29,6 +25,7 @@ calculate_mix_ppm = fert_mod.calculate_mix_ppm
 calculate_mix_density = fert_mod.calculate_mix_density
 estimate_solution_mass = fert_mod.estimate_solution_mass
 check_solubility_limits = fert_mod.check_solubility_limits
+check_dilution_limits = fert_mod.check_dilution_limits
 check_schedule_compatibility = fert_mod.check_schedule_compatibility
 estimate_cost_per_nutrient = fert_mod.estimate_cost_per_nutrient
 calculate_fertilizer_ppm = fert_mod.calculate_fertilizer_ppm
@@ -182,6 +179,18 @@ def test_check_solubility_limits():
 
     with pytest.raises(ValueError):
         check_solubility_limits(schedule, 0)
+
+
+def test_check_dilution_limits():
+    schedule = {"foxfarm_grow_big": 200}
+    warnings = check_dilution_limits(schedule, 1)
+    assert warnings["foxfarm_grow_big"] > 0
+
+    ok = check_dilution_limits({"foxfarm_grow_big": 50}, 1)
+    assert ok == {}
+
+    with pytest.raises(ValueError):
+        check_dilution_limits(schedule, 0)
 
 
 def test_check_schedule_compatibility():
