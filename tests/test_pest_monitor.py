@@ -20,6 +20,7 @@ from plant_engine.pest_monitor import (
     get_severity_thresholds,
     summarize_pest_management,
     calculate_pest_management_index,
+    calculate_pest_management_index_series,
     calculate_severity_index,
     estimate_adjusted_pest_risk_series,
 )
@@ -224,6 +225,21 @@ def test_estimate_adjusted_pest_risk_series():
     risk = estimate_adjusted_pest_risk_series("citrus", series)
     assert risk.get("aphids") == "high"
     assert risk.get("mites") == "moderate"
+
+
+def test_calculate_pest_management_index_series():
+    observations = [
+        {"aphids": 6},
+        {"aphids": 2},
+    ]
+    env_series = [
+        {"temperature": 26, "humidity": 80},
+        {"temperature": 10, "humidity": 55},
+    ]
+    idx = calculate_pest_management_index_series(
+        "citrus", observations, env_series=env_series
+    )
+    assert idx > 0
 
 
 def test_calculate_severity_index():

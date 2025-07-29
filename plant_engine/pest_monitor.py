@@ -72,6 +72,7 @@ __all__ = [
     "get_severity_action",
     "get_severity_thresholds",
     "calculate_pest_management_index",
+    "calculate_pest_management_index_series",
     "get_monitoring_interval",
     "risk_adjusted_monitor_interval",
     "next_monitor_date",
@@ -393,6 +394,35 @@ def calculate_pest_management_index(
     if total <= 0:
         return 0.0
     return round((pressure * p_w + risk_index * r_w) / total, 1)
+
+
+def calculate_pest_management_index_series(
+    plant_type: str,
+    series: Iterable[Mapping[str, int]],
+    *,
+    env_series: Iterable[Mapping[str, float]] | None = None,
+) -> float:
+    """Return average pest management index across multiple observations.
+
+    ``series`` provides successive pest observations. When ``env_series`` is
+    supplied, each observation is paired with the corresponding environment
+    readings. Extra observations without a matching environment map are
+    evaluated using pressure only. Missing observations yield ``0.0``.
+    """
+
+    total = 0.0
+    count = 0
+
+    if env_series is None:
+        for obs in series:
+            total += calculate_pest_management_index(plant_type, obs)
+            count += 1
+    else:
+        for obs, env in zip(series, env_series):
+            total += calculate_pest_management_index(plant_type, obs, env)
+            count += 1
+
+    return round(total / count, 1) if count else 0.0
 
 
 def classify_pest_severity(
