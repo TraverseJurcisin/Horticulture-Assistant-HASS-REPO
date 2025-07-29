@@ -6,7 +6,6 @@ Python. Some highlights are:
 
 - **precision_fertigation.py** – generate nutrient schedules and injector
   volumes for a crop stage. Supports optional nutrient synergy and stock
-  solution recipes. The script now returns a `FertigationResult` dataclass
   containing the full schedule, cost details and injection volumes.
 - **fertigation_plan.py** – output a daily fertigation schedule in JSON
   format for the specified number of days.
@@ -14,6 +13,7 @@ Python. Some highlights are:
   current sensor readings using built in guidelines.
 - **monitor_schedule.py** – produce a combined pest and disease scouting
   schedule based on crop stage and risk factors.
+- **pest_plan.py** – generate a JSON pest management plan for specified pests.
 
 Run a script with `-h` to see all available options. These utilities work
 with the datasets under `data/` and respect any custom directories

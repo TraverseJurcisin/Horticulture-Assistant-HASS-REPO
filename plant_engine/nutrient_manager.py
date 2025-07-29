@@ -131,17 +131,16 @@ def _deficiency_index_for_targets(current_levels: Mapping[str, float], targets: 
 
 
 def get_nutrient_weight(nutrient: str) -> float:
-    """Return importance weight for a nutrient.
+    """Return importance weight for ``nutrient``.
 
-    If no weight is defined the default ``1.0`` is returned.
+    Values are read from :data:`nutrient_weights.json` once at module
+    import time for better performance. The dataset can be reloaded by
+    calling :func:`plant_engine.utils.clear_dataset_cache` and
+    re-importing this module.
     """
 
-    from .utils import clear_dataset_cache
-
-    clear_dataset_cache()
-    weights = load_dataset(WEIGHT_DATA_FILE)
     try:
-        return float(weights.get(nutrient, 1.0))
+        return float(_WEIGHTS.get(nutrient, 1.0))
     except (TypeError, ValueError):
         return 1.0
 
