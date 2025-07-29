@@ -13,8 +13,18 @@ def test_adjust_uptake():
     adjusted = adjust_uptake(uptake, 15)
     assert adjusted == {"N": 70.0, "P": 35.0}
 
+    tomato_adjusted = adjust_uptake(uptake, 21, "tomato")
+    assert tomato_adjusted == {"N": 85.0, "P": 42.5}
+
+
+def test_plant_specific_optimum():
+    tomato_factor = get_uptake_factor(21, "tomato")
+    base_factor = get_uptake_factor(18)
+    assert tomato_factor == base_factor
+
 
 def test_temperature_adjusted_levels():
     levels = get_temperature_adjusted_levels("lettuce", "seedling", 15)
-    assert levels["N"] == 56.0  # 80 * 0.7
+    assert levels["N"] == 68.0  # 80 * 0.85 (lettuce optimum 18C)
+
 

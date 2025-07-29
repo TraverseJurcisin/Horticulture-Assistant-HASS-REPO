@@ -460,7 +460,7 @@ def get_temperature_adjusted_levels(
         return {}
     from .root_temperature import adjust_uptake
 
-    return adjust_uptake(base, root_temp_c)
+    return adjust_uptake(base, root_temp_c, plant_type)
 
 
 def calculate_deficiency_index_with_temperature(
@@ -693,7 +693,7 @@ def get_environment_adjusted_levels(
     if root_temp_c is not None:
         from .root_temperature import adjust_uptake
 
-        levels = adjust_uptake(levels, root_temp_c)
+        levels = adjust_uptake(levels, root_temp_c, plant_type)
 
     return levels
 
