@@ -136,8 +136,12 @@ def get_nutrient_weight(nutrient: str) -> float:
     If no weight is defined the default ``1.0`` is returned.
     """
 
+    from .utils import clear_dataset_cache
+
+    clear_dataset_cache()
+    weights = load_dataset(WEIGHT_DATA_FILE)
     try:
-        return float(_WEIGHTS.get(nutrient, 1.0))
+        return float(weights.get(nutrient, 1.0))
     except (TypeError, ValueError):
         return 1.0
 
