@@ -5,11 +5,13 @@ This module provides functionality to estimate the growing media type (e.g., pea
 based on observed sensor patterns of moisture retention, EC behavior, and dryback rates.
 """
 
-import os
 import json
 import logging
-from typing import Optional, Dict
+import os
+from dataclasses import asdict, dataclass
+from typing import Dict, Optional, Mapping
 
+from plant_engine.utils import lazy_dataset
 from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,16 +21,38 @@ _LOGGER = logging.getLogger(__name__)
 #   retention: relative water-holding capacity (higher = holds more moisture, slower to dry)
 #   dryback: relative drying speed (higher = dries out faster)
 #   ec_buffer: relative nutrient/EC buffering capacity (higher = buffers more, slower EC changes)
-MEDIA_PROFILES: Dict[str, Dict[str, float]] = {
-    "Peat Moss":    {"retention": 0.9, "dryback": 0.2, "ec_buffer": 0.9},
-    "Coco Coir":    {"retention": 0.8, "dryback": 0.3, "ec_buffer": 0.8},
-    "Rockwool":     {"retention": 0.7, "dryback": 0.7, "ec_buffer": 0.1},
-    "Perlite Blend": {"retention": 0.5, "dryback": 0.9, "ec_buffer": 0.4},
-}
+MEDIA_PROFILE_FILE = "media_sensor_profiles.json"
+MEDIA_PROFILES = lazy_dataset(MEDIA_PROFILE_FILE)
 
 
-def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate: float, 
-                     plant_id: Optional[str] = None) -> Dict[str, float]:
+@dataclass(slots=True)
+class MediaInferenceResult:
+    """Result of a media type inference."""
+
+    media_type: str | None
+    confidence: float
+
+    def as_dict(self) -> Dict[str, float | None]:
+        """Return a plain dictionary representation."""
+        return asdict(self)
+
+
+def _score_profile(values: tuple[float, float, float], profile: Mapping[str, float]) -> float:
+    """Return similarity score between sensor values and a media profile."""
+
+    return (
+        abs(profile.get("retention", 0.0) - values[0])
+        + abs(profile.get("dryback", 0.0) - values[2])
+        + abs(profile.get("ec_buffer", 0.0) - values[1])
+    )
+
+
+def infer_media_type(
+    moisture_retention: float,
+    ec_behavior: float,
+    dryback_rate: float,
+    plant_id: Optional[str] = None,
+) -> Dict[str, float] | None:
     """Infer the likely growing media type from sensor pattern metrics.
 
     Parameters:
@@ -43,7 +67,12 @@ def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate
     """
     # Validate and normalize inputs
     if any(val is None for val in (moisture_retention, ec_behavior, dryback_rate)):
-        _LOGGER.error("Invalid sensor pattern inputs: %s, %s, %s", moisture_retention, ec_behavior, dryback_rate)
+        _LOGGER.error(
+            "Invalid sensor pattern inputs: %s, %s, %s",
+            moisture_retention,
+            ec_behavior,
+            dryback_rate,
+        )
         return None
     try:
         moisture_retention_val = float(moisture_retention)
@@ -67,12 +96,14 @@ def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate
     dryback_rate_val = max(0.0, min(1.0, dryback_rate_val))
 
     # Compare against each known media profile to find the best match
-    best_match = None
+    best_match: str | None = None
     smallest_diff = float("inf")
-    for media, profile in MEDIA_PROFILES.items():
-        diff = (abs(profile["retention"] - moisture_retention_val) +
-                abs(profile["dryback"] - dryback_rate_val) +
-                abs(profile["ec_buffer"] - ec_behavior_val))
+    profiles = MEDIA_PROFILES()
+    for media, profile in profiles.items():
+        diff = _score_profile(
+            (moisture_retention_val, ec_behavior_val, dryback_rate_val),
+            profile,
+        )
         if diff < smallest_diff:
             smallest_diff = diff
             best_match = media
@@ -82,12 +113,11 @@ def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate
     confidence = max(0.0, 1.0 - (smallest_diff / max_diff))
     confidence = round(confidence, 3)
 
-    result_data = {"media_type": best_match, "confidence": confidence}
+    result = MediaInferenceResult(best_match, confidence)
 
     # Prepare to save result to file
     output_path = data_path(None, "media_type_estimates.json")
     if plant_id:
-        # Store results in a dictionary per plant
         try:
             if os.path.exists(output_path):
                 with open(output_path, "r", encoding="utf-8") as f:
@@ -95,23 +125,38 @@ def infer_media_type(moisture_retention: float, ec_behavior: float, dryback_rate
             else:
                 all_results = {}
         except Exception as err:
-            _LOGGER.error("Could not read media_type_estimates.json: %s. Starting fresh.", err)
+            _LOGGER.error(
+                "Could not read media_type_estimates.json: %s. Starting fresh.",
+                err,
+            )
             all_results = {}
         if not isinstance(all_results, dict):
-            # If file was not in expected format, reset to empty dict
             all_results = {}
-        all_results[str(plant_id)] = result_data
+        all_results[str(plant_id)] = result.as_dict()
         data_to_write = all_results
     else:
-        # No plant_id given, store only the single latest result (overwriting any existing file)
-        data_to_write = result_data
+        data_to_write = result.as_dict()
 
     try:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(data_to_write, f, indent=2)
     except Exception as err:
-        _LOGGER.error("Failed to write media type estimate to %s: %s", output_path, err)
+        _LOGGER.error(
+            "Failed to write media type estimate to %s: %s",
+            output_path,
+            err,
+        )
 
-    _LOGGER.info("Media type inference result: %s with confidence %.3f", best_match, confidence)
-    return result_data
+    _LOGGER.info(
+        "Media type inference result: %s with confidence %.3f",
+        best_match,
+        confidence,
+    )
+    return result.as_dict()
+
+
+__all__ = [
+    "infer_media_type",
+    "MediaInferenceResult",
+]
