@@ -15,6 +15,7 @@ from . import (
     pest_manager,
     pest_monitor,
     disease_manager,
+    disease_monitor,
     ph_manager,
     ec_manager,
     irrigation_manager,
@@ -40,6 +41,7 @@ class GuidelineSummary:
     pest_prevention: Dict[str, str] = dataclass_field(default_factory=dict)
     ipm_guidelines: Dict[str, str] = dataclass_field(default_factory=dict)
     pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
+    disease_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
     beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
     bioinoculants: List[str] = dataclass_field(default_factory=list)
     bioinoculant_details: Dict[str, Dict[str, str]] = dataclass_field(
@@ -49,6 +51,8 @@ class GuidelineSummary:
     ec_range: List[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
     irrigation_interval_days: float | None = None
+    pest_monitor_interval_days: int | None = None
+    disease_monitor_interval_days: int | None = None
     water_daily_ml: float | None = None
     stage_info: Optional[Dict[str, Any]] = None
     stages: Optional[List[str]] = None
@@ -71,6 +75,9 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     thresholds = pest_monitor.get_pest_thresholds(plant_type, stage)
     beneficial = {p: pest_manager.get_beneficial_insects(p) for p in thresholds}
+    disease_thresholds = disease_monitor.get_disease_thresholds(plant_type)
+    pest_interval = pest_monitor.get_monitoring_interval(plant_type, stage)
+    disease_interval = disease_monitor.get_monitoring_interval(plant_type, stage)
 
     if stage:
         tasks = {stage: stage_tasks.get_stage_tasks(plant_type, stage)}
@@ -99,6 +106,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         disease_guidelines=disease_manager.get_disease_guidelines(plant_type),
         disease_prevention=disease_manager.get_disease_prevention(plant_type),
         pest_thresholds=thresholds,
+        disease_thresholds=disease_thresholds,
         beneficial_insects=beneficial,
         bioinoculants=inoculants,
         bioinoculant_details=details,
@@ -114,6 +122,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
             if stage
             else None
         ),
+        pest_monitor_interval_days=pest_interval,
+        disease_monitor_interval_days=disease_interval,
         water_daily_ml=(
             water_usage.get_daily_use(plant_type, stage) if stage else None
         ),
