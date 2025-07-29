@@ -32,6 +32,8 @@ __all__ = [
     "summarize_deficiencies",
     "recommend_deficiency_treatments",
     "diagnose_deficiency_actions",
+    "assess_deficiency_severity_with_synergy",
+    "summarize_deficiencies_with_synergy",
 ]
 
 
@@ -165,6 +167,42 @@ def summarize_deficiencies(
         current_levels, plant_type, stage
     )
     index = calculate_deficiency_index(severity)
+    return {
+        "severity": severity,
+        "treatments": treatments,
+        "severity_index": index,
+    }
+
+
+def assess_deficiency_severity_with_synergy(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, str]:
+    """Return severity levels using synergy-adjusted guidelines."""
+
+    from . import nutrient_manager
+
+    deficits = nutrient_manager.calculate_all_deficiencies_with_synergy(
+        current_levels, plant_type, stage
+    )
+    return classify_deficiency_levels(deficits)
+
+
+def summarize_deficiencies_with_synergy(
+    current_levels: Mapping[str, float], plant_type: str, stage: str
+) -> Dict[str, object]:
+    """Return deficiency summary using synergy-adjusted targets."""
+
+    from . import nutrient_manager
+
+    severity = assess_deficiency_severity_with_synergy(
+        current_levels, plant_type, stage
+    )
+    treatments = recommend_deficiency_treatments(
+        current_levels, plant_type, stage
+    )
+    index = nutrient_manager.calculate_deficiency_index_with_synergy(
+        current_levels, plant_type, stage
+    )
     return {
         "severity": severity,
         "treatments": treatments,
