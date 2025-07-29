@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from bisect import bisect_left
+from functools import lru_cache
 from typing import Mapping, Dict, Sequence
 
 from .utils import load_dataset, list_dataset_entries, normalize_key
@@ -20,6 +21,7 @@ __all__ = [
     "get_optimal_root_temperature",
     "get_uptake_factor",
     "adjust_uptake",
+    "clear_cache",
 ]
 
 
@@ -39,12 +41,15 @@ def get_optimal_root_temperature(plant_type: str) -> float | None:
         return None
 
 
+@lru_cache(maxsize=None)
 def get_uptake_factor(temp_c: float, plant_type: str | None = None) -> float:
     """Return uptake efficiency factor for ``temp_c`` in Celsius.
 
     When ``plant_type`` is provided and an optimum temperature is defined in
     :data:`root_temperature_optima.json`, the lookup adjusts the curve so that
     the optimum factor of ``1.0`` occurs at the crop specific temperature.
+
+    Results are cached to speed up repeated calls with the same parameters.
     """
     if not _TEMPS or len(_TEMPS) != len(_FACTORS):
         return 1.0
@@ -71,3 +76,8 @@ def adjust_uptake(
     """Return ``uptake`` scaled by the temperature factor."""
     factor = get_uptake_factor(temp_c, plant_type)
     return {nutrient: round(value * factor, 2) for nutrient, value in uptake.items()}
+
+
+def clear_cache() -> None:
+    """Clear cached results for temperature factor lookups."""
+    get_uptake_factor.cache_clear()
