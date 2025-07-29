@@ -18,6 +18,7 @@ from plant_engine.irrigation_manager import (
     generate_env_irrigation_schedule,
     generate_precipitation_schedule,
     generate_env_precipitation_schedule,
+    generate_cycle_infiltration_schedule,
     get_rain_capture_efficiency,
     get_irrigation_zone_modifier,
     adjust_irrigation_for_zone,
@@ -359,4 +360,11 @@ def test_adjust_irrigation_for_zone():
     assert adjust_irrigation_for_zone(50.0, "humid") == 40.0
     with pytest.raises(ValueError):
         adjust_irrigation_for_zone(-1.0, "arid")
+
+
+def test_generate_cycle_infiltration_schedule():
+    schedule = generate_cycle_infiltration_schedule("lettuce", 0.1, "clay")
+    veg = schedule["vegetative"]
+    assert veg[1] == [200.0, 100.0]
+
 

@@ -34,6 +34,7 @@ __all__ = [
     "estimate_irrigation_time",
     "generate_cycle_irrigation_plan",
     "generate_infiltration_bursts",
+    "generate_cycle_infiltration_schedule",
     "IrrigationRecommendation",
 ]
 
@@ -627,3 +628,26 @@ def generate_infiltration_bursts(
         remaining -= burst
 
     return bursts
+
+
+def generate_cycle_infiltration_schedule(
+    plant_type: str,
+    area_m2: float,
+    texture: str,
+    *,
+    max_hours: float = 1.0,
+) -> Dict[str, Dict[int, list[float]]]:
+    """Return infiltration-aware irrigation bursts for an entire cycle."""
+
+    plan = generate_cycle_irrigation_plan(plant_type)
+    schedule: Dict[str, Dict[int, list[float]]] = {}
+    for stage, events in plan.items():
+        stage_sched: Dict[int, list[float]] = {}
+        for day, volume in events.items():
+            stage_sched[day] = generate_infiltration_bursts(
+                volume, area_m2, texture, max_hours=max_hours
+            )
+        if stage_sched:
+            schedule[stage] = stage_sched
+
+    return schedule
