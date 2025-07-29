@@ -19,6 +19,8 @@ REFERENCE_FILES: dict[str, str] = {
     "pest_monitoring_intervals": "pest_monitoring_intervals.json",
     "growth_stages": "growth_stages.json",
     "stage_tasks": "stage_tasks.json",
+    "total_nutrient_requirements": "total_nutrient_requirements.json",
+    "stage_nutrient_requirements": "stage_nutrient_requirements.json",
     # newly exposed reference datasets
     "nutrient_synergies": "nutrient_synergies.json",
     "disease_guidelines": "disease_guidelines.json",
@@ -84,6 +86,8 @@ def get_plant_overview(plant_type: str) -> Dict[str, Any]:
         "monitoring_intervals": entry("pest_monitoring_intervals"),
         "stages": entry("growth_stages"),
         "tasks": entry("stage_tasks"),
+        "total_requirements": entry("total_nutrient_requirements"),
+        "stage_requirements": entry("stage_nutrient_requirements"),
         "water_usage": entry("water_usage_guidelines"),
     }
 

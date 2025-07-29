@@ -21,6 +21,10 @@ def test_get_plant_overview():
     assert isinstance(overview["environment"], dict)
     assert "water_usage" in overview
     assert overview["water_usage"]["fruiting"] == 320
+    assert "total_requirements" in overview
+    assert overview["total_requirements"]["N"] == 180
+    assert "stage_requirements" in overview
+    assert overview["stage_requirements"]["vegetative"]["N"] == 1.8
 
 
 def test_refresh_reference_data(tmp_path, monkeypatch):
