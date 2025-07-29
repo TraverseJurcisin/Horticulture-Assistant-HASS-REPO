@@ -535,3 +535,19 @@ def test_calculate_injection_volumes():
     with pytest.raises(KeyError):
         calculate_injection_volumes({"unknown": 1.0}, 10.0, "dosatron_1pct")
 
+
+def test_recommend_temperature_adjusted_fertigation():
+    from plant_engine.fertigation import recommend_temperature_adjusted_fertigation
+
+    schedule = recommend_temperature_adjusted_fertigation(
+        "citrus",
+        "vegetative",
+        10.0,
+        root_temp_c=15.0,
+        purity={"N": 1.0, "P": 1.0, "K": 1.0, "Ca": 1.0, "Mg": 1.0},
+    )
+
+    assert schedule["N"] == pytest.approx(0.56, rel=1e-2)
+    assert schedule["P"] == pytest.approx(0.21, rel=1e-2)
+
+

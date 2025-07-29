@@ -421,6 +421,7 @@ __all__ = [
     "recommend_precise_fertigation_with_injection",
     "recommend_cost_optimized_fertigation_with_injection",
     "recommend_rootzone_fertigation",
+    "recommend_temperature_adjusted_fertigation",
     "get_loss_factors",
     "apply_loss_factors",
     "get_injection_ratio",
@@ -1163,6 +1164,36 @@ def recommend_recovery_adjusted_schedule(
         adjusted_ppm = ppm / factor
         schedule[nutrient] = _ppm_to_grams(
             adjusted_ppm, volume_l, purity_map.get(nutrient, 1.0)
+        )
+    return schedule
+
+
+def recommend_temperature_adjusted_fertigation(
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    root_temp_c: float,
+    purity: Mapping[str, float] | None = None,
+    *,
+    product: str | None = None,
+) -> Dict[str, float]:
+    """Return fertigation schedule adjusted for root temperature uptake.
+
+    Nutrient targets are scaled by factors from
+    :data:`root_temperature_uptake.json` before converting to grams.
+    """
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    from .nutrient_manager import get_temperature_adjusted_levels
+
+    purity_map = _resolve_purity(product, purity)
+    targets = get_temperature_adjusted_levels(plant_type, stage, root_temp_c)
+    schedule: Dict[str, float] = {}
+    for nutrient, ppm in targets.items():
+        schedule[nutrient] = _ppm_to_grams(
+            ppm, volume_l, purity_map.get(nutrient, 1.0)
         )
     return schedule
 
