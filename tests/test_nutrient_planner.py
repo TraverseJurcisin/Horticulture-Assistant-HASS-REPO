@@ -1,7 +1,9 @@
 import pytest
 from plant_engine.nutrient_planner import (
     generate_nutrient_management_report,
+    generate_nutrient_management_report_with_cost,
     NutrientManagementReport,
+    NutrientManagementCostReport,
 )
 
 
@@ -28,3 +30,16 @@ def test_generate_nutrient_management_report_invalid_volume():
             "seedling",
             volume_l=0,
         )
+
+
+def test_generate_nutrient_management_report_with_cost():
+    current = {"N": 50, "P": 10, "K": 40}
+    report = generate_nutrient_management_report_with_cost(
+        current,
+        "lettuce",
+        "seedling",
+        volume_l=5.0,
+    )
+    assert isinstance(report, NutrientManagementCostReport)
+    assert report.cost_total >= 0
+
