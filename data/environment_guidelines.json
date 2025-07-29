@@ -318,5 +318,13 @@
       "light_ppfd": [200, 400],
       "co2_ppm": [500, 900]
     }
+  },
+  "carrot": {
+    "optimal": {
+      "temp_c": [16, 24],
+      "humidity_pct": [50, 80],
+      "light_ppfd": [200, 400],
+      "co2_ppm": [400, 800]
+    }
   }
 }

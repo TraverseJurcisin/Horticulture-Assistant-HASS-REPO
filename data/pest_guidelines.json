@@ -38,5 +38,9 @@
   "blueberry": {
     "fruitworms": "Apply Bacillus thuringiensis when larvae appear.",
     "spotted wing drosophila": "Use traps and pick fruit frequently."
+  },
+  "carrot": {
+    "aphids": "Use insecticidal soap if populations increase.",
+    "carrot rust fly": "Use row covers and rotate crops."
   }
 }

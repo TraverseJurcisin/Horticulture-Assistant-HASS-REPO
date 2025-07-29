@@ -125,5 +125,9 @@
     "seedling": {"duration_days": 20, "notes": "Keep evenly moist."},
     "vegetative": {"duration_days": 40, "notes": "Provide regular nitrogen."},
     "harvest": {"duration_days": 30, "notes": "Harvest outer leaves first."}
+  },
+  "carrot": {
+    "vegetative": {"duration_days": 70, "notes": "Focus on foliage and root growth."},
+    "harvest": {"duration_days": 30, "notes": "Harvest when roots reach desired size."}
   }
 }

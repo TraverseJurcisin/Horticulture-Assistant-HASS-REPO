@@ -19,5 +19,9 @@
     "vegetative": 5,
     "harvest": 3,
     "optimal": 4
+  },
+  "carrot": {
+    "vegetative": 7,
+    "optimal": 7
   }
 }

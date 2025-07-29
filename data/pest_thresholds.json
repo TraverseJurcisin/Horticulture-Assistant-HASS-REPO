@@ -22,5 +22,9 @@
   "blueberry": {
     "fruitworms": 2,
     "spotted wing drosophila": 1
+  },
+  "carrot": {
+    "aphids": 5,
+    "carrot rust fly": 1
   }
 }

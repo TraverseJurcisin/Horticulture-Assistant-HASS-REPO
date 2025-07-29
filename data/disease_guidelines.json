@@ -38,5 +38,9 @@
   "blueberry": {
     "mummy berry": "Remove mummified fruit and apply fungicide early.",
     "botrytis": "Prune for airflow and remove infected berries."
+  },
+  "carrot": {
+    "root rot": "Ensure well-draining soil and avoid overwatering.",
+    "alternaria leaf blight": "Rotate crops and apply copper fungicide."
   }
 }
