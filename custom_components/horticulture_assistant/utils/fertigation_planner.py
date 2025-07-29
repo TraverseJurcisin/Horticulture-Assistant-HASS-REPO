@@ -23,7 +23,13 @@ _LOGGER = logging.getLogger(__name__)
 
 @dataclass
 class FertigationPlan:
-    """Structured fertigation recommendation."""
+    """Structured fertigation recommendation returned by
+    :func:`plan_fertigation_from_profile`.
+
+    All numeric values use litres and ppm for easy integration with other
+    modules.  ``schedule`` maps nutrient names to the required mass of each
+    fertilizer in grams.
+    """
 
     schedule: Dict[str, float]
     cost_total: float
@@ -32,6 +38,7 @@ class FertigationPlan:
     diagnostics: Dict[str, Dict[str, float]]
 
     def as_dict(self) -> Dict[str, Any]:
+        """Return the plan as a plain serialisable dictionary."""
         return {
             "schedule": self.schedule,
             "cost_total": self.cost_total,
@@ -39,6 +46,18 @@ class FertigationPlan:
             "warnings": self.warnings,
             "diagnostics": self.diagnostics,
         }
+
+
+def _extract_plant_info(profile: Mapping[str, Any]) -> tuple[str | None, str | None]:
+    """Return ``(plant_type, stage)`` from a loaded profile."""
+
+    general = profile.get("general", {}) if isinstance(profile, Mapping) else {}
+    plant_type = general.get("plant_type")
+    stage = general.get("lifecycle_stage") or general.get("stage") or profile.get("stage")
+    return (
+        str(plant_type).lower() if plant_type is not None else None,
+        str(stage).lower() if stage is not None else None,
+    )
 
 
 def plan_fertigation_from_profile(
@@ -67,13 +86,7 @@ def plan_fertigation_from_profile(
         _LOGGER.warning("Profile for %s not found", plant_id)
         return FertigationPlan({}, 0.0, {}, {}, {})
 
-    general = profile.get("general", {})
-    plant_type = general.get("plant_type")
-    stage = (
-        general.get("lifecycle_stage")
-        or general.get("stage")
-        or profile.get("stage")
-    )
+    plant_type, stage = _extract_plant_info(profile)
     if not plant_type or not stage:
         _LOGGER.warning("Incomplete profile for %s", plant_id)
         return FertigationPlan({}, 0.0, {}, {}, {})
