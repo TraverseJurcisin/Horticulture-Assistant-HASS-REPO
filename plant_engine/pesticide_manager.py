@@ -55,6 +55,7 @@ __all__ = [
     "get_pesticide_efficacy",
     "list_effective_pesticides",
     "recommend_rotation_products",
+    "estimate_rotation_plan_cost",
 ]
 
 
@@ -411,3 +412,18 @@ def recommend_rotation_products(pest: str, count: int = 3) -> list[str]:
             break
 
     return chosen
+
+
+def estimate_rotation_plan_cost(
+    plan: Iterable[tuple[str, date]], volume_l: float
+) -> float:
+    """Return total cost for executing a pesticide rotation plan."""
+
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+
+    total = 0.0
+    for product, _ in plan:
+        total += estimate_application_cost(product, volume_l)
+
+    return round(total, 2)
