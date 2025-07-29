@@ -27,3 +27,19 @@ def test_estimate_area_use():
 
     with pytest.raises(ValueError):
         water_usage.estimate_area_use("lettuce", "vegetative", -1)
+
+
+def test_estimate_daily_plant_cost():
+    per = water_usage.get_daily_use("lettuce", "vegetative")
+    expected = per * 10 / 1000
+    from plant_engine.water_costs import estimate_water_cost
+
+    cost = water_usage.estimate_daily_plant_cost(
+        "lettuce",
+        "vegetative",
+        10,
+    )
+    assert cost == estimate_water_cost(expected)
+
+    with pytest.raises(ValueError):
+        water_usage.estimate_daily_plant_cost("lettuce", "vegetative", 0)
