@@ -1,4 +1,5 @@
 {
   "citrus": {"seedling": 2, "vegetative": 3, "flowering": 4},
-  "lettuce": {"seedling": 1, "vegetative": 2}
+  "lettuce": {"seedling": 1, "vegetative": 2},
+  "blueberry": {"vegetative": 2, "flowering": 3, "fruiting": 3}
 }

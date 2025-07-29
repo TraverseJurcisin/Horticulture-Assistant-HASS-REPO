@@ -8,5 +8,10 @@
     "vegetative": {"N": 1.8, "P": 0.6, "K": 2.0},
     "flowering": {"N": 1.6, "P": 0.7, "K": 2.2},
     "fruiting": {"N": 1.4, "P": 0.6, "K": 2.4}
+  },
+  "blueberry": {
+    "vegetative": {"N": 1.2, "P": 0.4, "K": 1.2},
+    "flowering": {"N": 1.0, "P": 0.4, "K": 1.1},
+    "fruiting": {"N": 0.8, "P": 0.3, "K": 1.2}
   }
 }

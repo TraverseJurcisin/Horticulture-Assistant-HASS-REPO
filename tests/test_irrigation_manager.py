@@ -159,6 +159,11 @@ def test_daily_irrigation_target_lookup():
     assert get_daily_irrigation_target("unknown", "stage") == 0.0
 
 
+def test_daily_irrigation_target_blueberry():
+    assert get_daily_irrigation_target("blueberry", "vegetative") == 200
+    assert get_recommended_interval("blueberry", "vegetative") == 2
+
+
 def test_get_recommended_interval():
     assert get_recommended_interval("citrus", "seedling") == 2
     # When a stage-specific interval isn't defined the value falls back to

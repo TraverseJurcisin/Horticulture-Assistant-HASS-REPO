@@ -15,6 +15,11 @@ def test_get_stage_requirements_defined():
     assert req == {"N": 1.5, "P": 0.5, "K": 1.5}
 
 
+def test_get_stage_requirements_blueberry():
+    req = get_stage_requirements("blueberry", "vegetative")
+    assert req == {"N": 1.2, "P": 0.4, "K": 1.2}
+
+
 def test_calculate_stage_deficit():
     deficits = calculate_stage_deficit({"N": 0.5}, "citrus", "vegetative")
     assert deficits["N"] == 1.0

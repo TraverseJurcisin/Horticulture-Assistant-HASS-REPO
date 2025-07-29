@@ -10,6 +10,13 @@ def test_get_requirements():
     assert req["K"] == 150
 
 
+def test_get_requirements_blueberry():
+    req = get_requirements("blueberry")
+    assert req["N"] == 100
+    assert req["P"] == 40
+    assert req["K"] == 100
+
+
 def test_calculate_deficit():
     deficits = calculate_deficit({"N": 100, "P": 20}, "citrus")
     assert deficits["N"] == 50
