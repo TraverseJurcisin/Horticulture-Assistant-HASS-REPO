@@ -22,6 +22,7 @@ from plant_engine.pest_monitor import (
     calculate_pest_management_index,
     calculate_severity_index,
     estimate_adjusted_pest_risk_series,
+    get_sample_size,
 )
 
 
@@ -236,4 +237,9 @@ def test_report_includes_severity_index():
     obs = {"aphids": 6}
     report = generate_pest_report("citrus", obs)
     assert report["severity_index"] > 0
+
+
+def test_get_sample_size():
+    assert get_sample_size("citrus") == 25
+    assert get_sample_size("unknown") is None
 

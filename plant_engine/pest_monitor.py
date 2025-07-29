@@ -32,6 +32,7 @@ RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 SEVERITY_SCORE_FILE = "pest_severity_scores.json"
+SAMPLE_SIZE_FILE = "pest_sample_sizes.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
@@ -42,6 +43,7 @@ _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
 _SEVERITY_SCORES = lazy_dataset(SEVERITY_SCORE_FILE)
 PRESSURE_WEIGHT_FILE = "pest_pressure_weights.json"
 _PRESSURE_WEIGHTS = lazy_dataset(PRESSURE_WEIGHT_FILE)
+_SAMPLE_SIZES = lazy_dataset(SAMPLE_SIZE_FILE)
 
 
 def _resolve(data):
@@ -77,6 +79,7 @@ __all__ = [
     "next_monitor_date",
     "generate_monitoring_schedule",
     "generate_detailed_monitoring_schedule",
+    "get_sample_size",
     "PestReport",
     "summarize_pest_management",
 ]
@@ -218,6 +221,17 @@ def get_severity_thresholds(pest: str) -> Dict[str, float]:
 
     thresholds = _resolve(_SEVERITY_THRESHOLDS)
     return thresholds.get(normalize_key(pest), {})
+
+
+def get_sample_size(plant_type: str) -> int | None:
+    """Return recommended sample size for ``plant_type`` pest scouting."""
+
+    sizes = _resolve(_SAMPLE_SIZES)
+    value = sizes.get(normalize_key(plant_type)) if isinstance(sizes, Mapping) else None
+    try:
+        return int(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
 
 
 def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:

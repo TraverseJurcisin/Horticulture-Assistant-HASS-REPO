@@ -52,6 +52,7 @@ class GuidelineSummary:
     irrigation_volume_ml: float | None = None
     irrigation_interval_days: float | None = None
     pest_monitor_interval_days: int | None = None
+    pest_sample_size: int | None = None
     disease_monitor_interval_days: int | None = None
     water_daily_ml: float | None = None
     stage_info: Optional[Dict[str, Any]] = None
@@ -123,6 +124,7 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
             else None
         ),
         pest_monitor_interval_days=pest_interval,
+        pest_sample_size=pest_monitor.get_sample_size(plant_type),
         disease_monitor_interval_days=disease_interval,
         water_daily_ml=(
             water_usage.get_daily_use(plant_type, stage) if stage else None
