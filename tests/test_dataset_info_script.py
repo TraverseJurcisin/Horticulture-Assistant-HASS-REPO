@@ -37,3 +37,14 @@ def test_categories_cli():
     out = result.stdout
     assert "[fertilizers]" in out
     assert "fertilizers/fertilizer_products.json" in out
+
+
+def test_describe_cli():
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT), "describe", "nutrient_guidelines.json"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    out = result.stdout.strip()
+    assert out.startswith("nutrient_guidelines.json:")

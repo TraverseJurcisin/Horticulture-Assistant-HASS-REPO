@@ -20,6 +20,7 @@ from plant_engine.datasets import (
     list_datasets_by_category,
     list_dataset_info_by_category,
     search_datasets,
+    get_dataset_description,
 )
 
 
@@ -43,6 +44,11 @@ def main(argv: list[str] | None = None) -> None:
         action="store_true",
         help="include dataset descriptions in output",
     )
+
+    desc_parser = sub.add_parser(
+        "describe", help="show description for a specific dataset"
+    )
+    desc_parser.add_argument("name", help="dataset file name")
 
     args = parser.parse_args(argv)
 
@@ -77,6 +83,14 @@ def main(argv: list[str] | None = None) -> None:
                 print(f"[{cat}]")
                 for name in names:
                     print(f"  {name}")
+        return
+
+    if args.command == "describe":
+        desc = get_dataset_description(args.name)
+        if desc is None:
+            print("Dataset not found", file=sys.stderr)
+            sys.exit(1)
+        print(f"{args.name}: {desc}")
         return
 
 
