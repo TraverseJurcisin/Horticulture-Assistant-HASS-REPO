@@ -29,5 +29,6 @@ def test_run_daily_cycle_nutrient_analysis(tmp_path):
     # new expected uptake reporting
     assert report["expected_uptake"]["N"] == 50
     assert report["uptake_gap"]["K"] == 20
+    assert isinstance(report["stage_deficit"], dict)
     assert "environment_score" in report
     assert "environment_quality" in report

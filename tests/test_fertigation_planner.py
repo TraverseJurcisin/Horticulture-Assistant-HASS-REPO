@@ -52,3 +52,14 @@ def test_plan_fertigation_synergy(tmp_path):
     plan_basic = plan_fertigation_from_profile("lettuce", 1.0, hass)
     plan_syn = plan_fertigation_from_profile("lettuce", 1.0, hass, use_synergy=True)
     assert plan_syn.cost_total >= plan_basic.cost_total
+
+
+def test_plan_fertigation_default_volume(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "tom.json").write_text(
+        '{"general": {"plant_type": "tomato", "stage": "vegetative"}}'
+    )
+    hass = _hass_for(tmp_path)
+    plan = plan_fertigation_from_profile("tom", hass=hass)
+    assert plan.schedule

@@ -56,6 +56,9 @@ from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.rootzone_model import estimate_infiltration_time
 from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.stage_tasks import get_stage_tasks
+from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
+    calculate_stage_deficit,
+)
 from plant_engine import water_quality
 
 
@@ -70,6 +73,7 @@ class DailyReport:
     nutrient_summary: dict[str, object] = field(default_factory=dict)
     expected_uptake: dict[str, float] = field(default_factory=dict)
     uptake_gap: dict[str, float] = field(default_factory=dict)
+    stage_deficit: dict[str, float] = field(default_factory=dict)
     nutrient_analysis: dict[str, object] = field(default_factory=dict)
     sensor_summary: dict[str, object] = field(default_factory=dict)
     environment_comparison: dict[str, object] = field(default_factory=dict)
@@ -168,6 +172,9 @@ def run_daily_cycle(
     )
     report.expected_uptake = expected
     report.uptake_gap = gap
+    report.stage_deficit = calculate_stage_deficit(
+        nutrient_totals, plant_type, stage_name or ""
+    )
 
     # Summarize sensor readings (24h average per sensor type)
     sensor_avg = _average_sensor_data(sensor_entries)

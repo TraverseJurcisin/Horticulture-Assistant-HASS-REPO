@@ -13,7 +13,10 @@ except Exception:  # pragma: no cover - Home Assistant not available during test
 
 from .plant_profile_loader import load_profile_by_id
 from .path_utils import plants_path
-from plant_engine.fertigation import recommend_precise_fertigation
+from plant_engine.fertigation import (
+    recommend_precise_fertigation,
+    get_fertigation_volume,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,7 +43,7 @@ class FertigationPlan:
 
 def plan_fertigation_from_profile(
     plant_id: str,
-    volume_l: float,
+    volume_l: float | None = None,
     hass: HomeAssistant | None = None,
     *,
     water_profile: Mapping[str, float] | None = None,
@@ -48,9 +51,14 @@ def plan_fertigation_from_profile(
     fertilizers: Mapping[str, str] | None = None,
     use_synergy: bool = False,
 ) -> FertigationPlan:
-    """Return a fertigation plan using profile data and dataset guidelines."""
+    """Return a fertigation plan using profile data and dataset guidelines.
 
-    if volume_l <= 0:
+    When ``volume_l`` is ``None`` the value is looked up in the
+    :data:`fertigation_volume.json` dataset via
+    :func:`plant_engine.fertigation.get_fertigation_volume`.
+    """
+
+    if volume_l is not None and volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
     base_dir = plants_path(hass)
@@ -69,6 +77,17 @@ def plan_fertigation_from_profile(
     if not plant_type or not stage:
         _LOGGER.warning("Incomplete profile for %s", plant_id)
         return FertigationPlan({}, 0.0, {}, {}, {})
+
+    if volume_l is None:
+        vol_ml = get_fertigation_volume(plant_type, stage)
+        if vol_ml is None:
+            _LOGGER.warning(
+                "No fertigation volume guideline for %s at %s stage",
+                plant_type,
+                stage,
+            )
+            return FertigationPlan({}, 0.0, {}, {}, {})
+        volume_l = vol_ml / 1000
 
     if fertilizers is None:
         fertilizers = {
