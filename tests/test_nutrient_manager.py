@@ -335,6 +335,37 @@ def test_calculate_deficiency_index_with_ph_and_synergy():
     assert idx2 == 0.0
 
 
+def test_calculate_deficiency_index_environment_adjusted():
+    from plant_engine.nutrient_manager import (
+        calculate_deficiency_index_environment_adjusted,
+        get_environment_adjusted_levels,
+    )
+
+    guidelines = get_environment_adjusted_levels(
+        "tomato", "fruiting", ph=6.2, root_temp_c=18, synergy=True
+    )
+    current = {n: 0 for n in guidelines}
+    idx = calculate_deficiency_index_environment_adjusted(
+        current,
+        "tomato",
+        "fruiting",
+        ph=6.2,
+        root_temp_c=18,
+        synergy=True,
+    )
+    assert 99 <= idx <= 100
+
+    idx2 = calculate_deficiency_index_environment_adjusted(
+        guidelines,
+        "tomato",
+        "fruiting",
+        ph=6.2,
+        root_temp_c=18,
+        synergy=True,
+    )
+    assert idx2 == 0.0
+
+
 def test_calculate_deficiency_index_with_temperature():
     from plant_engine.nutrient_manager import (
         calculate_deficiency_index_with_temperature,

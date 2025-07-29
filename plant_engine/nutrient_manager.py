@@ -67,6 +67,8 @@ __all__ = [
     "calculate_deficiency_index_with_synergy",
     "calculate_deficiency_index_with_ph",
     "calculate_deficiency_index_with_ph_and_synergy",
+    "get_environment_adjusted_levels",
+    "calculate_deficiency_index_environment_adjusted",
 ]
 
 
@@ -657,5 +659,62 @@ def calculate_deficiency_index_with_ph_and_synergy(
         return calculate_deficiency_index(current_levels, plant_type, stage)
 
     return _deficiency_index_for_targets(current_levels, targets)
+
+
+def get_environment_adjusted_levels(
+    plant_type: str,
+    stage: str,
+    *,
+    ph: float | None = None,
+    root_temp_c: float | None = None,
+    synergy: bool = False,
+) -> Dict[str, float]:
+    """Return nutrient targets adjusted for synergy, pH and temperature."""
+
+    levels = get_all_recommended_levels(plant_type, stage)
+    if not levels:
+        return {}
+
+    if synergy:
+        from .nutrient_synergy import apply_synergy_adjustments
+
+        levels = apply_synergy_adjustments(levels)
+
+    if ph is not None:
+        if not 0 < ph <= 14:
+            raise ValueError("ph must be between 0 and 14")
+        factors = availability_for_all(ph)
+        levels = {
+            n: round(v / factors.get(n, 1.0), 2)
+            for n, v in levels.items()
+            if v is not None
+        }
+
+    if root_temp_c is not None:
+        from .root_temperature import adjust_uptake
+
+        levels = adjust_uptake(levels, root_temp_c)
+
+    return levels
+
+
+def calculate_deficiency_index_environment_adjusted(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    *,
+    ph: float | None = None,
+    root_temp_c: float | None = None,
+    synergy: bool = False,
+) -> float:
+    """Return deficiency index using environment-adjusted targets."""
+
+    targets = get_environment_adjusted_levels(
+        plant_type, stage, ph=ph, root_temp_c=root_temp_c, synergy=synergy
+    )
+    if not targets:
+        return calculate_deficiency_index(current_levels, plant_type, stage)
+    return _deficiency_index_for_targets(current_levels, targets)
+
 
 
