@@ -56,6 +56,7 @@ def test_get_dataset_description():
     assert "action" in desc9
     desc10 = get_dataset_description("frost_dates.json")
     assert "frost" in desc10
+    assert "thresholds" in get_dataset_description("pest_management_guidelines.json").lower()
 
 
 def test_search_datasets():
@@ -151,7 +152,10 @@ def test_get_dataset_path_and_load():
     assert path and path.exists()
     data = datasets.load_dataset_file("nutrient_guidelines.json")
     assert isinstance(data, dict)
+    path2 = datasets.get_dataset_path("pest_management_guidelines.json")
+    assert path2 and path2.exists()
 
 def test_dataset_exists():
     assert datasets.dataset_exists("nutrient_guidelines.json")
+    assert datasets.dataset_exists("pest_management_guidelines.json")
     assert not datasets.dataset_exists("missing_dataset.json")

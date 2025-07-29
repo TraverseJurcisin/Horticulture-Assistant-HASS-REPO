@@ -1,0 +1,9 @@
+{
+  "citrus": {
+    "aphids": {"threshold": 5, "treatment": "release ladybugs"},
+    "scale": {"threshold": 3, "treatment": "apply horticultural oil"}
+  },
+  "tomato": {
+    "whiteflies": {"threshold": 10, "treatment": "use yellow sticky traps"}
+  }
+}

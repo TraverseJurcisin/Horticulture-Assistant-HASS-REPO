@@ -24,6 +24,7 @@
     "pest_sample_sizes.json": "Recommended number of plants to inspect during pest monitoring.",
     "pest_lifecycle_durations.json": "Typical development duration for common pest life stages.",
     "ipm_guidelines.json": "Integrated pest management practices by crop.",
+    "pest_management_guidelines.json": "Thresholds and recommended treatments for common pests.",
     "disease_guidelines.json": "Treatment guidance for common plant diseases.",
     "disease_prevention.json": "Preventative measures to reduce disease incidence.",
     "disease_scouting_methods.json": "Recommended scouting techniques for common diseases.",
