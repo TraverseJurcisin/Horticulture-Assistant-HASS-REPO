@@ -4,6 +4,8 @@ from __future__ import annotations
 from typing import Any, Dict, Iterable, List, Mapping
 from datetime import date, timedelta
 
+from .growth_stage import generate_stage_schedule
+
 from .utils import (
     load_dataset,
     normalize_key,
@@ -348,6 +350,47 @@ def build_pest_management_plan(
     return plan
 
 
+def generate_cycle_monitoring_schedule(
+    plant_type: str,
+    start_date: date,
+    pests: Iterable[str],
+    *,
+    risk_level: str | None = None,
+) -> list[dict[str, object]]:
+    """Return list of monitoring tasks for the crop cycle.
+
+    Each entry contains ``date``, ``stage`` and a ``plan`` dictionary from
+    :func:`build_monitoring_plan`. The schedule is derived from growth stage
+    durations and stage-specific monitoring intervals.
+    """
+
+    stage_schedule = generate_stage_schedule(plant_type, start_date)
+    if not stage_schedule:
+        return []
+
+    tasks: list[dict[str, object]] = []
+    for stage_info in stage_schedule:
+        stage = stage_info["stage"]
+        interval = get_monitoring_interval(plant_type, stage)
+        if interval is None or interval <= 0:
+            continue
+        current = stage_info["start_date"] + timedelta(days=interval)
+        end_date = stage_info["end_date"]
+        while current <= end_date:
+            tasks.append(
+                {
+                    "date": current,
+                    "stage": stage,
+                    "plan": build_monitoring_plan(
+                        plant_type, pests, stage, risk_level=risk_level
+                    ),
+                }
+            )
+            current += timedelta(days=interval)
+
+    return tasks
+
+
 __all__ = [
     "list_supported_plants",
     "get_pest_guidelines",
@@ -375,4 +418,5 @@ __all__ = [
     "recommend_ipm_actions",
     "get_pest_resistance",
     "build_pest_management_plan",
+    "generate_cycle_monitoring_schedule",
 ]
