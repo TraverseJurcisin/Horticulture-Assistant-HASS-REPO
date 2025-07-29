@@ -1,4 +1,4 @@
-import pytest
+import asyncio
 from plant_engine import ai_model
 
 
@@ -13,10 +13,9 @@ def test_analyze_uses_mock_model():
     assert updated["leaf_temp"] == 19.0
 
 
-@pytest.mark.asyncio
-async def test_analyze_async_uses_mock_model():
+def test_analyze_async_uses_mock_model():
     data = {"thresholds": {"leaf_temp": 20}, "lifecycle_stage": "vegetative"}
-    updated = await ai_model.analyze_async(data)
+    updated = asyncio.run(ai_model.analyze_async(data))
     assert updated["leaf_temp"] == 19.0
 
 
