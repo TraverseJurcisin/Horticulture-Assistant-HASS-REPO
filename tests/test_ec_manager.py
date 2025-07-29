@@ -33,3 +33,18 @@ def test_recommend_ec_adjustment():
     assert ec_manager.recommend_ec_adjustment(1.0, "lettuce", "seedling") == "none"
     assert ec_manager.recommend_ec_adjustment(1.3, "lettuce", "seedling") == "decrease"
 
+
+def test_estimate_ec_adjustment_volume():
+    ml = ec_manager.estimate_ec_adjustment_volume(0.6, 1.0, 1.0, "stock_a")
+    assert ml == 4.0
+
+
+def test_recommend_ec_correction_increase():
+    result = ec_manager.recommend_ec_correction(0.6, "lettuce", "seedling", 1.0)
+    assert result == {"stock_a": 2.67, "stock_b": 1.33}
+
+
+def test_recommend_ec_correction_decrease():
+    result = ec_manager.recommend_ec_correction(1.4, "lettuce", "seedling", 1.0)
+    assert result == {"dilute_l": 0.4}
+

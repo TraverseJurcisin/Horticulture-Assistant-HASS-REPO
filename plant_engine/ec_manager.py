@@ -2,18 +2,30 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Mapping
 
 from .constants import get_stage_multiplier
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
 DATA_FILE = "ec_guidelines.json"
+RECIPE_FILE = "stock_solution_recipes.json"
+ADJUST_FILE = "ec_adjustment_factors.json"
 
 # cache dataset load
 @lru_cache(maxsize=None)
 def _data() -> Dict[str, Dict[str, Tuple[float, float]]]:
     return load_dataset(DATA_FILE)
+
+
+@lru_cache(maxsize=None)
+def _recipes() -> Dict[str, Dict[str, Mapping[str, float]]]:
+    return load_dataset(RECIPE_FILE)
+
+
+@lru_cache(maxsize=None)
+def _adjust() -> Dict[str, float]:
+    return load_dataset(ADJUST_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -22,6 +34,8 @@ __all__ = [
     "get_stage_adjusted_ec_range",
     "classify_ec_level",
     "recommend_ec_adjustment",
+    "estimate_ec_adjustment_volume",
+    "recommend_ec_correction",
 ]
 
 
@@ -90,4 +104,55 @@ def recommend_ec_adjustment(ec_ds_m: float, plant_type: str, stage: str | None =
     if level == "high":
         return "decrease"
     return "none"
+
+
+def estimate_ec_adjustment_volume(
+    current_ec_ds_m: float,
+    target_ec_ds_m: float,
+    volume_l: float,
+    stock: str,
+) -> float | None:
+    """Return ml of ``stock`` to raise EC from current to target."""
+    if volume_l <= 0:
+        raise ValueError("volume_l must be positive")
+    factor = _adjust().get(stock)
+    if not factor:
+        return None
+    delta = target_ec_ds_m - current_ec_ds_m
+    if delta <= 0:
+        return 0.0
+    ml = delta * volume_l / factor
+    return round(ml, 2)
+
+
+def recommend_ec_correction(
+    current_ec_ds_m: float,
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+) -> Dict[str, float] | None:
+    """Return stock solution volumes or dilution needed for EC correction."""
+
+    target = get_optimal_ec(plant_type, stage)
+    if target is None:
+        return None
+    delta = round(target - current_ec_ds_m, 2)
+    if abs(delta) < 0.01:
+        return {}
+    if delta < 0:
+        new_volume = volume_l * (current_ec_ds_m / target)
+        return {"dilute_l": round(new_volume - volume_l, 2)}
+
+    recipe = _recipes().get(normalize_key(plant_type), {}).get(normalize_key(stage), {})
+    if not isinstance(recipe, Mapping) or not recipe:
+        recipe = {"stock_a": 1.0}
+    total_ratio = sum(float(v) for v in recipe.values() if isinstance(v, (int, float)))
+    factors = _adjust()
+    result: Dict[str, float] = {}
+    for stock, ratio in recipe.items():
+        factor = factors.get(stock)
+        if factor and total_ratio > 0:
+            ml = (delta * volume_l / factor) * (float(ratio) / total_ratio)
+            result[stock] = round(ml, 2)
+    return result or None
 
