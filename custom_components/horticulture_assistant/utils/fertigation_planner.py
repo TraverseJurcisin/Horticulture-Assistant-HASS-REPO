@@ -15,8 +15,12 @@ from .plant_profile_loader import load_profile_by_id
 from .path_utils import plants_path
 from plant_engine.fertigation import (
     recommend_precise_fertigation,
+    recommend_precise_fertigation_with_injection,
     get_fertigation_volume,
 )
+from plant_engine.utils import load_dataset, normalize_key
+
+WATER_DATA_FILE = "water_profiles.json"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,6 +34,7 @@ class FertigationPlan:
     cost_breakdown: Dict[str, float]
     warnings: Dict[str, Dict[str, float]]
     diagnostics: Dict[str, Dict[str, float]]
+    injection: Dict[str, float] | None = None
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -38,7 +43,24 @@ class FertigationPlan:
             "cost_breakdown": self.cost_breakdown,
             "warnings": self.warnings,
             "diagnostics": self.diagnostics,
+            "injection": self.injection,
         }
+
+
+def load_water_profile(name: str) -> Dict[str, float]:
+    """Return water analysis profile from :data:`WATER_DATA_FILE`."""
+
+    data = load_dataset(WATER_DATA_FILE)
+    entry = data.get(normalize_key(name))
+    if not isinstance(entry, Mapping):
+        return {}
+    result: Dict[str, float] = {}
+    for key, val in entry.items():
+        try:
+            result[str(key)] = float(val)
+        except (TypeError, ValueError):
+            continue
+    return result
 
 
 def plan_fertigation_from_profile(
@@ -47,9 +69,11 @@ def plan_fertigation_from_profile(
     hass: HomeAssistant | None = None,
     *,
     water_profile: Mapping[str, float] | None = None,
+    water_profile_name: str | None = None,
     include_micro: bool = False,
     fertilizers: Mapping[str, str] | None = None,
     use_synergy: bool = False,
+    return_injection: bool = False,
 ) -> FertigationPlan:
     """Return a fertigation plan using profile data and dataset guidelines.
 
@@ -96,17 +120,44 @@ def plan_fertigation_from_profile(
             "K": "intrepid_granular_potash_0_0_60",
         }
 
-    schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
-        plant_type,
-        stage,
-        volume_l,
-        water_profile,
-        fertilizers=fertilizers,
-        include_micro=include_micro,
-        use_synergy=use_synergy,
-    )
+    if water_profile_name and water_profile is None:
+        water_profile = load_water_profile(water_profile_name)
 
-    return FertigationPlan(schedule, total, breakdown, warnings, diagnostics)
+    if return_injection:
+        (
+            schedule,
+            total,
+            breakdown,
+            warnings,
+            diagnostics,
+            injection,
+        ) = recommend_precise_fertigation_with_injection(
+            plant_type,
+            stage,
+            volume_l,
+            water_profile,
+            fertilizers=fertilizers,
+            include_micro=include_micro,
+            use_synergy=use_synergy,
+        )
+        return FertigationPlan(
+            schedule, total, breakdown, warnings, diagnostics, injection
+        )
+    else:
+        schedule, total, breakdown, warnings, diagnostics = recommend_precise_fertigation(
+            plant_type,
+            stage,
+            volume_l,
+            water_profile,
+            fertilizers=fertilizers,
+            include_micro=include_micro,
+            use_synergy=use_synergy,
+        )
+        return FertigationPlan(schedule, total, breakdown, warnings, diagnostics)
 
 
-__all__ = ["plan_fertigation_from_profile", "FertigationPlan"]
+__all__ = [
+    "plan_fertigation_from_profile",
+    "load_water_profile",
+    "FertigationPlan",
+]

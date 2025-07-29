@@ -1,4 +1,5 @@
 import importlib.util
+import os
 import sys
 from pathlib import Path
 
@@ -11,6 +12,7 @@ spec.loader.exec_module(fertigation_planner)
 
 FertigationPlan = fertigation_planner.FertigationPlan
 plan_fertigation_from_profile = fertigation_planner.plan_fertigation_from_profile
+load_water_profile = fertigation_planner.load_water_profile
 
 
 def _hass_for(base: Path):
@@ -63,3 +65,24 @@ def test_plan_fertigation_default_volume(tmp_path):
     hass = _hass_for(tmp_path)
     plan = plan_fertigation_from_profile("tom", hass=hass)
     assert plan.schedule
+
+
+def test_load_water_profile(tmp_path):
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    (data_dir / "water_profiles.json").write_text('{"sample": {"ph": 7}}')
+    os.environ["HORTICULTURE_EXTRA_DATA_DIRS"] = str(data_dir)
+    try:
+        prof = load_water_profile("sample")
+    finally:
+        os.environ.pop("HORTICULTURE_EXTRA_DATA_DIRS")
+    assert prof.get("ph") == 7.0
+
+
+def test_plan_fertigation_with_injection(tmp_path):
+    plant_dir = tmp_path / "plants"
+    plant_dir.mkdir()
+    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
+    hass = _hass_for(tmp_path)
+    plan = plan_fertigation_from_profile("lettuce", 1.0, hass, return_injection=True)
+    assert plan.injection is not None
