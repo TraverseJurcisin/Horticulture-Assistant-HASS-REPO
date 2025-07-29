@@ -43,3 +43,18 @@ def test_refresh_reference_data(tmp_path, monkeypatch):
     ref.refresh_reference_data()
     data3 = ref.load_reference_data()
     assert data3["dummy_dataset"]["tomato"]["fruiting"] == 500
+
+
+def test_register_reference_dataset(tmp_path, monkeypatch):
+    custom = tmp_path / "my_custom.json"
+    custom.write_text('{"demo": {"value": 42}}')
+
+    monkeypatch.setenv("HORTICULTURE_EXTRA_DATA_DIRS", str(tmp_path))
+    ref.register_reference_dataset("my_custom", custom.name)
+    try:
+        data = ref.get_reference_dataset("my_custom")
+        assert data["demo"]["value"] == 42
+    finally:
+        ref.REFERENCE_FILES.pop("my_custom", None)
+        ref.refresh_reference_data()
+        monkeypatch.delenv("HORTICULTURE_EXTRA_DATA_DIRS", raising=False)

@@ -24,6 +24,8 @@ REFERENCE_FILES: dict[str, str] = {
     "disease_guidelines": "disease_guidelines.json",
     # daily water usage requirements per growth stage
     "water_usage_guidelines": "water_usage_guidelines.json",
+    # classification of plant growth habits
+    "growth_habits": "growth_habits.json",
 }
 
 __all__ = [
@@ -31,6 +33,7 @@ __all__ = [
     "get_reference_dataset",
     "get_plant_overview",
     "refresh_reference_data",
+    "register_reference_dataset",
     "REFERENCE_FILES",
 ]
 
@@ -85,6 +88,7 @@ def get_plant_overview(plant_type: str) -> Dict[str, Any]:
         "stages": entry("growth_stages"),
         "tasks": entry("stage_tasks"),
         "water_usage": entry("water_usage_guidelines"),
+        "growth_habit": entry("growth_habits"),
     }
 
 
@@ -93,3 +97,26 @@ def refresh_reference_data() -> None:
 
     load_reference_data.cache_clear()
     clear_dataset_cache()
+
+
+def register_reference_dataset(key: str, filename: str) -> None:
+    """Register a new reference dataset at runtime.
+
+    Parameters
+    ----------
+    key : str
+        Unique identifier used to access the dataset.
+    filename : str
+        Relative path of the dataset file inside the data directory.
+
+    Raises
+    ------
+    ValueError
+        If ``key`` already exists in :data:`REFERENCE_FILES`.
+    """
+
+    if key in REFERENCE_FILES:
+        raise ValueError(f"{key} already registered")
+
+    REFERENCE_FILES[key] = filename
+    refresh_reference_data()
