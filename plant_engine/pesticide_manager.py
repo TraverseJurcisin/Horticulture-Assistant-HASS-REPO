@@ -56,6 +56,7 @@ __all__ = [
     "list_effective_pesticides",
     "recommend_rotation_products",
     "estimate_rotation_plan_cost",
+    "suggest_pest_rotation_plan",
 ]
 
 
@@ -427,3 +428,25 @@ def estimate_rotation_plan_cost(
         total += estimate_application_cost(product, volume_l)
 
     return round(total, 2)
+
+
+def suggest_pest_rotation_plan(
+    pest: str, start_date: date, cycles: int
+) -> list[tuple[str, date]]:
+    """Return rotation plan for ``pest`` starting at ``start_date``.
+
+    The function selects recommended rotation products for ``pest`` using
+    :func:`recommend_rotation_products` and schedules ``cycles`` applications
+    using :func:`suggest_rotation_plan`. When no products are known an empty
+    list is returned.
+    """
+
+    if cycles <= 0:
+        raise ValueError("cycles must be positive")
+
+    products = recommend_rotation_products(pest)
+    if not products:
+        return []
+
+    sequence = [products[i % len(products)] for i in range(cycles)]
+    return suggest_rotation_plan(sequence, start_date)

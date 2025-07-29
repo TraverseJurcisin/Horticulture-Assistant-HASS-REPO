@@ -18,6 +18,7 @@ from plant_engine.pesticide_manager import (
     get_pesticide_price,
     estimate_application_cost,
     estimate_rotation_plan_cost,
+    suggest_pest_rotation_plan,
 )
 
 
@@ -228,6 +229,15 @@ def test_estimate_rotation_plan_cost():
 
     with pytest.raises(ValueError):
         estimate_rotation_plan_cost(plan, 0)
+
+
+def test_suggest_pest_rotation_plan():
+    start = datetime.date(2024, 1, 1)
+    plan = suggest_pest_rotation_plan("aphids", start, 3)
+    assert plan[0][0] in {"imidacloprid", "spinosad", "pyrethrin"}
+    assert len(plan) == 3
+    # ensure intervals follow product guidelines
+    assert plan[1][1] > plan[0][1]
 
 
 
