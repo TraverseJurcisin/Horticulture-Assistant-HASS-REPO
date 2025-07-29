@@ -33,6 +33,7 @@ SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
 SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
 SEVERITY_SCORE_FILE = "pest_severity_scores.json"
 SAMPLE_SIZE_FILE = "pest_sample_sizes.json"
+YIELD_LOSS_FILE = "pest_yield_loss.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
@@ -44,6 +45,7 @@ _SEVERITY_SCORES = lazy_dataset(SEVERITY_SCORE_FILE)
 PRESSURE_WEIGHT_FILE = "pest_pressure_weights.json"
 _PRESSURE_WEIGHTS = lazy_dataset(PRESSURE_WEIGHT_FILE)
 _SAMPLE_SIZES = lazy_dataset(SAMPLE_SIZE_FILE)
+_YIELD_LOSS = lazy_dataset(YIELD_LOSS_FILE)
 
 
 def _resolve(data):
@@ -81,6 +83,7 @@ __all__ = [
     "generate_monitoring_schedule",
     "generate_detailed_monitoring_schedule",
     "get_sample_size",
+    "estimate_yield_loss",
     "PestReport",
     "summarize_pest_management",
 ]
@@ -296,6 +299,26 @@ def calculate_severity_index(severity_map: Mapping[str, str]) -> float:
     return round(total / count, 2) if count else 0.0
 
 
+def estimate_yield_loss(severity_map: Mapping[str, str]) -> float:
+    """Return estimated percent yield loss based on pest severity levels."""
+
+    if not severity_map:
+        return 0.0
+
+    data = _resolve(_YIELD_LOSS)
+    total = 0.0
+    for pest, level in severity_map.items():
+        info = data.get(normalize_key(pest))
+        if not isinstance(info, Mapping):
+            continue
+        try:
+            loss = float(info.get(level, 0))
+        except (TypeError, ValueError):
+            loss = 0.0
+        total += loss
+    return round(min(total, 100.0), 2)
+
+
 def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
     """Return treatment actions for pests exceeding thresholds."""
 
@@ -487,6 +510,7 @@ class PestReport:
     prevention: Dict[str, str]
     severity_actions: Dict[str, str]
     severity_index: float
+    yield_loss: float
 
     def as_dict(self) -> Dict[str, object]:
         """Return report as a regular dictionary."""
@@ -509,6 +533,7 @@ def generate_pest_report(
 
     severity_actions = {s: get_severity_action(lvl) for s, lvl in severity.items()}
     index = calculate_severity_index(severity)
+    yield_loss = estimate_yield_loss(severity)
 
     report = PestReport(
         severity=severity,
@@ -518,6 +543,7 @@ def generate_pest_report(
         prevention=prevention,
         severity_actions=severity_actions,
         severity_index=index,
+        yield_loss=yield_loss,
     )
     return report.as_dict()
 
