@@ -366,7 +366,7 @@ def test_adjust_irrigation_for_zone():
 def test_generate_cycle_infiltration_schedule():
     schedule = generate_cycle_infiltration_schedule("lettuce", 0.1, "clay")
     veg = schedule["vegetative"]
-    assert veg[1] == [200.0, 100.0]
+    assert veg[1] == [150.0, 150.0]
 
 
 def test_lazy_dataset_loading():

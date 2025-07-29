@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import Mapping, Dict, Any
+import math
 
 from .utils import lazy_dataset, normalize_key, stage_value
 from .et_model import calculate_eta
@@ -619,12 +620,16 @@ def generate_infiltration_bursts(
     capacity_ml_h = rate * area_m2 * 1000
     max_burst = capacity_ml_h * max_hours
 
-    bursts: list[float] = []
-    remaining = volume_ml
-    while remaining > 0:
-        burst = min(remaining, max_burst)
-        bursts.append(round(burst, 1))
-        remaining -= burst
+    if max_burst <= 0:
+        return [round(volume_ml, 1)]
+
+    burst_count = math.ceil(volume_ml / max_burst)
+    base = volume_ml / burst_count
+    bursts = [round(base, 1) for _ in range(burst_count)]
+
+    diff = round(volume_ml - base * burst_count, 1)
+    if diff:
+        bursts[-1] = round(bursts[-1] + diff, 1)
 
     return bursts
 
