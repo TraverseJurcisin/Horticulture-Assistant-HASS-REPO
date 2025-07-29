@@ -17,6 +17,7 @@ from plant_engine.pesticide_manager import (
     suggest_rotation_plan,
     get_pesticide_price,
     estimate_application_cost,
+    estimate_rotation_plan_cost,
 )
 
 
@@ -206,6 +207,27 @@ def test_pesticide_efficacy_helpers():
     ranking = list_effective_pesticides("aphids")
     assert ranking[0][0] == "imidacloprid"
     assert ranking[0][1] >= ranking[-1][1]
+
+
+def test_estimate_rotation_plan_cost():
+    import importlib
+    from plant_engine import nutrient_manager as nm
+    import plant_engine.utils as utils
+
+    utils.clear_dataset_cache()
+    importlib.reload(nm)
+
+    start = datetime.date(2024, 1, 1)
+    plan = suggest_rotation_plan(["spinosad", "neem_oil"], start)
+    expected = (
+        estimate_application_cost("spinosad", 2.0)
+        + estimate_application_cost("neem_oil", 2.0)
+    )
+    cost = estimate_rotation_plan_cost(plan, 2.0)
+    assert cost == expected
+
+    with pytest.raises(ValueError):
+        estimate_rotation_plan_cost(plan, 0)
 
 
 
