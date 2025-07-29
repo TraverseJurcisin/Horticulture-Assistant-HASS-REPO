@@ -9,6 +9,10 @@ from plant_engine.energy_manager import (
     get_electricity_rate,
     estimate_lighting_energy,
     estimate_lighting_cost,
+    get_emission_factor,
+    estimate_lighting_emissions,
+    estimate_hvac_emissions,
+    estimate_hvac_emissions_series,
     get_light_efficiency,
     estimate_dli_from_power,
 )
@@ -69,3 +73,24 @@ def test_light_efficiency_and_dli():
     dli = estimate_dli_from_power(200, 5, "led")
     # 200W for 5h at 2.5 umol/J over 1 m^2 -> 9 mol
     assert dli == pytest.approx(9.0, 0.1)
+
+
+def test_emission_factor_lookup():
+    assert get_emission_factor("solar") == 0.05
+    assert get_emission_factor("unknown") == 0.4
+
+
+def test_lighting_emissions():
+    kg = estimate_lighting_emissions(200, 5, "solar")
+    assert kg == pytest.approx(0.05, 0.001)
+
+
+def test_hvac_emissions_and_series():
+    kg = estimate_hvac_emissions(18, 20, 12, "heating", source="coal")
+    expected_energy = 0.5 * (2 * 12 / 24)
+    assert kg == pytest.approx(expected_energy * 0.9, 0.001)
+
+    temps = [20, 22]
+    series = estimate_hvac_emissions_series(18, temps, 4, "heating", source="coal")
+    expected_energy = round(0.5 * (2 * 4 / 24), 2)
+    assert series[0] == pytest.approx(expected_energy * 0.9, 0.001)
