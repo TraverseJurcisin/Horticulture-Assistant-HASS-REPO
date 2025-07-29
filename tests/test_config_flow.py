@@ -170,3 +170,25 @@ def test_init_menu(monkeypatch):
     flow.hass = hass
     result = asyncio.run(flow.async_step_init())
     assert result["type"] == "menu"
+
+
+def test_subentry_flow(monkeypatch):
+    recorded = {}
+
+    def fake_generate(data, hass=None):
+        recorded.update(data)
+        return "sub123"
+
+    monkeypatch.setattr(config_flow, "generate_profile", fake_generate)
+    flow = config_flow.PlantProfileSubEntryFlow()
+    flow.hass = object()
+    result = asyncio.run(flow.async_step_user({"plant_name": "Mint"}))
+    assert result["type"] == "create_entry"
+    assert flow.created_entry["data"]["plant_name"] == "Mint"
+    assert flow.created_entry["unique_id"] == "sub123"
+    assert recorded["plant_name"] == "Mint"
+
+
+def test_get_supported_subentry_types():
+    mapping = config_flow.async_get_supported_subentry_types(None)
+    assert mapping["plant"] is config_flow.PlantProfileSubEntryFlow

@@ -34,7 +34,8 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     Unknown or unspecified values are filled with placeholders (null or "TBD").
     Existing files are skipped by default unless overwrite is True.
 
-    :param metadata: Dictionary of plant metadata (name/display_name, cultivar, plant_type, tags, zone, stage_length, etc.)
+    :param metadata: Dictionary of plant metadata (name/display_name/plant_name,
+        cultivar, plant_type, tags, zone, stage_length, etc.)
     :param hass: HomeAssistant instance for path resolution (optional).
     :param overwrite: If True, overwrite existing files; if False, skip writing files that already exist.
     :param base_dir: Base directory for plant profiles (defaults to "plants/" in current working directory or Home Assistant config).
@@ -42,7 +43,11 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     """
     # Determine the plant identifier (plant_id)
     plant_id = metadata.get("plant_id") or metadata.get("id")
-    display_name = metadata.get("display_name") or metadata.get("name")
+    display_name = (
+        metadata.get("display_name")
+        or metadata.get("name")
+        or metadata.get("plant_name")
+    )
     if not plant_id:
         if display_name:
             plant_id = _slugify(display_name)
@@ -263,4 +268,13 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
             _LOGGER.error("Failed to write %s: %s", file_path, e)
 
     _LOGGER.info("Plant profile generated for '%s' at %s", plant_id, plant_dir)
+
+    # Cache profile for future upload
+    try:
+        from .profile_upload_cache import cache_profile_for_upload
+
+        cache_profile_for_upload(plant_id, hass)
+    except Exception as exc:  # pragma: no cover - best effort cache
+        _LOGGER.debug("Failed to cache profile %s: %s", plant_id, exc)
+
     return plant_id
