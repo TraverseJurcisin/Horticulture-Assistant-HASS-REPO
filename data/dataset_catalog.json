@@ -171,6 +171,7 @@
 
     "pest_resistance_ratings.json": "Relative pest resistance ratings by crop.",
     "pest_scientific_names.json": "Common pests mapped to their scientific names.",
+    "pest_common_names.json": "Scientific pest names mapped to their common names.",
     "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
     "reference_et0.json": "Monthly reference ET0 values in mm/day",
     "reference_et0_range.json": "Typical min and max ET0 values by month",

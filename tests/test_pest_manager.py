@@ -74,6 +74,13 @@ def test_get_scientific_name():
     assert get_scientific_name("unknown") is None
 
 
+def test_get_common_name():
+    from plant_engine.pest_manager import get_common_name
+
+    assert get_common_name("Aphidoidea") == "aphids"
+    assert get_common_name("Unknown") is None
+
+
 def test_get_pest_prevention():
     guide = get_pest_prevention("citrus")
     assert "aphids" in guide
@@ -137,6 +144,7 @@ def test_build_pest_management_plan_includes_organic():
 def test_build_pest_management_plan_includes_scientific_name():
     plan = build_pest_management_plan("citrus", ["aphids"])
     assert plan["aphids"]["scientific_name"] == "Aphidoidea"
+    assert plan["aphids"]["common_name"] == "aphids"
 
 
 def test_get_pest_lifecycle():

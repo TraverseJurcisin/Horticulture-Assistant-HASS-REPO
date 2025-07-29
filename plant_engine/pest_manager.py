@@ -20,6 +20,7 @@ IPM_FILE = "ipm_guidelines.json"
 RESISTANCE_FILE = "pest_resistance_ratings.json"
 ORGANIC_FILE = "organic_pest_controls.json"
 TAXONOMY_FILE = "pest_scientific_names.json"
+COMMON_NAME_FILE = "pest_common_names.json"
 RELEASE_RATE_FILE = "beneficial_release_rates.json"
 LIFECYCLE_FILE = "pest_lifecycle_durations.json"
 MONITOR_FILE = "pest_monitoring_intervals.json"
@@ -40,6 +41,7 @@ _IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
 _RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
 _ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
 _TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
+_COMMON_NAMES: Dict[str, str] = load_dataset(COMMON_NAME_FILE)
 _LIFECYCLE: Dict[str, Dict[str, int]] = load_dataset(LIFECYCLE_FILE)
 _MONITORING: Dict[str, Dict[str, int]] = load_dataset(MONITOR_FILE)
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(THRESHOLD_FILE)
@@ -78,6 +80,11 @@ def list_supported_pests() -> list[str]:
 def get_scientific_name(pest: str) -> str | None:
     """Return the scientific (Latin) name for ``pest`` if known."""
     return _TAXONOMY.get(normalize_key(pest))
+
+
+def get_common_name(scientific_name: str) -> str | None:
+    """Return the common name for a scientific pest identifier."""
+    return _COMMON_NAMES.get(scientific_name)
 
 
 def get_pest_resistance(plant_type: str, pest: str) -> float | None:
@@ -337,13 +344,18 @@ def build_pest_management_plan(
     organic = recommend_organic_controls(pest_list)
 
     for pest in pest_list:
+        sci = get_scientific_name(pest)
+        common = get_common_name(sci) if sci else get_common_name(pest)
+        if common is None:
+            common = pest
         plan[pest] = {
             "treatment": treatments.get(pest, "No guideline available"),
             "prevention": prevention.get(pest, "No guideline available"),
             "beneficials": beneficials.get(pest, []),
             "ipm": ipm_actions.get(pest),
             "organic": organic.get(pest, []),
-            "scientific_name": get_scientific_name(pest),
+            "scientific_name": sci,
+            "common_name": common,
             "lifecycle": get_pest_lifecycle(pest),
         }
 
@@ -397,6 +409,7 @@ __all__ = [
     "list_known_pests",
     "list_supported_pests",
     "get_scientific_name",
+    "get_common_name",
     "recommend_treatments",
     "get_beneficial_insects",
     "recommend_beneficials",
