@@ -344,6 +344,8 @@ useful commands is available in [`docs/scripts_overview.md`](docs/scripts_overvi
   current readings.
 - `monitor_schedule.py` outputs an integrated pest and disease monitoring
   schedule for a plant stage.
+`pest_plan.py` generates a JSON pest management plan with treatments,
+  prevention tips and beneficial release suggestions.
 - `dataset_info.py` lists available datasets and categories.
 - `validate_datasets.py` verifies that all dataset files can be parsed.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
