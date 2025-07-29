@@ -28,6 +28,7 @@ __all__ = [
     "estimate_total_removal",
     "estimate_required_nutrients",
     "estimate_fertilizer_requirements",
+    "estimate_fertilizer_cost",
     "estimate_solution_volume",
     "RemovalEstimate",
 ]
@@ -146,3 +147,41 @@ def estimate_solution_volume(masses: Mapping[str, float]) -> Dict[str, float]:
         volumes[fert_id] = round(grams / sol_rate, 3)
 
     return volumes
+
+
+def estimate_fertilizer_cost(
+    plant_type: str,
+    yield_kg: float,
+    fertilizers: Mapping[str, str],
+    *,
+    efficiency: float = 0.85,
+) -> float:
+    """Return estimated cost in USD for fertilizer requirements.
+
+    This helper converts expected nutrient removal into a fertilizer schedule
+    and multiplies each requirement by the cost efficiency of the selected
+    product using :func:`estimate_cost_per_nutrient` from the fertilizer
+    formulator utilities.
+    """
+
+    from custom_components.horticulture_assistant.fertilizer_formulator import (
+        estimate_cost_per_nutrient,
+    )
+
+    total = 0.0
+    for nutrient, grams in estimate_required_nutrients(
+        plant_type, yield_kg, efficiency=efficiency
+    ).nutrients_g.items():
+        fert_id = fertilizers.get(nutrient)
+        if not fert_id:
+            continue
+        try:
+            cost_map = estimate_cost_per_nutrient(fert_id)
+        except Exception:
+            continue
+        cost_per_g = cost_map.get(nutrient)
+        if cost_per_g is None:
+            continue
+        total += cost_per_g * grams
+
+    return round(total, 2)

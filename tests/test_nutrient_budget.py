@@ -1,4 +1,7 @@
 from plant_engine import nutrient_budget
+from custom_components.horticulture_assistant.fertilizer_formulator import (
+    estimate_mix_cost,
+)
 
 
 def test_get_removal_rates():
@@ -40,3 +43,10 @@ def test_estimate_solution_volume():
     assert volumes["foxfarm_grow_big"] == 0.5  # 150g / 300 g/L
     assert volumes["magriculture"] == 1.0      # 800g / 800 g/L
 
+
+def test_estimate_fertilizer_cost():
+    ferts = {"N": "foxfarm_grow_big", "P": "foxfarm_grow_big", "K": "foxfarm_grow_big"}
+    cost = nutrient_budget.estimate_fertilizer_cost(
+        "lettuce", 1.0, ferts, efficiency=1.0
+    )
+    assert cost > 0
