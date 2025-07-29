@@ -29,6 +29,7 @@ __all__ = [
     "lookup_crop_coefficient",
     "compute_transpiration",
     "compute_transpiration_series",
+    "compute_weighted_transpiration_dataframe",
     "compute_transpiration_dataframe",
 ]
 # Conversion constant: 1 mm of water over 1 m^2 equals 1 liter (1000 mL)
@@ -148,8 +149,8 @@ def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str
 
 def compute_transpiration_series(
     plant_profile: Mapping,
-    env_series: Iterable[Mapping],
-    weights: Iterable[float] | None = None,
+    env_series: Iterable[Mapping] | pd.DataFrame,
+    weights: Iterable[float] | pd.Series | None = None,
 ) -> Dict[str, float]:
     """Return weighted average transpiration metrics for ``env_series``.
 
@@ -159,30 +160,16 @@ def compute_transpiration_series(
     average.
     """
 
-    df = pd.DataFrame(list(env_series))
+    if isinstance(env_series, pd.DataFrame):
+        df = env_series
+    else:
+        df = pd.DataFrame(list(env_series))
     if df.empty:
         return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
 
-    metrics = compute_transpiration_dataframe(plant_profile, df)
-
-    if weights is None:
-        weights_arr = np.ones(len(df))
-    else:
-        weights_arr = np.asarray(list(weights), dtype=float)
-        if len(weights_arr) != len(df):
-            raise ValueError("weights length must match env_series length")
-
-    weights_arr = np.where(weights_arr > 0, weights_arr, 0)
-    total_w = weights_arr.sum()
-    if total_w == 0:
-        return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
-
-    weighted = metrics.mul(weights_arr, axis=0).sum() / total_w
-    return TranspirationMetrics(
-        round(float(weighted["et0_mm_day"]), 2),
-        round(float(weighted["eta_mm_day"]), 2),
-        round(float(weighted["transpiration_ml_day"]), 1),
-    ).as_dict()
+    return compute_weighted_transpiration_dataframe(
+        plant_profile, df, weights
+    )
 
 
 def compute_transpiration_dataframe(
@@ -263,4 +250,44 @@ def compute_transpiration_dataframe(
         },
         index=env_df.index,
     )
+
+
+def compute_weighted_transpiration_dataframe(
+    plant_profile: Mapping,
+    env_df: pd.DataFrame,
+    weights: Iterable[float] | pd.Series | None = None,
+) -> Dict[str, float]:
+    """Return weighted average metrics for ``env_df``.
+
+    Parameters
+    ----------
+    plant_profile : Mapping
+        Plant profile containing crop coefficient and canopy information.
+    env_df : pandas.DataFrame
+        Environment readings with the same columns accepted by
+        :func:`compute_transpiration_dataframe`.
+    weights : iterable of float or pandas.Series, optional
+        Weights for each row when averaging. Non-positive weights are ignored.
+    """
+
+    metrics = compute_transpiration_dataframe(plant_profile, env_df)
+
+    if weights is None:
+        weights_arr = np.ones(len(metrics))
+    else:
+        weights_arr = np.asarray(list(weights), dtype=float)
+        if len(weights_arr) != len(metrics):
+            raise ValueError("weights length must match env_df length")
+
+    weights_arr = np.where(weights_arr > 0, weights_arr, 0)
+    total_w = weights_arr.sum()
+    if total_w == 0:
+        return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
+
+    weighted = metrics.mul(weights_arr, axis=0).sum() / total_w
+    return TranspirationMetrics(
+        round(float(weighted["et0_mm_day"]), 2),
+        round(float(weighted["eta_mm_day"]), 2),
+        round(float(weighted["transpiration_ml_day"]), 1),
+    ).as_dict()
 
