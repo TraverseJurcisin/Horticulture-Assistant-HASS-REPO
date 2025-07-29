@@ -427,6 +427,7 @@ __all__ = [
     "calculate_environment_metrics_series",
     "generate_stage_environment_plan",
     "generate_stage_growth_plan",
+    "generate_cycle_growth_plan",
     "suggest_environment_setpoints_zone",
     "generate_zone_environment_plan",
 ]
@@ -1305,6 +1306,41 @@ def generate_stage_growth_plan(plant_type: str) -> Dict[str, Dict[str, Any]]:
             "nutrients": get_stage_requirements(plant_type, stage),
             "tasks": get_stage_tasks(plant_type, stage),
         }
+    return plan
+
+
+def generate_cycle_growth_plan(
+    plant_type: str, start_date: date
+) -> list[dict[str, Any]]:
+    """Return dated growth plan for an entire crop cycle.
+
+    Each entry includes the stage name, start and end dates along with the
+    environment setpoints, daily nutrient requirements and recommended tasks.
+    This consolidates :func:`generate_stage_growth_plan` with the schedule from
+    :func:`plant_engine.growth_stage.generate_stage_schedule` for convenience
+    when creating crop management timelines.
+    """
+
+    from .growth_stage import generate_stage_schedule
+
+    schedule = generate_stage_schedule(plant_type, start_date)
+    stage_plan = generate_stage_growth_plan(plant_type)
+
+    plan: list[dict[str, Any]] = []
+    for entry in schedule:
+        stage = entry["stage"]
+        details = stage_plan.get(stage, {})
+        plan.append(
+            {
+                "stage": stage,
+                "start_date": entry["start_date"],
+                "end_date": entry["end_date"],
+                "environment": details.get("environment", {}),
+                "nutrients": details.get("nutrients", {}),
+                "tasks": details.get("tasks", []),
+            }
+        )
+
     return plan
 
 
