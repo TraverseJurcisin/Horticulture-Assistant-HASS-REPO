@@ -1,7 +1,12 @@
-"""Load and evaluate baseline nutrient requirements for crops."""
+"""Utility helpers for crop nutrient requirements.
+
+The dataset :data:`DATA_FILE` contains average daily NPK needs for each
+registered plant.  This module exposes simple helpers to retrieve those values
+and compare them against accumulated nutrient totals.
+"""
 
 from functools import lru_cache
-from typing import Mapping, Dict
+from typing import Dict, Mapping
 
 from plant_engine.utils import load_dataset, normalize_key
 
@@ -12,32 +17,31 @@ DATA_FILE = "total_nutrient_requirements.json"
 def get_requirements(plant_type: str) -> Dict[str, float]:
     """Return daily nutrient requirements for ``plant_type``.
 
-    Values are parsed from :data:`DATA_FILE` and converted to floats. Unknown
-    plant types result in an empty dictionary.
+    Unknown plants yield an empty mapping. Values are coerced to ``float`` and
+    invalid entries are skipped gracefully.
     """
+
     data = load_dataset(DATA_FILE)
-    plant = data.get(normalize_key(plant_type))
-    if not isinstance(plant, Mapping):
+    raw = data.get(normalize_key(plant_type))
+    if not isinstance(raw, Mapping):
         return {}
-    req: Dict[str, float] = {}
-    for nutrient, value in plant.items():
-        try:
-            req[nutrient] = float(value)
-        except (TypeError, ValueError):
-            continue
-    return req
+
+    return {
+        nutrient: float(value)
+        for nutrient, value in raw.items()
+        if isinstance(value, (int, float, str))
+    }
 
 
 def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> Dict[str, float]:
     """Return required nutrient amounts not yet supplied."""
+
     required = get_requirements(plant_type)
-    deficit: Dict[str, float] = {}
-    for nutrient, target in required.items():
-        current = float(current_totals.get(nutrient, 0.0))
-        diff = round(target - current, 2)
-        if diff > 0:
-            deficit[nutrient] = diff
-    return deficit
+    return {
+        nutrient: round(target - float(current_totals.get(nutrient, 0.0)), 2)
+        for nutrient, target in required.items()
+        if target > float(current_totals.get(nutrient, 0.0))
+    }
 
 
 __all__ = ["get_requirements", "calculate_deficit"]
