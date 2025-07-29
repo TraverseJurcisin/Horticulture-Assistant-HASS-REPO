@@ -25,6 +25,7 @@ from plant_engine.irrigation_manager import (
     get_recommended_interval,
     IrrigationRecommendation,
 )
+from plant_engine.utils import clear_dataset_cache
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
 from plant_engine.compute_transpiration import compute_transpiration
 
@@ -366,5 +367,11 @@ def test_generate_cycle_infiltration_schedule():
     schedule = generate_cycle_infiltration_schedule("lettuce", 0.1, "clay")
     veg = schedule["vegetative"]
     assert veg[1] == [200.0, 100.0]
+
+
+def test_lazy_dataset_loading():
+    clear_dataset_cache()
+    plants = list_supported_plants()
+    assert "lettuce" in plants
 
 
