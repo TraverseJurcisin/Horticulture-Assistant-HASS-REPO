@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import Dict, Mapping, Iterable
+from functools import lru_cache
 
 from .constants import get_stage_multiplier
 
@@ -24,7 +25,6 @@ clear_dataset_cache()
 # Dataset cached via :func:`load_dataset` so this only happens once
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 _RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
-_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
 _RAW_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
 # Normalize modifier keys for consistent lookups regardless of hyphen/space use
 _TAG_MODIFIERS: Dict[str, Dict[str, float]] = {
@@ -130,20 +130,26 @@ def _deficiency_index_for_targets(current_levels: Mapping[str, float], targets: 
     return round((deficit_score / total_weight) * 100, 1)
 
 
+@lru_cache(maxsize=None)
+def _load_nutrient_weights() -> Dict[str, float]:
+    """Return mapping of nutrient importance weights."""
+
+    raw = load_dataset(WEIGHT_DATA_FILE)
+    if not isinstance(raw, Mapping):
+        return {}
+    weights: Dict[str, float] = {}
+    for key, value in raw.items():
+        try:
+            weights[str(key)] = float(value)
+        except (TypeError, ValueError):
+            continue
+    return weights
+
+
 def get_nutrient_weight(nutrient: str) -> float:
-    """Return importance weight for a nutrient.
+    """Return importance weight for ``nutrient`` with ``1.0`` fallback."""
 
-    If no weight is defined the default ``1.0`` is returned.
-    """
-
-    from .utils import clear_dataset_cache
-
-    clear_dataset_cache()
-    weights = load_dataset(WEIGHT_DATA_FILE)
-    try:
-        return float(weights.get(nutrient, 1.0))
-    except (TypeError, ValueError):
-        return 1.0
+    return _load_nutrient_weights().get(nutrient, 1.0)
 
 
 def list_supported_plants() -> list[str]:
