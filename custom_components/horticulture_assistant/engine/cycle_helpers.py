@@ -1,4 +1,4 @@
-"""Helper utilities for :mod:`run_daily_cycle`."""
+"""Reusable helpers for daily cycle processing."""
 
 from __future__ import annotations
 
@@ -9,14 +9,20 @@ from statistics import mean
 from typing import Mapping
 
 from plant_engine.nutrient_uptake import get_daily_uptake
+from plant_engine.rootzone_model import estimate_water_capacity
+
+# Default depth used when profiles omit ``max_root_depth_cm``.
+DEFAULT_ROOT_DEPTH_CM = 30.0
 
 __all__ = [
-    "load_recent_entries",
-    "load_last_entry",
-    "summarize_irrigation",
     "aggregate_nutrients",
     "average_sensor_data",
+    "build_root_zone_info",
     "compute_expected_uptake",
+    "load_last_entry",
+    "load_logs",
+    "load_recent_entries",
+    "summarize_irrigation",
 ]
 
 
@@ -113,4 +119,39 @@ def compute_expected_uptake(
         applied = totals.get(nutrient, 0.0)
         gap[nutrient] = round(target - applied, 2)
     return expected, gap
+
+
+def load_logs(plant_dir: Path) -> dict[str, list]:
+    """Return recent log entries for the given plant directory."""
+
+    return {
+        "irrigation": load_recent_entries(plant_dir / "irrigation_log.json"),
+        "nutrient": load_recent_entries(plant_dir / "nutrient_application_log.json"),
+        "sensor": load_recent_entries(plant_dir / "sensor_reading_log.json"),
+        "water_quality": load_recent_entries(plant_dir / "water_quality_log.json"),
+        "yield": load_recent_entries(plant_dir / "yield_tracking_log.json"),
+    }
+
+
+def build_root_zone_info(
+    general: Mapping[str, object], sensor_avg: Mapping[str, float]
+) -> dict[str, object]:
+    """Return root zone metrics calculated from profile and sensors."""
+
+    try:
+        root_depth_cm = float(general.get("max_root_depth_cm", DEFAULT_ROOT_DEPTH_CM))
+    except Exception:
+        root_depth_cm = DEFAULT_ROOT_DEPTH_CM
+
+    zone = estimate_water_capacity(root_depth_cm)
+    info = {
+        "taw_ml": zone.total_available_water_ml,
+        "mad_pct": zone.mad_pct,
+    }
+    for key in ("soil_moisture", "soil_moisture_pct", "moisture"):
+        if key in sensor_avg:
+            info["current_moisture_pct"] = sensor_avg[key]
+            break
+
+    return info
 

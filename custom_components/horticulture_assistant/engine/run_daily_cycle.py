@@ -44,6 +44,8 @@ from .cycle_helpers import (
     aggregate_nutrients as _aggregate_nutrients,
     average_sensor_data as _average_sensor_data,
     compute_expected_uptake as _compute_expected_uptake,
+    load_logs as _load_logs,
+    build_root_zone_info as _build_root_zone_info,
 )
 from plant_engine.fertigation import (
     recommend_nutrient_mix,
@@ -51,10 +53,7 @@ from plant_engine.fertigation import (
 )
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.compute_transpiration import compute_transpiration
-from plant_engine.rootzone_model import (
-    estimate_water_capacity,
-    estimate_infiltration_time,
-)
+from plant_engine.rootzone_model import estimate_infiltration_time
 from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.stage_tasks import get_stage_tasks
 from plant_engine import water_quality
@@ -104,39 +103,6 @@ class DailyReport:
 
 
 _LOGGER = logging.getLogger(__name__)
-
-
-def _load_logs(plant_dir: Path) -> dict[str, list]:
-    """Return recent log entries for the given plant directory."""
-
-    return {
-        "irrigation": _load_recent_entries(plant_dir / "irrigation_log.json"),
-        "nutrient": _load_recent_entries(plant_dir / "nutrient_application_log.json"),
-        "sensor": _load_recent_entries(plant_dir / "sensor_reading_log.json"),
-        "water_quality": _load_recent_entries(plant_dir / "water_quality_log.json"),
-        "yield": _load_recent_entries(plant_dir / "yield_tracking_log.json"),
-    }
-
-
-def _build_root_zone_info(general: Mapping[str, object], sensor_avg: Mapping[str, float]) -> dict[str, object]:
-    """Return root zone metrics calculated from profile and sensors."""
-
-    try:
-        root_depth_cm = float(general.get("max_root_depth_cm", 30.0))
-    except Exception:
-        root_depth_cm = 30.0
-
-    zone = estimate_water_capacity(root_depth_cm)
-    info = {
-        "taw_ml": zone.total_available_water_ml,
-        "mad_pct": zone.mad_pct,
-    }
-    for key in ("soil_moisture", "soil_moisture_pct", "moisture"):
-        if key in sensor_avg:
-            info["current_moisture_pct"] = sensor_avg[key]
-            break
-
-    return info
 
 
 def run_daily_cycle(
@@ -351,12 +317,12 @@ def run_daily_cycle(
 __all__ = [
     "DailyReport",
     "run_daily_cycle",
-    "_load_recent_entries",
-    "_summarize_irrigation",
     "_aggregate_nutrients",
     "_average_sensor_data",
-    "_compute_expected_uptake",
-    "load_last_entry",
-    "_load_logs",
     "_build_root_zone_info",
+    "_compute_expected_uptake",
+    "_load_logs",
+    "_load_recent_entries",
+    "_summarize_irrigation",
+    "load_last_entry",
 ]
