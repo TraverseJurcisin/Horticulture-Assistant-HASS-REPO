@@ -1,5 +1,8 @@
 {
   "foxfarm_grow_big": 150,
   "magriculture": 200,
-  "intrepid_granular_potash_0_0_60": 100
+  "intrepid_granular_potash_0_0_60": 100,
+  "general_hydroponics_floramicro": 120,
+  "general_hydroponics_floragrow": 120,
+  "general_hydroponics_florabloom": 120
 }
