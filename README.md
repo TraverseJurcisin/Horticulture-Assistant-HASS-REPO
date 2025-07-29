@@ -288,6 +288,7 @@ Important categories include:
 - **Root temperature optima** – recommended ideal root zone temperature by crop
 - **Media properties** – recommended pH range and water retention for common substrates
 - **Drought tolerance** – maximum days plants can remain dry before watering
+- **Harvest windows** – recommended harvest date ranges for supported crops
 - **Hardiness zone temperatures** – minimum winter temperatures by USDA zone
 - **DAFE species profiles** – growth and EC parameters used by the fertigation engine
 - **DAFE media profiles** – porosity and retention factors for supported substrates
