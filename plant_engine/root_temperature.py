@@ -4,7 +4,7 @@ from __future__ import annotations
 from bisect import bisect_left
 from typing import Mapping, Dict, Sequence
 
-from .utils import load_dataset
+from .utils import load_dataset, list_dataset_entries, normalize_key
 
 DATA_FILE = "root_temperature_uptake.json"
 OPTIMA_FILE = "root_temperature_optima.json"
@@ -16,9 +16,27 @@ _FACTORS: Sequence[float] = [float(f) for f in _DATA.get("factor", [])]
 _DEFAULT_OPTIMUM = next((t for t, f in zip(_TEMPS, _FACTORS) if f == 1.0), 21.0)
 
 __all__ = [
+    "list_supported_plants",
+    "get_optimal_root_temperature",
     "get_uptake_factor",
     "adjust_uptake",
 ]
+
+
+def list_supported_plants() -> list[str]:
+    """Return plant types with defined optimal root temperatures."""
+
+    return list_dataset_entries(_OPTIMA)
+
+
+def get_optimal_root_temperature(plant_type: str) -> float | None:
+    """Return optimal root zone temperature for ``plant_type`` when known."""
+
+    value = _OPTIMA.get(normalize_key(plant_type))
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - dataset corruption
+        return None
 
 
 def get_uptake_factor(temp_c: float, plant_type: str | None = None) -> float:

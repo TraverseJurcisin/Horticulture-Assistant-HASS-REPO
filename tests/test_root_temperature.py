@@ -1,4 +1,9 @@
-from plant_engine.root_temperature import get_uptake_factor, adjust_uptake
+from plant_engine.root_temperature import (
+    get_uptake_factor,
+    adjust_uptake,
+    list_supported_plants,
+    get_optimal_root_temperature,
+)
 from plant_engine.nutrient_manager import get_temperature_adjusted_levels
 
 
@@ -26,5 +31,15 @@ def test_plant_specific_optimum():
 def test_temperature_adjusted_levels():
     levels = get_temperature_adjusted_levels("lettuce", "seedling", 15)
     assert levels["N"] == 68.0  # 80 * 0.85 (lettuce optimum 18C)
+
+
+def test_list_supported_plants():
+    plants = list_supported_plants()
+    assert "tomato" in plants and "lettuce" in plants
+
+
+def test_get_optimal_root_temperature():
+    assert get_optimal_root_temperature("tomato") == 24
+    assert get_optimal_root_temperature("unknown") is None
 
 
