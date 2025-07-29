@@ -139,6 +139,21 @@ def test_score_nutrient_series():
     assert score == (100.0 + score_nutrient_levels(s2, "tomato", "fruiting")) / 2
 
 
+def test_calculate_deficiency_index_series():
+    from plant_engine.nutrient_manager import (
+        calculate_deficiency_index_series,
+        calculate_deficiency_index,
+        get_all_recommended_levels,
+    )
+
+    guidelines = get_all_recommended_levels("tomato", "fruiting")
+    zero = {n: 0 for n in guidelines}
+    idx_single = calculate_deficiency_index(zero, "tomato", "fruiting")
+    avg = calculate_deficiency_index_series([zero, guidelines], "tomato", "fruiting")
+    assert avg == round((idx_single + 0.0) / 2, 1)
+    assert calculate_deficiency_index_series([], "tomato", "fruiting") == 0.0
+
+
 def test_apply_tag_modifiers():
     from plant_engine import nutrient_manager as nm
 
