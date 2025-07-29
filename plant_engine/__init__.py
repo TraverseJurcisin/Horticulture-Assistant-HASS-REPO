@@ -30,6 +30,11 @@ from .precipitation_risk import (
     estimate_precipitation_risk,
 )
 from .fertigation_optimizer import generate_fertigation_plan
+from .growth_rate_manager import (
+    list_supported_plants as list_growth_rate_plants,
+    get_daily_growth_rate,
+    estimate_growth,
+)
 
 __all__ = sorted(
     set(utils.__all__)
@@ -50,6 +55,9 @@ __all__ = sorted(
         "list_precipitation_plants",
         "estimate_precipitation_risk",
         "generate_fertigation_plan",
+        "list_growth_rate_plants",
+        "get_daily_growth_rate",
+        "estimate_growth",
     }
 )
 
