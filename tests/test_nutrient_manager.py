@@ -100,6 +100,9 @@ def test_score_nutrient_levels_weighted(tmp_path, monkeypatch):
     current = {"N": 80, "P": 30, "K": 60}
     score = nm.score_nutrient_levels(current, "tomato", "fruiting")
     assert 80 < score < 90
+    # Reset environment and reload module to avoid side effects on other tests
+    monkeypatch.delenv("HORTICULTURE_OVERLAY_DIR")
+    importlib.reload(nm)
 
 
 def test_get_all_recommended_levels():
