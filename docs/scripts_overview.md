@@ -6,7 +6,8 @@ Python. Some highlights are:
 
 - **precision_fertigation.py** – generate nutrient schedules and injector
   volumes for a crop stage. Supports optional nutrient synergy and stock
-  solution recipes.
+  solution recipes. The script now returns a `FertigationResult` dataclass
+  containing the full schedule, cost details and injection volumes.
 - **fertigation_plan.py** – output a daily fertigation schedule in JSON
   format for the specified number of days.
 - **environment_optimize.py** – recommend environment adjustments for the

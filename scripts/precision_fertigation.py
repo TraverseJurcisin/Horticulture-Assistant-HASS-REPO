@@ -65,7 +65,7 @@ def main(argv: list[str] | None = None) -> None:
         "K": "intrepid_granular_potash_0_0_60",
     }
 
-    schedule, total, breakdown, warnings, diag, injection = recommend_precise_fertigation_with_injection(
+    result = recommend_precise_fertigation_with_injection(
         args.plant_type,
         args.stage,
         args.volume_l,
@@ -85,20 +85,20 @@ def main(argv: list[str] | None = None) -> None:
             args.volume_l,
         )
 
-    result = {
-        "schedule": schedule,
-        "cost_total": total,
-        "cost_breakdown": breakdown,
-        "warnings": warnings,
-        "diagnostics": diag,
-        "injection_volumes": injection,
+    payload = {
+        "schedule": result.schedule,
+        "cost_total": result.cost_total,
+        "cost_breakdown": result.cost_breakdown,
+        "warnings": result.warnings,
+        "diagnostics": result.diagnostics,
+        "injection_volumes": result.injection_volumes,
         "recipe_injection": recipe_injection,
     }
 
     if args.as_yaml:
-        print(yaml.safe_dump(result, sort_keys=False))
+        print(yaml.safe_dump(payload, sort_keys=False))
     else:
-        print(json.dumps(result, indent=2))
+        print(json.dumps(payload, indent=2))
 
 
 if __name__ == "__main__":  # pragma: no cover
