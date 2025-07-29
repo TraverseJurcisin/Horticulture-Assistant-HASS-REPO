@@ -211,7 +211,7 @@ def test_calculate_pest_management_index():
     obs = {"aphids": 6}
     env = {"temperature": 26, "humidity": 80}
     idx = calculate_pest_management_index("citrus", obs, env)
-    assert 66 <= idx <= 67
+    assert idx == 60.0
     base = calculate_pest_pressure_index("citrus", obs)
     assert calculate_pest_management_index("citrus", obs) == base
 

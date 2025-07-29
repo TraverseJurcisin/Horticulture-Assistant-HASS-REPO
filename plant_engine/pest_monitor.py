@@ -40,6 +40,8 @@ _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
 _SEVERITY_SCORES = lazy_dataset(SEVERITY_SCORE_FILE)
+PRESSURE_WEIGHT_FILE = "pest_pressure_weights.json"
+_PRESSURE_WEIGHTS = lazy_dataset(PRESSURE_WEIGHT_FILE)
 
 
 def _resolve(data):
@@ -383,7 +385,14 @@ def calculate_pest_management_index(
         return pressure
     risk_score = calculate_risk_score(risk)
     risk_index = (risk_score / 3.0) * 100 if risk_score else 0.0
-    return round((pressure + risk_index) / 2, 1)
+
+    weights = _PRESSURE_WEIGHTS() or {}
+    p_w = float(weights.get("pressure", 1.0))
+    r_w = float(weights.get("risk", 1.0))
+    total = p_w + r_w
+    if total <= 0:
+        return 0.0
+    return round((pressure * p_w + risk_index * r_w) / total, 1)
 
 
 def classify_pest_severity(
