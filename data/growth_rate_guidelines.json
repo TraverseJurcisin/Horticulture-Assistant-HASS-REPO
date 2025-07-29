@@ -1,0 +1,11 @@
+{
+  "citrus": {
+    "vegetative": 1.2,
+    "flowering": 0.8,
+    "fruiting": 0.9
+  },
+  "lettuce": {
+    "seedling": 0.4,
+    "vegetative": 1.5
+  }
+}
