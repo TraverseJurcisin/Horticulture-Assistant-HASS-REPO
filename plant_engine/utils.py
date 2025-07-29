@@ -1,10 +1,12 @@
-"""Utility helpers for reading data files used across the plant engine."""
+"""Utility helpers for reading datasets and parsing horticulture values."""
 
 from __future__ import annotations
 
 import json
 import os
+
 import math
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
@@ -38,6 +40,7 @@ __all__ = [
     "list_dataset_files",
 ]
 
+_RANGE_PATTERN = re.compile(r"(?<!\d)[-+]?\d*\.?\d+(?:e[-+]?\d+)?")
 
 PathType = Union[str, PathLike]
 
@@ -369,11 +372,8 @@ def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
 
     numbers: list[float] = []
     if isinstance(value, str):
-        import re
-
         cleaned = re.sub(r"(?i)\bto\b", " ", value)
-        pattern = re.compile(r"(?<!\d)[-+]?\d*\.?\d+(?:e[-+]?\d+)?")
-        for match in pattern.finditer(cleaned):
+        for match in _RANGE_PATTERN.finditer(cleaned):
             try:
                 numbers.append(float(match.group()))
             except ValueError:
