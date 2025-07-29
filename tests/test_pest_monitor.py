@@ -22,6 +22,7 @@ from plant_engine.pest_monitor import (
     calculate_pest_management_index,
     calculate_pest_management_index_series,
     calculate_severity_index,
+    estimate_yield_loss,
     estimate_adjusted_pest_risk_series,
     get_sample_size,
 )
@@ -253,6 +254,18 @@ def test_report_includes_severity_index():
     obs = {"aphids": 6}
     report = generate_pest_report("citrus", obs)
     assert report["severity_index"] > 0
+
+
+def test_estimate_yield_loss():
+    severity = {"aphids": "moderate", "scale": "low"}
+    loss = estimate_yield_loss(severity)
+    assert loss == 6.0
+
+
+def test_report_includes_yield_loss():
+    obs = {"aphids": 6, "scale": 2}
+    report = generate_pest_report("citrus", obs)
+    assert report.get("yield_loss") is not None
 
 
 def test_get_sample_size():

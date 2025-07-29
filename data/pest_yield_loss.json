@@ -1,0 +1,5 @@
+{
+  "aphids": {"low": 2, "moderate": 5, "severe": 10},
+  "scale": {"low": 1, "moderate": 3, "severe": 6},
+  "mites": {"low": 2, "moderate": 5, "severe": 8}
+}
