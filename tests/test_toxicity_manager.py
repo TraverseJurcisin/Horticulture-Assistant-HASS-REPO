@@ -7,6 +7,7 @@ from plant_engine.toxicity_manager import (
     diagnose_toxicities,
     get_toxicity_treatment,
     recommend_toxicity_treatments,
+    calculate_toxicity_index,
 )
 
 
@@ -47,3 +48,9 @@ def test_diagnose_and_recommend_treatments():
     actions = recommend_toxicity_treatments(current, "tomato")
     assert "N" in symptoms and "burn" in symptoms["N"].lower()
     assert "K" in actions and actions["K"]
+
+
+def test_calculate_toxicity_index():
+    levels = {"N": 300, "K": 400}
+    index = calculate_toxicity_index(levels, "tomato")
+    assert index == 17.1
