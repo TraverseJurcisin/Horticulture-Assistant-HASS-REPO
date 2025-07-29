@@ -73,6 +73,7 @@ from plant_engine.environment_manager import (
     summarize_environment,
     summarize_environment_series,
     calculate_environment_metrics_series,
+    calculate_environment_metrics_dataframe,
     average_environment_readings,
     calculate_environment_variance,
     calculate_environment_stddev,
@@ -1089,6 +1090,30 @@ def test_calculate_environment_metrics_series():
     avg_temp = (20 + 22 + 21) / 3
     avg_hum = (60 + 65 + 55) / 3
     assert metrics.vpd == calculate_vpd(avg_temp, avg_hum)
+
+
+def test_calculate_environment_metrics_dataframe():
+    import pandas as pd
+
+    df = pd.DataFrame(
+        [
+            {"temp_c": 20, "humidity_pct": 60},
+            {"temp_c": 22, "humidity_pct": 65},
+            {"temp_c": 21, "humidity_pct": 55},
+        ]
+    )
+    metrics_df = calculate_environment_metrics_dataframe(df)
+    assert list(metrics_df.columns) == [
+        "vpd",
+        "dew_point_c",
+        "heat_index_c",
+        "absolute_humidity_g_m3",
+        "et0_mm_day",
+        "eta_mm_day",
+        "transpiration_ml_day",
+        "root_uptake_factor",
+    ]
+    assert metrics_df.iloc[0]["vpd"] == calculate_vpd(20, 60)
 
 
 def test_summarize_environment_series_generator():

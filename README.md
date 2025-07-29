@@ -98,6 +98,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Daily report files summarizing environment and nutrient targets
 - Growth stage nutrient schedules for precise fertilization planning
 - Environment score and quality rating for sensor data
+- DataFrame-based environment metrics for bulk analysis
 - Infiltration-aware irrigation burst scheduling
 - Cost-optimized fertigation plans with injection volumes
 - Risk-adjusted pest monitoring summaries and scheduling
