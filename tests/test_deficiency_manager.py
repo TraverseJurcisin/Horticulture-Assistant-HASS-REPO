@@ -11,6 +11,8 @@ from plant_engine.deficiency_manager import (
     calculate_deficiency_index,
     summarize_deficiencies,
     summarize_deficiencies_with_synergy,
+    summarize_deficiencies_with_ph,
+    summarize_deficiencies_with_ph_and_synergy,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
 
@@ -107,4 +109,22 @@ def test_summarize_deficiencies_with_synergy():
     summary = summarize_deficiencies_with_synergy(current, "tomato", "fruiting")
     assert summary["severity_index"] > 0
     assert summary["severity"].get("P") == "severe"
+
+
+def test_summarize_deficiencies_with_ph():
+    guidelines = get_recommended_levels("tomato", "fruiting")
+    current = {n: 0 for n in guidelines}
+    summary = summarize_deficiencies_with_ph(current, "tomato", "fruiting", 6.5)
+    assert summary["severity_index"] > 0
+    assert "N" in summary["severity"]
+
+
+def test_summarize_deficiencies_with_ph_and_synergy():
+    guidelines = get_recommended_levels("tomato", "fruiting")
+    current = {n: 0 for n in guidelines}
+    summary = summarize_deficiencies_with_ph_and_synergy(
+        current, "tomato", "fruiting", 6.5
+    )
+    assert summary["severity_index"] > 0
+    assert "K" in summary["severity"]
 
