@@ -20,6 +20,7 @@ from plant_engine.growth_stage import (
     days_until_next_stage,
     growth_stage_summary,
     generate_stage_schedule,
+    stage_schedule_df,
 )
 
 
@@ -187,5 +188,13 @@ def test_cycle_progress_from_dates():
     assert cycle_progress_from_dates("tomato", start, current) == 50.0
     with pytest.raises(ValueError):
         cycle_progress_from_dates("tomato", current, start)
+
+
+def test_stage_schedule_df():
+    start = date(2025, 1, 1)
+    df = stage_schedule_df("tomato", start)
+    assert not df.empty
+    assert list(df.columns) == ["stage", "start_date", "end_date"]
+    assert df.iloc[0]["stage"] == "seedling"
 
 
