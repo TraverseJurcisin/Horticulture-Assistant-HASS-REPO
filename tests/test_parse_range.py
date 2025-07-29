@@ -33,3 +33,12 @@ def test_parse_range_reversed_order():
 def test_parse_range_non_finite():
     assert parse_range([float("inf"), 1]) is None
     assert parse_range([float("nan"), 2]) is None
+
+
+def test_parse_range_negative_values():
+    assert parse_range("-2 - -1") == (-2.0, -1.0)
+    assert parse_range([-5, -10]) == (-10.0, -5.0)
+
+
+def test_parse_range_decimals():
+    assert parse_range("1.5 to 2.5") == (1.5, 2.5)
