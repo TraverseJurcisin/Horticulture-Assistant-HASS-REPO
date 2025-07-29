@@ -9,6 +9,7 @@ from plant_engine.toxicity_manager import (
     recommend_toxicity_treatments,
     calculate_toxicity_index,
 )
+from plant_engine.utils import clear_dataset_cache
 
 
 def test_list_supported_plants():
@@ -51,6 +52,12 @@ def test_diagnose_and_recommend_treatments():
 
 
 def test_calculate_toxicity_index():
+    clear_dataset_cache()
+    import importlib
+    import plant_engine.nutrient_manager as nm
+    importlib.reload(nm)
+    import plant_engine.toxicity_manager as tm
+    importlib.reload(tm)
     levels = {"N": 300, "K": 400}
-    index = calculate_toxicity_index(levels, "tomato")
+    index = tm.calculate_toxicity_index(levels, "tomato")
     assert index == 17.1

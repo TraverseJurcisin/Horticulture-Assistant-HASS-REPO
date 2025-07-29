@@ -360,6 +360,7 @@ __all__ = [
     "calculate_dew_point",
     "calculate_heat_index",
     "relative_humidity_from_dew_point",
+    "relative_humidity_from_absolute",
     "calculate_absolute_humidity",
     "calculate_dli",
     "photoperiod_for_target_dli",
@@ -1491,6 +1492,29 @@ def calculate_absolute_humidity(temp_c: float, humidity_pct: float) -> float:
     vap_pressure = humidity_pct / 100 * svp
     ah = 2.1674 * (vap_pressure * 100) / (273.15 + temp_c)
     return round(ah, 2)
+
+
+def relative_humidity_from_absolute(temp_c: float, absolute_humidity_g_m3: float) -> float:
+    """Return relative humidity (%) from absolute humidity in g/m³.
+
+    Parameters
+    ----------
+    temp_c: float
+        Current air temperature in °C.
+    absolute_humidity_g_m3: float
+        Measured absolute humidity in g/m³. Must be non-negative.
+    """
+
+    if absolute_humidity_g_m3 < 0:
+        raise ValueError("absolute_humidity_g_m3 must be non-negative")
+
+    # Convert absolute humidity back to vapor pressure in hPa
+    vap_pressure = (
+        absolute_humidity_g_m3 * (273.15 + temp_c) / (2.1674 * 100)
+    )
+    svp = 6.112 * math.exp((17.67 * temp_c) / (temp_c + 243.5))
+    rh = 100 * vap_pressure / svp
+    return round(rh, 1)
 
 
 def calculate_dli(ppfd: float, photoperiod_hours: float) -> float:

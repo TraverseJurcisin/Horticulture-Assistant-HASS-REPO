@@ -14,6 +14,7 @@ from plant_engine.environment_manager import (
     calculate_heat_index,
     calculate_heat_index_series,
     relative_humidity_from_dew_point,
+    relative_humidity_from_absolute,
     calculate_absolute_humidity,
     calculate_dli,
     calculate_dli_series,
@@ -562,6 +563,14 @@ def test_calculate_absolute_humidity():
     assert round(ah, 1) == 11.5
     with pytest.raises(ValueError):
         calculate_absolute_humidity(25, -10)
+
+
+def test_relative_humidity_from_absolute():
+    ah = calculate_absolute_humidity(25, 50)
+    rh = relative_humidity_from_absolute(25, ah)
+    assert round(rh) == 50
+    with pytest.raises(ValueError):
+        relative_humidity_from_absolute(25, -1)
 
 
 def test_calculate_dli_series():
