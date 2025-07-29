@@ -260,6 +260,8 @@ Important categories include:
 - **Nutrient guidelines** – macronutrient and micronutrient targets by stage
 - **Total nutrient requirements** – daily NPK needs for common crops
 - **Stage nutrient requirements** – daily needs for each growth stage
+- **Cumulative nutrient estimation** – `calculate_cumulative_requirements()`
+  multiplies daily values by a number of days to help plan feeding schedules
 - **Pest and disease references** – thresholds, prevention tips and treatment options
 - **Fungicide recommendations** – suggested organic products for common diseases
 - **Pest scouting methods** – recommended techniques for monitoring common pests

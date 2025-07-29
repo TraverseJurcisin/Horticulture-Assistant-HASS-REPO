@@ -1,8 +1,9 @@
 """Utility helpers for crop nutrient requirements.
 
 The dataset :data:`DATA_FILE` contains average daily NPK needs for each
-registered plant.  This module exposes simple helpers to retrieve those values
-and compare them against accumulated nutrient totals.
+registered plant.  This module exposes simple helpers to retrieve those values,
+compare them against accumulated nutrient totals and estimate totals for a
+time span.
 """
 
 from functools import lru_cache
@@ -44,4 +45,19 @@ def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> D
     }
 
 
-__all__ = ["get_requirements", "calculate_deficit"]
+def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, float]:
+    """Return total nutrient needs over ``days``.
+
+    Values are derived from :func:`get_requirements` and multiplied by the
+    provided day count. Unknown plants or non-positive ``days`` yield an empty
+    mapping.
+    """
+
+    if days <= 0:
+        return {}
+
+    daily = get_requirements(plant_type)
+    return {nutrient: round(value * days, 2) for nutrient, value in daily.items()}
+
+
+__all__ = ["get_requirements", "calculate_deficit", "calculate_cumulative_requirements"]
