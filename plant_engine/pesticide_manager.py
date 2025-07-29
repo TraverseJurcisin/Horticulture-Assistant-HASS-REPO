@@ -16,6 +16,7 @@ PRICE_FILE = "pesticide_prices.json"
 ACTIVE_FILE = "pesticide_active_ingredients.json"
 EFFICACY_FILE = "pesticide_efficacy.json"
 PEST_ROTATION_FILE = "pest_rotation_moas.json"
+MAX_APPS_FILE = "pesticide_max_applications.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA = lazy_dataset(DATA_FILE)
@@ -28,6 +29,7 @@ _PRICES = lazy_dataset(PRICE_FILE)
 _ACTIVE = lazy_dataset(ACTIVE_FILE)
 _EFFICACY = lazy_dataset(EFFICACY_FILE)
 _PEST_ROTATION = lazy_dataset(PEST_ROTATION_FILE)
+_MAX_APPS = lazy_dataset(MAX_APPS_FILE)
 
 __all__ = [
     "get_withdrawal_days",
@@ -55,6 +57,7 @@ __all__ = [
     "get_pesticide_efficacy",
     "list_effective_pesticides",
     "recommend_rotation_products",
+    "get_max_applications",
     "estimate_rotation_plan_cost",
     "suggest_pest_rotation_plan",
 ]
@@ -450,3 +453,13 @@ def suggest_pest_rotation_plan(
 
     sequence = [products[i % len(products)] for i in range(cycles)]
     return suggest_rotation_plan(sequence, start_date)
+
+
+def get_max_applications(product: str) -> int | None:
+    """Return maximum recommended applications per season for ``product``."""
+
+    value = _MAX_APPS().get(product.lower())
+    try:
+        return int(value) if value is not None else None
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None

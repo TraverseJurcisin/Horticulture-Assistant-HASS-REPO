@@ -240,4 +240,12 @@ def test_suggest_pest_rotation_plan():
     assert plan[1][1] > plan[0][1]
 
 
+def test_get_max_applications():
+    from plant_engine.pesticide_manager import get_max_applications
+
+    assert get_max_applications("imidacloprid") == 3
+    assert get_max_applications("pyrethrin") == 8
+    assert get_max_applications("unknown") is None
+
+
 
