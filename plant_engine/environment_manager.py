@@ -332,6 +332,7 @@ __all__ = [
     "recommend_environment_adjustments",
     "score_environment",
     "score_environment_series",
+    "score_environment_dataframe",
     "score_environment_components",
     "suggest_environment_setpoints",
     "suggest_environment_setpoints_advanced",
@@ -1067,6 +1068,60 @@ def score_environment_series(
         return 0.0
 
     return round(total / count, 1)
+
+
+def score_environment_dataframe(
+    df: "pd.DataFrame", plant_type: str, stage: str | None = None
+) -> "pd.Series":
+    """Return environment scores for each row in ``df``.
+
+    The calculation is vectorized for efficiency and mirrors
+    :func:`score_environment` semantics.
+    """
+
+    import pandas as pd
+    import numpy as np
+
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
+
+    targets = get_environmental_targets(plant_type, stage)
+    if not targets:
+        return pd.Series([0.0] * len(df), index=df.index)
+
+    scores = pd.DataFrame(index=df.index)
+    weights = []
+    for key, bounds in targets.items():
+        if (
+            key not in df
+            or not isinstance(bounds, (list, tuple))
+            or len(bounds) != 2
+        ):
+            continue
+        low, high = float(bounds[0]), float(bounds[1])
+        width = high - low
+        if width <= 0:
+            continue
+        values = df[key].astype(float)
+        comp = np.where(
+            values < low,
+            1 - (low - values) / width,
+            np.where(values > high, 1 - (values - high) / width, 1.0),
+        )
+        scores[key] = np.clip(comp, 0.0, 1.0) * 100
+        weights.append(get_score_weight(key))
+
+    if scores.empty:
+        return pd.Series([0.0] * len(df), index=df.index)
+
+    weight_arr = np.array(weights)
+    weighted = scores.mul(weight_arr, axis=1)
+    total_weight = (
+        (~scores.isna()).astype(float).mul(weight_arr, axis=1)
+    ).sum(axis=1)
+    total_weight = total_weight.replace(0, np.nan)
+    result = weighted.sum(axis=1) / total_weight
+    return result.fillna(0.0).round(1)
 
 
 def classify_environment_quality(
