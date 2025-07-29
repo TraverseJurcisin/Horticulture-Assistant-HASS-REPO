@@ -42,15 +42,15 @@ def merge_sensor_maps(
 ) -> Dict[str, list[str]]:
     """Return ``base`` merged with ``update`` with duplicates removed."""
 
-    merged: Dict[str, list[str]] = {k: list(v) for k, v in base.items()}
+    merged_sets: Dict[str, set[str]] = {
+        key: set(values) for key, values in base.items()
+    }
+
     for key, values in update.items():
         if not values:
             continue
-        if isinstance(values, str):
-            values = [values]
-        existing = merged.get(key, [])
-        for item in values:
-            if item not in existing:
-                existing.append(item)
-        merged[key] = existing
-    return merged
+        if isinstance(values, str) or not isinstance(values, Iterable):
+            values = [str(values)]
+        merged_sets.setdefault(key, set()).update(map(str, values))
+
+    return {k: sorted(v) for k, v in merged_sets.items()}
