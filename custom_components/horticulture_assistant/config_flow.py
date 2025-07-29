@@ -15,7 +15,17 @@ from uuid import uuid4
 
 from .utils.profile_generator import generate_profile
 
-from .const import DOMAIN, CONF_ENABLE_AUTO_APPROVE
+from .const import (
+    DOMAIN,
+    CONF_ENABLE_AUTO_APPROVE,
+    CONF_DEFAULT_THRESHOLD_MODE,
+    CONF_USE_OPENAI,
+    CONF_OPENAI_API_KEY,
+    CONF_OPENAI_MODEL,
+    THRESHOLD_MODE_MANUAL,
+    THRESHOLD_MODE_PROFILE,
+)
+from .utils import global_config
 
 class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Horticulture Assistant."""
@@ -30,7 +40,7 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_menu(
                 step_id="init",
-                menu_options=["add_entry", "manage_entries"],
+                menu_options=["add_entry", "manage_entries", "settings"],
             )
 
         if user_input == "add_entry":
@@ -50,6 +60,8 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 step_id="select_entry",
                 data_schema=vol.Schema({vol.Required("entry_id"): vol.In(options)}),
             )
+        if user_input == "settings":
+            return await self.async_step_settings()
         return self.async_abort(reason="invalid_menu_selection")
 
     async def async_step_select_entry(self, user_input: dict) -> FlowResult:
@@ -59,6 +71,38 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             reason="existing_entry",
             description_placeholders={"entry_id": entry_id},
         )
+
+    async def async_step_settings(
+        self, user_input: dict | None = None
+    ) -> FlowResult:
+        """Configure global integration options."""
+        cfg = global_config.load_config(self.hass)
+        if user_input is not None:
+            cfg.update(user_input)
+            global_config.save_config(cfg, self.hass)
+            return await self.async_step_init()
+
+        data_schema = vol.Schema(
+            {
+                vol.Optional(
+                    CONF_USE_OPENAI, default=cfg.get(CONF_USE_OPENAI, False)
+                ): BooleanSelector(),
+                vol.Optional(
+                    CONF_OPENAI_MODEL, default=cfg.get(CONF_OPENAI_MODEL, "gpt-4o")
+                ): TextSelector(),
+                vol.Optional(
+                    CONF_OPENAI_API_KEY, default=cfg.get(CONF_OPENAI_API_KEY, "")
+                ): TextSelector(),
+                vol.Optional(
+                    CONF_DEFAULT_THRESHOLD_MODE,
+                    default=cfg.get(
+                        CONF_DEFAULT_THRESHOLD_MODE, THRESHOLD_MODE_PROFILE
+                    ),
+                ): vol.In([THRESHOLD_MODE_PROFILE, THRESHOLD_MODE_MANUAL]),
+            }
+        )
+
+        return self.async_show_form(step_id="settings", data_schema=data_schema)
 
     async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
         """Collect minimal information and create the entry."""
