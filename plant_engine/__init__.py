@@ -29,6 +29,7 @@ from .precipitation_risk import (
     list_supported_plants as list_precipitation_plants,
     estimate_precipitation_risk,
 )
+from .fertigation_optimizer import generate_fertigation_plan
 
 __all__ = sorted(
     set(utils.__all__)
@@ -48,6 +49,7 @@ __all__ = sorted(
         "apply_absorption_rates",
         "list_precipitation_plants",
         "estimate_precipitation_risk",
+        "generate_fertigation_plan",
     }
 )
 
