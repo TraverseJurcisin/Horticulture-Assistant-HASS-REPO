@@ -2,6 +2,7 @@ import math
 from plant_engine.et_model import (
     calculate_et0,
     calculate_eta,
+    calculate_et0_series,
     estimate_stage_et,
     get_et0_climate_adjustment,
     adjust_et0_for_climate,
@@ -30,3 +31,15 @@ def test_get_et0_climate_adjustment():
 def test_adjust_et0_for_climate():
     assert adjust_et0_for_climate(5.0, "arid") == 6.0
     assert adjust_et0_for_climate(5.0, None) == 5.0
+
+
+def test_calculate_et0_series():
+    import pandas as pd
+
+    temps = pd.Series([25, 26])
+    rh = pd.Series([50, 55])
+    solar = pd.Series([400, 420])
+    series = calculate_et0_series(temps, rh, solar)
+    # Compare to single value calculation
+    assert series.iloc[0] == calculate_et0(25, 50, 400)
+    assert series.iloc[1] == calculate_et0(26, 55, 420)

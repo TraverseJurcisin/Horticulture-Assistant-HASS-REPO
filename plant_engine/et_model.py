@@ -4,6 +4,9 @@ import math
 from functools import lru_cache
 from typing import Optional
 
+import numpy as np
+import pandas as pd
+
 from .utils import load_dataset, normalize_key
 
 def calculate_et0(
@@ -49,6 +52,42 @@ def calculate_et0(
 def calculate_eta(et0: float, kc: float = 1.0) -> float:
     """Calculate Actual Evapotranspiration based on Kc coefficient."""
     return round(et0 * kc, 2)
+
+
+def calculate_et0_series(
+    temperature_c: "pd.Series",
+    rh_percent: "pd.Series",
+    solar_rad_w_m2: "pd.Series",
+    wind_m_s: "pd.Series | float" = 1.0,
+    elevation_m: "pd.Series | float" = 200,
+) -> "pd.Series":
+    """Vectorized ET₀ calculation for pandas Series."""
+
+    temp = pd.Series(temperature_c, dtype=float)
+    rh = pd.Series(rh_percent, dtype=float)
+    solar = pd.Series(solar_rad_w_m2, dtype=float)
+    if isinstance(wind_m_s, pd.Series):
+        wind = wind_m_s.astype(float)
+    else:
+        wind = pd.Series(float(wind_m_s), index=temp.index)
+    if isinstance(elevation_m, pd.Series):
+        elevation = elevation_m.astype(float)
+    else:
+        elevation = pd.Series(float(elevation_m), index=temp.index)
+
+    solar_rad_mj = solar * 0.0864
+    gamma = 0.665e-3 * (
+        101.3 * ((293 - 0.0065 * elevation) / 293) ** 5.26
+    )
+    es = 0.6108 * np.exp((17.27 * temp) / (temp + 237.3))
+    ea = es * (rh / 100)
+    delta = 4098 * es / ((temp + 237.3) ** 2)
+    rn = 0.77 * solar_rad_mj
+    et0 = (
+        (0.408 * delta * rn)
+        + (gamma * 900 * wind * (es - ea) / (temp + 273))
+    ) / (delta + gamma * (1 + 0.34 * wind))
+    return et0.round(2)
 
 
 ET0_DATA_FILE = "reference_et0.json"
@@ -112,6 +151,7 @@ def adjust_et0_for_climate(et0: float, zone: str | None) -> float:
 __all__ = [
     "calculate_et0",
     "calculate_eta",
+    "calculate_et0_series",
     "get_reference_et0",
     "get_reference_et0_range",
     "get_et0_climate_adjustment",
