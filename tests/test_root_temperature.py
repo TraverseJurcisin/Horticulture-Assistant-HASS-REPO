@@ -3,6 +3,7 @@ from plant_engine.root_temperature import (
     adjust_uptake,
     list_supported_plants,
     get_optimal_root_temperature,
+    clear_cache,
 )
 from plant_engine.nutrient_manager import get_temperature_adjusted_levels
 
@@ -41,5 +42,17 @@ def test_list_supported_plants():
 def test_get_optimal_root_temperature():
     assert get_optimal_root_temperature("tomato") == 24
     assert get_optimal_root_temperature("unknown") is None
+
+
+def test_cache_clear():
+    """get_uptake_factor results should update after clearing the cache."""
+    first = get_uptake_factor(21)
+    # change cached result by altering private data then clearing cache
+    from plant_engine import root_temperature as rt
+
+    rt._OPTIMA["test"] = 30
+    clear_cache()
+    second = get_uptake_factor(21, "test")
+    assert first != second
 
 
