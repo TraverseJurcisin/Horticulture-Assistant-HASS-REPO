@@ -3,6 +3,8 @@ import subprocess
 import sys
 import json
 
+from scripts.precision_fertigation import load_water_profile
+
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/precision_fertigation.py"
 
 
@@ -34,5 +36,14 @@ def test_cli_synergy():
     )
     data = json.loads(result.stdout)
     assert "schedule" in data
+
+
+def test_load_water_profile(tmp_path):
+    path = tmp_path / "profile.json"
+    path.write_text('{"ec":1.2}')
+    assert load_water_profile(str(path)) == {"ec": 1.2}
+
+    missing = tmp_path / "missing.json"
+    assert load_water_profile(str(missing)) == {}
 
 
