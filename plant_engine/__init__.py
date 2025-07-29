@@ -37,6 +37,10 @@ from .precipitation_risk import (
     estimate_precipitation_risk,
 )
 from .fertigation_optimizer import generate_fertigation_plan
+from .nutrient_conversion import (
+    get_conversion_factors,
+    oxide_to_elemental,
+)
 from .growth_rate_manager import (
     list_supported_plants as list_growth_rate_plants,
     get_daily_growth_rate,
@@ -66,6 +70,8 @@ __all__ = sorted(
         "list_growth_rate_plants",
         "get_daily_growth_rate",
         "estimate_growth",
+        "get_conversion_factors",
+        "oxide_to_elemental",
     }
 )
 
