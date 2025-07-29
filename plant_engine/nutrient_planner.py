@@ -7,7 +7,16 @@ from typing import Mapping, Dict, Optional
 from .nutrient_analysis import analyze_nutrient_profile, NutrientAnalysis
 from .fertigation import recommend_correction_schedule
 
-__all__ = ["NutrientManagementReport", "generate_nutrient_management_report"]
+from custom_components.horticulture_assistant.fertilizer_formulator import (
+    get_cheapest_product,
+)
+
+__all__ = [
+    "NutrientManagementReport",
+    "NutrientManagementCostReport",
+    "generate_nutrient_management_report",
+    "generate_nutrient_management_report_with_cost",
+]
 
 
 @dataclass(slots=True)
@@ -16,6 +25,14 @@ class NutrientManagementReport:
 
     analysis: NutrientAnalysis
     corrections_g: Dict[str, float]
+
+
+@dataclass(slots=True)
+class NutrientManagementCostReport(NutrientManagementReport):
+    """Extends :class:`NutrientManagementReport` with cost information."""
+
+    cost_total: float
+    cost_breakdown: Dict[str, float]
 
 
 def generate_nutrient_management_report(
@@ -61,3 +78,50 @@ def generate_nutrient_management_report(
     )
 
     return NutrientManagementReport(analysis=analysis, corrections_g=corrections)
+
+
+def _estimate_correction_cost(corrections: Mapping[str, float]) -> tuple[float, Dict[str, float]]:
+    """Return total cost and per-nutrient breakdown for ``corrections``."""
+
+    total = 0.0
+    breakdown: Dict[str, float] = {}
+    for nutrient, grams in corrections.items():
+        if grams <= 0:
+            continue
+        try:
+            _pid, cost_per_g = get_cheapest_product(nutrient)
+        except Exception:
+            continue
+        cost = round(grams * cost_per_g, 2)
+        breakdown[nutrient] = cost
+        total += cost
+    return round(total, 2), breakdown
+
+
+def generate_nutrient_management_report_with_cost(
+    current_levels: Mapping[str, float],
+    plant_type: str,
+    stage: str,
+    volume_l: float,
+    *,
+    purity: Mapping[str, float] | None = None,
+    product: str | None = None,
+) -> NutrientManagementCostReport:
+    """Return nutrient report with correction grams and estimated costs."""
+
+    base = generate_nutrient_management_report(
+        current_levels,
+        plant_type,
+        stage,
+        volume_l,
+        purity=purity,
+        product=product,
+    )
+
+    total, breakdown = _estimate_correction_cost(base.corrections_g)
+    return NutrientManagementCostReport(
+        analysis=base.analysis,
+        corrections_g=base.corrections_g,
+        cost_total=total,
+        cost_breakdown=breakdown,
+    )
