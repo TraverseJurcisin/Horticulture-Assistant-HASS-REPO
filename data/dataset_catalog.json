@@ -176,6 +176,7 @@
     "reference_et0_range.json": "Typical min and max ET0 values by month",
     "et0_climate_adjustments.json": "Multipliers adjusting ET0 for climate zones",
     "electricity_rates.json": "Electricity cost per kWh by region.",
+    "energy_emission_factors.json": "Kg CO2 emitted per kWh of electricity by source.",
     "water_costs.json": "Water cost per liter by region.",
     "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",
     "feature/wsda_refactored_sharded/index_sharded/": "Sharded index of WSDA fertilizer products",

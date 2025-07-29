@@ -9,11 +9,13 @@ from .utils import load_dataset, normalize_key
 HVAC_FILE = "hvac_energy_coefficients.json"
 RATE_FILE = "electricity_rates.json"
 LIGHT_EFF_FILE = "light_efficiency.json"
+EMISSION_FILE = "energy_emission_factors.json"
 
 # Cache datasets via load_dataset
 _HVAC_DATA: Dict[str, Dict[str, float]] = load_dataset(HVAC_FILE)
 _RATES: Dict[str, float] = load_dataset(RATE_FILE)
 _LIGHT_EFF: Dict[str, Dict[str, float]] = load_dataset(LIGHT_EFF_FILE)
+_EMISSION_FACTORS: Dict[str, float] = load_dataset(EMISSION_FILE)
 
 __all__ = [
     "get_energy_coefficient",
@@ -26,6 +28,10 @@ __all__ = [
     "estimate_dli_from_power",
     "estimate_hvac_energy_series",
     "estimate_hvac_cost_series",
+    "get_emission_factor",
+    "estimate_lighting_emissions",
+    "estimate_hvac_emissions",
+    "estimate_hvac_emissions_series",
 ]
 
 
@@ -89,6 +95,30 @@ def estimate_lighting_cost(
     return round(kwh * rate, 2)
 
 
+@lru_cache(maxsize=None)
+def get_emission_factor(source: str | None = None) -> float:
+    """Return kg CO₂ per kWh emission factor for an energy ``source``."""
+
+    key = normalize_key(source) if source else "default"
+    factor = _EMISSION_FACTORS.get(key)
+    if factor is None:
+        factor = _EMISSION_FACTORS.get("default", 0.0)
+    try:
+        return float(factor)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def estimate_lighting_emissions(
+    power_watts: float, hours: float, source: str | None = None
+) -> float:
+    """Return kg CO₂ emitted by lighting energy use."""
+
+    energy = estimate_lighting_energy(power_watts, hours)
+    factor = get_emission_factor(source)
+    return round(energy * factor, 3)
+
+
 def estimate_hvac_cost(
     current_temp_c: float,
     target_temp_c: float,
@@ -101,6 +131,20 @@ def estimate_hvac_cost(
     energy = estimate_hvac_energy(current_temp_c, target_temp_c, hours, system)
     rate = get_electricity_rate(region)
     return round(energy * rate, 2)
+
+
+def estimate_hvac_emissions(
+    current_temp_c: float,
+    target_temp_c: float,
+    hours: float,
+    system: str,
+    source: str | None = None,
+) -> float:
+    """Return kg CO₂ emitted maintaining ``target_temp_c`` for ``hours``."""
+
+    energy = estimate_hvac_energy(current_temp_c, target_temp_c, hours, system)
+    factor = get_emission_factor(source)
+    return round(energy * factor, 3)
 
 
 @lru_cache(maxsize=None)
@@ -177,3 +221,19 @@ def estimate_hvac_cost_series(
     )
     rate = get_electricity_rate(region)
     return [round(e * rate, 2) for e in energies]
+
+
+def estimate_hvac_emissions_series(
+    start_temp_c: float,
+    target_temps: Iterable[float],
+    hours_per_step: float,
+    system: str,
+    source: str | None = None,
+) -> list[float]:
+    """Return emission estimates for sequential HVAC setpoints."""
+
+    energies = estimate_hvac_energy_series(
+        start_temp_c, target_temps, hours_per_step, system
+    )
+    factor = get_emission_factor(source)
+    return [round(e * factor, 3) for e in energies]

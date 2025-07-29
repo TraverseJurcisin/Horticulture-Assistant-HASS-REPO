@@ -1,0 +1,9 @@
+{
+  "default": 0.4,
+  "solar": 0.05,
+  "wind": 0.02,
+  "hydro": 0.04,
+  "nuclear": 0.05,
+  "coal": 0.9,
+  "natural_gas": 0.5
+}
