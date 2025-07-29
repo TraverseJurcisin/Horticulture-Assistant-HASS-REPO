@@ -16,3 +16,9 @@ def test_apply_absorption_rates():
     adjusted = apply_absorption_rates(schedule, "seedling")
     assert adjusted["N"] == 16.67
     assert adjusted["K"] == 7.14
+
+
+def test_ripening_stage_rates():
+    rates = get_absorption_rates("ripening")
+    assert rates["P"] == 0.8
+    assert "ripening" in list_stages()

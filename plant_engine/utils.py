@@ -31,6 +31,7 @@ __all__ = [
     "normalize_key",
     "list_dataset_entries",
     "parse_range",
+    "clean_float_map",
     "deep_update",
     "stage_value",
     "load_stage_dataset_value",
@@ -401,6 +402,20 @@ def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     if low > high:
         low, high = high, low
     return low, high
+
+
+def clean_float_map(data: Mapping[str, Any]) -> Dict[str, float]:
+    """Return mapping with float values ignoring invalid entries."""
+
+    result: Dict[str, float] = {}
+    for key, value in data.items():
+        try:
+            num = float(value)
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(num) and num > 0:
+            result[key] = num
+    return result
 
 
 def stage_value(

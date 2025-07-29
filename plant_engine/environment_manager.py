@@ -16,7 +16,13 @@ except Exception:  # pragma: no cover - numpy missing
 
 RangeTuple = Tuple[float, float]
 
-from .utils import load_dataset, normalize_key, list_dataset_entries, parse_range
+from .utils import (
+    load_dataset,
+    normalize_key,
+    list_dataset_entries,
+    parse_range,
+    clean_float_map,
+)
 from . import ph_manager, water_quality
 from .growth_stage import list_growth_stages
 from .compute_transpiration import compute_transpiration
@@ -1151,10 +1157,8 @@ def classify_environment_quality(
     """
 
     if thresholds:
-        labels = [
-            (k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))
-        ]
-        labels.sort(key=lambda x: x[1], reverse=True)
+        mapping = clean_float_map(thresholds)
+        labels = sorted(mapping.items(), key=lambda x: x[1], reverse=True)
     else:
         labels = get_environment_quality_labels()
 
@@ -1174,10 +1178,8 @@ def classify_environment_quality_series(
     """Return quality classification for averaged environment ``series``."""
 
     if thresholds:
-        labels = [
-            (k, float(v)) for k, v in thresholds.items() if isinstance(v, (int, float))
-        ]
-        labels.sort(key=lambda x: x[1], reverse=True)
+        mapping = clean_float_map(thresholds)
+        labels = sorted(mapping.items(), key=lambda x: x[1], reverse=True)
     else:
         labels = get_environment_quality_labels()
 
