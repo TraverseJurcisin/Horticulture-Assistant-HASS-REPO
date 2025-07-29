@@ -1,4 +1,5 @@
 """Lookup daily water use estimates for irrigation planning."""
+
 from __future__ import annotations
 
 from typing import Dict
@@ -18,6 +19,7 @@ __all__ = [
     "estimate_area_use",
     "estimate_area_water_cost",
     "estimate_daily_plant_cost",
+    "estimate_daily_use_from_et0",
     "estimate_stage_total_use",
     "estimate_cycle_total_use",
     "estimate_stage_water_cost",
@@ -39,6 +41,59 @@ def get_daily_use(plant_type: str, stage: str) -> float:
         return float(plant.get(normalize_key(stage), 0.0))
     except (TypeError, ValueError):
         return 0.0
+
+
+def estimate_daily_use_from_et0(
+    plant_type: str,
+    stage: str,
+    et0_mm_day: float,
+    zone: str | None = None,
+) -> float:
+    """Return estimated daily water use per plant from ET₀ and crop coefficients.
+
+    Parameters
+    ----------
+    plant_type : str
+        Plant identifier for crop coefficient and spacing lookup.
+    stage : str
+        Current growth stage for crop coefficient lookup.
+    et0_mm_day : float
+        Reference evapotranspiration in millimeters per day.
+    zone : str, optional
+        Climate zone for ET₀ adjustment using :mod:`plant_engine.et_model`.
+
+    Returns
+    -------
+    float
+        Estimated milliliters of water needed per plant each day. ``0.0`` is
+        returned if required dataset information is missing.
+    """
+
+    if et0_mm_day <= 0:
+        return 0.0
+
+    if zone:
+        from .et_model import adjust_et0_for_climate
+
+        et0_mm_day = adjust_et0_for_climate(et0_mm_day, zone)
+
+    from .et_model import calculate_eta
+
+    kc_data = load_dataset("crop_coefficients.json")
+    plant = kc_data.get(normalize_key(plant_type), {})
+    kc = plant.get(normalize_key(stage)) or plant.get("default")
+    try:
+        kc_val = float(kc) if kc is not None else 1.0
+    except (TypeError, ValueError):
+        kc_val = 1.0
+
+    spacing = get_spacing_cm(plant_type)
+    if spacing is None or spacing <= 0:
+        return 0.0
+
+    area_m2 = (spacing / 100) ** 2
+    eta = calculate_eta(et0_mm_day, kc_val)
+    return round(eta * area_m2 * 1000.0, 1)
 
 
 def estimate_area_use(plant_type: str, stage: str, area_m2: float) -> float:

@@ -106,6 +106,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Automated fertigation planning with cost estimates
 - Yield-based revenue and profit projections
 - Expected profit forecasts based on estimated production costs
+- ET₀-based daily water usage estimates using crop coefficients
 
 ---
 
