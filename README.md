@@ -45,7 +45,7 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 5. Open the entry's **Options** anytime to update the zone, enable auto‑approve or link sensors.
 6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
 7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
-8. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage or the default threshold mode. These settings are stored in `<config>/data/horticulture_global_config.json`.
+8. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage, model and temperature. These settings are stored in `<config>/data/horticulture_global_config.json`.
 9. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
@@ -300,6 +300,7 @@ Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_DATA_DIR` to change the base data directory
 - `HORTICULTURE_OVERLAY_DIR` to merge in custom files
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
+- `OPENAI_API_KEY` and `OPENAI_TEMPERATURE` configure the AI integration if you prefer not to store these values in the config file
 Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately. Use `plant_engine.utils.load_dataset_df()` to quickly load any dataset into a `pandas.DataFrame` for analysis. JSON, YAML and now CSV/TSV files are supported.
 
 See [docs/custom_data_dirs.md](docs/custom_data_dirs.md) for examples of how to

@@ -30,4 +30,5 @@ def test_save_and_merge(tmp_path):
     assert cfg["use_openai"] is True
     assert cfg["openai_api_key"] == ""
     assert cfg["openai_model"] == "gpt-4o"
+    assert cfg["openai_temperature"] == 0.3
     assert cfg["default_threshold_mode"] == "profile"

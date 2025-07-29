@@ -22,6 +22,7 @@ from .const import (
     CONF_USE_OPENAI,
     CONF_OPENAI_API_KEY,
     CONF_OPENAI_MODEL,
+    CONF_OPENAI_TEMPERATURE,
     THRESHOLD_MODE_MANUAL,
     THRESHOLD_MODE_PROFILE,
 )
@@ -93,6 +94,10 @@ class HorticultureAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OPENAI_API_KEY, default=cfg.get(CONF_OPENAI_API_KEY, "")
                 ): TextSelector(),
+                vol.Optional(
+                    CONF_OPENAI_TEMPERATURE,
+                    default=cfg.get(CONF_OPENAI_TEMPERATURE, 0.3),
+                ): vol.Coerce(float),
                 vol.Optional(
                     CONF_DEFAULT_THRESHOLD_MODE,
                     default=cfg.get(

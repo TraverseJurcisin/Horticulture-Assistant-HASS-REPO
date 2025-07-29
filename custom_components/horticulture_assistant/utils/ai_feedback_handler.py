@@ -8,6 +8,7 @@ from ..const import (
     CONF_OPENAI_API_KEY,
     CONF_OPENAI_MODEL,
     CONF_USE_OPENAI,
+    CONF_OPENAI_TEMPERATURE,
 )
 from . import global_config
 from custom_components.horticulture_assistant.utils.path_utils import (
@@ -46,6 +47,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
         use_openai=cfg.get(CONF_USE_OPENAI, ai_model.USE_OPENAI),
         model=cfg.get(CONF_OPENAI_MODEL, ai_model.OPENAI_MODEL),
         api_key=cfg.get(CONF_OPENAI_API_KEY) or ai_model.OPENAI_API_KEY,
+        temperature=cfg.get(CONF_OPENAI_TEMPERATURE, ai_model.OPENAI_TEMPERATURE),
     )
     try:
         result = ai_model.analyze(daily_report, model_cfg)
