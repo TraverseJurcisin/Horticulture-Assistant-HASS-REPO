@@ -2393,9 +2393,8 @@ def optimize_environment(
 
     wq = None
     if water_test is not None:
-        rating = water_quality.classify_water_quality(water_test)
-        wscore = water_quality.score_water_quality(water_test)
-        wq = WaterQualityInfo(rating=rating, score=wscore)
+        summary = water_quality.summarize_water_profile(water_test)
+        wq = WaterQualityInfo(rating=summary.rating, score=summary.score)
 
     result = EnvironmentOptimization(
         setpoints,
@@ -2479,7 +2478,7 @@ def summarize_environment(
     water_info = None
     if water_test is not None:
         summary = water_quality.summarize_water_profile(water_test)
-        water_info = WaterQualityInfo(rating=summary["rating"], score=summary["score"])
+        water_info = WaterQualityInfo(rating=summary.rating, score=summary.score)
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),

@@ -178,7 +178,7 @@ def run_daily_cycle(
         latest = water_quality_entries[-1]
         test = latest.get("results", latest)
         if isinstance(test, dict):
-            report.water_quality_summary = water_quality.summarize_water_profile(test)
+            report.water_quality_summary = water_quality.summarize_water_profile(test).as_dict()
     # Compare environment readings vs target thresholds using helper
     latest_env = general.get("latest_env", {})
     current_env = {**latest_env, **sensor_avg}
