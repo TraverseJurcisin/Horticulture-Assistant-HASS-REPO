@@ -165,6 +165,7 @@
     "disease_resistance_ratings.json": "Relative disease resistance ratings by crop.",
     "reference_et0.json": "Monthly reference ET0 values in mm/day",
     "reference_et0_range.json": "Typical min and max ET0 values by month",
+    "et0_climate_adjustments.json": "Multipliers adjusting ET0 for climate zones",
     "electricity_rates.json": "Electricity cost per kWh by region.",
     "water_costs.json": "Water cost per liter by region.",
     "feature/wsda_refactored_sharded/detail/": "Detailed WSDA product info (one file per product_id)",

@@ -53,6 +53,7 @@ def calculate_eta(et0: float, kc: float = 1.0) -> float:
 
 ET0_DATA_FILE = "reference_et0.json"
 ET0_RANGE_FILE = "reference_et0_range.json"
+ET0_CLIMATE_FILE = "et0_climate_adjustments.json"
 
 
 @lru_cache(maxsize=None)
@@ -86,11 +87,35 @@ def get_reference_et0_range(month: int) -> tuple[float, float] | None:
     return None
 
 
+@lru_cache(maxsize=None)
+def get_et0_climate_adjustment(zone: str) -> float:
+    """Return ET₀ multiplier for a climate ``zone`` if defined."""
+
+    data = load_dataset(ET0_CLIMATE_FILE)
+    value = data.get(normalize_key(zone))
+    try:
+        return float(value) if value is not None else 1.0
+    except (TypeError, ValueError):
+        return 1.0
+
+
+def adjust_et0_for_climate(et0: float, zone: str | None) -> float:
+    """Return ET₀ adjusted using the climate zone multiplier."""
+
+    if zone:
+        factor = get_et0_climate_adjustment(zone)
+    else:
+        factor = 1.0
+    return round(et0 * factor, 2)
+
+
 __all__ = [
     "calculate_et0",
     "calculate_eta",
     "get_reference_et0",
     "get_reference_et0_range",
+    "get_et0_climate_adjustment",
+    "adjust_et0_for_climate",
     "estimate_stage_et",
 ]
 
