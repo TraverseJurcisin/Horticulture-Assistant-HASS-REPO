@@ -7,7 +7,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "nutrient_conversion_factors.json"
+DATA_FILE = "nutrients/nutrient_conversion_factors.json"
 
 __all__ = ["get_conversion_factors", "oxide_to_elemental"]
 

@@ -13,10 +13,10 @@ from .utils import (
 )
 from .nutrient_availability import availability_for_all
 
-DATA_FILE = "nutrient_guidelines.json"
-RATIO_DATA_FILE = "nutrient_ratio_guidelines.json"
-WEIGHT_DATA_FILE = "nutrient_weights.json"
-TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
+DATA_FILE = "nutrients/nutrient_guidelines.json"
+RATIO_DATA_FILE = "nutrients/nutrient_ratio_guidelines.json"
+WEIGHT_DATA_FILE = "nutrients/nutrient_weights.json"
+TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
 
 
 # Ensure dataset cache respects overlay changes on reload

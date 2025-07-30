@@ -5,10 +5,10 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "leaf_tissue_targets.json"
+DATA_FILE = "leaf/leaf_tissue_targets.json"
 _TARGETS: Dict[str, Dict[str, Dict[str, list[float]]]] = load_dataset(DATA_FILE)
 
-WEIGHT_FILE = "leaf_tissue_score_weights.json"
+WEIGHT_FILE = "leaf/leaf_tissue_score_weights.json"
 _WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_FILE)
 
 __all__ = [

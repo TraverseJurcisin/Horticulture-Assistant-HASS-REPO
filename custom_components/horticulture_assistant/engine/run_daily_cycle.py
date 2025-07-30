@@ -261,7 +261,7 @@ def run_daily_cycle(
     report.transpiration = compute_transpiration(plant_info, current_env)
 
     # Irrigation and fertigation targets
-    irrigation_data = load_dataset("irrigation_guidelines.json")
+    irrigation_data = load_dataset("irrigation/irrigation_guidelines.json")
     report.irrigation_target_ml = irrigation_data.get(plant_type, {}).get(
         stage_name or ""
     )

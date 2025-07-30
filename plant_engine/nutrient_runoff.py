@@ -4,7 +4,7 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset
 
-DATA_FILE = "nutrient_runoff_rates.json"
+DATA_FILE = "nutrients/nutrient_runoff_rates.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 

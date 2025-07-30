@@ -6,7 +6,7 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "propagation_guidelines.json"
+DATA_FILE = "propagation/propagation_guidelines.json"
 
 _DATA: Dict[str, Dict[str, Dict[str, object]]] = load_dataset(DATA_FILE)
 

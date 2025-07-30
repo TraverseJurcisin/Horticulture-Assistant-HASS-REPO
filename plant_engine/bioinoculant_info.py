@@ -5,7 +5,7 @@ from typing import Dict
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "bioinoculant_attributes.json"
+DATA_FILE = "bioinoculants/bioinoculant_attributes.json"
 
 _data = lazy_dataset(DATA_FILE)
 

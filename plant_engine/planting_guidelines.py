@@ -5,7 +5,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "planting_depth_guidelines.json"
+DATA_FILE = "propagation/planting_depth_guidelines.json"
 
 # Cached dataset loaded at import time
 _DATA: Dict[str, float] = load_dataset(DATA_FILE)

@@ -6,7 +6,7 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "soil_nutrient_guidelines.json"
+DATA_FILE = "soil/soil_nutrient_guidelines.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 
@@ -139,7 +139,7 @@ def recommend_soil_amendments(
     if not deficits:
         return {}
 
-    purity_data = load_dataset("fertilizer_purity.json")
+    purity_data = load_dataset("fertilizers/fertilizer_purity.json")
     result: Dict[str, float] = {}
     for nutrient, ppm_needed in deficits.items():
         fert_id = fertilizers.get(nutrient)

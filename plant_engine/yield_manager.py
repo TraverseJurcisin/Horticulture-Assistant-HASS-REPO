@@ -17,7 +17,7 @@ from .utils import load_json, save_json, load_dataset, normalize_key
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
 # Expected total yields per crop (grams)
-YIELD_ESTIMATE_FILE = "yield_estimates.json"
+YIELD_ESTIMATE_FILE = "yield/yield_estimates.json"
 
 # Cached dataset so repeated lookups avoid disk I/O
 _YIELD_ESTIMATES: Dict[str, float] = load_dataset(YIELD_ESTIMATE_FILE)

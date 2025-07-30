@@ -7,8 +7,8 @@ from typing import Mapping, Dict, Sequence
 
 from .utils import load_dataset, list_dataset_entries, normalize_key
 
-DATA_FILE = "root_temperature_uptake.json"
-OPTIMA_FILE = "root_temperature_optima.json"
+DATA_FILE = "temperature/root_temperature_uptake.json"
+OPTIMA_FILE = "local/plants/temperature/root_temperature_optima.json"
 
 _DATA = load_dataset(DATA_FILE)
 _OPTIMA = load_dataset(OPTIMA_FILE)

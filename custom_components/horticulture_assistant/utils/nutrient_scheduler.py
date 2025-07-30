@@ -53,7 +53,7 @@ def normalize_tag(tag: str) -> str:
 # Tag-specific nutrient modifiers loaded from a dataset.  Users can extend
 # or override this mapping by providing ``nutrient_tag_modifiers.json`` in
 # the dataset overlay directory.
-TAG_MODIFIER_FILE = "nutrient_tag_modifiers.json"
+TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
 
 from plant_engine.nutrient_absorption import apply_absorption_rates
 

@@ -12,7 +12,7 @@ from .utils import load_dataset, normalize_key
 from .constants import DEFAULT_ENV
 from .canopy import estimate_canopy_area
 
-MODIFIER_FILE = "crop_coefficient_modifiers.json"
+MODIFIER_FILE = "coefficients/crop_coefficient_modifiers.json"
 # cached via load_dataset
 _MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(MODIFIER_FILE)
 
@@ -22,7 +22,7 @@ from plant_engine.et_model import (
     calculate_et0_series,
 )
 
-DATA_FILE = "crop_coefficients.json"
+DATA_FILE = "coefficients/crop_coefficients.json"
 # cached via load_dataset
 _KC_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 

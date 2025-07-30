@@ -10,10 +10,10 @@ from .utils import load_dataset, normalize_key
 
 DEFAULT_AREA_CM2 = 900  # ~30×30 cm surface area
 
-SOIL_DATA_FILE = "soil_texture_parameters.json"
-ROOT_DEPTH_DATA_FILE = "root_depth_guidelines.json"  # average max root depth per crop
-INFILTRATION_FILE = "soil_infiltration_rates.json"
-GROWTH_PARAM_FILE = "root_growth_parameters.json"
+SOIL_DATA_FILE = "soil/soil_texture_parameters.json"
+ROOT_DEPTH_DATA_FILE = "root/root_depth_guidelines.json"  # average max root depth per crop
+INFILTRATION_FILE = "soil/soil_infiltration_rates.json"
+GROWTH_PARAM_FILE = "root/root_growth_parameters.json"
 
 # cached dataset for soil parameters
 _SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)

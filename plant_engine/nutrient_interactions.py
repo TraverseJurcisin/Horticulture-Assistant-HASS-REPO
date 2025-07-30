@@ -15,8 +15,8 @@ class InteractionInfo:
     max_ratio: float
     message: str = ""
 
-DATA_FILE = "nutrient_interactions.json"
-ACTION_FILE = "nutrient_interaction_actions.json"
+DATA_FILE = "nutrients/nutrient_interactions.json"
+ACTION_FILE = "nutrients/nutrient_interaction_actions.json"
 
 
 _DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)

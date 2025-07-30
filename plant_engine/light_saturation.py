@@ -6,7 +6,7 @@ from typing import Dict
 from .utils import load_dataset, list_dataset_entries, normalize_key
 from .environment_manager import calculate_dli, photoperiod_for_target_dli
 
-DATA_FILE = "light_saturation_ppfd.json"
+DATA_FILE = "light/light_saturation_ppfd.json"
 
 _DATA: Dict[str, float] = load_dataset(DATA_FILE)
 

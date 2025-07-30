@@ -5,9 +5,9 @@ from typing import Iterable, Mapping
 
 from .utils import load_dataset
 
-DATA_FILE = "hardiness_zone_temperatures.json"
+DATA_FILE = "temperature/hardiness_zone_temperatures.json"
 _DATA = load_dataset(DATA_FILE)
-PLANT_FILE = "plant_hardiness_zones.json"
+PLANT_FILE = "plants/plant_hardiness_zones.json"
 _PLANT_ZONES: Mapping[str, Mapping[str, str]] = load_dataset(PLANT_FILE)
 
 __all__ = [

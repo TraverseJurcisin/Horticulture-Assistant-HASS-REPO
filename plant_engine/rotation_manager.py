@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "rotation_guidance.json"
+DATA_FILE = "companions/rotation_guidance.json"
 
 _DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
 

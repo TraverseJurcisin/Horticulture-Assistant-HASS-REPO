@@ -6,7 +6,7 @@ from typing import Dict
 
 from .utils import load_dataset, list_dataset_entries, normalize_key
 
-DATA_FILE = "biological_clock_resets.json"
+DATA_FILE = "phenology/biological_clock_resets.json"
 
 @lru_cache(maxsize=None)
 def _data() -> Dict[str, Dict[str, float]]:

@@ -39,25 +39,25 @@ __all__ = [
     "IrrigationRecommendation",
 ]
 
-_KC_DATA_FILE = "crop_coefficients.json"
+_KC_DATA_FILE = "coefficients/crop_coefficients.json"
 _KC_DATA = lazy_dataset(_KC_DATA_FILE)
 
-_IRRIGATION_FILE = "irrigation_guidelines.json"
+_IRRIGATION_FILE = "irrigation/irrigation_guidelines.json"
 _IRRIGATION_DATA = lazy_dataset(_IRRIGATION_FILE)
 
-_INTERVAL_FILE = "irrigation_intervals.json"
+_INTERVAL_FILE = "irrigation/irrigation_intervals.json"
 _INTERVAL_DATA = lazy_dataset(_INTERVAL_FILE)
 
-_EFFICIENCY_FILE = "irrigation_efficiency.json"
+_EFFICIENCY_FILE = "irrigation/irrigation_efficiency.json"
 _EFFICIENCY_DATA = lazy_dataset(_EFFICIENCY_FILE)
 
-_FLOW_FILE = "emitter_flow_rates.json"
+_FLOW_FILE = "irrigation/emitter_flow_rates.json"
 _FLOW_DATA = lazy_dataset(_FLOW_FILE)
 
-_RAIN_EFFICIENCY_FILE = "rain_capture_efficiency.json"
+_RAIN_EFFICIENCY_FILE = "irrigation/rain_capture_efficiency.json"
 _RAIN_EFFICIENCY_DATA = lazy_dataset(_RAIN_EFFICIENCY_FILE)
 
-_ZONE_MODIFIER_FILE = "irrigation_zone_modifiers.json"
+_ZONE_MODIFIER_FILE = "irrigation/irrigation_zone_modifiers.json"
 _ZONE_MODIFIERS = lazy_dataset(_ZONE_MODIFIER_FILE)
 
 
@@ -249,7 +249,7 @@ def estimate_irrigation_time(
 ) -> float:
     """Return hours required to apply ``volume_ml`` with ``emitter_type``.
 
-    Flow rates are loaded from :data:`emitter_flow_rates.json` in liters per
+    Flow rates are loaded from :data:`irrigation/emitter_flow_rates.json` in liters per
     hour for a single emitter. ``emitters`` specifies how many emitters are
     used simultaneously. ``0.0`` is returned when the emitter type is unknown.
     ``volume_ml`` and ``emitters`` must be positive.

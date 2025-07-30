@@ -96,10 +96,11 @@ def test_tag_based_modifier(tmp_path):
 def test_dataset_override(tmp_path, monkeypatch):
     overlay = tmp_path / "overlay"
     overlay.mkdir()
-    (overlay / "nutrient_tag_modifiers.json").write_text(
+    (overlay / "nutrients").mkdir()
+    (overlay / "nutrients" / "nutrient_tag_modifiers.json").write_text(
         json.dumps({"test-tag": {"N": 1.5}})
     )
-    assert (overlay / "nutrient_tag_modifiers.json").exists()
+    assert (overlay / "nutrients" / "nutrient_tag_modifiers.json").exists()
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
     importlib.reload(utils)

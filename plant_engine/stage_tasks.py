@@ -8,7 +8,7 @@ from typing import Dict, List, Tuple
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "stage_tasks.json"
+DATA_FILE = "stages/stage_tasks.json"
 
 _DATA: Dict[str, Dict[str, List[str]]] = load_dataset(DATA_FILE)
 

@@ -7,7 +7,7 @@ from typing import Dict, Iterable
 from . import thermal_time
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "phenological_milestones.json"
+DATA_FILE = "phenology/phenological_milestones.json"
 
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 

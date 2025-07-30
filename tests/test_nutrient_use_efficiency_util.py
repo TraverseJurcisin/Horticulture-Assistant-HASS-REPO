@@ -49,7 +49,8 @@ def test_compare_to_expected(tmp_path, monkeypatch):
         ]
     }))
     (data_dir / "yield_logs.json").write_text("{}")
-    (data_dir / "nutrient_uptake.json").write_text(json.dumps({
+    (data_dir / "nutrients").mkdir()
+    (data_dir / "nutrients" / "nutrient_uptake.json").write_text(json.dumps({
         "tomato": {"veg": {"N": 100, "P": 40}}
     }))
     monkeypatch.chdir(tmp_path)

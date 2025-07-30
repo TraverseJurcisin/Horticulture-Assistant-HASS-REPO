@@ -6,8 +6,8 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries, stage_value
 
-DATA_FILE = "pruning_guidelines.json"
-INTERVAL_FILE = "pruning_intervals.json"
+DATA_FILE = "pruning/pruning_guidelines.json"
+INTERVAL_FILE = "pruning/pruning_intervals.json"
 
 # Loaded once via load_dataset which uses caching
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)

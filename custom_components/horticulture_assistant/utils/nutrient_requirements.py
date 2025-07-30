@@ -13,7 +13,7 @@ from plant_engine.root_temperature import get_uptake_factor
 
 from plant_engine.utils import load_dataset, normalize_key
 
-DATA_FILE = "total_nutrient_requirements.json"
+DATA_FILE = "nutrients/total_nutrient_requirements.json"
 
 
 @lru_cache(maxsize=None)

@@ -6,11 +6,11 @@ from typing import Dict, Mapping
 from .nutrient_manager import calculate_deficiencies
 from .utils import lazy_dataset
 
-DATA_FILE = "nutrient_deficiency_symptoms.json"
-TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
-MOBILITY_DATA_FILE = "nutrient_mobility.json"
-THRESHOLD_DATA_FILE = "nutrient_deficiency_thresholds.json"
-SCORE_DATA_FILE = "deficiency_severity_scores.json"
+DATA_FILE = "nutrients/nutrient_deficiency_symptoms.json"
+TREATMENT_DATA_FILE = "nutrients/nutrient_deficiency_treatments.json"
+MOBILITY_DATA_FILE = "nutrients/nutrient_mobility.json"
+THRESHOLD_DATA_FILE = "nutrients/nutrient_deficiency_thresholds.json"
+SCORE_DATA_FILE = "nutrients/deficiency_severity_scores.json"
 
 # Load datasets lazily to avoid unnecessary work during import
 _symptoms = lazy_dataset(DATA_FILE)
@@ -149,6 +149,7 @@ def calculate_deficiency_index(severity_map: Mapping[str, str]) -> float:
     if not severity_map:
         return 0.0
 
+    _scores.cache_clear()
     scores = _scores()
     total = 0.0
     count = 0

@@ -7,7 +7,7 @@ from functools import lru_cache
 from plant_engine.utils import load_dataset
 
 # Dataset file residing under ``data/`` used to populate known species profiles.
-DATA_FILE = "dafe_species_profiles.json"
+DATA_FILE = "media/dafe_species_profiles.json"
 
 __all__ = ["SpeciesProfile", "get_species_profile"]
 
