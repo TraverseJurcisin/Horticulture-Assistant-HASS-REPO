@@ -7,9 +7,9 @@ from typing import Dict, Tuple, Mapping, Any
 
 from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
-DATA_FILE = "water_quality_thresholds.json"
-ACTION_FILE = "water_quality_actions.json"
-SALINITY_FILE = "water_salinity_tolerance.json"
+DATA_FILE = "water/water_quality_thresholds.json"
+ACTION_FILE = "water/water_quality_actions.json"
+SALINITY_FILE = "water/water_salinity_tolerance.json"
 
 # Cached thresholds loaded once via :func:`load_dataset`
 _thresholds = lazy_dataset(DATA_FILE)

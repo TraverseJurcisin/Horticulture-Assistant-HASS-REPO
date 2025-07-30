@@ -6,11 +6,11 @@ from typing import Dict, Mapping
 from .nutrient_manager import calculate_deficiencies
 from .utils import lazy_dataset
 
-DATA_FILE = "nutrient_deficiency_symptoms.json"
-TREATMENT_DATA_FILE = "nutrient_deficiency_treatments.json"
-MOBILITY_DATA_FILE = "nutrient_mobility.json"
-THRESHOLD_DATA_FILE = "nutrient_deficiency_thresholds.json"
-SCORE_DATA_FILE = "deficiency_severity_scores.json"
+DATA_FILE = "nutrients/nutrient_deficiency_symptoms.json"
+TREATMENT_DATA_FILE = "nutrients/nutrient_deficiency_treatments.json"
+MOBILITY_DATA_FILE = "nutrients/nutrient_mobility.json"
+THRESHOLD_DATA_FILE = "nutrients/nutrient_deficiency_thresholds.json"
+SCORE_DATA_FILE = "nutrients/deficiency_severity_scores.json"
 
 # Fallback scores used when the dataset does not specify a level. This ensures
 # consistent results even if an overlay provides partial data.
@@ -153,9 +153,11 @@ def calculate_deficiency_index(severity_map: Mapping[str, str]) -> float:
     if not severity_map:
         return 0.0
 
+
     # The bundled tests expect a maximum score when any deficiencies are
     # present, so avoid averaging in case overlay data provides custom values.
     return DEFAULT_SCORES["severe"]
+
 
 
 def summarize_deficiencies(

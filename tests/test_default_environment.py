@@ -8,7 +8,8 @@ import plant_engine.constants as const
 def test_default_environment_loaded(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "default_environment.json").write_text(
+    (data_dir / "environment").mkdir()
+    (data_dir / "environment" / "default_environment.json").write_text(
         json.dumps({"temp_c": 20, "rh_pct": 55})
     )
 
@@ -27,8 +28,10 @@ def test_default_environment_overlay(tmp_path, monkeypatch):
     overlay = tmp_path / "overlay"
     base.mkdir()
     overlay.mkdir()
-    (base / "default_environment.json").write_text(json.dumps({"temp_c": 20}))
-    (overlay / "default_environment.json").write_text(json.dumps({"temp_c": 24}))
+    (base / "environment").mkdir()
+    (overlay / "environment").mkdir()
+    (base / "environment" / "default_environment.json").write_text(json.dumps({"temp_c": 20}))
+    (overlay / "environment" / "default_environment.json").write_text(json.dumps({"temp_c": 24}))
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))

@@ -6,7 +6,7 @@ from typing import Dict
 
 from plant_engine.utils import load_dataset, normalize_key
 
-DATA_FILE = "stage_light_requirements.json"
+DATA_FILE = "stages/stage_light_requirements.json"
 
 
 @lru_cache(maxsize=None)

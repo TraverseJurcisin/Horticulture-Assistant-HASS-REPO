@@ -10,7 +10,8 @@ def _setup_sample(tmp_path: Path):
     plants.mkdir()
     plant_file = plants / "sample.json"
     plant_file.write_text("{}")
-    registry = tmp_path / "plant_registry.json"
+    registry = tmp_path / "data/local/plants/plant_registry.json"
+    registry.parent.mkdir(parents=True)
     registry.write_text("{}")
     backup_dir = tmp_path / "backups"
     bp.configure_root(tmp_path)
@@ -25,7 +26,7 @@ def test_create_and_restore(tmp_path: Path):
     with zipfile.ZipFile(archive) as zf:
         names = zf.namelist()
         assert "plants/sample.json" in names
-        assert "plant_registry.json" in names
+        assert "data/local/plants/plant_registry.json" in names
 
     plant_file.write_text('{"changed":true}')
     bp.restore_backup(archive, output_dir=tmp_path)

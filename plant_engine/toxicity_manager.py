@@ -10,9 +10,9 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "nutrient_toxicity_thresholds.json"
-SYMPTOMS_FILE = "nutrient_toxicity_symptoms.json"
-TREATMENTS_FILE = "nutrient_toxicity_treatments.json"
+DATA_FILE = "nutrients/nutrient_toxicity_thresholds.json"
+SYMPTOMS_FILE = "nutrients/nutrient_toxicity_symptoms.json"
+TREATMENTS_FILE = "nutrients/nutrient_toxicity_treatments.json"
 
 # Loaded once using cached loader
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)

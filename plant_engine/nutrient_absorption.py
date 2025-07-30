@@ -12,7 +12,7 @@ from .utils import (
     clean_float_map,
 )
 
-DATA_FILE = "nutrient_absorption_rates.json"
+DATA_FILE = "nutrients/nutrient_absorption_rates.json"
 
 
 @lru_cache(maxsize=1)

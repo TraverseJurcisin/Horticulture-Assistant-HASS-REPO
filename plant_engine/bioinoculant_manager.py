@@ -6,7 +6,7 @@ from typing import List
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "bioinoculant_guidelines.json"
+DATA_FILE = "bioinoculants/bioinoculant_guidelines.json"
 
 _data = lazy_dataset(DATA_FILE)
 

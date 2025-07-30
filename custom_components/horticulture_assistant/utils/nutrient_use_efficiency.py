@@ -18,6 +18,9 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     config_path,
 )
+from custom_components.horticulture_assistant.utils.plant_registry import (
+    PLANT_REGISTRY_FILE,
+)
 from plant_engine.utils import load_dataset
 
 try:
@@ -28,7 +31,7 @@ except ImportError:
 _LOGGER = logging.getLogger(__name__)
 
 # Efficiency benchmark dataset
-EFFICIENCY_TARGET_FILE = "nutrient_efficiency_targets.json"
+EFFICIENCY_TARGET_FILE = "nutrients/nutrient_efficiency_targets.json"
 _EFFICIENCY_TARGETS: Dict[str, Dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
 
 
@@ -257,7 +260,11 @@ class NutrientUseEfficiency:
         stage_name = stage
         if stage_name is None:
             # Try to retrieve current stage from plant registry if available
-            reg_path = config_path(self._hass, "plant_registry.json") if self._hass is not None else "plant_registry.json"
+            reg_path = (
+                config_path(self._hass, PLANT_REGISTRY_FILE)
+                if self._hass is not None
+                else PLANT_REGISTRY_FILE
+            )
             try:
                 with open(reg_path, "r", encoding="utf-8") as rf:
                     reg_data = json.load(rf)

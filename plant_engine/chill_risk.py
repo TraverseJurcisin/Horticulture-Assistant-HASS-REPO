@@ -5,8 +5,8 @@ from typing import Mapping, Sequence
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-COLD_DATA_FILE = "cold_stress_thresholds.json"
-SENSITIVITY_FILE = "chill_sensitivity.json"
+COLD_DATA_FILE = "local/plants/temperature/cold_stress_thresholds.json"
+SENSITIVITY_FILE = "local/plants/temperature/chill_sensitivity.json"
 
 _COLD_THRESHOLDS: Mapping[str, float] = load_dataset(COLD_DATA_FILE)
 _SENSITIVITY: Mapping[str, Mapping[str, float]] = load_dataset(SENSITIVITY_FILE)

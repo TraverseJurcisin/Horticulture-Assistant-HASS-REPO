@@ -6,7 +6,7 @@ from typing import Dict
 from .utils import load_dataset, normalize_key
 from .yield_manager import get_total_yield
 
-DATA_FILE = "yield_estimates.json"
+DATA_FILE = "yield/yield_estimates.json"
 
 # Cached dataset loaded at import time
 _YIELD_DATA: Dict[str, float] = load_dataset(DATA_FILE)

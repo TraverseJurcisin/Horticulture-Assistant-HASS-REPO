@@ -9,14 +9,14 @@ import plant_engine.datasets as datasets
 
 def test_list_datasets_contains_known():
     datasets = list_datasets()
-    assert "nutrient_guidelines.json" in datasets
-    assert "irrigation_intervals.json" in datasets
-    assert "soil_moisture_guidelines.json" in datasets
-    assert "leaf_temperature_guidelines.json" in datasets
-    assert "disease_monitoring_intervals.json" in datasets
-    assert "reference_et0.json" in datasets
-    assert "pesticide_modes.json" in datasets
-    assert "frost_dates.json" in datasets
+    assert "nutrients/nutrient_guidelines.json" in datasets
+    assert "irrigation/irrigation_intervals.json" in datasets
+    assert "soil/soil_moisture_guidelines.json" in datasets
+    assert "local/plants/temperature/leaf_temperature_guidelines.json" in datasets
+    assert "diseases/disease_monitoring_intervals.json" in datasets
+    assert "et0/reference_et0.json" in datasets
+    assert "pesticides/pesticide_modes.json" in datasets
+    assert "temperature/frost_dates.json" in datasets
     assert "dataset_catalog.json" not in datasets
 
 
@@ -26,43 +26,43 @@ def test_list_datasets_includes_subdirectory():
 
 
 def test_get_dataset_description():
-    desc = get_dataset_description("nutrient_guidelines.json")
+    desc = get_dataset_description("nutrients/nutrient_guidelines.json")
     assert "macronutrient" in desc
 
-    desc2 = get_dataset_description("micronutrient_guidelines.json")
+    desc2 = get_dataset_description("nutrients/micronutrient_guidelines.json")
     assert "micronutrient" in desc2
 
-    desc3 = get_dataset_description("fertilizer_purity.json")
+    desc3 = get_dataset_description("fertilizers/fertilizer_purity.json")
     assert "purity" in desc3
 
-    desc4 = get_dataset_description("irrigation_intervals.json")
+    desc4 = get_dataset_description("irrigation/irrigation_intervals.json")
     assert "irrigation" in desc4
 
     desc5 = get_dataset_description("feature/wsda_refactored_sharded/index_sharded/")
     assert "WSDA" in desc5
 
-    desc6 = get_dataset_description("soil_moisture_guidelines.json")
+    desc6 = get_dataset_description("soil/soil_moisture_guidelines.json")
     assert "moisture" in desc6
 
-    desc7 = get_dataset_description("disease_monitoring_intervals.json")
+    desc7 = get_dataset_description("diseases/disease_monitoring_intervals.json")
     assert "disease" in desc7
 
-    desc8 = get_dataset_description("reference_et0.json")
+    desc8 = get_dataset_description("et0/reference_et0.json")
     assert "ET0" in desc8 or "et0" in desc8.lower()
-    desc9 = get_dataset_description("leaf_temperature_guidelines.json")
+    desc9 = get_dataset_description("local/plants/temperature/leaf_temperature_guidelines.json")
     assert "temperature" in desc9
 
-    desc9 = get_dataset_description("pesticide_modes.json")
+    desc9 = get_dataset_description("pesticides/pesticide_modes.json")
     assert "action" in desc9
-    desc10 = get_dataset_description("frost_dates.json")
+    desc10 = get_dataset_description("temperature/frost_dates.json")
     assert "frost" in desc10
-    assert "thresholds" in get_dataset_description("pest_management_guidelines.json").lower()
+    assert "thresholds" in get_dataset_description("pests/pest_management_guidelines.json").lower()
 
 
 def test_search_datasets():
     results = search_datasets("irrigation")
-    assert "irrigation_guidelines.json" in results
-    assert "irrigation_intervals.json" in results
+    assert "irrigation/irrigation_guidelines.json" in results
+    assert "irrigation/irrigation_intervals.json" in results
     assert all(
         "irrigation" in name or "irrigation" in desc.lower()
         for name, desc in results.items()
@@ -76,7 +76,7 @@ def test_list_datasets_by_category():
     cats = list_datasets_by_category()
     assert "fertilizers" in cats
     assert "fertilizers/fertilizer_products.json" in cats["fertilizers"]
-    assert "nutrient_guidelines.json" in cats["root"]
+    assert "nutrients/nutrient_guidelines.json" in cats["nutrients"]
 
 
 def test_list_dataset_info_by_category():
@@ -84,9 +84,9 @@ def test_list_dataset_info_by_category():
     assert "fertilizers" in info
     fert = info["fertilizers"]
     assert "fertilizers/fertilizer_products.json" in fert
-    root_info = info["root"]
-    assert "nutrient_guidelines.json" in root_info
-    assert isinstance(root_info["nutrient_guidelines.json"], str)
+    root_info = info["nutrients"]
+    assert "nutrients/nutrient_guidelines.json" in root_info
+    assert isinstance(root_info["nutrients/nutrient_guidelines.json"], str)
 
 
 def test_catalog_custom_dir(tmp_path):
@@ -148,14 +148,14 @@ def test_catalog_paths_cached(tmp_path):
 
 
 def test_get_dataset_path_and_load():
-    path = datasets.get_dataset_path("nutrient_guidelines.json")
+    path = datasets.get_dataset_path("nutrients/nutrient_guidelines.json")
     assert path and path.exists()
-    data = datasets.load_dataset_file("nutrient_guidelines.json")
+    data = datasets.load_dataset_file("nutrients/nutrient_guidelines.json")
     assert isinstance(data, dict)
-    path2 = datasets.get_dataset_path("pest_management_guidelines.json")
+    path2 = datasets.get_dataset_path("pests/pest_management_guidelines.json")
     assert path2 and path2.exists()
 
 def test_dataset_exists():
-    assert datasets.dataset_exists("nutrient_guidelines.json")
-    assert datasets.dataset_exists("pest_management_guidelines.json")
+    assert datasets.dataset_exists("nutrients/nutrient_guidelines.json")
+    assert datasets.dataset_exists("pests/pest_management_guidelines.json")
     assert not datasets.dataset_exists("missing_dataset.json")

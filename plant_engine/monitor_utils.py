@@ -97,7 +97,7 @@ def estimate_condition_risk(
     return risks
 
 
-RISK_SCORE_FILE = "risk_score_map.json"
+RISK_SCORE_FILE = "risk/risk_score_map.json"
 
 
 @lru_cache(maxsize=1)

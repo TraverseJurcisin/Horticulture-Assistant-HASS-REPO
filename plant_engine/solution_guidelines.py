@@ -5,7 +5,7 @@ from typing import Dict, Iterable, Mapping
 
 from .utils import load_dataset, list_dataset_entries, normalize_key, parse_range
 
-DATA_FILE = "solution_guidelines.json"
+DATA_FILE = "solution/solution_guidelines.json"
 
 _DATA: Dict[str, Dict[str, Mapping[str, Iterable[float]]]] = load_dataset(DATA_FILE)
 

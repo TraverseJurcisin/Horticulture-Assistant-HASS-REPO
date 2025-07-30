@@ -5,7 +5,7 @@ from typing import Dict, Mapping
 from .nutrient_manager import calculate_all_surplus
 from .utils import load_dataset
 
-DATA_FILE = "nutrient_surplus_actions.json"
+DATA_FILE = "nutrients/nutrient_surplus_actions.json"
 
 _ACTIONS: Dict[str, str] = load_dataset(DATA_FILE)
 

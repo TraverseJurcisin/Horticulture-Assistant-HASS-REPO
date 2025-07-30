@@ -6,7 +6,7 @@ from datetime import date, timedelta
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "gdd_requirements.json"
+DATA_FILE = "local/plants/temperature/gdd_requirements.json"
 
 # Cached dataset loaded once
 _DATA: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)

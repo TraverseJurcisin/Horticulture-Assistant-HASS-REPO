@@ -13,7 +13,7 @@ def test_list_cli():
         check=True,
     )
     lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
-    assert "nutrient_guidelines.json" in lines
+    assert "nutrients/nutrient_guidelines.json" in lines
 
 
 def test_search_cli():
@@ -24,7 +24,7 @@ def test_search_cli():
         check=True,
     )
     out = result.stdout
-    assert "nutrient_guidelines.json" in out
+    assert "nutrients/nutrient_guidelines.json" in out
 
 
 def test_categories_cli():
@@ -41,10 +41,10 @@ def test_categories_cli():
 
 def test_describe_cli():
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), "describe", "nutrient_guidelines.json"],
+        [sys.executable, str(SCRIPT), "describe", "nutrients/nutrient_guidelines.json"],
         capture_output=True,
         text=True,
         check=True,
     )
     out = result.stdout.strip()
-    assert out.startswith("nutrient_guidelines.json:")
+    assert out.startswith("nutrients/nutrient_guidelines.json:")

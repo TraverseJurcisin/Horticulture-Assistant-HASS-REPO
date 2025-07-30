@@ -94,7 +94,8 @@ def test_classify_pest_severity():
 def test_classify_pest_severity_custom_thresholds(tmp_path, monkeypatch):
     override = tmp_path / "data"
     override.mkdir()
-    path = override / "pest_severity_thresholds.json"
+    (override / "pests").mkdir()
+    path = override / "pests" / "pest_severity_thresholds.json"
     path.write_text('{"aphids": {"moderate": 4, "severe": 8}}')
 
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(override))

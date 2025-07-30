@@ -36,7 +36,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_schedule_nutrients_dataset(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    shutil.copy(ROOT / "plant_registry.json", tmp_path / "plant_registry.json")
+    dest = tmp_path / "data/local/plants"
+    dest.mkdir(parents=True)
+    shutil.copy(ROOT / "data/local/plants/plant_registry.json", dest / "plant_registry.json")
     (tmp_path / "plants").mkdir()
     shutil.copy(ROOT / "plants/citrus_backyard_spring2025.json", tmp_path / "plants/citrus_backyard_spring2025.json")
 
@@ -96,10 +98,11 @@ def test_tag_based_modifier(tmp_path):
 def test_dataset_override(tmp_path, monkeypatch):
     overlay = tmp_path / "overlay"
     overlay.mkdir()
-    (overlay / "nutrient_tag_modifiers.json").write_text(
+    (overlay / "nutrients").mkdir()
+    (overlay / "nutrients" / "nutrient_tag_modifiers.json").write_text(
         json.dumps({"test-tag": {"N": 1.5}})
     )
-    assert (overlay / "nutrient_tag_modifiers.json").exists()
+    assert (overlay / "nutrients" / "nutrient_tag_modifiers.json").exists()
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
     importlib.reload(utils)

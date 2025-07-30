@@ -90,9 +90,9 @@ def calculate_et0_series(
     return et0.round(2)
 
 
-ET0_DATA_FILE = "reference_et0.json"
-ET0_RANGE_FILE = "reference_et0_range.json"
-ET0_CLIMATE_FILE = "et0_climate_adjustments.json"
+ET0_DATA_FILE = "et0/reference_et0.json"
+ET0_RANGE_FILE = "et0/reference_et0_range.json"
+ET0_CLIMATE_FILE = "et0/et0_climate_adjustments.json"
 
 
 @lru_cache(maxsize=None)
@@ -173,7 +173,7 @@ def estimate_stage_et(plant_type: str, stage: str, month: int) -> float:
     if et0 is None:
         return 0.0
 
-    kc_data = load_dataset("crop_coefficients.json")
+    kc_data = load_dataset("coefficients/crop_coefficients.json")
     plant = kc_data.get(normalize_key(plant_type))
     if not isinstance(plant, dict):
         return 0.0

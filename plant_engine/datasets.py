@@ -56,9 +56,11 @@ class DatasetCatalog:
     def paths(self) -> tuple[Path, ...]:
         """Return dataset search paths including overlay when set."""
         paths = [self.base_dir]
-        local = self.base_dir / "local"
-        if local.is_dir():
-            paths.append(local)
+
+        local_temp = self.base_dir / "local/plants/temperature"
+        if local_temp.exists():
+            paths.append(local_temp)
+
         paths.extend(self.extra_dirs)
         if self.overlay_dir:
             paths.insert(0, self.overlay_dir)

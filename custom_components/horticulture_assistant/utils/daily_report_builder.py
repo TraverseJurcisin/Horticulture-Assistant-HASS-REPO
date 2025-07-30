@@ -21,6 +21,9 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     plants_path,
     data_path,
 )
+from custom_components.horticulture_assistant.utils.plant_registry import (
+    PLANT_REGISTRY_FILE,
+)
 
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_profile,
@@ -61,7 +64,7 @@ def _resolve_plant_type(hass: HomeAssistant, plant_id: str, profile: dict) -> Op
     ptype = profile.get("general", {}).get("plant_type")
     if ptype:
         return str(ptype)
-    reg_path = config_path(hass, "plant_registry.json")
+    reg_path = config_path(hass, PLANT_REGISTRY_FILE)
     try:
         reg = load_json(reg_path)
         return reg.get(plant_id, {}).get("plant_type")

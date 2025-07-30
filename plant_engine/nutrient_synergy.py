@@ -6,7 +6,7 @@ from typing import Dict, Mapping, Tuple, Iterable
 
 from .utils import load_dataset, list_dataset_entries
 
-DATA_FILE = "nutrient_synergies.json"
+DATA_FILE = "nutrients/nutrient_synergies.json"
 
 @dataclass(frozen=True)
 class SynergyInfo:

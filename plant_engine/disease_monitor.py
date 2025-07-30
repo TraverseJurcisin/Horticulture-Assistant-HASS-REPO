@@ -15,12 +15,12 @@ from .monitor_utils import (
 from .disease_manager import recommend_treatments, recommend_prevention
 from . import disease_manager
 
-DATA_FILE = "disease_thresholds.json"
-MONITOR_INTERVAL_FILE = "disease_monitoring_intervals.json"
-RISK_DATA_FILE = "disease_risk_factors.json"
-SEVERITY_ACTIONS_FILE = "disease_severity_actions.json"
-RISK_INTERVAL_MOD_FILE = "disease_risk_interval_modifiers.json"
-SCOUTING_METHOD_FILE = "disease_scouting_methods.json"
+DATA_FILE = "diseases/disease_thresholds.json"
+MONITOR_INTERVAL_FILE = "diseases/disease_monitoring_intervals.json"
+RISK_DATA_FILE = "diseases/disease_risk_factors.json"
+SEVERITY_ACTIONS_FILE = "diseases/disease_severity_actions.json"
+RISK_INTERVAL_MOD_FILE = "diseases/disease_risk_interval_modifiers.json"
+SCOUTING_METHOD_FILE = "diseases/disease_scouting_methods.json"
 
 # Cached dataset
 _THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)

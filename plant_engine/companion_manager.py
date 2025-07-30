@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from .utils import lazy_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "companion_plants.json"
+DATA_FILE = "companions/companion_plants.json"
 _data = lazy_dataset(DATA_FILE)
 
 __all__ = [

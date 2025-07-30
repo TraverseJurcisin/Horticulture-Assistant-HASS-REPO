@@ -6,10 +6,10 @@ from typing import Dict, Iterable
 
 from .utils import list_dataset_entries, load_dataset, stage_value, normalize_key
 
-DATA_FILE = "ph_guidelines.json"
-ADJUST_FILE = "ph_adjustment_factors.json"
-MEDIUM_FILE = "growth_medium_ph_ranges.json"
-SOIL_PH_FILE = "soil_ph_guidelines.json"
+DATA_FILE = "ph/ph_guidelines.json"
+ADJUST_FILE = "ph/ph_adjustment_factors.json"
+MEDIUM_FILE = "ph/growth_medium_ph_ranges.json"
+SOIL_PH_FILE = "soil/soil_ph_guidelines.json"
 
 # Cached dataset loaded once
 _DATA: Dict[str, Dict[str, Iterable[float]]] = load_dataset(DATA_FILE)

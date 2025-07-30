@@ -6,7 +6,7 @@ from typing import Dict, Tuple
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "harvest_windows.json"
+DATA_FILE = "harvest/harvest_windows.json"
 
 _DATA: Dict[str, Tuple[int, int]] = load_dataset(DATA_FILE)
 

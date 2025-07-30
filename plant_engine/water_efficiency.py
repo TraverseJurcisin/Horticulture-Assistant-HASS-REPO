@@ -7,7 +7,7 @@ from typing import Mapping, Dict
 from .utils import load_json, load_dataset, normalize_key
 from .water_usage import estimate_cycle_total_use
 
-TARGET_FILE = "water_efficiency_targets.json"
+TARGET_FILE = "water/water_efficiency_targets.json"
 YIELD_DIR = Path("data/yield")
 
 __all__ = [

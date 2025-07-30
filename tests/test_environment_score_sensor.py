@@ -88,7 +88,9 @@ class DummyHass:
 
 
 def test_environment_score_sensor(tmp_path: Path):
-    (tmp_path / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
+    reg_dir = tmp_path / "data/local/plants"
+    reg_dir.mkdir(parents=True)
+    (reg_dir / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
     hass = DummyHass(tmp_path)
     sensor_entity = EnvironmentScoreSensor(hass, "Plant", "pid")
     hass.states._data = {
@@ -102,7 +104,9 @@ def test_environment_score_sensor(tmp_path: Path):
 
 
 def test_environment_quality_sensor(tmp_path: Path):
-    (tmp_path / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
+    reg_dir = tmp_path / "data/local/plants"
+    reg_dir.mkdir(parents=True)
+    (reg_dir / "plant_registry.json").write_text(json.dumps({"pid": {"plant_type": "citrus"}}))
     hass = DummyHass(tmp_path)
     sensor_entity = EnvironmentQualitySensor(hass, "Plant", "pid")
     hass.states._data = {

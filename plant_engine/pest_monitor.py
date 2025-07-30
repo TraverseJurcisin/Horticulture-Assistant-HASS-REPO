@@ -21,19 +21,19 @@ from .pest_manager import (
     list_known_pests,
 )
 
-DATA_FILE = "pest_thresholds.json"
-STAGE_DATA_FILE = "pest_thresholds_by_stage.json"
-RISK_DATA_FILE = "pest_risk_factors.json"
-SEVERITY_ACTIONS_FILE = "pest_severity_actions.json"
+DATA_FILE = "pests/pest_thresholds.json"
+STAGE_DATA_FILE = "pests/pest_thresholds_by_stage.json"
+RISK_DATA_FILE = "pests/pest_risk_factors.json"
+SEVERITY_ACTIONS_FILE = "pests/pest_severity_actions.json"
 # Recommended days between scouting events
-MONITOR_INTERVAL_FILE = "pest_monitoring_intervals.json"
+MONITOR_INTERVAL_FILE = "pests/pest_monitoring_intervals.json"
 # Adjustment factors for risk-based interval modifications
-RISK_INTERVAL_MOD_FILE = "pest_risk_interval_modifiers.json"
-SCOUTING_METHOD_FILE = "pest_scouting_methods.json"
-SEVERITY_THRESHOLD_FILE = "pest_severity_thresholds.json"
-SEVERITY_SCORE_FILE = "pest_severity_scores.json"
-SAMPLE_SIZE_FILE = "pest_sample_sizes.json"
-YIELD_LOSS_FILE = "pest_yield_loss.json"
+RISK_INTERVAL_MOD_FILE = "pests/pest_risk_interval_modifiers.json"
+SCOUTING_METHOD_FILE = "pests/pest_scouting_methods.json"
+SEVERITY_THRESHOLD_FILE = "pests/pest_severity_thresholds.json"
+SEVERITY_SCORE_FILE = "pests/pest_severity_scores.json"
+SAMPLE_SIZE_FILE = "pests/pest_sample_sizes.json"
+YIELD_LOSS_FILE = "pests/pest_yield_loss.json"
 
 # Load once with caching
 _THRESHOLDS = lazy_dataset(DATA_FILE)
@@ -42,7 +42,7 @@ _RISK_FACTORS = lazy_dataset(RISK_DATA_FILE)
 _SEVERITY_ACTIONS = lazy_dataset(SEVERITY_ACTIONS_FILE)
 _SEVERITY_THRESHOLDS = lazy_dataset(SEVERITY_THRESHOLD_FILE)
 _SEVERITY_SCORES = lazy_dataset(SEVERITY_SCORE_FILE)
-PRESSURE_WEIGHT_FILE = "pest_pressure_weights.json"
+PRESSURE_WEIGHT_FILE = "pests/pest_pressure_weights.json"
 _PRESSURE_WEIGHTS = lazy_dataset(PRESSURE_WEIGHT_FILE)
 _SAMPLE_SIZES = lazy_dataset(SAMPLE_SIZE_FILE)
 _YIELD_LOSS = lazy_dataset(YIELD_LOSS_FILE)

@@ -7,7 +7,7 @@ from functools import lru_cache
 from plant_engine.utils import load_dataset
 
 # Dataset file residing under ``data/`` used to populate media properties.
-DATA_FILE = "dafe_media_profiles.json"
+DATA_FILE = "media/dafe_media_profiles.json"
 
 __all__ = ["MediaProfile", "get_media_profile"]
 
