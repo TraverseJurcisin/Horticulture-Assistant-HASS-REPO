@@ -213,7 +213,7 @@ data:
 ```
 
 ### Plant Registry
-Multiple profiles can be indexed in `plant_registry.json` so automations can discover them easily. Example:
+Multiple profiles can be indexed in `./data/local/plants/plant_registry.json` alongside other plant datasets so automations can discover them easily.
 ```json
 {
   "citrus_backyard_spring2025": {
@@ -456,7 +456,7 @@ horticulture-assistant/
 │   └── constants.py                           # shared constants
 ├── scripts/                                   # helper scripts
 ├── plants/                                    # example plant profiles
-├── plant_registry.json
+├── data/local/plants/plant_registry.json   # local plant registry
 ├── tags.json
 └── tests/                                     # unit tests
 ```

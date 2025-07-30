@@ -14,7 +14,7 @@ except ModuleNotFoundError:  # pragma: no cover - tests run without HA
 from .json_io import load_json
 from custom_components.horticulture_assistant.utils.path_utils import config_path
 
-PLANT_REGISTRY_FILE = "plant_registry.json"
+PLANT_REGISTRY_FILE = "data/local/plants/plant_registry.json"
 
 
 @lru_cache(maxsize=None)
@@ -39,4 +39,4 @@ def get_plant_type(plant_id: str, hass: HomeAssistant | None = None) -> Optional
     ptype = meta.get("plant_type")
     return str(ptype) if ptype else None
 
-__all__ = ["get_plant_metadata", "get_plant_type"]
+__all__ = ["PLANT_REGISTRY_FILE", "get_plant_metadata", "get_plant_type"]

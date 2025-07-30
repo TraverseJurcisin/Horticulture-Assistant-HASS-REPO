@@ -10,7 +10,7 @@ from custom_components.horticulture_assistant.utils.load_plant_profile import (
 
 # === CONFIGURATION ===
 
-PLANT_REGISTRY_PATH = "plant_registry.json"
+PLANT_REGISTRY_PATH = "data/local/plants/plant_registry.json"
 PLANT_PROFILE_DIR = "plants"
 DAILY_REPORT_DIR = "data/daily_reports"
 AUTO_APPROVE_FIELD = "auto_approve_all"

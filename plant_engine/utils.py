@@ -195,7 +195,12 @@ def dataset_paths() -> tuple[Path, ...]:
     if _PATH_CACHE is None or _ENV_STATE != env_state:
         base = get_data_dir()
         extras = get_extra_dirs()
-        _PATH_CACHE = (base, *extras)
+        local_temp = base / "local/plants/temperature"
+        paths = [base]
+        if local_temp.exists():
+            paths.append(local_temp)
+        paths.extend(extras)
+        _PATH_CACHE = tuple(paths)
         _ENV_STATE = env_state
     return _PATH_CACHE
 
@@ -284,10 +289,11 @@ async def async_load_dataset(filename: str) -> Dict[str, Any]:
 
 
 def lazy_dataset(filename: str):
-    """Return a cached loader callable for dataset ``filename``."""
+    """Return a loader callable for dataset ``filename`` that always reflects
+    the current dataset environment."""
 
-    @lru_cache(maxsize=None)
-    def _loader():
+    def _loader() -> Dict[str, Any]:
+        clear_dataset_cache()
         return load_dataset(filename)
 
     return _loader

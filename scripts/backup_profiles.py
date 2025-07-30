@@ -18,7 +18,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 PLANTS_DIR = ROOT / "plants"
-REGISTRY_PATH = ROOT / "plant_registry.json"
+REGISTRY_PATH = ROOT / "data/local/plants/plant_registry.json"
 DEFAULT_BACKUP_DIR = ROOT / "backups"
 
 
@@ -28,7 +28,7 @@ def configure_root(path: Path) -> Path:
     global ROOT, PLANTS_DIR, REGISTRY_PATH, DEFAULT_BACKUP_DIR
     ROOT = path.resolve()
     PLANTS_DIR = ROOT / "plants"
-    REGISTRY_PATH = ROOT / "plant_registry.json"
+    REGISTRY_PATH = ROOT / "data/local/plants/plant_registry.json"
     DEFAULT_BACKUP_DIR = ROOT / "backups"
     return ROOT
 
@@ -69,7 +69,7 @@ def create_backup(output_dir: Path = DEFAULT_BACKUP_DIR, retain: int | None = No
         for pf in PLANTS_DIR.glob("*.json"):
             zf.write(pf, arcname=f"plants/{pf.name}")
         if REGISTRY_PATH.exists():
-            zf.write(REGISTRY_PATH, arcname="plant_registry.json")
+            zf.write(REGISTRY_PATH, arcname="data/local/plants/plant_registry.json")
 
     if not verify_backup(archive):
         archive.unlink(missing_ok=True)

@@ -342,7 +342,13 @@ def calculate_deficiency_index_series(
 def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     """Return combined macro and micro nutrient guidelines."""
 
-    levels = get_recommended_levels(plant_type, stage)
+    base = get_recommended_levels(plant_type, stage)
+    # ``get_recommended_levels`` returns the cached dataset mapping so we must
+    # copy it before merging in micronutrient values to avoid mutating the
+    # global dataset. Tests that call this helper previously polluted the shared
+    # cache which later affected other lookups.
+    levels = dict(base)
+
     from .micro_manager import get_recommended_levels as _micro
 
     levels.update(_micro(plant_type, stage))
