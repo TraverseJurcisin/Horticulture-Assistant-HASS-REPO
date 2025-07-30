@@ -7,7 +7,7 @@ from typing import Dict
 from .utils import load_dataset, normalize_key
 from .canopy import estimate_canopy_area
 
-DATA_FILE = "leaf_area_index.json"
+DATA_FILE = "leaf/leaf_area_index.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 

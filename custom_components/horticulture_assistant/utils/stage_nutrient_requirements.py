@@ -9,7 +9,7 @@ from plant_engine.utils import load_dataset, normalize_key
 
 from .nutrient_requirements import get_requirements
 
-DATA_FILE = "stage_nutrient_requirements.json"
+DATA_FILE = "nutrients/stage_nutrient_requirements.json"
 
 
 @lru_cache(maxsize=None)

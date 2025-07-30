@@ -36,7 +36,7 @@ from .plant_profile_loader import load_profile_by_id
 _LOGGER = logging.getLogger(__name__)
 
 MODEL_FILE = Path(data_path(None, "ec_model.json"))
-DEFAULT_DATA_FILE = "ec_model_defaults.json"
+DEFAULT_DATA_FILE = "ec/ec_model_defaults.json"
 
 
 def _model_path(

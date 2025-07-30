@@ -6,7 +6,7 @@ from typing import Dict, Tuple
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "plant_height_ranges.json"
+DATA_FILE = "plants/plant_height_ranges.json"
 
 _DATA: Dict[str, Dict[str, Tuple[float, float]]] = load_dataset(DATA_FILE)
 

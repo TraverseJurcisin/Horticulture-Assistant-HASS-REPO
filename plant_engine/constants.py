@@ -6,7 +6,7 @@ from typing import Mapping
 
 from .utils import load_dataset, lazy_dataset, normalize_key
 
-_MULTIPLIER_FILE = "stage_multipliers.json"
+_MULTIPLIER_FILE = "stages/stage_multipliers.json"
 _DEFAULT_MULTIPLIERS: dict[str, float] = {
     "seedling": 0.5,
     "vegetative": 1.0,
@@ -17,7 +17,7 @@ _DEFAULT_MULTIPLIERS: dict[str, float] = {
 _multipliers = lazy_dataset(_MULTIPLIER_FILE)
 
 # Path of the dataset providing baseline environment readings
-DEFAULT_ENV_FILE = "default_environment.json"
+DEFAULT_ENV_FILE = "environment/default_environment.json"
 _DEFAULT_ENV_FALLBACK: dict[str, float] = {
     "temp_c": 26,
     "temp_c_max": 30,

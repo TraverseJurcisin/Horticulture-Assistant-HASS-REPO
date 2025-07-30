@@ -8,7 +8,8 @@ from plant_engine import yield_manager
 def test_get_estimated_yield(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "yield_estimates.json").write_text(json.dumps({"tomato": 100}))
+    (data_dir / "yield").mkdir()
+    (data_dir / "yield" / "yield_estimates.json").write_text(json.dumps({"tomato": 100}))
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     importlib.reload(yp)
     assert yp.get_estimated_yield("tomato") == 100
@@ -17,7 +18,8 @@ def test_get_estimated_yield(tmp_path, monkeypatch):
 def test_estimate_remaining_yield(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "yield_estimates.json").write_text(json.dumps({"tomato": 100}))
+    (data_dir / "yield").mkdir()
+    (data_dir / "yield" / "yield_estimates.json").write_text(json.dumps({"tomato": 100}))
     yield_dir = tmp_path / "yield"
     yield_dir.mkdir()
     harvest_data = {"harvests": [{"date": "2024-01-01", "yield_grams": 30}]}

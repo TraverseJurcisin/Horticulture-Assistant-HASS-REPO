@@ -12,7 +12,7 @@ from .utils import (
     clear_dataset_cache,
 )
 
-DATA_FILE = "environment_tips.yaml"
+DATA_FILE = "environment/environment_tips.yaml"
 
 # Lazy loader so importing this module has minimal overhead
 _DATA = lazy_dataset(DATA_FILE)

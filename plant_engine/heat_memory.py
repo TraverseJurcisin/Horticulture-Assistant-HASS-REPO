@@ -6,7 +6,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "heat_memory_guidelines.json"
+DATA_FILE = "temperature/heat_memory_guidelines.json"
 
 @lru_cache(maxsize=None)
 def _data() -> Dict[str, Dict[str, float]]:

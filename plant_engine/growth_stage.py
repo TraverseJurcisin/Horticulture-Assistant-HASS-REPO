@@ -9,8 +9,8 @@ import pandas as pd
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "growth_stages.json"
-GERMINATION_FILE = "germination_duration.json"
+DATA_FILE = "stages/growth_stages.json"
+GERMINATION_FILE = "stages/germination_duration.json"
 
 
 

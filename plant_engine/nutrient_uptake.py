@@ -8,7 +8,7 @@ from .plant_density import get_spacing_cm
 
 from .utils import load_dataset, list_dataset_entries
 
-DATA_FILE = "nutrient_uptake.json"
+DATA_FILE = "nutrients/nutrient_uptake.json"
 
 _DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
 

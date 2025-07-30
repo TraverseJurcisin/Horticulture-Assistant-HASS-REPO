@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 #   retention: relative water-holding capacity (higher = holds more moisture, slower to dry)
 #   dryback: relative drying speed (higher = dries out faster)
 #   ec_buffer: relative nutrient/EC buffering capacity (higher = buffers more, slower EC changes)
-MEDIA_PROFILE_FILE = "media_sensor_profiles.json"
+MEDIA_PROFILE_FILE = "media/media_sensor_profiles.json"
 MEDIA_PROFILES = lazy_dataset(MEDIA_PROFILE_FILE)
 
 

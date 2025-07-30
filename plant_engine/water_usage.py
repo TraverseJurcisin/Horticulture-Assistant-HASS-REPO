@@ -6,7 +6,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "water_usage_guidelines.json"
+DATA_FILE = "water/water_usage_guidelines.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 
@@ -79,7 +79,7 @@ def estimate_daily_use_from_et0(
 
     from .et_model import calculate_eta
 
-    kc_data = load_dataset("crop_coefficients.json")
+    kc_data = load_dataset("coefficients/crop_coefficients.json")
     plant = kc_data.get(normalize_key(plant_type), {})
     kc = plant.get(normalize_key(stage)) or plant.get("default")
     try:

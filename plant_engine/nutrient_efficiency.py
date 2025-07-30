@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 # Dataset containing NUE targets per crop
-TARGET_FILE = "nutrient_efficiency_targets.json"
+TARGET_FILE = "nutrients/nutrient_efficiency_targets.json"
 
 # Default storage locations can be overridden with environment variables. This
 # makes the module more flexible for testing and deployment scenarios where the

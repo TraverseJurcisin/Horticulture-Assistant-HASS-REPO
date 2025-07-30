@@ -121,13 +121,15 @@ def test_recommend_fertigation_schedule():
 def test_profile_data_files(tmp_path, monkeypatch):
     """Species and media profiles load from dataset files."""
 
-    species_file = tmp_path / "dafe_species_profiles.json"
+    data_dir = tmp_path / "media"
+    data_dir.mkdir()
+    species_file = data_dir / "dafe_species_profiles.json"
     species_file.write_text(
         '{"testplant": {"root_depth": "shallow", "dryback_tolerance": "low",'
         ' "oxygen_min": 7, "ideal_wc_plateau": 0.5, "generative_threshold": 0.1,'
         ' "ec_low": 1.0, "ec_high": 2.0}}'
     )
-    media_file = tmp_path / "dafe_media_profiles.json"
+    media_file = data_dir / "dafe_media_profiles.json"
     media_file.write_text(
         '{"rockwool": {"porosity": 0.9, "fc": 0.7, "pwp": 0.1, "tortuosity": 1.5}}'
     )

@@ -5,7 +5,7 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "nighttime_strategies.json"
+DATA_FILE = "nighttime/nighttime_strategies.json"
 
 _DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
 

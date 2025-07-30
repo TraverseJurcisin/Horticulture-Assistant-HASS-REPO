@@ -5,7 +5,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "soil_water_capacity.json"
+DATA_FILE = "soil/soil_water_capacity.json"
 
 _DATA: Dict[str, float] = load_dataset(DATA_FILE)
 

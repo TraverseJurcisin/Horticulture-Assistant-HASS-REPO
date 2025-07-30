@@ -8,9 +8,9 @@ from .constants import get_stage_multiplier
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "ec_guidelines.json"
-RECIPE_FILE = "stock_solution_recipes.json"
-ADJUST_FILE = "ec_adjustment_factors.json"
+DATA_FILE = "ec/ec_guidelines.json"
+RECIPE_FILE = "stock/stock_solution_recipes.json"
+ADJUST_FILE = "ec/ec_adjustment_factors.json"
 
 # cache dataset load
 @lru_cache(maxsize=None)

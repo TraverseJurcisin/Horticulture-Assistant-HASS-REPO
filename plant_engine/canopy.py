@@ -7,7 +7,7 @@ from typing import Dict
 from .utils import load_dataset, normalize_key
 from .plant_density import get_spacing_cm
 
-DATA_FILE = "canopy_area.json"
+DATA_FILE = "stages/canopy_area.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 

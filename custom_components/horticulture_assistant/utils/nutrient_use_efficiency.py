@@ -28,7 +28,7 @@ except ImportError:
 _LOGGER = logging.getLogger(__name__)
 
 # Efficiency benchmark dataset
-EFFICIENCY_TARGET_FILE = "nutrient_efficiency_targets.json"
+EFFICIENCY_TARGET_FILE = "nutrients/nutrient_efficiency_targets.json"
 _EFFICIENCY_TARGETS: Dict[str, Dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
 
 

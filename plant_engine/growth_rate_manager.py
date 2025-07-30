@@ -6,7 +6,7 @@ from typing import Dict
 
 from .utils import load_dataset, list_dataset_entries, normalize_key
 
-DATA_FILE = "growth_rate_guidelines.json"
+DATA_FILE = "stages/growth_rate_guidelines.json"
 
 # Load dataset once at import time using cached helper
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)

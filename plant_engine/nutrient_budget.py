@@ -15,12 +15,12 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "nutrient_removal_rates.json"
+DATA_FILE = "nutrients/nutrient_removal_rates.json"
 
 # Cached dataset loaded once at import
 _RATES: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 # Fertilizer solubility (grams per liter) loaded once at import
-_SOLUBILITY: Dict[str, float] = load_dataset("fertilizer_solubility.json")
+_SOLUBILITY: Dict[str, float] = load_dataset("fertilizers/fertilizer_solubility.json")
 
 __all__ = [
     "list_supported_plants",
@@ -103,7 +103,7 @@ def estimate_fertilizer_requirements(
         plant_type, yield_kg, efficiency=efficiency
     ).nutrients_g
 
-    purity_data = load_dataset("fertilizer_purity.json")
+    purity_data = load_dataset("fertilizers/fertilizer_purity.json")
 
     totals: Dict[str, float] = {}
     for nutrient, grams in required.items():

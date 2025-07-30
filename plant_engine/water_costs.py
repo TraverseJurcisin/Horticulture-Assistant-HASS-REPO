@@ -6,7 +6,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key
 
-DATA_FILE = "water_costs.json"
+DATA_FILE = "water/water_costs.json"
 
 _DATA: Dict[str, float] = load_dataset(DATA_FILE)
 

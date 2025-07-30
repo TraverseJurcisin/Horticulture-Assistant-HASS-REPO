@@ -5,7 +5,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "media_properties.json"
+DATA_FILE = "media/media_properties.json"
 
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
 

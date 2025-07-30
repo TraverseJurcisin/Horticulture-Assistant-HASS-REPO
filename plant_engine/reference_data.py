@@ -11,23 +11,23 @@ from .utils import load_dataset, normalize_key, clear_dataset_cache
 # Additional datasets can be appended here without altering code that
 # consumes :func:`load_reference_data` or :func:`get_reference_dataset`.
 REFERENCE_FILES: dict[str, str] = {
-    "nutrient_guidelines": "nutrient_guidelines.json",
-    "micronutrient_guidelines": "micronutrient_guidelines.json",
-    "nutrient_ratio_guidelines": "nutrient_ratio_guidelines.json",
-    "environment_guidelines": "environment_guidelines.json",
-    "pest_guidelines": "pest_guidelines.json",
-    "pest_monitoring_intervals": "pest_monitoring_intervals.json",
-    "ipm_guidelines": "ipm_guidelines.json",
-    "pest_management_guidelines": "pest_management_guidelines.json",
-    "growth_stages": "growth_stages.json",
-    "stage_tasks": "stage_tasks.json",
-    "total_nutrient_requirements": "total_nutrient_requirements.json",
-    "stage_nutrient_requirements": "stage_nutrient_requirements.json",
+    "nutrient_guidelines": "nutrients/nutrient_guidelines.json",
+    "micronutrient_guidelines": "nutrients/micronutrient_guidelines.json",
+    "nutrient_ratio_guidelines": "nutrients/nutrient_ratio_guidelines.json",
+    "environment_guidelines": "environment/environment_guidelines.json",
+    "pest_guidelines": "pests/pest_guidelines.json",
+    "pest_monitoring_intervals": "pests/pest_monitoring_intervals.json",
+    "ipm_guidelines": "pests/ipm_guidelines.json",
+    "pest_management_guidelines": "pests/pest_management_guidelines.json",
+    "growth_stages": "stages/growth_stages.json",
+    "stage_tasks": "stages/stage_tasks.json",
+    "total_nutrient_requirements": "nutrients/total_nutrient_requirements.json",
+    "stage_nutrient_requirements": "nutrients/stage_nutrient_requirements.json",
     # newly exposed reference datasets
-    "nutrient_synergies": "nutrient_synergies.json",
-    "disease_guidelines": "disease_guidelines.json",
+    "nutrient_synergies": "nutrients/nutrient_synergies.json",
+    "disease_guidelines": "diseases/disease_guidelines.json",
     # daily water usage requirements per growth stage
-    "water_usage_guidelines": "water_usage_guidelines.json",
+    "water_usage_guidelines": "water/water_usage_guidelines.json",
 }
 
 __all__ = [

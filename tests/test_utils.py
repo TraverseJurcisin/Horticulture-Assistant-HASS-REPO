@@ -85,13 +85,13 @@ def test_stage_value_custom_default():
 
 def test_load_stage_dataset_value():
     value = load_stage_dataset_value(
-        "soil_moisture_guidelines.json", "citrus", "seedling"
+        "soil/soil_moisture_guidelines.json", "citrus", "seedling"
     )
     assert value == [30, 50]
 
     # missing stage falls back to the dataset's 'optimal' entry
     assert load_stage_dataset_value(
-        "soil_moisture_guidelines.json", "citrus", "missing"
+        "soil/soil_moisture_guidelines.json", "citrus", "missing"
     ) == [30, 50]
 
 

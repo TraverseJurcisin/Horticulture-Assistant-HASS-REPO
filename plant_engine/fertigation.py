@@ -20,21 +20,21 @@ from .nutrient_manager import (
 )
 from .utils import load_dataset, normalize_key, stage_value
 
-FOLIAR_DATA = "foliar_feed_guidelines.json"
-INTERVAL_DATA = "foliar_feed_intervals.json"
-FERTIGATION_INTERVAL_DATA = "fertigation_intervals.json"
-FOLIAR_VOLUME_DATA = "foliar_spray_volume.json"
-FERTIGATION_VOLUME_DATA = "fertigation_volume.json"
+FOLIAR_DATA = "foliar/foliar_feed_guidelines.json"
+INTERVAL_DATA = "foliar/foliar_feed_intervals.json"
+FERTIGATION_INTERVAL_DATA = "fertigation/fertigation_intervals.json"
+FOLIAR_VOLUME_DATA = "foliar/foliar_spray_volume.json"
+FERTIGATION_VOLUME_DATA = "fertigation/fertigation_volume.json"
 
-PURITY_DATA = "fertilizer_purity.json"
-EC_FACTOR_DATA = "ion_ec_factors.json"
-STOCK_DATA = "stock_solution_concentrations.json"
-SOLUBILITY_DATA = "fertilizer_solubility.json"
-RECIPE_DATA = "fertigation_recipes.json"
-STOCK_RECIPE_DATA = "stock_solution_recipes.json"
-LOSS_FACTOR_DATA = "fertigation_loss_factors.json"
-INJECTOR_DATA = "fertigation_injectors.json"
-FLOW_RATE_DATA = "fertigation_injector_flow_rates.json"
+PURITY_DATA = "fertilizers/fertilizer_purity.json"
+EC_FACTOR_DATA = "ec/ion_ec_factors.json"
+STOCK_DATA = "stock/stock_solution_concentrations.json"
+SOLUBILITY_DATA = "fertilizers/fertilizer_solubility.json"
+RECIPE_DATA = "fertigation/fertigation_recipes.json"
+STOCK_RECIPE_DATA = "stock/stock_solution_recipes.json"
+LOSS_FACTOR_DATA = "fertigation/fertigation_loss_factors.json"
+INJECTOR_DATA = "fertigation/fertigation_injectors.json"
+FLOW_RATE_DATA = "fertigation/fertigation_injector_flow_rates.json"
 
 _INTERVALS: Dict[str, Dict[str, int]] = load_dataset(INTERVAL_DATA)
 _FERTIGATION_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(

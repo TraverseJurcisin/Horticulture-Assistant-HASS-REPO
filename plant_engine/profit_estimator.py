@@ -6,8 +6,8 @@ from typing import Dict, Mapping
 from .utils import load_dataset, normalize_key
 from . import yield_manager
 
-PRICE_FILE = "crop_market_prices.json"
-COST_FILE = "crop_production_costs.json"
+PRICE_FILE = "economics/crop_market_prices.json"
+COST_FILE = "economics/crop_production_costs.json"
 
 # Cached datasets at import time
 _PRICES: Dict[str, float] = load_dataset(PRICE_FILE)

@@ -6,10 +6,10 @@ from typing import Dict, Iterable
 
 from .utils import load_dataset, normalize_key
 
-HVAC_FILE = "hvac_energy_coefficients.json"
-RATE_FILE = "electricity_rates.json"
-LIGHT_EFF_FILE = "light_efficiency.json"
-EMISSION_FILE = "energy_emission_factors.json"
+HVAC_FILE = "energy/hvac_energy_coefficients.json"
+RATE_FILE = "energy/electricity_rates.json"
+LIGHT_EFF_FILE = "light/light_efficiency.json"
+EMISSION_FILE = "energy/energy_emission_factors.json"
 
 # Cache datasets via load_dataset
 _HVAC_DATA: Dict[str, Dict[str, float]] = load_dataset(HVAC_FILE)

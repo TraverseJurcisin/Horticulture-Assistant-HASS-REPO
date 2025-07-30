@@ -6,16 +6,16 @@ from typing import Dict, Iterable, List, Mapping
 
 from .utils import lazy_dataset, normalize_key
 
-DATA_FILE = "pesticide_withdrawal_days.json"
-REENTRY_FILE = "pesticide_reentry_intervals.json"
-MOA_FILE = "pesticide_modes.json"
-ROTATION_FILE = "pesticide_rotation_intervals.json"
-PHYTO_FILE = "pesticide_phytotoxicity.json"
-RATE_FILE = "pesticide_application_rates.json"
-PRICE_FILE = "pesticide_prices.json"
-ACTIVE_FILE = "pesticide_active_ingredients.json"
-EFFICACY_FILE = "pesticide_efficacy.json"
-PEST_ROTATION_FILE = "pest_rotation_moas.json"
+DATA_FILE = "pesticides/pesticide_withdrawal_days.json"
+REENTRY_FILE = "pesticides/pesticide_reentry_intervals.json"
+MOA_FILE = "pesticides/pesticide_modes.json"
+ROTATION_FILE = "pesticides/pesticide_rotation_intervals.json"
+PHYTO_FILE = "pesticides/pesticide_phytotoxicity.json"
+RATE_FILE = "pesticides/pesticide_application_rates.json"
+PRICE_FILE = "pesticides/pesticide_prices.json"
+ACTIVE_FILE = "pesticides/pesticide_active_ingredients.json"
+EFFICACY_FILE = "pesticides/pesticide_efficacy.json"
+PEST_ROTATION_FILE = "pests/pest_rotation_moas.json"
 
 # Cached withdrawal data mapping product names to waiting days
 _DATA = lazy_dataset(DATA_FILE)

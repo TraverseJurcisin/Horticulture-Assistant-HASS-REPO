@@ -10,7 +10,7 @@ from plant_engine.utils import lazy_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
-SOLUBILITY_FILE = "fertilizer_solubility.json"
+SOLUBILITY_FILE = "fertilizers/fertilizer_solubility.json"
 APPLICATION_FILE = "fertilizers/fertilizer_application_methods.json"
 RATE_FILE = "fertilizers/fertilizer_application_rates.json"
 COMPAT_FILE = "fertilizers/fertilizer_compatibility.json"

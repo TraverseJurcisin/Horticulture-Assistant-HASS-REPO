@@ -21,9 +21,11 @@ def test_estimate_profit(tmp_path):
 def test_estimate_expected_profit(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "crop_market_prices.json").write_text('{"lettuce": 3}')
-    (data_dir / "crop_production_costs.json").write_text('{"lettuce": 1}')
-    (data_dir / "yield_estimates.json").write_text('{"lettuce": 1000}')
+    (data_dir / "economics").mkdir()
+    (data_dir / "yield").mkdir()
+    (data_dir / "economics" / "crop_market_prices.json").write_text('{"lettuce": 3}')
+    (data_dir / "economics" / "crop_production_costs.json").write_text('{"lettuce": 1}')
+    (data_dir / "yield" / "yield_estimates.json").write_text('{"lettuce": 1000}')
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     from plant_engine import utils

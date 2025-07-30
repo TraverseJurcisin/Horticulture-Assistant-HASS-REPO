@@ -13,7 +13,7 @@ from typing import Dict, Mapping
 
 from .utils import load_dataset
 
-DATA_FILE = "nutrient_recovery_factors.json"
+DATA_FILE = "nutrients/nutrient_recovery_factors.json"
 
 # Load dataset once using the cached loader
 _DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)

@@ -5,12 +5,12 @@ from typing import Dict, Iterable
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-RESISTANCE_FILE = "disease_resistance_ratings.json"
+RESISTANCE_FILE = "diseases/disease_resistance_ratings.json"
 
-DATA_FILE = "disease_guidelines.json"
-PREVENTION_FILE = "disease_prevention.json"
-FUNGICIDE_FILE = "fungicide_recommendations.json"
-RATE_FILE = "fungicide_application_rates.json"
+DATA_FILE = "diseases/disease_guidelines.json"
+PREVENTION_FILE = "diseases/disease_prevention.json"
+FUNGICIDE_FILE = "fungicides/fungicide_recommendations.json"
+RATE_FILE = "fungicides/fungicide_application_rates.json"
 
 
 

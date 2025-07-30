@@ -5,7 +5,7 @@ from typing import Dict
 
 from .utils import load_dataset, normalize_key, list_dataset_entries
 
-DATA_FILE = "training_guidelines.json"
+DATA_FILE = "training/training_guidelines.json"
 
 # Loaded once via :func:`load_dataset` which caches results
 _DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
