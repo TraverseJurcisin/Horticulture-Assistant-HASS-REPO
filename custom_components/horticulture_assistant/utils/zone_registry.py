@@ -7,9 +7,14 @@ from functools import lru_cache
 from typing import Dict, List, Optional
 
 from .json_io import load_json, save_json
-from .path_utils import config_path
+from .path_utils import data_path
 
 ZONE_REGISTRY_FILE = "zones.json"
+
+
+def _registry_path(hass=None) -> str:
+    """Return the absolute path to ``zones.json`` under ``data/local``."""
+    return data_path(hass, "local", ZONE_REGISTRY_FILE)
 
 __all__ = [
     "ZoneConfig",
@@ -58,7 +63,7 @@ def _load_registry(path: str) -> Dict[str, ZoneConfig]:
 def load_zones(hass=None) -> Dict[str, ZoneConfig]:
     """Return mapping of zone_id to :class:`ZoneConfig`."""
 
-    path = config_path(hass, ZONE_REGISTRY_FILE)
+    path = _registry_path(hass)
     return _load_registry(path)
 
 
@@ -87,7 +92,7 @@ def zones_for_plant(plant_id: str, hass=None) -> List[str]:
 def save_zones(zones: Dict[str, ZoneConfig], hass=None) -> bool:
     """Persist ``zones`` to ``zones.json``."""
 
-    path = config_path(hass, ZONE_REGISTRY_FILE)
+    path = _registry_path(hass)
     data = {zid: zone.as_dict() for zid, zone in zones.items()}
     try:
         save_json(path, data)

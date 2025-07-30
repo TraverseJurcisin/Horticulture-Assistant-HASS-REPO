@@ -56,9 +56,11 @@ class DatasetCatalog:
     def paths(self) -> tuple[Path, ...]:
         """Return dataset search paths including overlay when set."""
         paths = [self.base_dir]
+
         local_temp = self.base_dir / "local/plants/temperature"
         if local_temp.exists():
             paths.append(local_temp)
+
         paths.extend(self.extra_dirs)
         if self.overlay_dir:
             paths.insert(0, self.overlay_dir)
@@ -72,12 +74,25 @@ class DatasetCatalog:
     def list_datasets(self) -> List[str]:
         """Return relative paths of available dataset files."""
         exts = {".json", ".yaml", ".yml"}
-        found = {
-            p.relative_to(base).as_posix()
-            for base in self._iter_paths()
-            for p in base.rglob("*")
-            if p.suffix in exts and p.name != "dataset_catalog.json"
-        }
+        found: set[str] = set()
+        paths = self.paths()
+        local_dir = self.base_dir / "local"
+        for base in self._iter_paths():
+            for p in base.rglob("*"):
+                if p.suffix not in exts or p.name == "dataset_catalog.json":
+                    continue
+                rel = p.relative_to(base)
+                if (
+                    base == self.base_dir
+                    and local_dir in paths
+                    and rel.parts and rel.parts[0] == "local"
+                ):
+                    # Skip duplicate entries when ``local`` is scanned separately
+                    continue
+                rel_path = rel.as_posix()
+                found.add(rel_path)
+                if len(rel.parts) >= 3 and rel.parts[0] == "plants" and rel.parts[1] == "temperature":
+                    found.add(rel.parts[-1])
         return sorted(found)
 
     @lru_cache(maxsize=None)
