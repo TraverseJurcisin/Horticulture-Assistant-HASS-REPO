@@ -166,9 +166,10 @@ changing your code.
 
 ### Zones and Irrigation Scheduling
 Profiles can declare a `zone_id` to group plants under a common irrigation
-zone. Zones and their associated solenoids are defined in `zones.json`. Each
-zone entry lists the solenoid switches that must be opened for watering and may
-be referenced by multiple plants.
+zone. Zones and their associated solenoids are stored in
+`data/local/zones.json`, keeping local configuration separate from bundled
+datasets. Each zone entry lists the solenoid switches that must be opened for
+watering and may be referenced by multiple plants.
 
 You can set the zone ID during the config flow or later via **Options**. Use the
 helper functions in `zone_registry` to add zones or attach plants to a zone
@@ -320,6 +321,7 @@ Datasets can be overridden by setting environment variables:
 - `HORTICULTURE_OVERLAY_DIR` to merge in custom files
 - `HORTICULTURE_EXTRA_DATA_DIRS` to load additional datasets
 - `OPENAI_API_KEY` and `OPENAI_TEMPERATURE` configure the AI integration if you prefer not to store these values in the config file
+Files placed in `data/local` are discovered automatically so user-provided datasets remain isolated from the bundled defaults.
 Call `plant_engine.utils.clear_dataset_cache()` after adjusting these variables so changes are reflected immediately. Use `plant_engine.utils.load_dataset_df()` to quickly load any dataset into a `pandas.DataFrame` for analysis. JSON, YAML and now CSV/TSV files are supported.
 
 See [docs/custom_data_dirs.md](docs/custom_data_dirs.md) for examples of how to

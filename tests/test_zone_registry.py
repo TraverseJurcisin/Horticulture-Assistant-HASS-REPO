@@ -22,12 +22,12 @@ def test_zone_registry_roundtrip(tmp_path, monkeypatch):
     file_path = tmp_path / "zones.json"
     file_path.write_text("{}")
 
-    def fake_config_path(hass, *parts):
+    def fake_data_path(hass, *parts):
         return str(file_path)
 
     monkeypatch.setattr(
-        "custom_components.horticulture_assistant.utils.zone_registry.config_path",
-        fake_config_path,
+        "custom_components.horticulture_assistant.utils.zone_registry.data_path",
+        fake_data_path,
     )
 
     zones = {zid: ZoneConfig(zid, info["solenoids"], info["plant_ids"]) for zid, info in data.items()}
@@ -42,12 +42,12 @@ def test_zone_registry_modify(tmp_path, monkeypatch):
     file_path = tmp_path / "zones.json"
     file_path.write_text("{}")
 
-    def fake_config_path(hass, *parts):
+    def fake_data_path(hass, *parts):
         return str(file_path)
 
     monkeypatch.setattr(
-        "custom_components.horticulture_assistant.utils.zone_registry.config_path",
-        fake_config_path,
+        "custom_components.horticulture_assistant.utils.zone_registry.data_path",
+        fake_data_path,
     )
 
     assert add_zone("3", ["x"], ["p3"])
@@ -71,12 +71,12 @@ def test_zone_registry_remove(tmp_path, monkeypatch):
     file_path = tmp_path / "zones.json"
     file_path.write_text("{}")
 
-    def fake_config_path(hass, *parts):
+    def fake_data_path(hass, *parts):
         return str(file_path)
 
     monkeypatch.setattr(
-        "custom_components.horticulture_assistant.utils.zone_registry.config_path",
-        fake_config_path,
+        "custom_components.horticulture_assistant.utils.zone_registry.data_path",
+        fake_data_path,
     )
 
     assert add_zone("10", ["a"], ["p10"])
@@ -89,12 +89,12 @@ def test_zones_for_plant(tmp_path, monkeypatch):
     file_path = tmp_path / "zones.json"
     file_path.write_text("{}")
 
-    def fake_config_path(hass, *parts):
+    def fake_data_path(hass, *parts):
         return str(file_path)
 
     monkeypatch.setattr(
-        "custom_components.horticulture_assistant.utils.zone_registry.config_path",
-        fake_config_path,
+        "custom_components.horticulture_assistant.utils.zone_registry.data_path",
+        fake_data_path,
     )
 
     assert add_zone("1", ["a"], ["p1"])

@@ -184,10 +184,12 @@ def get_extra_dirs() -> tuple[Path, ...]:
 def dataset_paths() -> tuple[Path, ...]:
     """Return directories searched when loading datasets.
 
-    Results are cached but automatically refreshed if the relevant
-    environment variables change. This avoids repeated environment lookups
-    while still allowing tests or applications to modify the dataset paths
-    on the fly.
+    The base ``data`` directory is always included and the ``data/local``
+    subfolder is added automatically when it exists so user-provided files can
+    coexist with bundled datasets. Results are cached but automatically
+    refreshed if the relevant environment variables change. This avoids
+    repeated environment lookups while still allowing tests or applications to
+    modify the dataset paths on the fly.
     """
 
     global _PATH_CACHE, _ENV_STATE
@@ -195,7 +197,12 @@ def dataset_paths() -> tuple[Path, ...]:
     if _PATH_CACHE is None or _ENV_STATE != env_state:
         base = get_data_dir()
         extras = get_extra_dirs()
-        _PATH_CACHE = (base, *extras)
+        local = base / "local"
+        paths = [base]
+        if local.is_dir():
+            paths.append(local)
+        paths.extend(extras)
+        _PATH_CACHE = tuple(paths)
         _ENV_STATE = env_state
     return _PATH_CACHE
 
@@ -243,6 +250,9 @@ def dataset_file(filename: str) -> Path | None:
         path = base / filename
         if path.exists():
             return path
+        alt = base / "plants" / "temperature" / filename
+        if alt.exists():
+            return alt
 
     return None
 
@@ -257,6 +267,14 @@ def load_dataset(filename: str) -> Dict[str, Any]:
         path = base / filename
         if path.exists():
             extra = load_data(str(path))
+            if isinstance(extra, dict) and isinstance(data, dict):
+                deep_update(data, extra)
+            else:
+                data = extra
+            continue
+        alt = base / "plants" / "temperature" / filename
+        if alt.exists():
+            extra = load_data(str(alt))
             if isinstance(extra, dict) and isinstance(data, dict):
                 deep_update(data, extra)
             else:
