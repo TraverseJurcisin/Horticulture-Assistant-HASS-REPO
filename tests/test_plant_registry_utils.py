@@ -22,7 +22,9 @@ class DummyHass:
 
 def test_get_plant_type(tmp_path: Path):
     registry = {"p1": {"plant_type": "tomato"}}
-    (tmp_path / "plant_registry.json").write_text(json.dumps(registry))
+    reg_dir = tmp_path / "data/local/plants"
+    reg_dir.mkdir(parents=True)
+    (reg_dir / "plant_registry.json").write_text(json.dumps(registry))
 
     hass = DummyHass(tmp_path)
 

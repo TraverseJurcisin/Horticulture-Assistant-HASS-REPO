@@ -27,6 +27,9 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     ensure_data_dir,
 )
+from custom_components.horticulture_assistant.utils.plant_registry import (
+    PLANT_REGISTRY_FILE,
+)
 from plant_engine.constants import get_stage_multiplier
 
 _LOGGER = logging.getLogger(__name__)
@@ -75,9 +78,6 @@ def _tag_modifiers() -> dict[str, dict[str, float]]:
         if mods:
             modifiers[norm_tag] = mods
     return modifiers
-
-
-PLANT_REGISTRY_FILE = "plant_registry.json"
 
 
 @dataclass

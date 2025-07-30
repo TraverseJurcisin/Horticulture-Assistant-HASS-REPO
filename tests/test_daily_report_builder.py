@@ -45,7 +45,9 @@ def test_build_daily_report(tmp_path):
     (plants / "plant1.json").write_text(json.dumps(profile))
 
     registry = {"plant1": {"plant_type": "citrus"}}
-    (tmp_path / "plant_registry.json").write_text(json.dumps(registry))
+    reg_path = tmp_path / "data/local/plants"
+    reg_path.mkdir(parents=True)
+    (reg_path / "plant_registry.json").write_text(json.dumps(registry))
 
     hass = DummyHass(tmp_path)
     hass.states._data["sensor.p1_temp"] = "25"
