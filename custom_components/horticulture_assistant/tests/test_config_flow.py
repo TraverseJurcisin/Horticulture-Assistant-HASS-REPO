@@ -4,13 +4,24 @@ import sys
 import types
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/config_flow.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/config_flow.py"
+)
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     pkg = types.ModuleType(PACKAGE)
-    pkg.__path__ = [str(Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant")]
+    pkg.__path__ = [
+        str(
+            Path(__file__).resolve().parents[3]
+            / "custom_components/horticulture_assistant"
+        )
+    ]
     sys.modules[PACKAGE] = pkg
-CONST_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/const.py"
+CONST_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/const.py"
+)
 const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", CONST_PATH)
 const_mod = importlib.util.module_from_spec(const_spec)
 sys.modules[const_spec.name] = const_mod
@@ -22,8 +33,12 @@ sys.modules[spec.name] = config_flow
 
 # Minimal Home Assistant stubs
 ha = sys.modules.get("homeassistant", types.ModuleType("homeassistant"))
-ha.config_entries = sys.modules.get("homeassistant.config_entries", types.ModuleType("homeassistant.config_entries"))
+ha.config_entries = sys.modules.get(
+    "homeassistant.config_entries", types.ModuleType("homeassistant.config_entries")
+)
 ha.config_entries.ConfigEntry = object
+
+
 class ConfigFlowBase:
     def __init_subclass__(cls, **kwargs):
         pass
@@ -47,7 +62,11 @@ class ConfigFlowBase:
 
     def _abort_if_unique_id_configured(self):
         pass
+
+
 ha.config_entries.ConfigFlow = ConfigFlowBase
+
+
 class ConfigSubentryFlowBase:
     def __init__(self) -> None:
         self.created_entry = None
@@ -58,13 +77,21 @@ class ConfigSubentryFlowBase:
     def async_create_entry(self, **kwargs):
         self.created_entry = kwargs
         return {"type": "create_entry", **kwargs}
+
+
 ha.config_entries.ConfigSubentryFlow = ConfigSubentryFlowBase
 ha.config_entries.SubentryFlowResult = dict
 ha.core = sys.modules.get("homeassistant.core", types.ModuleType("homeassistant.core"))
+
+
 def callback(func):
     return func
+
+
 ha.core.callback = callback
 sys.modules["homeassistant.core"] = ha.core
+
+
 class OptionsFlowBase:
     def async_show_form(self, **kwargs):
         return {"type": "form", **kwargs}
@@ -72,11 +99,19 @@ class OptionsFlowBase:
     def async_create_entry(self, **kwargs):
         self.created_entry = kwargs
         return {"type": "create_entry", **kwargs}
+
+
 ha.config_entries.OptionsFlow = OptionsFlowBase
-ha.data_entry_flow = sys.modules.get("homeassistant.data_entry_flow", types.ModuleType("homeassistant.data_entry_flow"))
+ha.data_entry_flow = sys.modules.get(
+    "homeassistant.data_entry_flow", types.ModuleType("homeassistant.data_entry_flow")
+)
 ha.data_entry_flow.FlowResult = getattr(ha.data_entry_flow, "FlowResult", dict)
-ha.helpers = sys.modules.get("homeassistant.helpers", types.ModuleType("homeassistant.helpers"))
-ha.helpers.selector = sys.modules.get("homeassistant.helpers.selector", types.ModuleType("homeassistant.helpers.selector"))
+ha.helpers = sys.modules.get(
+    "homeassistant.helpers", types.ModuleType("homeassistant.helpers")
+)
+ha.helpers.selector = sys.modules.get(
+    "homeassistant.helpers.selector", types.ModuleType("homeassistant.helpers.selector")
+)
 ha.helpers.selector.BooleanSelector = object
 ha.helpers.selector.TextSelector = object
 ha.helpers.selector.EntitySelector = object
@@ -145,12 +180,14 @@ def test_options_flow(monkeypatch):
     entry = types.SimpleNamespace(data=flow.created_entry["data"])
     opt_flow = config_flow.HorticultureAssistantOptionsFlow(entry)
     result = asyncio.run(
-        opt_flow.async_step_init({
-            "moisture_sensors": "sensor.a",
-            "plant_type": "herb",
-            "zone_id": "5",
-            "enable_auto_approve": True,
-        })
+        opt_flow.async_step_init(
+            {
+                "moisture_sensors": "sensor.a",
+                "plant_type": "herb",
+                "zone_id": "5",
+                "enable_auto_approve": True,
+            }
+        )
     )
     assert result["type"] == "create_entry"
     assert opt_flow._data["moisture_sensors"] == ["sensor.a"]
@@ -166,7 +203,9 @@ def test_options_flow(monkeypatch):
 def test_init_menu(monkeypatch):
     flow = Flow()
     entries = [types.SimpleNamespace(entry_id="eid1", data={"plant_name": "Tom"})]
-    hass = types.SimpleNamespace(config_entries=types.SimpleNamespace(async_entries=lambda domain: entries))
+    hass = types.SimpleNamespace(
+        config_entries=types.SimpleNamespace(async_entries=lambda domain: entries)
+    )
     flow.hass = hass
     result = asyncio.run(flow.async_step_init())
     assert result["type"] == "menu"
@@ -175,7 +214,9 @@ def test_init_menu(monkeypatch):
 def test_settings_flow(tmp_path):
     hass = types.SimpleNamespace(
         config_entries=types.SimpleNamespace(async_entries=lambda domain: []),
-        config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts))),
+        config=types.SimpleNamespace(
+            path=lambda *parts: str(tmp_path.joinpath(*parts))
+        ),
     )
     flow = Flow()
     flow.hass = hass

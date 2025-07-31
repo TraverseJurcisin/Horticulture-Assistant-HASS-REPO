@@ -1,9 +1,17 @@
 import os
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
-os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+ROOT = Path(__file__).resolve().parents[3]
+os.environ.setdefault(
+    "WSDA_INDEX_DIR",
+    str(
+        ROOT / "custom_components/horticulture_assistant/data/fertilizers/index_sharded"
+    ),
+)
+os.environ.setdefault(
+    "WSDA_DETAIL_DIR",
+    str(ROOT / "custom_components/horticulture_assistant/data/fertilizers/detail"),
+)
 
 from custom_components.horticulture_assistant.utils.wsda_product_index import (
     list_products,
@@ -34,4 +42,3 @@ def test_lookup_by_number():
 def test_search_products_brand():
     results = search_products("INTREPID", fields=["brand"])
     assert any(p.product_id == "C552F8" for p in results)
-

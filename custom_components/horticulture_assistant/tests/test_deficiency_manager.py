@@ -19,15 +19,10 @@ from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine import utils
 import pytest
 
+
 @pytest.fixture(autouse=True)
 def _reset_cache():
     utils.clear_dataset_cache()
-    from plant_engine import deficiency_manager as dm
-    dm._symptoms.cache_clear()
-    dm._treatments.cache_clear()
-    dm._mobility.cache_clear()
-    dm._thresholds.cache_clear()
-    dm._scores.cache_clear()
 
 
 def test_list_known_nutrients():
@@ -142,4 +137,3 @@ def test_summarize_deficiencies_with_ph_and_synergy():
     )
     assert summary["severity_index"] > 0
     assert "K" in summary["severity"]
-

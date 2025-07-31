@@ -3,11 +3,21 @@ import os
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
-os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+ROOT = Path(__file__).resolve().parents[3]
+os.environ.setdefault(
+    "WSDA_INDEX_DIR",
+    str(
+        ROOT / "custom_components/horticulture_assistant/data/fertilizers/index_sharded"
+    ),
+)
+os.environ.setdefault(
+    "WSDA_DETAIL_DIR",
+    str(ROOT / "custom_components/horticulture_assistant/data/fertilizers/detail"),
+)
 
-module_path = ROOT / "plant_engine/wsda_lookup.py"
+module_path = (
+    ROOT / "custom_components/horticulture_assistant/plant_engine/wsda_lookup.py"
+)
 spec = importlib.util.spec_from_file_location("wsda_lookup", module_path)
 wsda = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = wsda
@@ -38,7 +48,9 @@ def test_lookup_by_number():
 
 
 def test_full_analysis_lookup():
-    by_name = get_product_analysis_by_name("1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6")
+    by_name = get_product_analysis_by_name(
+        "1ST CHOICE FERTILIZER EARTH-CARE PLUS 5-6-6"
+    )
     by_number = get_product_analysis_by_number("(#4083-0001)")
     assert by_name["N"] == 5.0
     assert by_number["K"] == 6.0

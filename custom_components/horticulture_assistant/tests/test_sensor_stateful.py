@@ -5,11 +5,24 @@ import types
 from datetime import datetime
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/sensor.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/sensor.py"
+)
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
-    sys.modules[PACKAGE] = types.ModuleType(PACKAGE)
-CONST_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/const.py"
+    pkg = types.ModuleType(PACKAGE)
+    pkg.__path__ = [
+        str(
+            Path(__file__).resolve().parents[3]
+            / "custom_components/horticulture_assistant"
+        )
+    ]
+    sys.modules[PACKAGE] = pkg
+CONST_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/const.py"
+)
 const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", CONST_PATH)
 const_mod = importlib.util.module_from_spec(const_spec)
 sys.modules[const_spec.name] = const_mod
@@ -23,18 +36,27 @@ sys.modules[spec.name] = sensor
 ha = types.ModuleType("homeassistant")
 ha.components = types.ModuleType("homeassistant.components")
 ha_sensor_mod = types.ModuleType("homeassistant.components.sensor")
+
+
 class SensorEntity:
     def __init__(self):
         self._attr_native_value = None
+
     @property
     def native_value(self):
         return getattr(self, "_attr_native_value", None)
+
+
 class SensorDeviceClass:
     MOISTURE = "moisture"
     PRECIPITATION = "precipitation"
     WEIGHT = "weight"
+
+
 class SensorStateClass:
     MEASUREMENT = "measurement"
+
+
 ha_sensor_mod.SensorEntity = SensorEntity
 ha_sensor_mod.SensorDeviceClass = SensorDeviceClass
 ha_sensor_mod.SensorStateClass = SensorStateClass
@@ -57,7 +79,9 @@ sys.modules.setdefault("homeassistant.config_entries", ha.config_entries)
 sys.modules.setdefault("homeassistant.core", ha.core)
 sys.modules.setdefault("homeassistant.helpers", ha.helpers)
 sys.modules.setdefault("homeassistant.helpers.entity", ha.helpers.entity)
-sys.modules.setdefault("homeassistant.helpers.entity_platform", ha.helpers.entity_platform)
+sys.modules.setdefault(
+    "homeassistant.helpers.entity_platform", ha.helpers.entity_platform
+)
 sys.modules.setdefault("homeassistant.const", ha.const)
 
 spec.loader.exec_module(sensor)
@@ -74,12 +98,15 @@ EstimatedWiltingPointSensor = sensor.EstimatedWiltingPointSensor
 DailyNitrogenAppliedSensor = sensor.DailyNitrogenAppliedSensor
 DOMAIN = sensor.DOMAIN
 
+
 class DummyStates:
     def __init__(self):
         self._data = {}
+
     def get(self, eid):
         val = self._data.get(eid)
         return types.SimpleNamespace(state=val) if val is not None else None
+
 
 class DummyHass:
     def __init__(self):
@@ -130,4 +157,3 @@ def test_daily_nitrogen_applied():
     )
     asyncio.run(sensor_entity.async_update())
     assert sensor_entity.native_value == 120.0
-

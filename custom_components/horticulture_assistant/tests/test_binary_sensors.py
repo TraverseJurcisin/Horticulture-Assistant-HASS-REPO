@@ -4,13 +4,24 @@ import sys
 import types
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/binary_sensor.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/binary_sensor.py"
+)
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     pkg = types.ModuleType(PACKAGE)
-    pkg.__path__ = [str(Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant")]
+    pkg.__path__ = [
+        str(
+            Path(__file__).resolve().parents[3]
+            / "custom_components/horticulture_assistant"
+        )
+    ]
     sys.modules[PACKAGE] = pkg
-CONST_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/const.py"
+CONST_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/const.py"
+)
 const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", CONST_PATH)
 const_mod = importlib.util.module_from_spec(const_spec)
 sys.modules[const_spec.name] = const_mod
@@ -24,13 +35,18 @@ sys.modules[spec.name] = binary_sensor
 ha = types.ModuleType("homeassistant")
 ha.components = types.ModuleType("homeassistant.components")
 ha_bs_mod = types.ModuleType("homeassistant.components.binary_sensor")
+
+
 class BinarySensorEntity:
     def __init__(self):
         self._attr_is_on = False
         self._attr_name = ""
+
     @property
     def is_on(self):
         return self._attr_is_on
+
+
 ha_bs_mod.BinarySensorEntity = BinarySensorEntity
 ha_bs_mod.DEVICE_CLASS_PROBLEM = "problem"
 ha_bs_mod.DEVICE_CLASS_MOISTURE = "moisture"
@@ -52,7 +68,9 @@ sys.modules.setdefault("homeassistant.config_entries", ha.config_entries)
 sys.modules.setdefault("homeassistant.core", ha.core)
 sys.modules.setdefault("homeassistant.helpers", ha.helpers)
 sys.modules.setdefault("homeassistant.helpers.entity", ha.helpers.entity)
-sys.modules.setdefault("homeassistant.helpers.entity_platform", ha.helpers.entity_platform)
+sys.modules.setdefault(
+    "homeassistant.helpers.entity_platform", ha.helpers.entity_platform
+)
 
 spec.loader.exec_module(binary_sensor)
 
@@ -60,16 +78,20 @@ SensorHealthBinarySensor = binary_sensor.SensorHealthBinarySensor
 IrrigationReadinessBinarySensor = binary_sensor.IrrigationReadinessBinarySensor
 FaultDetectionBinarySensor = binary_sensor.FaultDetectionBinarySensor
 
+
 class DummyStates:
     def __init__(self):
         self._data = {}
+
     def get(self, eid):
         val = self._data.get(eid)
         return types.SimpleNamespace(state=val) if val is not None else None
 
+
 class DummyHass:
     def __init__(self):
         self.states = DummyStates()
+
 
 def test_binary_sensor_behaviour():
     hass = DummyHass()

@@ -4,11 +4,19 @@ import sys
 import types
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/__init__.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/__init__.py"
+)
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     pkg = types.ModuleType(PACKAGE)
-    pkg.__path__ = [str(Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant")]
+    pkg.__path__ = [
+        str(
+            Path(__file__).resolve().parents[3]
+            / "custom_components/horticulture_assistant"
+        )
+    ]
     sys.modules[PACKAGE] = pkg
 spec = importlib.util.spec_from_file_location(f"{PACKAGE}.__init__", MODULE_PATH)
 module = importlib.util.module_from_spec(spec)
@@ -17,18 +25,23 @@ spec.loader.exec_module(module)
 DOMAIN = module.DOMAIN
 SERVICE_UPDATE_SENSORS = module.SERVICE_UPDATE_SENSORS
 
+
 class DummyServices:
     def __init__(self):
         self.registered = []
         self.removed = []
+
     def async_register(self, domain, name, func):
         self.registered.append((domain, name))
+
     def has_service(self, domain, name):
         return (domain, name) in self.registered and (domain, name) not in self.removed
+
     def async_remove(self, domain, name):
         if (domain, name) in self.registered:
             self.registered.remove((domain, name))
         self.removed.append((domain, name))
+
 
 class DummyConfigEntries:
     def __init__(self, hass):
@@ -44,11 +57,14 @@ class DummyConfigEntries:
         self.forwarded.append((entry, f"unload_{platform}"))
         return True
 
+
 class DummyConfig:
     def __init__(self, base: Path):
         self._base = base
+
     def path(self, name: str) -> str:
         return str(self._base / name)
+
 
 class DummyHass:
     def __init__(self, base: Path):
@@ -58,10 +74,12 @@ class DummyHass:
         self.config_entries = DummyConfigEntries(self)
         self.async_create_task = lambda coro: coro  # execute immediately
 
+
 class DummyEntry:
     def __init__(self, data):
         self.entry_id = "eid123"
         self.data = data
+
 
 def test_setup_entry(tmp_path: Path):
     hass = DummyHass(tmp_path)

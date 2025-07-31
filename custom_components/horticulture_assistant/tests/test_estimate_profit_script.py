@@ -4,7 +4,7 @@ import sys
 import json
 import os
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts/estimate_profit.py"
+SCRIPT_MODULE = "custom_components.horticulture_assistant.scripts.estimate_profit"
 
 
 def test_expected_profit_cli(tmp_path, monkeypatch):
@@ -17,11 +17,24 @@ def test_expected_profit_cli(tmp_path, monkeypatch):
     (data_dir / "yield" / "yield_estimates.json").write_text('{"lettuce": 1000}')
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
+    env = os.environ.copy()
+    env["PYTHONPATH"] = os.pathsep.join(
+        [
+            str(Path(__file__).resolve().parents[3]),
+            str(
+                Path(__file__).resolve().parents[3]
+                / "custom_components"
+                / "horticulture_assistant"
+            ),
+            env.get("PYTHONPATH", ""),
+        ]
+    )
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), "expected", "lettuce"],
+        [sys.executable, "-m", SCRIPT_MODULE, "expected", "lettuce"],
         capture_output=True,
         text=True,
         check=True,
+        env=env,
     )
     assert result.stdout.strip() == "2.0"
 
@@ -33,10 +46,22 @@ def test_actual_profit_cli(tmp_path):
     yield_manager.record_harvest("profitplant", grams=1000)
     env = os.environ.copy()
     env["HORTICULTURE_YIELD_DIR"] = str(tmp_path)
+    env["PYTHONPATH"] = os.pathsep.join(
+        [
+            str(Path(__file__).resolve().parents[3]),
+            str(
+                Path(__file__).resolve().parents[3]
+                / "custom_components"
+                / "horticulture_assistant"
+            ),
+            env.get("PYTHONPATH", ""),
+        ]
+    )
     result = subprocess.run(
         [
             sys.executable,
-            str(SCRIPT),
+            "-m",
+            SCRIPT_MODULE,
             "actual",
             "profitplant",
             "lettuce",
