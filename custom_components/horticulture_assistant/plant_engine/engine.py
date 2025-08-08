@@ -7,35 +7,38 @@ from pathlib import Path
 
 from functools import lru_cache
 
-from plant_engine.utils import save_json
-from custom_components.horticulture_assistant.utils.plant_profile_loader import (
-    load_profile_by_id,
-)
-from plant_engine.ai_model import analyze
-from plant_engine.compute_transpiration import compute_transpiration
-from plant_engine.water_deficit_tracker import update_water_balance
-from plant_engine.growth_model import update_growth_index
-from plant_engine.rootzone_model import (
+from .utils import save_json
+try:
+    from ..utils.plant_profile_loader import load_profile_by_id
+except ImportError:  # pragma: no cover - fallback when run as standalone
+    from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+        load_profile_by_id,
+    )
+from .ai_model import analyze
+from .compute_transpiration import compute_transpiration
+from .water_deficit_tracker import update_water_balance
+from .growth_model import update_growth_index
+from .rootzone_model import (
     estimate_rootzone_depth,
     estimate_water_capacity,
 )
-from plant_engine.nutrient_efficiency import calculate_nue
-from plant_engine.approval_queue import queue_threshold_updates
-from plant_engine.environment_manager import (
+from .nutrient_efficiency import calculate_nue
+from .approval_queue import queue_threshold_updates
+from .environment_manager import (
     recommend_environment_adjustments,
     optimize_environment,
     normalize_environment_readings,
 )
-from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.pest_manager import (
+from .nutrient_manager import get_recommended_levels
+from .pest_manager import (
     recommend_treatments as recommend_pest_treatments,
 )
-from plant_engine.disease_manager import (
+from .disease_manager import (
     recommend_treatments as recommend_disease_treatments,
 )
-from plant_engine.growth_stage import get_stage_info
-from plant_engine.report import DailyReport
-from plant_engine.constants import get_stage_multiplier, DEFAULT_ENV
+from .growth_stage import get_stage_info
+from .report import DailyReport
+from .constants import get_stage_multiplier, DEFAULT_ENV
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
