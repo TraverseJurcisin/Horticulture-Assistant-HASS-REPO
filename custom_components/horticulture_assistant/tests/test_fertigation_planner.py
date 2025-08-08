@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 PACKAGE = "custom_components.horticulture_assistant.utils"
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
+MODULE_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
 spec = importlib.util.spec_from_file_location(f"{PACKAGE}.fertigation_planner", MODULE_PATH)
 fertigation_planner = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = fertigation_planner

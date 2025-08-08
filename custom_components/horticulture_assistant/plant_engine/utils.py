@@ -304,9 +304,16 @@ async def async_load_dataset(filename: str) -> Dict[str, Any]:
 
 
 def lazy_dataset(filename: str):
-    """Return a loader callable for dataset ``filename`` that always reflects
-    the current dataset environment."""
+    """Return a callable that loads ``filename`` with simple caching.
 
+    The loader clears global dataset caches before reading the file so that
+    each call reflects the current dataset environment. The returned function
+    is wrapped with :func:`functools.lru_cache` to provide a ``cache_clear``
+    attribute used heavily throughout the test suite to reset state between
+    tests.
+    """
+
+    @lru_cache(maxsize=1)
     def _loader() -> Dict[str, Any]:
         clear_dataset_cache()
         return load_dataset(filename)

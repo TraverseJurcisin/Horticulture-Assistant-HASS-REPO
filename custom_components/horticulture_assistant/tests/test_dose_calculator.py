@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 MODULE_PATH = (
-    Path(__file__).resolve().parents[1]
+    Path(__file__).resolve().parents[3]
     / "custom_components/horticulture_assistant/utils/dose_calculator.py"
 )
 spec = importlib.util.spec_from_file_location("dose_calculator", MODULE_PATH)

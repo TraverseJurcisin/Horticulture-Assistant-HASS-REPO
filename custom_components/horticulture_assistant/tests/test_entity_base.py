@@ -15,7 +15,7 @@ sys.modules.setdefault("homeassistant.helpers.entity", ha.helpers.entity)
 
 base_spec = importlib.util.spec_from_file_location(
     f"{PACKAGE}.entity_base",
-    Path(__file__).resolve().parents[1]
+    Path(__file__).resolve().parents[3]
     / "custom_components/horticulture_assistant/entity_base.py",
 )
 base_mod = importlib.util.module_from_spec(base_spec)
