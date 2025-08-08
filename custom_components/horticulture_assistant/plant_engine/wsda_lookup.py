@@ -6,7 +6,10 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Dict, Iterable, List, Mapping, Tuple
 
-from plant_engine import wsda_loader
+try:
+    from . import wsda_loader
+except ImportError:  # pragma: no cover - fallback when run as script
+    from plant_engine import wsda_loader  # type: ignore
 
 __all__ = [
     "get_product_npk_by_name",

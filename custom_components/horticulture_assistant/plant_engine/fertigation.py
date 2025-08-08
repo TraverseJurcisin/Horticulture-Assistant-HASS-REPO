@@ -1584,8 +1584,6 @@ def summarize_fertigation_schedule(
     )
 
     if fertilizers:
-        from plant_engine.fertigation import recommend_nutrient_mix_with_cost_breakdown
-
         _, total, breakdown = recommend_nutrient_mix_with_cost_breakdown(
             plant_type,
             stage,

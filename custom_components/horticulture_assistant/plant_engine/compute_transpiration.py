@@ -16,7 +16,7 @@ MODIFIER_FILE = "coefficients/crop_coefficient_modifiers.json"
 # cached via load_dataset
 _MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(MODIFIER_FILE)
 
-from plant_engine.et_model import (
+from .et_model import (
     calculate_et0,
     calculate_eta,
     calculate_et0_series,
