@@ -5,6 +5,7 @@ data/pending_thresholds/
 data/water_balance/
 data/reports/
 custom_components/horticulture_assistant/analytics/all_plants_growth_yield.json
+custom_components/horticulture_assistant/data/pending_thresholds/
 *.zip
 *.tar
 *.tar.gz
