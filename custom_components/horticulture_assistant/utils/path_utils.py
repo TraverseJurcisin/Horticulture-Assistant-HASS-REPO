@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import os
+from pathlib import Path
 
 try:
     from homeassistant.core import HomeAssistant
@@ -22,12 +22,17 @@ __all__ = [
 def config_path(hass: HomeAssistant | None, *parts: str) -> str:
     """Return an absolute path within the Home Assistant config directory.
 
-    If ``hass`` is ``None`` the path is joined relative to the current
-    working directory.
+    When ``hass`` is ``None`` the path is resolved relative to the current
+    working directory.  Internally ``pathlib`` is used for clearer path
+    handling and to avoid manual ``os.path`` manipulation.
     """
+
     if hass is not None:
+        # Home Assistant already handles path joins via its helper.
         return hass.config.path(*parts)
-    return os.path.join(*parts)
+    # ``Path()`` gives a relative path (``."``), matching previous
+    # behaviour when Home Assistant is not available.
+    return str(Path().joinpath(*parts))
 
 
 def data_path(hass: HomeAssistant | None, *parts: str) -> str:
@@ -42,9 +47,9 @@ def plants_path(hass: HomeAssistant | None, *parts: str) -> str:
 
 def ensure_dir(hass: HomeAssistant | None, *parts: str) -> str:
     """Return a config directory path and create it if missing."""
-    path = config_path(hass, *parts)
-    os.makedirs(path, exist_ok=True)
-    return path
+    path = Path(config_path(hass, *parts))
+    path.mkdir(parents=True, exist_ok=True)
+    return str(path)
 
 
 def ensure_data_dir(hass: HomeAssistant | None, *parts: str) -> str:
