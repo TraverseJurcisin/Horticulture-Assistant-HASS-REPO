@@ -1,9 +1,9 @@
 """Helpers for constructing sensor entity mappings."""
 from __future__ import annotations
 
-from typing import Iterable, Mapping, Dict
+from collections.abc import Iterable, Mapping
 
-from .state_helpers import normalize_entities
+from .state_helpers import normalize_entities, parse_entities
 
 DEFAULT_SENSORS = {
     "moisture_sensors": "sensor.{plant_id}_raw_moisture",
@@ -21,12 +21,12 @@ def build_sensor_map(
     entry_data: Mapping[str, object],
     plant_id: str,
     keys: Iterable[str] | None = None,
-) -> Dict[str, list[str]]:
+) -> dict[str, list[str]]:
     """Return normalized sensor map for ``plant_id`` based on ``entry_data``."""
     if keys is None:
         keys = DEFAULT_SENSORS.keys()
 
-    result: Dict[str, list[str]] = {}
+    result: dict[str, list[str]] = {}
     for key in keys:
         default = DEFAULT_SENSORS.get(key)
         if not default:
@@ -38,19 +38,19 @@ def build_sensor_map(
 
 
 def merge_sensor_maps(
-    base: Mapping[str, Iterable[str]], update: Mapping[str, Iterable[str]]
-) -> Dict[str, list[str]]:
-    """Return ``base`` merged with ``update`` with duplicates removed."""
+    base: Mapping[str, Iterable[str] | str],
+    update: Mapping[str, Iterable[str] | str],
+) -> dict[str, list[str]]:
+    """Return ``base`` merged with ``update`` while preserving order.
 
-    merged_sets: Dict[str, set[str]] = {
-        key: set(values) for key, values in base.items()
-    }
+    Sensor lists from ``base`` retain their original order and any new sensors
+    from ``update`` are appended, skipping duplicates. Values may be strings or
+    iterables and are parsed using the same logic as ``normalize_entities``.
+    """
 
-    for key, values in update.items():
-        if not values:
-            continue
-        if isinstance(values, str) or not isinstance(values, Iterable):
-            values = [str(values)]
-        merged_sets.setdefault(key, set()).update(map(str, values))
-
-    return {k: sorted(v) for k, v in merged_sets.items()}
+    merged: dict[str, list[str]] = {}
+    for key in set(base) | set(update):
+        base_list = parse_entities(base.get(key))
+        update_list = parse_entities(update.get(key))
+        merged[key] = list(dict.fromkeys(base_list + update_list))
+    return merged

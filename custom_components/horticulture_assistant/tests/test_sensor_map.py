@@ -37,9 +37,7 @@ def test_merge_sensor_maps():
     base = {"moisture_sensors": ["a"], "ec_sensors": ["ec1"]}
     update = {"moisture_sensors": ["b", "a"], "temperature_sensors": ["t1"]}
     result = merge_sensor_maps(base, update)
-    assert {
-        key: sorted(values) for key, values in result.items()
-    } == {
+    assert result == {
         "moisture_sensors": ["a", "b"],
         "ec_sensors": ["ec1"],
         "temperature_sensors": ["t1"],
@@ -57,9 +55,7 @@ def test_merge_sensor_maps_string_values():
     base = {"moisture_sensors": "a"}
     update = {"moisture_sensors": "b", "light_sensors": "l1"}
     result = merge_sensor_maps(base, update)
-    assert {
-        key: sorted(values) for key, values in result.items()
-    } == {
+    assert result == {
         "moisture_sensors": ["a", "b"],
         "light_sensors": ["l1"],
     }
