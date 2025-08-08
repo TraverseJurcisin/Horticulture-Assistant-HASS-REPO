@@ -4,10 +4,11 @@ import importlib.util
 import sys
 import types
 import json
+import pytest
 import plant_engine.utils as utils
 
 MODULE_PATH = (
-    Path(__file__).resolve().parents[1]
+    Path(__file__).resolve().parents[3]
     / "custom_components/horticulture_assistant/utils/nutrient_scheduler.py"
 )
 spec = importlib.util.spec_from_file_location("nutrient_scheduler", MODULE_PATH)
@@ -31,9 +32,11 @@ spec.loader.exec_module(nutrient_scheduler)
 schedule_nutrients = nutrient_scheduler.schedule_nutrients
 NutrientTargets = nutrient_scheduler.NutrientTargets
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]
+PLANT_REGISTRY = ROOT / "data/local/plants/plant_registry.json"
 
 
+@pytest.mark.skipif(not PLANT_REGISTRY.exists(), reason="requires plant registry dataset")
 def test_schedule_nutrients_dataset(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     dest = tmp_path / "data/local/plants"

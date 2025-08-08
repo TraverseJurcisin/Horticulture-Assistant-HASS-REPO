@@ -5,11 +5,11 @@ import types
 from datetime import datetime
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/sensor.py"
+MODULE_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/sensor.py"
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     sys.modules[PACKAGE] = types.ModuleType(PACKAGE)
-CONST_PATH = Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/const.py"
+CONST_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/const.py"
 const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", CONST_PATH)
 const_mod = importlib.util.module_from_spec(const_spec)
 sys.modules[const_spec.name] = const_mod

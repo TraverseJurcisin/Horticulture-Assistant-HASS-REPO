@@ -1,6 +1,7 @@
 import importlib
 import sys
 from pathlib import Path
+import os
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -292,6 +293,10 @@ def test_catalog_lists_products():
     assert info.product_name
 
 
+WSDA_DIR = Path(os.environ.get("WSDA_INDEX_DIR", ""))
+
+
+@pytest.mark.skipif(not WSDA_DIR.exists(), reason="requires WSDA dataset")
 def test_recommend_wsda_products():
     products = recommend_wsda_products("N", limit=3)
     assert len(products) == 3
