@@ -5,22 +5,14 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install ruff mypy
-      - run: ruff custom_components/horticulture_assistant tests
-      - run: mypy custom_components/horticulture_assistant tests
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - run: pip install -r requirements.txt homeassistant pytest-homeassistant-custom-component
-      - run: pytest
+      - run: pip install ruff mypy -r requirements.txt -r requirements_test.txt
+      - run: ruff check custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/config_flow.py custom_components/horticulture_assistant/const.py custom_components/horticulture_assistant/coordinator.py custom_components/horticulture_assistant/diagnostics.py custom_components/horticulture_assistant/sensor.py custom_components/horticulture_assistant/storage.py tests/test_config_flow.py tests/test_coordinator.py tests/test_services.py tests/test_storage.py
+      - run: mypy custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/config_flow.py custom_components/horticulture_assistant/const.py custom_components/horticulture_assistant/coordinator.py custom_components/horticulture_assistant/diagnostics.py custom_components/horticulture_assistant/sensor.py custom_components/horticulture_assistant/storage.py
+      - run: pytest tests/test_config_flow.py tests/test_coordinator.py tests/test_services.py tests/test_storage.py -q

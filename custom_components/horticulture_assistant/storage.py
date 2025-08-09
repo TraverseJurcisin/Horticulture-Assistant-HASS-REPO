@@ -1,8 +1,9 @@
 from __future__ import annotations
+import asyncio
 from homeassistant.helpers.storage import Store
 
 STORAGE_KEY = "horticulture_assistant.data"
-STORAGE_VERSION = 1
+STORAGE_VERSION = 2
 
 DEFAULT_DATA: dict = {
     "recipes": [],
@@ -15,14 +16,18 @@ DEFAULT_DATA: dict = {
 
 class LocalStore:
     def __init__(self, hass):
+        self.hass = hass
         self._store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self.data: dict | None = None
+        self._lock = asyncio.Lock()
 
     async def load(self) -> dict:
         data = await self._store.async_load()
         if not data:
             data = DEFAULT_DATA.copy()
         else:
+            if data.get("version") == 1:
+                data = migrate_v1_to_v2(data)
             for key, value in DEFAULT_DATA.items():
                 data.setdefault(key, value.copy() if isinstance(value, (dict, list)) else value)
         self.data = data
@@ -33,4 +38,11 @@ class LocalStore:
             self.data = data
         elif self.data is None:
             self.data = DEFAULT_DATA.copy()
-        await self._store.async_save(self.data)
+        async with self._lock:
+            await self._store.async_save(self.data)
+
+
+def migrate_v1_to_v2(data: dict) -> dict:
+    """Placeholder migration logic for storage v1 -> v2."""
+    # Real migration would move files into data/local/plants and zones
+    return data

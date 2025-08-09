@@ -1,5 +1,5 @@
 pyyaml>=6.0
 pandas>=2.3
-voluptuous>=0.15
+voluptuous==0.13.1
 numpy>=1.25
 pytest-asyncio>=0.23

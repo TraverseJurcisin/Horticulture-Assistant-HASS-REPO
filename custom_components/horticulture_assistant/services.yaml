@@ -1,0 +1,27 @@
+update_sensors:
+  name: Update plant sensors
+  fields:
+    plant_id:
+      required: true
+      example: citrus_backyard_spring2025
+    sensors:
+      required: true
+      example:
+        moisture_sensors: [sensor.a, sensor.b]
+        temperature_sensors: [sensor.t1]
+recalculate_targets:
+  name: Recalculate nutrient/environment targets
+  fields:
+    plant_id:
+      required: true
+run_recommendation:
+  name: Run recommendation
+  fields:
+    plant_id:
+      required: true
+    approve:
+      required: false
+      default: false
+refresh:
+  name: Refresh data
+  fields: {}
