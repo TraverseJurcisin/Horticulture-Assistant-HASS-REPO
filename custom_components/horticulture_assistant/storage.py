@@ -1,0 +1,36 @@
+from __future__ import annotations
+from homeassistant.helpers.storage import Store
+
+STORAGE_KEY = "horticulture_assistant.data"
+STORAGE_VERSION = 1
+
+DEFAULT_DATA: dict = {
+    "recipes": [],
+    "inventory": {},
+    "history": [],
+    "profile": {},
+    "recommendation": "",
+}
+
+
+class LocalStore:
+    def __init__(self, hass):
+        self._store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
+        self.data: dict | None = None
+
+    async def load(self) -> dict:
+        data = await self._store.async_load()
+        if not data:
+            data = DEFAULT_DATA.copy()
+        else:
+            for key, value in DEFAULT_DATA.items():
+                data.setdefault(key, value.copy() if isinstance(value, (dict, list)) else value)
+        self.data = data
+        return data
+
+    async def save(self, data: dict | None = None) -> None:
+        if data is not None:
+            self.data = data
+        elif self.data is None:
+            self.data = DEFAULT_DATA.copy()
+        await self._store.async_save(self.data)
