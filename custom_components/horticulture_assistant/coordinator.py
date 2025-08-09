@@ -19,6 +19,8 @@ class HortiCoordinator(DataUpdateCoordinator[dict]):
         self.api = api
         self.store = store
         self.store_data = store.data or {}
+        self.retry_count = 0
+        self.breaker_open = False
         if initial:
             self.data = {"ok": True, "recommendation": initial}
 
@@ -39,6 +41,8 @@ class HortiCoordinator(DataUpdateCoordinator[dict]):
                 },
             ]
             res = await self.api.chat(messages, temperature=0.2, max_tokens=256)
+            self.retry_count = 0
+            self.breaker_open = False
             try:
                 text = res["choices"][0]["message"]["content"].strip()
             except (KeyError, IndexError, TypeError):
@@ -47,4 +51,7 @@ class HortiCoordinator(DataUpdateCoordinator[dict]):
             await self.store.save(self.store_data)
             return {"ok": True, "recommendation": text}
         except Exception as err:
+            self.retry_count += 1
+            if self.retry_count > 3:
+                self.breaker_open = True
             raise UpdateFailed(str(err)) from err

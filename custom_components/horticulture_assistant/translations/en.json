@@ -1,0 +1,20 @@
+{
+  "title": "Horticulture Assistant",
+  "config": {
+    "step": {
+      "user": { "title": "Connect AI", "description": "Enter API key and defaults." }
+    },
+    "error": { "cannot_connect": "Could not reach AI endpoint." },
+    "abort": {}
+  },
+  "options": {
+    "step": { "init": { "data": {
+      "update_interval": "Update interval (minutes)",
+      "keep_stale": "Keep entities available when API fails"
+    }}}
+  },
+  "issues": { "missing_entity": {
+    "title": "Missing sensor for {plant_id}",
+    "description": "A referenced sensor no longer exists."
+  }}
+}

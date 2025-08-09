@@ -1,12 +1,24 @@
 from __future__ import annotations
 from homeassistant.components.diagnostics import async_redact_data
+from .const import DOMAIN
 
 TO_REDACT = {"api_key", "Authorization"}
 
 async def async_get_config_entry_diagnostics(hass, entry):
+    entry_data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
+    store = entry_data.get("store")
+    plants = store.data.get("plants", {}) if store else {}
+    zones = store.data.get("zones", {}) if store else {}
     data = {
         "options": dict(entry.options),
         "data": {k: ("***" if "key" in k.lower() else v) for k, v in entry.data.items()},
-        "entities": [e.entity_id for e in hass.states.async_all() if e.entity_id.startswith("sensor.horticulture_assistant")],
+        "entities": [
+            e.entity_id
+            for e in hass.states.async_all()
+            if e.entity_id.startswith("sensor.horticulture_assistant")
+        ],
+        "plant_count": len(plants),
+        "zone_count": len(zones),
+        "last_profile_load": store.data.get("profile", {}).get("loaded_at") if store else None,
     }
     return async_redact_data(data, TO_REDACT)
