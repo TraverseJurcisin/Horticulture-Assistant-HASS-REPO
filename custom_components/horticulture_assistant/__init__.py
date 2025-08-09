@@ -1,114 +1,43 @@
-"""
-Horticulture Assistant integration entry module.
-
-This file sets up the custom component within Home Assistant and forwards the
-configuration entry to the supported platforms. It is intentionally minimal as
-all heavy lifting happens in the individual platform modules.
-
-Author: Traverse Jurcisin & ChatGPT (GPT-4o)
-Repo: horticulture-assistant
-"""
-
-import logging
-
-import asyncio
-from functools import partial
-
-try:
-    from homeassistant.core import HomeAssistant, ServiceCall
-    from homeassistant.config_entries import ConfigEntry
-    from homeassistant.helpers.typing import ConfigType
-
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    # Allow running tests without Home Assistant installed
-    HomeAssistant = object  # type: ignore
-    ServiceCall = object  # type: ignore
-    ConfigEntry = object  # type: ignore
-    ConfigType = dict
-
-from .const import DOMAIN, PLATFORMS, SERVICE_UPDATE_SENSORS
-from .utils.entry_helpers import (
-    store_entry_data,
-    remove_entry_data,
+from __future__ import annotations
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from .const import (
+    DOMAIN, PLATFORMS, CONF_API_KEY, CONF_MODEL, CONF_BASE_URL, CONF_UPDATE_INTERVAL,
+    DEFAULT_BASE_URL, DEFAULT_MODEL, DEFAULT_UPDATE_MINUTES
 )
-from .utils.plant_profile_loader import update_profile_sensors
-from .utils.path_utils import plants_path
+from .api import ChatApi
+from .coordinator import HortiCoordinator
+from .storage import LocalStore
 
-
-_LOGGER = logging.getLogger(__name__)
-
-
-async def update_sensors_service(
-    hass: HomeAssistant, call: ServiceCall
-) -> None:
-    """Handle the ``update_sensors`` service call."""
-    plant_id = call.data.get("plant_id")
-    sensors = call.data.get("sensors")
-    if not plant_id or not isinstance(sensors, dict):
-        _LOGGER.error("update_sensors called with invalid data")
-        return
-
-    base_dir = plants_path(hass)
-    # Run blocking disk IO in a thread so we don't slow the event loop
-    result = await asyncio.to_thread(
-        update_profile_sensors, plant_id, sensors, base_dir
-    )
-    if result:
-        _LOGGER.info("Updated sensors for profile %s", plant_id)
-    else:
-        _LOGGER.error("Failed to update sensors for profile %s", plant_id)
-
-
-async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Set up the Horticulture Assistant integration via YAML (if used)."""
-    _LOGGER.debug(
-        "async_setup (YAML) called, but this integration uses UI config flows."
-    )
+async def async_setup(hass: HomeAssistant, _config) -> bool:
     return True
-
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Horticulture Assistant from a config entry."""
-    _LOGGER.info(
-        "Initializing Horticulture Assistant from entry: %s", entry.entry_id
+    hass.data.setdefault(DOMAIN, {})
+    api = ChatApi(
+        hass,
+        entry.data.get(CONF_API_KEY, ""),
+        entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
+        entry.data.get(CONF_MODEL, DEFAULT_MODEL),
+        timeout=15.0,
     )
-
-    # Initialize storage/data so platforms can access it during their setup
-    store_entry_data(hass, entry)
-
-    # Forward config entry to all supported platforms
-    for platform in PLATFORMS:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, platform)
+    store = LocalStore(hass)
+    stored = await store.load()
+    minutes = int(
+        entry.options.get(
+            CONF_UPDATE_INTERVAL,
+            entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
         )
-
-    # Register services once
-    if not hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
-        hass.services.async_register(
-            DOMAIN,
-            SERVICE_UPDATE_SENSORS,
-            partial(update_sensors_service, hass),
-        )
-
+    )
+    coord = HortiCoordinator(
+        hass, api, store, update_minutes=minutes, initial=stored.get("recommendation")
+    )
+    await coord.async_config_entry_first_refresh()
+    hass.data[DOMAIN][entry.entry_id] = {"api": api, "coordinator": coord, "store": store}
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
-
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Unload a config entry."""
-    _LOGGER.info(
-        "Unloading Horticulture Assistant config entry: %s", entry.entry_id
-    )
-    unload_results = await asyncio.gather(
-        *[
-            hass.config_entries.async_forward_entry_unload(entry, platform)
-            for platform in PLATFORMS
-        ]
-    )
-
-    if all(unload_results):
-        remove_entry_data(hass, entry.entry_id)
-        if not hass.data.get(DOMAIN):
-            if hass.services.has_service(DOMAIN, SERVICE_UPDATE_SENSORS):
-                hass.services.async_remove(DOMAIN, SERVICE_UPDATE_SENSORS)
-
-    return all(unload_results)
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    hass.data[DOMAIN].pop(entry.entry_id, None)
+    return unload_ok
