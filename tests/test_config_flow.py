@@ -48,3 +48,27 @@ async def test_options_flow(hass, hass_admin_user):
         result["flow_id"], {}
     )
     assert result2["type"] == "create_entry"
+
+
+async def test_options_flow_invalid_entity(hass, hass_admin_user):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
+    entry.add_to_hass(hass)
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    assert result["type"] == "form"
+    result2 = await hass.config_entries.options.async_configure(
+        result["flow_id"], {"moisture_sensor": "sensor.bad"}
+    )
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"moisture_sensor": "not_found"}
+
+
+async def test_options_flow_invalid_interval(hass, hass_admin_user):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
+    entry.add_to_hass(hass)
+    result = await hass.config_entries.options.async_init(entry.entry_id)
+    assert result["type"] == "form"
+    result2 = await hass.config_entries.options.async_configure(
+        result["flow_id"], {"update_interval": 0}
+    )
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"update_interval": "invalid_interval"}

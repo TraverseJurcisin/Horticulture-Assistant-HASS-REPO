@@ -73,9 +73,21 @@ async def test_storage_migration(hass: HomeAssistant):
 
 
 @pytest.mark.asyncio
-async def test_diagnostics_redaction(hass: HomeAssistant, enable_custom_integrations: None):
+async def test_diagnostics_redaction(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
+    async def dummy_chat(self, *args, **kwargs):
+        return {"choices": [{"message": {"content": "ok"}}]}
+
+    monkeypatch.setattr(ChatApi, "chat", dummy_chat)
+
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "secret"})
     entry.add_to_hass(hass)
-    hass.states.async_set("sensor.horticulture_assistant_status", "ok")
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
     result = await async_get_config_entry_diagnostics(hass, entry)
     assert result["data"]["api_key"] == "**REDACTED**"
+    assert result["ai_retry_count"] == 0
+    assert result["ai_breaker_open"] is False
+    assert "ai_latency_ms" in result
