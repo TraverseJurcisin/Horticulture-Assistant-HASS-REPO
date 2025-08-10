@@ -1,19 +1,26 @@
 from __future__ import annotations
 import json
-from datetime import timedelta
 import logging
+import time
+from datetime import datetime, timedelta
+from typing import Any
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.util import dt as dt_util
 from .api import ChatApi
-from .storage import LocalStore
 from .plant_engine import guidelines  # type: ignore[import]
+from .storage import LocalStore
+
+_LOGGER = logging.getLogger(__name__)
 
 
-class HortiCoordinator(DataUpdateCoordinator[dict]):
+class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
+    """Coordinator handling slow AI calls."""
+
     def __init__(self, hass, api: ChatApi, store: LocalStore, update_minutes: int, initial: str | None = None):
         super().__init__(
             hass,
-            logging.getLogger(__name__),
-            name="horticulture_assistant",
+            _LOGGER,
+            name="horticulture_assistant_ai",
             update_interval=timedelta(minutes=update_minutes),
         )
         self.api = api
@@ -21,10 +28,14 @@ class HortiCoordinator(DataUpdateCoordinator[dict]):
         self.store_data = store.data or {}
         self.retry_count = 0
         self.breaker_open = False
+        self.latency_ms: int | None = None
+        self._last_warning: dict[str, datetime] = {}
+        self._warn_window = timedelta(minutes=5)
         if initial:
             self.data = {"ok": True, "recommendation": initial}
 
-    async def _async_update_data(self) -> dict:
+    async def _async_update_data(self) -> dict[str, Any]:
+        start = time.monotonic()
         try:
             profile = self.store_data.get("profile", {})
             plant_type = profile.get("plant_type", "tomato")
@@ -49,9 +60,19 @@ class HortiCoordinator(DataUpdateCoordinator[dict]):
                 text = str(res)
             self.store_data["recommendation"] = text
             await self.store.save(self.store_data)
+            self.latency_ms = int((time.monotonic() - start) * 1000)
             return {"ok": True, "recommendation": text}
         except Exception as err:
+            self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
+            err_key = type(err).__name__
+            now = dt_util.utcnow()
             if self.retry_count > 3:
                 self.breaker_open = True
+                _LOGGER.error("AI update failed; breaker opened: %s", err)
+            else:
+                last = self._last_warning.get(err_key)
+                if not last or now - last > self._warn_window:
+                    _LOGGER.warning("AI update failed: %s", err)
+                    self._last_warning[err_key] = now
             raise UpdateFailed(str(err)) from err

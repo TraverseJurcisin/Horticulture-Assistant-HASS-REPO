@@ -43,6 +43,10 @@ class LocalStore:
 
 
 def migrate_v1_to_v2(data: dict) -> dict:
-    """Placeholder migration logic for storage v1 -> v2."""
-    # Real migration would move files into data/local/plants and zones
+    """Migrate old v1 layout to v2."""
+    plants = data.pop("plant_registry", data.pop("plants", {}))
+    zones = data.pop("zones_registry", data.pop("zones", {}))
+    data["plants"] = plants
+    data["zones"] = zones
+    data["version"] = 2
     return data

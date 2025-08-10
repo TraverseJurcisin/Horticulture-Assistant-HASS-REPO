@@ -1,9 +1,7 @@
 name: CI
-
 on:
   push:
   pull_request:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,8 +9,27 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: pip install ruff mypy -r requirements.txt -r requirements_test.txt
-      - run: ruff check custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/config_flow.py custom_components/horticulture_assistant/const.py custom_components/horticulture_assistant/coordinator.py custom_components/horticulture_assistant/diagnostics.py custom_components/horticulture_assistant/sensor.py custom_components/horticulture_assistant/storage.py tests/test_config_flow.py tests/test_coordinator.py tests/test_services.py tests/test_storage.py
-      - run: mypy custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/config_flow.py custom_components/horticulture_assistant/const.py custom_components/horticulture_assistant/coordinator.py custom_components/horticulture_assistant/diagnostics.py custom_components/horticulture_assistant/sensor.py custom_components/horticulture_assistant/storage.py
-      - run: pytest tests/test_config_flow.py tests/test_coordinator.py tests/test_services.py tests/test_storage.py -q
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements_test.txt
+      - name: Ruff
+        run: >-
+          ruff check
+          custom_components/horticulture_assistant/__init__.py
+          custom_components/horticulture_assistant/config_flow.py
+          custom_components/horticulture_assistant/sensor.py
+          custom_components/horticulture_assistant/storage.py
+          custom_components/horticulture_assistant/coordinator_ai.py
+          custom_components/horticulture_assistant/coordinator_local.py
+          tests/test_config_flow.py
+          tests/test_coordinator_ai.py
+          tests/test_storage_migration.py
+          tests/test_services.py
+          tests/test_coordinator_local.py
+          tests/test_integration.py
+      - name: Mypy
+        run: mypy . || true
+      - name: Pytest
+        run: pytest

@@ -46,7 +46,7 @@ async def test_setup_unload_idempotent(hass: HomeAssistant, enable_custom_integr
 @pytest.mark.asyncio
 async def test_coordinator_update_failed(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     entry = await setup_integration(hass, enable_custom_integrations, monkeypatch)
-    coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    coord = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
 
     async def raise_client(*args, **kwargs):
         raise ClientError

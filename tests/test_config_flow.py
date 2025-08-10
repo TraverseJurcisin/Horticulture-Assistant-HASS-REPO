@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from homeassistant import config_entries
@@ -13,10 +14,30 @@ async def test_config_flow_user(hass):
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
-    result2 = await hass.config_entries.flow.async_configure(
-        result["flow_id"], {CONF_API_KEY: "abc"}
-    )
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        result2 = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_API_KEY: "abc"}
+        )
     assert result2["type"] == "create_entry"
+
+
+async def test_config_flow_invalid_key(hass):
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == "form"
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        side_effect=Exception,
+    ):
+        result2 = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_API_KEY: "bad"}
+        )
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"base": "cannot_connect"}
 
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
