@@ -54,3 +54,9 @@ class ChatApi:
 
     def _half_open(self) -> None:
         self._open = True
+
+    async def validate_api_key(self) -> None:
+        """Simple call to validate API key."""
+        await self.chat([
+            {"role": "user", "content": "ping"},
+        ], max_tokens=1)

@@ -24,3 +24,12 @@ async def test_update_sensors_service(hass):
         issue_id.startswith("missing_entity")
         for (_, issue_id) in issues
     )
+    hass.states.async_set("sensor.good", 1)
+    await hass.services.async_call(
+        DOMAIN,
+        "update_sensors",
+        {"plant_id": "plant1", "sensors": {"moisture_sensors": ["sensor.good"]}},
+        blocking=True,
+    )
+    store = hass.data[DOMAIN][entry.entry_id]["store"]
+    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == ["sensor.good"]

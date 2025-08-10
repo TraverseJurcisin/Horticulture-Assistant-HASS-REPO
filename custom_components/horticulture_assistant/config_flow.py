@@ -18,6 +18,7 @@ from .const import (
     DEFAULT_UPDATE_MINUTES,
     DEFAULT_KEEP_STALE,
 )
+from .api import ChatApi
 
 DATA_SCHEMA = vol.Schema({
     vol.Required(CONF_API_KEY): str,
@@ -27,12 +28,24 @@ DATA_SCHEMA = vol.Schema({
 })
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc,call-arg]
-    VERSION = 1
+    VERSION = 2
 
     async def async_step_user(self, user_input=None):
+        errors = {}
         if user_input is not None:
-            return self.async_create_entry(title="Horticulture Assistant", data=user_input)
-        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
+            api = ChatApi(
+                self.hass,
+                user_input.get(CONF_API_KEY, ""),
+                user_input.get(CONF_BASE_URL, DEFAULT_BASE_URL),
+                user_input.get(CONF_MODEL, DEFAULT_MODEL),
+            )
+            try:
+                await api.validate_api_key()
+            except Exception:
+                errors["base"] = "cannot_connect"
+            if not errors:
+                return self.async_create_entry(title="Horticulture Assistant", data=user_input)
+        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -61,17 +74,27 @@ class OptionsFlow(config_entries.OptionsFlow):
                 vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
                 vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
                 vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): int,
-                vol.Optional(CONF_MOISTURE_SENSOR): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
+                vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
+                    ),
+                    str,
                 ),
-                vol.Optional(CONF_TEMPERATURE_SENSOR): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
+                vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
+                    ),
+                    str,
                 ),
-                vol.Optional(CONF_EC_SENSOR): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"])
+                vol.Optional(CONF_EC_SENSOR): vol.Any(
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
+                    str,
                 ),
-                vol.Optional(CONF_CO2_SENSOR): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])
+                vol.Optional(CONF_CO2_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])
+                    ),
+                    str,
                 ),
                 vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
             }
