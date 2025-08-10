@@ -13,13 +13,14 @@ DEFAULT_DATA: dict = {
     "recommendation": "",
 }
 
+_LOCK = asyncio.Lock()
+
 
 class LocalStore:
     def __init__(self, hass):
         self.hass = hass
         self._store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self.data: dict | None = None
-        self._lock = asyncio.Lock()
 
     async def load(self) -> dict:
         data = await self._store.async_load()
@@ -38,7 +39,7 @@ class LocalStore:
             self.data = data
         elif self.data is None:
             self.data = DEFAULT_DATA.copy()
-        async with self._lock:
+        async with _LOCK:
             await self._store.async_save(self.data)
 
 

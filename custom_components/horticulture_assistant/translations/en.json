@@ -29,6 +29,10 @@
           "co2_sensor": "CO₂ sensor"
         }
       }
+    },
+    "error": {
+      "not_found": "Entity not found",
+      "invalid_interval": "Update interval must be at least 1 minute"
     }
   },
   "issues": {

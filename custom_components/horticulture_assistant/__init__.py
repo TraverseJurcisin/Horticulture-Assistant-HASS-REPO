@@ -26,6 +26,8 @@ from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
 
+SENSORS_SCHEMA = vol.Schema({str: [str]}, extra=vol.PREVENT_EXTRA)
+
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup(hass: HomeAssistant, _config) -> bool:
@@ -42,11 +44,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
     store = LocalStore(hass)
     stored = await store.load()
-    minutes = int(
-        entry.options.get(
-            CONF_UPDATE_INTERVAL,
-            entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
-        )
+    minutes = max(
+        1,
+        int(
+            entry.options.get(
+                CONF_UPDATE_INTERVAL,
+                entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+            )
+        ),
     )
     keep_stale = entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
     ai_coord = HortiAICoordinator(
@@ -75,7 +80,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             ir.async_create_issue(
                 hass,
                 DOMAIN,
-                f"missing_entity_{entity_id}",
+                f"missing_entity_{entry.entry_id}_{entity_id}",
                 is_fixable=False,
                 severity=ir.IssueSeverity.WARNING,
                 translation_key="missing_entity_option",
@@ -84,6 +89,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def _handle_refresh(call):
         await ai_coord.async_request_refresh()
+        await local_coord.async_request_refresh()
 
     async def _handle_update_sensors(call):
         plant_id = call.data["plant_id"]
@@ -101,16 +107,28 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         translation_key="missing_entity",
                         translation_placeholders={"plant_id": plant_id},
                     )
+                    _LOGGER.warning("update_sensors missing entity %s", entity_id)
+                    raise vol.Invalid(f"missing entity {entity_id}")
         store.data.setdefault("plants", {})
         store.data["plants"].setdefault(plant_id, {})["sensors"] = sensors
         await store.save()
 
     async def _handle_recalculate(call):
-        # placeholder; could trigger calculations in real implementation
-        return None
+        plant_id = call.data["plant_id"]
+        plants = store.data.setdefault("plants", {})
+        if plant_id not in plants:
+            raise vol.Invalid(f"unknown plant {plant_id}")
+        await local_coord.async_request_refresh()
 
     async def _handle_run_reco(call):
+        plant_id = call.data["plant_id"]
+        plants = store.data.setdefault("plants", {})
+        if plant_id not in plants:
+            raise vol.Invalid(f"unknown plant {plant_id}")
         await ai_coord.async_request_refresh()
+        if call.data.get("approve"):
+            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation")
+            await store.save()
 
     svc_base = DOMAIN
     hass.services.async_register(
@@ -122,7 +140,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "update_sensors",
         _handle_update_sensors,
-        schema=vol.Schema({vol.Required("plant_id"): str, vol.Required("sensors"): dict}),
+        schema=vol.Schema(
+            {vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}
+        ),
     )
     hass.services.async_register(
         svc_base,
@@ -149,7 +169,7 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if entry.version < 2:
         data = {**entry.data}
         options = {**entry.options}
-        if CONF_KEEP_STALE not in options:
-            options[CONF_KEEP_STALE] = DEFAULT_KEEP_STALE
+        options.setdefault(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
+        options.setdefault(CONF_UPDATE_INTERVAL, data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES))
         hass.config_entries.async_update_entry(entry, data=data, options=options, version=2)
     return True
