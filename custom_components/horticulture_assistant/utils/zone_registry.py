@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Helpers for managing irrigation zone definitions."""
+
+from __future__ import annotations
 
 from dataclasses import dataclass, asdict
 from functools import lru_cache

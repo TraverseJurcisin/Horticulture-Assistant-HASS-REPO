@@ -8,7 +8,6 @@ designed to run outside of Home Assistant as a maintenance task.
 
 from __future__ import annotations
 
-import json
 import logging
 import re
 from pathlib import Path
@@ -61,7 +60,7 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
         plant_id = data.get("plant_id", "unknown")
         changes = data.get("changes")
         if not changes or not any(info.get("status") == "pending" for info in changes.values()):
-            _LOGGER.info("No pending threshold changes in file %s; skipping.", filename)
+            _LOGGER.info("No pending threshold changes in file %s; skipping.", file_path.name)
             # No pending entries to approve in this file
             continue
         print(f"\nReviewing pending threshold changes for plant '{plant_id}' (file: {file_path.name}):")
@@ -103,7 +102,10 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
         # End for each pending change
         if not file_modified:
             # No changes were approved or rejected (all skipped)
-            _LOGGER.info("No changes made to pending threshold file %s (all changes left pending).", filename)
+            _LOGGER.info(
+                "No changes made to pending threshold file %s (all changes left pending).",
+                file_path.name,
+            )
             continue
         profile_update_failed = False
         if approved_list:
@@ -161,8 +163,14 @@ def approve_threshold_queue(hass: "HomeAssistant" = None) -> None:
             try:
                 save_json(file_path, data)
             except Exception as e:
-                _LOGGER.error("Failed to write updated pending threshold file %s: %s", filename, e)
-                print(f"Error: failed to update pending file {filename}. Changes may not be saved.")
+                _LOGGER.error(
+                    "Failed to write updated pending threshold file %s: %s",
+                    file_path.name,
+                    e,
+                )
+                print(
+                    f"Error: failed to update pending file {file_path.name}. Changes may not be saved."
+                )
     # End for each file
     _LOGGER.info("Threshold approval review complete: %d approved, %d rejected, %d skipped.", total_approved, total_rejected, total_skipped)
     print(f"\nReview complete. Approved: {total_approved}, Rejected: {total_rejected}, Skipped: {total_skipped}.")

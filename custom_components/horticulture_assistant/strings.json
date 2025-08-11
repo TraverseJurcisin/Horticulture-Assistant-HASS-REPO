@@ -1,20 +1,59 @@
 {
+  "title": "Horticulture Assistant",
   "config": {
     "step": {
       "user": {
-        "title": "Add Plant Profile",
+        "title": "Connect AI",
+        "description": "Enter AI settings and defaults.",
         "data": {
-          "plant_name": "Plant Name",
-          "zone_id": "Zone ID"
+          "api_key": "API key",
+          "model": "Model",
+          "base_url": "Base URL",
+          "update_interval": "Update interval (minutes)"
+        }
+      }
+    },
+    "error": {},
+    "abort": {}
+  },
+  "config_subentries": {
+    "plant": {
+      "step": {
+        "user": {
+          "title": "Add Plant",
+          "description": "Create a plant sub-entry.",
+          "data": {
+            "plant_name": "Plant name",
+            "zone_id": "Zone ID"
+          }
         }
       }
     }
   },
-  "config_subentries": {
-    "plant": {
-      "initiate_flow": {
-        "user": "Add Plant Profile"
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options",
+        "data": {
+          "keep_stale_available": "Keep entities available when AI fails",
+          "update_interval": "Update interval (minutes)",
+          "moisture_entities": "Moisture sensors",
+          "temperature_entities": "Temperature sensors",
+          "ec_entities": "EC sensors",
+          "co2_entities": "CO₂ sensors"
+        }
       }
+    }
+  },
+  "issues": {
+    "missing_entity": {
+      "title": "Missing sensor for {plant_id}",
+      "description": "A referenced sensor no longer exists."
+    },
+    "missing_entity_option": {
+      "title": "Missing entity {entity_id}",
+      "description": "A configured sensor no longer exists."
     }
   }
 }
+

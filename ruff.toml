@@ -1,0 +1,7 @@
+extend-exclude = [
+    "custom_components/horticulture_assistant/plant_engine",
+    "custom_components/horticulture_assistant/engine",
+    "custom_components/horticulture_assistant/utils",
+    "custom_components/horticulture_assistant/scripts",
+    "custom_components/horticulture_assistant/tests",
+]
