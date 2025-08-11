@@ -12,7 +12,6 @@ import logging
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Mapping
 
 from custom_components.horticulture_assistant.utils.path_utils import (
     plants_path,

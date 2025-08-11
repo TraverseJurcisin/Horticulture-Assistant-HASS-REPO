@@ -112,3 +112,9 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=user_input)
 
         return self.async_show_form(step_id="init", data_schema=schema)
+
+
+# Backwards compatibility for older imports
+class HorticultureAssistantConfigFlow(ConfigFlow):
+    """Retain legacy class name for tests and external references."""
+    pass

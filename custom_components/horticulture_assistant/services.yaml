@@ -1,27 +1,42 @@
 update_sensors:
   name: Update plant sensors
+  description: Attach or replace sensor entity IDs for a plant profile.
   fields:
     plant_id:
       required: true
       example: citrus_backyard_spring2025
+      selector:
+        text:
     sensors:
       required: true
       example:
-        moisture_sensors: [sensor.a, sensor.b]
-        temperature_sensors: [sensor.t1]
+        moisture_sensors: [sensor.soil_moist_1, sensor.soil_moist_2]
+        temperature_sensors: [sensor.greenhouse_temp]
+        ec_sensors: [sensor.substrate_ec]
+      selector:
+        object:
+
 recalculate_targets:
   name: Recalculate nutrient/environment targets
   fields:
     plant_id:
       required: true
+      selector:
+        text:
+
 run_recommendation:
   name: Run recommendation
   fields:
     plant_id:
       required: true
+      selector:
+        text:
     approve:
       required: false
       default: false
+      selector:
+        boolean:
+
 refresh:
-  name: Refresh data
-  fields: {}
+  name: Manual refresh
+  description: Trigger both local and AI coordinators to refresh now.

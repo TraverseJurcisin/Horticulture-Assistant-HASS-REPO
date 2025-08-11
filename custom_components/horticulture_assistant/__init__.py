@@ -1,6 +1,7 @@
 from __future__ import annotations
 import logging
 import voluptuous as vol
+import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import issue_registry as ir
@@ -27,6 +28,8 @@ from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
 
 SENSORS_SCHEMA = vol.Schema({str: [str]}, extra=vol.PREVENT_EXTRA)
+
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
 
