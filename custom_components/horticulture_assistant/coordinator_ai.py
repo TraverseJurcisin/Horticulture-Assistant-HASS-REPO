@@ -6,7 +6,7 @@ import time
 from datetime import datetime, timedelta
 from typing import Any
 
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt as dt_util
 
 from .api import ChatApi
@@ -32,6 +32,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.store_data = store.data or {}
         self.retry_count = 0
         self.breaker_open = False
+        self._breaker_until: datetime | None = None
         self.latency_ms: int | None = None
         self.last_call: datetime | None = None
         self.last_exception_msg: str | None = None
@@ -39,8 +40,20 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.data = {"ok": True, "recommendation": initial}
 
     async def _async_update_data(self) -> dict[str, Any]:
+        now = dt_util.utcnow()
+        if self.breaker_open and self._breaker_until and now < self._breaker_until:
+            log_limited(
+                _LOGGER,
+                logging.WARNING,
+                "BREAKER",
+                "Skipping AI update; breaker open until %s",
+                self._breaker_until,
+            )
+            self.last_call = now
+            return self.data or {}
+
         start = time.monotonic()
-        self.last_call = dt_util.utcnow()
+        self.last_call = now
         try:
             profile = self.store_data.get("profile", {})
             plant_type = profile.get("plant_type", "tomato")
@@ -59,6 +72,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             res = await self.api.chat(messages, temperature=0.2, max_tokens=256)
             self.retry_count = 0
             self.breaker_open = False
+            self._breaker_until = None
             try:
                 text = res["choices"][0]["message"]["content"].strip()
             except (KeyError, IndexError, TypeError):
@@ -77,8 +91,13 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             )
             if self.retry_count > 3:
                 self.breaker_open = True
-                _LOGGER.error("AI update failed; breaker opened (%s): %s", code, err)
+                self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
+                _LOGGER.error(
+                    "AI update failed; breaker opened (%s): %s", code, err
+                )
             else:
                 log_limited(_LOGGER, logging.WARNING, code, "AI update failed (%s): %s", code, err)
             self.last_exception_msg = str(err)
-            raise UpdateFailed(str(err)) from err
+            data = {"ok": False, "error": str(err)}
+            self.data = data
+            return data
