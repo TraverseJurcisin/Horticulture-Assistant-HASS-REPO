@@ -26,5 +26,5 @@ jobs:
       - name: Validate plant profiles
         run: python scripts/validate_profiles.py
       - run: ruff check custom_components
-      - run: mypy custom_components || true
+      - run: mypy --explicit-package-bases custom_components || true
       - run: pytest -q

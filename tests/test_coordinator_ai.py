@@ -16,7 +16,7 @@ pytestmark = [
 async def test_coordinator_handles_failures(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
     entry.add_to_hass(hass)
-    with patch("socket.socket"), patch(
+    with patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
         return_value={"choices": [{"message": {"content": "hi"}}]},
     ):
@@ -51,7 +51,7 @@ async def test_coordinator_handles_failures(hass):
 async def test_circuit_breaker_skips_calls(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
     entry.add_to_hass(hass)
-    with patch("socket.socket"), patch(
+    with patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
         return_value={"choices": [{"message": {"content": "hi"}}]},
     ):

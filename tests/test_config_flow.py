@@ -10,39 +10,37 @@ pytestmark = [
 ]
 
 async def test_config_flow_user(hass):
-    """Test user config flow without real sockets."""
-    with patch("socket.socket"):
-        result = await hass.config_entries.flow.async_init(
-            DOMAIN, context={"source": config_entries.SOURCE_USER}
+    """Test user config flow."""
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == "form"
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        result2 = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_API_KEY: "abc"}
         )
-        assert result["type"] == "form"
-        with patch(
-            "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-            return_value=None,
-        ):
-            result2 = await hass.config_entries.flow.async_configure(
-                result["flow_id"], {CONF_API_KEY: "abc"}
-            )
-        assert result2["type"] == "create_entry"
+    assert result2["type"] == "create_entry"
     await hass.async_block_till_done()
 
 
 async def test_config_flow_invalid_key(hass):
-    """Test config flow handles invalid API key without sockets."""
-    with patch("socket.socket"):
-        result = await hass.config_entries.flow.async_init(
-            DOMAIN, context={"source": config_entries.SOURCE_USER}
+    """Test config flow handles invalid API key."""
+    result = await hass.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == "form"
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        side_effect=Exception,
+    ):
+        result2 = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_API_KEY: "bad"}
         )
-        assert result["type"] == "form"
-        with patch(
-            "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-            side_effect=Exception,
-        ):
-            result2 = await hass.config_entries.flow.async_configure(
-                result["flow_id"], {CONF_API_KEY: "bad"}
-            )
-        assert result2["type"] == "form"
-        assert result2["errors"] == {"base": "cannot_connect"}
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"base": "cannot_connect"}
     await hass.async_block_till_done()
 
 async def test_options_flow(hass, hass_admin_user):
