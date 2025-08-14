@@ -1,5 +1,6 @@
 import pytest
 from unittest.mock import patch
+
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from homeassistant import config_entries
@@ -8,6 +9,12 @@ pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
+
+
+@pytest.fixture(autouse=True)
+def _mock_socket():
+    with patch("socket.socket"):
+        yield
 
 async def test_config_flow_user(hass):
     """Test user config flow."""

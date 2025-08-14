@@ -2,6 +2,7 @@ import asyncio
 from aiohttp import ClientError
 import pytest
 from unittest.mock import patch
+
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.helpers.entity_registry import async_get
@@ -11,6 +12,12 @@ pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
+
+
+@pytest.fixture(autouse=True)
+def _mock_socket():
+    with patch("socket.socket"):
+        yield
 
 
 async def test_coordinator_handles_failures(hass):

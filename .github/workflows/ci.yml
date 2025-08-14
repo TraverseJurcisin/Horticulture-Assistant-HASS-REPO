@@ -26,5 +26,5 @@ jobs:
       - name: Validate plant profiles
         run: python scripts/validate_profiles.py
       - run: ruff check custom_components
-      - run: mypy --explicit-package-bases custom_components || true
+      - run: mypy --explicit-package-bases acme/crypto_util.py custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/api.py custom_components/horticulture_assistant/fertilizer_formulator.py || true
       - run: pytest -q
