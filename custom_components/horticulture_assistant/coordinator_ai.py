@@ -86,9 +86,21 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
             err_key = type(err).__name__
-            code = "API_429" if "429" in str(err) else (
-                "TIMEOUT" if isinstance(err, asyncio.TimeoutError) else err_key
-            )
+            
+            # More specific error handling
+            if "429" in str(err):
+                code = "API_429"
+                _LOGGER.warning("Rate limit exceeded, will retry")
+            elif isinstance(err, asyncio.TimeoutError):
+                code = "TIMEOUT"
+                _LOGGER.warning("API request timed out")
+            elif isinstance(err, ConnectionError):
+                code = "CONNECTION_ERROR"
+                _LOGGER.warning("Connection error to AI service")
+            else:
+                code = err_key
+                _LOGGER.warning("Unexpected error in AI coordinator: %s", err)
+            
             if self.retry_count > 3:
                 self.breaker_open = True
                 self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
@@ -106,4 +118,4 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 )
             self.last_exception_msg = str(err)
             self.data = {"ok": False, "error": str(err)}
-            raise UpdateFailed(str(err)) from err
+            raise UpdateFailed(f"AI update failed ({code}): {err}") from err
