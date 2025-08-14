@@ -435,8 +435,8 @@ def dump_pyopenssl_chain(chain: List[crypto.X509],
                          filetype: int = crypto.FILETYPE_PEM) -> bytes:
     """Dump certificate chain into a bundle.
 
-    :param list chain: List of `OpenSSL.crypto.X509`.
-
+    :param list chain: Certificates to bundle (`OpenSSL.crypto.X509` instances).
+    :param int filetype: Encoding of the dumped certificates.
     :returns: certificate chain bundle
     :rtype: bytes
 
