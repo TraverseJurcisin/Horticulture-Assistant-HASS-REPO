@@ -4,3 +4,5 @@ voluptuous==0.13.1
 numpy>=1.25
 pytest-asyncio>=0.23
 types-PyYAML
+acme>=2.8.0,<3.0.0
+josepy>=1.13.0,<2.0.0
