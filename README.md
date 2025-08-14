@@ -358,6 +358,7 @@ useful commands is available in [`docs/scripts_overview.md`](docs/scripts_overvi
 - `dataset_info.py` lists available datasets and categories.
 - `plant_overview.py` prints consolidated reference information for a crop.
 - `validate_datasets.py` verifies that all dataset files can be parsed.
+- `validate_profiles.py` checks that all plant profiles conform to the schema.
 - `backup_profiles.py` manages ZIP backups of plant profiles and the registry. Use `--list` to view archives, `--restore` to unpack one, `--verify` to check an archive, `--retain` to limit how many are kept, and `--root` to operate on an alternate data directory.
 - `upload_profile_cache.py` sends cached profiles in `data/profile_cache/` to a remote service for training future models. Add `--delete` to remove files after upload.
 - `profile_manager.py` manages sensors, preferences, templates and history files. `attach-sensor` appends new sensors, while `detach-sensor` removes them. Other subcommands include `list-sensors`, `show-prefs`, `list-logs`, `set-pref`, `load-default`, `show-history`, `show-global`, and `list-globals`. `--plants-dir` and `--global-dir` operate on alternate directories.

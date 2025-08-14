@@ -48,7 +48,7 @@
   "issues": {
     "missing_entity": {
       "title": "Missing sensor for {plant_id}",
-      "description": "A referenced sensor no longer exists."
+      "description": "A referenced sensor no longer exists. Open Options to update the mapping."
     },
     "missing_entity_option": {
       "title": "Missing entity {entity_id}",
@@ -56,4 +56,3 @@
     }
   }
 }
-

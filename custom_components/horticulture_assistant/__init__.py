@@ -26,6 +26,8 @@ from .api import ChatApi
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
+from .utils.local_paths import normalize_local_paths
+from .entity_utils import ensure_entities_exist
 
 SENSORS_SCHEMA = vol.Schema({str: [str]}, extra=vol.PREVENT_EXTRA)
 
@@ -46,6 +48,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         timeout=15.0,
     )
     store = LocalStore(hass)
+    normalize_local_paths(hass)
     stored = await store.load()
     minutes = max(
         1,
@@ -97,21 +100,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def _handle_update_sensors(call):
         plant_id = call.data["plant_id"]
         sensors = call.data["sensors"]
-        # Check referenced entities exist
-        for sensor_ids in sensors.values():
-            for entity_id in sensor_ids:
-                if hass.states.get(entity_id) is None:
-                    ir.async_create_issue(
-                        hass,
-                        DOMAIN,
-                        f"missing_entity_{plant_id}",
-                        is_fixable=False,
-                        severity=ir.IssueSeverity.WARNING,
-                        translation_key="missing_entity",
-                        translation_placeholders={"plant_id": plant_id},
-                    )
-                    _LOGGER.warning("update_sensors missing entity %s", entity_id)
-                    raise vol.Invalid(f"missing entity {entity_id}")
+        all_entities = [eid for v in sensors.values() for eid in v]
+        missing = [eid for eid in all_entities if hass.states.get(eid) is None]
+        ensure_entities_exist(hass, plant_id, all_entities)
+        if missing:
+            _LOGGER.warning("update_sensors missing entity %s", missing[0])
+            raise vol.Invalid(f"missing entity {missing[0]}")
         store.data.setdefault("plants", {})
         store.data["plants"].setdefault(plant_id, {})["sensors"] = sensors
         await store.save()

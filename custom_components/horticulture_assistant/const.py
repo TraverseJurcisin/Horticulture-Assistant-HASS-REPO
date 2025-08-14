@@ -1,4 +1,5 @@
 from homeassistant.const import Platform
+from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "horticulture_assistant"
 PLATFORMS: list[Platform] = [Platform.SENSOR]
@@ -17,3 +18,7 @@ DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it
 DEFAULT_UPDATE_MINUTES = 5
 DEFAULT_KEEP_STALE = True
+
+# Entity categories
+CATEGORY_DIAGNOSTIC = EntityCategory.DIAGNOSTIC
+CATEGORY_CONTROL = EntityCategory.CONFIG

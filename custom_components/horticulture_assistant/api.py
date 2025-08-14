@@ -17,6 +17,7 @@ class ChatApi:
         self._timeout = timeout
         self._failures = 0
         self._open = True  # simple circuit breaker
+        self.last_latency_ms: int | None = None
 
     def _headers(self) -> dict[str, str]:
         return {"Authorization": f"Bearer {self._api_key}", "Content-Type": "application/json"}
@@ -32,13 +33,16 @@ class ChatApi:
         for attempt in range(5):
             try:
                 async with asyncio.timeout(self._timeout):
+                    t0 = time.perf_counter()
                     async with session.post(url, headers=self._headers(), json=payload) as resp:
                         if resp.status in RETRYABLE:
                             raise ClientError(f"Retryable status: {resp.status}")
                         resp.raise_for_status()
                         self._failures = 0
                         self._open = True
-                        return await resp.json()
+                        data = await resp.json()
+                        self.last_latency_ms = int((time.perf_counter() - t0) * 1000)
+                        return data
             except (ClientError, asyncio.TimeoutError):
                 self._failures += 1
                 if attempt == 4:

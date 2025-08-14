@@ -15,6 +15,7 @@ from .const import CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
 from .utils.entry_helpers import get_entry_data, store_entry_data
 from .entity_base import HorticultureBaseEntity
 from .utils.sensor_map import build_sensor_map
+from .entity_utils import ensure_entities_exist
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,6 +39,15 @@ async def async_setup_entry(
             "humidity_sensors",
             "ec_sensors",
         ),
+    )
+
+    ensure_entities_exist(
+        hass,
+        plant_id,
+        sensor_map.get("moisture_sensors", [])
+        + sensor_map.get("temperature_sensors", [])
+        + sensor_map.get("ec_sensors", [])
+        + sensor_map.get("co2_sensors", []),
     )
 
     sensors: list[BinarySensorEntity] = [
