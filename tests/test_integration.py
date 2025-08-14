@@ -2,8 +2,8 @@ import asyncio
 import pytest
 from aiohttp import ClientError
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.config_entries import OperationNotAllowed
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
@@ -44,7 +44,9 @@ async def test_setup_unload_idempotent(hass: HomeAssistant, enable_custom_integr
 
 
 @pytest.mark.asyncio
-async def test_coordinator_update_failed(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
+async def test_coordinator_update_handles_errors(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
     entry = await setup_integration(hass, enable_custom_integrations, monkeypatch)
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
 
@@ -54,6 +56,7 @@ async def test_coordinator_update_failed(hass: HomeAssistant, enable_custom_inte
     monkeypatch.setattr(coord.api, "chat", raise_client)
     with pytest.raises(UpdateFailed):
         await coord._async_update_data()
+    assert coord.retry_count == 1
 
     async def raise_timeout(*args, **kwargs):
         raise asyncio.TimeoutError
@@ -61,6 +64,7 @@ async def test_coordinator_update_failed(hass: HomeAssistant, enable_custom_inte
     monkeypatch.setattr(coord.api, "chat", raise_timeout)
     with pytest.raises(UpdateFailed):
         await coord._async_update_data()
+    assert coord.retry_count == 2
 
 
 @pytest.mark.asyncio
