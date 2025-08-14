@@ -481,11 +481,11 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
     for pid in list_products():
         try:
             costs = estimate_cost_per_nutrient(pid)
-        except (KeyError, ValueError) as e:
-            # _LOGGER.debug("Skipping product %s due to cost calculation error: %s", pid, e) # Original code had this line commented out
+        except (KeyError, ValueError):
+            # _LOGGER.debug("Skipping product %s due to cost calculation error", pid)  # Original code had this line commented out
             continue
-        except Exception as e:
-            # _LOGGER.warning("Unexpected error calculating costs for product %s: %s", pid, e) # Original code had this line commented out
+        except Exception:
+            # _LOGGER.warning("Unexpected error calculating costs for product %s", pid)  # Original code had this line commented out
             continue
         cost = costs.get(nutrient)
         if cost is None:
