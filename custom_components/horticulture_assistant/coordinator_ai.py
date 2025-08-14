@@ -39,6 +39,10 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if initial:
             self.data = {"ok": True, "recommendation": initial}
 
+    async def async_request_refresh(self) -> None:
+        """Refresh immediately without the built-in debouncer."""
+        await self._async_refresh()
+
     async def _async_update_data(self) -> dict[str, Any]:
         now = dt_util.utcnow()
         if self.breaker_open and self._breaker_until and now < self._breaker_until:
@@ -117,5 +121,6 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     err,
                 )
             self.last_exception_msg = str(err)
-            self.data = {"ok": False, "error": str(err)}
+            # Push failure state so listeners update even when the refresh fails
+            self.async_set_updated_data({"ok": False, "error": str(err)})
             raise UpdateFailed(f"AI update failed ({code}): {err}") from err

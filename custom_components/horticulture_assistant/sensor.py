@@ -40,8 +40,10 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
 
     @property
     def native_value(self):
+        if not self.coordinator.last_update_success:
+            return "error"
         data = self.coordinator.data or {}
-        return "ok" if data.get("ok") else "error"
+        return "ok" if data.get("ok") is True else "error"
 
     @property
     def extra_state_attributes(self):

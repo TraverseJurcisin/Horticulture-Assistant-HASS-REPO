@@ -23,6 +23,7 @@ from .const import (
     DEFAULT_KEEP_STALE,
 )
 from .api import ChatApi
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
@@ -122,9 +123,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
-        await ai_coord.async_request_refresh()
+        prev = ai_coord.data.get("recommendation")
+        try:
+            await ai_coord.async_request_refresh()
+        except UpdateFailed:
+            pass
         if call.data.get("approve"):
-            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation")
+            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get(
+                "recommendation", prev
+            )
             await store.save()
 
     svc_base = DOMAIN
