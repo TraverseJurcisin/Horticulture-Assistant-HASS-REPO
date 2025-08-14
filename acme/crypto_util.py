@@ -5,7 +5,7 @@ Provides a tiny subset of the upstream ``acme.crypto_util`` module.
 
 from typing import List
 
-from OpenSSL import crypto
+from OpenSSL import crypto  # type: ignore[import-untyped]
 
 
 def dump_pyopenssl_chain(chain: List[crypto.X509], filetype: int = crypto.FILETYPE_PEM) -> bytes:

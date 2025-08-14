@@ -5,6 +5,7 @@ import time
 from typing import Any
 from aiohttp import ClientError
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import aiohttp_client
 
 RETRYABLE = (429, 500, 502, 503, 504)
 
@@ -25,7 +26,7 @@ class ChatApi:
     async def chat(self, messages: list[dict[str, Any]], temperature: float = 0.2, max_tokens: int = 256) -> dict[str, Any]:
         if not self._open:
             raise RuntimeError("Circuit open; skipping call")
-        session = self._hass.helpers.aiohttp_client.async_get_clientsession()
+        session = aiohttp_client.async_get_clientsession(self._hass)
         payload = {"model": self._model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens}
         url = f"{self._base_url}/chat/completions"
 
