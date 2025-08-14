@@ -24,6 +24,7 @@ async def test_config_flow_user(hass):
                 result["flow_id"], {CONF_API_KEY: "abc"}
             )
         assert result2["type"] == "create_entry"
+    await hass.async_block_till_done()
 
 
 async def test_config_flow_invalid_key(hass):
@@ -42,6 +43,7 @@ async def test_config_flow_invalid_key(hass):
             )
         assert result2["type"] == "form"
         assert result2["errors"] == {"base": "cannot_connect"}
+    await hass.async_block_till_done()
 
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
@@ -52,6 +54,7 @@ async def test_options_flow(hass, hass_admin_user):
         result["flow_id"], {}
     )
     assert result2["type"] == "create_entry"
+    await hass.async_block_till_done()
 
 
 async def test_options_flow_invalid_entity(hass, hass_admin_user):
@@ -64,6 +67,7 @@ async def test_options_flow_invalid_entity(hass, hass_admin_user):
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
+    await hass.async_block_till_done()
 
 
 async def test_options_flow_invalid_interval(hass, hass_admin_user):
@@ -76,3 +80,4 @@ async def test_options_flow_invalid_interval(hass, hass_admin_user):
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"update_interval": "invalid_interval"}
+    await hass.async_block_till_done()

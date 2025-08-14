@@ -16,8 +16,12 @@ pytestmark = [
 async def test_coordinator_handles_failures(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
     entry.add_to_hass(hass)
-    await hass.config_entries.async_setup(entry.entry_id)
-    await hass.async_block_till_done()
+    with patch("socket.socket"), patch(
+        "custom_components.horticulture_assistant.api.ChatApi.chat",
+        return_value={"choices": [{"message": {"content": "hi"}}]},
+    ):
+        await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
     with patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
@@ -47,7 +51,7 @@ async def test_coordinator_handles_failures(hass):
 async def test_circuit_breaker_skips_calls(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
     entry.add_to_hass(hass)
-    with patch(
+    with patch("socket.socket"), patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
         return_value={"choices": [{"message": {"content": "hi"}}]},
     ):
@@ -67,3 +71,4 @@ async def test_circuit_breaker_skips_calls(hass):
         result = await coord._async_update_data()
     mock_chat.assert_not_called()
     assert result == data_before
+    await hass.async_block_till_done()
