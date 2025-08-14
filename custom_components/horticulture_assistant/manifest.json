@@ -1,9 +1,9 @@
 {
   "domain": "horticulture_assistant",
   "name": "Horticulture Assistant",
-  "after_dependencies": ["diagnostics", "recorder"],
   "codeowners": ["@TraverseJurcisin"],
   "config_flow": true,
+  "dependencies": ["diagnostics", "recorder"],
   "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO#readme",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues",
