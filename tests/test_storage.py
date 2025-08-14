@@ -1,15 +1,14 @@
 import pytest
-from custom_components.horticulture_assistant.storage import LocalStore, migrate_v1_to_v2
+from custom_components.horticulture_assistant.storage import LocalStore
 
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
 
-async def test_migrate_and_save(hass):
-    data = {"version": 1, "profile": {}}
-    migrated = migrate_v1_to_v2(data)
-    assert migrated["version"] == 2
+async def test_load_and_save(hass):
     store = LocalStore(hass)
-    await store.load()
-    await store.save({"profile": {}})
+    data = await store.load()
+    assert "recipes" in data
+    data["recipes"].append("test")
+    await store.save(data)

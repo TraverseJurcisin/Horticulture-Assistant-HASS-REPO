@@ -45,13 +45,27 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
 
     @property
     def extra_state_attributes(self):
-        return {
+        attrs = {
             "last_update_success": self.coordinator.last_update_success,
-            "last_exception": str(self.coordinator.last_exception) if self.coordinator.last_exception else None,
-            "retry_count": getattr(self.coordinator, "retry_count", 0),
-            "breaker_open": getattr(self.coordinator, "breaker_open", False),
-            "latency_ms": getattr(self.coordinator, "latency_ms", None),
+            "last_exception": str(self.coordinator.last_exception)
+            if self.coordinator.last_exception
+            else None,
         }
+        api = self.coordinator.__dict__.get("api") or getattr(self.coordinator, "api", None)
+        if api:
+            attrs["retry_count"] = max(
+                getattr(api, "_failures", 0),
+                getattr(self.coordinator, "retry_count", 0),
+            )
+            attrs["breaker_open"] = getattr(api, "_open", None) is False
+            attrs["latency_ms"] = getattr(
+                api, "last_latency_ms", getattr(self.coordinator, "latency_ms", None)
+            )
+        else:
+            attrs["retry_count"] = getattr(self.coordinator, "retry_count", None)
+            attrs["breaker_open"] = getattr(self.coordinator, "breaker_open", None)
+            attrs["latency_ms"] = getattr(self.coordinator, "latency_ms", None)
+        return attrs
 
     @property
     def available(self) -> bool:

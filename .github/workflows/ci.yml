@@ -11,13 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
-      - run: pip install ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component
+      - run: pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component
+      - name: Validate plant profiles
+        run: python scripts/validate_profiles.py
       - run: ruff check custom_components
       - run: mypy custom_components || true
       - run: pytest -q
