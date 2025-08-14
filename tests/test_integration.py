@@ -3,6 +3,7 @@ import pytest
 from aiohttp import ClientError
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import OperationNotAllowed
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
@@ -53,16 +54,16 @@ async def test_coordinator_update_handles_errors(
         raise ClientError
 
     monkeypatch.setattr(coord.api, "chat", raise_client)
-    data = await coord._async_update_data()
-    assert data["ok"] is False
+    with pytest.raises(UpdateFailed):
+        await coord._async_update_data()
     assert coord.retry_count == 1
 
     async def raise_timeout(*args, **kwargs):
         raise asyncio.TimeoutError
 
     monkeypatch.setattr(coord.api, "chat", raise_timeout)
-    data = await coord._async_update_data()
-    assert data["ok"] is False
+    with pytest.raises(UpdateFailed):
+        await coord._async_update_data()
     assert coord.retry_count == 2
 
 

@@ -6,7 +6,7 @@ import time
 from datetime import datetime, timedelta
 from typing import Any
 
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
 from .api import ChatApi
@@ -96,8 +96,14 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     "AI update failed; breaker opened (%s): %s", code, err
                 )
             else:
-                log_limited(_LOGGER, logging.WARNING, code, "AI update failed (%s): %s", code, err)
+                log_limited(
+                    _LOGGER,
+                    logging.WARNING,
+                    code,
+                    "AI update failed (%s): %s",
+                    code,
+                    err,
+                )
             self.last_exception_msg = str(err)
-            data = {"ok": False, "error": str(err)}
-            self.data = data
-            return data
+            self.data = {"ok": False, "error": str(err)}
+            raise UpdateFailed(str(err)) from err

@@ -3,6 +3,7 @@ from aiohttp import ClientError
 import pytest
 from unittest.mock import patch
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.helpers.entity_registry import async_get
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
@@ -58,7 +59,8 @@ async def test_circuit_breaker_skips_calls(hass):
         side_effect=Exception("boom"),
     ):
         for _ in range(4):
-            await coord._async_update_data()
+            with pytest.raises(UpdateFailed):
+                await coord._async_update_data()
     assert coord.breaker_open is True
     data_before = coord.data
     with patch("custom_components.horticulture_assistant.api.ChatApi.chat") as mock_chat:
