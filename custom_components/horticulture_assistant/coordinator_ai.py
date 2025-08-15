@@ -101,6 +101,9 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             elif isinstance(err, ConnectionError):
                 code = "CONNECTION_ERROR"
                 _LOGGER.warning("Connection error to AI service")
+            elif isinstance(err, ValueError) and "non-blocking" in str(err):
+                code = "SOCKET_NONBLOCKING"
+                _LOGGER.warning("Socket must be non-blocking: %s", err)
             else:
                 code = err_key
                 _LOGGER.warning("Unexpected error in AI coordinator: %s", err)

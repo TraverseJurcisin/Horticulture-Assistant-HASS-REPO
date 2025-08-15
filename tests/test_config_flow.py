@@ -15,7 +15,12 @@ pytestmark = [
 def _mock_socket():
     with patch("socket.socket") as mock_socket:
         instance = MagicMock()
-        instance.setblocking.side_effect = ValueError("the socket must be non-blocking")
+
+        def setblocking(flag):
+            if flag is False:
+                raise ValueError("the socket must be non-blocking")
+
+        instance.setblocking.side_effect = setblocking
         mock_socket.return_value = instance
         with patch(
             "socket.create_connection",
