@@ -1,5 +1,6 @@
 import pytest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
+
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from homeassistant import config_entries
@@ -9,7 +10,26 @@ pytestmark = [
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
 
+
+@pytest.fixture(autouse=True)
+def _mock_socket():
+    with patch("socket.socket") as mock_socket:
+        instance = MagicMock()
+
+        def connect(*args, **kwargs):
+            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
+                raise ValueError("the socket must be non-blocking")
+
+        instance.connect.side_effect = connect
+        mock_socket.return_value = instance
+        with patch(
+            "socket.create_connection",
+            side_effect=ValueError("the socket must be non-blocking"),
+        ):
+            yield
+
 async def test_config_flow_user(hass):
+    """Test user config flow."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -22,9 +42,11 @@ async def test_config_flow_user(hass):
             result["flow_id"], {CONF_API_KEY: "abc"}
         )
     assert result2["type"] == "create_entry"
+    await hass.async_block_till_done()
 
 
 async def test_config_flow_invalid_key(hass):
+    """Test config flow handles invalid API key."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -38,6 +60,7 @@ async def test_config_flow_invalid_key(hass):
         )
     assert result2["type"] == "form"
     assert result2["errors"] == {"base": "cannot_connect"}
+    await hass.async_block_till_done()
 
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
@@ -48,6 +71,7 @@ async def test_options_flow(hass, hass_admin_user):
         result["flow_id"], {}
     )
     assert result2["type"] == "create_entry"
+    await hass.async_block_till_done()
 
 
 async def test_options_flow_invalid_entity(hass, hass_admin_user):
@@ -60,6 +84,7 @@ async def test_options_flow_invalid_entity(hass, hass_admin_user):
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
+    await hass.async_block_till_done()
 
 
 async def test_options_flow_invalid_interval(hass, hass_admin_user):
@@ -72,3 +97,4 @@ async def test_options_flow_invalid_interval(hass, hass_admin_user):
     )
     assert result2["type"] == "form"
     assert result2["errors"] == {"update_interval": "invalid_interval"}
+    await hass.async_block_till_done()

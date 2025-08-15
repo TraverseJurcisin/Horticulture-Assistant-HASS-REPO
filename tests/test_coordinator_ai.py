@@ -1,7 +1,8 @@
 import asyncio
 from aiohttp import ClientError
 import pytest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
+
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.helpers.entity_registry import async_get
@@ -13,11 +14,33 @@ pytestmark = [
 ]
 
 
+@pytest.fixture(autouse=True)
+def _mock_socket():
+    with patch("socket.socket") as mock_socket:
+        instance = MagicMock()
+
+        def connect(*args, **kwargs):
+            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
+                raise ValueError("the socket must be non-blocking")
+
+        instance.connect.side_effect = connect
+        mock_socket.return_value = instance
+        with patch(
+            "socket.create_connection",
+            side_effect=ValueError("the socket must be non-blocking"),
+        ):
+            yield
+
+
 async def test_coordinator_handles_failures(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
     entry.add_to_hass(hass)
-    await hass.config_entries.async_setup(entry.entry_id)
-    await hass.async_block_till_done()
+    with patch(
+        "custom_components.horticulture_assistant.api.ChatApi.chat",
+        return_value={"choices": [{"message": {"content": "hi"}}]},
+    ):
+        await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
     with patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
@@ -67,3 +90,4 @@ async def test_circuit_breaker_skips_calls(hass):
         result = await coord._async_update_data()
     mock_chat.assert_not_called()
     assert result == data_before
+    await hass.async_block_till_done()
