@@ -478,6 +478,7 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
     best_id: str | None = None
     best_cost: float | None = None
 
+    # Iterate through the catalog and evaluate each product's nutrient costs.
     for pid in list_products():
         try:
             costs = estimate_cost_per_nutrient(pid)
