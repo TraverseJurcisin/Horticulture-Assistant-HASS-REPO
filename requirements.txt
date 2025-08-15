@@ -2,7 +2,7 @@ acme>=2.8.0,<3.0.0
 josepy>=1.13.0,<2.0.0
 numpy>=1.25
 pandas>=2.3
-pyyaml>=6.0
+PyYAML>=6.0.1
 pytest-asyncio>=0.23
 types-PyYAML
 voluptuous==0.13.1
