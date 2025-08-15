@@ -16,11 +16,11 @@ def _mock_socket():
     with patch("socket.socket") as mock_socket:
         instance = MagicMock()
 
-        def setblocking(flag):
-            if flag is False:
+        def connect(*args, **kwargs):
+            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
                 raise ValueError("the socket must be non-blocking")
 
-        instance.setblocking.side_effect = setblocking
+        instance.connect.side_effect = connect
         mock_socket.return_value = instance
         with patch(
             "socket.create_connection",
