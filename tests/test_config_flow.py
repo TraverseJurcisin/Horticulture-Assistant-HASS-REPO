@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -13,8 +13,15 @@ pytestmark = [
 
 @pytest.fixture(autouse=True)
 def _mock_socket():
-    with patch("socket.socket"):
-        yield
+    with patch("socket.socket") as mock_socket:
+        instance = MagicMock()
+        instance.setblocking.side_effect = ValueError("the socket must be non-blocking")
+        mock_socket.return_value = instance
+        with patch(
+            "socket.create_connection",
+            side_effect=ValueError("the socket must be non-blocking"),
+        ):
+            yield
 
 async def test_config_flow_user(hass):
     """Test user config flow."""
