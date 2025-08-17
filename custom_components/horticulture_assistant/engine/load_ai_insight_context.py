@@ -17,14 +17,14 @@ def load_ai_insight_context(
 ) -> dict:
     """
     Load recent plant data and compile context for AI insights.
-    
+
     Reads the plant's profile and recent growth/yield analytics to assemble a context dictionary containing:
       - plant_id: the plant identifier (string)
       - lifecycle_stage: current lifecycle stage of the plant (string)
       - current_thresholds: current threshold values from the plant profile (dict)
       - growth_trend: list of recent growth metric values (last 7 data points, most recent last)
       - yield_cumulative: latest cumulative yield value for the plant (float or int)
-    
+
     The plant profile is expected at `{base_path}/{plant_id}.json` and
     growth/yield data at `{analytics_path}/{plant_id}_growth_yield.json`.
 
@@ -41,7 +41,7 @@ def load_ai_insight_context(
         "growth_trend": [],
         "yield_cumulative": 0.0
     }
-    
+
     if base_path is None:
         base_path = plants_path(None)
     if analytics_path is None:
@@ -50,7 +50,7 @@ def load_ai_insight_context(
     # Construct file paths
     profile_path = Path(base_path) / f"{plant_id}.json"
     analytics_file = Path(analytics_path) / f"{plant_id}_growth_yield.json"
-    
+
     # Load plant profile JSON
     profile = {}
     try:
@@ -62,16 +62,16 @@ def load_ai_insight_context(
     except Exception as e:
         _LOGGER.error("Failed to parse profile for plant '%s': %s", plant_id, e)
         return context
-    
+
     if not isinstance(profile, dict):
         _LOGGER.error("Profile data for plant '%s' is invalid format (expected dict)", plant_id)
         return context
-    
+
     # Extract lifecycle stage (with fallback to nested structure if applicable)
     lifecycle_stage = profile.get("lifecycle_stage") or profile.get("general", {}).get("lifecycle_stage") \
                       or profile.get("general", {}).get("stage") or "unknown"
     context["lifecycle_stage"] = lifecycle_stage
-    
+
     # Extract current thresholds (ensure dictionary)
     thresholds = profile.get("thresholds")
     if thresholds is None:
@@ -80,7 +80,7 @@ def load_ai_insight_context(
         _LOGGER.warning("Unexpected thresholds format in profile %s; defaulting to empty dict.", plant_id)
         thresholds = {}
     context["current_thresholds"] = thresholds
-    
+
     # Load recent growth/yield data
     series = []
     try:
@@ -93,7 +93,7 @@ def load_ai_insight_context(
         _LOGGER.warning("Growth/yield data file not found for plant %s at %s", plant_id, analytics_file)
     except Exception as e:
         _LOGGER.error("Failed to read growth/yield data for plant '%s': %s", plant_id, e)
-    
+
     if series:
         # Determine latest cumulative yield from last entry
         last_entry = series[-1]
@@ -109,5 +109,5 @@ def load_ai_insight_context(
         # No data available, leave defaults (growth_trend empty, yield_cumulative 0.0)
         context["growth_trend"] = []
         context["yield_cumulative"] = 0.0
-    
+
     return context
