@@ -1,5 +1,10 @@
 name: CI
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 8 * * 1"
 jobs:
   hassfest:
     runs-on: ubuntu-latest
@@ -24,9 +29,10 @@ jobs:
       - run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
-      - run: pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component
+      - run: pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component pre-commit
       - name: Validate plant profiles
         run: python scripts/validate_profiles.py
+      - run: pre-commit run --all-files
       - run: ruff check custom_components
       - run: mypy --explicit-package-bases acme/crypto_util.py custom_components/horticulture_assistant/__init__.py custom_components/horticulture_assistant/api.py custom_components/horticulture_assistant/fertilizer_formulator.py || true
       - run: pytest -q

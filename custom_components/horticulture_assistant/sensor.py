@@ -1,8 +1,8 @@
 from __future__ import annotations
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import DOMAIN
 from .coordinator_ai import HortiAICoordinator
@@ -25,6 +25,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
 class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
     _attr_name = "Horticulture Assistant Status"
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_options = ["ok", "error"]
 
     def __init__(self, coordinator: HortiAICoordinator, local: HortiLocalCoordinator, entry_id: str, keep_stale: bool):
         super().__init__(coordinator)
@@ -47,27 +50,27 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
 
     @property
     def extra_state_attributes(self):
-        attrs = {
+        api = getattr(self.coordinator, "api", None)
+        last_exc = getattr(self.coordinator, "last_exception_msg", None)
+        if not last_exc and self.coordinator.last_exception:
+            last_exc = str(self.coordinator.last_exception)
+        latency = getattr(api, "last_latency_ms", None)
+        if latency is None:
+            latency = getattr(self.coordinator, "latency_ms", None)
+        return {
             "last_update_success": self.coordinator.last_update_success,
-            "last_exception": str(self.coordinator.last_exception)
-            if self.coordinator.last_exception
-            else None,
-        }
-        api = self.coordinator.__dict__.get("api") or getattr(self.coordinator, "api", None)
-        if api:
-            attrs["retry_count"] = max(
+            "last_exception": last_exc,
+            "retry_count": max(
                 getattr(api, "_failures", 0),
                 getattr(self.coordinator, "retry_count", 0),
-            )
-            attrs["breaker_open"] = getattr(api, "_open", None) is False
-            attrs["latency_ms"] = getattr(
-                api, "last_latency_ms", getattr(self.coordinator, "latency_ms", None)
-            )
-        else:
-            attrs["retry_count"] = getattr(self.coordinator, "retry_count", None)
-            attrs["breaker_open"] = getattr(self.coordinator, "breaker_open", None)
-            attrs["latency_ms"] = getattr(self.coordinator, "latency_ms", None)
-        return attrs
+            ),
+            "breaker_open": (
+                getattr(api, "_open", True) is False
+                if api is not None
+                else getattr(self.coordinator, "breaker_open", None)
+            ),
+            "latency_ms": latency,
+        }
 
     @property
     def available(self) -> bool:
@@ -86,6 +89,7 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
 
 class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
     _attr_name = "Horticulture Assistant Recommendation"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     def __init__(self, coordinator: HortiAICoordinator, entry_id: str, keep_stale: bool):
         super().__init__(coordinator)

@@ -55,6 +55,8 @@ async def test_coordinator_handles_failures(hass):
     assert state.state == "error"
     assert state.attributes["retry_count"] >= 1
     assert state.attributes["breaker_open"] is False
+    assert "ClientError" in (state.attributes["last_exception"] or "")
+    assert isinstance(state.attributes["latency_ms"], int)
 
     with patch(
         "custom_components.horticulture_assistant.api.ChatApi.chat",
@@ -65,6 +67,7 @@ async def test_coordinator_handles_failures(hass):
     state = hass.states.get(entity_id)
     assert state.state == "error"
     assert state.attributes["retry_count"] >= 2
+    assert isinstance(state.attributes["latency_ms"], int)
 
 
 async def test_circuit_breaker_skips_calls(hass):

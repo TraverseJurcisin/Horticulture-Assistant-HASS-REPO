@@ -4,7 +4,6 @@ import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import issue_registry as ir
 from .const import (
     DOMAIN,
     PLATFORMS,
@@ -27,10 +26,10 @@ from homeassistant.helpers.update_coordinator import UpdateFailed
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
-from .utils.local_paths import normalize_local_paths
+from .paths import ensure_local_data_paths
 from .entity_utils import ensure_entities_exist
 
-SENSORS_SCHEMA = vol.Schema({str: [str]}, extra=vol.PREVENT_EXTRA)
+SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -49,7 +48,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         timeout=15.0,
     )
     store = LocalStore(hass)
-    normalize_local_paths(hass)
+    ensure_local_data_paths(hass)
     stored = await store.load()
     minutes = max(
         1,
@@ -81,17 +80,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.info("Horticulture Assistant setup complete")
 
     # Validate configured sensors exist
-    for key in (CONF_MOISTURE_SENSOR, CONF_TEMPERATURE_SENSOR, CONF_EC_SENSOR, CONF_CO2_SENSOR):
+    for key in (
+        CONF_MOISTURE_SENSOR,
+        CONF_TEMPERATURE_SENSOR,
+        CONF_EC_SENSOR,
+        CONF_CO2_SENSOR,
+    ):
         entity_id = entry.options.get(key)
-        if entity_id and hass.states.get(entity_id) is None:
-            ir.async_create_issue(
+        if entity_id:
+            ensure_entities_exist(
                 hass,
-                DOMAIN,
-                f"missing_entity_{entry.entry_id}_{entity_id}",
-                is_fixable=False,
-                severity=ir.IssueSeverity.WARNING,
+                f"{entry.entry_id}_{entity_id}",
+                [entity_id],
                 translation_key="missing_entity_option",
-                translation_placeholders={"entity_id": entity_id},
+                placeholders={"entity_id": entity_id},
             )
 
     async def _handle_refresh(call):
@@ -139,6 +141,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "refresh",
         _handle_refresh,
+        schema=vol.Schema({}),
     )
     hass.services.async_register(
         svc_base,
@@ -164,16 +167,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    hass.data[DOMAIN].pop(entry.entry_id, None)
+    data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
+    for key in ("coordinator_ai", "coordinator_local", "coordinator"):
+        coord = data.get(key)
+        if coord and hasattr(coord, "async_shutdown"):
+            try:
+                await coord.async_shutdown()
+            except Exception:  # pragma: no cover - best effort cleanup
+                pass
     return unload_ok
 
 
 async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Migrate old config entries to new version."""
-    if entry.version < 2:
-        data = {**entry.data}
-        options = {**entry.options}
-        options.setdefault(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
-        options.setdefault(CONF_UPDATE_INTERVAL, data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES))
-        hass.config_entries.async_update_entry(entry, data=data, options=options, version=2)
+    version = entry.version or 1
+    data = {**entry.data}
+    options = {**entry.options}
+
+    if version < 2:
+        options.setdefault(
+            CONF_UPDATE_INTERVAL,
+            data.pop(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+        )
+        options.setdefault(
+            CONF_KEEP_STALE,
+            data.pop(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
+        )
+        hass.config_entries.async_update_entry(
+            entry, data=data, options=options, version=2
+        )
     return True

@@ -20,7 +20,7 @@ class HorticultureBaseEntity(Entity):
     def device_info(self) -> dict:
         """Return device information shared across entity types."""
         return {
-            "identifiers": {(DOMAIN, self._plant_id)},
+            "identifiers": {(DOMAIN, f"plant:{self._plant_id}")},
             "name": self._plant_name,
             "manufacturer": "Horticulture Assistant",
             "model": self._model,
