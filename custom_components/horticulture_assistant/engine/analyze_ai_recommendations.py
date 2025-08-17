@@ -23,7 +23,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     except Exception as e:
         _LOGGER.error("Failed to parse JSON report for plant %s: %s", plant_id, e)
         return
-    
+
     # Extract relevant context from report
     thresholds = report.get("thresholds") or report.get("nutrient_thresholds") or {}
     stage = report.get("lifecycle_stage", "unknown")
@@ -34,7 +34,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     temperature = report.get("temperature")
     humidity = report.get("humidity")
     light = report.get("light")
-    
+
     # Construct context for prompt
     context_lines = [f"Plant lifecycle stage: {stage}."]
     if yield_val is not None:
@@ -87,7 +87,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
             context_lines.append(f" - {line}")
     else:
         context_lines.append("Latest sensor readings: (unavailable)")
-    
+
     context_str = "\n".join(context_lines)
     prompt = (
         f"{context_str}\n\n"
@@ -97,7 +97,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         "If no changes are needed, output an empty JSON object {}. "
         "Do not include explanations or any additional text."
     )
-    
+
     # Ensure OpenAI API key is set
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -105,7 +105,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         return
     openai.api_key = api_key
     model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
-    
+
     # Query the AI model for recommendations
     try:
         response = openai.ChatCompletion.create(
@@ -116,14 +116,14 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     except Exception as e:
         _LOGGER.error("Failed to get AI recommendation for plant %s: %s", plant_id, e)
         return
-    
+
     # Extract the AI's message content
     try:
         ai_message = response["choices"][0]["message"]["content"]
     except Exception as e:
         _LOGGER.error("Unexpected AI response format for plant %s: %s", plant_id, e)
         return
-    
+
     # Parse the AI output as JSON
     try:
         suggested_thresholds = json.loads(ai_message.strip())
@@ -133,7 +133,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     if not isinstance(suggested_thresholds, dict):
         _LOGGER.warning("AI response for plant %s is not a JSON object (got %s); skipping.", plant_id, type(suggested_thresholds).__name__)
         return
-    
+
     # Compare suggested thresholds with current thresholds
     old = thresholds
     new = suggested_thresholds
@@ -149,7 +149,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     if not changes:
         _LOGGER.info("No threshold changes recommended by AI for plant %s.", plant_id)
         return
-    
+
     # Prepare record for pending threshold changes
     record = {
         "plant_id": plant_id,
@@ -158,7 +158,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         "proposed_thresholds": new,
         "changes": changes
     }
-    
+
     # Write record to data/pending_thresholds/{plant_id}_{YYYY-MM-DD}.json
     base_dir = get_pending_dir()
     os.makedirs(base_dir, exist_ok=True)
@@ -176,7 +176,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     except Exception as e:
         _LOGGER.error("Failed to save pending thresholds for plant %s: %s", plant_id, e)
         return
-    
+
     _LOGGER.info("Queued %d threshold change(s) for plant %s (saved to %s)", len(changes), plant_id, file_path)
     for k, info in changes.items():
         _LOGGER.info("Plant %s: suggested change - %s: %s -> %s", plant_id, k, info.get("previous_value"), info.get("proposed_value"))
