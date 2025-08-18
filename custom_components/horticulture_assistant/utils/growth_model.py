@@ -47,8 +47,8 @@ def update_growth_index(
     """
     Update the daily vegetative growth index (VGI) for a given plant.
 
-    Uses daily light (DLI or PAR), temperature (growing degree days), and profile stage-based modifiers 
-    to calculate today's VGI. Accumulates VGI over time and compares against expected growth for the 
+    Uses daily light (DLI or PAR), temperature (growing degree days), and profile stage-based modifiers
+    to calculate today's VGI. Accumulates VGI over time and compares against expected growth for the
     current lifecycle stage based on stage duration and ideal conditions.
 
     Saves the growth trend as a time series (JSON) in data/growth_trends.json and returns a summary dict.
@@ -67,8 +67,8 @@ def update_growth_index(
         return {}
 
     # Determine current lifecycle stage
-    stage = (profile.get("general", {}).get("lifecycle_stage") 
-             or profile.get("general", {}).get("stage") 
+    stage = (profile.get("general", {}).get("lifecycle_stage")
+             or profile.get("general", {}).get("stage")
              or "unknown")
     stage_lower = str(stage).lower()
     # Get stage details (duration, optional growth modifiers)
@@ -124,7 +124,7 @@ def update_growth_index(
             if light_val is not None:
                 # Rough conversion: ~1 W/m² per 120 lux for sunlight spectrum
                 par_val = light_val / 120.0
-                _LOGGER.debug("Approximating PAR from lux for %s: %s lux -> %.2f W/m²", 
+                _LOGGER.debug("Approximating PAR from lux for %s: %s lux -> %.2f W/m²",
                               plant_id, light_val, par_val)
         if par_val is not None:
             try:
