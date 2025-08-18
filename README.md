@@ -468,6 +468,7 @@ horticulture-assistant/
 
 ## Troubleshooting
 - **Sensors show `unavailable`**: verify the entity IDs and that the devices are reporting to Home Assistant.
+- **Missing sensor mapping**: a Repairs issue will alert you when a configured entity ID is gone; open Options to update it.
 - **Config flow fails**: check the logs for JSON errors in your plant profiles or missing permissions.
 - **Incorrect nutrient data**: the built-in datasets are for reference only. Verify recommendations with a trusted horticulture resource before applying.
 - **Blueprint missing**: copy `plant_monitoring.yaml` to `<config>/blueprints/automation/` and restart Home Assistant.
