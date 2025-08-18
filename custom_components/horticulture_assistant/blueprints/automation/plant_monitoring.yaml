@@ -115,7 +115,7 @@ action:
               message: >
                 {{ plant_name }} is showing water depletion of
                 {{ states(root_zone_depletion) }}. Moisture at
-                {{ states(smoothed_moisture) }}%. Recommendation: 
+                {{ states(smoothed_moisture) }}%. Recommendation:
                 {{ states(ai_recommendation) or 'Water now.' }}
 
 mode: restart

@@ -9,8 +9,8 @@ _LOGGER = logging.getLogger(__name__)
 def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: str = "dashboard") -> dict:
     """
     Compile plant data into a JSON object for Grafana dashboards and write to file.
-    Loads the plant profile and the last 7 days of logs, then produces a summary of 
-    current thresholds, latest sensor readings, and recent soil moisture, EC, irrigation, 
+    Loads the plant profile and the last 7 days of logs, then produces a summary of
+    current thresholds, latest sensor readings, and recent soil moisture, EC, irrigation,
     and nutrient data. The result is saved as a JSON file under the output_path.
     """
     base_dir = Path(base_path)

@@ -102,12 +102,12 @@ def run_daily_threshold_updates():
             profile = load_json(profile_path)
         # Step 1: Generate base report
         report = generate_daily_report(plant_id, profile)
-        
+
         # Step 2: Transpiration estimation
         # (Assumes you've already run compute_transpiration.py elsewhere — otherwise simulate)
         transpiration_ml = report.get("transpiration_ml_day", 1200.0)
         irrigation_ml = report.get("last_irrigation_ml", 1000.0)
-        
+
         # Step 3: Update water balance tracker
         water_status = update_water_balance(plant_id, irrigation_ml, transpiration_ml)
         report["water_deficit"] = water_status.as_dict()
@@ -122,9 +122,9 @@ def run_daily_threshold_updates():
         # Simulate AI threshold recalculation
         from ai_model import analyze
         from approval_queue import queue_threshold_updates
-        
+
         new_thresholds = analyze(report)
-        
+
         if profile.get(AUTO_APPROVE_FIELD, False):
             update_plant_profile(profile_path, new_thresholds)
             print("✅ Thresholds auto-updated (auto_approve_all: true)")
