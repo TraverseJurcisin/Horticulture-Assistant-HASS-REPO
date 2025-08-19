@@ -36,10 +36,16 @@ def main(argv: list[str] | None = None) -> None:
     data = generate_summary(args.plant_type, args.stage)
     if args.yaml:
         try:
-            import yaml
-        except Exception as exc:  # pragma: no cover - optional dependency
-            parser.error("PyYAML required for --yaml output")
-        print(yaml.safe_dump(data, sort_keys=False))
+            from io import StringIO
+            from ruamel.yaml import YAML
+        except Exception:  # pragma: no cover - optional dependency
+            parser.error("ruamel.yaml required for --yaml output")
+        yaml = YAML()
+        yaml.default_flow_style = False
+        yaml.sort_keys = False
+        buf = StringIO()
+        yaml.dump(data, buf)
+        print(buf.getvalue())
     else:
         print(json.dumps(data, indent=2))
 

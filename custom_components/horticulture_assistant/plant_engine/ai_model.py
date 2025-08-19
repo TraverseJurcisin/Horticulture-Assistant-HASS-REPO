@@ -7,10 +7,9 @@ import os
 from dataclasses import dataclass
 from typing import Dict, Protocol
 
-try:
-    import openai  # Optional, only if using OpenAI's API
-except ModuleNotFoundError:  # pragma: no cover - optional dependency
-    openai = None
+import asyncio
+
+from ..utils.ai_async import async_chat_completion
 
 # === Configuration ===
 
@@ -95,33 +94,15 @@ class OpenAIModel:
             {"role": "user", "content": f"Input data:\n{json.dumps(data, indent=2)}"},
         ]
 
-    def _call(self, data: Dict, async_mode: bool = False) -> Dict:
-        """Return updated thresholds synchronously or asynchronously."""
-
-        if openai is None:
-            raise RuntimeError("openai package is not installed")
+    async def _request(self, data: Dict) -> Dict:
         if not self.config.api_key:
             raise RuntimeError("OPENAI_API_KEY not set in environment.")
-
-        openai.api_key = self.config.api_key
-        messages = self._messages(data)
-
-        if async_mode:
-            response = openai.ChatCompletion.acreate(
-                model=self.config.model,
-                messages=messages,
-                temperature=self.config.temperature,
-            )
-        else:
-            response = openai.ChatCompletion.create(
-                model=self.config.model,
-                messages=messages,
-                temperature=self.config.temperature,
-            )
-
-        if async_mode:
-            # Awaitable for type checkers; runtime awaiting is handled in wrapper
-            return response  # type: ignore[return-value]
+        response = await async_chat_completion(
+            self.config.api_key,
+            self.config.model,
+            self._messages(data),
+            timeout=30,
+        )
         text = response["choices"][0]["message"]["content"]
         try:
             return json.loads(text)
@@ -131,17 +112,12 @@ class OpenAIModel:
     async def adjust_thresholds_async(self, data: Dict) -> Dict:
         """Asynchronously return updated thresholds via OpenAI."""
 
-        response = await self._call(data, async_mode=True)
-        text = response["choices"][0]["message"]["content"]
-        try:
-            return json.loads(text)
-        except json.JSONDecodeError as exc:
-            raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
+        return await self._request(data)
 
     def adjust_thresholds(self, data: Dict) -> Dict:
         """Return updated thresholds via OpenAI synchronously."""
 
-        return self._call(data)
+        return asyncio.run(self._request(data))
 
 
 # === Public Interface ===

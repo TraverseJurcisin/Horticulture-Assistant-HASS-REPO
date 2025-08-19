@@ -15,7 +15,12 @@ from scripts import ensure_repo_root_on_path
 ROOT = ensure_repo_root_on_path()
 
 from plant_engine.fertigation import recommend_precise_fertigation_with_injection
-import yaml
+from io import StringIO
+from ruamel.yaml import YAML
+
+yaml = YAML()
+yaml.default_flow_style = False
+yaml.sort_keys = False
 
 
 def load_water_profile(path: str) -> dict:
@@ -31,7 +36,7 @@ def load_water_profile(path: str) -> dict:
     try:
         text = file_path.read_text()
         if file_path.suffix.lower() in {".yaml", ".yml"}:
-            return yaml.safe_load(text) or {}
+            return yaml.load(text) or {}
         return json.loads(text)
     except Exception:
         return {}
@@ -96,7 +101,9 @@ def main(argv: list[str] | None = None) -> None:
     }
 
     if args.as_yaml:
-        print(yaml.safe_dump(payload, sort_keys=False))
+        buf = StringIO()
+        yaml.dump(payload, buf)
+        print(buf.getvalue())
     else:
         print(json.dumps(payload, indent=2))
 

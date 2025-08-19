@@ -1,13 +1,10 @@
+import asyncio
 import json
 import os
 import logging
 from datetime import datetime
 
-# Attempt to import OpenAI library (optional dependency)
-try:
-    import openai
-except ImportError:
-    openai = None
+from ..utils.ai_async import async_chat_completion
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -94,49 +91,56 @@ def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
     source = "openai" if use_openai else "mock"
     # Call OpenAI API or use mock response
     if use_openai:
-        if openai is None:
-            # OpenAI library not available
-            _LOGGER.error("OpenAI library is not installed, cannot fetch AI recommendations for plant %s.", plant_id)
-            ai_raw_response = "OpenAI library not available"
+        # Ensure API key is set
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            _LOGGER.error("OpenAI API key not found. Set OPENAI_API_KEY environment variable.")
+            ai_raw_response = "OpenAI API key not found"
         else:
-            # Ensure API key is set
-            api_key = os.getenv("OPENAI_API_KEY")
-            if not api_key:
-                _LOGGER.error("OpenAI API key not found. Set OPENAI_API_KEY environment variable.")
-                ai_raw_response = "OpenAI API key not found"
-            else:
-                openai.api_key = api_key
-                model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
-                try:
-                    response = openai.ChatCompletion.create(
-                        model=model_name,
-                        messages=[
-                            {"role": "system", "content": "You are a horticulture AI assistant optimizing plant yield and health. Return improved threshold values based on data."},
-                            {"role": "user", "content": json.dumps(context_dict)}
+            model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+            try:
+                response = asyncio.run(
+                    async_chat_completion(
+                        api_key,
+                        model_name,
+                        [
+                            {
+                                "role": "system",
+                                "content": (
+                                    "You are a horticulture AI assistant optimizing plant yield and health. "
+                                    "Return improved threshold values based on data."
+                                ),
+                            },
+                            {"role": "user", "content": json.dumps(context_dict)},
                         ],
-                        temperature=0
+                        timeout=30,
                     )
+                )
+            except Exception as e:
+                _LOGGER.error("OpenAI API call failed for plant %s: %s", plant_id, e)
+                ai_raw_response = f"OpenAI API call error: {e}"
+            else:
+                # Extract the AI's response message content
+                try:
+                    ai_raw_response = response["choices"][0]["message"]["content"]
                 except Exception as e:
-                    _LOGGER.error("OpenAI API call failed for plant %s: %s", plant_id, e)
-                    ai_raw_response = f"OpenAI API call error: {e}"
-                else:
-                    # Extract the AI's response message content
+                    _LOGGER.error("Unexpected OpenAI response format for plant %s: %s", plant_id, e)
+                    ai_raw_response = ""
+                # Parse AI response if possible
+                if ai_raw_response:
                     try:
-                        ai_raw_response = response["choices"][0]["message"]["content"]
-                    except Exception as e:
-                        _LOGGER.error("Unexpected OpenAI response format for plant %s: %s", plant_id, e)
-                        ai_raw_response = ""
-                    # Parse AI response if possible
-                    if ai_raw_response:
-                        try:
-                            parsed = json.loads(ai_raw_response.strip())
-                        except json.JSONDecodeError:
-                            _LOGGER.warning("AI did not return valid JSON for plant %s (output was: %r)", plant_id, ai_raw_response)
+                        parsed = json.loads(ai_raw_response.strip())
+                    except json.JSONDecodeError:
+                        _LOGGER.warning("AI did not return valid JSON for plant %s (output was: %r)", plant_id, ai_raw_response)
+                    else:
+                        if isinstance(parsed, dict):
+                            proposed_thresholds = parsed
                         else:
-                            if isinstance(parsed, dict):
-                                proposed_thresholds = parsed
-                            else:
-                                _LOGGER.warning("AI response for plant %s is not a JSON object (got %s)", plant_id, type(parsed).__name__)
+                            _LOGGER.warning(
+                                "AI response for plant %s is not a JSON object (got %s)",
+                                plant_id,
+                                type(parsed).__name__,
+                            )
     else:
         # Use offline mock model to generate threshold suggestions
         thresholds = context_dict.get("thresholds") or context_dict.get("nutrient_thresholds") or {}

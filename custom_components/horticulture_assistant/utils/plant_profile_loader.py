@@ -10,10 +10,14 @@ from typing import Any, Mapping, Iterable
 
 from .json_io import load_json, save_json
 
-# Attempt to import PyYAML for optional YAML support. Tests fall back to a very
-# small parser that understands the limited subset of YAML used in fixtures.
+# Attempt to import ruamel.yaml for optional YAML support. Tests fall back to a
+# very small parser that understands the limited subset of YAML used in
+# fixtures when the dependency is missing.
 try:
-    import yaml
+    from ruamel.yaml import YAML
+
+    yaml = YAML(typ="safe")
+    yaml.sort_keys = False
 except ImportError:
     yaml = None
 
@@ -39,7 +43,7 @@ REQUIRED_STAGE_KEY = "stage_duration"
 
 
 def parse_basic_yaml(content: str) -> dict:
-    """Return a naive YAML parser used when PyYAML is unavailable.
+    """Return a naive YAML parser used when ruamel.yaml is unavailable.
 
     The parser understands only the limited subset of YAML present in the
     unit test fixtures: nested mappings using indentation and single line
@@ -135,7 +139,7 @@ def load_profile_from_path(path: str | Path) -> dict:
     def _load_yaml(fp: Path) -> dict:
         content = fp.read_text(encoding="utf-8")
         if yaml is not None:
-            return yaml.safe_load(content) or {}
+            return yaml.load(content) or {}
         return parse_basic_yaml(content)
 
     try:

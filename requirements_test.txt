@@ -7,6 +7,5 @@ pandas>=2.3
 pytest>=7.0
 pytest-asyncio>=0.23
 pytest-homeassistant-custom-component>=0.0.1
-PyYAML>=6.0.1
-types-PyYAML
+ruamel.yaml>=0.17
 voluptuous==0.13.1

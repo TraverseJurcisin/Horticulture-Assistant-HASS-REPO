@@ -1,10 +1,11 @@
-import openai
+import asyncio
 import os
 import json
 import logging
 from datetime import datetime
 
 from ..utils.json_io import load_json, save_json
+from ..utils.ai_async import async_chat_completion
 from plant_engine.utils import get_pending_dir
 
 _LOGGER = logging.getLogger(__name__)
@@ -103,15 +104,17 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     if not api_key:
         _LOGGER.error("OpenAI API key not found. Set OPENAI_API_KEY environment variable.")
         return
-    openai.api_key = api_key
     model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
-    
+
     # Query the AI model for recommendations
     try:
-        response = openai.ChatCompletion.create(
-            model=model_name,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0
+        response = asyncio.run(
+            async_chat_completion(
+                api_key,
+                model_name,
+                [{"role": "user", "content": prompt}],
+                timeout=30,
+            )
         )
     except Exception as e:
         _LOGGER.error("Failed to get AI recommendation for plant %s: %s", plant_id, e)

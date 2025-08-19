@@ -1,16 +1,28 @@
 from __future__ import annotations
 import asyncio
-import math
+import random
 import time
 from typing import Any
 from aiohttp import ClientError
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import aiohttp_client
 
+from .const import DEFAULT_INITIAL_DELAY, DEFAULT_MAX_RETRIES
+
 RETRYABLE = (429, 500, 502, 503, 504)
 
 class ChatApi:
-    def __init__(self, hass: HomeAssistant, api_key: str, base_url: str, model: str, timeout: float = 15.0):
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        api_key: str,
+        base_url: str,
+        model: str,
+        timeout: float = 15.0,
+        *,
+        max_retries: int = DEFAULT_MAX_RETRIES,
+        initial_delay: float = DEFAULT_INITIAL_DELAY,
+    ) -> None:
         self._hass = hass
         self._api_key = (api_key or "").strip()
         self._base_url = base_url.rstrip("/") if base_url else "https://api.openai.com/v1"
@@ -18,6 +30,8 @@ class ChatApi:
         self._timeout = timeout
         self._failures = 0
         self._open = True  # simple circuit breaker
+        self._max_retries = max_retries
+        self._initial_delay = initial_delay
         self.last_latency_ms: int | None = None
 
     def _headers(self) -> dict[str, str]:
@@ -30,13 +44,19 @@ class ChatApi:
         payload = {"model": self._model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens}
         url = f"{self._base_url}/chat/completions"
 
-        delay = 1.0
-        for attempt in range(5):
+        delay = self._initial_delay
+        for attempt in range(self._max_retries + 1):
             try:
                 async with asyncio.timeout(self._timeout):
                     t0 = time.perf_counter()
                     async with session.post(url, headers=self._headers(), json=payload) as resp:
                         if resp.status in RETRYABLE:
+                            retry_after = resp.headers.get("Retry-After")
+                            if retry_after:
+                                try:
+                                    delay = max(delay, float(retry_after))
+                                except ValueError:
+                                    pass
                             raise ClientError(f"Retryable status: {resp.status}")
                         resp.raise_for_status()
                         self._failures = 0
@@ -46,13 +66,13 @@ class ChatApi:
                         return data
             except (ClientError, asyncio.TimeoutError):
                 self._failures += 1
-                if attempt == 4:
+                if attempt == self._max_retries:
                     self._open = False
                     # auto half-open after 60s
                     self._hass.loop.call_later(60, self._half_open)
                     raise
-                # exp backoff + small jitter
-                await asyncio.sleep(delay + 0.25 * (0.5 - math.sin(time.time())))
+                # exp backoff with jitter
+                await asyncio.sleep(delay + random.random() * 0.25)
                 delay = min(delay * 2, 30)
 
         raise RuntimeError("Failed to fetch chat completion")

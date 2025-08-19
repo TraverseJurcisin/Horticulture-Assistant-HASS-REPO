@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-import yaml
+from ruamel.yaml import YAML
 
 from scripts.generate_plant_sensors import generate_template_yaml, generate_from_directory
 
@@ -26,7 +26,8 @@ def test_generate_template_yaml(tmp_path: Path):
     out_path = generate_template_yaml("plant1", report_dir, out_dir)
     assert out_path.exists()
 
-    data = yaml.safe_load(out_path.read_text())
+    yaml = YAML(typ="safe")
+    data = yaml.load(out_path.read_text())
     sensors = data["template"][0]["sensor"]
     names = {s["name"] for s in sensors}
     assert "plant1 VGI Today" in names

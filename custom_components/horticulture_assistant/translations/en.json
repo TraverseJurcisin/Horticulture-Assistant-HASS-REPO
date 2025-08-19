@@ -9,7 +9,9 @@
           "api_key": "API key",
           "model": "Model",
           "base_url": "Base URL",
-          "update_interval": "Update interval (minutes)"
+          "update_interval": "Update interval (minutes)",
+          "max_retries": "Max API retries",
+          "initial_retry_delay": "Initial retry delay (s)"
         }
       }
     },
@@ -26,13 +28,17 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor"
+          "co2_sensor": "CO₂ sensor",
+          "max_retries": "Max API retries",
+          "initial_retry_delay": "Initial retry delay (s)"
         }
       }
     },
     "error": {
       "not_found": "Entity not found",
-      "invalid_interval": "Update interval must be at least 1 minute"
+      "invalid_interval": "Update interval must be at least 1 minute",
+      "invalid_max_retries": "Retry count must be zero or greater",
+      "invalid_initial_delay": "Initial delay must be zero or greater"
     }
   },
   "issues": {

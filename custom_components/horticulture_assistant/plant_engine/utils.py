@@ -12,7 +12,10 @@ from pathlib import Path
 from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
 from os import PathLike
 
-import yaml
+from ruamel.yaml import YAML, YAMLError
+
+yaml = YAML(typ="safe")
+yaml.sort_keys = False
 
 __all__ = [
     "load_json",
@@ -79,9 +82,9 @@ def load_data(path: PathType) -> Any:
     try:
         with _open_text(p) as f:
             if p.suffix.lower() in {".yaml", ".yml"}:
-                return yaml.safe_load(f) or {}
+                return yaml.load(f) or {}
             return json.load(f)
-    except yaml.YAMLError as exc:
+    except YAMLError as exc:
         raise ValueError(f"Invalid YAML in {p}: {exc}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"Invalid JSON in {p}: {exc}") from exc

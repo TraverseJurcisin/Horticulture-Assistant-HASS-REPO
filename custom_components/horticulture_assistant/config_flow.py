@@ -17,6 +17,10 @@ from .const import (
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DEFAULT_KEEP_STALE,
+    CONF_MAX_RETRIES,
+    CONF_INITIAL_DELAY,
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_INITIAL_DELAY,
 )
 from .api import ChatApi
 
@@ -26,6 +30,12 @@ DATA_SCHEMA = vol.Schema({
     vol.Optional(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
     vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_MINUTES): vol.All(
         int, vol.Range(min=1)
+    ),
+    vol.Optional(CONF_MAX_RETRIES, default=DEFAULT_MAX_RETRIES): vol.All(
+        int, vol.Range(min=0)
+    ),
+    vol.Optional(CONF_INITIAL_DELAY, default=DEFAULT_INITIAL_DELAY): vol.All(
+        vol.Coerce(float), vol.Range(min=0)
     ),
 })
 
@@ -40,6 +50,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 user_input.get(CONF_API_KEY, ""),
                 user_input.get(CONF_BASE_URL, DEFAULT_BASE_URL),
                 user_input.get(CONF_MODEL, DEFAULT_MODEL),
+                max_retries=user_input.get(CONF_MAX_RETRIES, DEFAULT_MAX_RETRIES),
+                initial_delay=user_input.get(CONF_INITIAL_DELAY, DEFAULT_INITIAL_DELAY),
             )
             try:
                 await api.validate_api_key()
@@ -66,6 +78,14 @@ class OptionsFlow(config_entries.OptionsFlow):
                 self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
             ),
             CONF_KEEP_STALE: self._entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
+            CONF_MAX_RETRIES: self._entry.options.get(
+                CONF_MAX_RETRIES,
+                self._entry.data.get(CONF_MAX_RETRIES, DEFAULT_MAX_RETRIES),
+            ),
+            CONF_INITIAL_DELAY: self._entry.options.get(
+                CONF_INITIAL_DELAY,
+                self._entry.data.get(CONF_INITIAL_DELAY, DEFAULT_INITIAL_DELAY),
+            ),
         }
 
         schema = vol.Schema(
@@ -96,6 +116,12 @@ class OptionsFlow(config_entries.OptionsFlow):
                     str,
                 ),
                 vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
+                vol.Optional(CONF_MAX_RETRIES, default=defaults[CONF_MAX_RETRIES]): vol.All(
+                    int, vol.Range(min=0)
+                ),
+                vol.Optional(
+                    CONF_INITIAL_DELAY, default=defaults[CONF_INITIAL_DELAY]
+                ): vol.All(vol.Coerce(float), vol.Range(min=0)),
             }
         )
 
@@ -103,7 +129,16 @@ class OptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             if user_input.get(CONF_UPDATE_INTERVAL, 1) < 1:
                 errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
-            for key in (CONF_MOISTURE_SENSOR, CONF_TEMPERATURE_SENSOR, CONF_EC_SENSOR, CONF_CO2_SENSOR):
+            if user_input.get(CONF_MAX_RETRIES, 0) < 0:
+                errors[CONF_MAX_RETRIES] = "invalid_max_retries"
+            if user_input.get(CONF_INITIAL_DELAY, 0.0) < 0:
+                errors[CONF_INITIAL_DELAY] = "invalid_initial_delay"
+            for key in (
+                CONF_MOISTURE_SENSOR,
+                CONF_TEMPERATURE_SENSOR,
+                CONF_EC_SENSOR,
+                CONF_CO2_SENSOR,
+            ):
                 entity_id = user_input.get(key)
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"

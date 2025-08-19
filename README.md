@@ -46,6 +46,7 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
 7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
 8. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage, model and temperature. These settings are stored in `<config>/data/horticulture_global_config.json`.
+   Retry behaviour for API calls can also be tuned here by adjusting `max_retries` and `initial_retry_delay`.
 9. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
@@ -78,6 +79,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Dynamic thresholds based on growth stage history
 - Optional OpenAI or offline models for nutrient planning
 - Async API helpers for non-blocking AI analysis
+- Configurable exponential backoff with retry for AI API calls
 - Irrigation and fertigation switches with approval queues
 - Configurable irrigation zones with shared solenoids
 - Watering interval defaults to drought tolerance when stage data is missing
@@ -99,6 +101,7 @@ Once you have at least one plant configured, open **Settings → Devices & Servi
 - Growth stage nutrient schedules for precise fertilization planning
 - Environment score and quality rating for sensor data
 - DataFrame-based environment metrics for bulk analysis
+- Robust YAML parsing with `ruamel.yaml` for flexible profile handling
 - Infiltration-aware irrigation burst scheduling
 - Cost-optimized fertigation plans with injection volumes
 - Weekly nutrient usage metrics for efficiency tracking
@@ -383,6 +386,7 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - Use the automation blueprints under `blueprints/automation/` for quick setup.
 - Toggle `input_boolean.auto_approve_all` to apply AI recommendations automatically.
 - Edit `plant_engine/constants.py` to tweak default environment readings or nutrient multipliers when profiles omit them.
+- Use `utils.ai_async.async_chat_completion` for non-blocking AI calls with timeout support.
 - Call `plant_engine.datasets.refresh_datasets()` if dataset files change.
 - Tag plants (e.g. `"blueberry"`, `"fruiting"`) to generate grouped dashboards and reports.
 - `recommend_nutrient_mix` computes fertilizer grams needed to hit N/P/K targets and can include micronutrients. `recommend_nutrient_mix_with_cost` returns the same schedule with estimated cost. `generate_nutrient_management_report` consolidates analysis and correction grams for a solution volume.

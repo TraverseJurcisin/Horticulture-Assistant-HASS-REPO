@@ -13,8 +13,12 @@ from custom_components.horticulture_assistant.utils.path_utils import data_path
 from typing import Dict, Iterable, List
 
 try:
-    import yaml
-except Exception:  # pragma: no cover - fallback when PyYAML is missing
+    from ruamel.yaml import YAML
+
+    yaml = YAML()
+    yaml.default_flow_style = False
+    yaml.sort_keys = False
+except Exception:  # pragma: no cover - fallback when YAML lib is missing
     yaml = None
 
 from custom_components.horticulture_assistant.utils.json_io import load_json
@@ -50,7 +54,7 @@ def _write_yaml(sensors: Iterable[SensorTemplate], out_path: Path) -> None:
     if yaml is not None:
         data = {"template": [{"sensor": sensor_dicts}]}
         with out_path.open("w", encoding="utf-8") as fh:
-            yaml.safe_dump(data, fh, sort_keys=False)
+            yaml.dump(data, fh)
         return
 
     # Basic string-based writer as fallback

@@ -9,7 +9,9 @@
           "api_key": "API key",
           "model": "Model",
           "base_url": "Base URL",
-          "update_interval": "Update interval (minutes)"
+          "update_interval": "Update interval (minutes)",
+          "max_retries": "Max API retries",
+          "initial_retry_delay": "Initial retry delay (s)"
         }
       }
     },
@@ -40,7 +42,9 @@
           "moisture_entities": "Moisture sensors",
           "temperature_entities": "Temperature sensors",
           "ec_entities": "EC sensors",
-          "co2_entities": "CO₂ sensors"
+          "co2_entities": "CO₂ sensors",
+          "max_retries": "Max API retries",
+          "initial_retry_delay": "Initial retry delay (s)"
         }
       }
     }

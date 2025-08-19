@@ -35,9 +35,15 @@ def main(argv: list[str] | None = None) -> None:
     )
 
     if args.yaml:
-        import yaml
+        from io import StringIO
+        from ruamel.yaml import YAML
 
-        print(yaml.safe_dump(summary, sort_keys=False))
+        yaml = YAML()
+        yaml.default_flow_style = False
+        yaml.sort_keys = False
+        buf = StringIO()
+        yaml.dump(summary, buf)
+        print(buf.getvalue())
     else:
         print(json.dumps(summary, indent=2))
 

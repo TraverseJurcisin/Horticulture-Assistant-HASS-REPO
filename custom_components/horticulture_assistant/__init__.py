@@ -21,6 +21,10 @@ from .const import (
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DEFAULT_KEEP_STALE,
+    CONF_MAX_RETRIES,
+    CONF_INITIAL_DELAY,
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_INITIAL_DELAY,
 )
 from .api import ChatApi
 from homeassistant.helpers.update_coordinator import UpdateFailed
@@ -47,6 +51,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
         entry.data.get(CONF_MODEL, DEFAULT_MODEL),
         timeout=15.0,
+        max_retries=entry.options.get(
+            CONF_MAX_RETRIES,
+            entry.data.get(CONF_MAX_RETRIES, DEFAULT_MAX_RETRIES),
+        ),
+        initial_delay=entry.options.get(
+            CONF_INITIAL_DELAY,
+            entry.data.get(CONF_INITIAL_DELAY, DEFAULT_INITIAL_DELAY),
+        ),
     )
     store = LocalStore(hass)
     normalize_local_paths(hass)

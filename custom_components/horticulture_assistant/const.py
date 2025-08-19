@@ -13,11 +13,15 @@ CONF_TEMPERATURE_SENSOR = "temperature_sensor"
 CONF_EC_SENSOR = "ec_sensor"
 CONF_CO2_SENSOR = "co2_sensor"
 CONF_KEEP_STALE = "keep_stale"
+CONF_MAX_RETRIES = "max_retries"
+CONF_INITIAL_DELAY = "initial_retry_delay"
 
 DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it
 DEFAULT_UPDATE_MINUTES = 5
 DEFAULT_KEEP_STALE = True
+DEFAULT_MAX_RETRIES = 4
+DEFAULT_INITIAL_DELAY = 1.0
 
 # Entity categories
 CATEGORY_DIAGNOSTIC = EntityCategory.DIAGNOSTIC
