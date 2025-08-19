@@ -43,7 +43,7 @@ def load_all_profiles(
     more JSON files. All matching files are loaded and merged into a single
     profile structure. If ``validate`` is ``True`` the profile is checked using
     :func:`validate_profile_structure` and any issues are collected.
-    
+
     :param base_path: Base directory containing plant profile folders (defaults to "./plants").
     :param validate: Whether to perform structural validation on each profile using validate_profile_structure.
     :param verbose: If True, pass verbose=True to the validation for detailed logging of issues.

@@ -12,7 +12,7 @@ from homeassistant.util import dt as dt_util
 from .api import ChatApi
 from .plant_engine import guidelines  # type: ignore[import]
 from .storage import LocalStore
-from .utils.log_utils import log_limited
+from .utils.logging import warn_once
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,12 +46,10 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _async_update_data(self) -> dict[str, Any]:
         now = dt_util.utcnow()
         if self.breaker_open and self._breaker_until and now < self._breaker_until:
-            log_limited(
+            warn_once(
                 _LOGGER,
-                logging.WARNING,
                 "BREAKER",
-                "Skipping AI update; breaker open until %s",
-                self._breaker_until,
+                f"Skipping AI update; breaker open until {self._breaker_until}",
             )
             self.last_call = now
             return self.data or {}
@@ -90,24 +88,24 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
             err_key = type(err).__name__
-            
+
             # More specific error handling
             if "429" in str(err):
                 code = "API_429"
-                _LOGGER.warning("Rate limit exceeded, will retry")
+                warn_once(_LOGGER, code, "Rate limit exceeded; backing off.")
             elif isinstance(err, asyncio.TimeoutError):
                 code = "TIMEOUT"
-                _LOGGER.warning("API request timed out")
+                warn_once(_LOGGER, code, "API request timed out")
             elif isinstance(err, ConnectionError):
                 code = "CONNECTION_ERROR"
-                _LOGGER.warning("Connection error to AI service")
+                warn_once(_LOGGER, code, "Connection error to AI service")
             elif isinstance(err, ValueError) and "non-blocking" in str(err):
                 code = "SOCKET_NONBLOCKING"
-                _LOGGER.warning("Socket must be non-blocking: %s", err)
+                warn_once(_LOGGER, code, f"Socket must be non-blocking: {err}")
             else:
                 code = err_key
-                _LOGGER.warning("Unexpected error in AI coordinator: %s", err)
-            
+                warn_once(_LOGGER, code, f"Unexpected error in AI coordinator: {err}")
+
             if self.retry_count > 3:
                 self.breaker_open = True
                 self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
@@ -115,15 +113,16 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     "AI update failed; breaker opened (%s): %s", code, err
                 )
             else:
-                log_limited(
+                warn_once(
                     _LOGGER,
-                    logging.WARNING,
                     code,
-                    "AI update failed (%s): %s",
-                    code,
-                    err,
+                    f"AI update failed ({code}): {err}",
                 )
             self.last_exception_msg = str(err)
             # Push failure state so listeners update even when the refresh fails
             self.async_set_updated_data({"ok": False, "error": str(err)})
             raise UpdateFailed(f"AI update failed ({code}): {err}") from err
+
+    async def async_shutdown(self) -> None:
+        """Shut down the coordinator (placeholder for future cleanup)."""
+        return

@@ -7,7 +7,7 @@ from typing import List, Dict
 def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Dict:
     """
     Generate a fertilizer recipe to meet nutrient targets specified in a plant profile.
-    
+
     Parameters:
     - plant_profile: dict with nutrient targets for the current growth stage, e.g.
         {"nutrient_targets": {"N": 100.0, "P": 50.0, "K": 150.0, "Fe": 2.0}}
@@ -17,7 +17,7 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
         - "form": "solid" or "liquid"
         - "analysis": dict of nutrient percentages by weight (e.g. {"N": 15.5, "P": 20.0})
         - "price_per_unit": cost per gram for solids or per mL for liquids.
-    
+
     Returns:
     A dict with the proposed recipe:
         {
@@ -28,7 +28,7 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
             "total_cost": total_cost,
             "total_volume": total_volume_liters
         }
-    
+
     Raises:
         ValueError: if the targets cannot be met with the available products.
     """
@@ -36,7 +36,7 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
     targets = plant_profile.get("nutrient_targets", {})
     if not targets:
         raise ValueError("Plant profile must include 'nutrient_targets' for current stage")
-    
+
     # Check that each required nutrient is present in at least one product
     for nutrient, target in targets.items():
         if target is None or target <= 0:
@@ -49,21 +49,21 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
             raise ValueError(
                 f"No available product contains nutrient '{nutrient}' to meet target {target} mg/L"
             )
-    
+
     # Initialize remaining targets (mg)
     remaining = {nut: val for nut, val in targets.items() if val > 0}
     # Track doses (grams for solids, mL for liquids) for each product by name
     doses: Dict[str, float] = {}
     # Total additional volume (mL) from liquid products
     liquid_volume_ml = 0.0
-    
+
     # Sort nutrients by descending target to prioritize largest needs
     nutrients_sorted = sorted(remaining.keys(), key=lambda x: remaining[x], reverse=True)
     for nutrient in nutrients_sorted:
         needed = remaining.get(nutrient, 0.0)
         if needed <= 0:
             continue
-        
+
         # Select best product: lowest cost per mg of this nutrient
         best_prod = None
         best_cost_per_mg = float("inf")
@@ -82,36 +82,36 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
             if cost_per_mg < best_cost_per_mg:
                 best_cost_per_mg = cost_per_mg
                 best_prod = prod
-        
+
         if not best_prod:
             raise ValueError(f"No suitable product found to meet nutrient '{nutrient}'")
-        
+
         # Calculate required dose of the chosen product (in its unit) to meet the nutrient need
         analysis_val = best_prod["analysis"][nutrient]
         mg_per_g = analysis_val * 10.0
         dose_g = needed / mg_per_g
         dose_g = round(dose_g, 4)
-        
+
         prod_name = best_prod["name"]
         doses[prod_name] = doses.get(prod_name, 0.0) + dose_g
-        
+
         # Subtract provided nutrients from remaining targets
         for nut, pct in best_prod.get("analysis", {}).items():
             if nut in remaining and remaining[nut] > 0:
                 mg_provided = dose_g * (pct * 10.0)
                 remaining[nut] = max(remaining[nut] - mg_provided, 0.0)
-        
+
         # If the product is liquid, convert its dose to volume and add to total volume
         if best_prod.get("form") == "liquid":
             density = best_prod.get("density_g_per_ml", 1.0)  # default assume 1 g/mL
             volume_ml = dose_g / density
             liquid_volume_ml += volume_ml
-    
+
     # Check if any nutrient targets remain unmet
     unmet = {nut: amt for nut, amt in remaining.items() if amt > 1e-3}
     if unmet:
         raise ValueError(f"Could not meet all targets, remaining: {unmet}")
-    
+
     # Build the recipe output
     recipe_ingredients = []
     total_cost = 0.0
@@ -129,9 +129,9 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
             "cost": round(cost, 2)
         })
         total_cost += cost
-    
+
     total_volume_liters = (1000.0 + liquid_volume_ml) / 1000.0  # base 1L plus liquids
-    
+
     return {
         "ingredients": recipe_ingredients,
         "total_cost": round(total_cost, 2),

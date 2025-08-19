@@ -1,6 +1,7 @@
 from __future__ import annotations
+
 import asyncio
-import math
+import random
 import time
 from typing import Any
 from aiohttp import ClientError
@@ -52,7 +53,7 @@ class ChatApi:
                     self._hass.loop.call_later(60, self._half_open)
                     raise
                 # exp backoff + small jitter
-                await asyncio.sleep(delay + 0.25 * (0.5 - math.sin(time.time())))
+                await asyncio.sleep(delay + 0.25 * random.random())
                 delay = min(delay * 2, 30)
 
         raise RuntimeError("Failed to fetch chat completion")

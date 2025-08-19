@@ -51,6 +51,8 @@ async def test_refresh_service(hass):
     local = hass.data[DOMAIN][entry.entry_id]["coordinator_local"]
     ai.async_request_refresh = AsyncMock(wraps=ai.async_request_refresh)
     local.async_request_refresh = AsyncMock(wraps=local.async_request_refresh)
+    with pytest.raises(vol.Invalid):
+        await hass.services.async_call(DOMAIN, "refresh", {"bad": 1}, blocking=True)
     await hass.services.async_call(DOMAIN, "refresh", {}, blocking=True)
     assert ai.async_request_refresh.called
     assert local.async_request_refresh.called

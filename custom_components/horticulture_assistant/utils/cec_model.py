@@ -56,12 +56,12 @@ def _write_cec_record(output_path: str, plant_id: Optional[str], result_data: di
 
 def log_measured_cec(plant_id: str, cec_value: float, include_warnings: bool = False) -> Optional[dict]:
     """Log an observed/measured CEC value for a plant's growth media.
-    
+
     Parameters:
       - plant_id: Unique identifier for the plant.
       - cec_value: Measured CEC (in meq/100g) of the plant's growing media.
       - include_warnings: If True, include nutrient retention warning flags in the record (e.g., if CEC is low).
-    
+
     Returns a dictionary with the recorded CEC data (including source and optional warning/category),
     and saves this record to data/cec_records.json under the given plant_id.
     """
@@ -95,17 +95,17 @@ def log_measured_cec(plant_id: str, cec_value: float, include_warnings: bool = F
 
 def estimate_cec_from_media(plant_id: str, moisture_retention: float, ec_behavior: float, dryback_rate: float, include_warnings: bool = False) -> Optional[dict]:
     """Estimate the CEC for a plant's growth media based on media type inference.
-    
-    This uses characteristic sensor patterns (moisture retention, EC buffering, dryback rate) 
+
+    This uses characteristic sensor patterns (moisture retention, EC buffering, dryback rate)
     to infer the media type via media_inference.infer_media_type, then assigns a typical CEC value for that media type.
-    
+
     Parameters:
       - plant_id: Unique identifier for the plant (used for record logging).
       - moisture_retention: Observed relative water-holding metric (0-1 scale or percentage).
       - ec_behavior: Observed nutrient/EC buffering metric (0-1 scale or percentage).
       - dryback_rate: Observed drying speed metric (0-1 scale or percentage).
       - include_warnings: If True, include nutrient retention warning flags in the record (e.g., if estimated CEC is low).
-    
+
     Returns a dictionary with the estimated CEC data (including source, media_type, confidence, and optional warning/category),
     and saves this record to data/cec_records.json under the given plant_id.
     If inference fails or media type is unknown, returns None.
@@ -143,11 +143,11 @@ def estimate_cec_from_media(plant_id: str, moisture_retention: float, ec_behavio
 
 def categorize_cec(cec_value: float) -> str:
     """Categorize a given CEC value as 'Low', 'Medium', or 'High' based on general crop nutrient retention needs.
-    
+
     Low CEC indicates the growing medium has low nutrient retention capacity (common in sandy or inert media).
     Medium CEC indicates moderate nutrient retention (typical of loam or mixed media).
     High CEC indicates high nutrient retention capacity (common in organic-rich or clay media, suitable for nutrient-demanding crops).
-    
+
     Note: These categories are general; specific crop requirements might adjust what is considered low or high for a given plant.
     """
     try:

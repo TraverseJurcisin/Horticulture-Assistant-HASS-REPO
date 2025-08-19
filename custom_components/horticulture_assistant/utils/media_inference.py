@@ -1,7 +1,7 @@
 # File: custom_components/horticulture_assistant/utils/media_inference.py
 """Media type inference module for Horticulture Assistant.
 
-This module provides functionality to estimate the growing media type (e.g., peat moss, coco coir, rockwool, perlite blend) 
+This module provides functionality to estimate the growing media type (e.g., peat moss, coco coir, rockwool, perlite blend)
 based on observed sensor patterns of moisture retention, EC behavior, and dryback rates.
 """
 
@@ -56,7 +56,7 @@ def infer_media_type(
     """Infer the likely growing media type from sensor pattern metrics.
 
     Parameters:
-      - moisture_retention: Observed fraction (0-1) of moisture retained after saturation over a period 
+      - moisture_retention: Observed fraction (0-1) of moisture retained after saturation over a period
                             (higher means the medium holds water longer).
       - ec_behavior: Observed nutrient/EC buffering indicator (0-1, higher means the medium buffers nutrients more, i.e., slower EC change).
       - dryback_rate: Observed relative drying speed (0-1, higher means faster dryback).

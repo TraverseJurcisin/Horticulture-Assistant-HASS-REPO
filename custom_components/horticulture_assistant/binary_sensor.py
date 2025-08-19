@@ -2,16 +2,14 @@
 import logging
 
 from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
     BinarySensorEntity,
-    DEVICE_CLASS_PROBLEM,
-    DEVICE_CLASS_MOISTURE,
-    DEVICE_CLASS_SAFETY,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL
+from .const import CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL, DOMAIN
 from .utils.entry_helpers import get_entry_data, store_entry_data
 from .entity_base import HorticultureBaseEntity
 from .utils.sensor_map import build_sensor_map
@@ -38,6 +36,7 @@ async def async_setup_entry(
             "temperature_sensors",
             "humidity_sensors",
             "ec_sensors",
+            "co2_sensors",
         ),
     )
 
@@ -51,9 +50,11 @@ async def async_setup_entry(
     )
 
     sensors: list[BinarySensorEntity] = [
-        SensorHealthBinarySensor(hass, plant_name, plant_id, sensor_map),
-        IrrigationReadinessBinarySensor(hass, plant_name, plant_id, sensor_map),
-        FaultDetectionBinarySensor(hass, plant_name, plant_id, sensor_map),
+        SensorHealthBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
+        IrrigationReadinessBinarySensor(
+            hass, entry.entry_id, plant_name, plant_id, sensor_map
+        ),
+        FaultDetectionBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
     ]
 
     async_add_entities(sensors)
@@ -65,12 +66,14 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
+        entry_id: str,
         plant_name: str,
         plant_id: str,
         sensor_map: dict[str, list[str]] | None = None,
     ) -> None:
         super().__init__(plant_name, plant_id, model="AI Monitored Plant")
         self.hass = hass
+        self._entry_id = entry_id
         if sensor_map is None:
             sensor_map = build_sensor_map(
                 {},
@@ -80,6 +83,7 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
                     "temperature_sensors",
                     "humidity_sensors",
                     "ec_sensors",
+                    "co2_sensors",
                 ),
             )
         self._sensor_map = sensor_map
@@ -91,14 +95,15 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
     def __init__(
         self,
         hass: HomeAssistant,
+        entry_id: str,
         plant_name: str,
         plant_id: str,
         sensor_map: dict[str, list[str]] | None = None,
     ):
-        super().__init__(hass, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
         self._attr_name = "Sensor Health"
-        self._attr_unique_id = f"{plant_id}_sensor_health"
-        self._attr_device_class = DEVICE_CLASS_PROBLEM
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_sensor_health"
+        self._attr_device_class = BinarySensorDeviceClass.PROBLEM
         self._attr_icon = "mdi:heart-pulse"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
 
@@ -129,14 +134,17 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     def __init__(
         self,
         hass: HomeAssistant,
+        entry_id: str,
         plant_name: str,
         plant_id: str,
         sensor_map: dict[str, list[str]] | None = None,
     ):
-        super().__init__(hass, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
         self._attr_name = "Irrigation Readiness"
-        self._attr_unique_id = f"{plant_id}_irrigation_readiness"
-        self._attr_device_class = DEVICE_CLASS_MOISTURE
+        self._attr_unique_id = (
+            f"{DOMAIN}_{entry_id}_{plant_id}_irrigation_readiness"
+        )
+        self._attr_device_class = BinarySensorDeviceClass.MOISTURE
         self._attr_icon = "mdi:water-alert"
         self._attr_entity_category = CATEGORY_CONTROL
         # Threshold for root zone depletion (%)
@@ -168,14 +176,15 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
     def __init__(
         self,
         hass: HomeAssistant,
+        entry_id: str,
         plant_name: str,
         plant_id: str,
         sensor_map: dict[str, list[str]] | None = None,
     ):
-        super().__init__(hass, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
         self._attr_name = "Fault Detection"
-        self._attr_unique_id = f"{plant_id}_fault_detection"
-        self._attr_device_class = DEVICE_CLASS_SAFETY
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_fault_detection"
+        self._attr_device_class = BinarySensorDeviceClass.SAFETY
         self._attr_icon = "mdi:alert"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
 

@@ -300,7 +300,7 @@ class NutrientUseEfficiency:
             self.application_log[plant_id][nut] = self.application_log[plant_id].get(nut, 0.0) + amt_val
         # Persist to file
         self._save_to_file()
-        _LOGGER.info("Fertilizer application logged for plant %s: %s on %s (stage: %s)", 
+        _LOGGER.info("Fertilizer application logged for plant %s: %s on %s (stage: %s)",
                      plant_id, nutrient_mass_clean, date_str, stage_name)
 
     def log_tissue_test(self, plant_id: str, tissue_nutrient_mass: Dict[str, float]) -> None:
@@ -311,7 +311,7 @@ class NutrientUseEfficiency:
         self.tissue_log[plant_id] = tissue_nutrient_mass
         _LOGGER.info("Tissue test recorded for plant %s: %s", plant_id, tissue_nutrient_mass)
 
-    def log_yield(self, plant_id: str, yield_mass: Union[int, float], 
+    def log_yield(self, plant_id: str, yield_mass: Union[int, float],
                   entry_date: Optional[Union[str, date, datetime]] = None) -> None:
         """
         Record a yield event (harvest) for a given plant.
@@ -475,4 +475,3 @@ class NutrientUseEfficiency:
             _LOGGER.error(
                 "Failed to write nutrient use logs to %s: %s", self._data_file, e
             )
-

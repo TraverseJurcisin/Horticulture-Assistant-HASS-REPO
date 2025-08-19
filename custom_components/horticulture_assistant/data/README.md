@@ -10,6 +10,6 @@ PESTS
 LABOR
 ...
 
-TODO - 
+TODO -
 - integrate the WSDA data set into our data package here
-- sort different like attribute files for better file organization 
+- sort different like attribute files for better file organization

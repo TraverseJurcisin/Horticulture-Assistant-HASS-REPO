@@ -23,3 +23,7 @@ class HortiLocalCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _async_update_data(self) -> dict[str, Any]:
         return self.store.data or {}
+
+    async def async_shutdown(self) -> None:
+        """Placeholder for coordinator cleanup."""
+        return

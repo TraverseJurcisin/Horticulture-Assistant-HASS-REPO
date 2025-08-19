@@ -10,12 +10,12 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     Generate or update a profile index file for a given plant.
 
     This function creates/updates `plants/<plant_id>/profile_index.json`, which contains an index of all JSON
-    profile files in the plant's directory. Each entry in the index is a dictionary of metadata (with keys 
+    profile files in the plant's directory. Each entry in the index is a dictionary of metadata (with keys
     "exists", "last_updated", and "size") for a profile file (e.g., "nutrition.json") present in the directory.
     The output index dictionary is sorted by file name alphabetically.
 
     If `profile_index.json` already exists and `overwrite` is False, the index generation is skipped.
-    If `overwrite` is True or the index file is missing, a new index file is written (or an existing one 
+    If `overwrite` is True or the index file is missing, a new index file is written (or an existing one
     overwritten) with the collected metadata.
 
     All actions (skipping, file creation, overwriting) are logged, including an entry for each profile file indexed
