@@ -40,18 +40,17 @@ The bundled datasets are not exhaustive and may contain inaccuracies. Always cro
 ## Quick Start
 1. Go to **Settings → Devices & Services** in Home Assistant.
 2. Choose **Add Integration** and search for **Horticulture Assistant**.
-3. Enter a plant name and (optionally) a zone ID to start the profile.
-4. If a matching template isn't found, a placeholder entry is created and you can complete the details later in **Options**.
-5. Open the entry's **Options** anytime to update the zone, enable auto‑approve or link sensors.
-6. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
-7. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
-8. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage, model and temperature. These settings are stored in `<config>/data/horticulture_global_config.json`.
-9. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
+3. Enter your OpenAI API key, model and other defaults when prompted.
+4. Open the entry's **Options** anytime to link sensors or adjust settings.
+5. Copy `blueprints/automation/plant_monitoring.yaml` into `<config>/blueprints/automation/>` and create an automation from it.
+6. Enable `input_boolean.auto_approve_all` if you want AI recommendations applied automatically.
+7. From the integration page, choose **Settings** to configure global AI options such as OpenAI usage, model and temperature. These settings are stored in `<config>/data/horticulture_global_config.json`.
+8. Ensure all numeric sensors use `state_class: measurement` so statistics are recorded.
 
 Plant profiles are stored in the `plants/` directory and can be created through the config flow or edited manually.
 Each newly generated profile is also cached under `data/profile_cache/` so it can be uploaded to a public database in a future release. When you're ready to share new profiles, run the `upload_profile_cache.py` script to send them to the external service.
 
-Once you have at least one plant configured, open **Settings → Devices & Services → Horticulture Assistant**. Here you can edit existing plant profiles and use the **Add Plant** button to create new ones without returning to the integrations list.
+Once you have at least one plant configured, open **Settings → Devices & Services → Horticulture Assistant** to edit existing plant profiles without returning to the integrations list.
 
 ---
 
