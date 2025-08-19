@@ -1,24 +1,33 @@
 from __future__ import annotations
+
+import asyncio
+import logging
+
 import voluptuous as vol
+from aiohttp import ClientError
 from homeassistant import config_entries
 from homeassistant.helpers import selector as sel
+
 from .const import (
-    DOMAIN,
     CONF_API_KEY,
-    CONF_MODEL,
     CONF_BASE_URL,
-    CONF_UPDATE_INTERVAL,
+    CONF_CO2_SENSOR,
+    CONF_EC_SENSOR,
+    CONF_KEEP_STALE,
+    CONF_MODEL,
     CONF_MOISTURE_SENSOR,
     CONF_TEMPERATURE_SENSOR,
-    CONF_EC_SENSOR,
-    CONF_CO2_SENSOR,
-    CONF_KEEP_STALE,
+    CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
+    DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
-    DEFAULT_KEEP_STALE,
+    DOMAIN,
 )
 from .api import ChatApi
+
+
+_LOGGER = logging.getLogger(__name__)
 
 DATA_SCHEMA = vol.Schema({
     vol.Required(CONF_API_KEY): str,
@@ -43,8 +52,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             )
             try:
                 await api.validate_api_key()
-            except Exception:
+            except (ClientError, asyncio.TimeoutError) as err:
                 errors["base"] = "cannot_connect"
+                _LOGGER.error("API key validation failed: %s", err)
+            except Exception as err:  # pragma: no cover - unexpected
+                errors["base"] = "cannot_connect"
+                _LOGGER.exception("Unexpected error validating API key: %s", err)
             if not errors:
                 return self.async_create_entry(title="Horticulture Assistant", data=user_input)
         return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)

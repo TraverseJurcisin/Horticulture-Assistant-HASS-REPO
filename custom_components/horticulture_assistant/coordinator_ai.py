@@ -8,6 +8,7 @@ from typing import Any
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
+from aiohttp import ClientError
 
 from .api import ChatApi
 from .plant_engine import guidelines  # type: ignore[import]
@@ -84,12 +85,11 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.last_exception_msg = None
             return {"ok": True, "recommendation": text}
-        except Exception as err:
+        except (ClientError, asyncio.TimeoutError, ConnectionError, ValueError) as err:
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
             err_key = type(err).__name__
 
-            # More specific error handling
             if "429" in str(err):
                 code = "API_429"
                 warn_once(_LOGGER, code, "Rate limit exceeded; backing off.")
@@ -104,24 +104,28 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 warn_once(_LOGGER, code, f"Socket must be non-blocking: {err}")
             else:
                 code = err_key
-                warn_once(_LOGGER, code, f"Unexpected error in AI coordinator: {err}")
+                warn_once(_LOGGER, code, f"API error in AI coordinator: {err}")
 
             if self.retry_count > 3:
                 self.breaker_open = True
                 self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
-                _LOGGER.error(
-                    "AI update failed; breaker opened (%s): %s", code, err
-                )
+                _LOGGER.error("AI update failed; breaker opened (%s): %s", code, err)
             else:
-                warn_once(
-                    _LOGGER,
-                    code,
-                    f"AI update failed ({code}): {err}",
-                )
+                warn_once(_LOGGER, code, f"AI update failed ({code}): {err}")
             self.last_exception_msg = str(err)
-            # Push failure state so listeners update even when the refresh fails
             self.async_set_updated_data({"ok": False, "error": str(err)})
             raise UpdateFailed(f"AI update failed ({code}): {err}") from err
+        except Exception as err:  # pragma: no cover - unexpected
+            self.latency_ms = int((time.monotonic() - start) * 1000)
+            self.retry_count += 1
+            warn_once(_LOGGER, "UNEXPECTED", f"Unexpected error in AI coordinator: {err}")
+            _LOGGER.exception("AI update failed unexpectedly: %s", err)
+            if self.retry_count > 3:
+                self.breaker_open = True
+                self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
+            self.last_exception_msg = str(err)
+            self.async_set_updated_data({"ok": False, "error": str(err)})
+            raise UpdateFailed(f"AI update failed (UNEXPECTED): {err}") from err
 
     async def async_shutdown(self) -> None:
         """Shut down the coordinator (placeholder for future cleanup)."""

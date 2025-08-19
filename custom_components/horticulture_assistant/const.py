@@ -2,7 +2,12 @@ from homeassistant.const import Platform
 from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "horticulture_assistant"
-PLATFORMS: list[Platform] = [Platform.SENSOR]
+# The integration exposes multiple entity platforms per plant
+PLATFORMS: list[Platform] = [
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.SWITCH,
+]
 
 CONF_API_KEY = "api_key"
 CONF_MODEL = "model"

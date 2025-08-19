@@ -4,7 +4,7 @@ import asyncio
 import random
 import time
 from typing import Any
-from aiohttp import ClientError
+from aiohttp import ClientError, ClientResponseError
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import aiohttp_client
 
@@ -37,6 +37,10 @@ class ChatApi:
                 async with asyncio.timeout(self._timeout):
                     t0 = time.perf_counter()
                     async with session.post(url, headers=self._headers(), json=payload) as resp:
+                        if resp.status in {401, 403}:
+                            self._failures += 1
+                            self._open = False
+                            resp.raise_for_status()
                         if resp.status in RETRYABLE:
                             raise ClientError(f"Retryable status: {resp.status}")
                         resp.raise_for_status()
@@ -45,14 +49,22 @@ class ChatApi:
                         data = await resp.json()
                         self.last_latency_ms = int((time.perf_counter() - t0) * 1000)
                         return data
+            except ClientResponseError as err:
+                self._failures += 1
+                if err.status in {401, 403}:
+                    raise
+                if attempt == 4:
+                    self._open = False
+                    self._hass.loop.call_later(60, self._half_open)
+                    raise
+                await asyncio.sleep(delay + 0.25 * random.random())
+                delay = min(delay * 2, 30)
             except (ClientError, asyncio.TimeoutError):
                 self._failures += 1
                 if attempt == 4:
                     self._open = False
-                    # auto half-open after 60s
                     self._hass.loop.call_later(60, self._half_open)
                     raise
-                # exp backoff + small jitter
                 await asyncio.sleep(delay + 0.25 * random.random())
                 delay = min(delay * 2, 30)
 

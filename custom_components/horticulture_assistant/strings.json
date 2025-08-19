@@ -16,31 +16,17 @@
     "error": {},
     "abort": {}
   },
-  "config_subentries": {
-    "plant": {
-      "step": {
-        "user": {
-          "title": "Add Plant",
-          "description": "Create a plant sub-entry.",
-          "data": {
-            "plant_name": "Plant name",
-            "zone_id": "Zone ID"
-          }
-        }
-      }
-    }
-  },
   "options": {
     "step": {
       "init": {
         "title": "Options",
         "data": {
-          "keep_stale_available": "Keep entities available when AI fails",
+          "keep_stale": "Keep entities available when AI fails",
           "update_interval": "Update interval (minutes)",
-          "moisture_entities": "Moisture sensors",
-          "temperature_entities": "Temperature sensors",
-          "ec_entities": "EC sensors",
-          "co2_entities": "CO₂ sensors"
+          "moisture_sensor": "Moisture sensor",
+          "temperature_sensor": "Temperature sensor",
+          "ec_sensor": "EC sensor",
+          "co2_sensor": "CO₂ sensor"
         }
       }
     }

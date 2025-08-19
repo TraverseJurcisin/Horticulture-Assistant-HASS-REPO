@@ -27,6 +27,8 @@ from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
 from .paths import ensure_local_data_paths
+from aiohttp import ClientError
+import asyncio
 from .entity_utils import ensure_entities_exist
 
 SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
@@ -48,7 +50,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         timeout=15.0,
     )
     store = LocalStore(hass)
-    ensure_local_data_paths(hass)
+    await ensure_local_data_paths(hass)
     stored = await store.load()
     minutes = max(
         1,
@@ -67,8 +69,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     try:
         await ai_coord.async_config_entry_first_refresh()
         await local_coord.async_config_entry_first_refresh()
-    except Exception:  # UpdateFailed, network errors
-        pass
+    except (UpdateFailed, ClientError, asyncio.TimeoutError) as err:
+        _LOGGER.warning("Initial data refresh failed: %s", err)
+    except Exception as err:  # pragma: no cover - unexpected
+        _LOGGER.exception("Initial data refresh failed: %s", err)
     hass.data[DOMAIN][entry.entry_id] = {
         "api": api,
         "coordinator_ai": ai_coord,
