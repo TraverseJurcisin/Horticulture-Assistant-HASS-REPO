@@ -28,4 +28,3 @@ def test_estimate_recovered_amounts():
 def test_adjust_for_recovery():
     adjusted = adjust_for_recovery({"K": 100})
     assert adjusted == {"K": 40.0}
-

@@ -174,4 +174,3 @@ def remove_zone(zone_id: str, hass=None) -> bool:
         return False
     zones.pop(str(zone_id), None)
     return save_zones(zones, hass)
-

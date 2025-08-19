@@ -130,4 +130,3 @@ def test_calculate_infiltration_volume():
 
     # custom rate overrides dataset lookup
     assert calculate_infiltration_volume(0.2, 1.0, infiltration_rate=5) == 1000.0
-

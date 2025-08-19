@@ -238,6 +238,3 @@ def test_suggest_pest_rotation_plan():
     assert len(plan) == 3
     # ensure intervals follow product guidelines
     assert plan[1][1] > plan[0][1]
-
-
-

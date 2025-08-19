@@ -45,4 +45,3 @@ def recommended_rotation_years(plant_type: str) -> int | None:
     """Return recommended years before replanting the same crop."""
     info = get_rotation_info(plant_type)
     return info.years
-

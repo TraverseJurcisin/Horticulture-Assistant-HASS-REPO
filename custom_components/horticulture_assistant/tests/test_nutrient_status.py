@@ -8,4 +8,3 @@ def test_classify_nutrient_status():
     assert status["P"] == "severe deficiency"
     assert status["K"] == "excessive"
     assert status["Ca"] == "adequate"
-

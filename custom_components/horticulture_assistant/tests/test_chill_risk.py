@@ -20,4 +20,3 @@ def test_forecast_chilling_risk():
     assert risk == "moderate"
     risk = forecast_chilling_risk("monstera", [4], [17], past_events=1)
     assert risk == "high"
-

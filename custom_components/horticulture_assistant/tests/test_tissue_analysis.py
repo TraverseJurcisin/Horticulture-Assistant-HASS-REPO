@@ -33,4 +33,3 @@ def test_score_tissue_levels_low_high():
     # N below range, K above range
     score = score_tissue_levels("tomato", "vegetative", levels)
     assert 0 < score < 100
-

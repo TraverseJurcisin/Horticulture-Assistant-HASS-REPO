@@ -135,4 +135,3 @@ def evaluate_plant_nue(plant_id: str, plant_type: str, tolerance: float = 0.1) -
     info = calculate_nue(plant_id)
     nue_map = info.get("nue", {})
     return evaluate_nue(nue_map, plant_type, tolerance)
-

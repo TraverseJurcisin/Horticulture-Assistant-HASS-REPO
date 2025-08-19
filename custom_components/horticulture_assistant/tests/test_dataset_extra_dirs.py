@@ -49,4 +49,3 @@ def test_dataset_extra_dirs_with_overlay(tmp_path, monkeypatch):
 
     result = utils.load_dataset("sample.json")
     assert result == {"val": 3}
-

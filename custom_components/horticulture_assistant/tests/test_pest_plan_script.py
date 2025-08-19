@@ -16,4 +16,3 @@ def test_cli_basic():
     data = json.loads(result.stdout)
     assert "aphids" in data
     assert "treatment" in data["aphids"]
-

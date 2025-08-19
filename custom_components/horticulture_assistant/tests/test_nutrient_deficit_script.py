@@ -18,4 +18,3 @@ def test_nutrient_deficit_cli(tmp_path):
     assert '"N": 100' in out
     assert '"P": 30' in out
     assert '"K": 150' in out
-

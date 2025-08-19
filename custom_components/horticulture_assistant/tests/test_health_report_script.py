@@ -57,4 +57,3 @@ def test_health_report_cli_stdout(tmp_path: Path):
     )
     data = json.loads(result.stdout)
     assert "pest_actions" in data
-

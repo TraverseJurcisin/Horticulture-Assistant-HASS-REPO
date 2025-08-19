@@ -16,4 +16,3 @@ def test_estimate_cycle_water_cost():
     cost = water_usage.estimate_cycle_water_cost("lettuce", "california")
     expected_ml = water_usage.estimate_cycle_total_use("lettuce")
     assert round(cost, 4) == round(0.003 * expected_ml / 1000, 4)
-

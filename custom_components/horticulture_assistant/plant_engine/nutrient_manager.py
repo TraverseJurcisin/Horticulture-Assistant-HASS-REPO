@@ -736,6 +736,3 @@ def calculate_deficiency_index_environment_adjusted(
     if not targets:
         return calculate_deficiency_index(current_levels, plant_type, stage)
     return _deficiency_index_for_targets(current_levels, targets)
-
-
-

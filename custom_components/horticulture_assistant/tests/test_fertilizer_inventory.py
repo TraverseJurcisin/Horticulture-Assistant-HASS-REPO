@@ -45,5 +45,3 @@ def test_product_price_and_usage():
     assert len(product.usage_log) == 2
     assert not product.is_expired()
     assert product.total_usage() == 150
-
-

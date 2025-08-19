@@ -190,4 +190,3 @@ def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> List[str]:
 
     ranked.sort(key=lambda x: x[1], reverse=True)
     return [name for name, _ in ranked[: max(limit, 0)]]
-

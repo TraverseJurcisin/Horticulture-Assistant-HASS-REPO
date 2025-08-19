@@ -31,4 +31,3 @@ def test_recommend_supplemental_hours():
     assert recommend_supplemental_hours("unknown", 500, 12) is None
     assert recommend_supplemental_hours("tomato", -1, 12) is None
     assert recommend_supplemental_hours("tomato", 500, 0) is None
-

@@ -71,4 +71,3 @@ def refresh_cache() -> None:
     clear_dataset_cache()
     _DATA.cache_clear()
     get_environment_tips.cache_clear()
-

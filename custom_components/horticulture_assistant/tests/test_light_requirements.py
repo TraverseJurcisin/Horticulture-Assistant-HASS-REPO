@@ -15,4 +15,3 @@ def test_generate_light_schedule():
     assert sched["seedling"] == 200
     assert sched["fruiting"] == 650
     assert generate_light_schedule("unknown") == {}
-

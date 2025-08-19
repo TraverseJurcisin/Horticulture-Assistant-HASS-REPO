@@ -101,4 +101,3 @@ def test_zones_for_plant(tmp_path, monkeypatch):
     assert add_zone("2", ["b"], ["p2", "p1"])
     zones = zones_for_plant("p1")
     assert zones == ["1", "2"]
-

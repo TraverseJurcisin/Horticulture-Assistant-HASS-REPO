@@ -45,5 +45,3 @@ def test_load_water_profile(tmp_path):
 
     missing = tmp_path / "missing.json"
     assert load_water_profile(str(missing)) == {}
-
-

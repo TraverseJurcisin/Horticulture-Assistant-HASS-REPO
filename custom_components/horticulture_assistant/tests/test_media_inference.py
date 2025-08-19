@@ -34,4 +34,3 @@ def test_infer_media_type_percent_input(monkeypatch):
     result = infer_media_type(80, 30, 30)
     assert isinstance(result, dict)
     assert result["media_type"]
-

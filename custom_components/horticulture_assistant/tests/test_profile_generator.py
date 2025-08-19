@@ -27,4 +27,3 @@ def test_generate_profile_caches(tmp_path, monkeypatch):
     assert plant_id == "mint"
     assert calls[0][0] == "mint"
     assert calls[0][1] is hass
-

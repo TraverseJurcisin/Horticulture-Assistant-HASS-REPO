@@ -142,4 +142,3 @@ def test_summarize_deficiencies_with_ph_and_synergy():
     )
     assert summary["severity_index"] > 0
     assert "K" in summary["severity"]
-

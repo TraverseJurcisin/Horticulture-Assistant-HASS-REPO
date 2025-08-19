@@ -373,5 +373,3 @@ def test_lazy_dataset_loading():
     clear_dataset_cache()
     plants = list_supported_plants()
     assert "lettuce" in plants
-
-

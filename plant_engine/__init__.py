@@ -6,4 +6,3 @@ import sys
 sys.modules[__name__] = import_module(
     "custom_components.horticulture_assistant.plant_engine"
 )
-

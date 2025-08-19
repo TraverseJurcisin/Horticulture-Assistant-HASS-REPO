@@ -154,4 +154,3 @@ def build_root_zone_info(
             break
 
     return info
-

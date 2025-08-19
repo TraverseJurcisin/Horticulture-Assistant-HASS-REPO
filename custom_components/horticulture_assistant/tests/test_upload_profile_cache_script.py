@@ -49,4 +49,3 @@ def test_upload_cached_profiles_delete(tmp_path: Path, monkeypatch):
     upc.upload_cached_profiles("http://example.com/upload", cache_dir, delete=True)
 
     assert not p.exists()
-

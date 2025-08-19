@@ -183,4 +183,3 @@ def estimate_area_cumulative_uptake(
 
     plants = area_m2 / ((spacing / 100) ** 2)
     return {n: round(val * plants, 2) for n, val in totals.items()}
-

@@ -18,4 +18,3 @@ def test_log_runoff_cli(tmp_path: Path):
     assert log.exists()
     data = json.loads(log.read_text())
     assert data and data[0]["ec"] == 1.23
-

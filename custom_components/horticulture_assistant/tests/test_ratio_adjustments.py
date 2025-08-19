@@ -7,4 +7,3 @@ def test_recommend_ratio_adjustments():
     assert result["N"] < 0  # need to decrease N
     assert result["K"] > 0   # need to increase K
     assert round(result["P"], 2) > 0
-

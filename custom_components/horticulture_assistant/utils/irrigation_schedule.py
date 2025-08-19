@@ -64,4 +64,3 @@ def parse_schedule(data: Mapping[str, object]) -> Schedule:
     """Return :class:`Schedule` parsed from ``data``."""
 
     return Schedule.from_dict(data)
-

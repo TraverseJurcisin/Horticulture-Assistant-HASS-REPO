@@ -60,4 +60,3 @@ def ensure_data_dir(hass: HomeAssistant | None, *parts: str) -> str:
 def ensure_plants_dir(hass: HomeAssistant | None, *parts: str) -> str:
     """Return a path under ``plants`` and ensure the directory exists."""
     return ensure_dir(hass, "plants", *parts)
-

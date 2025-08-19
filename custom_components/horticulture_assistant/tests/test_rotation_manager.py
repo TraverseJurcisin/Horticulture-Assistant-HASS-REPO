@@ -19,4 +19,3 @@ def test_get_rotation_info():
 def test_recommended_rotation_years():
     assert recommended_rotation_years("lettuce") == 2
     assert recommended_rotation_years("unknown") is None
-

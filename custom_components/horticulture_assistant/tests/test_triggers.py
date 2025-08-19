@@ -43,4 +43,3 @@ def test_fertilizer_trigger(tmp_path):
         )
         is False
     )
-

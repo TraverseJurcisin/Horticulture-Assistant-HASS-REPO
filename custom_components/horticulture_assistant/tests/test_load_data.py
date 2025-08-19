@@ -18,4 +18,3 @@ def test_load_data_invalid_yaml(tmp_path):
 def test_load_data_missing(tmp_path):
     with pytest.raises(FileNotFoundError):
         load_data(str(tmp_path / 'none.yaml'))
-

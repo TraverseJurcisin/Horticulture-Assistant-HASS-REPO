@@ -130,4 +130,3 @@ def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[st
     if not path.exists():
         return None
     return load_json(path)
-

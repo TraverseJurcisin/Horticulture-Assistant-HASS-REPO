@@ -47,4 +47,3 @@ def test_recommend_ec_correction_increase():
 def test_recommend_ec_correction_decrease():
     result = ec_manager.recommend_ec_correction(1.4, "lettuce", "seedling", 1.0)
     assert result == {"dilute_l": 0.4}
-

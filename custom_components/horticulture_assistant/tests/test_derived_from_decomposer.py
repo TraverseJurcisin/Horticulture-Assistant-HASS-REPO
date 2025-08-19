@@ -26,4 +26,3 @@ def test_unknown_ingredient_ignored():
     analysis = {"N": 0.33}
     result = decompose_derived_from(analysis, ["Unknown", "Ammonium Nitrate"])
     assert result == [("Ammonium Nitrate", 1.0)]
-

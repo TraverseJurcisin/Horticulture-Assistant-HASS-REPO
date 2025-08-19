@@ -17,4 +17,3 @@ def test_estimate_fertigation_solution_volume():
     assert estimate_fertigation_solution_volume(1, "unknown", "stage") is None
     with pytest.raises(ValueError):
         estimate_fertigation_solution_volume(0, "tomato", "vegetative")
-

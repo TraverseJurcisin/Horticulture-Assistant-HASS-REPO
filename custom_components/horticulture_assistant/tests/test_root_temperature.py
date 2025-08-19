@@ -54,5 +54,3 @@ def test_cache_clear():
     clear_cache()
     second = get_uptake_factor(21, "test")
     assert first != second
-
-

@@ -10,4 +10,3 @@ def test_generate_cycle_growth_plan_tomato():
     assert plan[0]["environment"]["temp_c"] == 24
     assert plan[-1]["stage"] == "fruiting"
     assert plan[-1]["end_date"] == date(2025, 5, 1)
-

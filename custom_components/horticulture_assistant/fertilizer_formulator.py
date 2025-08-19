@@ -843,4 +843,3 @@ __all__ = [
     "CATALOG",
     "Fertilizer",
 ]
-

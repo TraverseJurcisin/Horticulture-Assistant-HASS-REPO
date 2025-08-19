@@ -14,4 +14,3 @@ def test_environment_tips_stage_specific():
 
 def test_environment_tips_unknown():
     assert get_environment_tips("unknown") == {}
-

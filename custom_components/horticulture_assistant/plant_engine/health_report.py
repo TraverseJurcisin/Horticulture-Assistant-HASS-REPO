@@ -62,4 +62,3 @@ def generate_health_report(
     }
 
 __all__ = ["generate_health_report"]
-

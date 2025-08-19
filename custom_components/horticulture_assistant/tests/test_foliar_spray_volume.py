@@ -16,4 +16,3 @@ def test_estimate_spray_solution_volume():
     assert vol == 0.5
     assert estimate_spray_solution_volume(5, "lettuce") == 0.15
     assert estimate_spray_solution_volume(3, "unknown") is None
-

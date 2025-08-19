@@ -67,4 +67,3 @@ def test_calculate_nutrient_dose():
         DoseCalculator.calculate_nutrient_dose("N", 100, 0, "urea")
     with pytest.raises(ValueError):
         DoseCalculator.calculate_nutrient_dose("X", 100, 10, "urea")
-

@@ -32,4 +32,3 @@ def test_schedule_from_dict_and_as_dict():
     sched = Schedule.from_dict(mapping)
     assert sched.volume_l == 5.0
     assert sched.as_dict()["volume_l"] == 5.0
-

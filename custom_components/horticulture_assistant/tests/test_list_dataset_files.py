@@ -10,4 +10,3 @@ def test_list_dataset_files(tmp_path, monkeypatch):
     clear_dataset_cache()
     files = list_dataset_files()
     assert set(files) == {"foo.json", "bar.yaml"}
-

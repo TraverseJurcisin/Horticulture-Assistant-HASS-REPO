@@ -367,4 +367,3 @@ def test_deficiency_correction_helpers():
         fert_mod.recommend_deficiency_correction_plan(
             current, "citrus", "veg", 1, num_plants=0
         )
-
