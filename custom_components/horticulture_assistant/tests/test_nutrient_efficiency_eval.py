@@ -21,4 +21,3 @@ def test_evaluate_plant_nue(tmp_path, monkeypatch):
     result = ne.evaluate_plant_nue("plant", "tomato")
     assert result["N"]["status"] == "above target"
     assert result["K"]["status"] == "above target"
-

@@ -31,4 +31,3 @@ def test_generate_health_report_with_water():
         water_test={"Na": 60},
     )
     assert report["environment"]["water_quality"]["rating"] == "fair"
-

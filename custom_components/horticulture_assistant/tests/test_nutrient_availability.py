@@ -34,4 +34,3 @@ def test_availability_factor_outside_range():
 def test_availability_for_all():
     factors = availability_for_all(6.5)
     assert set(list_supported_nutrients()) == set(factors)
-

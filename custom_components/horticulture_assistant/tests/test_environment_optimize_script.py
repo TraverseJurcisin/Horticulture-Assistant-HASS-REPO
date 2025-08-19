@@ -16,4 +16,3 @@ def test_cli_basic():
     data = json.loads(result.stdout)
     assert "setpoints" in data
     assert "adjustments" in data
-

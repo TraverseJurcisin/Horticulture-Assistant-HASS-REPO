@@ -595,4 +595,3 @@ def summarize_pest_management(
     if next_date_val is not None:
         data["next_monitor_date"] = next_date_val
     return data
-

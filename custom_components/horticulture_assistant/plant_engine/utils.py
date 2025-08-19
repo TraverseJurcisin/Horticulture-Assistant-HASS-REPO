@@ -500,4 +500,3 @@ def list_dataset_files() -> list[str]:
             ):
                 files.add(path.relative_to(base).as_posix())
     return sorted(files)
-

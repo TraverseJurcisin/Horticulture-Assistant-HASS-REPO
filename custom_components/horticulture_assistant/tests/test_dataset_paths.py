@@ -68,4 +68,3 @@ def test_dataset_search_paths_env_change(monkeypatch, tmp_path):
     assert paths2[0] == base2
     assert paths1 != paths2
     utils.clear_dataset_cache()
-

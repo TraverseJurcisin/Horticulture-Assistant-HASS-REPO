@@ -196,5 +196,3 @@ def test_stage_schedule_df():
     assert not df.empty
     assert list(df.columns) == ["stage", "start_date", "end_date"]
     assert df.iloc[0]["stage"] == "seedling"
-
-

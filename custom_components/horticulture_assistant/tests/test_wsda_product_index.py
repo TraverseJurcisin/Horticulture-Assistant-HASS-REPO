@@ -34,4 +34,3 @@ def test_lookup_by_number():
 def test_search_products_brand():
     results = search_products("INTREPID", fields=["brand"])
     assert any(p.product_id == "C552F8" for p in results)
-

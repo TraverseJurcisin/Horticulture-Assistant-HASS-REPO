@@ -130,4 +130,3 @@ def test_normalize_env_aliases():
         "dli": 20,
         "photoperiod_hours": 16,
     }
-

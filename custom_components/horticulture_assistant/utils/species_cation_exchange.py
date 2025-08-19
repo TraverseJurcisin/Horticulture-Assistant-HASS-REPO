@@ -99,4 +99,3 @@ def recommend_amendments(
         messages.append("Increase Mg supplementation for Begonia.")
 
     return messages
-

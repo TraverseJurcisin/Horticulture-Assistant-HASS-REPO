@@ -125,4 +125,3 @@ def load_water_balance(plant_id: str, storage_path: str = STORAGE_PATH) -> Dict[
 
 
 __all__ = ["update_water_balance", "load_water_balance", "WaterBalance"]
-

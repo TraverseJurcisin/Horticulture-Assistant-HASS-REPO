@@ -41,4 +41,3 @@ def test_load_all_profiles_pattern(tmp_path):
     assert res.plant_id == "test"
     assert "data_one" in res.profile_data
     assert "skip" not in res.profile_data
-

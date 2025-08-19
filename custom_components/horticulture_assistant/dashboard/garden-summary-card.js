@@ -124,4 +124,3 @@ class GardenSummaryCard extends LitElement {
 if (!customElements.get("garden-summary-card")) {
   customElements.define("garden-summary-card", GardenSummaryCard);
 }
-

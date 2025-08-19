@@ -54,5 +54,3 @@ def test_recommend_soil_amendments():
     assert rec["urea"] > 0
     assert rec["map"] > 0
     assert rec["kcl"] > 0
-
-

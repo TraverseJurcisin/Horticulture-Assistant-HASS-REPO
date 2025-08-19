@@ -72,4 +72,3 @@ def analyze_nutrient_profile(
         npk_ratio=current_ratio,
         ratio_delta=ratio_delta,
     )
-

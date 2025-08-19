@@ -58,4 +58,3 @@ def availability_factor(nutrient: str, ph: float) -> float:
 def availability_for_all(ph: float) -> Dict[str, float]:
     """Return availability factors for all known nutrients at ``ph``."""
     return {n: availability_factor(n, ph) for n in list_supported_nutrients()}
-

@@ -95,4 +95,3 @@ def test_calculate_remaining_requirements():
     assert deficits["N"] == 200
     assert deficits["P"] == 100
     assert deficits["K"] == 250
-

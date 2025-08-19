@@ -111,4 +111,3 @@ def project_levels_after_leaching(
     for nutrient, mg in levels_mg.items():
         remaining[nutrient] = round(float(mg) - losses.get(nutrient, 0.0), 2)
     return remaining
-

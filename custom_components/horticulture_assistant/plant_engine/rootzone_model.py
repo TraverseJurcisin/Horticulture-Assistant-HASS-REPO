@@ -277,4 +277,3 @@ def soil_moisture_pct(rootzone: RootZone, available_ml: float) -> float:
     """Return current soil moisture as a percentage of capacity."""
 
     return rootzone.moisture_pct(available_ml)
-

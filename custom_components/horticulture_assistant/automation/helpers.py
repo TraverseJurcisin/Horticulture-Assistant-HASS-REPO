@@ -46,5 +46,3 @@ def latest_env(profile: Mapping[str, Any]) -> Dict[str, Any]:
     if not data:
         data = profile.get("latest_env") or {}
     return dict(data) if isinstance(data, Mapping) else {}
-
-

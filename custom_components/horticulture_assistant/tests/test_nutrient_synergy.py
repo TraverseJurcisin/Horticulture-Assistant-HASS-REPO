@@ -41,5 +41,3 @@ def test_has_synergy_pair():
     assert has_synergy_pair("N", "Ca")
     assert has_synergy_pair("Fe", "Mn")
     assert not has_synergy_pair("Cu", "Zn")
-
-

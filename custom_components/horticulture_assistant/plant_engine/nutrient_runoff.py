@@ -84,4 +84,3 @@ def project_levels_after_runoff(levels_mg: Mapping[str, float], plant_type: str 
     for nutrient, mg in levels_mg.items():
         remaining[nutrient] = round(float(mg) - losses.get(nutrient, 0.0), 2)
     return remaining
-

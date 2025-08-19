@@ -26,4 +26,3 @@ def test_plant_overview_cli_stdout():
     )
     data = json.loads(result.stdout)
     assert "pests" in data
-

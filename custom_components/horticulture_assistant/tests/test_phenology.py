@@ -39,4 +39,3 @@ def test_format_milestone_prediction():
     )
     assert "Buddha's Hand" in msg
     assert "flower initiation" in msg
-

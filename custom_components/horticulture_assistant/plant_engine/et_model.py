@@ -189,4 +189,3 @@ def estimate_stage_et(plant_type: str, stage: str, month: int) -> float:
         return 0.0
 
     return calculate_eta(et0, kc_val)
-

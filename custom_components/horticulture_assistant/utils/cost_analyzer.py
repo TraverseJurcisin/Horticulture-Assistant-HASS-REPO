@@ -51,4 +51,3 @@ class CostAnalyzer:
             unit_prices = [e.price / e.package_size for e in entries]
             summary[product_id] = sum(unit_prices) / len(unit_prices)
         return summary
-

@@ -42,4 +42,3 @@ def test_generate_nutrient_management_report_with_cost():
     )
     assert isinstance(report, NutrientManagementCostReport)
     assert report.cost_total >= 0
-

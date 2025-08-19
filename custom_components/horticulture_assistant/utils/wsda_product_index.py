@@ -96,4 +96,3 @@ def search_products(query: str, *, fields: Iterable[str] = ("label_name", "brand
     matches = [i for i in items if _match_query(i, query, fields)]
     matches.sort(key=lambda x: x.label_name)
     return matches[: max(limit, 0)]
-

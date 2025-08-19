@@ -133,4 +133,3 @@ def analyze_interactions(levels: Mapping[str, float]) -> Dict[str, Dict[str, obj
                 "action": get_balance_action(pair),
             }
     return result
-

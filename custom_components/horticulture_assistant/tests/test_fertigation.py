@@ -554,4 +554,3 @@ def test_estimate_injection_duration():
     expected_time = round(expected_volume / (1.0 * 1000), 3)
     duration = estimate_injection_duration(schedule, 10.0, "dosatron_1pct")
     assert duration == expected_time
-

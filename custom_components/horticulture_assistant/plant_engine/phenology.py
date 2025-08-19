@@ -121,4 +121,3 @@ def format_milestone_prediction(
         f"{plant_name} has reached {accumulated_gdd:.0f} GDD since last reset. "
         f"Expect {milestone.replace('_', ' ')} within {low}–{high} days."
     )
-

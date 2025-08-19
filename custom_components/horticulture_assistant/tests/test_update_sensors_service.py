@@ -41,4 +41,3 @@ def test_update_service_invalid_data(tmp_path: Path):
 
     # Should not raise even though data is missing
     asyncio.run(update_sensors_service(hass, call))
-

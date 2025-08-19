@@ -155,4 +155,3 @@ def recommend_ec_correction(
             ml = (delta * volume_l / factor) * (float(ratio) / total_ratio)
             result[stock] = round(ml, 2)
     return result or None
-

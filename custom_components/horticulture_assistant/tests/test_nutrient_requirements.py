@@ -45,4 +45,3 @@ def test_temperature_adjusted_requirements():
     assert req["N"] > 150  # factor < 1 so requirement increases
     cumulative = calculate_temperature_adjusted_cumulative_requirements("citrus", 2, 18)
     assert cumulative["N"] == round(req["N"] * 2, 2)
-

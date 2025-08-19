@@ -59,4 +59,3 @@ def test_run_fertilizer_cycle(tmp_path, monkeypatch):
     assert log.exists()
     data = json.loads(log.read_text())
     assert data and data[0]["triggered"] is True
-

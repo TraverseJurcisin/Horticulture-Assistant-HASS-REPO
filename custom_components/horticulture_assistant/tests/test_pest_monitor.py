@@ -272,4 +272,3 @@ def test_report_includes_yield_loss():
 def test_get_sample_size():
     assert get_sample_size("citrus") == 25
     assert get_sample_size("unknown") is None
-

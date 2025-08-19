@@ -286,4 +286,3 @@ def compute_weighted_transpiration_dataframe(
         round(float(weighted["eta_mm_day"]), 2),
         round(float(weighted["transpiration_ml_day"]), 1),
     ).as_dict()
-

@@ -112,4 +112,3 @@ def test_load_datasets(monkeypatch, tmp_path):
 def test_clean_float_map():
     raw = {"a": "1", "b": 2, "c": "bad", "d": -1}
     assert clean_float_map(raw) == {"a": 1.0, "b": 2.0}
-

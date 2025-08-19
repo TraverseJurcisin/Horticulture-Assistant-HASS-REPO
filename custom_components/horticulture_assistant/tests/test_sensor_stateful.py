@@ -130,4 +130,3 @@ def test_daily_nitrogen_applied():
     )
     asyncio.run(sensor_entity.async_update())
     assert sensor_entity.native_value == 120.0
-

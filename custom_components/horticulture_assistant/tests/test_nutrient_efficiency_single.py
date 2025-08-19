@@ -26,4 +26,3 @@ def test_calculate_nue_for_nutrient_missing(tmp_path, monkeypatch):
     monkeypatch.setattr(ne, "NUTRIENT_DIR", str(n_dir))
     monkeypatch.setattr(ne, "YIELD_DIR", str(y_dir))
     assert ne.calculate_nue_for_nutrient("plant", "Ca") is None
-

@@ -77,4 +77,3 @@ def estimate_diffusion_mass(
     )
     mass = abs(flux) * area_cm2 * duration_s
     return mass
-
