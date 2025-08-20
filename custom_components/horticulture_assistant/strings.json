@@ -11,11 +11,29 @@
           "base_url": "Base URL",
           "update_interval": "Update interval (minutes)"
         }
-      }
+      },
+        "profile": {
+          "title": "Plant profile",
+          "description": "Create a plant profile.",
+          "data": {
+            "plant_name": "Plant name",
+            "plant_type": "Plant type (optional)"
+          }
+        },
+        "sensors": {
+          "title": "Sensors",
+          "description": "Select sensor entities (optional; can be added later).",
+          "data": {
+            "moisture_sensor": "Moisture sensor",
+            "temperature_sensor": "Temperature sensor",
+            "ec_sensor": "EC sensor",
+            "co2_sensor": "CO₂ sensor"
+          }
+        }
+      },
+      "error": {"profile_error": "Failed to create plant profile"},
+      "abort": {}
     },
-    "error": {},
-    "abort": {}
-  },
   "options": {
     "step": {
       "init": {

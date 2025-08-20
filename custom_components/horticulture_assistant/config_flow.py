@@ -7,6 +7,7 @@ import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant import config_entries
 from homeassistant.helpers import selector as sel
+from homeassistant.helpers import config_validation as cv
 
 from .const import (
     CONF_API_KEY,
@@ -18,6 +19,9 @@ from .const import (
     CONF_MOISTURE_SENSOR,
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
+    CONF_PLANT_NAME,
+    CONF_PLANT_ID,
+    CONF_PLANT_TYPE,
     DEFAULT_BASE_URL,
     DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
@@ -25,6 +29,9 @@ from .const import (
     DOMAIN,
 )
 from .api import ChatApi
+from .utils import profile_generator
+from .utils.plant_registry import register_plant
+from .utils.json_io import load_json, save_json
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,9 +47,20 @@ DATA_SCHEMA = vol.Schema(
     }
 )
 
+PROFILE_SCHEMA = vol.Schema(
+    {
+        vol.Required(CONF_PLANT_NAME): cv.string,
+        vol.Optional(CONF_PLANT_TYPE): cv.string,
+    }
+)
+
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc,call-arg]
     VERSION = 2
+
+    def __init__(self) -> None:
+        self._config: dict | None = None
+        self._profile: dict | None = None
 
     async def async_step_user(self, user_input=None):
         errors = {}
@@ -62,12 +80,144 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 errors["base"] = "cannot_connect"
                 _LOGGER.exception("Unexpected error validating API key: %s", err)
             if not errors:
-                return self.async_create_entry(
-                    title="Horticulture Assistant", data=user_input
-                )
+                self._config = user_input
+                return await self.async_step_profile()
         return self.async_show_form(
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
         )
+
+    async def async_step_profile(self, user_input=None):
+        errors = {}
+        if user_input is not None and self._config is not None:
+            plant_name = user_input[CONF_PLANT_NAME].strip()
+            plant_type = user_input.get(CONF_PLANT_TYPE, "").strip()
+            if not plant_name:
+                errors[CONF_PLANT_NAME] = "required"
+            else:
+                metadata = {CONF_PLANT_NAME: plant_name}
+                if plant_type:
+                    metadata[CONF_PLANT_TYPE] = plant_type
+                try:
+                    plant_id = await self.hass.async_add_executor_job(
+                        profile_generator.generate_profile,
+                        metadata,
+                        self.hass,
+                    )
+                except Exception as err:  # pragma: no cover - unexpected
+                    errors["base"] = "profile_error"
+                    _LOGGER.exception("Failed to generate profile: %s", err)
+                else:
+                    if not plant_id:
+                        errors["base"] = "profile_error"
+            if not errors:
+                self._profile = {
+                    CONF_PLANT_ID: plant_id,
+                    CONF_PLANT_NAME: plant_name,
+                }
+                if plant_type:
+                    self._profile[CONF_PLANT_TYPE] = plant_type
+                return await self.async_step_sensors()
+        return self.async_show_form(
+            step_id="profile", data_schema=PROFILE_SCHEMA, errors=errors
+        )
+
+    async def async_step_sensors(self, user_input=None):
+        if self._config is None or self._profile is None:
+            return self.async_abort(reason="unknown")
+
+        schema = vol.Schema(
+            {
+                vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(
+                            domain=["sensor"], device_class=["moisture"]
+                        )
+                    ),
+                    str,
+                ),
+                vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(
+                            domain=["sensor"], device_class=["temperature"]
+                        )
+                    ),
+                    str,
+                ),
+                vol.Optional(CONF_EC_SENSOR): vol.Any(
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
+                    str,
+                ),
+                vol.Optional(CONF_CO2_SENSOR): vol.Any(
+                    sel.EntitySelector(
+                        sel.EntitySelectorConfig(
+                            domain=["sensor"], device_class=["carbon_dioxide"]
+                        )
+                    ),
+                    str,
+                ),
+            }
+        )
+
+        errors = {}
+        if user_input is not None:
+            for key in (
+                CONF_MOISTURE_SENSOR,
+                CONF_TEMPERATURE_SENSOR,
+                CONF_EC_SENSOR,
+                CONF_CO2_SENSOR,
+            ):
+                entity_id = user_input.get(key)
+                if entity_id and self.hass.states.get(entity_id) is None:
+                    errors[key] = "not_found"
+            if errors:
+                return self.async_show_form(
+                    step_id="sensors", data_schema=schema, errors=errors
+                )
+            sensor_map = {}
+            if moisture := user_input.get(CONF_MOISTURE_SENSOR):
+                sensor_map["moisture_sensors"] = [moisture]
+            if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
+                sensor_map["temperature_sensors"] = [temperature]
+            if ec := user_input.get(CONF_EC_SENSOR):
+                sensor_map["ec_sensors"] = [ec]
+            if co2 := user_input.get(CONF_CO2_SENSOR):
+                sensor_map["co2_sensors"] = [co2]
+            if sensor_map:
+                plant_id = self._profile[CONF_PLANT_ID]
+
+                def _save_sensors():
+                    path = self.hass.config.path("plants", plant_id, "general.json")
+                    try:
+                        data = load_json(path)
+                    except Exception:
+                        data = {}
+                    container = data.setdefault("sensor_entities", {})
+                    for key, value in sensor_map.items():
+                        container[key] = value
+                    save_json(path, data)
+
+                await self.hass.async_add_executor_job(_save_sensors)
+            plant_id = self._profile[CONF_PLANT_ID]
+            await self.hass.async_add_executor_job(
+                register_plant,
+                plant_id,
+                {
+                    "display_name": self._profile[CONF_PLANT_NAME],
+                    "profile_path": f"plants/{plant_id}/general.json",
+                    **(
+                        {"plant_type": self._profile[CONF_PLANT_TYPE]}
+                        if self._profile.get(CONF_PLANT_TYPE)
+                        else {}
+                    ),
+                },
+                self.hass,
+            )
+            data = {**self._config, **self._profile}
+            return self.async_create_entry(
+                title=self._profile[CONF_PLANT_NAME], data=data, options=user_input
+            )
+
+        return self.async_show_form(step_id="sensors", data_schema=schema)
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -147,6 +297,41 @@ class OptionsFlow(config_entries.OptionsFlow):
                 return self.async_show_form(
                     step_id="init", data_schema=schema, errors=errors
                 )
+            sensor_map: dict[str, list[str]] = {}
+            if moisture := user_input.get(CONF_MOISTURE_SENSOR):
+                sensor_map["moisture_sensors"] = [moisture]
+            if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
+                sensor_map["temperature_sensors"] = [temperature]
+            if ec := user_input.get(CONF_EC_SENSOR):
+                sensor_map["ec_sensors"] = [ec]
+            if co2 := user_input.get(CONF_CO2_SENSOR):
+                sensor_map["co2_sensors"] = [co2]
+
+            plant_id = self._entry.data.get(CONF_PLANT_ID)
+            if plant_id:
+                def _save_sensors():
+                    path = self.hass.config.path("plants", plant_id, "general.json")
+                    try:
+                        data = load_json(path)
+                    except Exception:
+                        data = {}
+                    container = data.setdefault("sensor_entities", {})
+                    for key in (
+                        "moisture_sensors",
+                        "temperature_sensors",
+                        "ec_sensors",
+                        "co2_sensors",
+                    ):
+                        if key in sensor_map:
+                            container[key] = sensor_map[key]
+                        else:
+                            container.pop(key, None)
+                    if not container:
+                        data.pop("sensor_entities", None)
+                    save_json(path, data)
+
+                await self.hass.async_add_executor_job(_save_sensors)
+
             return self.async_create_entry(title="", data=user_input)
 
         return self.async_show_form(step_id="init", data_schema=schema)
