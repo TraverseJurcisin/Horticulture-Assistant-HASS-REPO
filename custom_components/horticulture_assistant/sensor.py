@@ -1,28 +1,37 @@
 from __future__ import annotations
+from datetime import date
+
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.util import dt as dt_util
+
 from .const import DOMAIN
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
+from .entity_base import HorticultureBaseEntity
+from .utils.entry_helpers import get_entry_data, store_entry_data
 
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities
 ):
-    entry_data = hass.data[DOMAIN][entry.entry_id]
-    coord_ai: HortiAICoordinator = entry_data["coordinator_ai"]
-    coord_local: HortiLocalCoordinator = entry_data["coordinator_local"]
-    keep_stale: bool = entry_data.get("keep_stale", True)
-    async_add_entities(
-        [
-            HortiStatusSensor(coord_ai, coord_local, entry.entry_id, keep_stale),
-            HortiRecommendationSensor(coord_ai, entry.entry_id, keep_stale),
-        ],
-        True,
-    )
+    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
+    coord_ai: HortiAICoordinator = stored["coordinator_ai"]
+    coord_local: HortiLocalCoordinator = stored["coordinator_local"]
+    keep_stale: bool = stored.get("keep_stale", True)
+    plant_id: str = stored["plant_id"]
+    plant_name: str = stored["plant_name"]
+
+    sensors = [
+        HortiStatusSensor(coord_ai, coord_local, entry.entry_id, keep_stale),
+        HortiRecommendationSensor(coord_ai, entry.entry_id, keep_stale),
+        PlantDLISensor(hass, entry, plant_name, plant_id),
+    ]
+
+    async_add_entities(sensors, True)
 
 
 class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
@@ -127,3 +136,56 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         if self._keep_stale:
             return True
         return super().available
+
+
+class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
+    """Sensor calculating Daily Light Integral for a plant."""
+
+    _attr_name = "Daily Light Integral"
+    _attr_native_unit_of_measurement = "mol/m²/d"
+
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        plant_name: str,
+        plant_id: str,
+    ) -> None:
+        super().__init__(plant_name, plant_id)
+        self.hass = hass
+        self._entry = entry
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_dli"
+        self._value: float | None = None
+        self._accum: float = 0.0
+        self._last_day: date | None = None
+
+    @property
+    def native_value(self) -> float | None:
+        return self._value
+
+    async def async_added_to_hass(self) -> None:
+        await super().async_added_to_hass()
+        self.async_on_remove(
+            self.hass.bus.async_listen("state_changed", self._on_illuminance)
+        )
+
+    async def _on_illuminance(self, event) -> None:
+        light_sensor = self._entry.options.get("sensors", {}).get("illuminance")
+        if not light_sensor or event.data.get("entity_id") != light_sensor:
+            return
+        state = self.hass.states.get(light_sensor)
+        try:
+            lx = float(state.state) if state else None
+        except (TypeError, ValueError):
+            lx = None
+        if lx is None:
+            return
+        ppfd = lx * 0.0185  # µmol/m²/s
+        seconds = 60
+        day = dt_util.utcnow().date()
+        if self._last_day is None or day != self._last_day:
+            self._accum = 0.0
+            self._last_day = day
+        self._accum += (ppfd * seconds) / 1_000_000
+        self._value = round(self._accum, 2)
+        self.async_write_ha_state()

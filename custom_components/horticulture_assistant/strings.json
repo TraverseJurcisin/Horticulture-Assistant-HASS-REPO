@@ -44,7 +44,9 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor"
+          "co2_sensor": "CO₂ sensor",
+          "species_display": "Species",
+          "force_refresh": "Force refresh thresholds"
         }
       }
     }

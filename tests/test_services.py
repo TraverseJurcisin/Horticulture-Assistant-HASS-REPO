@@ -12,7 +12,11 @@ pytestmark = [
 
 
 async def test_update_sensors_service(hass):
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", "plant_id": "plant1", "plant_name": "Plant 1"},
+        title="Plant 1",
+    )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -43,6 +47,33 @@ async def test_update_sensors_service(hass):
     assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == [
         "sensor.good"
     ]
+
+
+async def test_replace_sensor_service(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", "plant_id": "plant1", "plant_name": "Plant 1"},
+        title="Plant 1",
+    )
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    with pytest.raises(vol.Invalid):
+        await hass.services.async_call(
+            DOMAIN,
+            "replace_sensor",
+            {"plant_id": "plant1", "role": "moisture", "new_sensor": "sensor.bad"},
+            blocking=True,
+        )
+    hass.states.async_set("sensor.good", 2)
+    await hass.services.async_call(
+        DOMAIN,
+        "replace_sensor",
+        {"plant_id": "plant1", "role": "moisture", "new_sensor": "sensor.good"},
+        blocking=True,
+    )
+    await hass.async_block_till_done()
+    assert entry.options["sensors"]["moisture"] == "sensor.good"
 
 
 async def test_refresh_service(hass):

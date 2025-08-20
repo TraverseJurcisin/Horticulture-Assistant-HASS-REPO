@@ -161,6 +161,27 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             {vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}
         ),
     )
+    async def _handle_replace_sensor(call):
+        plant_id = call.data["plant_id"]
+        role = call.data["role"]
+        new_sensor = call.data["new_sensor"]
+        if hass.states.get(new_sensor) is None:
+            raise vol.Invalid(f"missing entity {new_sensor}")
+        # Update persistent store for backward compatibility
+        sensors = (
+            store.data.setdefault("plants", {})
+            .setdefault(plant_id, {})
+            .setdefault("sensors", {})
+        )
+        sensors[f"{role}_sensors"] = [new_sensor]
+        await store.save()
+        # Update config entry options so entities pick up the new sensor immediately
+        opts = dict(entry.options)
+        mapped = dict(opts.get("sensors", {}))
+        mapped[role] = new_sensor
+        opts["sensors"] = mapped
+        hass.config_entries.async_update_entry(entry, options=opts)
+        await local_coord.async_request_refresh()
     hass.services.async_register(
         svc_base,
         "recalculate_targets",
@@ -175,6 +196,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             {
                 vol.Required("plant_id"): str,
                 vol.Optional("approve", default=False): bool,
+            }
+        ),
+    )
+    hass.services.async_register(
+        svc_base,
+        "replace_sensor",
+        _handle_replace_sensor,
+        schema=vol.Schema(
+            {
+                vol.Required("plant_id"): str,
+                vol.Required("role"): str,
+                vol.Required("new_sensor"): cv.entity_id,
             }
         ),
     )

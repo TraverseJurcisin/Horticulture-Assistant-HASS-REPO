@@ -40,3 +40,22 @@ run_recommendation:
 refresh:
   name: Manual refresh
   description: Trigger both local and AI coordinators to refresh now.
+
+replace_sensor:
+  name: Replace a mapped sensor
+  description: Swap the source sensor feeding a plant profile.
+  fields:
+    plant_id:
+      required: true
+      selector:
+        text:
+    role:
+      required: true
+      example: moisture
+      selector:
+        text:
+    new_sensor:
+      required: true
+      selector:
+        entity:
+          domain: sensor
