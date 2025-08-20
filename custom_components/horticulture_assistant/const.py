@@ -18,6 +18,9 @@ CONF_TEMPERATURE_SENSOR = "temperature_sensor"
 CONF_EC_SENSOR = "ec_sensor"
 CONF_CO2_SENSOR = "co2_sensor"
 CONF_KEEP_STALE = "keep_stale"
+CONF_PLANT_NAME = "plant_name"
+CONF_PLANT_ID = "plant_id"
+CONF_PLANT_TYPE = "plant_type"
 
 DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it

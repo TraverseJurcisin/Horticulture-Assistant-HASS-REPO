@@ -1,9 +1,43 @@
 import pytest
 from unittest.mock import MagicMock, patch
 
-from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
+import importlib.util
+import sys
+import types
+from pathlib import Path
+import json
+
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-from homeassistant import config_entries
+
+DOMAIN = "horticulture_assistant"
+CONF_API_KEY = "api_key"
+
+# Load const and config_flow modules without importing package __init__
+PACKAGE = "custom_components.horticulture_assistant"
+BASE_PATH = Path(__file__).resolve().parent.parent / "custom_components/horticulture_assistant"
+
+if PACKAGE not in sys.modules:
+    pkg = types.ModuleType(PACKAGE)
+    pkg.__path__ = [str(BASE_PATH)]
+    sys.modules[PACKAGE] = pkg
+
+const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", BASE_PATH / "const.py")
+const = importlib.util.module_from_spec(const_spec)
+sys.modules[const_spec.name] = const
+const_spec.loader.exec_module(const)
+CONF_PLANT_NAME = const.CONF_PLANT_NAME
+CONF_PLANT_ID = const.CONF_PLANT_ID
+CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
+
+cfg_spec = importlib.util.spec_from_file_location(
+    f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py"
+)
+cfg = importlib.util.module_from_spec(cfg_spec)
+sys.modules[cfg_spec.name] = cfg
+cfg_spec.loader.exec_module(cfg)
+
+ConfigFlow = cfg.ConfigFlow
+OptionsFlow = cfg.OptionsFlow
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -34,70 +68,250 @@ def _mock_socket():
 
 async def test_config_flow_user(hass):
     """Test user config flow."""
-    result = await hass.config_entries.flow.async_init(
-        DOMAIN, context={"source": config_entries.SOURCE_USER}
-    )
+    flow = ConfigFlow()
+    flow.hass = hass
+    result = await flow.async_step_user()
     assert result["type"] == "form"
     with patch(
         "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
         return_value=None,
     ):
-        result2 = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {CONF_API_KEY: "abc"}
-        )
-    assert result2["type"] == "create_entry"
-    await hass.async_block_till_done()
+        result2 = await flow.async_step_user({CONF_API_KEY: "abc"})
+    assert result2["type"] == "form"
+    assert result2["step_id"] == "profile"
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = {"plant_type": "herb", "sensor_entities": {}}
+        path.write_text(json.dumps(data), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run) as exec_mock,
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ) as gen_mock,
+    ):
+        result3 = await flow.async_step_profile({
+            CONF_PLANT_NAME: "Mint",
+            CONF_PLANT_TYPE: "Herb",
+        })
+        assert result3["type"] == "form"
+        assert result3["step_id"] == "sensors"
+        hass.states.async_set("sensor.good", 0)
+        result4 = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+    assert result4["type"] == "create_entry"
+    assert result4["data"][CONF_PLANT_NAME] == "Mint"
+    assert result4["data"][CONF_PLANT_ID] == "mint"
+    assert result4["options"] == {"moisture_sensor": "sensor.good"}
+    assert exec_mock.call_count == 3
+    gen_mock.assert_called_once()
+    general = json.loads(
+        Path(hass.config.path("plants", "mint", "general.json")).read_text()
+    )
+    assert general["sensor_entities"] == {"moisture_sensors": ["sensor.good"]}
+    assert general["plant_type"] == "herb"
+    registry = json.loads(
+        Path(
+            hass.config.path(
+                "data", "local", "plants", "plant_registry.json"
+            )
+        ).read_text()
+    )
+    assert registry["mint"]["display_name"] == "Mint"
+    assert registry["mint"]["plant_type"] == "Herb"
 
 
 async def test_config_flow_invalid_key(hass):
     """Test config flow handles invalid API key."""
-    result = await hass.config_entries.flow.async_init(
-        DOMAIN, context={"source": config_entries.SOURCE_USER}
-    )
+    flow = ConfigFlow()
+    flow.hass = hass
+    result = await flow.async_step_user()
     assert result["type"] == "form"
     with patch(
         "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
         side_effect=Exception,
     ):
-        result2 = await hass.config_entries.flow.async_configure(
-            result["flow_id"], {CONF_API_KEY: "bad"}
-        )
+        result2 = await flow.async_step_user({CONF_API_KEY: "bad"})
     assert result2["type"] == "form"
     assert result2["errors"] == {"base": "cannot_connect"}
-    await hass.async_block_till_done()
+
+
+async def test_config_flow_profile_error(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        await flow.async_step_user({CONF_API_KEY: "abc"})
+    async def _run(func, *args):
+        return ""
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        result = await flow.async_step_profile({
+            CONF_PLANT_NAME: "Mint",
+            CONF_PLANT_TYPE: "Herb",
+        })
+    assert result["type"] == "form"
+    assert result["errors"] == {"base": "profile_error"}
+
+
+async def test_config_flow_profile_requires_name(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        await flow.async_step_user({CONF_API_KEY: "abc"})
+    result = await flow.async_step_profile({
+        CONF_PLANT_NAME: "",
+        CONF_PLANT_TYPE: "Herb",
+    })
+    assert result["type"] == "form"
+    assert result["errors"] == {CONF_PLANT_NAME: "required"}
+
+
+async def test_config_flow_sensor_not_found(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        await flow.async_step_user({CONF_API_KEY: "abc"})
+    async def _run(func, *args):
+        return func(*args)
+    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
+        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+        return_value="mint",
+    ):
+        await flow.async_step_profile({
+            CONF_PLANT_NAME: "Mint",
+            CONF_PLANT_TYPE: "Herb",
+        })
+        result = await flow.async_step_sensors({"moisture_sensor": "sensor.bad"})
+    assert result["type"] == "form"
+    assert result["errors"] == {"moisture_sensor": "not_found"}
+
+
+async def test_config_flow_without_sensors(hass):
+    """Profiles can be created without attaching sensors."""
+    flow = ConfigFlow()
+    flow.hass = hass
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
+        return_value=None,
+    ):
+        await flow.async_step_user({CONF_API_KEY: "abc"})
+    async def _run(func, *args):
+        return func(*args)
+
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Rose"})
+        result = await flow.async_step_sensors({})
+    assert result["type"] == "create_entry"
+    assert result["data"][CONF_PLANT_NAME] == "Rose"
+    assert result["data"][CONF_PLANT_ID] == "rose"
+    assert result["options"] == {}
+    general = json.loads(Path(hass.config.path("plants", "rose", "general.json")).read_text())
+    sensors = general.get("sensor_entities", {})
+    assert all(not values for values in sensors.values())
+    registry = json.loads(
+        Path(
+            hass.config.path("data", "local", "plants", "plant_registry.json")
+        ).read_text()
+    )
+    assert registry["rose"]["display_name"] == "Rose"
+    assert "plant_type" not in registry["rose"]
+    assert general["plant_type"] == "TBD"
 
 
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
-    entry.add_to_hass(hass)
-    result = await hass.config_entries.options.async_init(entry.entry_id)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    result = await flow.async_step_init()
     assert result["type"] == "form"
-    result2 = await hass.config_entries.options.async_configure(result["flow_id"], {})
+    result2 = await flow.async_step_init({})
     assert result2["type"] == "create_entry"
-    await hass.async_block_till_done()
+
+
+async def test_options_flow_persists_sensors(hass, hass_admin_user):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", CONF_PLANT_ID: "pid", CONF_PLANT_NAME: "Plant"},
+        title="title",
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    profile_dir = Path(hass.config.path("plants", "pid"))
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    (profile_dir / "general.json").write_text("{}")
+    hass.states.async_set("sensor.good", 0, {"device_class": "moisture"})
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        await flow.async_step_init()
+        result = await flow.async_step_init({"moisture_sensor": "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    general = json.loads((profile_dir / "general.json").read_text())
+    assert general["sensor_entities"]["moisture_sensors"] == ["sensor.good"]
+
+
+async def test_options_flow_removes_sensor(hass, hass_admin_user):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", CONF_PLANT_ID: "pid", CONF_PLANT_NAME: "Plant"},
+        title="title",
+        options={"moisture_sensor": "sensor.old"},
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    profile_dir = Path(hass.config.path("plants", "pid"))
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    (profile_dir / "general.json").write_text(
+        json.dumps({"sensor_entities": {"moisture_sensors": ["sensor.old"]}})
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        await flow.async_step_init()
+        result = await flow.async_step_init({})
+
+    assert result["type"] == "create_entry"
+    general = json.loads((profile_dir / "general.json").read_text())
+    sensors = general.get("sensor_entities", {})
+    assert "moisture_sensors" not in sensors
 
 
 async def test_options_flow_invalid_entity(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
-    entry.add_to_hass(hass)
-    result = await hass.config_entries.options.async_init(entry.entry_id)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    result = await flow.async_step_init()
     assert result["type"] == "form"
-    result2 = await hass.config_entries.options.async_configure(
-        result["flow_id"], {"moisture_sensor": "sensor.bad"}
-    )
+    result2 = await flow.async_step_init({"moisture_sensor": "sensor.bad"})
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
-    await hass.async_block_till_done()
 
 
 async def test_options_flow_invalid_interval(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
-    entry.add_to_hass(hass)
-    result = await hass.config_entries.options.async_init(entry.entry_id)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    result = await flow.async_step_init()
     assert result["type"] == "form"
-    result2 = await hass.config_entries.options.async_configure(
-        result["flow_id"], {"update_interval": 0}
-    )
+    result2 = await flow.async_step_init({"update_interval": 0})
     assert result2["type"] == "form"
     assert result2["errors"] == {"update_interval": "invalid_interval"}
-    await hass.async_block_till_done()

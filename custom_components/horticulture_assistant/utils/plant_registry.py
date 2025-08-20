@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from functools import lru_cache
 from typing import Any, Dict, Optional
 
@@ -11,7 +10,7 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - tests run without HA
     HomeAssistant = None  # type: ignore
 
-from .json_io import load_json
+from .json_io import load_json, save_json
 from custom_components.horticulture_assistant.utils.path_utils import config_path
 
 PLANT_REGISTRY_FILE = "data/local/plants/plant_registry.json"
@@ -39,4 +38,22 @@ def get_plant_type(plant_id: str, hass: HomeAssistant | None = None) -> Optional
     ptype = meta.get("plant_type")
     return str(ptype) if ptype else None
 
-__all__ = ["PLANT_REGISTRY_FILE", "get_plant_metadata", "get_plant_type"]
+
+def register_plant(
+    plant_id: str, metadata: Dict[str, Any], hass: HomeAssistant | None = None
+) -> None:
+    """Add or update ``plant_id`` in the plant registry."""
+    path = config_path(hass, PLANT_REGISTRY_FILE)
+    try:
+        data = load_json(path)
+    except Exception:
+        data = {}
+    data[plant_id] = metadata
+    save_json(path, data)
+    _load_registry.cache_clear()
+__all__ = [
+    "PLANT_REGISTRY_FILE",
+    "get_plant_metadata",
+    "get_plant_type",
+    "register_plant",
+]
