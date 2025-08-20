@@ -26,10 +26,11 @@ from homeassistant.helpers.update_coordinator import UpdateFailed
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .storage import LocalStore
-from .paths import ensure_local_data_paths
+from .utils.paths import ensure_local_data_paths
 from aiohttp import ClientError
 import asyncio
 from .entity_utils import ensure_entities_exist
+from .utils.entry_helpers import store_entry_data
 
 SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
@@ -37,8 +38,10 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup(hass: HomeAssistant, _config) -> bool:
     return True
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
@@ -73,13 +76,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER.warning("Initial data refresh failed: %s", err)
     except Exception as err:  # pragma: no cover - unexpected
         _LOGGER.exception("Initial data refresh failed: %s", err)
-    hass.data[DOMAIN][entry.entry_id] = {
-        "api": api,
-        "coordinator_ai": ai_coord,
-        "coordinator_local": local_coord,
-        "store": store,
-        "keep_stale": keep_stale,
-    }
+    entry_data = store_entry_data(hass, entry)
+    entry_data.update(
+        {
+            "api": api,
+            "coordinator_ai": ai_coord,
+            "coordinator_local": local_coord,
+            "store": store,
+            "keep_stale": keep_stale,
+        }
+    )
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     _LOGGER.info("Horticulture Assistant setup complete")
 
@@ -165,9 +171,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "run_recommendation",
         _handle_run_reco,
-        schema=vol.Schema({vol.Required("plant_id"): str, vol.Optional("approve", default=False): bool}),
+        schema=vol.Schema(
+            {
+                vol.Required("plant_id"): str,
+                vol.Optional("approve", default=False): bool,
+            }
+        ),
     )
     return True
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)

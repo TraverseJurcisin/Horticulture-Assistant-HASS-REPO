@@ -6,7 +6,10 @@ from ..utils.json_io import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
-def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: str = "dashboard") -> dict:
+
+def export_grafana_data(
+    plant_id: str, base_path: str = "plants", output_path: str = "dashboard"
+) -> dict:
     """
     Compile plant data into a JSON object for Grafana dashboards and write to file.
     Loads the plant profile and the last 7 days of logs, then produces a summary of
@@ -22,7 +25,7 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
         "threshold_summary": {},
         "sensor_summary": {},
         "irrigation_summary": {},
-        "nutrient_summary": {}
+        "nutrient_summary": {},
     }
 
     # Load plant profile JSON
@@ -38,7 +41,9 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
     thresholds = {}
     if isinstance(profile.get("thresholds"), dict):
         thresholds = profile["thresholds"]
-    elif isinstance(profile.get("profile_data"), dict) and isinstance(profile["profile_data"].get("thresholds"), dict):
+    elif isinstance(profile.get("profile_data"), dict) and isinstance(
+        profile["profile_data"].get("thresholds"), dict
+    ):
         thresholds = profile["profile_data"]["thresholds"]
     data["threshold_summary"] = thresholds
 
@@ -83,16 +88,22 @@ def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: s
 
     # Load and filter log data for the last 7 days
     irrigation_entries = _filter_last_7d(_load_log(plant_dir / "irrigation_log.json"))
-    nutrient_entries  = _filter_last_7d(_load_log(plant_dir / "nutrient_application_log.json"))
-    sensor_entries    = _filter_last_7d(_load_log(plant_dir / "sensor_reading_log.json"))
+    nutrient_entries = _filter_last_7d(
+        _load_log(plant_dir / "nutrient_application_log.json")
+    )
+    sensor_entries = _filter_last_7d(_load_log(plant_dir / "sensor_reading_log.json"))
 
     # Summarize last 7 days of irrigation events
     if irrigation_entries:
-        total_volume = sum(entry.get("volume_applied_ml", 0) or 0 for entry in irrigation_entries)
-        methods = {entry.get("method") for entry in irrigation_entries if entry.get("method")}
+        total_volume = sum(
+            entry.get("volume_applied_ml", 0) or 0 for entry in irrigation_entries
+        )
+        methods = {
+            entry.get("method") for entry in irrigation_entries if entry.get("method")
+        }
         irrigation_summary = {
             "events": len(irrigation_entries),
-            "total_volume_ml": total_volume
+            "total_volume_ml": total_volume,
         }
         if methods:
             irrigation_summary["methods"] = list(methods)

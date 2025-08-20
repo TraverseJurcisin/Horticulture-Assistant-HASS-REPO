@@ -4,6 +4,7 @@ from .const import DOMAIN
 
 TO_REDACT = {"api_key", "Authorization"}
 
+
 async def async_get_config_entry_diagnostics(hass, entry):
     entry_data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
     store = entry_data.get("store")
@@ -20,7 +21,9 @@ async def async_get_config_entry_diagnostics(hass, entry):
         ],
         "plant_count": len(plants),
         "zone_count": len(zones),
-        "last_profile_load": store.data.get("profile", {}).get("loaded_at") if store else None,
+        "last_profile_load": store.data.get("profile", {}).get("loaded_at")
+        if store
+        else None,
         "last_ai_call": ai.last_call.isoformat() if ai and ai.last_call else None,
         "last_ai_exception": ai.last_exception_msg if ai else None,
         "ai_retry_count": ai.retry_count if ai else None,

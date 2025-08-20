@@ -6,7 +6,8 @@ import importlib.util
 ROOT = Path(__file__).resolve().parents[1]
 
 spec = importlib.util.spec_from_file_location(
-    "validators", ROOT / "custom_components" / "horticulture_assistant" / "validators.py"
+    "validators",
+    ROOT / "custom_components" / "horticulture_assistant" / "validators.py",
 )
 module = importlib.util.module_from_spec(spec)
 assert spec and spec.loader

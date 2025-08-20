@@ -76,9 +76,7 @@ def generate_pulse_schedule(
             )
             schedule.append(
                 {
-                    "time": (current_time + timedelta(hours=hour)).strftime(
-                        "%H:%M"
-                    ),
+                    "time": (current_time + timedelta(hours=hour)).strftime("%H:%M"),
                     "volume": pulse_volume,
                     "mass_mg": mass_mg,
                 }

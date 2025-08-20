@@ -33,7 +33,9 @@ def trigger_actuator(
         _LOGGER.error("Error reading plant profile file %s: %s", profile_file, e)
         return
 
-    actuators = profile_data.get("actuator_entities") or profile_data.get("actuators") or {}
+    actuators = (
+        profile_data.get("actuator_entities") or profile_data.get("actuators") or {}
+    )
     entity: str | None = None
     if isinstance(actuators, dict):
         entity = (
@@ -44,7 +46,11 @@ def trigger_actuator(
         )
 
     if not entity:
-        _LOGGER.info("No %s actuator defined for plant '%s'; skipping action.", actuator, plant_id)
+        _LOGGER.info(
+            "No %s actuator defined for plant '%s'; skipping action.",
+            actuator,
+            plant_id,
+        )
         return
 
     if hass is None:

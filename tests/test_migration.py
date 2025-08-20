@@ -14,6 +14,7 @@ pytestmark = [
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
 
+
 async def test_async_migrate_entry_moves_defaults(hass):
     entry = MockConfigEntry(
         domain=DOMAIN,

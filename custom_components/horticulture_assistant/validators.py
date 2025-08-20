@@ -7,9 +7,11 @@ try:
 except Exception:  # jsonschema is only needed for CI/tests/CLI
     Draft202012Validator = None  # type: ignore[assignment]
 
+
 def _load_json(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
 
 def validate_profile_dict(profile: dict, schema: dict) -> list[str]:
     """Return a list of human-readable errors (empty if valid)."""
@@ -22,6 +24,7 @@ def validate_profile_dict(profile: dict, schema: dict) -> list[str]:
         loc = ".".join(str(x) for x in e.absolute_path) or "<root>"
         errors.append(f"{loc}: {e.message}")
     return errors
+
 
 def validate_all_profiles(root_dirs: list[Path], schema_path: Path) -> list[str]:
     """Validate all *.json profiles in the provided directories."""

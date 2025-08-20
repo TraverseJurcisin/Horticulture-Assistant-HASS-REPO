@@ -10,6 +10,7 @@ from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def irrigation_trigger(
     plant_id: str, base_path: str | None = None, sensor_data: dict | None = None
 ) -> bool:
@@ -44,9 +45,18 @@ def irrigation_trigger(
     if isinstance(profile_data.get("actuators"), dict):
         irrigation_enabled = profile_data["actuators"].get("irrigation_enabled", True)
     # Some profiles might use a top-level or 'general' flag for irrigation
-    if not irrigation_enabled or profile_data.get("irrigation_enabled") is False or \
-       (isinstance(profile_data.get("general"), dict) and profile_data["general"].get("irrigation_enabled") is False):
-        _LOGGER.info("Irrigation is disabled in the profile for plant_id %s. Skipping irrigation trigger check.", plant_id)
+    if (
+        not irrigation_enabled
+        or profile_data.get("irrigation_enabled") is False
+        or (
+            isinstance(profile_data.get("general"), dict)
+            and profile_data["general"].get("irrigation_enabled") is False
+        )
+    ):
+        _LOGGER.info(
+            "Irrigation is disabled in the profile for plant_id %s. Skipping irrigation trigger check.",
+            plant_id,
+        )
         return False
 
     # Determine the soil moisture threshold
@@ -60,7 +70,9 @@ def irrigation_trigger(
     elif "soil_moisture" in thresholds:
         threshold_value = thresholds["soil_moisture"]
     else:
-        _LOGGER.error("No soil moisture threshold found in profile for plant_id %s.", plant_id)
+        _LOGGER.error(
+            "No soil moisture threshold found in profile for plant_id %s.", plant_id
+        )
         return False
 
     # Get current soil moisture from sensor_data or profile (if available)
@@ -81,20 +93,34 @@ def irrigation_trigger(
                 current_moisture = latest_env[key]
                 break
     if current_moisture is None:
-        _LOGGER.error("No current soil moisture reading available for plant_id %s.", plant_id)
+        _LOGGER.error(
+            "No current soil moisture reading available for plant_id %s.", plant_id
+        )
         return False
 
     # Convert readings to float for comparison
     try:
         current_val = float(current_moisture)
     except (TypeError, ValueError):
-        _LOGGER.error("Current soil moisture value is invalid for plant_id %s: %s", plant_id, current_moisture)
+        _LOGGER.error(
+            "Current soil moisture value is invalid for plant_id %s: %s",
+            plant_id,
+            current_moisture,
+        )
         return False
     try:
         # If threshold is a list or tuple (range), use the first value as the minimum threshold
-        threshold_val = float(threshold_value[0]) if isinstance(threshold_value, (list, tuple)) else float(threshold_value)
+        threshold_val = (
+            float(threshold_value[0])
+            if isinstance(threshold_value, (list, tuple))
+            else float(threshold_value)
+        )
     except (TypeError, ValueError):
-        _LOGGER.error("Soil moisture threshold is invalid for plant_id %s: %s", plant_id, threshold_value)
+        _LOGGER.error(
+            "Soil moisture threshold is invalid for plant_id %s: %s",
+            plant_id,
+            threshold_value,
+        )
         return False
 
     # Compare the current moisture against the threshold
