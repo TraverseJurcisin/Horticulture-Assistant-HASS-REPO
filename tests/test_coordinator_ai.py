@@ -20,7 +20,10 @@ def _mock_socket():
         instance = MagicMock()
 
         def connect(*args, **kwargs):
-            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
+            if (
+                not instance.setblocking.called
+                or instance.setblocking.call_args[0][0] is not False
+            ):
                 raise ValueError("the socket must be non-blocking")
 
         instance.connect.side_effect = connect
@@ -49,7 +52,9 @@ async def test_coordinator_handles_failures(hass):
         await coord.async_request_refresh()
     await hass.async_block_till_done()
     reg = async_get(hass)
-    entity_id = reg.async_get_entity_id("sensor", DOMAIN, f"{DOMAIN}_{entry.entry_id}_status")
+    entity_id = reg.async_get_entity_id(
+        "sensor", DOMAIN, f"{DOMAIN}_{entry.entry_id}_status"
+    )
     state = hass.states.get(entity_id)
     assert state is not None
     assert state.state == "error"
@@ -89,7 +94,9 @@ async def test_circuit_breaker_skips_calls(hass):
                 await coord._async_update_data()
     assert coord.breaker_open is True
     data_before = coord.data
-    with patch("custom_components.horticulture_assistant.api.ChatApi.chat") as mock_chat:
+    with patch(
+        "custom_components.horticulture_assistant.api.ChatApi.chat"
+    ) as mock_chat:
         result = await coord._async_update_data()
     mock_chat.assert_not_called()
     assert result == data_before

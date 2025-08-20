@@ -9,6 +9,7 @@ from custom_components.horticulture_assistant.dashboard import grafana_exporter
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def export_all_dashboards():
     """
     Compile dashboard data for all plant profiles into a single JSON.

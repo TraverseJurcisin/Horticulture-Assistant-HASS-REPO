@@ -221,7 +221,9 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
-def estimate_mix_cost_per_plant(schedule: Mapping[str, float], num_plants: int) -> float:
+def estimate_mix_cost_per_plant(
+    schedule: Mapping[str, float], num_plants: int
+) -> float:
     """Return cost per plant for ``schedule`` applied to ``num_plants``.
 
     ``num_plants`` must be positive. Costs are estimated using
@@ -286,18 +288,16 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
         if fert_id not in inventory:
             raise KeyError(f"Unknown fertilizer '{fert_id}'")
 
-        ga = convert_guaranteed_analysis(
-            inventory[fert_id].guaranteed_analysis
-        )
+        ga = convert_guaranteed_analysis(inventory[fert_id].guaranteed_analysis)
         for nutrient, pct in ga.items():
-            totals[nutrient] = round(
-                totals.get(nutrient, 0.0) + grams * pct * 1000, 2
-            )
+            totals[nutrient] = round(totals.get(nutrient, 0.0) + grams * pct * 1000, 2)
 
     return totals
 
 
-def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def calculate_mix_ppm(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
 
     ``volume_l`` is the final solution volume in liters. The returned mapping
@@ -378,7 +378,9 @@ def estimate_mix_cost_per_liter(
     return round(total / volume_l, 4)
 
 
-def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def check_solubility_limits(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
     Parameters
@@ -411,13 +413,17 @@ def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> D
     return warnings
 
 
-def check_dilution_limits(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def check_dilution_limits(
+    schedule: Mapping[str, float], volume_l: float
+) -> Dict[str, float]:
     """Return grams per liter exceeding recommended dilution limits."""
 
     return fertilizer_limits.check_schedule(schedule, volume_l)
 
 
-def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dict[str, str]]:
+def check_schedule_compatibility(
+    schedule: Mapping[str, float],
+) -> Dict[str, Dict[str, str]]:
     """Return fertilizer incompatibilities found in ``schedule``.
 
     The returned mapping has each conflicting fertilizer ID mapped to the
@@ -428,7 +434,7 @@ def check_schedule_compatibility(schedule: Mapping[str, float]) -> Dict[str, Dic
     compat = CATALOG.compatibility()
     conflicts: Dict[str, Dict[str, str]] = {}
     for i, fid in enumerate(ferts):
-        for other in ferts[i + 1:]:
+        for other in ferts[i + 1 :]:
             reason = compat.get(fid, {}).get(other) or compat.get(other, {}).get(fid)
             if reason:
                 conflicts.setdefault(fid, {})[other] = reason
@@ -499,8 +505,6 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
         raise KeyError(f"No priced product contains nutrient '{nutrient}'")
 
     return best_id, best_cost
-
-
 
 
 def list_products() -> list[str]:
@@ -629,9 +633,7 @@ def recommend_deficiency_correction_mix(
             fert_id, _ = get_cheapest_product(nutrient)
         except KeyError:
             continue
-        grams = calculate_mass_for_target_ppm(
-            fert_id, nutrient, deficit_ppm, volume_l
-        )
+        grams = calculate_mass_for_target_ppm(fert_id, nutrient, deficit_ppm, volume_l)
         schedule[fert_id] = round(schedule.get(fert_id, 0.0) + grams, 3)
 
     return schedule

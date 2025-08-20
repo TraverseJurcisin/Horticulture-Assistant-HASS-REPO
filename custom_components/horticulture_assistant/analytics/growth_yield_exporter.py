@@ -7,6 +7,7 @@ from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def export_growth_yield(
     plant_id: str,
     base_path: str = "plants",
@@ -49,14 +50,18 @@ def export_growth_yield(
                 "Yield log for plant %s is not a list; ignoring content.", plant_id
             )
     else:
-        _LOGGER.warning("Yield tracking log not found for plant %s at %s", plant_id, yield_log_file)
+        _LOGGER.warning(
+            "Yield tracking log not found for plant %s at %s", plant_id, yield_log_file
+        )
 
     # Aggregate yield quantities by date
     yield_by_date = {}
     for entry in yield_entries:
         if not isinstance(entry, dict):
             continue
-        ts = entry.get("timestamp") or entry.get("date")  # allow "date" key fallback if used
+        ts = entry.get("timestamp") or entry.get(
+            "date"
+        )  # allow "date" key fallback if used
         if not ts:
             continue
         try:
@@ -67,7 +72,9 @@ def export_growth_yield(
                 ts_str = ts_str[:-1]
             date_obj = datetime.fromisoformat(ts_str)
         except Exception as err:
-            _LOGGER.warning("Unrecognized timestamp format in yield log (%s): %s", ts, err)
+            _LOGGER.warning(
+                "Unrecognized timestamp format in yield log (%s): %s", ts, err
+            )
             continue
         date_str = date_obj.date().isoformat()
         try:
@@ -98,7 +105,11 @@ def export_growth_yield(
                             gm_value = metrics["vgi"]
                         else:
                             # Fallbacks: 'growth_index' or canopy size if present
-                            gm_value = metrics.get("growth_index") or metrics.get("canopy") or metrics.get("canopy_size")
+                            gm_value = (
+                                metrics.get("growth_index")
+                                or metrics.get("canopy")
+                                or metrics.get("canopy_size")
+                            )
                         # Convert to float if possible
                         try:
                             if gm_value is not None:
@@ -114,7 +125,10 @@ def export_growth_yield(
                             gm_val = None
                         growth_by_date[date_key] = gm_val
     else:
-        _LOGGER.info("Growth trends file not found at %s; proceeding without growth metrics.", growth_trends_file)
+        _LOGGER.info(
+            "Growth trends file not found at %s; proceeding without growth metrics.",
+            growth_trends_file,
+        )
 
     # Determine the set of dates to include
     dates_with_data = set(yield_by_date.keys()) | set(growth_by_date.keys())
@@ -128,11 +142,19 @@ def export_growth_yield(
         try:
             min_date = datetime.fromisoformat(min_date_str).date()
         except Exception:
-            min_date = datetime.strptime(min_date_str, "%Y-%m-%d").date() if min_date_str else None
+            min_date = (
+                datetime.strptime(min_date_str, "%Y-%m-%d").date()
+                if min_date_str
+                else None
+            )
         try:
             max_date = datetime.fromisoformat(max_date_str).date()
         except Exception:
-            max_date = datetime.strptime(max_date_str, "%Y-%m-%d").date() if max_date_str else None
+            max_date = (
+                datetime.strptime(max_date_str, "%Y-%m-%d").date()
+                if max_date_str
+                else None
+            )
 
         series = []
         current_cumulative = 0.0
@@ -167,7 +189,11 @@ def export_growth_yield(
                     # No yield event today; cumulative remains unchanged
                     current_cumulative += 0
                 # Record cumulative yield up to this day
-                entry["cumulative_yield"] = round(current_cumulative, 2) if isinstance(current_cumulative, float) else current_cumulative
+                entry["cumulative_yield"] = (
+                    round(current_cumulative, 2)
+                    if isinstance(current_cumulative, float)
+                    else current_cumulative
+                )
                 series.append(entry)
             # Move to the next day
             date_iter += timedelta(days=1)

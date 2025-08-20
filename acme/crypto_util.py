@@ -3,12 +3,12 @@
 Provides a tiny subset of the upstream ``acme.crypto_util`` module.
 """
 
-from typing import List
-
 from OpenSSL import crypto  # type: ignore[import-untyped]
 
 
-def dump_pyopenssl_chain(chain: List[crypto.X509], filetype: int = crypto.FILETYPE_PEM) -> bytes:
+def dump_pyopenssl_chain(
+    chain: list[crypto.X509], filetype: int = crypto.FILETYPE_PEM
+) -> bytes:
     """Dump a list of certificates into a single bundle.
 
     :param chain: Certificates to bundle (``OpenSSL.crypto.X509`` instances).

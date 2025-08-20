@@ -13,13 +13,17 @@ from custom_components.horticulture_assistant.const import (
     CONF_API_KEY,
     CONF_MOISTURE_SENSOR,
 )
-from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
+from custom_components.horticulture_assistant.diagnostics import (
+    async_get_config_entry_diagnostics,
+)
 from custom_components.horticulture_assistant.storage import LocalStore
 from custom_components.horticulture_assistant.api import ChatApi
 from homeassistant.helpers import issue_registry as ir
 
 
-async def setup_integration(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
+async def setup_integration(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
     async def dummy_chat(self, *args, **kwargs):
         return {"choices": [{"message": {"content": "ok"}}]}
 
@@ -33,7 +37,9 @@ async def setup_integration(hass: HomeAssistant, enable_custom_integrations: Non
 
 
 @pytest.mark.asyncio
-async def test_setup_unload_idempotent(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
+async def test_setup_unload_idempotent(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
     async def dummy_chat(self, *args, **kwargs):
         return {"choices": [{"message": {"content": "ok"}}]}
 
@@ -105,7 +111,9 @@ async def test_diagnostics_redaction(
 
 
 @pytest.mark.asyncio
-async def test_unload_calls_shutdown(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
+async def test_unload_calls_shutdown(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
     """Ensure coordinators receive shutdown when integration is unloaded."""
 
     async def dummy_chat(self, *args, **kwargs):
@@ -143,7 +151,9 @@ async def test_unload_calls_shutdown(hass: HomeAssistant, enable_custom_integrat
 
 
 @pytest.mark.asyncio
-async def test_service_validation(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
+async def test_service_validation(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
+):
     """Invalid payloads should be rejected by voluptuous schema."""
 
     async def dummy_chat(self, *args, **kwargs):
@@ -157,11 +167,15 @@ async def test_service_validation(hass: HomeAssistant, enable_custom_integration
     await hass.async_block_till_done()
 
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(DOMAIN, "update_sensors", {"plant_id": "x"}, blocking=True)
+        await hass.services.async_call(
+            DOMAIN, "update_sensors", {"plant_id": "x"}, blocking=True
+        )
 
 
 @pytest.mark.asyncio
-async def test_paths_created(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch, tmp_path):
+async def test_paths_created(
+    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch, tmp_path
+):
     """Ensure data/local directories and zones file are created."""
 
     hass.config.config_dir = str(tmp_path)
@@ -183,11 +197,13 @@ async def test_paths_created(hass: HomeAssistant, enable_custom_integrations: No
 
     assert (data_root / "plants").exists()
     assert zones_file.exists()
-    assert zones_file.read_text(encoding="utf-8") == "{}"
+    assert zones_file.read_text(encoding="utf-8") == ""
 
 
 @pytest.mark.asyncio
-async def test_missing_option_creates_issue(hass: HomeAssistant, enable_custom_integrations: None):
+async def test_missing_option_creates_issue(
+    hass: HomeAssistant, enable_custom_integrations: None
+):
     """Configured sensors that don't exist should raise a Repairs issue."""
 
     entry = MockConfigEntry(
@@ -212,7 +228,14 @@ async def test_co2_sensor_checked(hass: HomeAssistant, monkeypatch):
 
     captured: dict[str, list[str]] = {}
 
-    def fake_ensure(hass_arg, plant_id, entity_ids, *, translation_key="missing_entity", placeholders=None):
+    def fake_ensure(
+        hass_arg,
+        plant_id,
+        entity_ids,
+        *,
+        translation_key="missing_entity",
+        placeholders=None,
+    ):
         captured["ids"] = list(entity_ids)
 
     monkeypatch.setattr(

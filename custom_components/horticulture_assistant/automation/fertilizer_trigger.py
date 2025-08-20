@@ -6,6 +6,7 @@ from custom_components.horticulture_assistant.utils.path_utils import plants_pat
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def fertilizer_trigger(
     plant_id: str, base_path: str | None = None, sensor_data: dict | None = None
 ) -> bool:
@@ -41,9 +42,18 @@ def fertilizer_trigger(
     if isinstance(profile_data.get("actuators"), dict):
         fertilizer_enabled = profile_data["actuators"].get("fertilizer_enabled", True)
     # Some profiles might use a top-level or 'general' flag for fertilization
-    if not fertilizer_enabled or profile_data.get("fertilizer_enabled") is False or \
-       (isinstance(profile_data.get("general"), dict) and profile_data["general"].get("fertilizer_enabled") is False):
-        _LOGGER.info("Fertilization is disabled in the profile for plant_id %s. Skipping fertilizer trigger check.", plant_id)
+    if (
+        not fertilizer_enabled
+        or profile_data.get("fertilizer_enabled") is False
+        or (
+            isinstance(profile_data.get("general"), dict)
+            and profile_data["general"].get("fertilizer_enabled") is False
+        )
+    ):
+        _LOGGER.info(
+            "Fertilization is disabled in the profile for plant_id %s. Skipping fertilizer trigger check.",
+            plant_id,
+        )
         return False
 
     # Determine nutrient thresholds to check
@@ -55,14 +65,21 @@ def fertilizer_trigger(
             # Skip thresholds that are not related to nutrients (e.g., moisture, temp, light, or known contaminants)
             if "moisture" in k_lower or "temp" in k_lower or "light" in k_lower:
                 continue
-            if "arsenic" in k_lower or "cadmium" in k_lower or "lead" in k_lower or "mercury" in k_lower:
+            if (
+                "arsenic" in k_lower
+                or "cadmium" in k_lower
+                or "lead" in k_lower
+                or "mercury" in k_lower
+            ):
                 continue
             if k_lower == "ph":
                 continue
             # If we reach here, consider this threshold relevant for fertilization
             relevant_thresholds[key] = value
     if not relevant_thresholds:
-        _LOGGER.error("No nutrient thresholds found in profile for plant_id %s.", plant_id)
+        _LOGGER.error(
+            "No nutrient thresholds found in profile for plant_id %s.", plant_id
+        )
         return False
 
     # Iterate through relevant nutrient thresholds and check current values
@@ -79,7 +96,9 @@ def fertilizer_trigger(
                 if alt_key in sensor_data:
                     current_reading = sensor_data[alt_key]
             # Handle EC as a special case (threshold might be 'ec' or 'ec_min')
-            if current_reading is None and (thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"):
+            if current_reading is None and (
+                thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"
+            ):
                 if "ec" in sensor_data:
                     current_reading = sensor_data["ec"]
                 elif "EC" in sensor_data:
@@ -97,13 +116,19 @@ def fertilizer_trigger(
                 alt_key = thresh_key[:-4]
                 if alt_key in latest_env:
                     current_reading = latest_env[alt_key]
-            if current_reading is None and (thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"):
+            if current_reading is None and (
+                thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"
+            ):
                 if "ec" in latest_env:
                     current_reading = latest_env["ec"]
                 elif "EC" in latest_env:
                     current_reading = latest_env["EC"]
         if current_reading is None:
-            _LOGGER.error("No current reading for %s available for plant_id %s.", thresh_key, plant_id)
+            _LOGGER.error(
+                "No current reading for %s available for plant_id %s.",
+                thresh_key,
+                plant_id,
+            )
             # Continue checking other nutrients even if this one is not available
             continue
 
@@ -111,13 +136,27 @@ def fertilizer_trigger(
         try:
             current_val = float(current_reading)
         except (TypeError, ValueError):
-            _LOGGER.error("Current value for %s is invalid for plant_id %s: %s", thresh_key, plant_id, current_reading)
+            _LOGGER.error(
+                "Current value for %s is invalid for plant_id %s: %s",
+                thresh_key,
+                plant_id,
+                current_reading,
+            )
             continue
         # Convert threshold to float (use first element if it's a range list/tuple)
         try:
-            threshold_val = float(thresh_value[0]) if isinstance(thresh_value, (list, tuple)) else float(thresh_value)
+            threshold_val = (
+                float(thresh_value[0])
+                if isinstance(thresh_value, (list, tuple))
+                else float(thresh_value)
+            )
         except (TypeError, ValueError):
-            _LOGGER.error("Threshold value for %s is invalid for plant_id %s: %s", thresh_key, plant_id, thresh_value)
+            _LOGGER.error(
+                "Threshold value for %s is invalid for plant_id %s: %s",
+                thresh_key,
+                plant_id,
+                thresh_value,
+            )
             continue
 
         # Compare the current value against the threshold
@@ -138,8 +177,13 @@ def fertilizer_trigger(
             # Special-case acronym formatting for EC
             if thresh_key.lower().startswith("ec"):
                 thresh_name_str = "EC"
-            _LOGGER.info("%s below threshold for plant_id %s (%.2f < %.2f). Triggering fertilization.",
-                         thresh_name_str, plant_id, current_val, threshold_val)
+            _LOGGER.info(
+                "%s below threshold for plant_id %s (%.2f < %.2f). Triggering fertilization.",
+                thresh_name_str,
+                plant_id,
+                current_val,
+                threshold_val,
+            )
             return True
 
     # If we reach here, no nutrient was below its threshold

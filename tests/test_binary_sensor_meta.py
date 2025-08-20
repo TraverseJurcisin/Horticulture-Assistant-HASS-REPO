@@ -1,5 +1,7 @@
 import pytest
-from custom_components.horticulture_assistant.binary_sensor import SensorHealthBinarySensor
+from custom_components.horticulture_assistant.binary_sensor import (
+    SensorHealthBinarySensor,
+)
 from custom_components.horticulture_assistant.const import DOMAIN
 
 

@@ -17,6 +17,7 @@ DEFAULT_DATA: dict = {
     "zones": {},
 }
 
+
 class LocalStore:
     def __init__(self, hass):
         self._store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
@@ -28,7 +29,9 @@ class LocalStore:
             data = DEFAULT_DATA.copy()
         else:
             for key, value in DEFAULT_DATA.items():
-                data.setdefault(key, value.copy() if isinstance(value, (dict, list)) else value)
+                data.setdefault(
+                    key, value.copy() if isinstance(value, (dict, list)) else value
+                )
         self.data = data
         return data
 

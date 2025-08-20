@@ -17,17 +17,11 @@ from typing import Sequence
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     """Return parsed command line arguments."""
-    parser = argparse.ArgumentParser(
-        description="Diffusion-Aware Fertigation Engine"
-    )
-    parser.add_argument(
-        "--config", help="Path to configuration file", default=None
-    )
+    parser = argparse.ArgumentParser(description="Diffusion-Aware Fertigation Engine")
+    parser.add_argument("--config", help="Path to configuration file", default=None)
     parser.add_argument("--species", help="Override species from config")
     parser.add_argument("--media", help="Override media from config")
-    parser.add_argument(
-        "--json", action="store_true", help="Output schedule as JSON"
-    )
+    parser.add_argument("--json", action="store_true", help="Output schedule as JSON")
     parser.add_argument(
         "--D-base",
         dest="D_base",

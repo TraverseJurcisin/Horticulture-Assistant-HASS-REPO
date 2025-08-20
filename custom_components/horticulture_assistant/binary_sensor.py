@@ -1,4 +1,5 @@
 """Binary sensor platform for Horticulture Assistant."""
+
 import logging
 
 from homeassistant.components.binary_sensor import (
@@ -16,6 +17,7 @@ from .utils.sensor_map import build_sensor_map
 from .entity_utils import ensure_entities_exist
 
 _LOGGER = logging.getLogger(__name__)
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -50,11 +52,15 @@ async def async_setup_entry(
     )
 
     sensors: list[BinarySensorEntity] = [
-        SensorHealthBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
+        SensorHealthBinarySensor(
+            hass, entry.entry_id, plant_name, plant_id, sensor_map
+        ),
         IrrigationReadinessBinarySensor(
             hass, entry.entry_id, plant_name, plant_id, sensor_map
         ),
-        FaultDetectionBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
+        FaultDetectionBinarySensor(
+            hass, entry.entry_id, plant_name, plant_id, sensor_map
+        ),
     ]
 
     async_add_entities(sensors)
@@ -141,9 +147,7 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
         self._attr_name = "Irrigation Readiness"
-        self._attr_unique_id = (
-            f"{DOMAIN}_{entry_id}_{plant_id}_irrigation_readiness"
-        )
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_irrigation_readiness"
         self._attr_device_class = BinarySensorDeviceClass.MOISTURE
         self._attr_icon = "mdi:water-alert"
         self._attr_entity_category = CATEGORY_CONTROL
@@ -217,7 +221,10 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
             if value < min_val or value > max_val:
                 _LOGGER.warning(
                     "Sensor %s out of range: %s not in [%s, %s]",
-                    entity_id, value, min_val, max_val
+                    entity_id,
+                    value,
+                    min_val,
+                    max_val,
                 )
                 fault = True
                 break

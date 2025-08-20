@@ -10,6 +10,7 @@ pytestmark = [
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
 
+
 async def test_update_sensors_service(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     entry.add_to_hass(hass)
@@ -39,7 +40,9 @@ async def test_update_sensors_service(hass):
         blocking=True,
     )
     store = hass.data[DOMAIN][entry.entry_id]["store"]
-    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == ["sensor.good"]
+    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == [
+        "sensor.good"
+    ]
 
 
 async def test_refresh_service(hass):
@@ -68,11 +71,15 @@ async def test_recalculate_and_run_recommendation_services(hass):
     local = hass.data[DOMAIN][entry.entry_id]["coordinator_local"]
 
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True)
+        await hass.services.async_call(
+            DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True
+        )
 
     store.data.setdefault("plants", {})["p1"] = {}
     local.async_request_refresh = AsyncMock(wraps=local.async_request_refresh)
-    await hass.services.async_call(DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True)
+    await hass.services.async_call(
+        DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True
+    )
     assert local.async_request_refresh.called
 
     ai.async_request_refresh = AsyncMock(wraps=ai.async_request_refresh)

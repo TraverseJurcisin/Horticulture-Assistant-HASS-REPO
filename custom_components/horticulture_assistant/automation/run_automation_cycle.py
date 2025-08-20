@@ -73,6 +73,7 @@ class MoistureInfo:
     current: float
     threshold: float
 
+
 def run_automation_cycle(base_path: str | None = None) -> None:
     """
     Run one cycle of automated irrigation checks for all plant profiles.
@@ -83,7 +84,9 @@ def run_automation_cycle(base_path: str | None = None) -> None:
     """
     # Global override check
     if not ENABLE_AUTOMATION:
-        _LOGGER.info("Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping automation cycle.")
+        _LOGGER.info(
+            "Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping automation cycle."
+        )
         return
 
     if base_path is None:
@@ -120,6 +123,7 @@ def run_automation_cycle(base_path: str | None = None) -> None:
             )
             try:
                 import custom_components.horticulture_assistant.automation.irrigation_actuator as irrigation_actuator
+
                 irrigation_actuator.trigger_irrigation_actuator(
                     plant_id=plant_id,
                     trigger=True,
@@ -135,7 +139,10 @@ def run_automation_cycle(base_path: str | None = None) -> None:
                 triggered = True
         else:
             _LOGGER.info(
-                "Soil moisture sufficient for plant %s (%.2f >= %.2f).", plant_id, info.current, info.threshold
+                "Soil moisture sufficient for plant %s (%.2f >= %.2f).",
+                plant_id,
+                info.current,
+                info.threshold,
             )
 
         entry = {
@@ -148,7 +155,11 @@ def run_automation_cycle(base_path: str | None = None) -> None:
         try:
             append_json_log(log_file, entry)
         except Exception as e:  # noqa: BLE001 - log and continue
-            _LOGGER.error("Failed to write irrigation log for plant %s: %s", plant_id, e)
+            _LOGGER.error(
+                "Failed to write irrigation log for plant %s: %s", plant_id, e
+            )
 
     if not found:
-        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)
+        _LOGGER.info(
+            "No plant profile JSON files found in %s. Nothing to do.", plants_dir
+        )

@@ -17,7 +17,10 @@ def _mock_socket():
         instance = MagicMock()
 
         def connect(*args, **kwargs):
-            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
+            if (
+                not instance.setblocking.called
+                or instance.setblocking.call_args[0][0] is not False
+            ):
                 raise ValueError("the socket must be non-blocking")
 
         instance.connect.side_effect = connect
@@ -27,6 +30,7 @@ def _mock_socket():
             side_effect=ValueError("the socket must be non-blocking"),
         ):
             yield
+
 
 async def test_config_flow_user(hass):
     """Test user config flow."""
@@ -62,14 +66,13 @@ async def test_config_flow_invalid_key(hass):
     assert result2["errors"] == {"base": "cannot_connect"}
     await hass.async_block_till_done()
 
+
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     entry.add_to_hass(hass)
     result = await hass.config_entries.options.async_init(entry.entry_id)
     assert result["type"] == "form"
-    result2 = await hass.config_entries.options.async_configure(
-        result["flow_id"], {}
-    )
+    result2 = await hass.config_entries.options.async_configure(result["flow_id"], {})
     assert result2["type"] == "create_entry"
     await hass.async_block_till_done()
 

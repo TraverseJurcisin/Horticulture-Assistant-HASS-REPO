@@ -7,6 +7,7 @@ pytestmark = [
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
 
+
 async def test_load_and_save(hass):
     store = LocalStore(hass)
     data = await store.load()
