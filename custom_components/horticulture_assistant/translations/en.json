@@ -20,6 +20,20 @@
           "plant_type": "Plant type (optional)"
         }
       },
+      "thresholds": {
+        "title": "Thresholds",
+        "description": "Set initial threshold values (optional).",
+        "data": {
+          "temperature_min": "Min temperature",
+          "temperature_max": "Max temperature",
+          "humidity_min": "Min humidity",
+          "humidity_max": "Max humidity",
+          "illuminance_min": "Min illuminance",
+          "illuminance_max": "Max illuminance",
+          "conductivity_min": "Min conductivity",
+          "conductivity_max": "Max conductivity"
+        }
+      },
       "sensors": {
         "title": "Sensors",
         "description": "Select sensor entities (optional; can be added later).",
@@ -47,7 +61,9 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor"
+          "co2_sensor": "CO₂ sensor",
+          "species_display": "Species",
+          "force_refresh": "Force refresh thresholds"
         }
       }
     },

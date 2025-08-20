@@ -61,6 +61,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
     def __init__(self) -> None:
         self._config: dict | None = None
         self._profile: dict | None = None
+        self._thresholds: dict[str, float] = {}
 
     async def async_step_user(self, user_input=None):
         errors = {}
@@ -116,10 +117,35 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 }
                 if plant_type:
                     self._profile[CONF_PLANT_TYPE] = plant_type
-                return await self.async_step_sensors()
+                return await self.async_step_thresholds()
         return self.async_show_form(
             step_id="profile", data_schema=PROFILE_SCHEMA, errors=errors
         )
+
+    async def async_step_thresholds(self, user_input=None):
+        if self._config is None or self._profile is None:
+            return self.async_abort(reason="unknown")
+
+        schema = vol.Schema(
+            {
+                vol.Optional("temperature_min"): vol.Coerce(float),
+                vol.Optional("temperature_max"): vol.Coerce(float),
+                vol.Optional("humidity_min"): vol.Coerce(float),
+                vol.Optional("humidity_max"): vol.Coerce(float),
+                vol.Optional("illuminance_min"): vol.Coerce(float),
+                vol.Optional("illuminance_max"): vol.Coerce(float),
+                vol.Optional("conductivity_min"): vol.Coerce(float),
+                vol.Optional("conductivity_max"): vol.Coerce(float),
+            }
+        )
+
+        if user_input is not None:
+            self._thresholds = {
+                k: v for k, v in user_input.items() if v is not None
+            }
+            return await self.async_step_sensors()
+
+        return self.async_show_form(step_id="thresholds", data_schema=schema)
 
     async def async_step_sensors(self, user_input=None):
         if self._config is None or self._profile is None:
@@ -212,9 +238,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 },
                 self.hass,
             )
+            mapped: dict[str, str] = {}
+            if moisture := user_input.get(CONF_MOISTURE_SENSOR):
+                mapped["moisture"] = moisture
+            if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
+                mapped["temperature"] = temperature
+            if ec := user_input.get(CONF_EC_SENSOR):
+                mapped["conductivity"] = ec
+            if co2 := user_input.get(CONF_CO2_SENSOR):
+                mapped["co2"] = co2
             data = {**self._config, **self._profile}
+            options = dict(user_input)
+            options["sensors"] = mapped
+            options["thresholds"] = self._thresholds
             return self.async_create_entry(
-                title=self._profile[CONF_PLANT_NAME], data=data, options=user_input
+                title=self._profile[CONF_PLANT_NAME], data=data, options=options
             )
 
         return self.async_show_form(step_id="sensors", data_schema=schema)
@@ -238,6 +276,9 @@ class OptionsFlow(config_entries.OptionsFlow):
             ),
             CONF_KEEP_STALE: self._entry.options.get(
                 CONF_KEEP_STALE, DEFAULT_KEEP_STALE
+            ),
+            "species_display": self._entry.options.get(
+                "species_display", self._entry.data.get(CONF_PLANT_TYPE, "")
             ),
         }
 
@@ -277,6 +318,10 @@ class OptionsFlow(config_entries.OptionsFlow):
                     str,
                 ),
                 vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
+                vol.Optional(
+                    "species_display", default=defaults["species_display"]
+                ): str,
+                vol.Optional("force_refresh", default=False): bool,
             }
         )
 
@@ -332,7 +377,62 @@ class OptionsFlow(config_entries.OptionsFlow):
 
                 await self.hass.async_add_executor_job(_save_sensors)
 
-            return self.async_create_entry(title="", data=user_input)
+            opts = dict(self._entry.options)
+            mapped = {}
+            for key, role in (
+                (CONF_MOISTURE_SENSOR, "moisture"),
+                (CONF_TEMPERATURE_SENSOR, "temperature"),
+                (CONF_EC_SENSOR, "conductivity"),
+                (CONF_CO2_SENSOR, "co2"),
+            ):
+                if key in user_input:
+                    value = user_input.get(key)
+                    if value:
+                        opts[key] = value
+                        mapped[role] = value
+                    else:
+                        opts.pop(key, None)
+                else:
+                    opts.pop(key, None)
+            opts["sensors"] = mapped
+            if "species_display" in user_input:
+                value = user_input.get("species_display")
+                if value:
+                    opts["species_display"] = value
+                else:
+                    opts.pop("species_display", None)
+            opts.update(
+                {
+                    k: v
+                    for k, v in user_input.items()
+                    if k
+                    not in (
+                        CONF_MOISTURE_SENSOR,
+                        CONF_TEMPERATURE_SENSOR,
+                        CONF_EC_SENSOR,
+                        CONF_CO2_SENSOR,
+                        "force_refresh",
+                        "species_display",
+                    )
+                }
+            )
+            if user_input.get("force_refresh"):
+                plant_id = self._entry.data.get(CONF_PLANT_ID)
+                plant_name = self._entry.data.get(CONF_PLANT_NAME)
+                if plant_id and plant_name:
+                    metadata = {
+                        CONF_PLANT_ID: plant_id,
+                        CONF_PLANT_NAME: plant_name,
+                    }
+                    if species := opts.get("species_display"):
+                        metadata[CONF_PLANT_TYPE] = species
+                    await self.hass.async_add_executor_job(
+                        profile_generator.generate_profile,
+                        metadata,
+                        self.hass,
+                        True,
+                    )
+            return self.async_create_entry(title="", data=opts)
 
         return self.async_show_form(step_id="init", data_schema=schema)
 
