@@ -107,7 +107,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
             lx = None
         if lx is None:
             return
-        now = dt_util.utcnow()
+        now = dt_util.now()
         day = now.date()
         if self._last_day is None or day != self._last_day:
             self._accum = 0.0
@@ -116,9 +116,9 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         coeff = self._entry.options.get("thresholds", {}).get("lux_to_ppfd", 0.0185)
         ppfd = lx * coeff
         if self._last_ts is None:
-            seconds = 60
+            seconds = 60.0
         else:
-            seconds = (now - self._last_ts).total_seconds()
+            seconds = max(0.0, (now - self._last_ts).total_seconds())
         self._accum += (ppfd * seconds) / 1_000_000
         self._value = round(self._accum, 2)
         self._last_ts = now
@@ -171,7 +171,7 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
     """Sensor providing dew point temperature in Celsius."""
 
     _attr_name = "Dew Point"
-    _attr_native_unit_of_measurement = "°C"
+    _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
 

@@ -31,7 +31,7 @@ async def test_dli_sensor_tracks_light(hass, monkeypatch):
     assert entity_id is not None
 
     # First day accumulation
-    monkeypatch.setattr(dt_util, "utcnow", lambda: datetime(2024, 1, 1, tzinfo=dt_util.UTC))
+    monkeypatch.setattr(dt_util, "now", lambda: datetime(2024, 1, 1, tzinfo=dt_util.UTC))
     hass.states.async_set("sensor.light1", 1_000_000)
     await hass.async_block_till_done()
     state = hass.states.get(entity_id)
@@ -39,7 +39,7 @@ async def test_dli_sensor_tracks_light(hass, monkeypatch):
     assert state.state == "1.11"
 
     # Next day should reset and accumulate separately
-    monkeypatch.setattr(dt_util, "utcnow", lambda: datetime(2024, 1, 2, tzinfo=dt_util.UTC))
+    monkeypatch.setattr(dt_util, "now", lambda: datetime(2024, 1, 2, tzinfo=dt_util.UTC))
     hass.states.async_set("sensor.light1", 1_000_000)
     await hass.async_block_till_done()
 
@@ -97,12 +97,12 @@ async def test_dli_sensor_respects_time_delta(hass, monkeypatch):
     assert entity_id is not None
 
     # first reading at t0
-    monkeypatch.setattr(dt_util, "utcnow", lambda: datetime(2024, 1, 1, 0, 0, tzinfo=dt_util.UTC))
+    monkeypatch.setattr(dt_util, "now", lambda: datetime(2024, 1, 1, 0, 0, tzinfo=dt_util.UTC))
     hass.states.async_set("sensor.light1", 400_000)
     await hass.async_block_till_done()
 
     # second reading 30 seconds later with different value to trigger update
-    monkeypatch.setattr(dt_util, "utcnow", lambda: datetime(2024, 1, 1, 0, 0, 30, tzinfo=dt_util.UTC))
+    monkeypatch.setattr(dt_util, "now", lambda: datetime(2024, 1, 1, 0, 0, 30, tzinfo=dt_util.UTC))
     hass.states.async_set("sensor.light1", 500_000)
     await hass.async_block_till_done()
 
@@ -134,7 +134,7 @@ async def test_dli_sensor_uses_configured_coefficient(hass, monkeypatch):
     entity_id = reg.async_get_entity_id("sensor", DOMAIN, unique_id)
     assert entity_id is not None
 
-    monkeypatch.setattr(dt_util, "utcnow", lambda: datetime(2024, 1, 1, tzinfo=dt_util.UTC))
+    monkeypatch.setattr(dt_util, "now", lambda: datetime(2024, 1, 1, tzinfo=dt_util.UTC))
     hass.states.async_set("sensor.light1", 1_000_000)
     await hass.async_block_till_done()
 
