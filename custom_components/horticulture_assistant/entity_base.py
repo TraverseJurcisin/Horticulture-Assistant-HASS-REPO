@@ -5,6 +5,7 @@ from __future__ import annotations
 from homeassistant.helpers.entity import Entity
 
 from .const import DOMAIN
+from .utils.entry_helpers import get_entry_data_by_plant_id
 
 
 class HorticultureBaseEntity(Entity):
@@ -27,3 +28,16 @@ class HorticultureBaseEntity(Entity):
             "manufacturer": "Horticulture Assistant",
             "model": self._model,
         }
+
+    @property
+    def entity_picture(self) -> str | None:
+        """Return a profile image if configured."""
+        if not self.hass:
+            return None
+        stored = get_entry_data_by_plant_id(self.hass, self._plant_id)
+        if not stored:
+            return None
+        entry = stored.get("config_entry")
+        if entry is None:
+            return None
+        return entry.options.get("image_url")

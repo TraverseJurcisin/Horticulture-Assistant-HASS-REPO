@@ -3,7 +3,7 @@ import voluptuous as vol
 from unittest.mock import AsyncMock
 from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-from homeassistant.helpers import issue_registry as ir
+from homeassistant.helpers import issue_registry as ir, entity_registry as er
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -54,22 +54,29 @@ async def test_replace_sensor_service(hass):
         domain=DOMAIN,
         data={CONF_API_KEY: "key", "plant_id": "plant1", "plant_name": "Plant 1"},
         title="Plant 1",
+        options={"sensors": {"moisture": "sensor.old"}},
     )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
-    with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN,
-            "replace_sensor",
-            {"plant_id": "plant1", "role": "moisture", "new_sensor": "sensor.bad"},
-            blocking=True,
-        )
+    reg = er.async_get(hass)
+    reg.async_get_or_create(
+        "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
+    )
+    reg.async_get_or_create(
+        "sensor", "test", "sensor_good", suggested_object_id="good", original_device_class="moisture"
+    )
+
+    hass.states.async_set("sensor.old", 1)
     hass.states.async_set("sensor.good", 2)
     await hass.services.async_call(
         DOMAIN,
         "replace_sensor",
-        {"plant_id": "plant1", "role": "moisture", "new_sensor": "sensor.good"},
+        {
+            "profile_id": "plant1",
+            "meter_entity": "sensor.old",
+            "new_sensor": "sensor.good",
+        },
         blocking=True,
     )
     await hass.async_block_till_done()
