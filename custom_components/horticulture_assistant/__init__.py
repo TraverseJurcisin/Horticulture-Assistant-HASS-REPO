@@ -34,12 +34,23 @@ from .entity_utils import ensure_entities_exist
 from .utils.entry_helpers import store_entry_data
 from homeassistant.helpers.event import async_track_time_interval
 from .openplantbook_client import OpenPlantbookClient
+from .irrigation_bridge import async_apply_irrigation
+from homeassistant.helpers import entity_registry as er
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.exceptions import HomeAssistantError
 
 SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
+
+ROLE_DEVICE_CLASS = {
+    "humidity": SensorDeviceClass.HUMIDITY,
+    "temperature": SensorDeviceClass.TEMPERATURE,
+    "illuminance": SensorDeviceClass.ILLUMINANCE,
+    "moisture": SensorDeviceClass.MOISTURE,
+}
 
 
 async def async_setup(hass: HomeAssistant, _config) -> bool:
@@ -203,22 +214,35 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
     async def _handle_replace_sensor(call):
-        plant_id = call.data["plant_id"]
-        role = call.data["role"]
+        profile_id = call.data["profile_id"]
+        meter_entity = call.data["meter_entity"]
         new_sensor = call.data["new_sensor"]
         if hass.states.get(new_sensor) is None:
-            raise vol.Invalid(f"missing entity {new_sensor}")
-        # Update persistent store for backward compatibility
+            raise HomeAssistantError(f"missing entity {new_sensor}")
+
+        opts = dict(entry.options)
+        mapped = dict(opts.get("sensors", {}))
+        role = next((r for r, eid in mapped.items() if eid == meter_entity), None)
+        if role is None:
+            raise HomeAssistantError(f"unknown meter {meter_entity}")
+
+        reg = er.async_get(hass)
+        reg_entry = reg.async_get(new_sensor)
+        expected = ROLE_DEVICE_CLASS.get(role)
+        actual = None
+        if reg_entry:
+            actual = reg_entry.device_class or reg_entry.original_device_class
+        if expected and (reg_entry is None or actual != expected.value):
+            raise HomeAssistantError("device class mismatch")
+
         sensors = (
             store.data.setdefault("plants", {})
-            .setdefault(plant_id, {})
+            .setdefault(profile_id, {})
             .setdefault("sensors", {})
         )
         sensors[f"{role}_sensors"] = [new_sensor]
         await store.save()
-        # Update config entry options so entities pick up the new sensor immediately
-        opts = dict(entry.options)
-        mapped = dict(opts.get("sensors", {}))
+
         mapped[role] = new_sensor
         opts["sensors"] = mapped
         hass.config_entries.async_update_entry(entry, options=opts)
@@ -240,15 +264,57 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             }
         ),
     )
+
+    async def _handle_apply_irrigation(call):
+        profile_id = call.data["profile_id"]
+        provider = call.data.get("provider", "auto")
+        zone = call.data.get("zone")
+        # fetch recommendation sensor
+        reg = er.async_get(hass)
+        unique_id = f"{DOMAIN}_{entry.entry_id}_{profile_id}_irrigation_rec"
+        rec_entity = reg.async_get_entity_id("sensor", DOMAIN, unique_id)
+        seconds: float | None = None
+        if rec_entity:
+            state = hass.states.get(rec_entity)
+            try:
+                seconds = float(state.state)
+            except (TypeError, ValueError):
+                seconds = None
+        if seconds is None:
+            raise vol.Invalid("no recommendation available")
+
+        if provider == "auto":
+            if hass.services.has_service("irrigation_unlimited", "run_zone"):
+                provider = "irrigation_unlimited"
+            elif hass.services.has_service("opensprinkler", "run_once"):
+                provider = "opensprinkler"
+            else:
+                raise vol.Invalid("no irrigation provider")
+
+        await async_apply_irrigation(hass, provider, zone, seconds)
     hass.services.async_register(
         svc_base,
         "replace_sensor",
         _handle_replace_sensor,
         schema=vol.Schema(
             {
-                vol.Required("plant_id"): str,
-                vol.Required("role"): str,
+                vol.Required("profile_id"): str,
+                vol.Required("meter_entity"): cv.entity_id,
                 vol.Required("new_sensor"): cv.entity_id,
+            }
+        ),
+    )
+    hass.services.async_register(
+        svc_base,
+        "apply_irrigation_plan",
+        _handle_apply_irrigation,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("provider", default="auto"): vol.In(
+                    ["auto", "irrigation_unlimited", "opensprinkler"]
+                ),
+                vol.Optional("zone"): str,
             }
         ),
     )

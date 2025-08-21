@@ -45,17 +45,39 @@ replace_sensor:
   name: Replace a mapped sensor
   description: Swap the source sensor feeding a plant profile.
   fields:
-    plant_id:
+    profile_id:
       required: true
       selector:
         text:
-    role:
+    meter_entity:
       required: true
-      example: moisture
       selector:
-        text:
+        entity:
+          domain: sensor
     new_sensor:
       required: true
       selector:
         entity:
           domain: sensor
+
+apply_irrigation_plan:
+  name: Apply irrigation plan
+  description: Use Smart Irrigation recommendation and run via Irrigation Unlimited or OpenSprinkler.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+    provider:
+      required: false
+      default: auto
+      selector:
+        select:
+          options:
+            - auto
+            - irrigation_unlimited
+            - opensprinkler
+    zone:
+      required: false
+      selector:
+        text:

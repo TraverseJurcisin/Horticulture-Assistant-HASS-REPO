@@ -1,17 +1,21 @@
 from __future__ import annotations
-from datetime import date
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
-from .entity_base import HorticultureBaseEntity
+from .derived import (
+    PlantDLISensor,
+    PlantDewPointSensor,
+    PlantMoldRiskSensor,
+    PlantVPDSensor,
+)
+from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 
@@ -30,6 +34,21 @@ async def async_setup_entry(
         HortiRecommendationSensor(coord_ai, entry.entry_id, keep_stale),
         PlantDLISensor(hass, entry, plant_name, plant_id),
     ]
+
+    sensors_cfg = entry.options.get("sensors", {})
+    if sensors_cfg.get("temperature") and sensors_cfg.get("humidity"):
+        sensors.extend(
+            [
+                PlantVPDSensor(hass, entry, plant_name, plant_id),
+                PlantDewPointSensor(hass, entry, plant_name, plant_id),
+                PlantMoldRiskSensor(hass, entry, plant_name, plant_id),
+            ]
+        )
+
+    if sensors_cfg.get("smart_irrigation"):
+        sensors.append(
+            PlantIrrigationRecommendationSensor(hass, entry, plant_name, plant_id)
+        )
 
     async_add_entities(sensors, True)
 
@@ -136,56 +155,3 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         if self._keep_stale:
             return True
         return super().available
-
-
-class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
-    """Sensor calculating Daily Light Integral for a plant."""
-
-    _attr_name = "Daily Light Integral"
-    _attr_native_unit_of_measurement = "mol/m²/d"
-
-    def __init__(
-        self,
-        hass: HomeAssistant,
-        entry: ConfigEntry,
-        plant_name: str,
-        plant_id: str,
-    ) -> None:
-        super().__init__(plant_name, plant_id)
-        self.hass = hass
-        self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_dli"
-        self._value: float | None = None
-        self._accum: float = 0.0
-        self._last_day: date | None = None
-
-    @property
-    def native_value(self) -> float | None:
-        return self._value
-
-    async def async_added_to_hass(self) -> None:
-        await super().async_added_to_hass()
-        self.async_on_remove(
-            self.hass.bus.async_listen("state_changed", self._on_illuminance)
-        )
-
-    async def _on_illuminance(self, event) -> None:
-        light_sensor = self._entry.options.get("sensors", {}).get("illuminance")
-        if not light_sensor or event.data.get("entity_id") != light_sensor:
-            return
-        state = self.hass.states.get(light_sensor)
-        try:
-            lx = float(state.state) if state else None
-        except (TypeError, ValueError):
-            lx = None
-        if lx is None:
-            return
-        ppfd = lx * 0.0185  # µmol/m²/s
-        seconds = 60
-        day = dt_util.utcnow().date()
-        if self._last_day is None or day != self._last_day:
-            self._accum = 0.0
-            self._last_day = day
-        self._accum += (ppfd * seconds) / 1_000_000
-        self._value = round(self._accum, 2)
-        self.async_write_ha_state()

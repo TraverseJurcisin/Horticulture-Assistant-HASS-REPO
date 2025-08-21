@@ -17,8 +17,13 @@ THRESHOLD_SPECS = [
     ("humidity_max", "%"),
     ("illuminance_min", "lx"),
     ("illuminance_max", "lx"),
+    ("moisture_min", "%"),
+    ("moisture_max", "%"),
     ("conductivity_min", "µS/cm"),
     ("conductivity_max", "µS/cm"),
+    ("vpd_min", "kPa"),
+    ("vpd_max", "kPa"),
+    ("lux_to_ppfd", "µmol/(m²·s·lx)"),
 ]
 
 
