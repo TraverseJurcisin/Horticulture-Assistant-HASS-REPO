@@ -7,6 +7,6 @@
   "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO#readme",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues",
-  "requirements": [],
+  "requirements": ["openplantbook-sdk>=0.1.0"],
   "version": "0.1.0"
 }

@@ -43,11 +43,30 @@
           "ec_sensor": "EC sensor",
           "co2_sensor": "CO₂ sensor"
         }
+      },
+      "threshold_source": {
+        "title": "Prefill thresholds",
+        "description": "Choose how to pre-fill thresholds.",
+        "data": {"method": "Method"}
+      },
+      "opb_credentials": {
+        "title": "OpenPlantbook credentials",
+        "description": "Enter client_id and secret to search species and pre-fill thresholds.",
+        "data": {"client_id": "Client ID", "secret": "Client Secret"}
+      },
+      "opb_species_search": {
+        "title": "Search OpenPlantbook",
+        "data": {"query": "Species or keyword"}
+      },
+      "opb_species_select": {
+        "title": "Select species",
+        "description": "Choose the best match to pre-fill thresholds and image."
       }
     },
     "error": {
       "cannot_connect": "Could not reach AI endpoint.",
-      "profile_error": "Failed to create plant profile"
+      "profile_error": "Failed to create plant profile",
+      "opb_missing": "OpenPlantbook SDK not available"
     },
     "abort": {}
   },
@@ -63,7 +82,11 @@
           "ec_sensor": "EC sensor",
           "co2_sensor": "CO₂ sensor",
           "species_display": "Species",
-          "force_refresh": "Force refresh thresholds"
+          "force_refresh": "Force refresh thresholds",
+          "opb_auto_download_images": "Auto-download species image",
+          "opb_download_dir": "Image download directory",
+          "opb_location_share": "Share location when uploading (off/country/coordinates)",
+          "opb_enable_upload": "Enable daily upload to OpenPlantbook"
         }
       }
     },

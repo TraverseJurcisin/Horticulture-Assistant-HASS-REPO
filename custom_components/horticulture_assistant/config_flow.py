@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from pathlib import Path
 
 import voluptuous as vol
 from aiohttp import ClientError
@@ -32,6 +33,7 @@ from .api import ChatApi
 from .utils import profile_generator
 from .utils.plant_registry import register_plant
 from .utils.json_io import load_json, save_json
+from .openplantbook_client import OpenPlantbookClient
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -62,6 +64,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._config: dict | None = None
         self._profile: dict | None = None
         self._thresholds: dict[str, float] = {}
+        self._opb_credentials: dict[str, str] | None = None
+        self._opb_results: list[dict[str, str]] = []
+        self._species_pid: str | None = None
+        self._species_display: str | None = None
+        self._image_url: str | None = None
 
     async def async_step_user(self, user_input=None):
         errors = {}
@@ -117,25 +124,166 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 }
                 if plant_type:
                     self._profile[CONF_PLANT_TYPE] = plant_type
-                return await self.async_step_thresholds()
+                return await self.async_step_threshold_source()
         return self.async_show_form(
             step_id="profile", data_schema=PROFILE_SCHEMA, errors=errors
+        )
+
+    async def async_step_threshold_source(self, user_input=None):
+        if self._config is None or self._profile is None:
+            return self.async_abort(reason="unknown")
+        if user_input is not None:
+            method = user_input["method"]
+            if method == "openplantbook":
+                return await self.async_step_opb_credentials()
+            return await self.async_step_thresholds()
+        schema = vol.Schema(
+            {
+                vol.Required("method", default="manual"): sel.SelectSelector(
+                    sel.SelectSelectorConfig(
+                        options=[
+                            {"value": "openplantbook", "label": "From OpenPlantbook"},
+                            {"value": "manual", "label": "Manual entry"},
+                        ]
+                    )
+                )
+            }
+        )
+        return self.async_show_form(step_id="threshold_source", data_schema=schema)
+
+    async def async_step_opb_credentials(self, user_input=None):
+        errors = {}
+        if user_input is not None:
+            try:
+                OpenPlantbookClient(self.hass, user_input["client_id"], user_input["secret"])
+            except RuntimeError:
+                errors["base"] = "opb_missing"
+            else:
+                self._opb_credentials = {
+                    "client_id": user_input["client_id"],
+                    "secret": user_input["secret"],
+                }
+                return await self.async_step_opb_species_search()
+        return self.async_show_form(
+            step_id="opb_credentials",
+            data_schema=vol.Schema(
+                {
+                    vol.Required("client_id"): str,
+                    vol.Required("secret"): str,
+                }
+            ),
+            errors=errors,
+        )
+
+    async def async_step_opb_species_search(self, user_input=None):
+        if self._opb_credentials is None:
+            return self.async_abort(reason="unknown")
+        client = OpenPlantbookClient(
+            self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"]
+        )
+        if user_input is not None:
+            try:
+                results = await client.search(user_input["query"])
+            except Exception as err:  # pragma: no cover - network issues
+                _LOGGER.warning("OpenPlantbook search failed: %s", err)
+                return await self.async_step_thresholds()
+            if not results:
+                return await self.async_step_thresholds()
+            self._opb_results = results
+            return await self.async_step_opb_species_select()
+        schema = vol.Schema({vol.Required("query"): str})
+        return self.async_show_form(
+            step_id="opb_species_search", data_schema=schema
+        )
+
+    async def async_step_opb_species_select(self, user_input=None):
+        if self._opb_credentials is None:
+            return self.async_abort(reason="unknown")
+        client = OpenPlantbookClient(
+            self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"]
+        )
+        results = self._opb_results
+        if user_input is not None:
+            pid = user_input["pid"]
+            try:
+                detail = await client.get_details(pid)
+            except Exception as err:  # pragma: no cover - network issues
+                _LOGGER.warning("OpenPlantbook details failed: %s", err)
+                return await self.async_step_thresholds()
+            self._species_pid = pid
+            self._species_display = next(
+                (r["display"] for r in results if r["pid"] == pid), pid
+            )
+            thresholds = {
+                "temperature_min": detail.get("min_temp"),
+                "temperature_max": detail.get("max_temp"),
+                "humidity_min": detail.get("min_hum"),
+                "humidity_max": detail.get("max_hum"),
+                "illuminance_min": detail.get("min_lux"),
+                "illuminance_max": detail.get("max_lux"),
+                "conductivity_min": detail.get("min_soil_ec"),
+                "conductivity_max": detail.get("max_soil_ec"),
+            }
+            self._thresholds = {k: v for k, v in thresholds.items() if v is not None}
+            image_url = detail.get("image_url") or detail.get("image")
+            self._image_url = image_url
+            if image_url:
+                auto_dl = True
+                dl_path = Path(self.hass.config.path("www/images/plants"))
+                existing = self._async_current_entries()
+                if existing:
+                    opts = existing[0].options
+                    auto_dl = opts.get("opb_auto_download_images", True)
+                    dl_path = Path(opts.get("opb_download_dir", dl_path))
+                if auto_dl:
+                    name = self._profile.get(CONF_PLANT_NAME, "") if self._profile else ""
+                    local_url = await client.download_image(name, image_url, dl_path)
+                    if local_url:
+                        self._image_url = local_url
+            return await self.async_step_thresholds()
+        schema = vol.Schema(
+            {
+                vol.Required("pid"): sel.SelectSelector(
+                    sel.SelectSelectorConfig(
+                        options=[
+                            {"value": r["pid"], "label": r["display"]}
+                            for r in results
+                        ]
+                    )
+                )
+            }
+        )
+        return self.async_show_form(
+            step_id="opb_species_select", data_schema=schema
         )
 
     async def async_step_thresholds(self, user_input=None):
         if self._config is None or self._profile is None:
             return self.async_abort(reason="unknown")
 
+        defaults = self._thresholds
         schema = vol.Schema(
             {
-                vol.Optional("temperature_min"): vol.Coerce(float),
-                vol.Optional("temperature_max"): vol.Coerce(float),
-                vol.Optional("humidity_min"): vol.Coerce(float),
-                vol.Optional("humidity_max"): vol.Coerce(float),
-                vol.Optional("illuminance_min"): vol.Coerce(float),
-                vol.Optional("illuminance_max"): vol.Coerce(float),
-                vol.Optional("conductivity_min"): vol.Coerce(float),
-                vol.Optional("conductivity_max"): vol.Coerce(float),
+                vol.Optional("temperature_min", default=defaults.get("temperature_min")): vol.Coerce(
+                    float
+                ),
+                vol.Optional("temperature_max", default=defaults.get("temperature_max")): vol.Coerce(
+                    float
+                ),
+                vol.Optional("humidity_min", default=defaults.get("humidity_min")): vol.Coerce(float),
+                vol.Optional("humidity_max", default=defaults.get("humidity_max")): vol.Coerce(float),
+                vol.Optional("illuminance_min", default=defaults.get("illuminance_min")): vol.Coerce(
+                    float
+                ),
+                vol.Optional("illuminance_max", default=defaults.get("illuminance_max")): vol.Coerce(
+                    float
+                ),
+                vol.Optional("conductivity_min", default=defaults.get("conductivity_min")): vol.Coerce(
+                    float
+                ),
+                vol.Optional("conductivity_max", default=defaults.get("conductivity_max")): vol.Coerce(
+                    float
+                ),
             }
         )
 
@@ -251,6 +399,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             options = dict(user_input)
             options["sensors"] = mapped
             options["thresholds"] = self._thresholds
+            if self._species_display:
+                options["species_display"] = self._species_display
+            if self._species_pid:
+                options["species_pid"] = self._species_pid
+            if self._image_url:
+                options["image_url"] = self._image_url
+            if self._opb_credentials:
+                options["opb_credentials"] = self._opb_credentials
             return self.async_create_entry(
                 title=self._profile[CONF_PLANT_NAME], data=data, options=options
             )
@@ -279,6 +435,19 @@ class OptionsFlow(config_entries.OptionsFlow):
             ),
             "species_display": self._entry.options.get(
                 "species_display", self._entry.data.get(CONF_PLANT_TYPE, "")
+            ),
+            "opb_auto_download_images": self._entry.options.get(
+                "opb_auto_download_images", True
+            ),
+            "opb_download_dir": self._entry.options.get(
+                "opb_download_dir",
+                self.hass.config.path("www/images/plants"),
+            ),
+            "opb_location_share": self._entry.options.get(
+                "opb_location_share", "off"
+            ),
+            "opb_enable_upload": self._entry.options.get(
+                "opb_enable_upload", False
             ),
         }
 
@@ -321,6 +490,28 @@ class OptionsFlow(config_entries.OptionsFlow):
                 vol.Optional(
                     "species_display", default=defaults["species_display"]
                 ): str,
+                vol.Optional(
+                    "opb_auto_download_images",
+                    default=defaults["opb_auto_download_images"],
+                ): bool,
+                vol.Optional(
+                    "opb_download_dir", default=defaults["opb_download_dir"]
+                ): str,
+                vol.Optional(
+                    "opb_location_share",
+                    default=defaults["opb_location_share"],
+                ): sel.SelectSelector(
+                    sel.SelectSelectorConfig(
+                        options=[
+                            {"value": "off", "label": "off"},
+                            {"value": "country", "label": "country"},
+                            {"value": "coordinates", "label": "coordinates"},
+                        ]
+                    )
+                ),
+                vol.Optional(
+                    "opb_enable_upload", default=defaults["opb_enable_upload"]
+                ): bool,
                 vol.Optional("force_refresh", default=False): bool,
             }
         )
