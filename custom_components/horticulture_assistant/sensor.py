@@ -1,14 +1,20 @@
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, CONF_PROFILES
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
+from .coordinator import HorticultureCoordinator
+from .entity import HorticultureBaseEntity
 from .derived import (
     PlantDLISensor,
     PlantDewPointSensor,
@@ -25,6 +31,7 @@ async def async_setup_entry(
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
     coord_local: HortiLocalCoordinator = stored["coordinator_local"]
+    profile_coord: HorticultureCoordinator | None = stored.get("coordinator")
     keep_stale: bool = stored.get("keep_stale", True)
     plant_id: str = stored["plant_id"]
     plant_name: str = stored["plant_name"]
@@ -49,6 +56,12 @@ async def async_setup_entry(
         sensors.append(
             PlantIrrigationRecommendationSensor(hass, entry, plant_name, plant_id)
         )
+
+    profiles = entry.options.get(CONF_PROFILES, {})
+    if profile_coord and profiles:
+        for pid, profile in profiles.items():
+            name = profile.get("name", pid)
+            sensors.append(ProfileDLISensor(profile_coord, pid, name))
 
     async_add_entities(sensors, True)
 
@@ -155,3 +168,28 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         if self._keep_stale:
             return True
         return super().available
+
+
+class ProfileDLISensor(HorticultureBaseEntity, SensorEntity):
+    """DLI sensor backed by the profile coordinator."""
+
+    _attr_native_unit_of_measurement = "mol/m²·day"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_icon = "mdi:weather-sunny-alert"
+
+    def __init__(
+        self, coordinator: HorticultureCoordinator, profile_id: str, profile_name: str
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._attr_unique_id = f"{profile_id}:dli"
+        self._attr_name = "Daily Light Integral"
+
+    @property
+    def native_value(self):
+        return (
+            (self.coordinator.data or {})
+            .get("profiles", {})
+            .get(self._profile_id, {})
+            .get("metrics", {})
+            .get("dli")
+        )

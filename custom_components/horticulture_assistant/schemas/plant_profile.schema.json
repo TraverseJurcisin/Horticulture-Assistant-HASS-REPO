@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Plant Profile",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "sensors",
+    "targets"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "zone_id": {
+      "type": "string"
+    },
+    "sensors": {
+      "type": "object",
+      "properties": {
+        "moisture_entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "temperature_entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ec_entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "co2_entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "targets": {
+      "type": "object",
+      "properties": {
+        "temp_f": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "rh_pct": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "vpd_kpa": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0130D2","source_wsda_record":{"wsda_product_number":"(#0739-0020)","product_name":"GENESIS AGRI-PRODUCTS MOR BOR 17 SOLUBLE FOLIAR BORON 0-0-0","company_info":{"company":"GENESIS AGRI-PRODUCTS INC","Mailing Address":"PO Box 10512","Post Office Box":null,"City":"Yakima","State":"WA","Postal Code":"98909","Telephone Number":"509 575-8382","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":17.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3400","Cadmium":"<2.3000","Cobalt":"<3.4000","Mercury":"<0.0200","Molybdenum":"<11.0000","Nickel":"<11.0000","Lead":"=53.0000","Selenium":"=1.1000","Zinc":"=230.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":17.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3400","Cadmium":"<2.3000","Cobalt":"<3.4000","Mercury":"<0.0200","Molybdenum":"<11.0000","Nickel":"<11.0000","Lead":"=53.0000","Selenium":"=1.1000","Zinc":"=230.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENESIS AGRI-PRODUCTS INC","label_name":"GENESIS AGRI-PRODUCTS MOR BOR 17 SOLUBLE FOLIAR BORON 0-0-0","wsda_reg_no":"(#0739-0020)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0130D2",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0739-0020)",
+    "product_name": "GENESIS AGRI-PRODUCTS MOR BOR 17 SOLUBLE FOLIAR BORON 0-0-0",
+    "company_info": {
+      "company": "GENESIS AGRI-PRODUCTS INC",
+      "Mailing Address": "PO Box 10512",
+      "Post Office Box": null,
+      "City": "Yakima",
+      "State": "WA",
+      "Postal Code": "98909",
+      "Telephone Number": "509 575-8382",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 17.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.3400",
+      "Cadmium": "<2.3000",
+      "Cobalt": "<3.4000",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<11.0000",
+      "Nickel": "<11.0000",
+      "Lead": "=53.0000",
+      "Selenium": "=1.1000",
+      "Zinc": "=230.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "Y"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 17.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.3400",
+      "Cadmium": "<2.3000",
+      "Cobalt": "<3.4000",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<11.0000",
+      "Nickel": "<11.0000",
+      "Lead": "=53.0000",
+      "Selenium": "=1.1000",
+      "Zinc": "=230.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "GENESIS AGRI-PRODUCTS INC",
+    "label_name": "GENESIS AGRI-PRODUCTS MOR BOR 17 SOLUBLE FOLIAR BORON 0-0-0",
+    "wsda_reg_no": "(#0739-0020)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
