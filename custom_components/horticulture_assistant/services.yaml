@@ -146,3 +146,32 @@ apply_irrigation_plan:
       required: false
       selector:
         text:
+
+resolve_profile:
+  name: Resolve profile preferences
+  description: Resolve all per-variable sources into numeric thresholds for a profile.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+
+resolve_all:
+  name: Resolve all profiles
+  description: Resolve all profiles that have needs_resolution=true or expired AI TTL.
+
+generate_profile:
+  name: Generate profile
+  description: Populate all variables for a profile from a single source.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+    mode:
+      required: true
+      selector:
+        select:
+          options:
+            - opb
+            - ai

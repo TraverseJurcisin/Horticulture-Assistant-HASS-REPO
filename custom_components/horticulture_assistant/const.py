@@ -24,6 +24,26 @@ CONF_PLANT_ID = "plant_id"
 CONF_PLANT_TYPE = "plant_type"
 CONF_PROFILES = "profiles"
 
+# Variables (keys) we support in thresholds (can extend safely)
+VARIABLE_SPECS = [
+    # key, unit, step, min, max
+    ("temp_c_min", "°C", 0.1, -20, 60),
+    ("temp_c_max", "°C", 0.1, -20, 60),
+    ("rh_min", "%", 1, 0, 100),
+    ("rh_max", "%", 1, 0, 100),
+    ("dli_min", "mol/m²·d", 0.1, 0, 60),
+    ("dli_max", "mol/m²·d", 0.1, 0, 60),
+    ("moisture_min", "%", 1, 0, 100),
+    ("moisture_max", "%", 1, 0, 100),
+    ("ec_min", "µS/cm", 1, 0, 20000),
+    ("ec_max", "µS/cm", 1, 0, 20000),
+    ("co2_min", "ppm", 10, 300, 2000),
+    ("co2_max", "ppm", 10, 300, 5000),
+    ("vpd_min", "kPa", 0.01, 0, 3),
+    ("vpd_max", "kPa", 0.01, 0, 3),
+]
+SOURCES = ("manual", "clone", "opb", "ai")
+
 DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it
 DEFAULT_UPDATE_MINUTES = 5
