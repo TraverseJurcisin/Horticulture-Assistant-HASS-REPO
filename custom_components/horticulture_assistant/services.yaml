@@ -1,3 +1,59 @@
+create_profile:
+  name: Create plant profile
+  description: Create a new plant profile managed by Horticulture Assistant.
+  fields:
+    name:
+      required: true
+      selector:
+        text:
+
+duplicate_profile:
+  name: Duplicate plant profile
+  description: Clone an existing plant profile under a new name.
+  fields:
+    source_profile_id:
+      required: true
+      selector:
+        text:
+    new_name:
+      required: true
+      selector:
+        text:
+
+delete_profile:
+  name: Delete plant profile
+  description: Remove a plant profile and its associated sensors.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+
+link_sensors:
+  name: Link sensors to profile
+  description: Attach sensor entity IDs to a plant profile.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+    temperature:
+      selector:
+        entity:
+          domain: sensor
+    humidity:
+      selector:
+        entity:
+          domain: sensor
+    illuminance:
+      selector:
+        entity:
+          domain: sensor
+    moisture:
+      selector:
+        entity:
+          domain: sensor
+
 update_sensors:
   name: Update plant sensors
   description: Attach or replace sensor entity IDs for a plant profile.
@@ -40,6 +96,15 @@ run_recommendation:
 refresh:
   name: Manual refresh
   description: Trigger both local and AI coordinators to refresh now.
+
+recompute:
+  name: Recompute Metrics
+  description: Force coordinator to recompute metrics for all profiles or one profile.
+  fields:
+    profile_id:
+      required: false
+      selector:
+        text:
 
 replace_sensor:
   name: Replace a mapped sensor

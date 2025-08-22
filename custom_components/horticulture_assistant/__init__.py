@@ -1,6 +1,7 @@
 from __future__ import annotations
 import logging
 from datetime import timedelta
+from copy import deepcopy
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
@@ -17,6 +18,7 @@ from .const import (
     CONF_TEMPERATURE_SENSOR,
     CONF_EC_SENSOR,
     CONF_CO2_SENSOR,
+    CONF_PROFILES,
     DEFAULT_BASE_URL,
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
@@ -26,6 +28,7 @@ from .api import ChatApi
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
+from .coordinator import HorticultureCoordinator
 from .storage import LocalStore
 from .utils.paths import ensure_local_data_paths
 from aiohttp import ClientError
@@ -38,6 +41,7 @@ from .irrigation_bridge import async_apply_irrigation
 from homeassistant.helpers import entity_registry as er
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.util import slugify
 
 SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
@@ -83,9 +87,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass, api, store, update_minutes=minutes, initial=stored.get("recommendation")
     )
     local_coord = HortiLocalCoordinator(hass, store, update_minutes=1)
+    profile_coord = HorticultureCoordinator(hass, entry.entry_id, entry.options)
     try:
         await ai_coord.async_config_entry_first_refresh()
         await local_coord.async_config_entry_first_refresh()
+        await profile_coord.async_config_entry_first_refresh()
     except (UpdateFailed, ClientError, asyncio.TimeoutError) as err:
         _LOGGER.warning("Initial data refresh failed: %s", err)
     except Exception as err:  # pragma: no cover - unexpected
@@ -96,6 +102,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "api": api,
             "coordinator_ai": ai_coord,
             "coordinator_local": local_coord,
+            "coordinator": profile_coord,
             "store": store,
             "keep_stale": keep_stale,
         }
@@ -212,6 +219,130 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         schema=vol.Schema(
             {vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}
         ),
+    )
+
+    async def _handle_create_profile(call):
+        name: str = call.data["name"]
+        profiles = dict(entry.options.get(CONF_PROFILES, {}))
+        base = slugify(name) or "profile"
+        candidate = base
+        idx = 1
+        while candidate in profiles:
+            idx += 1
+            candidate = f"{base}_{idx}"
+        profiles[candidate] = {"name": name}
+        new_opts = dict(entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_opts)
+        profile_coord._options = new_opts
+        await profile_coord.async_request_refresh()
+
+    hass.services.async_register(
+        svc_base,
+        "create_profile",
+        _handle_create_profile,
+        schema=vol.Schema({vol.Required("name"): str}),
+    )
+
+    async def _handle_duplicate_profile(call):
+        source_id = call.data["source_profile_id"]
+        new_name = call.data["new_name"]
+        profiles = dict(entry.options.get(CONF_PROFILES, {}))
+        if source_id not in profiles:
+            raise vol.Invalid(f"unknown profile {source_id}")
+        base = slugify(new_name)
+        candidate = base
+        idx = 0
+        while candidate in profiles:
+            idx += 1
+            candidate = f"{base}_{idx}"
+        new_profile = deepcopy(profiles[source_id])
+        new_profile["name"] = new_name
+        profiles[candidate] = new_profile
+        new_opts = dict(entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_opts)
+        profile_coord._options = new_opts
+        await profile_coord.async_request_refresh()
+
+    hass.services.async_register(
+        svc_base,
+        "duplicate_profile",
+        _handle_duplicate_profile,
+        schema=vol.Schema(
+            {vol.Required("source_profile_id"): str, vol.Required("new_name"): str}
+        ),
+    )
+
+    async def _handle_delete_profile(call):
+        profile_id = call.data["profile_id"]
+        profiles = dict(entry.options.get(CONF_PROFILES, {}))
+        if profile_id not in profiles:
+            raise vol.Invalid(f"unknown profile {profile_id}")
+        profiles.pop(profile_id)
+        new_opts = dict(entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_opts)
+        profile_coord._options = new_opts
+        await profile_coord.async_request_refresh()
+
+    hass.services.async_register(
+        svc_base,
+        "delete_profile",
+        _handle_delete_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
+    )
+
+    async def _handle_link_sensors(call):
+        profile_id = call.data["profile_id"]
+        profiles = dict(entry.options.get(CONF_PROFILES, {}))
+        if profile_id not in profiles:
+            raise vol.Invalid(f"unknown profile {profile_id}")
+        sensors: dict[str, str] = {}
+        for role in ("temperature", "humidity", "illuminance", "moisture"):
+            entity_id = call.data.get(role)
+            if not entity_id:
+                continue
+            if hass.states.get(entity_id) is None:
+                raise vol.Invalid(f"missing entity {entity_id}")
+            sensors[role] = entity_id
+        prof = dict(profiles[profile_id])
+        prof["sensors"] = sensors
+        profiles[profile_id] = prof
+        new_opts = dict(entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_opts)
+        profile_coord._options = new_opts
+        await profile_coord.async_request_refresh()
+
+    hass.services.async_register(
+        svc_base,
+        "link_sensors",
+        _handle_link_sensors,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("temperature"): cv.entity_id,
+                vol.Optional("humidity"): cv.entity_id,
+                vol.Optional("illuminance"): cv.entity_id,
+                vol.Optional("moisture"): cv.entity_id,
+            }
+        ),
+    )
+
+    async def _handle_recompute(call):
+        profile_id = call.data.get("profile_id")
+        if profile_id:
+            profiles = entry.options.get(CONF_PROFILES, {})
+            if profile_id not in profiles:
+                raise vol.Invalid(f"unknown profile {profile_id}")
+        await profile_coord.async_request_refresh()
+
+    hass.services.async_register(
+        svc_base,
+        "recompute",
+        _handle_recompute,
+        schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
     async def _handle_replace_sensor(call):
         profile_id = call.data["profile_id"]
