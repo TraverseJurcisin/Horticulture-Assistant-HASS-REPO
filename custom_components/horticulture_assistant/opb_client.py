@@ -30,3 +30,20 @@ class OpenPlantbookClient:
                 raise OpenPlantbookError(f"search failed: {r.status}")
             data = await r.json()
             return data if isinstance(data, list) else []
+
+
+async def async_fetch_field(hass, species: str, field: str) -> tuple[Any, str]:
+    """Fetch a specific field for a species from OpenPlantbook."""
+    session = hass.helpers.aiohttp_client.async_get_clientsession()
+    token = None
+    client = OpenPlantbookClient(session, token)
+    detail = await client.species_details(species)
+    cur: Any = detail
+    for part in field.split("."):
+        if isinstance(cur, dict):
+            cur = cur.get(part)
+        else:
+            cur = None
+            break
+    url = f"https://openplantbook.org/{species}"
+    return cur, url

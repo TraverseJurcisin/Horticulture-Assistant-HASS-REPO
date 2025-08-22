@@ -8,9 +8,13 @@ repos:
     rev: v4.6.0
     hooks:
       - id: end-of-file-fixer
+        exclude: ^custom_components/horticulture_assistant/data/
       - id: trailing-whitespace
+        exclude: ^custom_components/horticulture_assistant/data/
       - id: check-json
+        exclude: ^custom_components/horticulture_assistant/data/
       - id: pretty-format-json
+        exclude: ^custom_components/horticulture_assistant/data/
         args: ["--autofix", "--indent", "2", "--no-sort-keys"]
   - repo: local
     hooks:

@@ -173,5 +173,10 @@ generate_profile:
       selector:
         select:
           options:
+            - clone
             - opb
             - ai
+    source_profile_id:
+      required: false
+      selector:
+        text:

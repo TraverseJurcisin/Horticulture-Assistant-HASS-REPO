@@ -143,6 +143,16 @@ like `"moisture_sensors"` or `"temperature_sensors"` with a list of entity IDs:
 }
 ```
 
+Each threshold recorded in a profile tracks how it was set. Variables can be
+resolved manually, cloned from another profile, fetched from OpenPlantbook or
+recommended by an AI sweep. The stored profile includes a `citations` section
+that surfaces this provenance, also available through Diagnostics and selected
+entity attributes.
+
+For faster setup, the options flow provides a **Generate profile** action that
+can clone another profile's thresholds or populate them from OpenPlantbook or an
+AI sweep in a single step.
+
 If multiple entity IDs are provided, their values are averaged. When more than
 two sensors are listed, the median of the available readings is used instead to
 reduce the effect of outliers.
