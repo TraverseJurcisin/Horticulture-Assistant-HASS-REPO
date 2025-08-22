@@ -1,8 +1,8 @@
 """Automated nutrient management based on plant profile data."""
 
 import logging
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
@@ -140,7 +140,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
             try:
                 threshold_val = (
                     float(thresh_value[0])
-                    if isinstance(thresh_value, (list, tuple))
+                    if isinstance(thresh_value, list | tuple)
                     else float(thresh_value)
                 )
             except (TypeError, ValueError):

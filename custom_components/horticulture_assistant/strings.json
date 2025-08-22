@@ -12,28 +12,30 @@
           "update_interval": "Update interval (minutes)"
         }
       },
-        "profile": {
-          "title": "Plant profile",
-          "description": "Create a plant profile.",
-          "data": {
-            "plant_name": "Plant name",
-            "plant_type": "Plant type (optional)"
-          }
-        },
-        "sensors": {
-          "title": "Sensors",
-          "description": "Select sensor entities (optional; can be added later).",
-          "data": {
-            "moisture_sensor": "Moisture sensor",
-            "temperature_sensor": "Temperature sensor",
-            "ec_sensor": "EC sensor",
-            "co2_sensor": "CO₂ sensor"
-          }
+      "profile": {
+        "title": "Plant profile",
+        "description": "Create a plant profile.",
+        "data": {
+          "plant_name": "Plant name",
+          "plant_type": "Plant type (optional)"
         }
       },
-      "error": {"profile_error": "Failed to create plant profile"},
-      "abort": {}
+      "sensors": {
+        "title": "Sensors",
+        "description": "Select sensor entities (optional; can be added later).",
+        "data": {
+          "moisture_sensor": "Moisture sensor",
+          "temperature_sensor": "Temperature sensor",
+          "ec_sensor": "EC sensor",
+          "co2_sensor": "CO\u2082 sensor"
+        }
+      }
     },
+    "error": {
+      "profile_error": "Failed to create plant profile"
+    },
+    "abort": {}
+  },
   "options": {
     "step": {
       "init": {
@@ -44,7 +46,7 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor",
+          "co2_sensor": "CO\u2082 sensor",
           "species_display": "Species",
           "force_refresh": "Force refresh thresholds"
         }

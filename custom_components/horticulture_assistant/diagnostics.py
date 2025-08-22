@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 from homeassistant.components.diagnostics import async_redact_data
+
 from .const import DOMAIN
 
 TO_REDACT = {"api_key", "Authorization"}

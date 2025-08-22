@@ -41,22 +41,29 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor"
+          "co2_sensor": "CO\u2082 sensor"
         }
       },
       "threshold_source": {
         "title": "Prefill thresholds",
         "description": "Choose how to pre-fill thresholds.",
-        "data": {"method": "Method"}
+        "data": {
+          "method": "Method"
+        }
       },
       "opb_credentials": {
         "title": "OpenPlantbook credentials",
         "description": "Enter client_id and secret to search species and pre-fill thresholds.",
-        "data": {"client_id": "Client ID", "secret": "Client Secret"}
+        "data": {
+          "client_id": "Client ID",
+          "secret": "Client Secret"
+        }
       },
       "opb_species_search": {
         "title": "Search OpenPlantbook",
-        "data": {"query": "Species or keyword"}
+        "data": {
+          "query": "Species or keyword"
+        }
       },
       "opb_species_select": {
         "title": "Select species",
@@ -80,7 +87,7 @@
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor",
           "ec_sensor": "EC sensor",
-          "co2_sensor": "CO₂ sensor",
+          "co2_sensor": "CO\u2082 sensor",
           "species_display": "Species",
           "force_refresh": "Force refresh thresholds",
           "opb_auto_download_images": "Auto-download species image",

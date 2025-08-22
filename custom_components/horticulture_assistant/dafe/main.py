@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-from .species_profiles import get_species_profile
-from .media_models import get_media_profile
-from .wc_monitor import get_current_wc
-from .ec_tracker import get_current_ec
-from .diffusion_model import calculate_effective_diffusion
-from .pulse_scheduler import generate_pulse_schedule
-from .utils import load_config
-
 import argparse
 import json
-from typing import Sequence
+from collections.abc import Sequence
+
+from .diffusion_model import calculate_effective_diffusion
+from .ec_tracker import get_current_ec
+from .media_models import get_media_profile
+from .pulse_scheduler import generate_pulse_schedule
+from .species_profiles import get_species_profile
+from .utils import load_config
+from .wc_monitor import get_current_wc
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:

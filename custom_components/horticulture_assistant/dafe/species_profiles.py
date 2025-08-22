@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
+
 from plant_engine.utils import load_dataset
 
 # Dataset file residing under ``data/`` used to populate known species profiles.
@@ -32,7 +33,7 @@ def _profile_data() -> dict:
     return load_dataset(DATA_FILE)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_species_profile(species_name: str) -> SpeciesProfile | None:
     """Return a :class:`SpeciesProfile` for ``species_name`` if available."""
 

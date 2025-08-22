@@ -5,6 +5,7 @@ import logging
 import random
 import time
 from typing import Any
+
 from aiohttp import ClientError, ClientResponseError
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import aiohttp_client
@@ -90,7 +91,7 @@ class ChatApi:
                     raise
                 await asyncio.sleep(delay + 0.25 * random.random())
                 delay = min(delay * 2, 30)
-            except (ClientError, asyncio.TimeoutError) as err:
+            except (TimeoutError, ClientError) as err:
                 self._failures += 1
                 warn_once(_LOGGER, "network_error", str(err))
                 if attempt == 4:

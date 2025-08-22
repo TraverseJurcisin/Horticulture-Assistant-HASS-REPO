@@ -1,9 +1,7 @@
-from __future__ import annotations
-
 """Helper utilities for command line scripts."""
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 
 def ensure_repo_root_on_path() -> Path:
@@ -12,8 +10,8 @@ def ensure_repo_root_on_path() -> Path:
     path = str(root)
     if path not in sys.path:
         # ``sys.path``[0] is typically the custom component directory added by
-        # individual scripts. Insert the repository root *after* this so that
-        # bundled copies of packages (e.g. ``plant_engine``) take precedence
-        # over any stub modules at the repository root.
+        # individual scripts. Insert the repository root *after* this so
+        # bundled copies of packages ship with the integration take
+        # precedence when resolving imports.
         sys.path.insert(1, path)
     return root

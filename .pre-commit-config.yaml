@@ -3,12 +3,13 @@ repos:
     rev: v0.12.7
     hooks:
       - id: ruff
-        args: [--fix]
+        args: [--fix, --exit-non-zero-on-fix]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
+      - id: check-yaml
       - id: check-json
       - id: pretty-format-json
         args: ["--autofix", "--indent", "2", "--no-sort-keys"]
@@ -18,3 +19,10 @@ repos:
       - id: check-jsonschema
         files: ^custom_components/horticulture_assistant/data/fertilizers/detail/.*\.json$
         args: ["--schemafile", "custom_components/horticulture_assistant/schemas/fertilizer_detail.schema.json"]
+  - repo: local
+    hooks:
+      - id: sort-manifest
+        name: Sort Home Assistant manifest.json
+        entry: python scripts/sort_manifest.py
+        language: system
+        files: ^custom_components/horticulture_assistant/manifest\.json$

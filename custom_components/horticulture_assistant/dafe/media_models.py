@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
+
 from plant_engine.utils import load_dataset
 
 # Dataset file residing under ``data/`` used to populate media properties.
@@ -29,7 +30,7 @@ def _profile_data() -> dict:
     return load_dataset(DATA_FILE)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_media_profile(media_name: str) -> MediaProfile | None:
     """Return a :class:`MediaProfile` for ``media_name`` if available."""
 

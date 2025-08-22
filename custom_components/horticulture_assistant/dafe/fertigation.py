@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Dict
+from collections.abc import Mapping
 
 from plant_engine.fertigation import recommend_fertigation_schedule as _recommend
 
@@ -16,7 +16,7 @@ def recommend_fertigation_schedule(
     purity: Mapping[str, float] | None = None,
     *,
     product: str | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return fertilizer grams for a nutrient solution.
 
     This is a thin wrapper around
