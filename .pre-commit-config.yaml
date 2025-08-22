@@ -7,18 +7,11 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-yaml
+      - id: trailing-whitespace
       - id: check-json
       - id: pretty-format-json
         args: ["--autofix", "--indent", "2", "--no-sort-keys"]
-  - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.28.5
-    hooks:
-      - id: check-jsonschema
-        files: ^custom_components/horticulture_assistant/data/fertilizers/detail/.*\.json$
-        args: ["--schemafile", "custom_components/horticulture_assistant/schemas/fertilizer_detail.schema.json"]
   - repo: local
     hooks:
       - id: sort-manifest

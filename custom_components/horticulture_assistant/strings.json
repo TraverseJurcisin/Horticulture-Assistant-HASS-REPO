@@ -1,66 +1,129 @@
 {
-  "title": "Horticulture Assistant",
   "config": {
-    "step": {
-      "user": {
-        "title": "Connect AI",
-        "description": "Enter AI settings and defaults.",
-        "data": {
-          "api_key": "API key",
-          "model": "Model",
-          "base_url": "Base URL",
-          "update_interval": "Update interval (minutes)"
-        }
-      },
-      "profile": {
-        "title": "Plant profile",
-        "description": "Create a plant profile.",
-        "data": {
-          "plant_name": "Plant name",
-          "plant_type": "Plant type (optional)"
-        }
-      },
-      "sensors": {
-        "title": "Sensors",
-        "description": "Select sensor entities (optional; can be added later).",
-        "data": {
-          "moisture_sensor": "Moisture sensor",
-          "temperature_sensor": "Temperature sensor",
-          "ec_sensor": "EC sensor",
-          "co2_sensor": "CO\u2082 sensor"
-        }
-      }
-    },
+    "abort": {},
     "error": {
       "profile_error": "Failed to create plant profile"
     },
-    "abort": {}
-  },
-  "options": {
     "step": {
-      "init": {
-        "title": "Options",
+      "profile": {
         "data": {
-          "keep_stale": "Keep entities available when AI fails",
-          "update_interval": "Update interval (minutes)",
-          "moisture_sensor": "Moisture sensor",
-          "temperature_sensor": "Temperature sensor",
-          "ec_sensor": "EC sensor",
+          "plant_name": "Plant name",
+          "plant_type": "Plant type (optional)"
+        },
+        "description": "Create a plant profile.",
+        "title": "Plant profile"
+      },
+      "sensors": {
+        "data": {
           "co2_sensor": "CO\u2082 sensor",
-          "species_display": "Species",
-          "force_refresh": "Force refresh thresholds"
-        }
+          "ec_sensor": "EC sensor",
+          "moisture_sensor": "Moisture sensor",
+          "temperature_sensor": "Temperature sensor"
+        },
+        "description": "Select sensor entities (optional; can be added later).",
+        "title": "Sensors"
+      },
+      "user": {
+        "data": {
+          "api_key": "API key",
+          "base_url": "Base URL",
+          "model": "Model",
+          "update_interval": "Update interval (minutes)"
+        },
+        "description": "Enter AI settings and defaults.",
+        "title": "Connect AI"
       }
     }
   },
   "issues": {
     "missing_entity": {
-      "title": "Missing sensor for {plant_id}",
-      "description": "A referenced sensor no longer exists. Open Options to update the mapping."
+      "description": "A referenced sensor no longer exists. Open Options to update the mapping.",
+      "title": "Missing sensor for {plant_id}"
     },
     "missing_entity_option": {
-      "title": "Missing entity {entity_id}",
-      "description": "A configured sensor no longer exists."
+      "description": "A configured sensor no longer exists.",
+      "title": "Missing entity {entity_id}"
     }
-  }
+  },
+  "options": {
+    "step": {
+      "apply": {
+        "data": {
+          "resolve_now": "Resolve now"
+        },
+        "title": "Apply"
+      },
+      "action": {
+        "data": {
+          "action": "Action"
+        },
+        "title": "Profile action"
+      },
+      "init": {
+        "data": {
+          "co2_sensor": "CO\u2082 sensor",
+          "ec_sensor": "EC sensor",
+          "force_refresh": "Force refresh thresholds",
+          "keep_stale": "Keep entities available when AI fails",
+          "moisture_sensor": "Moisture sensor",
+          "species_display": "Species",
+          "temperature_sensor": "Temperature sensor",
+          "update_interval": "Update interval (minutes)"
+        },
+        "title": "Options"
+      },
+      "pick_source": {
+        "data": {
+          "mode": "Source"
+        },
+        "title": "Pick source"
+      },
+      "pick_variable": {
+        "data": {
+          "variable": "Variable"
+        },
+        "title": "Pick variable"
+      },
+      "generate": {
+        "data": {
+          "mode": "Source"
+        },
+        "title": "Generate profile"
+      },
+      "profile": {
+        "data": {
+          "profile_id": "Profile"
+        },
+        "title": "Pick profile"
+      },
+      "src_ai": {
+        "data": {
+          "model": "Model",
+          "provider": "Provider",
+          "ttl_hours": "TTL hours"
+        },
+        "title": "AI provider/model/TTL"
+      },
+      "src_clone": {
+        "data": {
+          "copy_from": "Profile"
+        },
+        "title": "Copy from profile"
+      },
+      "src_manual": {
+        "data": {
+          "value": "Value"
+        },
+        "title": "Manual value"
+      },
+      "src_opb": {
+        "data": {
+          "field": "Field",
+          "species": "Species"
+        },
+        "title": "OpenPlantbook species & field"
+      }
+    }
+  },
+  "title": "Horticulture Assistant"
 }

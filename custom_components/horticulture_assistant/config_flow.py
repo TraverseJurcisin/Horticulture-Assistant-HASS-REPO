@@ -419,6 +419,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 class OptionsFlow(config_entries.OptionsFlow):
     def __init__(self, entry):
         self._entry = entry
+        self._pid: str | None = None
+        self._var: str | None = None
+        self._mode: str | None = None
 
     async def async_step_init(self, user_input=None):
         defaults = {
@@ -624,6 +627,186 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=opts)
 
         return self.async_show_form(step_id="init", data_schema=schema)
+
+    # --- Per-variable source editing ---
+
+    async def async_step_profile(self, user_input=None):
+        profiles = self._profiles()
+        if user_input is not None:
+            self._pid = user_input["profile_id"]
+            return await self.async_step_action()
+        return self.async_show_form(
+            step_id="profile",
+            data_schema=vol.Schema(
+                {vol.Required("profile_id"): vol.In({pid: p["name"] for pid, p in profiles.items()})}
+            ),
+        )
+
+    async def async_step_action(self, user_input=None):
+        actions = {"edit": "Edit variable", "generate": "Generate profile"}
+        if user_input is not None:
+            act = user_input["action"]
+            if act == "edit":
+                return await self.async_step_pick_variable()
+            return await self.async_step_generate()
+        return self.async_show_form(
+            step_id="action",
+            data_schema=vol.Schema({vol.Required("action"): vol.In(actions)}),
+        )
+
+    async def async_step_pick_variable(self, user_input=None):
+        from .const import VARIABLE_SPECS
+
+        if user_input is not None:
+            self._var = user_input["variable"]
+            return await self.async_step_pick_source()
+        return self.async_show_form(
+            step_id="pick_variable",
+            data_schema=vol.Schema(
+                {vol.Required("variable"): vol.In([k for k, *_ in VARIABLE_SPECS])}
+            ),
+        )
+
+    async def async_step_pick_source(self, user_input=None):
+        from .const import SOURCES
+
+        if user_input is not None:
+            self._mode = user_input["mode"]
+            if self._mode == "manual":
+                return await self.async_step_src_manual()
+            if self._mode == "clone":
+                return await self.async_step_src_clone()
+            if self._mode == "opb":
+                return await self.async_step_src_opb()
+            if self._mode == "ai":
+                return await self.async_step_src_ai()
+        return self.async_show_form(
+            step_id="pick_source",
+            data_schema=vol.Schema({vol.Required("mode"): vol.In(SOURCES)}),
+        )
+
+    async def async_step_src_manual(self, user_input=None):
+        if user_input is not None:
+            self._set_source({"mode": "manual", "value": float(user_input["value"])})
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="src_manual",
+            data_schema=vol.Schema({vol.Required("value"): float}),
+        )
+
+    async def async_step_src_clone(self, user_input=None):
+        profs = {pid: p["name"] for pid, p in self._profiles().items() if pid != self._pid}
+        if user_input is not None:
+            self._set_source({"mode": "clone", "copy_from": user_input["copy_from"]})
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="src_clone",
+            data_schema=vol.Schema({vol.Required("copy_from"): vol.In(profs)}),
+        )
+
+    async def async_step_src_opb(self, user_input=None):
+        if user_input is not None:
+            self._set_source(
+                {
+                    "mode": "opb",
+                    "opb": {"species": user_input["species"], "field": user_input["field"]},
+                }
+            )
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="src_opb",
+            data_schema=vol.Schema(
+                {vol.Required("species"): str, vol.Required("field"): str}
+            ),
+        )
+
+    async def async_step_src_ai(self, user_input=None):
+        if user_input is not None:
+            self._set_source(
+                {
+                    "mode": "ai",
+                    "ai": {
+                        "provider": user_input.get("provider", "openai"),
+                        "model": user_input.get("model", "gpt-4o-mini"),
+                        "ttl_hours": int(user_input.get("ttl_hours", 720)),
+                    },
+                }
+            )
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="src_ai",
+            data_schema=vol.Schema(
+                {
+                    vol.Optional("provider", default="openai"): str,
+                    vol.Optional("model", default="gpt-4o-mini"): str,
+                    vol.Optional("ttl_hours", default=720): int,
+                }
+            ),
+        )
+
+    async def async_step_generate(self, user_input=None):
+        if user_input is not None:
+            mode = user_input["mode"]
+            self._generate_all(mode)
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="generate",
+            data_schema=vol.Schema({vol.Required("mode"): vol.In(["opb", "ai"])}),
+        )
+
+    def _profiles(self):
+        return dict(self._entry.options.get("profiles", {}))
+
+    def _set_source(self, src: dict):
+        opts = dict(self._entry.options)
+        prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        sources = dict(prof.get("sources", {}))
+        sources[self._var] = src
+        prof["sources"] = sources
+        prof["needs_resolution"] = True
+        allp = dict(opts.get("profiles", {}))
+        allp[self._pid] = prof
+        opts["profiles"] = allp
+        self.hass.config_entries.async_update_entry(self._entry, options=opts)
+
+    def _generate_all(self, mode: str):
+        from .const import VARIABLE_SPECS
+
+        opts = dict(self._entry.options)
+        prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        sources = dict(prof.get("sources", {}))
+        species = prof.get("species")
+        slug = species.get("slug") if isinstance(species, dict) else species
+        for key, *_ in VARIABLE_SPECS:
+            if mode == "opb":
+                sources[key] = {"mode": "opb", "opb": {"species": slug, "field": key}}
+            else:
+                sources[key] = {
+                    "mode": "ai",
+                    "ai": {
+                        "provider": "openai",
+                        "model": "gpt-4o-mini",
+                        "ttl_hours": 720,
+                    },
+                }
+        prof["sources"] = sources
+        prof["needs_resolution"] = True
+        allp = dict(opts.get("profiles", {}))
+        allp[self._pid] = prof
+        opts["profiles"] = allp
+        self.hass.config_entries.async_update_entry(self._entry, options=opts)
+
+    async def async_step_apply(self, user_input=None):
+        if user_input is not None:
+            if user_input.get("resolve_now"):
+                from .resolver import PreferenceResolver
+
+                await PreferenceResolver(self.hass).resolve_profile(self._entry, self._pid)
+            return self.async_create_entry(title="", data={})
+        return self.async_show_form(
+            step_id="apply",
+            data_schema=vol.Schema({vol.Optional("resolve_now", default=True): bool}),
+        )
 
 
 # Backwards compatibility for older imports

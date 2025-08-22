@@ -76,6 +76,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         self._unit = unit
         self._attr_native_unit_of_measurement = None
         self._value = float(value) if value is not None else None
+        self._plant_id = plant_id
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
@@ -116,3 +117,19 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         if self._key.startswith("temperature"):
             return self.hass.config.units.temperature_unit
         return self._unit
+
+    def coordinator_entry_profile(self):
+        profiles = self._entry.options.get("profiles", {})
+        return profiles.get(self._plant_id, {})
+
+    @property
+    def extra_state_attributes(self):
+        prof = self.coordinator_entry_profile()
+        prov = (prof.get("citations", {}) or {}).get(self._key)
+        src = (prof.get("sources", {}) or {}).get(self._key, {})
+        return {
+            "source_mode": src.get("mode"),
+            "source_detail": (prov or {}).get("source_detail"),
+            "ai_confidence": (src.get("ai") or {}).get("confidence"),
+            "last_resolved": (prov or {}).get("ts"),
+        }

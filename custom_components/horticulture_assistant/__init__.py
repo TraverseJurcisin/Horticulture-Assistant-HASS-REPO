@@ -451,6 +451,37 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             }
         ),
     )
+
+    async def _svc_resolve_profile(call):
+        pid = call.data["profile_id"]
+        from .resolver import PreferenceResolver
+
+        await PreferenceResolver(hass).resolve_profile(entry, pid)
+
+    async def _svc_resolve_all(call):
+        from .resolver import PreferenceResolver
+
+        r = PreferenceResolver(hass)
+        for pid in entry.options.get(CONF_PROFILES, {}).keys():
+            await r.resolve_profile(entry, pid)
+
+    async def _svc_generate_profile(call):
+        pid = call.data["profile_id"]
+        mode = call.data["mode"]
+        from .resolver import generate_profile
+
+        await generate_profile(hass, entry, pid, mode)
+
+    hass.services.async_register(
+        svc_base, "resolve_profile", _svc_resolve_profile, schema=vol.Schema({vol.Required("profile_id"): str})
+    )
+    hass.services.async_register(svc_base, "resolve_all", _svc_resolve_all)
+    hass.services.async_register(
+        svc_base,
+        "generate_profile",
+        _svc_generate_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("mode"): vol.In(["opb", "ai"])}),
+    )
     return True
 
 
