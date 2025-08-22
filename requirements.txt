@@ -1,4 +1,5 @@
 acme>=2.8.0,<3.0.0
+aiohttp>=3.9
 josepy>=1.13.0,<2.0.0
 numpy>=1.25
 pandas>=2.3

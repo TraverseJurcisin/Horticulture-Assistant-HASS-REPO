@@ -84,6 +84,7 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         self._local = local
         self._keep_stale = keep_stale
         self._attr_has_entity_name = True
+        self._citations: dict | None = None
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
@@ -91,6 +92,33 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
             self.async_on_remove(
                 self._local.async_add_listener(self.async_write_ha_state)
             )
+        # Load citation summary once on startup
+        from .profile.store import async_load_all
+
+        profiles = await async_load_all(self.hass)
+        total = 0
+        summary: dict[str, int] = {}
+        links: list[str] = []
+        link_set: set[str] = set()
+        for prof in profiles.values():
+            for key, data in (prof.get("variables") or {}).items():
+                cits = data.get("citations") or []
+                if not cits:
+                    continue
+                total += len(cits)
+                summary[key] = summary.get(key, 0) + len(cits)
+                for cit in cits:
+                    if len(links) >= 3:
+                        break
+                    url = cit.get("url")
+                    if url and url not in link_set:
+                        links.append(url)
+                        link_set.add(url)
+        self._citations = {
+            "citations_count": total,
+            "citations_summary": summary,
+            "citations_links_preview": links,
+        }
 
     @property
     def native_value(self):
@@ -108,7 +136,7 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         latency = getattr(api, "last_latency_ms", None)
         if latency is None:
             latency = getattr(self.coordinator, "latency_ms", None)
-        return {
+        attrs = {
             "last_update_success": self.coordinator.last_update_success,
             "last_exception": last_exc,
             "retry_count": max(
@@ -122,6 +150,9 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
             ),
             "latency_ms": latency,
         }
+        if self._citations:
+            attrs.update(self._citations)
+        return attrs
 
     @property
     def available(self) -> bool:

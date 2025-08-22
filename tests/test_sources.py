@@ -3,6 +3,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+pytest.importorskip("homeassistant.exceptions")
+
 from custom_components.horticulture_assistant.config_flow import OptionsFlow
 from custom_components.horticulture_assistant.resolver import (
     PreferenceResolver,
@@ -19,10 +21,29 @@ def make_hass():
     def update_entry(entry, *, options):
         entry.options = options
 
+    def async_create_task(coro, *_args, **_kwargs):
+        import asyncio
+
+        return asyncio.create_task(coro)
+
+    async def async_add_executor_job(func, *args):
+        return func(*args)
+
+    def config_path(*_args):
+        return "/tmp/test.json"
+
     return types.SimpleNamespace(
         config_entries=types.SimpleNamespace(async_update_entry=update_entry),
-        config=types.SimpleNamespace(location_name="loc", units=types.SimpleNamespace(name="metric")),
+        config=types.SimpleNamespace(
+            location_name="loc",
+            units=types.SimpleNamespace(name="metric"),
+            path=config_path,
+        ),
         helpers=types.SimpleNamespace(aiohttp_client=types.SimpleNamespace(async_get_clientsession=MagicMock())),
+        data={},
+        state=None,
+        async_create_task=async_create_task,
+        async_add_executor_job=async_add_executor_job,
     )
 
 
@@ -138,3 +159,31 @@ async def test_options_flow_generate_profile():
     ):
         await flow.async_step_generate({"mode": "ai"})
     assert entry.options["profiles"]["p1"]["sources"]["temp_c_min"]["mode"] == "ai"
+
+
+@pytest.mark.asyncio
+async def test_options_flow_generate_profile_clone():
+    hass = make_hass()
+    entry = DummyEntry(
+        {
+            "profiles": {
+                "p1": {"name": "Plant"},
+                "src": {"name": "Source", "thresholds": {"temp_c_min": 7.0}},
+            }
+        }
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_profile()
+    await flow.async_step_profile({"profile_id": "p1"})
+    await flow.async_step_action({"action": "generate"})
+    result = await flow.async_step_generate({"mode": "clone"})
+    assert result["step_id"] == "generate_clone"
+    with patch(
+        "custom_components.horticulture_assistant.resolver.PreferenceResolver.resolve_profile",
+        AsyncMock(),
+    ):
+        await flow.async_step_generate_clone({"copy_from": "src"})
+    prof = entry.options["profiles"]["p1"]
+    assert prof["thresholds"]["temp_c_min"] == 7.0
+    assert prof["sources"]["temp_c_min"]["mode"] == "clone"

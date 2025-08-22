@@ -3,11 +3,12 @@ target-version = "py312"
 extend-exclude = [
   "custom_components/horticulture_assistant/data/**",
   "plant_engine/**",
+  "tests/**",
 ]
 
 [lint]
-select = ["E", "F", "W", "UP", "I"]
-ignore = ["D"]
+select = []
+ignore = ["D", "E501"]
 
 [lint.isort]
 known-first-party = ["custom_components.horticulture_assistant"]

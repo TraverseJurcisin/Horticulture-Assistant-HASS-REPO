@@ -747,11 +747,23 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_generate(self, user_input=None):
         if user_input is not None:
             mode = user_input["mode"]
+            if mode == "clone":
+                return await self.async_step_generate_clone()
             self._generate_all(mode)
             return await self.async_step_apply()
         return self.async_show_form(
             step_id="generate",
-            data_schema=vol.Schema({vol.Required("mode"): vol.In(["opb", "ai"])}),
+            data_schema=vol.Schema({vol.Required("mode"): vol.In(["clone", "opb", "ai"])}),
+        )
+
+    async def async_step_generate_clone(self, user_input=None):
+        profs = {pid: p["name"] for pid, p in self._profiles().items() if pid != self._pid}
+        if user_input is not None:
+            self._generate_all("clone", user_input["copy_from"])
+            return await self.async_step_apply()
+        return self.async_show_form(
+            step_id="generate_clone",
+            data_schema=vol.Schema({vol.Required("copy_from"): vol.In(profs)}),
         )
 
     def _profiles(self):
@@ -769,7 +781,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         opts["profiles"] = allp
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
 
-    def _generate_all(self, mode: str):
+    def _generate_all(self, mode: str, source_profile_id: str | None = None):
         from .const import VARIABLE_SPECS
 
         opts = dict(self._entry.options)
@@ -777,18 +789,26 @@ class OptionsFlow(config_entries.OptionsFlow):
         sources = dict(prof.get("sources", {}))
         species = prof.get("species")
         slug = species.get("slug") if isinstance(species, dict) else species
-        for key, *_ in VARIABLE_SPECS:
-            if mode == "opb":
-                sources[key] = {"mode": "opb", "opb": {"species": slug, "field": key}}
-            else:
-                sources[key] = {
-                    "mode": "ai",
-                    "ai": {
-                        "provider": "openai",
-                        "model": "gpt-4o-mini",
-                        "ttl_hours": 720,
-                    },
-                }
+        if mode == "clone":
+            if not source_profile_id:
+                raise ValueError("source_profile_id required for clone")
+            other = opts.get("profiles", {}).get(source_profile_id, {})
+            prof["thresholds"] = dict(other.get("thresholds", {}))
+            for key, *_ in VARIABLE_SPECS:
+                sources[key] = {"mode": "clone", "copy_from": source_profile_id}
+        else:
+            for key, *_ in VARIABLE_SPECS:
+                if mode == "opb":
+                    sources[key] = {"mode": "opb", "opb": {"species": slug, "field": key}}
+                else:
+                    sources[key] = {
+                        "mode": "ai",
+                        "ai": {
+                            "provider": "openai",
+                            "model": "gpt-4o-mini",
+                            "ttl_hours": 720,
+                        },
+                    }
         prof["sources"] = sources
         prof["needs_resolution"] = True
         allp = dict(opts.get("profiles", {}))

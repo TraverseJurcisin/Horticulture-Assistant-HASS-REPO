@@ -63,4 +63,17 @@ class AIClient:
         return (val, max(0.0, min(conf, 1.0)))
 
     def _get_openai_key(self) -> str | None:
-        return getattr(self.hass.data.get("secrets", {}), "OPENAI_API_KEY", None) or None
+        """Return the OpenAI API key if available in Home Assistant secrets."""
+        secrets = self.hass.data.get("secrets", {})
+        if isinstance(secrets, dict):
+            return secrets.get("OPENAI_API_KEY")
+        return None
+
+
+async def async_recommend_variable(hass, key: str, plant_id: str, **kwargs) -> dict:
+    """Return a recommended value for a variable using the AI client."""
+    provider = kwargs.get("provider", "openai")
+    model = kwargs.get("model", "gpt-4o-mini")
+    client = AIClient(hass, provider, model)
+    val, _conf, notes = await client.generate_setpoint({"key": key, **kwargs})
+    return {"value": val, "summary": notes, "links": []}

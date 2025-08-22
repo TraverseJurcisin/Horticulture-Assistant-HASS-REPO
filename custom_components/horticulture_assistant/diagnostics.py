@@ -3,6 +3,7 @@ from __future__ import annotations
 from homeassistant.components.diagnostics import async_redact_data
 
 from .const import DOMAIN
+from .profile.store import async_load_all
 
 TO_REDACT = {"api_key", "Authorization"}
 
@@ -13,6 +14,7 @@ async def async_get_config_entry_diagnostics(hass, entry):
     ai = entry_data.get("coordinator_ai")
     plants = store.data.get("plants", {}) if store else {}
     zones = store.data.get("zones", {}) if store else {}
+    profiles = await async_load_all(hass)
     data = {
         "options": dict(entry.options),
         "data": dict(entry.data),
@@ -31,5 +33,6 @@ async def async_get_config_entry_diagnostics(hass, entry):
         "ai_retry_count": ai.retry_count if ai else None,
         "ai_breaker_open": ai.breaker_open if ai else None,
         "ai_latency_ms": ai.latency_ms if ai else None,
+        "profiles": profiles,
     }
     return async_redact_data(data, TO_REDACT)

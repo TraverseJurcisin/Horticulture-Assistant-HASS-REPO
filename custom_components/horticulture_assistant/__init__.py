@@ -4,17 +4,76 @@ import logging
 from copy import deepcopy
 from datetime import timedelta
 
-import homeassistant.helpers.config_validation as cv
+try:  # pragma: no cover - allow import without Home Assistant installed
+    import homeassistant.helpers.config_validation as cv
+except (ModuleNotFoundError, ImportError):  # pragma: no cover
+    class _ConfigValidationFallback:  # pylint: disable=too-few-public-methods
+        """Minimal stub for tests when Home Assistant isn't installed."""
+
+        entity_id = str
+
+        @staticmethod
+        def config_entry_only_config_schema(_domain):
+            return {}
+
+    cv = _ConfigValidationFallback()  # type: ignore[assignment]
+
 import voluptuous as vol
 from aiohttp import ClientError
-from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.config_entries import ConfigEntry
+try:  # pragma: no cover - allow import without Home Assistant installed
+    from homeassistant.components.sensor import SensorDeviceClass
+except (ModuleNotFoundError, ImportError):  # pragma: no cover
+    from enum import Enum
+
+    class SensorDeviceClass(str, Enum):  # type: ignore[misc]
+        """Minimal sensor device class stub for tests."""
+
+        HUMIDITY = "humidity"
+        TEMPERATURE = "temperature"
+        ILLUMINANCE = "illuminance"
+        MOISTURE = "moisture"
+try:  # pragma: no cover - allow import without Home Assistant installed
+    from homeassistant.config_entries import ConfigEntry
+except ModuleNotFoundError:  # pragma: no cover
+    from dataclasses import dataclass
+
+    @dataclass
+    class ConfigEntry:  # type: ignore[too-many-instance-attributes]
+        """Minimal stub for tests when Home Assistant isn't installed."""
+
+        entry_id: str | None = None
+        data: dict | None = None
+        options: dict | None = None
+        title: str | None = None
+
+        def add_update_listener(self, _):  # pragma: no cover - stub
+            return None
+
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import HomeAssistantError
-from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.event import async_track_time_interval
-from homeassistant.helpers.update_coordinator import UpdateFailed
-from homeassistant.util import slugify
+try:  # pragma: no cover - allow import without Home Assistant installed
+    from homeassistant.exceptions import HomeAssistantError
+except (ModuleNotFoundError, ImportError):  # pragma: no cover
+    class HomeAssistantError(Exception):
+        """Fallback Home Assistant error."""
+
+try:  # pragma: no cover - allow import without Home Assistant installed
+    from homeassistant.helpers import entity_registry as er
+    from homeassistant.helpers.event import async_track_time_interval
+    from homeassistant.helpers.update_coordinator import UpdateFailed
+    from homeassistant.util import slugify
+except (ModuleNotFoundError, ImportError):  # pragma: no cover
+    import types
+
+    er = types.SimpleNamespace()
+
+    async def async_track_time_interval(*args, **kwargs):  # type: ignore[override]
+        return None
+
+    class UpdateFailed(Exception):
+        """Fallback update failure."""
+
+    def slugify(value: str) -> str:
+        return value
 
 from .api import ChatApi
 from .const import (
@@ -468,9 +527,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def _svc_generate_profile(call):
         pid = call.data["profile_id"]
         mode = call.data["mode"]
+        source_profile_id = call.data.get("source_profile_id")
         from .resolver import generate_profile
 
-        await generate_profile(hass, entry, pid, mode)
+        await generate_profile(hass, entry, pid, mode, source_profile_id)
 
     hass.services.async_register(
         svc_base, "resolve_profile", _svc_resolve_profile, schema=vol.Schema({vol.Required("profile_id"): str})
@@ -480,7 +540,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "generate_profile",
         _svc_generate_profile,
-        schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("mode"): vol.In(["opb", "ai"])}),
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("mode"): vol.In(["clone", "opb", "ai"]),
+                vol.Optional("source_profile_id"): str,
+            }
+        ),
     )
     return True
 
