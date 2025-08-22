@@ -1,29 +1,53 @@
+import sys
+import types
+
 import pytest
-from homeassistant.core import HomeAssistant
-from homeassistant.loader import DATA_CUSTOM_COMPONENTS
-from homeassistant.config_entries import ConfigEntries
+
+# Create minimal Home Assistant package structure for tests.
+ha_pkg = types.ModuleType("homeassistant")
+ha_pkg.__path__ = []  # mark as package
+sys.modules.setdefault("homeassistant", ha_pkg)
+
+core = types.ModuleType("homeassistant.core")
+
+
+class HomeAssistant:  # pragma: no cover - simple stub
+    def __init__(self) -> None:
+        self.config = types.SimpleNamespace(components=set())
+        # Populate common Home Assistant attributes accessed by the integration.
+        self.data: dict[str, object] = {"integrations": {}}
+        self.auth = types.SimpleNamespace()
+
+
+core.HomeAssistant = HomeAssistant
+sys.modules.setdefault("homeassistant.core", core)
+
+helpers = types.ModuleType("homeassistant.helpers")
+helpers.__path__ = []
+sys.modules.setdefault("homeassistant.helpers", helpers)
+
+aiohttp_client = types.ModuleType("homeassistant.helpers.aiohttp_client")
+
+
+def async_get_clientsession(hass):  # pragma: no cover - stubbed
+    raise NotImplementedError
+
+
+aiohttp_client.async_get_clientsession = async_get_clientsession
+sys.modules.setdefault("homeassistant.helpers.aiohttp_client", aiohttp_client)
+
+util = types.ModuleType("homeassistant.util")
+
+
+def slugify(value: str) -> str:  # pragma: no cover - simple stub
+    return value
+
+
+util.slugify = slugify
+sys.modules.setdefault("homeassistant.util", util)
 
 
 @pytest.fixture
-async def hass(tmp_path):
-    """Create a minimal Home Assistant instance for tests."""
-    hass = HomeAssistant(tmp_path)
-    hass.config_entries = ConfigEntries(hass, hass.config)
-    await hass.config_entries.async_initialize()
-    await hass.async_start()
-    yield hass
-    await hass.async_stop()
-
-
-@pytest.fixture(autouse=True)
-def fake_dependencies(hass):
-    """Pretend required dependencies are loaded."""
-    hass.config.components.add("recorder")
-    hass.config.components.add("diagnostics")
-
-
-@pytest.fixture
-def enable_custom_integrations(hass):
-    """Allow loading custom_components during tests."""
-    hass.data.setdefault(DATA_CUSTOM_COMPONENTS, {})
-    yield
+def hass() -> HomeAssistant:
+    """Provide a minimal Home Assistant instance."""
+    return HomeAssistant()

@@ -1,47 +1,49 @@
 from __future__ import annotations
+
 import logging
-from datetime import timedelta
 from copy import deepcopy
-import voluptuous as vol
+from datetime import timedelta
+
 import homeassistant.helpers.config_validation as cv
+import voluptuous as vol
+from aiohttp import ClientError
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.update_coordinator import UpdateFailed
+from homeassistant.util import slugify
+
+from .api import ChatApi
 from .const import (
-    DOMAIN,
-    PLATFORMS,
     CONF_API_KEY,
-    CONF_MODEL,
     CONF_BASE_URL,
-    CONF_UPDATE_INTERVAL,
-    CONF_KEEP_STALE,
-    CONF_MOISTURE_SENSOR,
-    CONF_TEMPERATURE_SENSOR,
-    CONF_EC_SENSOR,
     CONF_CO2_SENSOR,
+    CONF_EC_SENSOR,
+    CONF_KEEP_STALE,
+    CONF_MODEL,
+    CONF_MOISTURE_SENSOR,
     CONF_PROFILES,
+    CONF_TEMPERATURE_SENSOR,
+    CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
+    DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
-    DEFAULT_KEEP_STALE,
+    DOMAIN,
+    PLATFORMS,
 )
-from .api import ChatApi
-from homeassistant.helpers.update_coordinator import UpdateFailed
+from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
-from .coordinator import HorticultureCoordinator
-from .storage import LocalStore
-from .utils.paths import ensure_local_data_paths
-from aiohttp import ClientError
-import asyncio
 from .entity_utils import ensure_entities_exist
-from .utils.entry_helpers import store_entry_data
-from homeassistant.helpers.event import async_track_time_interval
-from .openplantbook_client import OpenPlantbookClient
 from .irrigation_bridge import async_apply_irrigation
-from homeassistant.helpers import entity_registry as er
-from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.exceptions import HomeAssistantError
-from homeassistant.util import slugify
+from .opb_client import OpenPlantbookClient
+from .storage import LocalStore
+from .utils.entry_helpers import store_entry_data
+from .utils.paths import ensure_local_data_paths
 
 SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
@@ -92,7 +94,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await ai_coord.async_config_entry_first_refresh()
         await local_coord.async_config_entry_first_refresh()
         await profile_coord.async_config_entry_first_refresh()
-    except (UpdateFailed, ClientError, asyncio.TimeoutError) as err:
+    except (TimeoutError, UpdateFailed, ClientError) as err:
         _LOGGER.warning("Initial data refresh failed: %s", err)
     except Exception as err:  # pragma: no cover - unexpected
         _LOGGER.exception("Initial data refresh failed: %s", err)

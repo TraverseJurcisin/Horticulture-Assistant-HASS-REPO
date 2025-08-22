@@ -6,7 +6,7 @@ from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN, CATEGORY_CONTROL
+from .const import CATEGORY_CONTROL, DOMAIN
 from .entity_base import HorticultureBaseEntity
 from .utils.entry_helpers import get_entry_data, store_entry_data
 

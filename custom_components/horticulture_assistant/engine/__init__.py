@@ -1,8 +1,10 @@
 """Engine subpackage for Horticulture Assistant.
 
-An empty module previously prevented Python from treating this directory as
-package after project restructuring.  Adding this file restores standard
-package semantics so modules like ``push_to_approval_queue`` can be imported
-using ``custom_components.horticulture_assistant.engine``.
+Provides convenient access to bundled agronomy helpers.  The heavy
+``plant_engine`` package lives one level deeper, but we surface commonly
+used modules like :mod:`guidelines` for internal callers.
 """
-__all__ = []
+
+from .plant_engine import guidelines  # noqa: F401
+
+__all__ = ["guidelines"]

@@ -9,16 +9,13 @@ for each nutrient based on the inventory and price datasets.
 from __future__ import annotations
 
 import datetime
-from typing import Dict, Mapping, List
-
-from plant_engine.wsda_lookup import (
-    recommend_products_for_nutrient as _wsda_recommend,
-)
-
-from plant_engine import nutrient_manager, fertilizer_limits
+from collections.abc import Mapping
 
 from .catalog import CATALOG, Fertilizer
-
+from .engine.plant_engine import fertilizer_limits, nutrient_manager
+from .engine.plant_engine.wsda_lookup import (
+    recommend_products_for_nutrient as _wsda_recommend,
+)
 
 MOLAR_MASS_CONVERSIONS = {
     "P2O5": ("P", 0.436),
@@ -46,7 +43,7 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
 
 def calculate_fertilizer_nutrients(
     plant_id: str, fertilizer_id: str, volume_ml: float
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return nutrient mass (mg) for ``volume_ml`` of a fertilizer."""
     if volume_ml <= 0:
         raise ValueError("volume_ml must be positive")
@@ -97,7 +94,7 @@ def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
 
 def calculate_fertilizer_nutrients_from_mass(
     fertilizer_id: str, grams: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient mass (mg) for ``grams`` of fertilizer product."""
 
     if grams <= 0:
@@ -113,7 +110,7 @@ def calculate_fertilizer_nutrients_from_mass(
 
 def calculate_fertilizer_ppm(
     fertilizer_id: str, grams: float, volume_l: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient ppm for ``grams`` dissolved in ``volume_l`` solution."""
 
     if volume_l <= 0:
@@ -237,7 +234,7 @@ def estimate_mix_cost_per_plant(
     return round(total_cost / num_plants, 4)
 
 
-def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
+def estimate_cost_breakdown(schedule: Mapping[str, float]) -> dict[str, float]:
     """Return estimated cost contribution per nutrient in ``schedule``.
 
     Each entry in ``schedule`` maps a fertilizer ID to the grams of product
@@ -250,7 +247,7 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     prices = CATALOG.prices()
     inventory = CATALOG.inventory()
 
-    breakdown: Dict[str, float] = {}
+    breakdown: dict[str, float] = {}
     for fert_id, grams in schedule.items():
         if grams <= 0:
             continue
@@ -276,11 +273,11 @@ def estimate_cost_breakdown(schedule: Mapping[str, float]) -> Dict[str, float]:
     return breakdown
 
 
-def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
+def calculate_mix_nutrients(schedule: Mapping[str, float]) -> dict[str, float]:
     """Return nutrient totals (mg) for a fertilizer mix."""
 
     inventory = CATALOG.inventory()
-    totals: Dict[str, float] = {}
+    totals: dict[str, float] = {}
 
     for fert_id, grams in schedule.items():
         if grams <= 0:
@@ -297,7 +294,7 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> Dict[str, float]:
 
 def calculate_mix_ppm(
     schedule: Mapping[str, float], volume_l: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
 
     ``volume_l`` is the final solution volume in liters. The returned mapping
@@ -380,7 +377,7 @@ def estimate_mix_cost_per_liter(
 
 def check_solubility_limits(
     schedule: Mapping[str, float], volume_l: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
     Parameters
@@ -402,7 +399,7 @@ def check_solubility_limits(
         raise ValueError("volume_l must be positive")
 
     limits = CATALOG.solubility()
-    warnings: Dict[str, float] = {}
+    warnings: dict[str, float] = {}
     for fert_id, grams in schedule.items():
         max_g_l = limits.get(fert_id)
         if max_g_l is None:
@@ -415,7 +412,7 @@ def check_solubility_limits(
 
 def check_dilution_limits(
     schedule: Mapping[str, float], volume_l: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return grams per liter exceeding recommended dilution limits."""
 
     return fertilizer_limits.check_schedule(schedule, volume_l)
@@ -423,7 +420,7 @@ def check_dilution_limits(
 
 def check_schedule_compatibility(
     schedule: Mapping[str, float],
-) -> Dict[str, Dict[str, str]]:
+) -> dict[str, dict[str, str]]:
     """Return fertilizer incompatibilities found in ``schedule``.
 
     The returned mapping has each conflicting fertilizer ID mapped to the
@@ -432,7 +429,7 @@ def check_schedule_compatibility(
 
     ferts = [fid for fid, grams in schedule.items() if grams > 0]
     compat = CATALOG.compatibility()
-    conflicts: Dict[str, Dict[str, str]] = {}
+    conflicts: dict[str, dict[str, str]] = {}
     for i, fid in enumerate(ferts):
         for other in ferts[i + 1 :]:
             reason = compat.get(fid, {}).get(other) or compat.get(other, {}).get(fid)
@@ -442,7 +439,7 @@ def check_schedule_compatibility(
     return conflicts
 
 
-def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
+def estimate_cost_per_nutrient(fertilizer_id: str) -> dict[str, float]:
     """Return cost per gram of each nutrient in a fertilizer product."""
 
     inventory = CATALOG.inventory()
@@ -461,7 +458,7 @@ def estimate_cost_per_nutrient(fertilizer_id: str) -> Dict[str, float]:
     cost_per_gram = prices[fertilizer_id] / (density * 1000)
     ga = convert_guaranteed_analysis(info.guaranteed_analysis)
 
-    costs: Dict[str, float] = {}
+    costs: dict[str, float] = {}
     for nutrient, fraction in ga.items():
         if fraction <= 0:
             continue
@@ -489,10 +486,10 @@ def get_cheapest_product(nutrient: str) -> tuple[str, float]:
         try:
             costs = estimate_cost_per_nutrient(pid)
         except (KeyError, ValueError):
-            # _LOGGER.debug("Skipping product %s due to cost calculation error", pid)  # Original code had this line commented out
+            # Skip products with missing cost data.
             continue
         except Exception:
-            # _LOGGER.warning("Unexpected error calculating costs for product %s", pid)  # Original code had this line commented out
+            # Skip products that raise unexpected errors during cost calculation.
             continue
         cost = costs.get(nutrient)
         if cost is None:
@@ -567,7 +564,7 @@ def estimate_recommended_application_cost(fertilizer_id: str, volume_l: float) -
     return calculate_fertilizer_cost_from_mass(fertilizer_id, grams)
 
 
-def recommend_wsda_products(nutrient: str, limit: int = 5) -> List[str]:
+def recommend_wsda_products(nutrient: str, limit: int = 5) -> list[str]:
     """Return WSDA product names with high concentrations of ``nutrient``."""
 
     return _wsda_recommend(nutrient, limit=limit)
@@ -611,7 +608,7 @@ def recommend_deficiency_correction_mix(
     plant_type: str,
     stage: str,
     volume_l: float,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return fertilizer grams needed to correct nutrient deficiencies.
 
     Each deficient nutrient is matched with the cheapest fertilizer product
@@ -625,7 +622,7 @@ def recommend_deficiency_correction_mix(
     deficits = nutrient_manager.calculate_all_deficiencies(
         current_levels, plant_type, stage
     )
-    schedule: Dict[str, float] = {}
+    schedule: dict[str, float] = {}
     for nutrient, deficit_ppm in deficits.items():
         if deficit_ppm <= 0:
             continue
@@ -646,7 +643,7 @@ def recommend_deficiency_correction_plan(
     volume_l: float,
     *,
     num_plants: int = 1,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return mix, ppm and cost info for correcting nutrient deficiencies."""
 
     if volume_l <= 0:
@@ -670,7 +667,7 @@ def recommend_deficiency_correction_plan(
 
 def recommend_fertigation_mix(
     plant_type: str, stage: str, volume_l: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return fertilizer grams for ``volume_l`` solution using cheapest products.
 
     The nutrient guidelines for ``plant_type`` and ``stage`` are loaded via
@@ -688,7 +685,7 @@ def recommend_fertigation_mix(
     if not targets:
         return {}
 
-    schedule: Dict[str, float] = {}
+    schedule: dict[str, float] = {}
     for nutrient, ppm in targets.items():
         if ppm <= 0:
             continue
@@ -706,7 +703,7 @@ def recommend_fertigation_mix(
 
 def recommend_fertigation_plan(
     plant_type: str, stage: str, volume_l: float, num_plants: int = 1
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return fertigation mix with ppm and cost information.
 
     Parameters
@@ -746,7 +743,7 @@ def recommend_advanced_fertigation_plan(
     num_plants: int = 1,
     ph: float | None = None,
     use_synergy: bool = False,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return fertigation plan accounting for pH and nutrient synergy.
 
     Parameters
@@ -778,14 +775,14 @@ def recommend_advanced_fertigation_plan(
         targets = nutrient_manager.get_all_recommended_levels(plant_type, stage)
 
     if use_synergy and targets:
-        from plant_engine.nutrient_synergy import apply_synergy_adjustments
+        from .engine.plant_engine.nutrient_synergy import apply_synergy_adjustments
 
         targets = apply_synergy_adjustments(targets)
 
     if not targets:
         return {"mix": {}, "ppm": {}, "cost_total": 0.0, "cost_per_plant": 0.0}
 
-    schedule: Dict[str, float] = {}
+    schedule: dict[str, float] = {}
     for nutrient, ppm in targets.items():
         if ppm <= 0:
             continue

@@ -10,17 +10,17 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, CONF_PROFILES
+from .const import CONF_PROFILES, DOMAIN
+from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
-from .coordinator import HorticultureCoordinator
-from .entity import HorticultureBaseEntity
 from .derived import (
-    PlantDLISensor,
     PlantDewPointSensor,
+    PlantDLISensor,
     PlantMoldRiskSensor,
     PlantVPDSensor,
 )
+from .entity import HorticultureBaseEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .utils.entry_helpers import get_entry_data, store_entry_data
 

@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import asyncio
 import json
 import logging
@@ -6,12 +7,12 @@ import time
 from datetime import datetime, timedelta
 from typing import Any
 
+from aiohttp import ClientError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
-from aiohttp import ClientError
 
 from .api import ChatApi
-from .plant_engine import guidelines  # type: ignore[import]
+from .engine import guidelines  # type: ignore[import]
 from .storage import LocalStore
 from .utils.logging import warn_once
 
@@ -92,7 +93,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.last_exception_msg = None
             return {"ok": True, "recommendation": text}
-        except (ClientError, asyncio.TimeoutError, ConnectionError, ValueError) as err:
+        except (TimeoutError, ClientError, ConnectionError, ValueError) as err:
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
             err_key = type(err).__name__

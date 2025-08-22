@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
-from plant_engine.utils import lazy_dataset
+from .engine.plant_engine.utils import lazy_dataset
 
 DATA_FILE = "fertilizers/fertilizer_products.json"
 PRICE_FILE = "fertilizers/fertilizer_prices.json"
@@ -30,7 +29,7 @@ class Fertilizer:
     """Fertilizer product information."""
 
     density_kg_per_l: float
-    guaranteed_analysis: Dict[str, float]
+    guaranteed_analysis: dict[str, float]
     product_name: str | None = None
     wsda_product_number: str | None = None
 
@@ -39,10 +38,10 @@ class FertilizerCatalog:
     """Cached access to fertilizer datasets."""
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def inventory() -> Dict[str, Fertilizer]:
+    @cache
+    def inventory() -> dict[str, Fertilizer]:
         data = _DATA()
-        inv: Dict[str, Fertilizer] = {}
+        inv: dict[str, Fertilizer] = {}
         for name, info in data.items():
             inv[name] = Fertilizer(
                 density_kg_per_l=info.get("density_kg_per_l", 1.0),
@@ -53,34 +52,34 @@ class FertilizerCatalog:
         return inv
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def prices() -> Dict[str, float]:
+    @cache
+    def prices() -> dict[str, float]:
         return _PRICES()
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def solubility() -> Dict[str, float]:
+    @cache
+    def solubility() -> dict[str, float]:
         return _SOLUBILITY()
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def application_methods() -> Dict[str, str]:
+    @cache
+    def application_methods() -> dict[str, str]:
         return _APPLICATION()
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def application_rates() -> Dict[str, float]:
+    @cache
+    def application_rates() -> dict[str, float]:
         return _RATES()
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def compatibility() -> Dict[str, Dict[str, str]]:
+    @cache
+    def compatibility() -> dict[str, dict[str, str]]:
         raw = _COMPAT()
-        mapping: Dict[str, Dict[str, str]] = {}
+        mapping: dict[str, dict[str, str]] = {}
         for fert, info in raw.items():
             if not isinstance(info, dict):
                 continue
-            inner: Dict[str, str] = {}
+            inner: dict[str, str] = {}
             for other, reason in info.items():
                 inner[str(other)] = str(reason)
             if inner:
@@ -88,8 +87,8 @@ class FertilizerCatalog:
         return mapping
 
     @staticmethod
-    @lru_cache(maxsize=None)
-    def dilution_limits() -> Dict[str, float]:
+    @cache
+    def dilution_limits() -> dict[str, float]:
         return _DILUTION()
 
     def list_products(self) -> list[str]:

@@ -112,7 +112,7 @@ def irrigation_trigger(
         # If threshold is a list or tuple (range), use the first value as the minimum threshold
         threshold_val = (
             float(threshold_value[0])
-            if isinstance(threshold_value, (list, tuple))
+            if isinstance(threshold_value, list | tuple)
             else float(threshold_value)
         )
     except (TypeError, ValueError):

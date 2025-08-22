@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-import asyncio
 import logging
 from pathlib import Path
 
 import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant import config_entries
-from homeassistant.helpers import selector as sel
 from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import selector as sel
 
+from .api import ChatApi
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -18,23 +18,21 @@ from .const import (
     CONF_KEEP_STALE,
     CONF_MODEL,
     CONF_MOISTURE_SENSOR,
+    CONF_PLANT_ID,
+    CONF_PLANT_NAME,
+    CONF_PLANT_TYPE,
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
-    CONF_PLANT_NAME,
-    CONF_PLANT_ID,
-    CONF_PLANT_TYPE,
     DEFAULT_BASE_URL,
     DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DOMAIN,
 )
-from .api import ChatApi
+from .opb_client import OpenPlantbookClient
 from .utils import profile_generator
-from .utils.plant_registry import register_plant
 from .utils.json_io import load_json, save_json
-from .openplantbook_client import OpenPlantbookClient
-
+from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -81,7 +79,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             )
             try:
                 await api.validate_api_key()
-            except (ClientError, asyncio.TimeoutError) as err:
+            except (TimeoutError, ClientError) as err:
                 errors["base"] = "cannot_connect"
                 _LOGGER.error("API key validation failed: %s", err)
             except Exception as err:  # pragma: no cover - unexpected

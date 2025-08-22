@@ -1,7 +1,30 @@
+line-length = 120
+target-version = "py312"
+force-exclude = true
+
 extend-exclude = [
-    "custom_components/horticulture_assistant/plant_engine",
-    "custom_components/horticulture_assistant/engine",
-    "custom_components/horticulture_assistant/utils",
-    "custom_components/horticulture_assistant/scripts",
-    "custom_components/horticulture_assistant/tests",
+  "custom_components/horticulture_assistant/analytics/**",
+  "custom_components/horticulture_assistant/automation/**",
+  "custom_components/horticulture_assistant/backups/**",
+  "custom_components/horticulture_assistant/blueprints/**",
+  "custom_components/horticulture_assistant/dafe/**",
+  "custom_components/horticulture_assistant/dashboard/**",
+  "custom_components/horticulture_assistant/data/**",
+  "custom_components/horticulture_assistant/engine/**",
+  "custom_components/horticulture_assistant/scripts/**",
+  "custom_components/horticulture_assistant/tests/**",
+  "custom_components/horticulture_assistant/utils/**",
 ]
+
+[lint]
+select = ["E", "F", "W", "UP", "I"]
+ignore = ["D", "E501"]
+
+[format]
+quote-style = "double"
+
+[lint.isort]
+known-first-party = ["custom_components.horticulture_assistant"]
+
+[lint.per-file-ignores]
+"tests/**" = ["S101"]

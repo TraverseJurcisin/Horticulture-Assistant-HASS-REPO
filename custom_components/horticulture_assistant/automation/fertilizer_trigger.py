@@ -30,7 +30,7 @@ def fertilizer_trigger(
         _LOGGER.error("Plant profile file not found for plant_id: %s", plant_id)
         return False
     try:
-        with open(profile_path, "r", encoding="utf-8") as f:
+        with open(profile_path, encoding="utf-8") as f:
             profile_data = json.load(f)
     except Exception as e:
         _LOGGER.error("Failed to load profile for plant_id %s: %s", plant_id, e)
@@ -147,7 +147,7 @@ def fertilizer_trigger(
         try:
             threshold_val = (
                 float(thresh_value[0])
-                if isinstance(thresh_value, (list, tuple))
+                if isinstance(thresh_value, list | tuple)
                 else float(thresh_value)
             )
         except (TypeError, ValueError):

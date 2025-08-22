@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+
 from homeassistant.helpers.storage import Store
 
 STORAGE_KEY = "horticulture_assistant.data"
@@ -30,7 +31,7 @@ class LocalStore:
         else:
             for key, value in DEFAULT_DATA.items():
                 data.setdefault(
-                    key, value.copy() if isinstance(value, (dict, list)) else value
+                    key, value.copy() if isinstance(value, dict | list) else value
                 )
         self.data = data
         return data

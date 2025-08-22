@@ -9,13 +9,13 @@ as a standalone script or invoked from Home Assistant services.
 from __future__ import annotations
 
 import logging
-from pathlib import Path
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
-from .helpers import iter_profiles, append_json_log, latest_env
+from .helpers import append_json_log, iter_profiles, latest_env
 
 # Global override: disable automation if False
 ENABLE_AUTOMATION = False
@@ -44,7 +44,7 @@ def _get_moisture_threshold(profile: dict) -> float | None:
     for key in ("soil_moisture_min", "soil_moisture_pct", "soil_moisture"):
         if key in thresholds:
             val = thresholds[key]
-            if isinstance(val, (list, tuple)):
+            if isinstance(val, list | tuple):
                 val = val[0]
             try:
                 return float(val)

@@ -1,13 +1,13 @@
 from __future__ import annotations
 
+import logging
 from datetime import timedelta
 from typing import Any
-import logging
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DOMAIN, CONF_PROFILES
+from .const import CONF_PROFILES, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 

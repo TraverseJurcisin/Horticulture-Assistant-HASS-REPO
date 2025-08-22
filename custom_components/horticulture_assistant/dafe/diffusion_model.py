@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from plant_engine.nutrient_diffusion import (
-    calculate_effective_diffusion,
     calculate_diffusion_flux,
+    calculate_effective_diffusion,
     estimate_diffusion_mass,
 )
 

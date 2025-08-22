@@ -1,7 +1,7 @@
-import os
-import re
 import json
 import logging
+import os
+import re
 from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
@@ -119,7 +119,7 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
 
     # Compile tags from provided list and known metadata fields
     tags = []
-    if "tags" in metadata and isinstance(metadata["tags"], (list, tuple)):
+    if "tags" in metadata and isinstance(metadata["tags"], list | tuple):
         tags = list(metadata["tags"])
     tags_lower = [str(t).lower() for t in tags]
 

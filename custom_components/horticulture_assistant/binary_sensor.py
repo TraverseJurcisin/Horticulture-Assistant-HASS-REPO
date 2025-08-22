@@ -10,11 +10,11 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_DIAGNOSTIC, CATEGORY_CONTROL, DOMAIN
-from .utils.entry_helpers import get_entry_data, store_entry_data
+from .const import CATEGORY_CONTROL, CATEGORY_DIAGNOSTIC, DOMAIN
 from .entity_base import HorticultureBaseEntity
-from .utils.sensor_map import build_sensor_map
 from .entity_utils import ensure_entities_exist
+from .utils.entry_helpers import get_entry_data, store_entry_data
+from .utils.sensor_map import build_sensor_map
 
 _LOGGER = logging.getLogger(__name__)
 
