@@ -1,50 +1,46 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from typing import Any, Dict, List
+from datetime import UTC, datetime
 
 from .schema import Citation
 
 
 def utcnow_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def manual_note(note: str) -> Citation:
     return Citation(
         source="manual",
-        title="User-entered setpoint",
+        title="Manual entry",
         details={"note": note},
         accessed=utcnow_iso(),
     )
 
 
-def clone_note(from_profile_id: str, variables: List[str]) -> Citation:
+def clone_ref(from_profile_id: str, variable: str) -> Citation:
     return Citation(
         source="clone",
         title="Cloned from profile",
-        details={"profile_id": from_profile_id, "variables": variables},
+        details={"profile_id": from_profile_id, "variable": variable},
         accessed=utcnow_iso(),
     )
 
 
-def opb_ref(field: str, url: str, extra: Dict[str, Any] | None = None) -> Citation:
-    det: Dict[str, Any] = {"field": field}
-    if extra:
-        det.update(extra)
+def opb_ref(species: str, field: str, url: str) -> Citation:
     return Citation(
         source="openplantbook",
-        title="OpenPlantbook reference",
+        title="OpenPlantbook",
         url=url,
-        details=det,
+        details={"species": species, "field": field},
         accessed=utcnow_iso(),
     )
 
 
-def ai_ref(summary: str, links: List[str]) -> Citation:
+def ai_ref(summary: str, links: list[str]) -> Citation:
     return Citation(
         source="ai",
-        title="AI-derived recommendation",
+        title="AI synthesis",
         details={"summary": summary, "links": links},
         accessed=utcnow_iso(),
     )

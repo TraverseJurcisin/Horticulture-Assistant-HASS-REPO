@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime
+
 from homeassistant.components.diagnostics import async_redact_data
 
 from .const import DOMAIN
@@ -15,6 +17,22 @@ async def async_get_config_entry_diagnostics(hass, entry):
     plants = store.data.get("plants", {}) if store else {}
     zones = store.data.get("zones", {}) if store else {}
     profiles = await async_load_all(hass)
+    # Summarize citation provenance across all profiles
+    total_citations = 0
+    citation_summary: dict[str, int] = {}
+    latest: datetime | None = None
+    for prof in profiles.values():
+        for key, variable in (prof.get("variables") or {}).items():
+            cites = variable.get("citations") or []
+            if not cites:
+                continue
+            total_citations += len(cites)
+            citation_summary[key] = citation_summary.get(key, 0) + len(cites)
+        lr = prof.get("last_resolved")
+        if lr:
+            ts = datetime.fromisoformat(lr.replace("Z", "+00:00"))
+            if latest is None or ts > latest:
+                latest = ts
     data = {
         "options": dict(entry.options),
         "data": dict(entry.data),
@@ -34,5 +52,8 @@ async def async_get_config_entry_diagnostics(hass, entry):
         "ai_breaker_open": ai.breaker_open if ai else None,
         "ai_latency_ms": ai.latency_ms if ai else None,
         "profiles": profiles,
+        "citations_count": total_citations,
+        "citations_summary": citation_summary,
+        "last_resolved_utc": latest.isoformat() if latest else None,
     }
     return async_redact_data(data, TO_REDACT)

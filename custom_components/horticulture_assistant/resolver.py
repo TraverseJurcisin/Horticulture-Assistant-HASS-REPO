@@ -6,7 +6,8 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from .const import VARIABLE_SPECS
+from .const import OPB_FIELD_MAP, VARIABLE_SPECS
+from .profile.schema import VariableValue
 
 
 @dataclass
@@ -50,6 +51,7 @@ class PreferenceResolver:
             prof["thresholds"] = thresholds
             prof["citations"] = citations
             prof["needs_resolution"] = False
+            prof["last_resolved"] = datetime.now(UTC).isoformat()
             allp = dict(opts.get("profiles", {}))
             allp[profile_id] = prof
             opts["profiles"] = allp
@@ -114,8 +116,8 @@ class PreferenceResolver:
                 "unit_system": self.hass.config.units.name,
                 "key": key,
             }
-            val, conf, notes = await client.generate_setpoint(context=context)
-            self._update_ai_cache(entry, profile_id, key, val, conf, notes)
+            val, conf, notes, links = await client.generate_setpoint(context=context)
+            self._update_ai_cache(entry, profile_id, key, val, conf, notes, links)
             return ResolveResult(value=val, mode=mode, detail=f"ai:{client.model}", confidence=conf)
 
         return None
@@ -135,7 +137,7 @@ class PreferenceResolver:
     async def _get_opb_token(self, entry):
         return entry.options.get("opb_token")
 
-    def _update_ai_cache(self, entry, pid, key, val, conf, notes):
+    def _update_ai_cache(self, entry, pid, key, val, conf, notes, links):
         opts = dict(entry.options)
         prof = dict(opts.get("profiles", {}).get(pid, {}))
         sources = dict(prof.get("sources", {}))
@@ -143,6 +145,7 @@ class PreferenceResolver:
         ai["last_run"] = datetime.now(UTC).isoformat()
         ai["confidence"] = conf
         ai["notes"] = notes
+        ai["links"] = links
         s = dict(sources.get(key, {}))
         s["ai"] = ai
         sources[key] = s
@@ -179,7 +182,11 @@ async def generate_profile(
     else:
         for key, *_ in VARIABLE_SPECS:
             if mode == "opb":
-                sources[key] = {"mode": "opb", "opb": {"species": slug, "field": key}}
+                field = OPB_FIELD_MAP.get(key, key)
+                sources[key] = {
+                    "mode": "opb",
+                    "opb": {"species": slug, "field": field},
+                }
             else:
                 sources[key] = {
                     "mode": "ai",
@@ -200,52 +207,28 @@ async def generate_profile(
     resolver = PreferenceResolver(hass)
     await resolver.resolve_profile(entry, profile_id)
 
-    from .profile.schema import PlantProfile, VariableValue, Citation
-    from .profile.store import async_save_profile
+    from .profile.store import async_save_profile_from_options
 
-    prof = entry.options.get("profiles", {}).get(profile_id, {})
-    variables: dict[str, VariableValue] = {}
-    for key, value in prof.get("thresholds", {}).items():
-        mode = prof.get("sources", {}).get(key, {}).get("mode", "manual")
-        cit_data = prof.get("citations", {}).get(key)
-        cits = []
-        if cit_data:
-            cits.append(
-                Citation(
-                    source=cit_data.get("mode", mode),
-                    title=cit_data.get("source_detail", ""),
-                    details={"source_detail": cit_data.get("source_detail", "")},
-                    accessed=cit_data.get("ts"),
-                )
-            )
-        variables[key] = VariableValue(value=value, source=mode, citations=cits)
-
-    profile = PlantProfile(
-        plant_id=profile_id,
-        display_name=prof.get("name", profile_id),
-        species=prof.get("species"),
-        variables=variables,
-    )
-    await async_save_profile(hass, profile.to_json())
+    await async_save_profile_from_options(hass, entry, profile_id)
 
 
 async def resolve_variable_from_source(
-    hass,
+    hass: HomeAssistant,
     *,
     plant_id: str,
     key: str,
     source: str,
     manual_value: Any | None = None,
     clone_from: str | None = None,
-    opb_args: dict | None = None,
-    ai_args: dict | None = None,
-) -> "VariableValue":
+    opb_args: dict[str, Any] | None = None,
+    ai_args: dict[str, Any] | None = None,
+) -> VariableValue:
     """Resolve a single variable based on the selected source."""
-    from .profile.schema import VariableValue
-    from .profile.citations import manual_note, clone_note, opb_ref, ai_ref
-    from .profile.store import async_get_profile
-    from .opb_client import async_fetch_field
     from .ai_client import async_recommend_variable
+    from .opb_client import async_fetch_field
+    from .profile.citations import ai_ref, clone_ref, manual_note, opb_ref
+    from .profile.schema import VariableValue
+    from .profile.store import async_get_profile
 
     citations = []
     if source == "manual":
@@ -259,14 +242,14 @@ async def resolve_variable_from_source(
         if not src or key not in src.get("variables", {}):
             raise ValueError("Clone source missing variable")
         val = src["variables"][key]["value"]
-        citations.append(clone_note(clone_from, [key]))
+        citations.append(clone_ref(clone_from, key))
         return VariableValue(value=val, source=source, citations=citations)
 
     if source == "openplantbook":
         field = (opb_args or {}).get("field")
         species = (opb_args or {}).get("species")
         val, url = await async_fetch_field(hass, species=species, field=field)
-        citations.append(opb_ref(field, url, {"species": species}))
+        citations.append(opb_ref(species, field, url))
         return VariableValue(value=val, source=source, citations=citations)
 
     if source == "ai":

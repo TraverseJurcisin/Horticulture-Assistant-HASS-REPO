@@ -122,7 +122,9 @@ def main(argv: Sequence[str] | None = None) -> None:
         else:
             for pulse in pulse_plan:
                 print(
-                    f"Pulse at {pulse['time']} - Volume: {pulse['volume']} mL - Estimated mass: {pulse['mass_mg']:.3f} mg"
+                    f"Pulse at {pulse['time']} - "
+                    f"Volume: {pulse['volume']} mL - "
+                    f"Estimated mass: {pulse['mass_mg']:.3f} mg"
                 )
 
 

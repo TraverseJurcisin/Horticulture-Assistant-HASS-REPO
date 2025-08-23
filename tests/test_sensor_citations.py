@@ -13,6 +13,7 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
     profile = {
         "plant_id": "p1",
         "display_name": "Plant 1",
+        "last_resolved": "2024-01-02T00:00:00+00:00",
         "variables": {
             "air_temp_min": {
                 "value": 10,
@@ -55,3 +56,4 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
         "air_temp_max": 3,
     }
     assert attrs["citations_links_preview"] == ["http://a", "http://b", "http://c"]
+    assert attrs["last_resolved_utc"] == "2024-01-02T00:00:00+00:00"

@@ -248,6 +248,10 @@ async def test_delete_profile_service(hass):
     )
     entry.add_to_hass(hass)
     import custom_components.horticulture_assistant as hca
+    from custom_components.horticulture_assistant.profile.store import (
+        async_get_profile,
+        async_save_profile,
+    )
 
     hca.PLATFORMS = []
     with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
@@ -255,16 +259,20 @@ async def test_delete_profile_service(hass):
     ) as mock_local:
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
-        await hca.async_setup_entry(hass, entry)
+    await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     coord.async_request_refresh = AsyncMock()
+
+    await async_save_profile(hass, {"plant_id": "p1", "display_name": "Plant 1"})
+    assert await async_get_profile(hass, "p1") is not None
 
     await hass.services.async_call(
         DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True
     )
     assert coord.async_request_refresh.called
     assert "p1" not in entry.options.get("profiles", {})
+    assert await async_get_profile(hass, "p1") is None
 
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
@@ -317,3 +325,131 @@ async def test_link_sensors_service(hass):
             {"profile_id": "p1", "temperature": "sensor.miss"},
             blocking=True,
         )
+
+
+async def test_clear_caches_service(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
+        hca, "HortiLocalCoordinator"
+    ) as mock_local:
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    from custom_components.horticulture_assistant.ai_client import (
+        _AI_CACHE,
+        async_recommend_variable,
+    )
+    from custom_components.horticulture_assistant.opb_client import (
+        _SPECIES_CACHE,
+        async_fetch_field,
+    )
+
+    _AI_CACHE.clear()
+    _SPECIES_CACHE.clear()
+
+    with patch(
+        "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
+        AsyncMock(return_value=(1.0, 0.5, "s", [])),
+    ):
+        await async_recommend_variable(hass, "t", "p1")
+    with patch(
+        "custom_components.horticulture_assistant.opb_client.OpenPlantbookClient.species_details",
+        AsyncMock(return_value={"t": {"min": 1}}),
+    ):
+        await async_fetch_field(hass, "slug", "t.min")
+
+    assert _AI_CACHE and _SPECIES_CACHE
+
+    await hass.services.async_call(DOMAIN, "clear_caches", {}, blocking=True)
+
+    assert not _AI_CACHE
+    assert not _SPECIES_CACHE
+
+
+async def test_resolve_profile_persists_to_store(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "Plant 1",
+                    "sources": {"temp_c_min": {"mode": "manual", "value": 10}},
+                    "thresholds": {},
+                    "citations": {},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
+        hca, "HortiLocalCoordinator"
+    ) as mock_local:
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    await hass.services.async_call(
+        DOMAIN, "resolve_profile", {"profile_id": "p1"}, blocking=True
+    )
+    from custom_components.horticulture_assistant.profile.store import (
+        async_get_profile,
+    )
+
+    prof = await async_get_profile(hass, "p1")
+    assert prof["variables"]["temp_c_min"]["value"] == 10
+    assert prof["variables"]["temp_c_min"]["citations"][0]["source"] == "manual"
+
+
+async def test_resolve_all_persists_every_profile(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "P1",
+                    "sources": {"temp_c_min": {"mode": "manual", "value": 5}},
+                    "thresholds": {},
+                    "citations": {},
+                },
+                "p2": {
+                    "name": "P2",
+                    "sources": {"temp_c_min": {"mode": "manual", "value": 7}},
+                    "thresholds": {},
+                    "citations": {},
+                },
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
+        hca, "HortiLocalCoordinator"
+    ) as mock_local:
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    await hass.services.async_call(DOMAIN, "resolve_all", {}, blocking=True)
+    from custom_components.horticulture_assistant.profile.store import (
+        async_get_profile,
+    )
+
+    prof1 = await async_get_profile(hass, "p1")
+    prof2 = await async_get_profile(hass, "p2")
+    assert prof1["variables"]["temp_c_min"]["value"] == 5
+    assert prof2["variables"]["temp_c_min"]["value"] == 7

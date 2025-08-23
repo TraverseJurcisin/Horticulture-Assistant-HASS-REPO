@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 import aiohttp
 
 BASE_URL = "https://api.openplantbook.org"
+_SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}
+_CACHE_TTL = timedelta(hours=12)
 
 
 class OpenPlantbookError(Exception):
@@ -32,12 +35,23 @@ class OpenPlantbookClient:
             return data if isinstance(data, list) else []
 
 
-async def async_fetch_field(hass, species: str, field: str) -> tuple[Any, str]:
-    """Fetch a specific field for a species from OpenPlantbook."""
+async def async_fetch_field(hass, species: str, field: str) -> tuple[float | None, str]:
+    """Fetch a numeric field for a species from OpenPlantbook.
+
+    Returns a `(value, url)` tuple where ``value`` is coerced to ``float`` when
+    possible, otherwise ``None``. ``url`` points to the species detail page so
+    it can be used for citation links.
+    """
     session = hass.helpers.aiohttp_client.async_get_clientsession()
     token = None
     client = OpenPlantbookClient(session, token)
-    detail = await client.species_details(species)
+    now = datetime.now(UTC)
+    cached = _SPECIES_CACHE.get(species)
+    if cached and now - cached[1] < _CACHE_TTL:
+        detail = cached[0]
+    else:
+        detail = await client.species_details(species)
+        _SPECIES_CACHE[species] = (detail, now)
     cur: Any = detail
     for part in field.split("."):
         if isinstance(cur, dict):
@@ -46,4 +60,12 @@ async def async_fetch_field(hass, species: str, field: str) -> tuple[Any, str]:
             cur = None
             break
     url = f"https://openplantbook.org/{species}"
-    return cur, url
+    try:
+        return float(cur), url
+    except (TypeError, ValueError):
+        return None, url
+
+
+def clear_opb_cache() -> None:
+    """Clear cached species lookups."""
+    _SPECIES_CACHE.clear()

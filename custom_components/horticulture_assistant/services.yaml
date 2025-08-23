@@ -22,7 +22,7 @@ duplicate_profile:
 
 delete_profile:
   name: Delete plant profile
-  description: Remove a plant profile and its associated sensors.
+  description: Remove a plant profile, its stored data, and any associated sensors.
   fields:
     profile_id:
       required: true
@@ -180,3 +180,36 @@ generate_profile:
       required: false
       selector:
         text:
+
+export_profiles:
+  name: Export profiles
+  description: Write all stored profiles to a JSON file on disk.
+  fields:
+    path:
+      required: true
+      selector:
+        text:
+export_profile:
+  name: Export profile
+  description: Write a single profile to a JSON file on disk.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+    path:
+      required: true
+      selector:
+        text:
+import_profiles:
+  name: Import profiles
+  description: Load profiles from a JSON file and merge into storage.
+  fields:
+    path:
+      required: true
+      selector:
+        text:
+
+clear_caches:
+  name: Clear caches
+  description: Remove cached AI recommendations and OpenPlantbook lookups.

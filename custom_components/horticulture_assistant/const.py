@@ -42,6 +42,22 @@ VARIABLE_SPECS = [
     ("vpd_min", "kPa", 0.01, 0, 3),
     ("vpd_max", "kPa", 0.01, 0, 3),
 ]
+OPB_FIELD_MAP = {
+    "temp_c_min": "temperature.min_c",
+    "temp_c_max": "temperature.max_c",
+    "rh_min": "humidity.min",
+    "rh_max": "humidity.max",
+    "dli_min": "light.dli_min",
+    "dli_max": "light.dli_max",
+    "moisture_min": "soil_moisture.min",
+    "moisture_max": "soil_moisture.max",
+    "ec_min": "ec.min",
+    "ec_max": "ec.max",
+    "co2_min": "co2.min",
+    "co2_max": "co2.max",
+    "vpd_min": "vpd.min",
+    "vpd_max": "vpd.max",
+}
 SOURCES = ("manual", "clone", "opb", "ai")
 
 DEFAULT_BASE_URL = "https://api.openai.com/v1"
