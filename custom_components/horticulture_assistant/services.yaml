@@ -213,3 +213,41 @@ import_profiles:
 clear_caches:
   name: Clear caches
   description: Remove cached AI recommendations and OpenPlantbook lookups.
+
+start_calibration:
+  name: Start Lux→PPFD calibration
+  description: Begin a calibration session for a Lux sensor against a PPFD reference.
+  fields:
+    lux_entity_id: { required: true, selector: { entity: { domain: sensor, device_class: illuminance } } }
+    ppfd_entity_id: { required: false, selector: { entity: { domain: sensor } } }
+    model:
+      required: false
+      default: linear
+      selector: { select: { options: ["linear","quadratic","power"] } }
+    averaging_seconds:
+      required: false
+      default: 3
+      selector: { number: { min: 1, max: 30, step: 1, mode: box } }
+    notes: { required: false, selector: { text: {} } }
+
+add_calibration_point:
+  name: Add calibration point
+  description: Capture a Lux/PPFD pair for the active session.
+  fields:
+    session_id: { required: true, selector: { text: {} } }
+    ppfd_value:
+      required: false
+      description: "If no PPFD entity was chosen, enter the current PPFD reading from your PAR sensor."
+      selector: { number: { min: 0, max: 3000, step: 1, mode: box } }
+
+finish_calibration:
+  name: Finish calibration
+  description: Finalize the curve fit, store coefficients, and apply to derived PPFD/DLI.
+  fields:
+    session_id: { required: true, selector: { text: {} } }
+
+abort_calibration:
+  name: Abort calibration
+  description: Cancel a running calibration session.
+  fields:
+    session_id: { required: true, selector: { text: {} } }

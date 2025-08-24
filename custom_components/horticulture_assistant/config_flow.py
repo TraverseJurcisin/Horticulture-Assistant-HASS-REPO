@@ -403,6 +403,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._pid: str | None = None
         self._var: str | None = None
         self._mode: str | None = None
+        self._cal_session: str | None = None
 
     async def async_step_init(self, user_input=None):
         defaults = {
@@ -585,6 +586,73 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=opts)
 
         return self.async_show_form(step_id="init", data_schema=schema)
+
+    async def async_step_calibration(self, user_input=None):
+        schema = vol.Schema(
+            {
+                vol.Required("lux_entity_id"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain="sensor", device_class="illuminance")
+                ),
+                vol.Optional("ppfd_entity_id"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain="sensor")
+                ),
+                vol.Optional("model", default="linear"): vol.In(["linear", "quadratic", "power"]),
+                vol.Optional("averaging_seconds", default=3): int,
+                vol.Optional("notes"): str,
+            }
+        )
+        if user_input is not None:
+            res = await self.hass.services.async_call(
+                DOMAIN,
+                "start_calibration",
+                user_input,
+                blocking=True,
+                return_response=True,
+            )
+            self._cal_session = res.get("session_id")
+            return await self.async_step_calibration_collect()
+        return self.async_show_form(step_id="calibration", data_schema=schema)
+
+    async def async_step_calibration_collect(self, user_input=None):
+        schema = vol.Schema(
+            {
+                vol.Required("action", default="add"): vol.In(
+                    [
+                        "add",
+                        "finish",
+                        "abort",
+                    ]
+                ),
+                vol.Optional("ppfd_value"): float,
+            }
+        )
+        if user_input is not None and self._cal_session:
+            action = user_input["action"]
+            if action == "add":
+                data = {"session_id": self._cal_session}
+                if user_input.get("ppfd_value") is not None:
+                    data["ppfd_value"] = user_input["ppfd_value"]
+                await self.hass.services.async_call(
+                    DOMAIN, "add_calibration_point", data, blocking=True
+                )
+                return await self.async_step_calibration_collect()
+            if action == "finish":
+                await self.hass.services.async_call(
+                    DOMAIN,
+                    "finish_calibration",
+                    {"session_id": self._cal_session},
+                    blocking=True,
+                )
+                return self.async_create_entry(title="calibration", data={})
+            if action == "abort":
+                await self.hass.services.async_call(
+                    DOMAIN,
+                    "abort_calibration",
+                    {"session_id": self._cal_session},
+                    blocking=True,
+                )
+                return self.async_create_entry(title="calibration", data={})
+        return self.async_show_form(step_id="calibration_collect", data_schema=schema)
 
     # --- Per-variable source editing ---
 

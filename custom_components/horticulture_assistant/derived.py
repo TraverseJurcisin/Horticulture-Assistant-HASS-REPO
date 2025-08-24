@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from datetime import date
 
+import numpy as np
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -17,6 +18,9 @@ from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
+from .calibration.apply import lux_to_ppfd
+from .calibration.fit import eval_model
+from .calibration.store import async_get_for_entity
 from .const import DOMAIN
 from .entity_base import HorticultureBaseEntity
 
@@ -97,6 +101,8 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
                 async_track_state_change_event(self.hass, [light_sensor], self._on_illuminance)
             )
 
+        self._light_sensor = light_sensor
+
     @callback
     def _on_illuminance(self, event) -> None:
         state = event.data.get("new_state")
@@ -106,14 +112,19 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
             lx = None
         if lx is None:
             return
+        self.hass.async_create_task(self._process_lux(lx))
+
+    async def _process_lux(self, lx: float) -> None:
         now = dt_util.now()
         day = now.date()
         if self._last_day is None or day != self._last_day:
             self._accum = 0.0
             self._last_day = day
             self._last_ts = None
-        coeff = self._entry.options.get("thresholds", {}).get("lux_to_ppfd", 0.0185)
-        ppfd = lx * coeff
+        ppfd = await lux_to_ppfd(self.hass, self._light_sensor, lx)
+        if ppfd is None:
+            coeff = self._entry.options.get("thresholds", {}).get("lux_to_ppfd", 0.0185)
+            ppfd = lx * coeff
         if self._last_ts is None:
             seconds = 60.0
         else:
@@ -121,6 +132,77 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         self._accum += (ppfd * seconds) / 1_000_000
         self._value = round(self._accum, 2)
         self._last_ts = now
+        self.async_write_ha_state()
+
+
+class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
+    """Sensor providing calibrated PPFD from Lux."""
+
+    _attr_name = "PPFD"
+    _attr_native_unit_of_measurement = "µmol/m²/s"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str
+    ) -> None:
+        super().__init__(plant_name, plant_id)
+        self.hass = hass
+        self._entry = entry
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_ppfd"
+        self._value: float | None = None
+        self._attrs: dict | None = None
+        self._light_sensor: str | None = None
+
+    @property
+    def native_value(self) -> float | None:
+        return self._value
+
+    @property
+    def extra_state_attributes(self):
+        return self._attrs
+
+    async def async_added_to_hass(self) -> None:
+        await super().async_added_to_hass()
+        self._light_sensor = self._entry.options.get("sensors", {}).get("illuminance")
+        if self._light_sensor:
+            self.async_on_remove(
+                async_track_state_change_event(self.hass, [self._light_sensor], self._on_lux)
+            )
+
+    @callback
+    def _on_lux(self, event) -> None:
+        state = event.data.get("new_state")
+        try:
+            lx = float(state.state) if state else None
+        except (TypeError, ValueError):
+            lx = None
+        if lx is None:
+            return
+        self.hass.async_create_task(self._update_ppfd(lx))
+
+    async def _update_ppfd(self, lx: float) -> None:
+        rec = (
+            await async_get_for_entity(self.hass, self._light_sensor)
+            if self._light_sensor
+            else None
+        )
+        if rec:
+            model = rec["model"]
+            ppfd = float(eval_model(model["model"], model["coefficients"], np.array([lx]))[0])
+            self._attrs = {
+                "model": model["model"],
+                "coefficients": model["coefficients"],
+                "r2": model["r2"],
+                "rmse": model["rmse"],
+                "training_range_lux": [model["lux_min"], model["lux_max"]],
+            }
+            if lx < model["lux_min"] or lx > model["lux_max"]:
+                self._attrs["extrapolating"] = True
+        else:
+            coeff = self._entry.options.get("thresholds", {}).get("lux_to_ppfd", 0.0185)
+            ppfd = lx * coeff
+            self._attrs = {"model": "constant", "coefficients": [coeff]}
+        self._value = round(ppfd, 2)
         self.async_write_ha_state()
 
 

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from homeassistant.components.diagnostics import async_redact_data
 
+from .calibration.store import async_load_all as calib_load_all
 from .const import DOMAIN
 from .profile.store import async_load_all
 
@@ -53,5 +54,6 @@ async def async_get_config_entry_diagnostics(hass, entry):
         "citations_count": total_citations,
         "citations_summary": citation_summary,
         "last_resolved_utc": latest.isoformat() if latest else None,
+        "calibrations": await calib_load_all(hass),
     }
     return async_redact_data(data, TO_REDACT)

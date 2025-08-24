@@ -20,6 +20,7 @@ from .derived import (
     PlantDewPointSensor,
     PlantDLISensor,
     PlantMoldRiskSensor,
+    PlantPPFDSensor,
     PlantVPDSensor,
 )
 from .entity import HorticultureBaseEntity
@@ -39,6 +40,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     sensors = [
         HortiStatusSensor(coord_ai, coord_local, entry.entry_id, keep_stale),
         HortiRecommendationSensor(coord_ai, entry.entry_id, keep_stale),
+        PlantPPFDSensor(hass, entry, plant_name, plant_id),
         PlantDLISensor(hass, entry, plant_name, plant_id),
     ]
 

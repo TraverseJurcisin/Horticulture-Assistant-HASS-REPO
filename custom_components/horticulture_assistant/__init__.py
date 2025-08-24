@@ -56,6 +56,8 @@ except ModuleNotFoundError:  # pragma: no cover
 
 from homeassistant.core import HomeAssistant
 
+from .calibration import services as calibration_services
+
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.exceptions import HomeAssistantError
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
@@ -128,6 +130,7 @@ ROLE_DEVICE_CLASS = {
 
 
 async def async_setup(hass: HomeAssistant, _config) -> bool:
+    await calibration_services.async_setup(hass)
     return True
 
 
