@@ -23,20 +23,6 @@ import voluptuous as vol
 from aiohttp import ClientError
 
 try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.components.sensor import SensorDeviceClass
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    from enum import Enum
-
-    class SensorDeviceClass(str, Enum):  # type: ignore[misc]
-        """Minimal sensor device class stub for tests."""
-
-        HUMIDITY = "humidity"
-        TEMPERATURE = "temperature"
-        ILLUMINANCE = "illuminance"
-        MOISTURE = "moisture"
-
-
-try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.config_entries import ConfigEntry
 except ModuleNotFoundError:  # pragma: no cover
     from dataclasses import dataclass
@@ -57,14 +43,6 @@ except ModuleNotFoundError:  # pragma: no cover
 from homeassistant.core import HomeAssistant
 
 from .calibration import services as calibration_services
-
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.exceptions import HomeAssistantError
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-
-    class HomeAssistantError(Exception):
-        """Fallback Home Assistant error."""
-
 
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.helpers import entity_registry as er
@@ -111,6 +89,8 @@ from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .irrigation_bridge import async_apply_irrigation
 from .opb_client import OpenPlantbookClient
+from .profile_registry import ProfileRegistry
+from .services import async_setup_services
 from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
@@ -121,12 +101,6 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
 
-ROLE_DEVICE_CLASS = {
-    "humidity": SensorDeviceClass.HUMIDITY,
-    "temperature": SensorDeviceClass.TEMPERATURE,
-    "illuminance": SensorDeviceClass.ILLUMINANCE,
-    "moisture": SensorDeviceClass.MOISTURE,
-}
 
 
 async def async_setup(hass: HomeAssistant, _config) -> bool:
@@ -169,6 +143,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER.warning("Initial data refresh failed: %s", err)
     except Exception as err:  # pragma: no cover - unexpected
         _LOGGER.exception("Initial data refresh failed: %s", err)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_initialize()
+    hass.data[DOMAIN]["profile_registry"] = registry
+    await async_setup_services(hass, entry, registry)
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
         {
@@ -414,38 +392,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
 
-    async def _handle_replace_sensor(call):
-        profile_id = call.data["profile_id"]
-        meter_entity = call.data["meter_entity"]
-        new_sensor = call.data["new_sensor"]
-        if hass.states.get(new_sensor) is None:
-            raise HomeAssistantError(f"missing entity {new_sensor}")
-
-        opts = dict(entry.options)
-        mapped = dict(opts.get("sensors", {}))
-        role = next((r for r, eid in mapped.items() if eid == meter_entity), None)
-        if role is None:
-            raise HomeAssistantError(f"unknown meter {meter_entity}")
-
-        reg = er.async_get(hass)
-        reg_entry = reg.async_get(new_sensor)
-        expected = ROLE_DEVICE_CLASS.get(role)
-        actual = None
-        if reg_entry:
-            actual = reg_entry.device_class or reg_entry.original_device_class
-        if expected and (reg_entry is None or actual != expected.value):
-            raise HomeAssistantError("device class mismatch")
-
-        sensors = (
-            store.data.setdefault("plants", {}).setdefault(profile_id, {}).setdefault("sensors", {})
-        )
-        sensors[f"{role}_sensors"] = [new_sensor]
-        await store.save()
-
-        mapped[role] = new_sensor
-        opts["sensors"] = mapped
-        hass.config_entries.async_update_entry(entry, options=opts)
-        await local_coord.async_request_refresh()
 
     hass.services.async_register(
         svc_base,
@@ -495,18 +441,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.services.async_register(
         svc_base,
-        "replace_sensor",
-        _handle_replace_sensor,
-        schema=vol.Schema(
-            {
-                vol.Required("profile_id"): str,
-                vol.Required("meter_entity"): cv.entity_id,
-                vol.Required("new_sensor"): cv.entity_id,
-            }
-        ),
-    )
-    hass.services.async_register(
-        svc_base,
         "apply_irrigation_plan",
         _handle_apply_irrigation,
         schema=vol.Schema(
@@ -545,12 +479,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         await generate_profile(hass, entry, pid, mode, source_profile_id)
 
-    async def _svc_export_profiles(call):
-        path = call.data["path"]
-        from .profile.export import async_export_profiles
-
-        await async_export_profiles(hass, path)
-
     async def _svc_export_profile(call):
         pid = call.data["profile_id"]
         path = call.data["path"]
@@ -582,12 +510,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 vol.Optional("source_profile_id"): str,
             }
         ),
-    )
-    hass.services.async_register(
-        svc_base,
-        "export_profiles",
-        _svc_export_profiles,
-        schema=vol.Schema({vol.Required("path"): str}),
     )
     hass.services.async_register(
         svc_base,

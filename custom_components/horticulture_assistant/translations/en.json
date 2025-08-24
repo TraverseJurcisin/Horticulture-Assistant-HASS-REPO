@@ -35,7 +35,7 @@
       },
       "sensors": {
         "data": {
-          "co2_sensor": "CO₂ sensor",
+          "co2_sensor": "CO\u2082 sensor",
           "ec_sensor": "EC sensor",
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor"
@@ -92,21 +92,27 @@
       "not_found": "Entity not found"
     },
     "step": {
-      "apply": {
-        "data": {
-          "resolve_now": "Resolve now"
-        },
-        "title": "Apply"
-      },
       "action": {
         "data": {
           "action": "Action"
         },
         "title": "Profile action"
       },
+      "apply": {
+        "data": {
+          "resolve_now": "Resolve now"
+        },
+        "title": "Apply"
+      },
+      "generate": {
+        "data": {
+          "mode": "Source"
+        },
+        "title": "Generate profile"
+      },
       "init": {
         "data": {
-          "co2_sensor": "CO₂ sensor",
+          "co2_sensor": "CO\u2082 sensor",
           "ec_sensor": "EC sensor",
           "force_refresh": "Force refresh thresholds",
           "keep_stale": "Keep entities available when API fails",
@@ -120,7 +126,7 @@
           "update_interval": "Update interval (minutes)"
         },
         "description": "Configure local sensors and behavior.",
-        "title": "Horticulture Assistant — Options"
+        "title": "Horticulture Assistant \u2014 Options"
       },
       "pick_source": {
         "data": {
@@ -134,17 +140,23 @@
         },
         "title": "Pick variable"
       },
-      "generate": {
-        "data": {
-          "mode": "Source"
-        },
-        "title": "Generate profile"
-      },
       "profile": {
         "data": {
           "profile_id": "Profile"
         },
         "title": "Pick profile"
+      },
+      "profile_add": {
+        "data": {
+          "copy_from": "Copy preferences from existing profile",
+          "humidity_sensor": "Humidity sensor",
+          "light_sensor": "Light (PPFD/DLI) sensor",
+          "profile_name": "Profile name",
+          "soil_moisture_sensor": "Soil moisture sensor",
+          "species": "Species (optional)",
+          "temp_sensor": "Air temperature sensor"
+        },
+        "title": "Add plant profile"
       },
       "src_ai": {
         "data": {
@@ -172,18 +184,6 @@
           "species": "Species"
         },
         "title": "OpenPlantbook species & field"
-      },
-      "profile_add": {
-        "title": "Add plant profile",
-        "data": {
-          "profile_name": "Profile name",
-          "species": "Species (optional)",
-          "copy_from": "Copy preferences from existing profile",
-          "temp_sensor": "Air temperature sensor",
-          "humidity_sensor": "Humidity sensor",
-          "light_sensor": "Light (PPFD/DLI) sensor",
-          "soil_moisture_sensor": "Soil moisture sensor"
-        }
       }
     }
   },

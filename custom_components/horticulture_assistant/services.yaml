@@ -114,12 +114,16 @@ replace_sensor:
       required: true
       selector:
         text:
-    meter_entity:
+    measurement:
       required: true
       selector:
-        entity:
-          domain: sensor
-    new_sensor:
+        select:
+          options:
+            - temperature
+            - humidity
+            - illuminance
+            - moisture
+    entity_id:
       required: true
       selector:
         entity:
@@ -206,6 +210,15 @@ import_profiles:
   description: Load profiles from a JSON file and merge into storage.
   fields:
     path:
+      required: true
+      selector:
+        text:
+
+refresh_species:
+  name: Refresh species data
+  description: Re-fetch species thresholds and images for a profile.
+  fields:
+    profile_id:
       required: true
       selector:
         text:
