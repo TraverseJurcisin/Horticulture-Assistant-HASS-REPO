@@ -1,12 +1,14 @@
 """Utility helpers for nutrient synergy adjustments."""
+
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Dict, Mapping, Tuple, Iterable
 
-from .utils import load_dataset, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset
 
 DATA_FILE = "nutrients/nutrient_synergies.json"
+
 
 @dataclass(frozen=True)
 class SynergyInfo:
@@ -16,10 +18,10 @@ class SynergyInfo:
     message: str = ""
 
 
-_DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, object]] = load_dataset(DATA_FILE)
 
 # Pre-compute a case-insensitive lookup map for faster runtime access
-_SYNERGY_MAP: Dict[Tuple[str, str], SynergyInfo] = {
+_SYNERGY_MAP: dict[tuple[str, str], SynergyInfo] = {
     tuple(part.casefold() for part in key.split("_", 1)): SynergyInfo(
         factor=float(info.get("factor", 1.0)),
         message=str(info.get("message", "")),
@@ -43,7 +45,7 @@ def list_synergy_pairs() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_synergy_info(pair: str) -> Dict[str, object]:
+def get_synergy_info(pair: str) -> dict[str, object]:
     """Return raw synergy entry for ``pair`` if defined."""
     return _DATA.get(pair.lower(), {})
 
@@ -63,7 +65,7 @@ def has_synergy_pair(n1: str, n2: str) -> bool:
     return (n1_key, n2_key) in _SYNERGY_MAP or (n2_key, n1_key) in _SYNERGY_MAP
 
 
-def apply_synergy_adjustments(levels: Mapping[str, float]) -> Dict[str, float]:
+def apply_synergy_adjustments(levels: Mapping[str, float]) -> dict[str, float]:
     """Return ``levels`` adjusted using defined synergy factors."""
     result = {k: float(v) for k, v in levels.items()}
 
@@ -79,11 +81,11 @@ def apply_synergy_adjustments(levels: Mapping[str, float]) -> Dict[str, float]:
 
 def apply_synergy_adjustments_verbose(
     levels: Mapping[str, float],
-) -> tuple[Dict[str, float], Dict[str, str]]:
+) -> tuple[dict[str, float], dict[str, str]]:
     """Return adjusted levels with messages describing each applied synergy."""
 
     adjusted = {k: float(v) for k, v in levels.items()}
-    notes: Dict[str, str] = {}
+    notes: dict[str, str] = {}
 
     key_map = {k.casefold(): k for k in levels}
 

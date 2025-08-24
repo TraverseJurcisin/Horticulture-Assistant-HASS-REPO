@@ -1,9 +1,10 @@
 """Disease management guideline utilities."""
+
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from collections.abc import Iterable
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 RESISTANCE_FILE = "diseases/disease_resistance_ratings.json"
 
@@ -13,21 +14,17 @@ FUNGICIDE_FILE = "fungicides/fungicide_recommendations.json"
 RATE_FILE = "fungicides/fungicide_application_rates.json"
 
 
-
 # Dataset is cached by ``load_dataset`` so load once at import time
-_DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
-_PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
-_RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
-_FUNGICIDES_RAW: Dict[str, list[str]] = load_dataset(FUNGICIDE_FILE)
-_RATES_RAW: Dict[str, float] = load_dataset(RATE_FILE)
-_FUNGICIDES: Dict[str, list[str]] = {
-    normalize_key(k): list(v) if isinstance(v, list) else []
-    for k, v in _FUNGICIDES_RAW.items()
+_DATA: dict[str, dict[str, str]] = load_dataset(DATA_FILE)
+_PREVENTION: dict[str, dict[str, str]] = load_dataset(PREVENTION_FILE)
+_RESISTANCE: dict[str, dict[str, float]] = load_dataset(RESISTANCE_FILE)
+_FUNGICIDES_RAW: dict[str, list[str]] = load_dataset(FUNGICIDE_FILE)
+_RATES_RAW: dict[str, float] = load_dataset(RATE_FILE)
+_FUNGICIDES: dict[str, list[str]] = {
+    normalize_key(k): list(v) if isinstance(v, list) else [] for k, v in _FUNGICIDES_RAW.items()
 }
-_RATES: Dict[str, float] = {
-    normalize_key(k): float(v)
-    for k, v in _RATES_RAW.items()
-    if isinstance(v, (int, float))
+_RATES: dict[str, float] = {
+    normalize_key(k): float(v) for k, v in _RATES_RAW.items() if isinstance(v, int | float)
 }
 
 
@@ -36,7 +33,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_disease_guidelines(plant_type: str) -> Dict[str, str]:
+def get_disease_guidelines(plant_type: str) -> dict[str, str]:
     """Return disease management guidelines for the specified plant type."""
     return _DATA.get(normalize_key(plant_type), {})
 
@@ -46,24 +43,24 @@ def list_known_diseases(plant_type: str) -> list[str]:
     return sorted(get_disease_guidelines(plant_type).keys())
 
 
-def recommend_treatments(plant_type: str, diseases: Iterable[str]) -> Dict[str, str]:
+def recommend_treatments(plant_type: str, diseases: Iterable[str]) -> dict[str, str]:
     """Return recommended treatment strings for each observed disease."""
     guide = get_disease_guidelines(plant_type)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for dis in diseases:
         actions[dis] = guide.get(dis, "No guideline available")
     return actions
 
 
-def get_disease_prevention(plant_type: str) -> Dict[str, str]:
+def get_disease_prevention(plant_type: str) -> dict[str, str]:
     """Return disease prevention guidelines for the specified plant type."""
     return _PREVENTION.get(normalize_key(plant_type), {})
 
 
-def recommend_prevention(plant_type: str, diseases: Iterable[str]) -> Dict[str, str]:
+def recommend_prevention(plant_type: str, diseases: Iterable[str]) -> dict[str, str]:
     """Return recommended prevention steps for each observed disease."""
     guide = get_disease_prevention(plant_type)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for dis in diseases:
         actions[dis] = guide.get(dis, "No guideline available")
     return actions
@@ -78,7 +75,7 @@ def get_disease_resistance(plant_type: str, disease: str) -> float | None:
 
     data = _RESISTANCE.get(normalize_key(plant_type), {})
     value = data.get(normalize_key(disease))
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
 def get_fungicide_options(disease: str) -> list[str]:
@@ -94,16 +91,16 @@ def get_fungicide_application_rate(product: str) -> float | None:
     """Return recommended application rate for a fungicide product."""
 
     value = _RATES.get(normalize_key(product))
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
-def calculate_fungicide_mix(disease: str, volume_l: float) -> Dict[str, float]:
+def calculate_fungicide_mix(disease: str, volume_l: float) -> dict[str, float]:
     """Return fungicide grams for treating ``volume_l`` solution."""
 
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    mix: Dict[str, float] = {}
+    mix: dict[str, float] = {}
     for product in get_fungicide_options(disease):
         rate = get_fungicide_application_rate(product)
         if rate is None:
@@ -112,10 +109,10 @@ def calculate_fungicide_mix(disease: str, volume_l: float) -> Dict[str, float]:
     return mix
 
 
-def recommend_fungicides(diseases: Iterable[str]) -> Dict[str, list[str]]:
+def recommend_fungicides(diseases: Iterable[str]) -> dict[str, list[str]]:
     """Return fungicide suggestions for each disease in ``diseases``."""
 
-    recs: Dict[str, list[str]] = {}
+    recs: dict[str, list[str]] = {}
     for dis in diseases:
         recs[dis] = get_fungicide_options(dis)
     return recs

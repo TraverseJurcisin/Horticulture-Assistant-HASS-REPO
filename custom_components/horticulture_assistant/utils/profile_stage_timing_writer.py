@@ -4,7 +4,10 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
-def generate_stage_timing_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
+
+def generate_stage_timing_profiles(
+    plant_id: str, base_path: str = None, overwrite: bool = False
+) -> str:
     """
     Generate or update stage progress and calendar timing profile files for a given plant.
 
@@ -31,17 +34,11 @@ def generate_stage_timing_profiles(plant_id: str, base_path: str = None, overwri
         "last_transition_date": None,
         "next_expected_stage": None,
         "growth_rate_class": None,
-        "current_duration_days": None
+        "current_duration_days": None,
     }
 
     # Define default content for calendar_timing.json
-    calendar_timing_data = {
-        "zone_5a": {
-            "seedling": None,
-            "veg": None,
-            "flower": None
-        }
-    }
+    calendar_timing_data = {"zone_5a": {"seedling": None, "veg": None, "flower": None}}
 
     profile_sections = {
         "stage_progress.json": stage_progress_data,

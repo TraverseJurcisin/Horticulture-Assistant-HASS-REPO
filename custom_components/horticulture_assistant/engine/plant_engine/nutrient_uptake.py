@@ -1,16 +1,14 @@
 """Lookup daily nutrient uptake targets by plant type and stage."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .growth_stage import list_growth_stages, get_stage_duration
+from .growth_stage import get_stage_duration, list_growth_stages
 from .plant_density import get_spacing_cm
-
-from .utils import load_dataset, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset
 
 DATA_FILE = "nutrients/nutrient_uptake.json"
 
-_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, dict[str, float]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -32,7 +30,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_daily_uptake(plant_type: str, stage: str) -> Dict[str, float]:
+def get_daily_uptake(plant_type: str, stage: str) -> dict[str, float]:
     """Return mg/day uptake for ``plant_type`` and ``stage``."""
     plant = _DATA.get(plant_type.lower())
     if not plant:
@@ -40,7 +38,7 @@ def get_daily_uptake(plant_type: str, stage: str) -> Dict[str, float]:
     return plant.get(stage.lower(), {})
 
 
-def get_uptake_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+def get_uptake_ratio(plant_type: str, stage: str) -> dict[str, float]:
     """Return normalized N:P:K ratio from daily uptake data.
 
     The values sum to 1.0. Unknown plants or stages return an empty mapping.
@@ -60,7 +58,7 @@ def get_uptake_ratio(plant_type: str, stage: str) -> Dict[str, float]:
     }
 
 
-def estimate_stage_totals(plant_type: str, stage: str) -> Dict[str, float]:
+def estimate_stage_totals(plant_type: str, stage: str) -> dict[str, float]:
     """Return total nutrient demand for a single stage in milligrams."""
 
     from .growth_stage import get_stage_duration
@@ -73,12 +71,12 @@ def estimate_stage_totals(plant_type: str, stage: str) -> Dict[str, float]:
     return {n: round(mg_per_day * duration, 2) for n, mg_per_day in daily.items()}
 
 
-def estimate_total_uptake(plant_type: str) -> Dict[str, float]:
+def estimate_total_uptake(plant_type: str) -> dict[str, float]:
     """Return estimated nutrient use for the entire growth cycle."""
 
     from .growth_stage import list_growth_stages
 
-    totals: Dict[str, float] = {}
+    totals: dict[str, float] = {}
     for stage in list_growth_stages(plant_type):
         stage_totals = estimate_stage_totals(plant_type, stage)
         for nutrient, mg in stage_totals.items():
@@ -86,7 +84,7 @@ def estimate_total_uptake(plant_type: str) -> Dict[str, float]:
     return totals
 
 
-def estimate_average_daily_uptake(plant_type: str) -> Dict[str, float]:
+def estimate_average_daily_uptake(plant_type: str) -> dict[str, float]:
     """Return average daily nutrient demand for the full crop cycle."""
 
     totals = estimate_total_uptake(plant_type)
@@ -102,14 +100,14 @@ def estimate_average_daily_uptake(plant_type: str) -> Dict[str, float]:
     return {nutrient: round(mg / days, 2) for nutrient, mg in totals.items()}
 
 
-def estimate_cumulative_uptake(plant_type: str, stage: str) -> Dict[str, float]:
+def estimate_cumulative_uptake(plant_type: str, stage: str) -> dict[str, float]:
     """Return total nutrient demand from the start through ``stage``."""
 
     stages = list_growth_stages(plant_type)
     if not stages or stage not in stages:
         return {}
 
-    totals: Dict[str, float] = {}
+    totals: dict[str, float] = {}
     for st in stages:
         stage_totals = estimate_stage_totals(plant_type, st)
         for nutrient, amount in stage_totals.items():
@@ -120,9 +118,7 @@ def estimate_cumulative_uptake(plant_type: str, stage: str) -> Dict[str, float]:
     return totals
 
 
-def estimate_area_daily_uptake(
-    plant_type: str, stage: str, area_m2: float
-) -> Dict[str, float]:
+def estimate_area_daily_uptake(plant_type: str, stage: str, area_m2: float) -> dict[str, float]:
     """Return daily nutrient demand for ``area_m2`` of crop."""
 
     if area_m2 <= 0:
@@ -137,9 +133,7 @@ def estimate_area_daily_uptake(
     return {n: round(val * plants, 2) for n, val in daily.items()}
 
 
-def estimate_area_stage_uptake(
-    plant_type: str, stage: str, area_m2: float
-) -> Dict[str, float]:
+def estimate_area_stage_uptake(plant_type: str, stage: str, area_m2: float) -> dict[str, float]:
     """Return total nutrient demand for an area during ``stage``."""
 
     daily_totals = estimate_area_daily_uptake(plant_type, stage, area_m2)
@@ -153,7 +147,7 @@ def estimate_area_stage_uptake(
     return {n: round(val * duration, 2) for n, val in daily_totals.items()}
 
 
-def estimate_area_total_uptake(plant_type: str, area_m2: float) -> Dict[str, float]:
+def estimate_area_total_uptake(plant_type: str, area_m2: float) -> dict[str, float]:
     """Return nutrient demand for the entire crop cycle over ``area_m2``."""
 
     totals = estimate_total_uptake(plant_type)
@@ -170,7 +164,7 @@ def estimate_area_total_uptake(plant_type: str, area_m2: float) -> Dict[str, flo
 
 def estimate_area_cumulative_uptake(
     plant_type: str, stage: str, area_m2: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return cumulative nutrient demand up to ``stage`` over ``area_m2``."""
 
     totals = estimate_cumulative_uptake(plant_type, stage)

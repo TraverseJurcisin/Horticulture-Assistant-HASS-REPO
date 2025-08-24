@@ -1,6 +1,6 @@
 import json
-import os
 import logging
+import os
 from datetime import datetime
 
 # Attempt to import OpenAI library (optional dependency)
@@ -10,6 +10,7 @@ except ImportError:
     openai = None
 
 _LOGGER = logging.getLogger(__name__)
+
 
 def _generate_mock_reply(thresholds: dict) -> dict:
     """
@@ -28,7 +29,7 @@ def _generate_mock_reply(thresholds: dict) -> dict:
             break
         value = thresholds.get(key)
         # Only adjust numeric values or lists of numerics
-        if isinstance(value, (int, float)):
+        if isinstance(value, int | float):
             new_val = value * 1.05
             # Round values: integers back to int, floats to 2 decimal places
             if isinstance(value, int):
@@ -42,7 +43,7 @@ def _generate_mock_reply(thresholds: dict) -> dict:
             new_list = []
             all_numbers = True
             for elem in value:
-                if isinstance(elem, (int, float)):
+                if isinstance(elem, int | float):
                     new_elem = elem * 1.05
                     if isinstance(elem, int):
                         new_elem = int(round(new_elem))
@@ -58,8 +59,10 @@ def _generate_mock_reply(thresholds: dict) -> dict:
         # Non-numeric types are not adjusted (skipped)
     return proposed
 
-def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
-                        use_openai: bool = True, log: bool = True) -> dict:
+
+def dispatch_ai_context(
+    context_dict: dict, plant_id: str, base_path: str, use_openai: bool = True, log: bool = True
+) -> dict:
     """
     Send context data to an AI model (OpenAI or mock) to get improved threshold suggestions.
     Saves the input context and AI response to files under base_path/ai_feedback.
@@ -96,7 +99,10 @@ def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
     if use_openai:
         if openai is None:
             # OpenAI library not available
-            _LOGGER.error("OpenAI library is not installed, cannot fetch AI recommendations for plant %s.", plant_id)
+            _LOGGER.error(
+                "OpenAI library is not installed, cannot fetch AI recommendations for plant %s.",
+                plant_id,
+            )
             ai_raw_response = "OpenAI library not available"
         else:
             # Ensure API key is set
@@ -111,10 +117,13 @@ def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
                     response = openai.ChatCompletion.create(
                         model=model_name,
                         messages=[
-                            {"role": "system", "content": "You are a horticulture AI assistant optimizing plant yield and health. Return improved threshold values based on data."},
-                            {"role": "user", "content": json.dumps(context_dict)}
+                            {
+                                "role": "system",
+                                "content": "You are a horticulture AI assistant optimizing plant yield and health. Return improved threshold values based on data.",
+                            },
+                            {"role": "user", "content": json.dumps(context_dict)},
                         ],
-                        temperature=0
+                        temperature=0,
                     )
                 except Exception as e:
                     _LOGGER.error("OpenAI API call failed for plant %s: %s", plant_id, e)
@@ -124,19 +133,29 @@ def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
                     try:
                         ai_raw_response = response["choices"][0]["message"]["content"]
                     except Exception as e:
-                        _LOGGER.error("Unexpected OpenAI response format for plant %s: %s", plant_id, e)
+                        _LOGGER.error(
+                            "Unexpected OpenAI response format for plant %s: %s", plant_id, e
+                        )
                         ai_raw_response = ""
                     # Parse AI response if possible
                     if ai_raw_response:
                         try:
                             parsed = json.loads(ai_raw_response.strip())
                         except json.JSONDecodeError:
-                            _LOGGER.warning("AI did not return valid JSON for plant %s (output was: %r)", plant_id, ai_raw_response)
+                            _LOGGER.warning(
+                                "AI did not return valid JSON for plant %s (output was: %r)",
+                                plant_id,
+                                ai_raw_response,
+                            )
                         else:
                             if isinstance(parsed, dict):
                                 proposed_thresholds = parsed
                             else:
-                                _LOGGER.warning("AI response for plant %s is not a JSON object (got %s)", plant_id, type(parsed).__name__)
+                                _LOGGER.warning(
+                                    "AI response for plant %s is not a JSON object (got %s)",
+                                    plant_id,
+                                    type(parsed).__name__,
+                                )
     else:
         # Use offline mock model to generate threshold suggestions
         thresholds = context_dict.get("thresholds") or context_dict.get("nutrient_thresholds") or {}
@@ -152,7 +171,7 @@ def dispatch_ai_context(context_dict: dict, plant_id: str, base_path: str,
         "proposed_thresholds": proposed_thresholds,
         "ai_raw": ai_raw_response,
         "source": source,
-        "timestamp": datetime.now().isoformat()
+        "timestamp": datetime.now().isoformat(),
     }
     # Save the AI response to a JSON file
     response_filename = f"response_{plant_id}_{date_str}.json"

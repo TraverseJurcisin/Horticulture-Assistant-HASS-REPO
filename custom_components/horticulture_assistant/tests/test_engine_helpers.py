@@ -1,13 +1,16 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from plant_engine import engine
 
 
 def test_generate_environment_actions(tmp_path, monkeypatch):
-    profile = {"plant_type": "citrus", "stage": "vegetative", "observed_pests": ["aphids"], "observed_diseases": ["root rot"]}
+    profile = {
+        "plant_type": "citrus",
+        "stage": "vegetative",
+        "observed_pests": ["aphids"],
+        "observed_diseases": ["root rot"],
+    }
     env = {"temp_c": 24, "rh_pct": 60, "par_w_m2": 300}
     # Use real dataset; function should work without patching
     actions = engine._generate_environment_actions(profile, env)

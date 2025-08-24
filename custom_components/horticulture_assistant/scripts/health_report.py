@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Generate a consolidated plant health report."""
+
 from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root on path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,12 +27,8 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument(
         "--nutrients", type=Path, required=True, help="Path to nutrient levels file"
     )
-    parser.add_argument(
-        "--pests", help="Comma separated list of observed pests", default=""
-    )
-    parser.add_argument(
-        "--diseases", help="Comma separated list of observed diseases", default=""
-    )
+    parser.add_argument("--pests", help="Comma separated list of observed pests", default="")
+    parser.add_argument("--diseases", help="Comma separated list of observed diseases", default="")
     parser.add_argument("--output", type=Path, help="Optional output file path")
     args = parser.parse_args(argv)
 

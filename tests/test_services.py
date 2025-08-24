@@ -1,9 +1,12 @@
+from unittest.mock import AsyncMock, patch
+
 import pytest
 import voluptuous as vol
-from unittest.mock import AsyncMock, patch
-from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers import issue_registry as ir
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-from homeassistant.helpers import issue_registry as ir, entity_registry as er
+
+from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -46,9 +49,7 @@ async def test_update_sensors_service(hass):
         blocking=True,
     )
     store = hass.data[DOMAIN][entry.entry_id]["store"]
-    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == [
-        "sensor.good"
-    ]
+    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == ["sensor.good"]
 
 
 async def test_replace_sensor_service(hass):
@@ -66,7 +67,11 @@ async def test_replace_sensor_service(hass):
         "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
     )
     reg.async_get_or_create(
-        "sensor", "test", "sensor_good", suggested_object_id="good", original_device_class="moisture"
+        "sensor",
+        "test",
+        "sensor_good",
+        suggested_object_id="good",
+        original_device_class="moisture",
     )
 
     hass.states.async_set("sensor.old", 1)
@@ -117,9 +122,7 @@ async def test_recalculate_and_run_recommendation_services(hass):
 
     store.data.setdefault("plants", {})["p1"] = {}
     local.async_request_refresh = AsyncMock(wraps=local.async_request_refresh)
-    await hass.services.async_call(
-        DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True)
     assert local.async_request_refresh.called
 
     ai.async_request_refresh = AsyncMock(wraps=ai.async_request_refresh)
@@ -146,9 +149,10 @@ async def test_recompute_service(hass, expected_lingering_timers):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
@@ -156,12 +160,8 @@ async def test_recompute_service(hass, expected_lingering_timers):
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     coord.async_request_refresh = AsyncMock(wraps=coord.async_request_refresh)
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN, "recompute", {"profile_id": "bad"}, blocking=True
-        )
-    await hass.services.async_call(
-        DOMAIN, "recompute", {"profile_id": "p1"}, blocking=True
-    )
+        await hass.services.async_call(DOMAIN, "recompute", {"profile_id": "bad"}, blocking=True)
+    await hass.services.async_call(DOMAIN, "recompute", {"profile_id": "p1"}, blocking=True)
     await hass.services.async_call(DOMAIN, "recompute", {}, blocking=True)
     assert coord.async_request_refresh.call_count == 2
 
@@ -172,9 +172,10 @@ async def test_create_profile_service(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
@@ -182,9 +183,7 @@ async def test_create_profile_service(hass):
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     coord.async_request_refresh = AsyncMock()
 
-    await hass.services.async_call(
-        DOMAIN, "create_profile", {"name": "Avocado"}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "create_profile", {"name": "Avocado"}, blocking=True)
     assert coord.async_request_refresh.called
     profiles = entry.options.get("profiles", {})
     assert any(p.get("name") == "Avocado" for p in profiles.values())
@@ -208,9 +207,10 @@ async def test_duplicate_profile_service(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
@@ -254,9 +254,10 @@ async def test_delete_profile_service(hass):
     )
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
     await hca.async_setup_entry(hass, entry)
@@ -267,9 +268,7 @@ async def test_delete_profile_service(hass):
     await async_save_profile(hass, {"plant_id": "p1", "display_name": "Plant 1"})
     assert await async_get_profile(hass, "p1") is not None
 
-    await hass.services.async_call(
-        DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True)
     assert coord.async_request_refresh.called
     assert "p1" not in entry.options.get("profiles", {})
     assert await async_get_profile(hass, "p1") is None
@@ -290,9 +289,10 @@ async def test_link_sensors_service(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
@@ -308,9 +308,7 @@ async def test_link_sensors_service(hass):
         blocking=True,
     )
     assert coord.async_request_refresh.called
-    assert entry.options["profiles"]["p1"]["sensors"] == {
-        "temperature": "sensor.temp"
-    }
+    assert entry.options["profiles"]["p1"]["sensors"] == {"temperature": "sensor.temp"}
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
             DOMAIN,
@@ -333,9 +331,10 @@ async def test_clear_caches_service(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
@@ -391,17 +390,16 @@ async def test_resolve_profile_persists_to_store(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    await hass.services.async_call(
-        DOMAIN, "resolve_profile", {"profile_id": "p1"}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "resolve_profile", {"profile_id": "p1"}, blocking=True)
     from custom_components.horticulture_assistant.profile.store import (
         async_get_profile,
     )
@@ -436,9 +434,10 @@ async def test_resolve_all_persists_every_profile(hass):
     import custom_components.horticulture_assistant as hca
 
     hca.PLATFORMS = []
-    with patch.object(hca, "HortiAICoordinator") as mock_ai, patch.object(
-        hca, "HortiLocalCoordinator"
-    ) as mock_local:
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
         mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)

@@ -1,13 +1,12 @@
 import importlib
+import os
 import sys
 from pathlib import Path
-import os
+
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-fert_mod = importlib.import_module(
-    "custom_components.horticulture_assistant.fertilizer_formulator"
-)
+fert_mod = importlib.import_module("custom_components.horticulture_assistant.fertilizer_formulator")
 
 calculate_fertilizer_nutrients = fert_mod.calculate_fertilizer_nutrients
 convert_guaranteed_analysis = fert_mod.convert_guaranteed_analysis
@@ -92,9 +91,7 @@ def test_calculate_fertilizer_cost():
 def test_mass_helpers_match_volume_equivalents():
     mass = 9.6  # grams corresponding to 10 mL at 0.96 kg/L
     grams_output = calculate_fertilizer_nutrients_from_mass("foxfarm_grow_big", mass)
-    volume_output = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    volume_output = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)["nutrients"]
     assert grams_output == volume_output
 
     cost_mass = calculate_fertilizer_cost_from_mass("foxfarm_grow_big", mass)
@@ -139,9 +136,7 @@ def test_calculate_mix_nutrients():
     mix = {"foxfarm_grow_big": 9.6}
     totals = calculate_mix_nutrients(mix)
 
-    reference = calculate_fertilizer_nutrients(
-        "plant", "foxfarm_grow_big", 10
-    )["nutrients"]
+    reference = calculate_fertilizer_nutrients("plant", "foxfarm_grow_big", 10)["nutrients"]
 
     assert totals == reference
 
@@ -327,9 +322,7 @@ def test_recommend_fertigation_mix():
 
 
 def test_recommend_fertigation_plan():
-    plan = fert_mod.recommend_fertigation_plan(
-        "citrus", "vegetative", 2, num_plants=2
-    )
+    plan = fert_mod.recommend_fertigation_plan("citrus", "vegetative", 2, num_plants=2)
     assert plan["mix"]
     assert plan["ppm"]
     assert plan["cost_per_plant"] == round(plan["cost_total"] / 2, 4)
@@ -351,9 +344,7 @@ def test_recommend_advanced_fertigation_plan():
 
 def test_deficiency_correction_helpers():
     current = {"N": 40, "P": 10, "K": 30}
-    mix = fert_mod.recommend_deficiency_correction_mix(
-        current, "citrus", "vegetative", 1
-    )
+    mix = fert_mod.recommend_deficiency_correction_mix(current, "citrus", "vegetative", 1)
     assert mix
     plan = fert_mod.recommend_deficiency_correction_plan(
         current, "citrus", "vegetative", 1, num_plants=2
@@ -364,6 +355,4 @@ def test_deficiency_correction_helpers():
     with pytest.raises(ValueError):
         fert_mod.recommend_deficiency_correction_plan(current, "citrus", "veg", 0)
     with pytest.raises(ValueError):
-        fert_mod.recommend_deficiency_correction_plan(
-            current, "citrus", "veg", 1, num_plants=0
-        )
+        fert_mod.recommend_deficiency_correction_plan(current, "citrus", "veg", 1, num_plants=0)

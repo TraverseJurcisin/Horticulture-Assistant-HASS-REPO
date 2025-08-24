@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import json
-import os
-
 import math
+import os
 import re
-from functools import lru_cache
-from pathlib import Path
-from typing import Any, Dict, Mapping, Iterable, Union, IO, TextIO
+from collections.abc import Iterable, Mapping
+from functools import cache, lru_cache
 from os import PathLike
+from pathlib import Path
+from typing import Any, TextIO, Union
 
 import yaml
 
@@ -47,10 +47,10 @@ PathType = Union[str, PathLike]
 
 
 def _open_text(path: Path) -> TextIO:
-    return open(path, "r", encoding="utf-8")
+    return open(path, encoding="utf-8")
 
 
-def load_json(path: PathType) -> Dict[str, Any]:
+def load_json(path: PathType) -> dict[str, Any]:
     """Return the parsed JSON contents of ``path``.
 
     A :class:`FileNotFoundError` is raised if the file does not exist and a
@@ -87,7 +87,7 @@ def load_data(path: PathType) -> Any:
         raise ValueError(f"Invalid JSON in {p}: {exc}") from exc
 
 
-def save_json(path: PathType, data: Dict[str, Any]) -> bool:
+def save_json(path: PathType, data: dict[str, Any]) -> bool:
     """Write ``data`` to ``path`` and return ``True`` on success."""
 
     p = Path(path)
@@ -97,15 +97,11 @@ def save_json(path: PathType, data: Dict[str, Any]) -> bool:
     return True
 
 
-def deep_update(base: Dict[str, Any], other: Mapping[str, Any]) -> Dict[str, Any]:
+def deep_update(base: dict[str, Any], other: Mapping[str, Any]) -> dict[str, Any]:
     """Recursively merge ``other`` into ``base`` and return ``base``."""
 
     for key, value in other.items():
-        if (
-            key in base
-            and isinstance(base[key], dict)
-            and isinstance(value, Mapping)
-        ):
+        if key in base and isinstance(base[key], dict) and isinstance(value, Mapping):
             deep_update(base[key], value)
         else:
             base[key] = value
@@ -209,8 +205,6 @@ def dataset_paths() -> tuple[Path, ...]:
     return _PATH_CACHE
 
 
-
-
 def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
     """Return dataset search paths optionally including the overlay directory."""
 
@@ -222,7 +216,7 @@ def dataset_search_paths(include_overlay: bool = False) -> tuple[Path, ...]:
     return _dataset_search_paths(include_overlay, *env_state)
 
 
-@lru_cache(maxsize=None)
+@cache
 def _dataset_search_paths(
     include_overlay: bool,
     data_env: str | None,
@@ -238,7 +232,7 @@ def _dataset_search_paths(
     return tuple(paths)
 
 
-@lru_cache(maxsize=None)
+@cache
 def dataset_file(filename: str) -> Path | None:
     """Return absolute path to ``filename`` if found in search paths.
 
@@ -259,11 +253,11 @@ def dataset_file(filename: str) -> Path | None:
     return None
 
 
-@lru_cache(maxsize=None)
-def load_dataset(filename: str) -> Dict[str, Any]:
+@cache
+def load_dataset(filename: str) -> dict[str, Any]:
     """Return dataset ``filename`` merged with any overlay data."""
 
-    data: Dict[str, Any] = {}
+    data: dict[str, Any] = {}
     paths = dataset_paths()
     for base in paths:
         path = base / filename
@@ -295,7 +289,7 @@ def load_dataset(filename: str) -> Dict[str, Any]:
     return data
 
 
-async def async_load_dataset(filename: str) -> Dict[str, Any]:
+async def async_load_dataset(filename: str) -> dict[str, Any]:
     """Asynchronously load dataset ``filename`` in a thread."""
 
     import asyncio
@@ -314,14 +308,14 @@ def lazy_dataset(filename: str):
     """
 
     @lru_cache(maxsize=1)
-    def _loader() -> Dict[str, Any]:
+    def _loader() -> dict[str, Any]:
         clear_dataset_cache()
         return load_dataset(filename)
 
     return _loader
 
 
-def load_dataset_df(filename: str) -> "pd.DataFrame":
+def load_dataset_df(filename: str) -> pd.DataFrame:
     """Return dataset ``filename`` as a :class:`pandas.DataFrame`.
 
     JSON/YAML files are loaded via :func:`load_dataset`. CSV/TSV files are read
@@ -345,15 +339,15 @@ def load_dataset_df(filename: str) -> "pd.DataFrame":
     raise ValueError(f"Dataset {filename} is not tabular")
 
 
-@lru_cache(maxsize=None)
-def load_datasets(*filenames: str) -> Dict[str, Dict[str, Any]]:
+@cache
+def load_datasets(*filenames: str) -> dict[str, dict[str, Any]]:
     """Return multiple datasets keyed by filename.
 
     Each file is loaded via :func:`load_dataset` and the results are cached to
     minimize disk access when called repeatedly.
     """
 
-    data: Dict[str, Dict[str, Any]] = {}
+    data: dict[str, dict[str, Any]] = {}
     for name in filenames:
         data[name] = load_dataset(name)
     return data
@@ -436,10 +430,10 @@ def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     return low, high
 
 
-def clean_float_map(data: Mapping[str, Any]) -> Dict[str, float]:
+def clean_float_map(data: Mapping[str, Any]) -> dict[str, float]:
     """Return mapping with float values ignoring invalid entries."""
 
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for key, value in data.items():
         try:
             num = float(value)
@@ -465,6 +459,7 @@ def stage_value(
             return value
     return plant.get(default_key)
 
+
 def load_stage_dataset_value(
     filename: str, plant_type: str, stage: str | None, default_key: str = "optimal"
 ) -> Any:
@@ -479,7 +474,7 @@ def load_stage_dataset_value(
     return stage_value(data, plant_type, stage, default_key)
 
 
-@lru_cache(maxsize=None)
+@cache
 def list_dataset_files() -> list[str]:
     """Return alphabetically sorted dataset files available in search paths.
 

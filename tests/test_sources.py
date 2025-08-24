@@ -5,9 +5,12 @@ import pytest
 
 pytest.importorskip("homeassistant.exceptions")
 
-from custom_components.horticulture_assistant.config_flow import OptionsFlow
-from custom_components.horticulture_assistant.const import OPB_FIELD_MAP
-from custom_components.horticulture_assistant.resolver import PreferenceResolver, generate_profile
+from custom_components.horticulture_assistant.config_flow import OptionsFlow  # noqa: E402
+from custom_components.horticulture_assistant.const import OPB_FIELD_MAP  # noqa: E402
+from custom_components.horticulture_assistant.resolver import (  # noqa: E402
+    PreferenceResolver,
+    generate_profile,
+)
 
 
 class DummyEntry:
@@ -37,7 +40,9 @@ def make_hass():
             units=types.SimpleNamespace(name="metric"),
             path=config_path,
         ),
-        helpers=types.SimpleNamespace(aiohttp_client=types.SimpleNamespace(async_get_clientsession=MagicMock())),
+        helpers=types.SimpleNamespace(
+            aiohttp_client=types.SimpleNamespace(async_get_clientsession=MagicMock())
+        ),
         data={},
         state=None,
         async_create_task=async_create_task,
@@ -48,7 +53,9 @@ def make_hass():
 @pytest.mark.asyncio
 async def test_manual_source_applies_immediately():
     hass = make_hass()
-    entry = DummyEntry({"profiles": {"p1": {"sources": {"temp_c_min": {"mode": "manual", "value": 1.0}}}}})
+    entry = DummyEntry(
+        {"profiles": {"p1": {"sources": {"temp_c_min": {"mode": "manual", "value": 1.0}}}}}
+    )
     await PreferenceResolver(hass).resolve_profile(entry, "p1")
     assert entry.options["profiles"]["p1"]["thresholds"]["temp_c_min"] == 1.0
 
@@ -97,7 +104,9 @@ async def test_opb_source_maps_field():
 @pytest.mark.asyncio
 async def test_ai_source_respects_ttl_and_caches():
     hass = make_hass()
-    entry = DummyEntry({"profiles": {"p1": {"sources": {"temp_c_max": {"mode": "ai", "ai": {"ttl_hours": 720}}}}}})
+    entry = DummyEntry(
+        {"profiles": {"p1": {"sources": {"temp_c_max": {"mode": "ai", "ai": {"ttl_hours": 720}}}}}}
+    )
     mock = AsyncMock(return_value=(4.0, 0.9, "note", []))
     with patch(
         "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",

@@ -8,10 +8,11 @@ based on observed sensor patterns of moisture retention, EC behavior, and drybac
 import json
 import logging
 import os
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
-from typing import Dict, Optional, Mapping
 
 from plant_engine.utils import lazy_dataset
+
 from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,7 +33,7 @@ class MediaInferenceResult:
     media_type: str | None
     confidence: float
 
-    def as_dict(self) -> Dict[str, float | None]:
+    def as_dict(self) -> dict[str, float | None]:
         """Return a plain dictionary representation."""
         return asdict(self)
 
@@ -51,8 +52,8 @@ def infer_media_type(
     moisture_retention: float,
     ec_behavior: float,
     dryback_rate: float,
-    plant_id: Optional[str] = None,
-) -> Dict[str, float] | None:
+    plant_id: str | None = None,
+) -> dict[str, float] | None:
     """Infer the likely growing media type from sensor pattern metrics.
 
     Parameters:
@@ -84,7 +85,8 @@ def infer_media_type(
 
     # If values appear to be percentages (greater than 1.0 but <= 100), convert to 0-1 scale
     if (moisture_retention_val > 1 or ec_behavior_val > 1 or dryback_rate_val > 1) and (
-        moisture_retention_val <= 100 and ec_behavior_val <= 100 and dryback_rate_val <= 100):
+        moisture_retention_val <= 100 and ec_behavior_val <= 100 and dryback_rate_val <= 100
+    ):
         moisture_retention_val /= 100.0
         ec_behavior_val /= 100.0
         dryback_rate_val /= 100.0
@@ -120,7 +122,7 @@ def infer_media_type(
     if plant_id:
         try:
             if os.path.exists(output_path):
-                with open(output_path, "r", encoding="utf-8") as f:
+                with open(output_path, encoding="utf-8") as f:
                     all_results = json.load(f)
             else:
                 all_results = {}

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Dict, Any, List, Tuple
 from datetime import date, timedelta
+from typing import Any
 
 import pandas as pd
 
@@ -13,26 +13,24 @@ DATA_FILE = "stages/growth_stages.json"
 GERMINATION_FILE = "stages/germination_duration.json"
 
 
-
 # Load growth stage dataset once. ``load_dataset`` handles caching.
-_DATA: Dict[str, Dict[str, Any]] = load_dataset(DATA_FILE)
-_GERMINATION: Dict[str, int] = load_dataset(GERMINATION_FILE)
+_DATA: dict[str, dict[str, Any]] = load_dataset(DATA_FILE)
+_GERMINATION: dict[str, int] = load_dataset(GERMINATION_FILE)
 
 # Precompute cumulative stage end days for quick lookups
-_STAGE_BOUNDS: Dict[str, List[Tuple[str, int]]] = {}
+_STAGE_BOUNDS: dict[str, list[tuple[str, int]]] = {}
 for plant, stages in _DATA.items():
     if not isinstance(stages, dict):
         continue
     elapsed = 0
-    bounds: List[Tuple[str, int]] = []
+    bounds: list[tuple[str, int]] = []
     for stage, info in stages.items():
         days = info.get("duration_days")
-        if isinstance(days, (int, float)):
+        if isinstance(days, int | float):
             elapsed += int(days)
             bounds.append((stage, elapsed))
     if bounds:
         _STAGE_BOUNDS[plant] = bounds
-
 
 
 __all__ = [
@@ -58,7 +56,7 @@ __all__ = [
 ]
 
 
-def get_stage_info(plant_type: str, stage: str) -> Dict[str, Any]:
+def get_stage_info(plant_type: str, stage: str) -> dict[str, Any]:
     """Return information about a particular growth stage."""
     return _DATA.get(normalize_key(plant_type), {}).get(normalize_key(stage), {})
 
@@ -73,7 +71,7 @@ def get_stage_duration(plant_type: str, stage: str) -> int | None:
     """Return the duration in days for a growth stage if known."""
     info = get_stage_info(plant_type, stage)
     duration = info.get("duration_days")
-    if isinstance(duration, (int, float)):
+    if isinstance(duration, int | float):
         return int(duration)
     return None
 
@@ -87,12 +85,12 @@ def get_total_cycle_duration(plant_type: str) -> int | None:
     total = 0
     for info in stages.values():
         days = info.get("duration_days")
-        if isinstance(days, (int, float)):
+        if isinstance(days, int | float):
             total += int(days)
     return total if total > 0 else None
 
 
-def stage_bounds(plant_type: str) -> List[Tuple[str, int]]:
+def stage_bounds(plant_type: str) -> list[tuple[str, int]]:
     """Return cumulative ``(stage, end_day)`` pairs for ``plant_type``."""
 
     return list(_STAGE_BOUNDS.get(normalize_key(plant_type), []))
@@ -112,9 +110,7 @@ def estimate_stage_from_age(plant_type: str, days_since_start: int) -> str | Non
     return None
 
 
-def estimate_stage_from_date(
-    plant_type: str, start_date: date, current_date: date
-) -> str | None:
+def estimate_stage_from_date(plant_type: str, start_date: date, current_date: date) -> str | None:
     """Return growth stage for ``current_date`` based on ``start_date``."""
 
     days = (current_date - start_date).days
@@ -132,7 +128,7 @@ def predict_harvest_date(plant_type: str, start_date: date) -> date | None:
     total_days = 0
     for info in stages.values():
         days = info.get("duration_days")
-        if isinstance(days, (int, float)):
+        if isinstance(days, int | float):
             total_days += int(days)
 
     return start_date + timedelta(days=total_days)
@@ -166,9 +162,7 @@ def cycle_progress(plant_type: str, days_since_start: int) -> float | None:
     return round(progress * 100, 1)
 
 
-def days_until_harvest(
-    plant_type: str, start_date: date, current_date: date
-) -> int | None:
+def days_until_harvest(plant_type: str, start_date: date, current_date: date) -> int | None:
     """Return the number of days until the estimated harvest date."""
 
     harvest = predict_harvest_date(plant_type, start_date)
@@ -178,9 +172,7 @@ def days_until_harvest(
     return max(0, remaining)
 
 
-def predict_next_stage_date(
-    plant_type: str, current_stage: str, stage_start: date
-) -> date | None:
+def predict_next_stage_date(plant_type: str, current_stage: str, stage_start: date) -> date | None:
     """Return the estimated start date of the stage following ``current_stage``.
 
     Parameters
@@ -204,9 +196,7 @@ def predict_next_stage_date(
     return stage_start + timedelta(days=duration)
 
 
-def predict_stage_end_date(
-    plant_type: str, stage: str, stage_start: date
-) -> date | None:
+def predict_stage_end_date(plant_type: str, stage: str, stage_start: date) -> date | None:
     """Return the expected end date of ``stage`` for ``plant_type``."""
 
     duration = get_stage_duration(plant_type, stage)
@@ -240,9 +230,7 @@ def cycle_progress_from_dates(
     return cycle_progress(plant_type, days)
 
 
-def days_until_next_stage(
-    plant_type: str, current_stage: str, days_elapsed: int
-) -> int | None:
+def days_until_next_stage(plant_type: str, current_stage: str, days_elapsed: int) -> int | None:
     """Return days remaining in ``current_stage`` for ``plant_type``.
 
     Parameters
@@ -275,7 +263,7 @@ def get_germination_duration(plant_type: str) -> int | None:
     """Return default days to germination for ``plant_type`` if known."""
 
     value = _GERMINATION.get(normalize_key(plant_type))
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return int(value)
     return None
 
@@ -285,7 +273,7 @@ def growth_stage_summary(
     start_date: date | None = None,
     *,
     include_guidelines: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return growth stage durations with optional guideline data.
 
     When ``include_guidelines`` is ``True`` each stage entry also contains
@@ -304,9 +292,7 @@ def growth_stage_summary(
             from .environment_manager import get_environment_guidelines
             from .nutrient_manager import get_recommended_levels
 
-            entry["environment"] = get_environment_guidelines(
-                plant_type, stage
-            ).as_dict()
+            entry["environment"] = get_environment_guidelines(plant_type, stage).as_dict()
             entry["nutrients"] = get_recommended_levels(plant_type, stage)
         summary.append(entry)
 
@@ -350,7 +336,7 @@ def generate_stage_schedule(plant_type: str, start_date: date) -> list[dict[str,
     return schedule
 
 
-def stage_schedule_df(plant_type: str, start_date: date) -> "pd.DataFrame":
+def stage_schedule_df(plant_type: str, start_date: date) -> pd.DataFrame:
     """Return stage schedule as a :class:`pandas.DataFrame`."""
 
     schedule = generate_stage_schedule(plant_type, start_date)

@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -24,9 +24,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("plant_type", help="Crop identifier")
     parser.add_argument("stage", help="Growth stage")
     parser.add_argument("days", type=int, help="Number of days to generate")
-    parser.add_argument(
-        "--output", type=Path, help="Optional path to write the plan JSON"
-    )
+    parser.add_argument("--output", type=Path, help="Optional path to write the plan JSON")
     args = parser.parse_args(argv)
 
     plan = generate_fertigation_plan(args.plant_type, args.stage, args.days)

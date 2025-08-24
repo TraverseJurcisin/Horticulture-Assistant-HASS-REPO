@@ -1,6 +1,6 @@
 import json
-import types
 import sys
+import types
 from pathlib import Path
 
 ha = types.ModuleType("homeassistant")
@@ -11,18 +11,23 @@ sys.modules.setdefault("homeassistant.core", ha.core)
 
 from custom_components.horticulture_assistant.utils import daily_report_builder as drb  # noqa: E402
 
+
 class DummyConfig:
     def __init__(self, base: Path):
         self._base = Path(base)
+
     def path(self, *parts):
         return str(self._base.joinpath(*parts))
+
 
 class DummyStates:
     def __init__(self):
         self._data = {}
+
     def get(self, entity_id):
         val = self._data.get(entity_id)
         return types.SimpleNamespace(state=str(val)) if val is not None else None
+
 
 class DummyHass:
     def __init__(self, base: Path):

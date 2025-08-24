@@ -1,16 +1,16 @@
+import pytest
 from plant_engine.rootzone_model import (
-    estimate_rootzone_depth,
-    get_default_root_depth,
-    estimate_water_capacity,
+    RootZone,
+    calculate_infiltration_volume,
     calculate_remaining_water,
+    estimate_infiltration_time,
+    estimate_rootzone_depth,
+    estimate_water_capacity,
+    get_default_root_depth,
+    get_infiltration_rate,
     get_soil_parameters,
     soil_moisture_pct,
-    get_infiltration_rate,
-    estimate_infiltration_time,
-    calculate_infiltration_volume,
-    RootZone,
 )
-import pytest
 
 
 def test_estimate_rootzone_depth():
@@ -22,6 +22,7 @@ def test_estimate_rootzone_depth():
 
 def test_estimate_rootzone_depth_custom_params(monkeypatch):
     import plant_engine.rootzone_model as rz
+
     monkeypatch.setattr(
         rz,
         "_GROWTH_PARAMS",

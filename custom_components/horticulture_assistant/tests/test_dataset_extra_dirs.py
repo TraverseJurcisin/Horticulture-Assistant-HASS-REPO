@@ -27,8 +27,6 @@ def test_dataset_extra_dirs(tmp_path, monkeypatch):
     assert result == {"a": 1, "b": 3, "c": 4}
 
 
-
-
 def test_dataset_extra_dirs_with_overlay(tmp_path, monkeypatch):
     base = tmp_path / "base"
     extra = tmp_path / "extra"

@@ -1,15 +1,16 @@
 """Leaf tissue analysis helpers."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "leaf/leaf_tissue_targets.json"
-_TARGETS: Dict[str, Dict[str, Dict[str, list[float]]]] = load_dataset(DATA_FILE)
+_TARGETS: dict[str, dict[str, dict[str, list[float]]]] = load_dataset(DATA_FILE)
 
 WEIGHT_FILE = "leaf/leaf_tissue_score_weights.json"
-_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_FILE)
+_WEIGHTS: dict[str, float] = load_dataset(WEIGHT_FILE)
 
 __all__ = [
     "get_target_ranges",
@@ -18,7 +19,7 @@ __all__ = [
 ]
 
 
-def get_target_ranges(plant_type: str, stage: str) -> Dict[str, list[float]]:
+def get_target_ranges(plant_type: str, stage: str) -> dict[str, list[float]]:
     """Return optimal nutrient ranges for ``plant_type`` at ``stage``."""
     return _TARGETS.get(normalize_key(plant_type), {}).get(normalize_key(stage), {})
 
@@ -27,10 +28,10 @@ def evaluate_tissue_levels(
     plant_type: str,
     stage: str,
     sample_levels: Mapping[str, float],
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Classify tissue nutrient levels as 'low', 'ok', or 'high'."""
     targets = get_target_ranges(plant_type, stage)
-    results: Dict[str, str] = {}
+    results: dict[str, str] = {}
     for nutrient, value in sample_levels.items():
         try:
             val = float(value)
@@ -68,7 +69,7 @@ def score_tissue_levels(
     total_weight = 0.0
     for nutrient, bounds in ranges.items():
         if (
-            not isinstance(bounds, (list, tuple))
+            not isinstance(bounds, list | tuple)
             or len(bounds) != 2
             or nutrient not in sample_levels
         ):

@@ -1,30 +1,31 @@
 from datetime import date
+
 import pytest
 from plant_engine.pest_monitor import (
-    list_supported_plants,
-    get_pest_thresholds,
-    get_pest_threshold,
-    is_threshold_exceeded,
     assess_pest_pressure,
-    calculate_pest_pressure_index,
-    recommend_threshold_actions,
-    recommend_biological_controls,
-    classify_pest_severity,
-    generate_pest_report,
-    get_monitoring_interval,
-    next_monitor_date,
-    generate_monitoring_schedule,
-    generate_detailed_monitoring_schedule,
-    risk_adjusted_monitor_interval,
-    get_scouting_method,
-    get_severity_thresholds,
-    summarize_pest_management,
     calculate_pest_management_index,
     calculate_pest_management_index_series,
+    calculate_pest_pressure_index,
     calculate_severity_index,
-    estimate_yield_loss,
+    classify_pest_severity,
     estimate_adjusted_pest_risk_series,
+    estimate_yield_loss,
+    generate_detailed_monitoring_schedule,
+    generate_monitoring_schedule,
+    generate_pest_report,
+    get_monitoring_interval,
+    get_pest_threshold,
+    get_pest_thresholds,
     get_sample_size,
+    get_scouting_method,
+    get_severity_thresholds,
+    is_threshold_exceeded,
+    list_supported_plants,
+    next_monitor_date,
+    recommend_biological_controls,
+    recommend_threshold_actions,
+    risk_adjusted_monitor_interval,
+    summarize_pest_management,
 )
 
 
@@ -239,9 +240,7 @@ def test_calculate_pest_management_index_series():
         {"temperature": 26, "humidity": 80},
         {"temperature": 10, "humidity": 55},
     ]
-    idx = calculate_pest_management_index_series(
-        "citrus", observations, env_series=env_series
-    )
+    idx = calculate_pest_management_index_series("citrus", observations, env_series=env_series)
     assert idx > 0
 
 

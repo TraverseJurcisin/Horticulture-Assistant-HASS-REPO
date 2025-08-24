@@ -1,15 +1,14 @@
 import pytest
-
+from plant_engine.fertigation import recommend_uptake_fertigation
 from plant_engine.nutrient_uptake import (
-    list_supported_plants,
-    get_daily_uptake,
-    get_uptake_ratio,
-    estimate_average_daily_uptake,
-    estimate_cumulative_uptake,
     estimate_area_daily_uptake,
     estimate_area_stage_uptake,
+    estimate_average_daily_uptake,
+    estimate_cumulative_uptake,
+    get_daily_uptake,
+    get_uptake_ratio,
+    list_supported_plants,
 )
-from plant_engine.fertigation import recommend_uptake_fertigation
 
 
 def test_get_daily_uptake():
@@ -28,9 +27,9 @@ def test_list_supported_plants():
 
 def test_recommend_uptake_fertigation():
     schedule = recommend_uptake_fertigation("lettuce", "vegetative", num_plants=2)
-    assert schedule["urea"] == pytest.approx((60*2)/1000/0.46, rel=1e-2)
-    assert schedule["map"] == pytest.approx((20*2)/1000/0.22, rel=1e-2)
-    assert schedule["kcl"] == pytest.approx((80*2)/1000/0.5, rel=1e-2)
+    assert schedule["urea"] == pytest.approx((60 * 2) / 1000 / 0.46, rel=1e-2)
+    assert schedule["map"] == pytest.approx((20 * 2) / 1000 / 0.22, rel=1e-2)
+    assert schedule["kcl"] == pytest.approx((80 * 2) / 1000 / 0.5, rel=1e-2)
 
 
 def test_get_uptake_ratio():
@@ -51,7 +50,7 @@ def test_estimate_cumulative_uptake():
 
 def test_estimate_area_daily_uptake():
     daily = estimate_area_daily_uptake("lettuce", "vegetative", 1.0)
-    plants = 1.0 / (0.25 ** 2)
+    plants = 1.0 / (0.25**2)
     assert daily["N"] == pytest.approx(60 * plants, rel=1e-2)
     assert daily["K"] == pytest.approx(80 * plants, rel=1e-2)
 
@@ -59,6 +58,6 @@ def test_estimate_area_daily_uptake():
 def test_estimate_area_stage_uptake():
     totals = estimate_area_stage_uptake("lettuce", "vegetative", 1.0)
     duration = 35
-    plants = 1.0 / (0.25 ** 2)
+    plants = 1.0 / (0.25**2)
     assert totals["N"] == pytest.approx(60 * plants * duration, rel=1e-2)
     assert totals["K"] == pytest.approx(80 * plants * duration, rel=1e-2)

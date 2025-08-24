@@ -1,6 +1,6 @@
 from plant_engine.leaf_area_index import (
-    get_leaf_area_index,
     estimate_leaf_area_index,
+    get_leaf_area_index,
 )
 
 

@@ -1,9 +1,9 @@
 from plant_engine.nutrient_synergy import (
-    list_synergy_pairs,
-    get_synergy_factor,
-    has_synergy_pair,
     apply_synergy_adjustments,
     apply_synergy_adjustments_verbose,
+    get_synergy_factor,
+    has_synergy_pair,
+    list_synergy_pairs,
 )
 
 

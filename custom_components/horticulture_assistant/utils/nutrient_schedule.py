@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict, List
+from functools import cache
 
 from plant_engine import growth_stage
+
 from custom_components.horticulture_assistant.utils import (
     stage_nutrient_requirements,
 )
@@ -16,11 +16,11 @@ from custom_components.horticulture_assistant.utils import (
 class StageNutrientTotals:
     stage: str
     duration_days: int
-    totals: Dict[str, float]
+    totals: dict[str, float]
 
 
-@lru_cache(maxsize=None)
-def generate_nutrient_schedule(plant_type: str) -> List[StageNutrientTotals]:
+@cache
+def generate_nutrient_schedule(plant_type: str) -> list[StageNutrientTotals]:
     """Return per-stage nutrient totals for ``plant_type``.
 
     The schedule is computed from :mod:`stage_nutrient_requirements` and
@@ -29,14 +29,12 @@ def generate_nutrient_schedule(plant_type: str) -> List[StageNutrientTotals]:
     Unknown stages or missing data are skipped gracefully.
     """
 
-    schedule: List[StageNutrientTotals] = []
+    schedule: list[StageNutrientTotals] = []
     for stage in growth_stage.list_growth_stages(plant_type):
         duration = growth_stage.get_stage_duration(plant_type, stage)
         if not duration:
             continue
-        daily = stage_nutrient_requirements.get_stage_requirements(
-            plant_type, stage
-        )
+        daily = stage_nutrient_requirements.get_stage_requirements(plant_type, stage)
         totals = {nut: round(val * duration, 2) for nut, val in daily.items()}
         schedule.append(StageNutrientTotals(stage, duration, totals))
     return schedule

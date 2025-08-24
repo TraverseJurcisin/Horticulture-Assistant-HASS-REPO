@@ -29,9 +29,7 @@ def export_all_growth_yield(base_dir: Path | None = None) -> dict[str, list]:
                 _LOGGER.error("Data in %s is not a list, skipping.", file_path)
             continue
         if len(data) == 0:
-            _LOGGER.warning(
-                "No growth yield data for plant %s (file is empty).", plant_id
-            )
+            _LOGGER.warning("No growth yield data for plant %s (file is empty).", plant_id)
             continue
         results[plant_id] = data
     output_path = Path(__file__).parent / "all_plants_growth_yield.json"

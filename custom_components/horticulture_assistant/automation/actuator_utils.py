@@ -33,9 +33,7 @@ def trigger_actuator(
         _LOGGER.error("Error reading plant profile file %s: %s", profile_file, e)
         return
 
-    actuators = (
-        profile_data.get("actuator_entities") or profile_data.get("actuators") or {}
-    )
+    actuators = profile_data.get("actuator_entities") or profile_data.get("actuators") or {}
     entity: str | None = None
     if isinstance(actuators, dict):
         entity = (

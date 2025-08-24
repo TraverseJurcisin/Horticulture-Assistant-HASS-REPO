@@ -10,8 +10,7 @@ _SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}
 _CACHE_TTL = timedelta(hours=12)
 
 
-class OpenPlantbookError(Exception):
-    ...
+class OpenPlantbookError(Exception): ...
 
 
 class OpenPlantbookClient:

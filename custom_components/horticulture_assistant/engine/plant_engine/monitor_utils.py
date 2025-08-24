@@ -1,12 +1,12 @@
 """Generic helpers for pest and disease monitoring intervals."""
+
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import date, timedelta
-from typing import Mapping, Dict
-
 from functools import lru_cache
 
-from .utils import normalize_key, load_dataset
+from .utils import load_dataset, normalize_key
 
 __all__ = [
     "get_interval",
@@ -26,10 +26,10 @@ def get_interval(
     plant = data.get(normalize_key(plant_type), {})
     if stage:
         value = plant.get(normalize_key(stage))
-        if isinstance(value, (int, float)):
+        if isinstance(value, int | float):
             return int(value)
     value = plant.get("optimal")
-    return int(value) if isinstance(value, (int, float)) else None
+    return int(value) if isinstance(value, int | float) else None
 
 
 def next_date(
@@ -73,10 +73,7 @@ def estimate_condition_risk(
         matches = 0
         total = 0
         for key, bounds in reqs.items():
-            if (
-                not isinstance(bounds, (list, tuple))
-                or len(bounds) != 2
-            ):
+            if not isinstance(bounds, list | tuple) or len(bounds) != 2:
                 continue
             total += 1
             value = readings.get(key)
@@ -101,10 +98,10 @@ RISK_SCORE_FILE = "risk/risk_score_map.json"
 
 
 @lru_cache(maxsize=1)
-def _risk_score_map() -> Dict[str, int]:
+def _risk_score_map() -> dict[str, int]:
     """Return mapping of risk levels to numeric scores."""
     raw = load_dataset(RISK_SCORE_FILE)
-    scores: Dict[str, int] = {"low": 1, "moderate": 2, "high": 3}
+    scores: dict[str, int] = {"low": 1, "moderate": 2, "high": 3}
     if isinstance(raw, Mapping):
         for key, val in raw.items():
             try:

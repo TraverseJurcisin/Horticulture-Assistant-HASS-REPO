@@ -4,17 +4,17 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 
-def load_json(path: str | Path) -> Dict[str, Any]:
+def load_json(path: str | Path) -> dict[str, Any]:
     """Return the parsed JSON contents of ``path``."""
     p = Path(path)
     with p.open("r", encoding="utf-8") as handle:
         return json.load(handle)
 
 
-def save_json(path: str | Path, data: Dict[str, Any]) -> bool:
+def save_json(path: str | Path, data: dict[str, Any]) -> bool:
     """Write ``data`` to ``path`` in JSON format."""
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)

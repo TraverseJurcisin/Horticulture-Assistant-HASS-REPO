@@ -7,6 +7,7 @@ from datetime import timedelta
 try:  # pragma: no cover - allow import without Home Assistant installed
     import homeassistant.helpers.config_validation as cv
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
+
     class _ConfigValidationFallback:  # pylint: disable=too-few-public-methods
         """Minimal stub for tests when Home Assistant isn't installed."""
 
@@ -33,6 +34,8 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
         TEMPERATURE = "temperature"
         ILLUMINANCE = "illuminance"
         MOISTURE = "moisture"
+
+
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.config_entries import ConfigEntry
 except ModuleNotFoundError:  # pragma: no cover
@@ -50,13 +53,16 @@ except ModuleNotFoundError:  # pragma: no cover
         def add_update_listener(self, _):  # pragma: no cover - stub
             return None
 
+
 from homeassistant.core import HomeAssistant
 
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.exceptions import HomeAssistantError
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
+
     class HomeAssistantError(Exception):
         """Fallback Home Assistant error."""
+
 
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.helpers import entity_registry as er
@@ -76,6 +82,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
 
     def slugify(value: str) -> str:
         return value
+
 
 from .api import ChatApi
 from .const import (
@@ -191,15 +198,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             )
 
     if entry.options.get("opb_enable_upload"):
+
         async def _opb_upload(_now):
             opb = entry.options.get("opb_credentials")
             pid = entry.options.get("species_pid")
             sensors_map: dict[str, str] = entry.options.get("sensors", {})
             if not opb or not pid or not sensors_map:
                 return
-            client = OpenPlantbookClient(
-                hass, opb.get("client_id", ""), opb.get("secret", "")
-            )
+            client = OpenPlantbookClient(hass, opb.get("client_id", ""), opb.get("secret", ""))
             values: dict[str, float] = {}
             for role, entity_id in sensors_map.items():
                 state = hass.states.get(entity_id)
@@ -224,9 +230,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                     kwargs["location_lat"] = float(hass.config.latitude)
             await client.upload(entry.entry_id, pid, values, **kwargs)
 
-        entry_data["opb_unsub"] = async_track_time_interval(
-            hass, _opb_upload, timedelta(days=1)
-        )
+        entry_data["opb_unsub"] = async_track_time_interval(hass, _opb_upload, timedelta(days=1))
 
     async def _handle_refresh(call):
         await ai_coord.async_request_refresh()
@@ -279,9 +283,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "update_sensors",
         _handle_update_sensors,
-        schema=vol.Schema(
-            {vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}
-        ),
+        schema=vol.Schema({vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}),
     )
 
     async def _handle_create_profile(call):
@@ -332,9 +334,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         svc_base,
         "duplicate_profile",
         _handle_duplicate_profile,
-        schema=vol.Schema(
-            {vol.Required("source_profile_id"): str, vol.Required("new_name"): str}
-        ),
+        schema=vol.Schema({vol.Required("source_profile_id"): str, vol.Required("new_name"): str}),
     )
 
     async def _handle_delete_profile(call):
@@ -410,6 +410,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _handle_recompute,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
+
     async def _handle_replace_sensor(call):
         profile_id = call.data["profile_id"]
         meter_entity = call.data["meter_entity"]
@@ -433,9 +434,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             raise HomeAssistantError("device class mismatch")
 
         sensors = (
-            store.data.setdefault("plants", {})
-            .setdefault(profile_id, {})
-            .setdefault("sensors", {})
+            store.data.setdefault("plants", {}).setdefault(profile_id, {}).setdefault("sensors", {})
         )
         sensors[f"{role}_sensors"] = [new_sensor]
         await store.save()
@@ -444,6 +443,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         opts["sensors"] = mapped
         hass.config_entries.async_update_entry(entry, options=opts)
         await local_coord.async_request_refresh()
+
     hass.services.async_register(
         svc_base,
         "recalculate_targets",
@@ -489,6 +489,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 raise vol.Invalid("no irrigation provider")
 
         await async_apply_irrigation(hass, provider, zone, seconds)
+
     hass.services.async_register(
         svc_base,
         "replace_sensor",
@@ -561,7 +562,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await async_import_profiles(hass, path)
 
     hass.services.async_register(
-        svc_base, "resolve_profile", _svc_resolve_profile, schema=vol.Schema({vol.Required("profile_id"): str})
+        svc_base,
+        "resolve_profile",
+        _svc_resolve_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
     )
     hass.services.async_register(svc_base, "resolve_all", _svc_resolve_all)
     hass.services.async_register(
@@ -640,7 +644,5 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             CONF_KEEP_STALE,
             data.pop(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
         )
-        hass.config_entries.async_update_entry(
-            entry, data=data, options=options, version=2
-        )
+        hass.config_entries.async_update_entry(entry, data=data, options=options, version=2)
     return True

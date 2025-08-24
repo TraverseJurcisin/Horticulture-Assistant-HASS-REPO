@@ -8,5 +8,6 @@ def test_get_reference_et0_range():
 
 def test_get_reference_et0_range_invalid():
     import pytest
+
     with pytest.raises(ValueError):
         get_reference_et0_range(13)

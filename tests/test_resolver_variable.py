@@ -3,26 +3,38 @@ import types
 
 import pytest
 
+from custom_components.horticulture_assistant.resolver import resolve_variable_from_source
+
 ha = types.ModuleType("homeassistant")
 ha.const = types.SimpleNamespace(Platform=types.SimpleNamespace(SENSOR="sensor"))
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.const", ha.const)
 config_entries = types.ModuleType("homeassistant.config_entries")
+
+
 class ConfigEntry:  # minimal stub
     pass
+
+
 config_entries.ConfigEntry = ConfigEntry
 sys.modules.setdefault("homeassistant.config_entries", config_entries)
 sys.modules.setdefault("homeassistant.exceptions", types.ModuleType("homeassistant.exceptions"))
 helpers = types.ModuleType("homeassistant.helpers")
 sys.modules.setdefault("homeassistant.helpers", helpers)
-sys.modules.setdefault("homeassistant.helpers.entity_registry", types.ModuleType("homeassistant.helpers.entity_registry"))
-sys.modules.setdefault("homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event"))
-sys.modules.setdefault("homeassistant.helpers.update_coordinator", types.ModuleType("homeassistant.helpers.update_coordinator"))
+sys.modules.setdefault(
+    "homeassistant.helpers.entity_registry",
+    types.ModuleType("homeassistant.helpers.entity_registry"),
+)
+sys.modules.setdefault(
+    "homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event")
+)
+sys.modules.setdefault(
+    "homeassistant.helpers.update_coordinator",
+    types.ModuleType("homeassistant.helpers.update_coordinator"),
+)
 util = types.ModuleType("homeassistant.util")
 util.slugify = lambda x: x
 sys.modules.setdefault("homeassistant.util", util)
-
-from custom_components.horticulture_assistant.resolver import resolve_variable_from_source
 
 
 @pytest.mark.asyncio

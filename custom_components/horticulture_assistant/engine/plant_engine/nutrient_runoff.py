@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset
 
 DATA_FILE = "nutrients/nutrient_runoff_rates.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -42,9 +42,11 @@ def get_runoff_rate(nutrient: str, plant_type: str | None = None) -> float:
         return 0.0
 
 
-def estimate_runoff_loss(levels_mg: Mapping[str, float], plant_type: str | None = None) -> Dict[str, float]:
+def estimate_runoff_loss(
+    levels_mg: Mapping[str, float], plant_type: str | None = None
+) -> dict[str, float]:
     """Return nutrient losses (mg) from runoff."""
-    losses: Dict[str, float] = {}
+    losses: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         rate = get_runoff_rate(nutrient, plant_type)
         if rate <= 0:
@@ -53,21 +55,25 @@ def estimate_runoff_loss(levels_mg: Mapping[str, float], plant_type: str | None 
     return losses
 
 
-def compensate_for_runoff(levels_mg: Mapping[str, float], plant_type: str | None = None) -> Dict[str, float]:
+def compensate_for_runoff(
+    levels_mg: Mapping[str, float], plant_type: str | None = None
+) -> dict[str, float]:
     """Return adjusted nutrient amounts accounting for runoff losses."""
     losses = estimate_runoff_loss(levels_mg, plant_type)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         adjusted[nutrient] = round(float(mg) + losses.get(nutrient, 0.0), 2)
     return adjusted
 
 
-def estimate_cumulative_runoff_loss(levels_mg: Mapping[str, float], plant_type: str | None, cycles: int) -> Dict[str, float]:
+def estimate_cumulative_runoff_loss(
+    levels_mg: Mapping[str, float], plant_type: str | None, cycles: int
+) -> dict[str, float]:
     """Return nutrient losses after multiple runoff ``cycles``."""
     if cycles <= 0:
         raise ValueError("cycles must be positive")
 
-    losses: Dict[str, float] = {}
+    losses: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         rate = get_runoff_rate(nutrient, plant_type)
         if rate <= 0:
@@ -77,10 +83,12 @@ def estimate_cumulative_runoff_loss(levels_mg: Mapping[str, float], plant_type: 
     return losses
 
 
-def project_levels_after_runoff(levels_mg: Mapping[str, float], plant_type: str | None, cycles: int) -> Dict[str, float]:
+def project_levels_after_runoff(
+    levels_mg: Mapping[str, float], plant_type: str | None, cycles: int
+) -> dict[str, float]:
     """Return remaining nutrient levels after repeated runoff."""
     losses = estimate_cumulative_runoff_loss(levels_mg, plant_type, cycles)
-    remaining: Dict[str, float] = {}
+    remaining: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         remaining[nutrient] = round(float(mg) - losses.get(nutrient, 0.0), 2)
     return remaining

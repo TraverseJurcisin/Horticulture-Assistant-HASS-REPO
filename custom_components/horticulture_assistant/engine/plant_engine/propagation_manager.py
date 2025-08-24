@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "propagation/propagation_guidelines.json"
 
-_DATA: Dict[str, Dict[str, Dict[str, object]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, dict[str, object]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -29,7 +29,7 @@ def list_propagation_methods(plant_type: str) -> list[str]:
     return sorted(str(m) for m in plant.keys())
 
 
-def get_propagation_guidelines(plant_type: str, method: str) -> Dict[str, object]:
+def get_propagation_guidelines(plant_type: str, method: str) -> dict[str, object]:
     """Return guideline mapping for ``plant_type`` and ``method``."""
     plant = _DATA.get(normalize_key(plant_type), {})
     return plant.get(normalize_key(method), {})
@@ -47,7 +47,7 @@ def propagation_success_score(
     count = 0
     for key in ("temperature_c", "humidity_pct"):
         target = guide.get(key)
-        if not isinstance(target, (list, tuple)) or len(target) != 2:
+        if not isinstance(target, list | tuple) or len(target) != 2:
             continue
         try:
             value = float(environment.get(key))

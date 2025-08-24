@@ -9,11 +9,11 @@ Accepts a plant ID and analyzes recent electrical conductivity (EC) sensor readi
 Any detected alerts are logged and recorded in a JSON file (`data/ec_alerts.json`).
 """
 
-import logging
 import json
+import logging
 import os
-from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional
+from datetime import UTC, datetime, timedelta
+from typing import Optional
 
 from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
@@ -45,8 +45,9 @@ SUDDEN_CHANGE_THRESHOLD = 1.0  # mS/cm increase
 SUDDEN_CHANGE_WINDOW_HOURS = 3  # hours for sudden change detection
 SUSTAINED_HIGH_WINDOW_HOURS = 6  # hours for sustained high EC detection
 
+
 class ECTrendTracker:
-    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None):
+    def __init__(self, data_file: str | None = None, hass: Optional['HomeAssistant'] = None):
         """
         Initialize the ECTrendTracker.
         Loads existing EC alert logs from the specified JSON file, or creates a new structure if file is absent.
@@ -60,26 +61,40 @@ class ECTrendTracker:
         self._data_file = data_file
         self._hass = hass
         # Internal alerts log structure: dict of plant_id -> list of alert entries
-        self._alerts: Dict[str, List[Dict]] = {}
+        self._alerts: dict[str, list[dict]] = {}
         # Load existing alerts from file if available
         try:
-            with open(self._data_file, "r", encoding="utf-8") as f:
+            with open(self._data_file, encoding="utf-8") as f:
                 data = json.load(f)
             if isinstance(data, dict):
                 for pid, entries in data.items():
                     if isinstance(entries, list):
                         self._alerts[pid] = entries
                     else:
-                        _LOGGER.warning("EC alert log for plant %s is not a list; resetting to empty list.", pid)
+                        _LOGGER.warning(
+                            "EC alert log for plant %s is not a list; resetting to empty list.", pid
+                        )
                         self._alerts[pid] = []
             else:
-                _LOGGER.warning("EC alerts file format invalid (expected dict); starting with empty alerts log.")
+                _LOGGER.warning(
+                    "EC alerts file format invalid (expected dict); starting with empty alerts log."
+                )
         except FileNotFoundError:
-            _LOGGER.info("EC alerts file not found at %s; starting new EC alerts log.", self._data_file)
+            _LOGGER.info(
+                "EC alerts file not found at %s; starting new EC alerts log.", self._data_file
+            )
         except json.JSONDecodeError as e:
-            _LOGGER.error("JSON decode error reading EC alerts from %s: %s; initializing empty alert log.", self._data_file, e)
+            _LOGGER.error(
+                "JSON decode error reading EC alerts from %s: %s; initializing empty alert log.",
+                self._data_file,
+                e,
+            )
         except Exception as e:
-            _LOGGER.error("Error loading EC alerts from %s: %s; initializing empty alert log.", self._data_file, e)
+            _LOGGER.error(
+                "Error loading EC alerts from %s: %s; initializing empty alert log.",
+                self._data_file,
+                e,
+            )
 
     def check_trends(self, plant_id: str) -> None:
         """
@@ -90,10 +105,15 @@ class ECTrendTracker:
         Logs any detected alerts and records them in the EC alerts log.
         """
         if self._hass is None:
-            _LOGGER.error("HomeAssistant instance not provided; cannot retrieve sensor data for trend analysis.")
+            _LOGGER.error(
+                "HomeAssistant instance not provided; cannot retrieve sensor data for trend analysis."
+            )
             return
         if state_changes_during_period is None:
-            _LOGGER.warning("History not available; EC trend analysis cannot be performed for plant %s.", plant_id)
+            _LOGGER.warning(
+                "History not available; EC trend analysis cannot be performed for plant %s.",
+                plant_id,
+            )
             return
 
         # Load plant profile to get sensor entity and threshold
@@ -101,12 +121,15 @@ class ECTrendTracker:
         if load_profile is not None:
             profile = load_profile(plant_id=plant_id, base_dir=plants_path(self._hass))
         if not profile:
-            _LOGGER.error("Plant profile for '%s' not found or empty. EC threshold will be unavailable.", plant_id)
+            _LOGGER.error(
+                "Plant profile for '%s' not found or empty. EC threshold will be unavailable.",
+                plant_id,
+            )
 
         sensor_map = profile.get("sensor_entities") or {}
         ec_entity = sensor_map.get("ec") or f"sensor.{plant_id}_raw_ec"
         # Retrieve the plant's EC threshold from profile (if available)
-        plant_threshold: Optional[float] = None
+        plant_threshold: float | None = None
         thresholds = profile.get("thresholds") if profile else {}
         if isinstance(thresholds, dict):
             # Look for an EC threshold key (case-insensitive match: "EC", "ec")
@@ -115,39 +138,60 @@ class ECTrendTracker:
                     try:
                         plant_threshold = float(value)
                     except (ValueError, TypeError):
-                        _LOGGER.error("Invalid EC threshold value for plant %s: %s", plant_id, value)
+                        _LOGGER.error(
+                            "Invalid EC threshold value for plant %s: %s", plant_id, value
+                        )
                         plant_threshold = None
                     break
 
         # Get current EC sensor state
         state = self._hass.states.get(ec_entity)
         if not state or state.state in ("unknown", "unavailable"):
-            _LOGGER.warning("EC sensor %s is unavailable or has no data; skipping EC trend analysis for plant %s.", ec_entity, plant_id)
+            _LOGGER.warning(
+                "EC sensor %s is unavailable or has no data; skipping EC trend analysis for plant %s.",
+                ec_entity,
+                plant_id,
+            )
             return
         try:
             current_val = float(state.state)
         except (ValueError, TypeError):
-            _LOGGER.warning("Current state of %s is not numeric (%s); cannot analyze EC trends for plant %s.", ec_entity, state.state, plant_id)
+            _LOGGER.warning(
+                "Current state of %s is not numeric (%s); cannot analyze EC trends for plant %s.",
+                ec_entity,
+                state.state,
+                plant_id,
+            )
             return
 
         # Determine time window bounds
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         start_sudden = now - timedelta(hours=SUDDEN_CHANGE_WINDOW_HOURS)
         start_sustained = now - timedelta(hours=SUSTAINED_HIGH_WINDOW_HOURS)
 
         # Query state history for the EC sensor
         try:
-            history_sudden = state_changes_during_period(self._hass, start_sudden, now, entity_id=ec_entity, include_start_time_state=True)
-            history_sustained = state_changes_during_period(self._hass, start_sustained, now, entity_id=ec_entity, include_start_time_state=True)
+            history_sudden = state_changes_during_period(
+                self._hass, start_sudden, now, entity_id=ec_entity, include_start_time_state=True
+            )
+            history_sustained = state_changes_during_period(
+                self._hass, start_sustained, now, entity_id=ec_entity, include_start_time_state=True
+            )
         except Exception as e:
             _LOGGER.error("Failed to retrieve history for %s: %s", ec_entity, e)
             return
 
-        states_sudden = history_sudden.get(ec_entity.lower(), []) if isinstance(history_sudden, dict) else []
-        states_sustained = history_sustained.get(ec_entity.lower(), []) if isinstance(history_sustained, dict) else []
+        states_sudden = (
+            history_sudden.get(ec_entity.lower(), []) if isinstance(history_sudden, dict) else []
+        )
+        states_sustained = (
+            history_sustained.get(ec_entity.lower(), [])
+            if isinstance(history_sustained, dict)
+            else []
+        )
 
         # Extract numeric EC values from history, filtering out invalid states
-        ec_values_sudden: List[float] = []
+        ec_values_sudden: list[float] = []
         for s in states_sudden:
             # Each state in history is a homeassistant.core.State object
             if not hasattr(s, "state"):
@@ -158,8 +202,12 @@ class ECTrendTracker:
                 val = float(s.state)
                 ec_values_sudden.append(val)
             except (ValueError, TypeError):
-                _LOGGER.warning("Non-numeric EC state encountered for %s in sudden window: %s", ec_entity, s.state)
-        ec_values_sustained: List[float] = []
+                _LOGGER.warning(
+                    "Non-numeric EC state encountered for %s in sudden window: %s",
+                    ec_entity,
+                    s.state,
+                )
+        ec_values_sustained: list[float] = []
         for s in states_sustained:
             if not hasattr(s, "state"):
                 continue
@@ -169,15 +217,23 @@ class ECTrendTracker:
                 val = float(s.state)
                 ec_values_sustained.append(val)
             except (ValueError, TypeError):
-                _LOGGER.warning("Non-numeric EC state encountered for %s in sustained window: %s", ec_entity, s.state)
+                _LOGGER.warning(
+                    "Non-numeric EC state encountered for %s in sustained window: %s",
+                    ec_entity,
+                    s.state,
+                )
 
         if not ec_values_sudden or not ec_values_sustained:
             # If there's no data in history (unlikely if current_val exists), skip
-            _LOGGER.warning("No EC history data available for plant %s (sensor %s); skipping trend analysis.", plant_id, ec_entity)
+            _LOGGER.warning(
+                "No EC history data available for plant %s (sensor %s); skipping trend analysis.",
+                plant_id,
+                ec_entity,
+            )
             return
 
         # Initialize list for new alerts to record
-        new_alerts: List[Dict] = []
+        new_alerts: list[dict] = []
 
         # Check for sudden EC increase over the defined window
         # Compare EC at start of window vs end (current) to detect a large rise
@@ -192,11 +248,17 @@ class ECTrendTracker:
                 "change": round(delta, 2),
                 "window_hours": SUDDEN_CHANGE_WINDOW_HOURS,
                 "start_value": round(first_val, 2),
-                "end_value": round(last_val, 2)
+                "end_value": round(last_val, 2),
             }
             new_alerts.append(alert_entry)
-            _LOGGER.warning("Sudden EC increase detected for plant %s: EC rose by %.2f mS/cm in the last %d hours (%.2f -> %.2f).",
-                            plant_id, delta, SUDDEN_CHANGE_WINDOW_HOURS, first_val, last_val)
+            _LOGGER.warning(
+                "Sudden EC increase detected for plant %s: EC rose by %.2f mS/cm in the last %d hours (%.2f -> %.2f).",
+                plant_id,
+                delta,
+                SUDDEN_CHANGE_WINDOW_HOURS,
+                first_val,
+                last_val,
+            )
 
         # Check for sustained high EC above threshold if threshold is known
         if plant_threshold is not None and ec_values_sustained:
@@ -208,11 +270,16 @@ class ECTrendTracker:
                     "type": "high_ec",
                     "threshold": round(plant_threshold, 2),
                     "min_value": round(min_val, 2),
-                    "window_hours": SUSTAINED_HIGH_WINDOW_HOURS
+                    "window_hours": SUSTAINED_HIGH_WINDOW_HOURS,
                 }
                 new_alerts.append(alert_entry)
-                _LOGGER.warning("Sustained high EC for plant %s: EC has been above %.2f mS/cm for at least %d hours (minimum %.2f).",
-                                plant_id, plant_threshold, SUSTAINED_HIGH_WINDOW_HOURS, min_val)
+                _LOGGER.warning(
+                    "Sustained high EC for plant %s: EC has been above %.2f mS/cm for at least %d hours (minimum %.2f).",
+                    plant_id,
+                    plant_threshold,
+                    SUSTAINED_HIGH_WINDOW_HOURS,
+                    min_val,
+                )
 
         # If any alerts were generated, save them to the alerts log
         if new_alerts:

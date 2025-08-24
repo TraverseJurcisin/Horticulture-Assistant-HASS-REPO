@@ -10,14 +10,13 @@ logs.  The functions are intentionally dependency free so they can be
 executed during unit tests without a Home Assistant install.
 """
 
-from dataclasses import dataclass, asdict
-from datetime import datetime
-from pathlib import Path
-from typing import Iterable, Mapping, MutableMapping
-
-from functools import lru_cache
-
 import logging
+from collections.abc import Iterable, Mapping, MutableMapping
+from dataclasses import dataclass
+from datetime import datetime
+from functools import cache
+from pathlib import Path
+
 import numpy as np
 
 try:
@@ -30,7 +29,7 @@ from plant_engine.fertigation import estimate_solution_ec
 from plant_engine.utils import load_dataset
 
 from .json_io import load_json, save_json
-from .path_utils import plants_path, data_path
+from .path_utils import data_path, plants_path
 from .plant_profile_loader import load_profile_by_id
 
 _LOGGER = logging.getLogger(__name__)
@@ -39,9 +38,7 @@ MODEL_FILE = Path(data_path(None, "ec_model.json"))
 DEFAULT_DATA_FILE = "ec/ec_model_defaults.json"
 
 
-def _model_path(
-    plant_id: str | None = None, *, base_path: str | Path | None = None
-) -> Path:
+def _model_path(plant_id: str | None = None, *, base_path: str | Path | None = None) -> Path:
     """Return the path to the EC model file."""
     if plant_id:
         return Path(base_path or plants_path(None)) / plant_id / "ec_model.json"
@@ -81,9 +78,7 @@ class ECEstimator:
 
 
 _default_data = load_dataset(DEFAULT_DATA_FILE)
-_default_coeffs = _default_data.get("coeffs", {}) if isinstance(
-    _default_data, Mapping
-) else {}
+_default_coeffs = _default_data.get("coeffs", {}) if isinstance(_default_data, Mapping) else {}
 if not isinstance(_default_coeffs, Mapping):
     _default_coeffs = {}
 DEFAULT_MODEL = ECEstimator(
@@ -132,7 +127,7 @@ class ECFeatures:
         return data
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_model(
     path: str | Path | None = None,
     *,
@@ -224,9 +219,7 @@ def log_runoff_ec(
         _LOGGER.error("Failed to write runoff EC log for %s: %s", plant_id, exc)
 
 
-def _latest_log_value(
-    entries: Iterable[Mapping[str, object]], key: str
-) -> float | None:
+def _latest_log_value(entries: Iterable[Mapping[str, object]], key: str) -> float | None:
     """Return the most recent numeric ``key`` value from log ``entries``."""
     for entry in reversed(list(entries)):
         val = _float_or_none(entry.get(key))
@@ -286,26 +279,22 @@ def estimate_ec(
     profile = load_profile_by_id(plant_id, base_dir=base_path or plants_path(hass))
     general = profile.get("general", {}) if profile else {}
     latest_env = (
-        general.get("latest_env", {})
-        if isinstance(general.get("latest_env"), Mapping)
-        else {}
+        general.get("latest_env", {}) if isinstance(general.get("latest_env"), Mapping) else {}
     )
 
-    moisture = _latest_sensor_value(
-        sensor_log, ["soil_moisture", "moisture"]
-    ) or _env_value(latest_env, ["soil_moisture", "moisture"])
+    moisture = _latest_sensor_value(sensor_log, ["soil_moisture", "moisture"]) or _env_value(
+        latest_env, ["soil_moisture", "moisture"]
+    )
     temperature = _latest_sensor_value(
         sensor_log, ["soil_temperature", "root_temperature"]
     ) or _env_value(latest_env, ["soil_temperature", "root_temperature"])
     irrigation_ml = _latest_log_value(irrigation_log, "volume_applied_ml") or 0.0
     ambient_temp = _latest_sensor_value(
         sensor_log, ["air_temperature", "ambient_temperature", "temperature"]
-    ) or _env_value(
-        latest_env, ["air_temperature", "ambient_temperature", "temperature"]
+    ) or _env_value(latest_env, ["air_temperature", "ambient_temperature", "temperature"])
+    humidity = _latest_sensor_value(sensor_log, ["humidity", "relative_humidity"]) or _env_value(
+        latest_env, ["humidity", "relative_humidity"]
     )
-    humidity = _latest_sensor_value(
-        sensor_log, ["humidity", "relative_humidity"]
-    ) or _env_value(latest_env, ["humidity", "relative_humidity"])
 
     solution_ec = _latest_log_value(nutrient_log, "solution_ec") or 0.0
     formulation = None

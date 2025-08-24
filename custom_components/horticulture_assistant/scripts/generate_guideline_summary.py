@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root on path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,21 +23,17 @@ def generate_summary(plant_type: str, stage: str | None = None) -> dict:
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(
-        description="Show guideline summary for a plant stage"
-    )
+    parser = argparse.ArgumentParser(description="Show guideline summary for a plant stage")
     parser.add_argument("plant_type", help="crop identifier")
     parser.add_argument("stage", nargs="?", default=None, help="growth stage")
-    parser.add_argument(
-        "--yaml", action="store_true", help="output YAML instead of JSON"
-    )
+    parser.add_argument("--yaml", action="store_true", help="output YAML instead of JSON")
     args = parser.parse_args(argv)
 
     data = generate_summary(args.plant_type, args.stage)
     if args.yaml:
         try:
             import yaml
-        except Exception as exc:  # pragma: no cover - optional dependency
+        except Exception:  # pragma: no cover - optional dependency
             parser.error("PyYAML required for --yaml output")
         print(yaml.safe_dump(data, sort_keys=False))
     else:

@@ -1,20 +1,21 @@
-import pytest
 from datetime import date
+
+import pytest
 from plant_engine.fertigation import (
+    calculate_mix_nutrients,
+    estimate_daily_nutrient_uptake,
+    generate_fertigation_plan,
+    get_fertigation_interval,
+    get_fertilizer_purity,
+    next_fertigation_date,
+    recommend_batch_fertigation,
+    recommend_correction_schedule,
     recommend_fertigation_schedule,
     recommend_fertigation_with_water,
-    recommend_correction_schedule,
-    get_fertilizer_purity,
-    recommend_batch_fertigation,
     recommend_nutrient_mix,
-    recommend_nutrient_mix_with_water,
-    estimate_daily_nutrient_uptake,
     recommend_nutrient_mix_with_cost,
     recommend_nutrient_mix_with_cost_breakdown,
-    generate_fertigation_plan,
-    calculate_mix_nutrients,
-    get_fertigation_interval,
-    next_fertigation_date,
+    recommend_nutrient_mix_with_water,
 )
 
 
@@ -125,9 +126,7 @@ def test_recommend_nutrient_mix_with_water():
 
 
 def test_estimate_daily_nutrient_uptake():
-    uptake = estimate_daily_nutrient_uptake(
-        "tomato", "vegetative", daily_water_ml=2000.0
-    )
+    uptake = estimate_daily_nutrient_uptake("tomato", "vegetative", daily_water_ml=2000.0)
     assert uptake["N"] == pytest.approx(200.0)
     assert uptake["P"] == pytest.approx(100.0)
 
@@ -203,7 +202,7 @@ def test_recommend_uptake_fertigation_invalid():
 
 
 def test_estimate_stage_and_cycle_cost():
-    from plant_engine.fertigation import estimate_stage_cost, estimate_cycle_cost
+    from plant_engine.fertigation import estimate_cycle_cost, estimate_stage_cost
 
     stage_cost = estimate_stage_cost(
         "lettuce",
@@ -364,8 +363,8 @@ def test_recommend_stock_solution_injection():
 
 def test_stock_solution_recipes():
     from plant_engine.fertigation import (
-        get_stock_solution_recipe,
         apply_stock_solution_recipe,
+        get_stock_solution_recipe,
     )
 
     recipe = get_stock_solution_recipe("tomato", "vegetative")
@@ -427,9 +426,7 @@ def test_summarize_fertigation_schedule():
         "P": "foxfarm_grow_big",
         "K": "intrepid_granular_potash_0_0_60",
     }
-    summary = summarize_fertigation_schedule(
-        "citrus", "vegetative", 1.0, fertilizers=fert_map
-    )
+    summary = summarize_fertigation_schedule("citrus", "vegetative", 1.0, fertilizers=fert_map)
     assert "schedule" in summary
     assert "cost_total" in summary
     assert isinstance(summary["schedule"], dict)
@@ -438,8 +435,8 @@ def test_summarize_fertigation_schedule():
 
 def test_recommend_loss_compensated_mix():
     from plant_engine.fertigation import (
-        recommend_nutrient_mix,
         recommend_loss_compensated_mix,
+        recommend_nutrient_mix,
     )
 
     base = recommend_nutrient_mix("citrus", "vegetative", 1.0)
@@ -453,9 +450,7 @@ def test_recommend_loss_compensated_mix():
 def test_recommend_recovery_adjusted_schedule():
     from plant_engine.fertigation import recommend_recovery_adjusted_schedule
 
-    schedule = recommend_recovery_adjusted_schedule(
-        "tomato", "vegetative", 10.0
-    )
+    schedule = recommend_recovery_adjusted_schedule("tomato", "vegetative", 10.0)
 
     assert schedule["N"] == pytest.approx(1.667, rel=1e-3)
     assert schedule["P"] == pytest.approx(1.429, rel=1e-3)
@@ -491,14 +486,13 @@ def test_recommend_loss_adjusted_fertigation():
 
 def test_estimate_weekly_fertigation_cost():
     from plant_engine.fertigation import estimate_weekly_fertigation_cost
+
     fert_map = {
         "N": "foxfarm_grow_big",
         "P": "foxfarm_grow_big",
         "K": "intrepid_granular_potash_0_0_60",
     }
-    cost = estimate_weekly_fertigation_cost(
-        "tomato", "vegetative", 10.0, fertilizers=fert_map
-    )
+    cost = estimate_weekly_fertigation_cost("tomato", "vegetative", 10.0, fertilizers=fert_map)
     assert cost > 0
 
 

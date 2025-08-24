@@ -1,16 +1,14 @@
 from datetime import date
 
 from plant_engine.monitor_utils import (
+    calculate_risk_score,
+    generate_schedule,
     get_interval,
     next_date,
-    generate_schedule,
-    calculate_risk_score,
 )
 
-DATA = {
-    "citrus": {"fruiting": 4, "optimal": 5},
-    "tomato": {"seedling": 2}
-}
+DATA = {"citrus": {"fruiting": 4, "optimal": 5}, "tomato": {"seedling": 2}}
+
 
 def test_get_interval():
     assert get_interval(DATA, "citrus", "fruiting") == 4

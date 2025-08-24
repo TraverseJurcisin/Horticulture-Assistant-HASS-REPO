@@ -2,10 +2,11 @@ from __future__ import annotations
 
 """Utilities for combined pest and disease monitoring schedules."""
 
+from collections.abc import Mapping
 from datetime import date
-from typing import List, Mapping, Dict, Any
+from typing import Any
 
-from . import pest_monitor, disease_monitor
+from . import disease_monitor, pest_monitor
 
 __all__ = [
     "generate_integrated_monitoring_schedule",
@@ -18,7 +19,7 @@ def generate_integrated_monitoring_schedule(
     stage: str | None,
     start: date,
     events: int,
-) -> List[date]:
+) -> list[date]:
     """Return merged pest and disease monitoring dates.
 
     The schedule combines pest and disease intervals, sorted and deduplicated.
@@ -40,7 +41,7 @@ def summarize_integrated_management(
     diseases: Mapping[str, int],
     environment: Mapping[str, float] | None = None,
     last_date: date | None = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return combined pest and disease management summary."""
 
     pest_summary = pest_monitor.summarize_pest_management(

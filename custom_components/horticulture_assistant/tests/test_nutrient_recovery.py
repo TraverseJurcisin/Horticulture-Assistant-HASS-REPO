@@ -1,8 +1,8 @@
 from plant_engine.nutrient_recovery import (
+    adjust_for_recovery,
+    estimate_recovered_amounts,
     get_recovery_factor,
     get_recovery_factors,
-    estimate_recovered_amounts,
-    adjust_for_recovery,
 )
 
 

@@ -6,18 +6,17 @@ compare them against accumulated nutrient totals and estimate totals for a
 time span.
 """
 
-from functools import lru_cache
-from typing import Dict, Mapping
+from collections.abc import Mapping
+from functools import cache
 
 from plant_engine.root_temperature import get_uptake_factor
-
 from plant_engine.utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrients/total_nutrient_requirements.json"
 
 
-@lru_cache(maxsize=None)
-def get_requirements(plant_type: str) -> Dict[str, float]:
+@cache
+def get_requirements(plant_type: str) -> dict[str, float]:
     """Return daily nutrient requirements for ``plant_type``.
 
     Unknown plants yield an empty mapping. Values are coerced to ``float`` and
@@ -32,11 +31,11 @@ def get_requirements(plant_type: str) -> Dict[str, float]:
     return {
         nutrient: float(value)
         for nutrient, value in raw.items()
-        if isinstance(value, (int, float, str))
+        if isinstance(value, int | float | str)
     }
 
 
-def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> dict[str, float]:
     """Return required nutrient amounts not yet supplied."""
 
     required = get_requirements(plant_type)
@@ -47,7 +46,7 @@ def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> D
     }
 
 
-def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, float]:
+def calculate_cumulative_requirements(plant_type: str, days: int) -> dict[str, float]:
     """Return total nutrient needs over ``days``.
 
     Values are derived from :func:`get_requirements` and multiplied by the
@@ -62,9 +61,7 @@ def calculate_cumulative_requirements(plant_type: str, days: int) -> Dict[str, f
     return {nutrient: round(value * days, 2) for nutrient, value in daily.items()}
 
 
-def get_temperature_adjusted_requirements(
-    plant_type: str, root_temp_c: float
-) -> Dict[str, float]:
+def get_temperature_adjusted_requirements(plant_type: str, root_temp_c: float) -> dict[str, float]:
     """Return daily requirements adjusted for root zone temperature."""
 
     base = get_requirements(plant_type)
@@ -80,7 +77,7 @@ def get_temperature_adjusted_requirements(
 
 def calculate_temperature_adjusted_cumulative_requirements(
     plant_type: str, days: int, root_temp_c: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return total nutrient needs adjusted for root zone temperature."""
 
     if days <= 0:

@@ -1,13 +1,12 @@
 """Growing media guidelines and utilities."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "media/media_properties.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_media",
@@ -20,10 +19,10 @@ def list_supported_media() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_media_properties(media_type: str) -> Dict[str, float]:
+def get_media_properties(media_type: str) -> dict[str, float]:
     """Return property mapping for ``media_type``."""
     return {
         k: float(v)
         for k, v in _DATA.get(normalize_key(media_type), {}).items()
-        if isinstance(v, (int, float))
+        if isinstance(v, int | float)
     }

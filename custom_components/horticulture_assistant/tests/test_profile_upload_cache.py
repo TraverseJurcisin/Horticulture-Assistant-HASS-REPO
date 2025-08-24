@@ -8,9 +8,7 @@ from custom_components.horticulture_assistant.utils.profile_upload_cache import 
 
 def _make_hass(tmp_path):
     return types.SimpleNamespace(
-        config=types.SimpleNamespace(
-            path=lambda *parts: str(tmp_path.joinpath(*parts))
-        )
+        config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts)))
     )
 
 

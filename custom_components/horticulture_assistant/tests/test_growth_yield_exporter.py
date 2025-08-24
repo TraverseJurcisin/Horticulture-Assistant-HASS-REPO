@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 from custom_components.horticulture_assistant.analytics import growth_yield_exporter as gy
 

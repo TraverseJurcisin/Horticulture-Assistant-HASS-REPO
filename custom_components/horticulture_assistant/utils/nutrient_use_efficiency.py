@@ -7,21 +7,24 @@ applications for individual plants and aggregates yield data from the default
 Assistant so the calculations can be unit tested in isolation.  Usage logs are
 stored in JSON for easy inspection and further analysis.
 """
-import os
+
 import json
 import logging
-from dataclasses import dataclass, asdict
-from datetime import datetime, date
-from typing import Dict, List, Optional, Union, Mapping
+import os
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from datetime import date, datetime
+from typing import Optional
+
+from plant_engine.utils import load_dataset
 
 from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
     config_path,
+    data_path,
 )
 from custom_components.horticulture_assistant.utils.plant_registry import (
     PLANT_REGISTRY_FILE,
 )
-from plant_engine.utils import load_dataset
 
 try:
     from homeassistant.core import HomeAssistant
@@ -32,7 +35,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # Efficiency benchmark dataset
 EFFICIENCY_TARGET_FILE = "nutrients/nutrient_efficiency_targets.json"
-_EFFICIENCY_TARGETS: Dict[str, Dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
+_EFFICIENCY_TARGETS: dict[str, dict[str, float]] = load_dataset(EFFICIENCY_TARGET_FILE)
 
 
 @dataclass(slots=True)
@@ -40,7 +43,7 @@ class ApplicationRecord:
     """Single fertilizer application log entry."""
 
     date: date
-    nutrients: Dict[str, float]
+    nutrients: dict[str, float]
     stage: str
 
     @classmethod
@@ -51,7 +54,7 @@ class ApplicationRecord:
         except Exception:
             dt = date.today()
         raw = data.get("nutrients", {})
-        nutrients: Dict[str, float] = {}
+        nutrients: dict[str, float] = {}
         if isinstance(raw, Mapping):
             for k, v in raw.items():
                 try:
@@ -61,7 +64,7 @@ class ApplicationRecord:
         stage = str(data.get("stage", "unknown"))
         return cls(dt, nutrients, stage)
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         return {"date": self.date.isoformat(), "nutrients": self.nutrients, "stage": self.stage}
 
 
@@ -85,14 +88,14 @@ class YieldRecord:
             weight = 0.0
         return cls(dt, weight)
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         return {"date": self.date.isoformat(), "weight": self.weight}
 
 
-def get_efficiency_targets(plant_type: str) -> Dict[str, float]:
+def get_efficiency_targets(plant_type: str) -> dict[str, float]:
     """Return expected nutrient use efficiency for ``plant_type``."""
     data = _EFFICIENCY_TARGETS.get(str(plant_type).lower(), {})
-    return {k: float(v) for k, v in data.items() if isinstance(v, (int, float))}
+    return {k: float(v) for k, v in data.items() if isinstance(v, int | float)}
 
 
 def score_efficiency(efficiency: Mapping[str, float], plant_type: str) -> float:
@@ -112,7 +115,9 @@ def score_efficiency(efficiency: Mapping[str, float], plant_type: str) -> float:
     return round((total / count) * 100, 1) if count else 0.0
 
 
-def efficiency_report(efficiency: Mapping[str, float], plant_type: str) -> Dict[str, Dict[str, float]]:
+def efficiency_report(
+    efficiency: Mapping[str, float], plant_type: str
+) -> dict[str, dict[str, float]]:
     """Return comparison of ``efficiency`` against reference targets.
 
     Parameters
@@ -131,7 +136,7 @@ def efficiency_report(efficiency: Mapping[str, float], plant_type: str) -> Dict[
     """
 
     targets = get_efficiency_targets(plant_type)
-    report: Dict[str, Dict[str, float]] = {}
+    report: dict[str, dict[str, float]] = {}
     for nutrient, target in targets.items():
         actual = efficiency.get(nutrient)
         if actual is None:
@@ -148,10 +153,13 @@ def efficiency_report(efficiency: Mapping[str, float], plant_type: str) -> Dict[
         }
     return report
 
+
 class NutrientUseEfficiency:
     """Track fertilizer usage and calculate nutrient use efficiency."""
 
-    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None) -> None:
+    def __init__(
+        self, data_file: str | None = None, hass: Optional['HomeAssistant'] = None
+    ) -> None:
         """Load existing logs or initialize empty structures.
 
         Parameters
@@ -167,39 +175,60 @@ class NutrientUseEfficiency:
         self._data_file = data_file
         self._hass = hass
         # Internal logs
-        self._usage_logs: Dict[str, List[Dict]] = {}
-        self.application_log: Dict[str, Dict[str, float]] = {}
-        self.tissue_log: Dict[str, Dict[str, float]] = {}
-        self.yield_log: Dict[str, float] = {}
+        self._usage_logs: dict[str, list[dict]] = {}
+        self.application_log: dict[str, dict[str, float]] = {}
+        self.tissue_log: dict[str, dict[str, float]] = {}
+        self.yield_log: dict[str, float] = {}
         # Load existing usage logs from file if available
         try:
-            with open(self._data_file, "r", encoding="utf-8") as f:
+            with open(self._data_file, encoding="utf-8") as f:
                 data = json.load(f)
             if isinstance(data, dict):
                 for pid, entries in data.items():
                     if isinstance(entries, list):
                         self._usage_logs[pid] = entries
                     else:
-                        _LOGGER.warning("Nutrient use log for plant %s is not a list; resetting to empty list.", pid)
+                        _LOGGER.warning(
+                            "Nutrient use log for plant %s is not a list; resetting to empty list.",
+                            pid,
+                        )
                         self._usage_logs[pid] = []
             else:
-                _LOGGER.warning("Nutrient use log file format invalid (expected dict at top level); starting with empty log.")
+                _LOGGER.warning(
+                    "Nutrient use log file format invalid (expected dict at top level); starting with empty log."
+                )
         except FileNotFoundError:
-            _LOGGER.info("Nutrient use log file not found at %s; starting new nutrient use log.", self._data_file)
+            _LOGGER.info(
+                "Nutrient use log file not found at %s; starting new nutrient use log.",
+                self._data_file,
+            )
         except json.JSONDecodeError as e:
-            _LOGGER.error("JSON decode error reading nutrient use log from %s: %s; initializing empty log.", self._data_file, e)
+            _LOGGER.error(
+                "JSON decode error reading nutrient use log from %s: %s; initializing empty log.",
+                self._data_file,
+                e,
+            )
         except Exception as e:
-            _LOGGER.error("Error loading nutrient use log from %s: %s; initializing empty log.", self._data_file, e)
+            _LOGGER.error(
+                "Error loading nutrient use log from %s: %s; initializing empty log.",
+                self._data_file,
+                e,
+            )
         # Build application_log totals from loaded records
         for pid, entries in self._usage_logs.items():
-            total_nutrients: Dict[str, float] = {}
+            total_nutrients: dict[str, float] = {}
             for record in entries:
                 nutrients = record.get("nutrients", {})
                 for nutrient, amt in nutrients.items():
                     try:
                         amt_val = float(amt)
                     except (ValueError, TypeError):
-                        _LOGGER.warning("Invalid nutrient amount '%s' for %s in plant %s log; skipping.", amt, nutrient, pid)
+                        _LOGGER.warning(
+                            "Invalid nutrient amount '%s' for %s in plant %s log; skipping.",
+                            amt,
+                            nutrient,
+                            pid,
+                        )
                         continue
                     total_nutrients[nutrient] = total_nutrients.get(nutrient, 0.0) + amt_val
             self.application_log[pid] = total_nutrients
@@ -209,7 +238,7 @@ class NutrientUseEfficiency:
         except Exception:
             yield_file = data_path(None, "yield_logs.json")
         try:
-            with open(yield_file, "r", encoding="utf-8") as yf:
+            with open(yield_file, encoding="utf-8") as yf:
                 yield_data = json.load(yf)
             if isinstance(yield_data, dict):
                 for pid, entries in yield_data.items():
@@ -224,18 +253,32 @@ class NutrientUseEfficiency:
                                 total_yield += w
                         self.yield_log[pid] = total_yield
                     else:
-                        _LOGGER.warning("Yield log for plant %s is not a list; skipping yield load for this plant.", pid)
+                        _LOGGER.warning(
+                            "Yield log for plant %s is not a list; skipping yield load for this plant.",
+                            pid,
+                        )
             else:
-                _LOGGER.warning("Yield logs file format invalid (expected dict at top level); yield data not loaded.")
+                _LOGGER.warning(
+                    "Yield logs file format invalid (expected dict at top level); yield data not loaded."
+                )
         except FileNotFoundError:
-            _LOGGER.info("Yield logs file not found at %s; proceeding without initial yield data.", yield_file)
+            _LOGGER.info(
+                "Yield logs file not found at %s; proceeding without initial yield data.",
+                yield_file,
+            )
         except json.JSONDecodeError as e:
-            _LOGGER.error("JSON decode error reading yield logs from %s: %s; yield data not loaded.", yield_file, e)
+            _LOGGER.error(
+                "JSON decode error reading yield logs from %s: %s; yield data not loaded.",
+                yield_file,
+                e,
+            )
         except Exception as e:
-            _LOGGER.error("Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e)
+            _LOGGER.error(
+                "Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e
+            )
 
     @staticmethod
-    def _format_date(value: Optional[Union[str, date, datetime]]) -> str:
+    def _format_date(value: str | date | datetime | None) -> str:
         """Return ``YYYY-MM-DD`` string for ``value`` or today if ``None``."""
         if value is None:
             return datetime.now().strftime("%Y-%m-%d")
@@ -245,9 +288,13 @@ class NutrientUseEfficiency:
             return value.isoformat()
         return str(value)
 
-    def log_fertilizer_application(self, plant_id: str, nutrient_mass: Dict[str, float],
-                                   entry_date: Optional[Union[str, date, datetime]] = None,
-                                   stage: Optional[str] = None) -> None:
+    def log_fertilizer_application(
+        self,
+        plant_id: str,
+        nutrient_mass: dict[str, float],
+        entry_date: str | date | datetime | None = None,
+        stage: str | None = None,
+    ) -> None:
         """
         Record a fertilizer application event for a plant.
         :param plant_id: Identifier of the plant.
@@ -266,16 +313,18 @@ class NutrientUseEfficiency:
                 else PLANT_REGISTRY_FILE
             )
             try:
-                with open(reg_path, "r", encoding="utf-8") as rf:
+                with open(reg_path, encoding="utf-8") as rf:
                     reg_data = json.load(rf)
                 if plant_id in reg_data:
-                    stage_name = reg_data[plant_id].get("current_lifecycle_stage") or reg_data[plant_id].get("lifecycle_stage")
+                    stage_name = reg_data[plant_id].get("current_lifecycle_stage") or reg_data[
+                        plant_id
+                    ].get("lifecycle_stage")
             except Exception:
                 stage_name = None
         if stage_name is None:
             stage_name = "unknown"
         # Convert nutrient amounts to float and validate
-        nutrient_mass_clean: Dict[str, float] = {}
+        nutrient_mass_clean: dict[str, float] = {}
         for nut, amt in nutrient_mass.items():
             try:
                 amt_val = float(amt)
@@ -297,13 +346,20 @@ class NutrientUseEfficiency:
         if plant_id not in self.application_log:
             self.application_log[plant_id] = {}
         for nut, amt_val in nutrient_mass_clean.items():
-            self.application_log[plant_id][nut] = self.application_log[plant_id].get(nut, 0.0) + amt_val
+            self.application_log[plant_id][nut] = (
+                self.application_log[plant_id].get(nut, 0.0) + amt_val
+            )
         # Persist to file
         self._save_to_file()
-        _LOGGER.info("Fertilizer application logged for plant %s: %s on %s (stage: %s)",
-                     plant_id, nutrient_mass_clean, date_str, stage_name)
+        _LOGGER.info(
+            "Fertilizer application logged for plant %s: %s on %s (stage: %s)",
+            plant_id,
+            nutrient_mass_clean,
+            date_str,
+            stage_name,
+        )
 
-    def log_tissue_test(self, plant_id: str, tissue_nutrient_mass: Dict[str, float]) -> None:
+    def log_tissue_test(self, plant_id: str, tissue_nutrient_mass: dict[str, float]) -> None:
         """
         Record a tissue nutrient analysis result for a given plant.
         Example: {"N": 9.2, "P": 2.3, "K": 7.4} (concentrations or content in % or mg as appropriate)
@@ -311,8 +367,12 @@ class NutrientUseEfficiency:
         self.tissue_log[plant_id] = tissue_nutrient_mass
         _LOGGER.info("Tissue test recorded for plant %s: %s", plant_id, tissue_nutrient_mass)
 
-    def log_yield(self, plant_id: str, yield_mass: Union[int, float],
-                  entry_date: Optional[Union[str, date, datetime]] = None) -> None:
+    def log_yield(
+        self,
+        plant_id: str,
+        yield_mass: int | float,
+        entry_date: str | date | datetime | None = None,
+    ) -> None:
         """
         Record a yield event (harvest) for a given plant.
         :param plant_id: Identifier of the plant.
@@ -332,21 +392,26 @@ class NutrientUseEfficiency:
         self.yield_log[plant_id] += yield_val
         _LOGGER.info("Yield logged for plant %s: %.2f g on %s", plant_id, yield_val, date_str)
 
-    def compute_efficiency(self, plant_id: str) -> Optional[Dict[str, float]]:
+    def compute_efficiency(self, plant_id: str) -> dict[str, float] | None:
         """
         Calculate nutrient use efficiency for the given plant.
         Efficiency is defined as grams of yield produced per mg of nutrient applied.
         Returns a dict mapping each nutrient to its efficiency value, or None if data is incomplete.
         """
         if plant_id not in self.application_log or plant_id not in self.yield_log:
-            _LOGGER.warning("Cannot compute efficiency for plant %s: missing data (applied nutrients or yield).", plant_id)
+            _LOGGER.warning(
+                "Cannot compute efficiency for plant %s: missing data (applied nutrients or yield).",
+                plant_id,
+            )
             return None
         total_yield_g = self.yield_log.get(plant_id, 0.0)
         if total_yield_g <= 0:
-            _LOGGER.warning("No yield recorded for plant %s; efficiency cannot be computed.", plant_id)
+            _LOGGER.warning(
+                "No yield recorded for plant %s; efficiency cannot be computed.", plant_id
+            )
             return None
         applied_totals = self.application_log.get(plant_id, {})
-        results: Dict[str, float] = {}
+        results: dict[str, float] = {}
         for nutrient, total_mg in applied_totals.items():
             if total_mg <= 0:
                 continue
@@ -355,13 +420,13 @@ class NutrientUseEfficiency:
             results[nutrient] = round(efficiency_value, 4)
         return results
 
-    def total_nutrients_applied(self, plant_id: str) -> Dict[str, float]:
+    def total_nutrients_applied(self, plant_id: str) -> dict[str, float]:
         """Return cumulative nutrient mass (mg) applied to ``plant_id``."""
         return self.application_log.get(plant_id, {}).copy()
 
-    def compute_overall_efficiency(self) -> Dict[str, Dict[str, float]]:
+    def compute_overall_efficiency(self) -> dict[str, dict[str, float]]:
         """Return nutrient efficiency values for all plants with data."""
-        output: Dict[str, Dict[str, float]] = {}
+        output: dict[str, dict[str, float]] = {}
         for pid in self.application_log:
             eff = self.compute_efficiency(pid)
             if eff:
@@ -375,9 +440,7 @@ class NutrientUseEfficiency:
             return 0.0
         return score_efficiency(eff, plant_type)
 
-    def compare_to_expected(
-        self, plant_id: str, plant_type: str, stage: str
-    ) -> Dict[str, float]:
+    def compare_to_expected(self, plant_id: str, plant_type: str, stage: str) -> dict[str, float]:
         """Return applied minus expected nutrient totals for a stage."""
 
         from plant_engine.nutrient_uptake import estimate_stage_totals
@@ -387,14 +450,14 @@ class NutrientUseEfficiency:
             return {}
 
         applied = self.total_nutrients_applied(plant_id)
-        diff: Dict[str, float] = {}
+        diff: dict[str, float] = {}
         for nut in set(expected) | set(applied):
             exp = float(expected.get(nut, 0.0))
             act = float(applied.get(nut, 0.0))
             diff[nut] = round(act - exp, 2)
         return diff
 
-    def get_usage_summary(self, plant_id: str, by: str) -> Dict[str, Dict[str, float]]:
+    def get_usage_summary(self, plant_id: str, by: str) -> dict[str, dict[str, float]]:
         """
         Summarize nutrient usage for a plant, grouped by a time period or lifecycle stage.
         :param plant_id: Identifier of the plant.
@@ -405,14 +468,16 @@ class NutrientUseEfficiency:
         group_by = str(by).lower()
         if plant_id not in self._usage_logs or not self._usage_logs[plant_id]:
             return {}
-        summary: Dict[str, Dict[str, float]] = {}
+        summary: dict[str, dict[str, float]] = {}
         for entry in self._usage_logs[plant_id]:
             date_str = entry.get("date")
             # Parse date string to date object for grouping
             try:
                 entry_date = datetime.strptime(date_str, "%Y-%m-%d").date()
             except Exception as e:
-                _LOGGER.warning("Invalid date format '%s' in logs for plant %s: %s", date_str, plant_id, e)
+                _LOGGER.warning(
+                    "Invalid date format '%s' in logs for plant %s: %s", date_str, plant_id, e
+                )
                 continue
             if group_by == "week":
                 year, week_num, _ = entry_date.isocalendar()
@@ -422,7 +487,9 @@ class NutrientUseEfficiency:
             elif group_by == "stage":
                 key = entry.get("stage", "unknown")
             else:
-                raise ValueError(f"Invalid summary grouping: {by}. Use 'week', 'month', or 'stage'.")
+                raise ValueError(
+                    f"Invalid summary grouping: {by}. Use 'week', 'month', or 'stage'."
+                )
             # Aggregate nutrient amounts
             if key not in summary:
                 summary[key] = {}
@@ -434,7 +501,7 @@ class NutrientUseEfficiency:
                 summary[key][nut] = summary[key].get(nut, 0.0) + amt_val
         return summary
 
-    def average_weekly_usage(self, plant_id: str) -> Dict[str, float]:
+    def average_weekly_usage(self, plant_id: str) -> dict[str, float]:
         """Return average weekly nutrient application for ``plant_id``."""
 
         if plant_id not in self._usage_logs or not self._usage_logs[plant_id]:
@@ -445,7 +512,7 @@ class NutrientUseEfficiency:
         start = records[0].date
         end = records[-1].date
         weeks = max(1, ((end - start).days // 7) + 1)
-        totals: Dict[str, float] = {}
+        totals: dict[str, float] = {}
         for rec in records:
             for nutrient, amt in rec.nutrients.items():
                 totals[nutrient] = totals.get(nutrient, 0.0) + amt
@@ -458,7 +525,7 @@ class NutrientUseEfficiency:
             with open(self._data_file, "w", encoding="utf-8") as f:
                 serializable = {}
                 for pid, entries in self._usage_logs.items():
-                    out: List[Dict[str, object]] = []
+                    out: list[dict[str, object]] = []
                     for e in entries:
                         if isinstance(e, dict):
                             out.append(e)
@@ -472,6 +539,4 @@ class NutrientUseEfficiency:
                     serializable[pid] = out
                 json.dump(serializable, f, indent=2)
         except Exception as e:
-            _LOGGER.error(
-                "Failed to write nutrient use logs to %s: %s", self._data_file, e
-            )
+            _LOGGER.error("Failed to write nutrient use logs to %s: %s", self._data_file, e)

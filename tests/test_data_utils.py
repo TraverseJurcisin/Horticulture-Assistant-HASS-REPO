@@ -1,5 +1,6 @@
-import json
 import builtins
+import json
+
 import pytest
 
 from custom_components.horticulture_assistant.utils.data import load_large_json

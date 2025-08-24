@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import List, Optional, Dict
 
-from .path_utils import data_path
 from .json_io import load_json, save_json
+from .path_utils import data_path
 
 __all__ = [
     "LaborEntry",
@@ -22,9 +21,9 @@ class LaborEntry:
     task: str
     minutes: float
     timestamp: str
-    notes: Optional[str] = None
+    notes: str | None = None
 
-    def to_dict(self) -> Dict[str, object]:
+    def to_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
@@ -35,7 +34,7 @@ class LaborLog:
         if data_file is None:
             data_file = data_path(hass, "labor_log.json")
         self._data_file = data_file
-        self._entries: List[LaborEntry] = []
+        self._entries: list[LaborEntry] = []
         try:
             raw = load_json(self._data_file)
             if isinstance(raw, list):
@@ -59,7 +58,7 @@ class LaborLog:
             pass
 
     @property
-    def entries(self) -> List[LaborEntry]:
+    def entries(self) -> list[LaborEntry]:
         return list(self._entries)
 
     def _save(self) -> None:
@@ -98,8 +97,8 @@ class LaborLog:
             total += e.minutes
         return total
 
-    def compute_roi(self, yield_by_zone: Dict[str, float]) -> Dict[str, float]:
-        roi: Dict[str, float] = {}
+    def compute_roi(self, yield_by_zone: dict[str, float]) -> dict[str, float]:
+        roi: dict[str, float] = {}
         zones = {e.zone_id for e in self._entries if e.zone_id}
         for zid in zones:
             minutes = self.total_minutes(zone_id=zid)
@@ -108,20 +107,24 @@ class LaborLog:
             roi[zid] = yield_g / hours if hours > 0 else 0.0
         return roi
 
-    def high_effort_low_return(self, yield_by_zone: Dict[str, float], threshold: float) -> List[str]:
+    def high_effort_low_return(
+        self, yield_by_zone: dict[str, float], threshold: float
+    ) -> list[str]:
         roi = self.compute_roi(yield_by_zone)
         return [z for z, value in roi.items() if value < threshold]
 
-    def minutes_by_task(self, *, zone_id: str | None = None) -> Dict[str, float]:
+    def minutes_by_task(self, *, zone_id: str | None = None) -> dict[str, float]:
         """Aggregate labor minutes by task, optionally filtering by zone."""
-        totals: Dict[str, float] = {}
+        totals: dict[str, float] = {}
         for e in self._entries:
             if zone_id is not None and e.zone_id != zone_id:
                 continue
             totals[e.task] = totals.get(e.task, 0.0) + e.minutes
         return totals
 
-    def high_effort_tasks(self, threshold_minutes: float, *, zone_id: str | None = None) -> List[str]:
+    def high_effort_tasks(
+        self, threshold_minutes: float, *, zone_id: str | None = None
+    ) -> list[str]:
         """Return tasks whose logged minutes exceed the threshold."""
         totals = self.minutes_by_task(zone_id=zone_id)
         return [task for task, minutes in totals.items() if minutes > threshold_minutes]

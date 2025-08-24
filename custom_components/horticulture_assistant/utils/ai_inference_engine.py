@@ -7,11 +7,11 @@ examines daily plant data and emits simple suggestions.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Any, Dict, List, Mapping, Optional
-
 import datetime as _dt
 import json
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from typing import Any
 
 
 @dataclass(slots=True)
@@ -19,10 +19,10 @@ class InferenceResult:
     """Result of :class:`AIInferenceEngine.analyze`."""
 
     plant_id: str
-    recommendations: List[str]
+    recommendations: list[str]
     confidence: float
-    flagged_issues: List[str]
-    notes: Optional[str] = None
+    flagged_issues: list[str]
+    notes: str | None = None
 
 
 @dataclass(slots=True)
@@ -30,11 +30,11 @@ class DailyPackage:
     """Container for daily inference inputs."""
 
     date: str
-    plant_data: Dict[str, Any]
+    plant_data: dict[str, Any]
     #: Mapping of plant_id to environment metrics (``temp_c``/``humidity_pct`` etc.)
-    environment_data: Dict[str, Any]
-    fertigation_data: Dict[str, Any]
-    notes: Optional[str] = None
+    environment_data: dict[str, Any]
+    fertigation_data: dict[str, Any]
+    notes: str | None = None
 
 
 class AIInferenceEngine:
@@ -45,19 +45,19 @@ class AIInferenceEngine:
 
     def __init__(self, auto_approve: bool = False) -> None:
         self.auto_approve = auto_approve
-        self.history: List[InferenceResult] = []
+        self.history: list[InferenceResult] = []
 
     # ------------------------------------------------------------------
     # Core analysis
     # ------------------------------------------------------------------
 
-    def analyze(self, package: DailyPackage) -> List[InferenceResult]:
+    def analyze(self, package: DailyPackage) -> list[InferenceResult]:
         """Return inference results for all plants in ``package``."""
 
-        results: List[InferenceResult] = []
+        results: list[InferenceResult] = []
         for plant_id, pdata in package.plant_data.items():
-            recs: List[str] = []
-            issues: List[str] = []
+            recs: list[str] = []
+            issues: list[str] = []
 
             self._check_growth(pdata, issues, recs)
             self._check_yield(pdata, issues, recs)
@@ -90,9 +90,7 @@ class AIInferenceEngine:
     # Individual checks
     # ------------------------------------------------------------------
 
-    def _check_growth(
-        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
-    ) -> None:
+    def _check_growth(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         growth = data.get("growth_rate")
         expected = data.get("expected_growth")
         if growth is not None and expected is not None:
@@ -100,9 +98,7 @@ class AIInferenceEngine:
                 issues.append("Low growth rate detected")
                 recs.append("Evaluate nutrient delivery and light levels")
 
-    def _check_yield(
-        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
-    ) -> None:
+    def _check_yield(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         observed = data.get("yield")
         expected = data.get("expected_yield")
         if observed is not None and expected is not None:
@@ -110,9 +106,7 @@ class AIInferenceEngine:
                 issues.append("Yield below expected threshold")
                 recs.append("Check fertigation accuracy and media saturation")
 
-    def _check_ec(
-        self, data: Mapping[str, Any], issues: List[str], recs: List[str]
-    ) -> None:
+    def _check_ec(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         ec = data.get("ec")
         if ec is not None and ec > self.HIGH_EC_THRESHOLD:
             issues.append("High EC detected")
@@ -122,8 +116,8 @@ class AIInferenceEngine:
         self,
         env: Mapping[str, Any],
         plant_type: str,
-        issues: List[str],
-        recs: List[str],
+        issues: list[str],
+        recs: list[str],
     ) -> None:
         """Check temperature stress based on dataset thresholds."""
 
@@ -131,8 +125,8 @@ class AIInferenceEngine:
             return
         try:
             from plant_engine.environment_manager import (
-                evaluate_heat_stress,
                 evaluate_cold_stress,
+                evaluate_heat_stress,
             )
         except Exception:
             return
@@ -150,8 +144,8 @@ class AIInferenceEngine:
         self,
         env: Mapping[str, Any],
         plant_type: str,
-        issues: List[str],
-        recs: List[str],
+        issues: list[str],
+        recs: list[str],
     ) -> None:
         """Flag readings outside recommended ranges."""
 
@@ -159,8 +153,8 @@ class AIInferenceEngine:
             return
         try:
             from plant_engine.environment_manager import (
-                get_environmental_targets,
                 compare_environment,
+                get_environmental_targets,
             )
         except Exception:  # pragma: no cover - optional dependency
             return
@@ -181,8 +175,8 @@ class AIInferenceEngine:
         self,
         env: Mapping[str, Any],
         plant_type: str,
-        issues: List[str],
-        recs: List[str],
+        issues: list[str],
+        recs: list[str],
     ) -> None:
         """Append pest risk warnings based on current environment."""
 
@@ -207,8 +201,8 @@ class AIInferenceEngine:
         current: Mapping[str, Any],
         plant_type: str,
         stage: str | None,
-        issues: List[str],
-        recs: List[str],
+        issues: list[str],
+        recs: list[str],
     ) -> None:
         """Flag nutrient deficiencies using dataset guidelines."""
 

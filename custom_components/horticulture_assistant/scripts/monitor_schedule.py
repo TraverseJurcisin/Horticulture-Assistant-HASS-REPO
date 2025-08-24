@@ -5,9 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import date
 from pathlib import Path
-import sys
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,9 +27,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("stage", nargs="?", help="Growth stage", default=None)
     parser.add_argument("start", help="Start date YYYY-MM-DD")
     parser.add_argument("events", type=int, help="Number of events to return")
-    parser.add_argument(
-        "--json", action="store_true", dest="as_json", help="Output as JSON"
-    )
+    parser.add_argument("--json", action="store_true", dest="as_json", help="Output as JSON")
     args = parser.parse_args(argv)
 
     start_date = date.fromisoformat(args.start)

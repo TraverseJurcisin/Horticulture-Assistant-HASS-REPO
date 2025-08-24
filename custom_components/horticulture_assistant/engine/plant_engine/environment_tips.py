@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
 from .utils import (
+    clear_dataset_cache,
     lazy_dataset,
     list_dataset_entries,
     normalize_key,
-    clear_dataset_cache,
 )
 
 DATA_FILE = "environment/environment_tips.yaml"
@@ -29,8 +28,8 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA())
 
 
-@lru_cache(maxsize=None)
-def get_environment_tips(plant_type: str, stage: str | None = None) -> Dict[str, str]:
+@cache
+def get_environment_tips(plant_type: str, stage: str | None = None) -> dict[str, str]:
     """Return environment management tips for ``plant_type`` and ``stage``.
 
     The dataset may include a ``default`` section with general tips and optional
@@ -42,7 +41,7 @@ def get_environment_tips(plant_type: str, stage: str | None = None) -> Dict[str,
     if not isinstance(plant, dict):
         return {}
 
-    tips: Dict[str, str] = {}
+    tips: dict[str, str] = {}
 
     default = plant.get("default")
     if isinstance(default, dict):

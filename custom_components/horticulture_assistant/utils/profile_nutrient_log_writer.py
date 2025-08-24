@@ -1,12 +1,14 @@
 import logging
 from pathlib import Path
+
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:  # pragma: no cover - outside Home Assistant
     HomeAssistant = None
 
-from .profile_helpers import write_profile_sections
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
+
+from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 

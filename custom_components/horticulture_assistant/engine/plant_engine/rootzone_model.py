@@ -1,10 +1,11 @@
 """Root zone modeling utilities."""
+
 from __future__ import annotations
 
 import math
-
-from dataclasses import dataclass, asdict
-from typing import Dict, Mapping, Any
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from typing import Any
 
 from .utils import load_dataset, normalize_key
 
@@ -16,10 +17,10 @@ INFILTRATION_FILE = "soil/soil_infiltration_rates.json"
 GROWTH_PARAM_FILE = "root/root_growth_parameters.json"
 
 # cached dataset for soil parameters
-_SOIL_DATA: Dict[str, Dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
-_ROOT_DEPTH_DATA: Dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
-_INFILTRATION_DATA: Dict[str, float] = load_dataset(INFILTRATION_FILE)
-_GROWTH_PARAMS: Dict[str, Mapping[str, float]] = load_dataset(GROWTH_PARAM_FILE)
+_SOIL_DATA: dict[str, dict[str, Any]] = load_dataset(SOIL_DATA_FILE)
+_ROOT_DEPTH_DATA: dict[str, float] = load_dataset(ROOT_DEPTH_DATA_FILE)
+_INFILTRATION_DATA: dict[str, float] = load_dataset(INFILTRATION_FILE)
+_GROWTH_PARAMS: dict[str, Mapping[str, float]] = load_dataset(GROWTH_PARAM_FILE)
 
 __all__ = [
     "estimate_rootzone_depth",
@@ -36,7 +37,7 @@ __all__ = [
 ]
 
 
-def get_soil_parameters(texture: str) -> Dict[str, float]:
+def get_soil_parameters(texture: str) -> dict[str, float]:
     """Return soil parameters for ``texture`` if available.
 
     The returned mapping always contains the ``field_capacity`` and
@@ -82,7 +83,9 @@ def get_growth_curve_params(plant_type: str) -> tuple[float, float]:
 
     data = _GROWTH_PARAMS.get(normalize_key(plant_type)) or {}
     try:
-        midpoint = float(data.get("midpoint", _GROWTH_PARAMS.get("default", {}).get("midpoint", 60)))
+        midpoint = float(
+            data.get("midpoint", _GROWTH_PARAMS.get("default", {}).get("midpoint", 60))
+        )
     except (TypeError, ValueError):
         midpoint = 60.0
     try:
@@ -108,6 +111,7 @@ def estimate_rootzone_depth(
     depth = max_depth_cm / (1 + math.exp(-k * (growth_index - midpoint)))
     return round(depth, 2)
 
+
 @dataclass
 class RootZone:
     """Container for root zone capacity estimates."""
@@ -119,7 +123,7 @@ class RootZone:
     field_capacity_pct: float = 0.20
     mad_pct: float = 0.5
 
-    def to_dict(self) -> Dict[str, float]:
+    def to_dict(self) -> dict[str, float]:
         return asdict(self)
 
     def calculate_remaining_water(

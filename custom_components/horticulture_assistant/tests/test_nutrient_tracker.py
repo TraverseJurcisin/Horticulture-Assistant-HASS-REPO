@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
+
 import pytest
 
 from custom_components.horticulture_assistant.utils.nutrient_tracker import (
-    NutrientTracker,
     NutrientDeliveryRecord,
+    NutrientTracker,
     register_fertilizers_from_dataset,
 )
 
@@ -11,11 +12,13 @@ from custom_components.horticulture_assistant.utils.nutrient_tracker import (
 def test_summarize_mg_for_period():
     tracker = NutrientTracker()
     now = datetime.now()
-    tracker.delivery_log.extend([
-        NutrientDeliveryRecord("pid", "b1", now - timedelta(days=2), {"N": 10}, 1.0),
-        NutrientDeliveryRecord("pid", "b2", now - timedelta(days=1), {"N": 20}, 0.5),
-        NutrientDeliveryRecord("pid", "b3", now, {"N": 30}, 1.0),
-    ])
+    tracker.delivery_log.extend(
+        [
+            NutrientDeliveryRecord("pid", "b1", now - timedelta(days=2), {"N": 10}, 1.0),
+            NutrientDeliveryRecord("pid", "b2", now - timedelta(days=1), {"N": 20}, 0.5),
+            NutrientDeliveryRecord("pid", "b3", now, {"N": 30}, 1.0),
+        ]
+    )
     start = now - timedelta(days=1)
     end = now
     summary = tracker.summarize_mg_for_period(start, end, "pid")
@@ -57,9 +60,7 @@ def test_summarize_daily_totals_and_dataset_registration():
     assert n_entry and n_entry.value_mg_per_kg == pytest.approx(60000, abs=1)
 
     now = datetime.now()
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("p", "b1", now, {"N": 100}, 2.0)
-    )
+    tracker.delivery_log.append(NutrientDeliveryRecord("p", "b1", now, {"N": 100}, 2.0))
     totals = tracker.summarize_daily_totals("p")
     today = now.date().isoformat()
     assert totals[today]["N"] == 200.0
@@ -68,9 +69,7 @@ def test_summarize_daily_totals_and_dataset_registration():
 def test_save_and_load_log(tmp_path):
     tracker = NutrientTracker()
     when = datetime(2022, 1, 1, 12, 0)
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("p", "b1", when, {"N": 50}, 1.0)
-    )
+    tracker.delivery_log.append(NutrientDeliveryRecord("p", "b1", when, {"N": 50}, 1.0))
     path = tmp_path / "log.json"
     tracker.save_log(path)
 

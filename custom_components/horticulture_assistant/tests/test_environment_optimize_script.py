@@ -1,14 +1,21 @@
-from pathlib import Path
+import json
 import subprocess
 import sys
-import json
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/environment_optimize.py"
 
 
 def test_cli_basic():
     result = subprocess.run(
-        [sys.executable, str(SCRIPT), "citrus", "vegetative", "--env", '{"temp_c":25,"humidity_pct":60}'],
+        [
+            sys.executable,
+            str(SCRIPT),
+            "citrus",
+            "vegetative",
+            "--env",
+            '{"temp_c":25,"humidity_pct":60}',
+        ],
         capture_output=True,
         text=True,
         check=True,

@@ -3,21 +3,20 @@
 from __future__ import annotations
 
 import json
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
-from typing import Dict, List
 
 __all__ = ["list_tags", "get_plants_with_tag", "search_tags"]
 
 _TAGS_FILE = Path(__file__).resolve().parents[3] / "tags.json"
 
 
-@lru_cache(maxsize=None)
-def _load_tags() -> Dict[str, List[str]]:
+@cache
+def _load_tags() -> dict[str, list[str]]:
     """Return contents of ``tags.json`` as ``{tag: [plant_ids]}``."""
     if not _TAGS_FILE.exists():
         return {}
-    with open(_TAGS_FILE, "r", encoding="utf-8") as f:
+    with open(_TAGS_FILE, encoding="utf-8") as f:
         try:
             data = json.load(f)
             return {str(k): list(v) for k, v in data.items()}
@@ -25,22 +24,22 @@ def _load_tags() -> Dict[str, List[str]]:
             return {}
 
 
-def list_tags() -> List[str]:
+def list_tags() -> list[str]:
     """Return all available tag names sorted alphabetically."""
     return sorted(_load_tags().keys())
 
 
-def get_plants_with_tag(tag: str) -> List[str]:
+def get_plants_with_tag(tag: str) -> list[str]:
     """Return plant IDs associated with ``tag``."""
     return _load_tags().get(str(tag), [])
 
 
-def search_tags(term: str) -> Dict[str, List[str]]:
+def search_tags(term: str) -> dict[str, list[str]]:
     """Return tags containing ``term`` (case-insensitive)."""
     if not term:
         return {}
     term = term.lower()
-    matches: Dict[str, List[str]] = {}
+    matches: dict[str, list[str]] = {}
     for tag, plants in _load_tags().items():
         if term in tag.lower():
             matches[tag] = plants

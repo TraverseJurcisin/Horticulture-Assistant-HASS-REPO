@@ -36,12 +36,8 @@ async def async_setup_entry(
 class HorticultureBaseSwitch(HorticultureBaseEntity, SwitchEntity):
     """Base class for horticulture switches."""
 
-    def __init__(
-        self, hass: HomeAssistant, entry_id: str, plant_name: str, plant_id: str
-    ) -> None:
-        super().__init__(
-            plant_name, plant_id, model="Irrigation/Fertigation Controller"
-        )
+    def __init__(self, hass: HomeAssistant, entry_id: str, plant_name: str, plant_id: str) -> None:
+        super().__init__(plant_name, plant_id, model="Irrigation/Fertigation Controller")
         self.hass = hass
         self._entry_id = entry_id
         self._attr_is_on = False  # Optimistic switch model

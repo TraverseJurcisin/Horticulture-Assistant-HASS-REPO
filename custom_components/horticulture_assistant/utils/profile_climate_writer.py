@@ -4,6 +4,7 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def generate_climate_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
     """
     Generate or update climate adaptability and zone suitability profile files for a given plant.
@@ -33,7 +34,7 @@ def generate_climate_profiles(plant_id: str, base_path: str = None, overwrite: b
         "rainfall_tolerance": None,
         "radiation_tolerance": None,
         "heat_unit_accumulation": None,
-        "overwintering_behavior": None
+        "overwintering_behavior": None,
     }
 
     # Define default content for zone_suitability.json
@@ -43,7 +44,7 @@ def generate_climate_profiles(plant_id: str, base_path: str = None, overwrite: b
         "optimal_latitude_band": None,
         "global_elevation_band": None,
         "subtropical_to_temperate_gradient": None,
-        "known_zone_failures": None
+        "known_zone_failures": None,
     }
 
     profile_sections = {

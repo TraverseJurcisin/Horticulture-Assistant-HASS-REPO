@@ -1,9 +1,9 @@
 from custom_components.horticulture_assistant.utils.nutrient_requirements import (
-    get_requirements,
-    calculate_deficit,
     calculate_cumulative_requirements,
-    get_temperature_adjusted_requirements,
+    calculate_deficit,
     calculate_temperature_adjusted_cumulative_requirements,
+    get_requirements,
+    get_temperature_adjusted_requirements,
 )
 
 

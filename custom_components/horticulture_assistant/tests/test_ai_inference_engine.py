@@ -1,8 +1,9 @@
+import json
+
 from custom_components.horticulture_assistant.utils.ai_inference_engine import (
     AIInferenceEngine,
     DailyPackage,
 )
-import json
 
 
 def _sample_package():

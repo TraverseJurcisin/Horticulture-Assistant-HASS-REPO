@@ -71,9 +71,7 @@ def irrigation_trigger(
     elif "soil_moisture" in thresholds:
         threshold_value = thresholds["soil_moisture"]
     else:
-        _LOGGER.error(
-            "No soil moisture threshold found in profile for plant_id %s.", plant_id
-        )
+        _LOGGER.error("No soil moisture threshold found in profile for plant_id %s.", plant_id)
         return False
 
     # Get current soil moisture from sensor_data or profile (if available)
@@ -94,9 +92,7 @@ def irrigation_trigger(
                 current_moisture = latest_env[key]
                 break
     if current_moisture is None:
-        _LOGGER.error(
-            "No current soil moisture reading available for plant_id %s.", plant_id
-        )
+        _LOGGER.error("No current soil moisture reading available for plant_id %s.", plant_id)
         return False
 
     # Convert readings to float for comparison

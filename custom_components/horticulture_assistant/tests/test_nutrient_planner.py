@@ -1,9 +1,9 @@
 import pytest
 from plant_engine.nutrient_planner import (
+    NutrientManagementCostReport,
+    NutrientManagementReport,
     generate_nutrient_management_report,
     generate_nutrient_management_report_with_cost,
-    NutrientManagementReport,
-    NutrientManagementCostReport,
 )
 
 

@@ -1,6 +1,7 @@
-import tempfile
 import os
-from plant_engine.water_deficit_tracker import update_water_balance, load_water_balance
+import tempfile
+
+from plant_engine.water_deficit_tracker import load_water_balance, update_water_balance
 
 
 def test_update_water_balance_tmpdir():

@@ -1,7 +1,6 @@
 """Helpers for validating fertilizer storage conditions."""
 
 from datetime import datetime
-from typing import Dict, Optional
 
 
 class ProductStorageMonitor:
@@ -9,7 +8,7 @@ class ProductStorageMonitor:
 
     @staticmethod
     def is_expired(
-        expiration_date: Optional[str],
+        expiration_date: str | None,
         ignore_expiry: bool = False,
     ) -> bool:
         """Return ``True`` if ``expiration_date`` has passed."""
@@ -26,8 +25,8 @@ class ProductStorageMonitor:
     @staticmethod
     def flag_temperature_risk(
         temperature_c: float,
-        ingredient_profile: Dict[str, Dict[str, float]],
-    ) -> Optional[str]:
+        ingredient_profile: dict[str, dict[str, float]],
+    ) -> str | None:
         """Return a warning string if ``temperature_c`` jeopardizes ingredients."""
 
         for name, limits in ingredient_profile.items():
@@ -39,8 +38,8 @@ class ProductStorageMonitor:
 
     @staticmethod
     def check_manufacturing_date(
-        mfg_date: Optional[str],
-        shelf_life_months: Optional[int] = None,
+        mfg_date: str | None,
+        shelf_life_months: int | None = None,
     ) -> bool:
         """Return ``True`` if ``mfg_date`` is older than ``shelf_life_months``."""
 

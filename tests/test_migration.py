@@ -1,13 +1,14 @@
 import pytest
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
 from custom_components.horticulture_assistant import async_migrate_entry
 from custom_components.horticulture_assistant.const import (
-    DOMAIN,
     CONF_API_KEY,
-    CONF_UPDATE_INTERVAL,
     CONF_KEEP_STALE,
+    CONF_UPDATE_INTERVAL,
     DEFAULT_KEEP_STALE,
+    DOMAIN,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = [
     pytest.mark.asyncio,

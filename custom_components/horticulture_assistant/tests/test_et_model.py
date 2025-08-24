@@ -1,16 +1,19 @@
 import math
+
 from plant_engine.et_model import (
+    adjust_et0_for_climate,
     calculate_et0,
-    calculate_eta,
     calculate_et0_series,
+    calculate_eta,
     estimate_stage_et,
     get_et0_climate_adjustment,
-    adjust_et0_for_climate,
 )
 
 
 def test_calculate_et0():
-    et0 = calculate_et0(temperature_c=25, rh_percent=50, solar_rad_w_m2=400, wind_m_s=1.0, elevation_m=200)
+    et0 = calculate_et0(
+        temperature_c=25, rh_percent=50, solar_rad_w_m2=400, wind_m_s=1.0, elevation_m=200
+    )
     assert math.isclose(et0, 8.54, abs_tol=0.01)
 
 

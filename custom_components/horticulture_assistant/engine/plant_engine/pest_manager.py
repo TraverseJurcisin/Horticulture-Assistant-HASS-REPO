@@ -1,15 +1,16 @@
 """Pest management guideline utilities."""
+
 from __future__ import annotations
 
-from typing import Any, Dict, Iterable, List, Mapping
+from collections.abc import Iterable, Mapping
 from datetime import date, timedelta
+from typing import Any
 
 from .growth_stage import generate_stage_schedule
-
 from .utils import (
+    list_dataset_entries,
     load_dataset,
     normalize_key,
-    list_dataset_entries,
     stage_value,
 )
 
@@ -34,32 +35,29 @@ SEVERITY_SCORES_FILE = "pests/pest_severity_scores.json"
 SEVERITY_ACTIONS_FILE = "pests/pest_severity_actions.json"
 
 
-
 # Datasets are cached by ``load_dataset`` so loaded once at import time
-_DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
-_BENEFICIALS: Dict[str, List[str]] = load_dataset(BENEFICIAL_FILE)
-_RELEASE_RATES: Dict[str, float] = load_dataset(RELEASE_RATE_FILE)
-_PREVENTION: Dict[str, Dict[str, str]] = load_dataset(PREVENTION_FILE)
-_IPM: Dict[str, Dict[str, str]] = load_dataset(IPM_FILE)
-_RESISTANCE: Dict[str, Dict[str, float]] = load_dataset(RESISTANCE_FILE)
-_ORGANIC: Dict[str, List[str]] = load_dataset(ORGANIC_FILE)
-_TAXONOMY: Dict[str, str] = load_dataset(TAXONOMY_FILE)
-_COMMON_NAMES: Dict[str, str] = load_dataset(COMMON_NAME_FILE)
-_LIFECYCLE: Dict[str, Dict[str, int]] = load_dataset(LIFECYCLE_FILE)
-_MONITORING: Dict[str, Dict[str, int]] = load_dataset(MONITOR_FILE)
-_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(THRESHOLD_FILE)
-_STAGE_THRESHOLDS: Dict[str, Dict[str, Dict[str, int]]] = load_dataset(
-    STAGE_THRESHOLD_FILE
-)
-_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_MOD_FILE)
-_SCOUT_METHODS: Dict[str, str] = load_dataset(SCOUTING_FILE)
-_EFFECTIVE_DAYS: Dict[str, int] = load_dataset(EFFECTIVE_FILE)
-_RAW_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(SEVERITY_THRESHOLDS_FILE)
-_SEVERITY_THRESHOLDS: Dict[str, Dict[str, int]] = {
+_DATA: dict[str, dict[str, str]] = load_dataset(DATA_FILE)
+_BENEFICIALS: dict[str, list[str]] = load_dataset(BENEFICIAL_FILE)
+_RELEASE_RATES: dict[str, float] = load_dataset(RELEASE_RATE_FILE)
+_PREVENTION: dict[str, dict[str, str]] = load_dataset(PREVENTION_FILE)
+_IPM: dict[str, dict[str, str]] = load_dataset(IPM_FILE)
+_RESISTANCE: dict[str, dict[str, float]] = load_dataset(RESISTANCE_FILE)
+_ORGANIC: dict[str, list[str]] = load_dataset(ORGANIC_FILE)
+_TAXONOMY: dict[str, str] = load_dataset(TAXONOMY_FILE)
+_COMMON_NAMES: dict[str, str] = load_dataset(COMMON_NAME_FILE)
+_LIFECYCLE: dict[str, dict[str, int]] = load_dataset(LIFECYCLE_FILE)
+_MONITORING: dict[str, dict[str, int]] = load_dataset(MONITOR_FILE)
+_THRESHOLDS: dict[str, dict[str, int]] = load_dataset(THRESHOLD_FILE)
+_STAGE_THRESHOLDS: dict[str, dict[str, dict[str, int]]] = load_dataset(STAGE_THRESHOLD_FILE)
+_RISK_MODIFIERS: dict[str, float] = load_dataset(RISK_MOD_FILE)
+_SCOUT_METHODS: dict[str, str] = load_dataset(SCOUTING_FILE)
+_EFFECTIVE_DAYS: dict[str, int] = load_dataset(EFFECTIVE_FILE)
+_RAW_THRESHOLDS: dict[str, dict[str, int]] = load_dataset(SEVERITY_THRESHOLDS_FILE)
+_SEVERITY_THRESHOLDS: dict[str, dict[str, int]] = {
     normalize_key(k): v for k, v in _RAW_THRESHOLDS.items()
 }
-_SEVERITY_SCORES: Dict[str, float] = load_dataset(SEVERITY_SCORES_FILE)
-_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
+_SEVERITY_SCORES: dict[str, float] = load_dataset(SEVERITY_SCORES_FILE)
+_SEVERITY_ACTIONS: dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
 
 
 def list_supported_plants() -> list[str]:
@@ -67,7 +65,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_pest_guidelines(plant_type: str) -> Dict[str, str]:
+def get_pest_guidelines(plant_type: str) -> dict[str, str]:
     """Return pest management guidelines for the specified plant type."""
     return _DATA.get(normalize_key(plant_type), {})
 
@@ -106,20 +104,20 @@ def get_pest_resistance(plant_type: str, pest: str) -> float | None:
 
     data = _RESISTANCE.get(normalize_key(plant_type), {})
     value = data.get(normalize_key(pest))
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
-def get_severity_thresholds(pest: str | None = None) -> Dict[str, int]:
+def get_severity_thresholds(pest: str | None = None) -> dict[str, int]:
     """Return severity thresholds for ``pest`` or the default scale."""
 
     key = normalize_key(pest) if pest else "scale"
     data = _SEVERITY_THRESHOLDS.get(key)
     if not isinstance(data, Mapping):
         data = _SEVERITY_THRESHOLDS.get("scale", {})
-    result: Dict[str, int] = {}
+    result: dict[str, int] = {}
     for k in ("moderate", "severe"):
         v = data.get(k)
-        if isinstance(v, (int, float)):
+        if isinstance(v, int | float):
             result[k] = int(v)
     return result
 
@@ -137,7 +135,7 @@ def classify_pest_severity(count: int, pest: str | None = None) -> str:
     return "low"
 
 
-def assess_pest_severity(counts: Mapping[str, int]) -> Dict[str, str]:
+def assess_pest_severity(counts: Mapping[str, int]) -> dict[str, str]:
     """Return severity classification for each pest count entry."""
 
     return {p: classify_pest_severity(int(c), p) for p, c in counts.items()}
@@ -160,31 +158,31 @@ def calculate_severity_index(severity_map: Mapping[str, str]) -> float:
     return total / count if count else 0.0
 
 
-def recommend_severity_actions(counts: Mapping[str, int]) -> Dict[str, str]:
+def recommend_severity_actions(counts: Mapping[str, int]) -> dict[str, str]:
     """Return actions based on assessed pest population severity."""
 
     severity = assess_pest_severity(counts)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for pest, level in severity.items():
         actions[pest] = _SEVERITY_ACTIONS.get(level, "")
     return actions
 
 
-def recommend_treatments(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
+def recommend_treatments(plant_type: str, pests: Iterable[str]) -> dict[str, str]:
     """Return recommended treatment strings for each observed pest."""
     guide = get_pest_guidelines(plant_type)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for pest in pests:
         actions[pest] = guide.get(pest, "No guideline available")
     return actions
 
 
-def get_beneficial_insects(pest: str) -> List[str]:
+def get_beneficial_insects(pest: str) -> list[str]:
     """Return a list of beneficial insects that prey on ``pest``."""
     return _BENEFICIALS.get(pest.lower(), [])
 
 
-def recommend_beneficials(pests: Iterable[str]) -> Dict[str, List[str]]:
+def recommend_beneficials(pests: Iterable[str]) -> dict[str, list[str]]:
     """Return beneficial insect suggestions for observed ``pests``."""
     return {p: get_beneficial_insects(p) for p in pests}
 
@@ -199,13 +197,13 @@ def get_beneficial_release_rate(insect: str) -> float | None:
         return None
 
 
-def recommend_release_rates(pests: Iterable[str]) -> Dict[str, Dict[str, float]]:
+def recommend_release_rates(pests: Iterable[str]) -> dict[str, dict[str, float]]:
     """Return release rates for beneficials targeting the given pests."""
 
-    rec: Dict[str, Dict[str, float]] = {}
+    rec: dict[str, dict[str, float]] = {}
     for pest in pests:
         insects = get_beneficial_insects(pest)
-        rates: Dict[str, float] = {}
+        rates: dict[str, float] = {}
         for insect in insects:
             rate = get_beneficial_release_rate(insect)
             if rate is not None:
@@ -244,34 +242,31 @@ def plan_beneficial_releases(
 
     schedule: list[dict[str, object]] = []
     for idx in range(cycles):
-        releases = {
-            insect: get_beneficial_release_rate(insect) or 0.0
-            for insect in insects
-        }
+        releases = {insect: get_beneficial_release_rate(insect) or 0.0 for insect in insects}
         schedule.append({"date": start + timedelta(days=idx * interval), "releases": releases})
 
     return schedule
 
 
-def get_organic_controls(pest: str) -> List[str]:
+def get_organic_controls(pest: str) -> list[str]:
     """Return organic control options for ``pest``."""
 
     return _ORGANIC.get(normalize_key(pest), [])
 
 
-def recommend_organic_controls(pests: Iterable[str]) -> Dict[str, List[str]]:
+def recommend_organic_controls(pests: Iterable[str]) -> dict[str, list[str]]:
     """Return organic control recommendations for observed ``pests``."""
 
     return {p: get_organic_controls(p) for p in pests}
 
 
-def get_pest_lifecycle(pest: str) -> Dict[str, int]:
+def get_pest_lifecycle(pest: str) -> dict[str, int]:
     """Return lifecycle stage durations in days for ``pest``."""
 
     data = _LIFECYCLE.get(normalize_key(pest))
     if not isinstance(data, Mapping):
         return {}
-    result: Dict[str, int] = {}
+    result: dict[str, int] = {}
     for stage, days in data.items():
         try:
             result[stage] = int(days)
@@ -284,12 +279,10 @@ def get_monitoring_interval(plant_type: str, stage: str | None = None) -> int | 
     """Return scouting interval in days for a plant stage."""
 
     value = stage_value(_MONITORING, plant_type, stage)
-    return int(value) if isinstance(value, (int, float)) else None
+    return int(value) if isinstance(value, int | float) else None
 
 
-def get_pest_threshold(
-    plant_type: str, pest: str, stage: str | None = None
-) -> int | None:
+def get_pest_threshold(plant_type: str, pest: str, stage: str | None = None) -> int | None:
     """Return pest count threshold triggering action."""
 
     if stage:
@@ -297,12 +290,12 @@ def get_pest_threshold(
         stage_data = crop.get(normalize_key(stage))
         if isinstance(stage_data, Mapping):
             value = stage_data.get(normalize_key(pest))
-            if isinstance(value, (int, float)):
+            if isinstance(value, int | float):
                 return int(value)
 
     crop = _THRESHOLDS.get(normalize_key(plant_type), {})
     value = crop.get(normalize_key(pest))
-    return int(value) if isinstance(value, (int, float)) else None
+    return int(value) if isinstance(value, int | float) else None
 
 
 def get_scouting_method(pest: str) -> str | None:
@@ -323,7 +316,7 @@ def recommend_monitoring_interval(
         return None
     if risk_level:
         factor = _RISK_MODIFIERS.get(normalize_key(risk_level))
-        if isinstance(factor, (int, float)) and factor > 0:
+        if isinstance(factor, int | float) and factor > 0:
             base = round(base * float(factor))
     return int(base)
 
@@ -333,12 +326,12 @@ def build_monitoring_plan(
     pests: Iterable[str],
     stage: str | None = None,
     risk_level: str | None = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return monitoring interval, thresholds and methods for ``pests``."""
 
     interval = recommend_monitoring_interval(plant_type, stage, risk_level)
-    thresholds: Dict[str, int] = {}
-    methods: Dict[str, str] = {}
+    thresholds: dict[str, int] = {}
+    methods: dict[str, str] = {}
     for p in pests:
         thresh = get_pest_threshold(plant_type, p, stage)
         if thresh is not None:
@@ -352,31 +345,31 @@ def build_monitoring_plan(
     }
 
 
-def get_pest_prevention(plant_type: str) -> Dict[str, str]:
+def get_pest_prevention(plant_type: str) -> dict[str, str]:
     """Return pest prevention guidelines for ``plant_type``."""
     return _PREVENTION.get(normalize_key(plant_type), {})
 
 
-def recommend_prevention(plant_type: str, pests: Iterable[str]) -> Dict[str, str]:
+def recommend_prevention(plant_type: str, pests: Iterable[str]) -> dict[str, str]:
     """Return preventative actions for each observed pest."""
     guide = get_pest_prevention(plant_type)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for pest in pests:
         actions[pest] = guide.get(pest, "No guideline available")
     return actions
 
 
-def get_ipm_guidelines(plant_type: str) -> Dict[str, str]:
+def get_ipm_guidelines(plant_type: str) -> dict[str, str]:
     """Return integrated pest management guidance for a crop."""
     return _IPM.get(normalize_key(plant_type), {})
 
 
-def recommend_ipm_actions(plant_type: str, pests: Iterable[str] | None = None) -> Dict[str, str]:
+def recommend_ipm_actions(plant_type: str, pests: Iterable[str] | None = None) -> dict[str, str]:
     """Return IPM actions for the crop and specific pests if provided."""
     data = get_ipm_guidelines(plant_type)
     if not data:
         return {}
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     general = data.get("general")
     if general:
         actions["general"] = general
@@ -388,9 +381,7 @@ def recommend_ipm_actions(plant_type: str, pests: Iterable[str] | None = None) -
     return actions
 
 
-def build_pest_management_plan(
-    plant_type: str, pests: Iterable[str]
-) -> Dict[str, Any]:
+def build_pest_management_plan(plant_type: str, pests: Iterable[str]) -> dict[str, Any]:
     """Return a consolidated IPM plan for ``plant_type`` and ``pests``.
 
     The returned mapping contains a ``"general"`` entry when overall IPM
@@ -400,7 +391,7 @@ def build_pest_management_plan(
 
     pest_list = [normalize_key(p) for p in pests]
 
-    plan: Dict[str, Any] = {}
+    plan: dict[str, Any] = {}
 
     # IPM actions may include a general recommendation in addition to per pest
     ipm_actions = recommend_ipm_actions(plant_type, pest_list)
@@ -463,9 +454,7 @@ def generate_cycle_monitoring_schedule(
                 {
                     "date": current,
                     "stage": stage,
-                    "plan": build_monitoring_plan(
-                        plant_type, pests, stage, risk_level=risk_level
-                    ),
+                    "plan": build_monitoring_plan(plant_type, pests, stage, risk_level=risk_level),
                 }
             )
             current += timedelta(days=interval)

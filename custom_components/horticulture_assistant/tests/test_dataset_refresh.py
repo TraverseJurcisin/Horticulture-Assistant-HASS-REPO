@@ -1,8 +1,8 @@
-import json
 import importlib
+import json
 
-import plant_engine.utils as utils
 import plant_engine.datasets as datasets
+import plant_engine.utils as utils
 
 
 def test_refresh_datasets_reload(tmp_path, monkeypatch):

@@ -1,4 +1,5 @@
 import pytest
+
 from custom_components.horticulture_assistant.binary_sensor import (
     SensorHealthBinarySensor,
 )

@@ -2,13 +2,14 @@ from __future__ import annotations
 
 """Utilities for integrated pest and disease management."""
 
-from typing import Iterable, Mapping, Any, Dict
+from collections.abc import Iterable, Mapping
+from typing import Any
 
 from . import (
-    pest_manager,
-    pest_monitor,
     disease_manager,
     disease_monitor,
+    pest_manager,
+    pest_monitor,
 )
 
 __all__ = ["generate_management_plan"]
@@ -21,7 +22,7 @@ def generate_management_plan(
     *,
     pest_severity: Mapping[str, str] | None = None,
     disease_severity: Mapping[str, str] | None = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return consolidated management actions for pests and diseases.
 
     Parameters
@@ -55,7 +56,7 @@ def generate_management_plan(
 
     disease_actions = disease_manager.recommend_treatments(plant_type, diseases)
     disease_prev = disease_manager.recommend_prevention(plant_type, diseases)
-    disease_plan: Dict[str, Dict[str, Any]] = {}
+    disease_plan: dict[str, dict[str, Any]] = {}
     for disease in diseases:
         disease_plan[disease] = {
             "treatment": disease_actions.get(disease, "No guideline available"),

@@ -1,10 +1,10 @@
 from plant_engine.disease_manager import (
     get_disease_guidelines,
-    recommend_treatments,
-    list_known_diseases,
     get_disease_resistance,
     get_fungicide_options,
+    list_known_diseases,
     recommend_fungicides,
+    recommend_treatments,
 )
 
 

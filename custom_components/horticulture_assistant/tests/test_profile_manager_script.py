@@ -17,7 +17,7 @@ def test_load_default_profile(tmp_path: Path):
 
     ok = pm.load_default_profile("demo", "demo1", plants_dir, global_dir)
     assert ok
-    created = json.load(open(plants_dir / "demo1.json", "r", encoding="utf-8"))
+    created = json.load(open(plants_dir / "demo1.json", encoding="utf-8"))
     assert created["general"]["plant_id"] == "demo1"
     assert created["general"]["plant_type"] == "demo"
 
@@ -36,11 +36,7 @@ def test_show_history(tmp_path: Path):
 def test_list_profile_sensors(tmp_path: Path):
     plants_dir = tmp_path / "plants"
     plants_dir.mkdir()
-    profile = {
-        "general": {
-            "sensor_entities": {"moisture_sensors": ["a"], "temp_sensors": ["t"]}
-        }
-    }
+    profile = {"general": {"sensor_entities": {"moisture_sensors": ["a"], "temp_sensors": ["t"]}}}
     (plants_dir / "p1.json").write_text(json.dumps(profile))
 
     sensors = pm.list_profile_sensors("p1", plants_dir)
@@ -92,10 +88,14 @@ def test_attach_and_detach_sensor(tmp_path: Path):
 
     ok = pm.attach_sensor("p1", "moisture_sensors", ["b"], plants_dir)
     assert ok
-    sensors = json.load(open(plants_dir / "p1.json", "r", encoding="utf-8"))["general"]["sensor_entities"]
+    sensors = json.load(open(plants_dir / "p1.json", encoding="utf-8"))["general"][
+        "sensor_entities"
+    ]
     assert sensors["moisture_sensors"] == ["a", "b"]
 
     ok = pm.detach_sensor("p1", "moisture_sensors", ["a"], plants_dir)
     assert ok
-    sensors = json.load(open(plants_dir / "p1.json", "r", encoding="utf-8"))["general"]["sensor_entities"]
+    sensors = json.load(open(plants_dir / "p1.json", encoding="utf-8"))["general"][
+        "sensor_entities"
+    ]
     assert sensors["moisture_sensors"] == ["b"]

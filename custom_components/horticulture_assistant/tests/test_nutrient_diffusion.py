@@ -1,6 +1,6 @@
 from dafe.diffusion_model import (
-    calculate_effective_diffusion,
     calculate_diffusion_flux,
+    calculate_effective_diffusion,
     estimate_diffusion_mass,
 )
 
@@ -42,6 +42,7 @@ def test_estimate_diffusion_mass():
 
 def test_invalid_parameters():
     import pytest
+
     with pytest.raises(ValueError):
         calculate_effective_diffusion(-1, 0.5, 0.5, 2.0)
     with pytest.raises(ValueError):

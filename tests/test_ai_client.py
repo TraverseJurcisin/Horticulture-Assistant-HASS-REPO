@@ -1,13 +1,17 @@
 import importlib.util
-from pathlib import Path
-from unittest.mock import AsyncMock
 import sys
 import types
+from pathlib import Path
+from unittest.mock import AsyncMock
 
 import pytest
 
 spec = importlib.util.spec_from_file_location(
-    "ai_utils", Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant" / "ai_utils.py"
+    "ai_utils",
+    Path(__file__).resolve().parent.parent
+    / "custom_components"
+    / "horticulture_assistant"
+    / "ai_utils.py",
 )
 ai_utils = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ai_utils)
@@ -26,7 +30,11 @@ sys.modules["custom_components.horticulture_assistant"] = pkg
 sys.modules["custom_components.horticulture_assistant.ai_utils"] = ai_utils
 
 ai_spec = importlib.util.spec_from_file_location(
-    "ai_client", Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant" / "ai_client.py"
+    "ai_client",
+    Path(__file__).resolve().parent.parent
+    / "custom_components"
+    / "horticulture_assistant"
+    / "ai_client.py",
 )
 ai_client_mod = importlib.util.module_from_spec(ai_spec)
 ai_client_mod.__package__ = "custom_components.horticulture_assistant"

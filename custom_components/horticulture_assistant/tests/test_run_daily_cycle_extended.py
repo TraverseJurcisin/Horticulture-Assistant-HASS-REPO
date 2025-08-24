@@ -1,5 +1,6 @@
-import json
 import datetime
+import json
+
 from custom_components.horticulture_assistant.engine.run_daily_cycle import run_daily_cycle
 
 
@@ -24,14 +25,16 @@ def test_run_daily_cycle_extended(tmp_path):
         )
     )
 
-    (plants_dir / "sample" ).mkdir()
+    (plants_dir / "sample").mkdir()
     (plants_dir / "sample" / "water_quality_log.json").write_text(
-        json.dumps([
-            {
-                "results": {"Na": 60, "Cl": 50},
-                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
-            }
-        ])
+        json.dumps(
+            [
+                {
+                    "results": {"Na": 60, "Cl": 50},
+                    "timestamp": datetime.datetime.now(datetime.UTC).isoformat(),
+                }
+            ]
+        )
     )
 
     report = run_daily_cycle("sample", base_path=str(plants_dir), output_path=str(out_dir))

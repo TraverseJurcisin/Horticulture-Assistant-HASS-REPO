@@ -50,15 +50,12 @@ def remove_entry_data(hass: HomeAssistant, entry_id: str) -> None:
             if by_pid and by_pid.get(plant_id) is entry_data:
                 by_pid.pop(plant_id, None)
         if not domain_data or (
-            set(domain_data.keys()) <= {BY_PLANT_ID}
-            and not domain_data.get(BY_PLANT_ID)
+            set(domain_data.keys()) <= {BY_PLANT_ID} and not domain_data.get(BY_PLANT_ID)
         ):
             hass.data.pop(DOMAIN, None)
 
 
-def get_entry_data(
-    hass: HomeAssistant, entry_or_id: ConfigEntry | str
-) -> dict | None:
+def get_entry_data(hass: HomeAssistant, entry_or_id: ConfigEntry | str) -> dict | None:
     """Return stored entry metadata or ``None`` if missing."""
     entry_id = getattr(entry_or_id, "entry_id", entry_or_id)
     data = hass.data.get(DOMAIN, {})

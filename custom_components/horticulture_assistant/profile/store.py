@@ -19,9 +19,7 @@ async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     return await _store(hass).async_load() or {}
 
 
-async def async_save_profile(
-    hass: HomeAssistant, profile: PlantProfile | dict[str, Any]
-) -> None:
+async def async_save_profile(hass: HomeAssistant, profile: PlantProfile | dict[str, Any]) -> None:
     """Persist a profile dictionary or dataclass to storage."""
 
     if isinstance(profile, PlantProfile):
@@ -32,9 +30,7 @@ async def async_save_profile(
     await _store(hass).async_save(data)
 
 
-async def async_save_profile_from_options(
-    hass: HomeAssistant, entry, profile_id: str
-) -> None:
+async def async_save_profile_from_options(hass: HomeAssistant, entry, profile_id: str) -> None:
     """Persist a profile from config entry options to storage."""
 
     prof = entry.options.get("profiles", {}).get(profile_id, {})
@@ -68,9 +64,7 @@ async def async_get_profile(hass: HomeAssistant, plant_id: str) -> dict[str, Any
     return (await async_load_all(hass)).get(plant_id)
 
 
-async def async_load_profile(
-    hass: HomeAssistant, plant_id: str
-) -> PlantProfile | None:
+async def async_load_profile(hass: HomeAssistant, plant_id: str) -> PlantProfile | None:
     """Load a PlantProfile dataclass for a given plant ID."""
 
     data = await async_get_profile(hass, plant_id)

@@ -1,11 +1,11 @@
 from plant_engine.soil_manager import (
-    list_supported_plants,
-    get_soil_targets,
+    calculate_soil_balance,
     calculate_soil_deficiencies,
     calculate_soil_surplus,
-    score_soil_nutrients,
-    calculate_soil_balance,
+    get_soil_targets,
+    list_supported_plants,
     recommend_soil_amendments,
+    score_soil_nutrients,
 )
 
 
@@ -43,6 +43,7 @@ def test_score_soil_nutrients():
 def test_calculate_soil_balance():
     balance = calculate_soil_balance({"N": 40, "P": 15, "K": 45}, "citrus")
     assert balance == {"N": 0.5, "P": 0.5, "K": 0.5}
+
 
 def test_recommend_soil_amendments():
     rec = recommend_soil_amendments(

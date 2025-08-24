@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor
-from itertools import repeat
 import os
+from collections.abc import Iterable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from itertools import repeat
 from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import data_path
-from typing import Dict, Iterable, List
 
 try:
     import yaml
@@ -18,7 +18,6 @@ except Exception:  # pragma: no cover - fallback when PyYAML is missing
     yaml = None
 
 from custom_components.horticulture_assistant.utils.json_io import load_json
-
 
 DEFAULT_OUTPUT_DIR = Path("templates/generated")
 DEFAULT_REPORT_DIR = Path(data_path(None, "reports"))
@@ -35,7 +34,7 @@ class SensorTemplate:
     device_class: str = ""
 
 
-def _load_report(plant_id: str, report_dir: Path) -> Dict[str, object]:
+def _load_report(plant_id: str, report_dir: Path) -> dict[str, object]:
     """Return parsed daily report for ``plant_id`` from ``report_dir``."""
 
     path = report_dir / f"{plant_id}.json"
@@ -60,12 +59,8 @@ def _write_yaml(sensors: Iterable[SensorTemplate], out_path: Path) -> None:
             fh.write(f"      - name: \"{sensor['name']}\"\n")
             fh.write(f"        unique_id: {sensor['unique_id']}\n")
             fh.write(f"        state: \"{sensor['state']}\"\n")
-            fh.write(
-                f"        unit_of_measurement: \"{sensor.get('unit_of_measurement','')}\"\n"
-            )
-            fh.write(
-                f"        device_class: \"{sensor.get('device_class','')}\"\n"
-            )
+            fh.write(f"        unit_of_measurement: \"{sensor.get('unit_of_measurement', '')}\"\n")
+            fh.write(f"        device_class: \"{sensor.get('device_class', '')}\"\n")
 
 
 def generate_template_yaml(
@@ -77,7 +72,7 @@ def generate_template_yaml(
 
     data = _load_report(plant_id, report_dir)
 
-    sensors: List[SensorTemplate] = []
+    sensors: list[SensorTemplate] = []
 
     # Add VGI and Transpiration
     growth = data.get("growth", {})
@@ -184,9 +179,7 @@ def generate_from_directory(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Generate template sensors from daily reports"
-    )
+    parser = argparse.ArgumentParser(description="Generate template sensors from daily reports")
     parser.add_argument("plant_id", nargs="?", help="ID used for the daily report file")
     parser.add_argument(
         "--reports",

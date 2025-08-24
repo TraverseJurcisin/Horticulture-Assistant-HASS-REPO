@@ -1,8 +1,9 @@
 """Utilities for pesticide withdrawal periods."""
+
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from datetime import date, datetime, timedelta
-from typing import Dict, Iterable, List, Mapping
 
 from .utils import lazy_dataset, normalize_key
 
@@ -153,7 +154,7 @@ def get_mode_of_action(product: str) -> str | None:
     return _MOA().get(product.lower())
 
 
-def list_known_pesticides() -> List[str]:
+def list_known_pesticides() -> list[str]:
     """Return alphabetically sorted list of pesticides with MOA data."""
 
     return sorted(_MOA().keys())
@@ -170,10 +171,10 @@ def get_rotation_interval(product: str) -> int | None:
     if moa is None:
         return None
     days = _ROTATION().get(moa.lower())
-    return int(days) if isinstance(days, (int, float)) else None
+    return int(days) if isinstance(days, int | float) else None
 
 
-def suggest_rotation_schedule(product: str, start_date: date, cycles: int) -> List[date]:
+def suggest_rotation_schedule(product: str, start_date: date, cycles: int) -> list[date]:
     """Return future application dates spaced by the rotation interval."""
 
     if cycles <= 0:
@@ -195,9 +196,7 @@ def next_rotation_date(product: str, last_date: date) -> date | None:
     return last_date + timedelta(days=interval)
 
 
-def suggest_rotation_plan(
-    products: Iterable[str], start_date: date
-) -> List[tuple[str, date]]:
+def suggest_rotation_plan(products: Iterable[str], start_date: date) -> list[tuple[str, date]]:
     """Return sequential application schedule for multiple products.
 
     Each product is scheduled after the rotation interval of the previous
@@ -212,7 +211,7 @@ def suggest_rotation_plan(
         Date of the first application.
     """
 
-    plan: List[tuple[str, date]] = []
+    plan: list[tuple[str, date]] = []
     current_date = start_date
     for product in products:
         plan.append((product, current_date))
@@ -288,7 +287,7 @@ def calculate_application_amount(product: str, volume_l: float) -> float:
 
 
 def summarize_pesticide_restrictions(
-    applications: Iterable[tuple[str, datetime]] | Iterable[tuple[str, date]]
+    applications: Iterable[tuple[str, datetime]] | Iterable[tuple[str, date]],
 ) -> dict:
     """Return combined reentry and harvest restrictions.
 
@@ -329,13 +328,13 @@ def summarize_pesticide_restrictions(
     return info
 
 
-def get_active_ingredient_info(name: str) -> Dict[str, object] | None:
+def get_active_ingredient_info(name: str) -> dict[str, object] | None:
     """Return detailed info for a pesticide active ingredient."""
 
     return _ACTIVE().get(name.lower())
 
 
-def list_active_ingredients() -> List[str]:
+def list_active_ingredients() -> list[str]:
     """Return sorted list of known active ingredient names."""
 
     return sorted(_ACTIVE().keys())
@@ -354,7 +353,7 @@ def get_pesticide_efficacy(product: str, pest: str) -> float | None:
         return None
 
 
-def list_effective_pesticides(pest: str) -> List[tuple[str, float]]:
+def list_effective_pesticides(pest: str) -> list[tuple[str, float]]:
     """Return products with efficacy ratings for ``pest`` sorted high to low."""
 
     results: list[tuple[str, float]] = []
@@ -396,8 +395,7 @@ def recommend_rotation_products(pest: str, count: int = 3) -> list[str]:
         candidates = [
             p
             for p in _products_for_moa(moa)
-            if isinstance(efficacies.get(p), Mapping)
-            and pest_key in efficacies[p]
+            if isinstance(efficacies.get(p), Mapping) and pest_key in efficacies[p]
         ]
         if not candidates:
             continue
@@ -415,9 +413,7 @@ def recommend_rotation_products(pest: str, count: int = 3) -> list[str]:
     return chosen
 
 
-def estimate_rotation_plan_cost(
-    plan: Iterable[tuple[str, date]], volume_l: float
-) -> float:
+def estimate_rotation_plan_cost(plan: Iterable[tuple[str, date]], volume_l: float) -> float:
     """Return total cost for executing a pesticide rotation plan."""
 
     if volume_l <= 0:
@@ -430,9 +426,7 @@ def estimate_rotation_plan_cost(
     return round(total, 2)
 
 
-def suggest_pest_rotation_plan(
-    pest: str, start_date: date, cycles: int
-) -> list[tuple[str, date]]:
+def suggest_pest_rotation_plan(pest: str, start_date: date, cycles: int) -> list[tuple[str, date]]:
     """Return rotation plan for ``pest`` starting at ``start_date``.
 
     The function selects recommended rotation products for ``pest`` using

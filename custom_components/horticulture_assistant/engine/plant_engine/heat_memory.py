@@ -1,16 +1,18 @@
 """Helpers for modeling heat memory responses by crop."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "temperature/heat_memory_guidelines.json"
 
-@lru_cache(maxsize=None)
-def _data() -> Dict[str, Dict[str, float]]:
+
+@cache
+def _data() -> dict[str, dict[str, float]]:
     return load_dataset(DATA_FILE)
+
 
 __all__ = [
     "list_supported_plants",
@@ -25,7 +27,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_data())
 
 
-def get_heat_memory_info(plant_type: str) -> Dict[str, float] | None:
+def get_heat_memory_info(plant_type: str) -> dict[str, float] | None:
     """Return heat memory parameters for ``plant_type`` if available."""
     return _data().get(normalize_key(plant_type))
 
@@ -44,10 +46,10 @@ def calculate_heat_memory_index(plant_type: str, exposure_days: int) -> float:
     return round(index, 2)
 
 
-def recommend_heat_recovery(plant_type: str) -> Dict[str, float]:
+def recommend_heat_recovery(plant_type: str) -> dict[str, float]:
     """Return nutrient adjustments to aid recovery after heat stress."""
     info = get_heat_memory_info(plant_type) or {}
-    rec: Dict[str, float] = {}
+    rec: dict[str, float] = {}
     ec = info.get("ec_adjustment_pct")
     if ec:
         rec["ec_adjustment_pct"] = float(ec)

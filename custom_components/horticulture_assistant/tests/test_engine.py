@@ -1,7 +1,6 @@
 import json
 
-from plant_engine import engine
-from plant_engine import growth_model
+from plant_engine import engine, growth_model
 
 
 def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):

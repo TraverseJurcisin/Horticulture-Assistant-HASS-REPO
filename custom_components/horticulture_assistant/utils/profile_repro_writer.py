@@ -4,7 +4,10 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
-def generate_reproductive_profiles(plant_id: str, base_dir: str = None, overwrite: bool = False) -> str:
+
+def generate_reproductive_profiles(
+    plant_id: str, base_dir: str = None, overwrite: bool = False
+) -> str:
     """
     Generate or update reproductive and phenology profile files for a given plant.
 
@@ -27,15 +30,11 @@ def generate_reproductive_profiles(plant_id: str, base_dir: str = None, overwrit
     # Define default content for reproductive.json
     reproductive_data = {
         "pollination_type": None,
-        "flowering_triggers": {
-            "temperature": None,
-            "photoperiod": None,
-            "nutrient": None
-        },
+        "flowering_triggers": {"temperature": None, "photoperiod": None, "nutrient": None},
         "fruit_development": None,
         "harvest_readiness": None,
         "self_pruning": None,
-        "flower_to_fruit_rate": None
+        "flower_to_fruit_rate": None,
     }
 
     # Define default content for phenology.json
@@ -44,7 +43,7 @@ def generate_reproductive_profiles(plant_id: str, base_dir: str = None, overwrit
         "fruiting_period": None,
         "dormancy_triggers": None,
         "stage_by_zone_estimates": None,
-        "chill_hour_needs": None
+        "chill_hour_needs": None,
     }
 
     profile_sections = {

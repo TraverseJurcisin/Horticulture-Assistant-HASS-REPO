@@ -1,15 +1,15 @@
 from plant_engine.pest_manager import (
-    get_pest_guidelines,
-    recommend_treatments,
+    build_pest_management_plan,
     get_beneficial_insects,
-    recommend_beneficials,
-    get_pest_prevention,
-    recommend_prevention,
     get_ipm_guidelines,
-    recommend_ipm_actions,
+    get_pest_guidelines,
+    get_pest_prevention,
     list_known_pests,
     list_supported_pests,
-    build_pest_management_plan,
+    recommend_beneficials,
+    recommend_ipm_actions,
+    recommend_prevention,
+    recommend_treatments,
 )
 
 
@@ -194,9 +194,10 @@ def test_build_monitoring_plan():
 
 def test_plan_beneficial_releases():
     from datetime import date, timedelta
+
     from plant_engine.pest_manager import (
-        plan_beneficial_releases,
         get_beneficial_effective_days,
+        plan_beneficial_releases,
     )
 
     start = date(2024, 1, 1)
@@ -211,10 +212,10 @@ def test_plan_beneficial_releases():
 
 def test_pest_severity_tools():
     from plant_engine.pest_manager import (
-        get_severity_thresholds,
-        classify_pest_severity,
         assess_pest_severity,
         calculate_severity_index,
+        classify_pest_severity,
+        get_severity_thresholds,
         recommend_severity_actions,
     )
 

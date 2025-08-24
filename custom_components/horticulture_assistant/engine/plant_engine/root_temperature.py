@@ -1,11 +1,12 @@
 """Root zone temperature impact on nutrient uptake."""
+
 from __future__ import annotations
 
 from bisect import bisect_left
-from functools import lru_cache
-from typing import Mapping, Dict, Sequence
+from collections.abc import Mapping, Sequence
+from functools import cache
 
-from .utils import load_dataset, list_dataset_entries, normalize_key
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "temperature/root_temperature_uptake.json"
 OPTIMA_FILE = "local/plants/temperature/root_temperature_optima.json"
@@ -14,7 +15,7 @@ _DATA = load_dataset(DATA_FILE)
 _OPTIMA = load_dataset(OPTIMA_FILE)
 _TEMPS: Sequence[float] = [float(t) for t in _DATA.get("temperature_c", [])]
 _FACTORS: Sequence[float] = [float(f) for f in _DATA.get("factor", [])]
-_DEFAULT_OPTIMUM = next((t for t, f in zip(_TEMPS, _FACTORS) if f == 1.0), 21.0)
+_DEFAULT_OPTIMUM = next((t for t, f in zip(_TEMPS, _FACTORS, strict=False) if f == 1.0), 21.0)
 
 __all__ = [
     "list_supported_plants",
@@ -41,7 +42,7 @@ def get_optimal_root_temperature(plant_type: str) -> float | None:
         return None
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_uptake_factor(temp_c: float, plant_type: str | None = None) -> float:
     """Return uptake efficiency factor for ``temp_c`` in Celsius.
 
@@ -56,7 +57,7 @@ def get_uptake_factor(temp_c: float, plant_type: str | None = None) -> float:
 
     if plant_type:
         opt = _OPTIMA.get(plant_type.lower())
-        if isinstance(opt, (int, float)):
+        if isinstance(opt, int | float):
             temp_c = temp_c + (_DEFAULT_OPTIMUM - float(opt))
 
     idx = bisect_left(_TEMPS, temp_c)
@@ -72,7 +73,7 @@ def get_uptake_factor(temp_c: float, plant_type: str | None = None) -> float:
 
 def adjust_uptake(
     uptake: Mapping[str, float], temp_c: float, plant_type: str | None = None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ``uptake`` scaled by the temperature factor."""
     factor = get_uptake_factor(temp_c, plant_type)
     return {nutrient: round(value * factor, 2) for nutrient, value in uptake.items()}

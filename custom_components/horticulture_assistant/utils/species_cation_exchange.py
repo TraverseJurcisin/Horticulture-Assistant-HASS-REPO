@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Dict, List, Mapping
 
 from plant_engine.utils import load_dataset
 
 # Relative cation extraction multipliers for select species
 SPECIES_CATION_FILE = "species/species_cation_profiles.json"
-SPECIES_CATION_PROFILE: Dict[str, Mapping[str, float]] = load_dataset(SPECIES_CATION_FILE)
+SPECIES_CATION_PROFILE: dict[str, Mapping[str, float]] = load_dataset(SPECIES_CATION_FILE)
 
 
 @dataclass
@@ -21,7 +21,7 @@ class MediaBuffer:
     Mg: float = 0.0
     S: float = 0.0
 
-    def as_dict(self) -> Dict[str, float]:
+    def as_dict(self) -> dict[str, float]:
         return {"Ca": self.Ca, "K": self.K, "Mg": self.Mg, "S": self.S}
 
 
@@ -60,12 +60,12 @@ def recommend_amendments(
     media: MediaBuffer,
     species: str,
     thresholds: Mapping[str, float] | None = None,
-) -> List[str]:
+) -> list[str]:
     """Return recommendation messages for depleted cations."""
 
     thresholds = thresholds or {}
     species_l = species.lower()
-    messages: List[str] = []
+    messages: list[str] = []
     profile = SPECIES_CATION_PROFILE.get(species_l, {})
 
     def below(nutrient: str) -> bool:
@@ -76,9 +76,7 @@ def recommend_amendments(
         return level < float(thresholds.get(nutrient, 0.0))
 
     if species_l == "iris" and below("Mg"):
-        messages.append(
-            "Media in Iris zone depleted in Mg. Recommend gypsum + MgSO₄ amendment."
-        )
+        messages.append("Media in Iris zone depleted in Mg. Recommend gypsum + MgSO₄ amendment.")
 
     if species_l == "iris":
         ratio = profile.get("S_to_Ca")
@@ -86,9 +84,7 @@ def recommend_amendments(
             try:
                 ratio_val = float(ratio)
                 if media.Ca > 0 and media.S / media.Ca < ratio_val:
-                    messages.append(
-                        "S:Ca ratio below target for Iris. Add gypsum amendment."
-                    )
+                    messages.append("S:Ca ratio below target for Iris. Add gypsum amendment.")
             except (TypeError, ValueError, ZeroDivisionError):
                 pass
 

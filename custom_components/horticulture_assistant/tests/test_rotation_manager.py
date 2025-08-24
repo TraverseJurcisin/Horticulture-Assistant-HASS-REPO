@@ -1,6 +1,6 @@
 from plant_engine.rotation_manager import (
-    list_supported_plants,
     get_rotation_info,
+    list_supported_plants,
     recommended_rotation_years,
 )
 

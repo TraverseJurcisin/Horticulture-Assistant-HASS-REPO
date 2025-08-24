@@ -1,10 +1,10 @@
 from datetime import date
 
 from plant_engine.fertigation import (
-    get_foliar_guidelines,
-    recommend_foliar_feed,
     get_foliar_feed_interval,
+    get_foliar_guidelines,
     next_foliar_feed_date,
+    recommend_foliar_feed,
 )
 
 

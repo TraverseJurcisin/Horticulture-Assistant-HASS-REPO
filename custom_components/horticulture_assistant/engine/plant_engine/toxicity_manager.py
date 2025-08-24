@@ -4,9 +4,10 @@ This module exposes helper functions for checking nutrient levels against
 toxicity thresholds and suggesting mitigation actions.  Datasets of toxicity
 symptoms and treatments are loaded at import time for fast access.
 """
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset, normalize_key
 
@@ -15,9 +16,9 @@ SYMPTOMS_FILE = "nutrients/nutrient_toxicity_symptoms.json"
 TREATMENTS_FILE = "nutrients/nutrient_toxicity_treatments.json"
 
 # Loaded once using cached loader
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
-_SYMPTOMS: Dict[str, str] = load_dataset(SYMPTOMS_FILE)
-_TREATMENTS: Dict[str, str] = load_dataset(TREATMENTS_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
+_SYMPTOMS: dict[str, str] = load_dataset(SYMPTOMS_FILE)
+_TREATMENTS: dict[str, str] = load_dataset(TREATMENTS_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -37,7 +38,7 @@ def list_supported_plants() -> list[str]:
     return sorted(k for k in _DATA.keys() if k != "default")
 
 
-def get_toxicity_thresholds(plant_type: str) -> Dict[str, float]:
+def get_toxicity_thresholds(plant_type: str) -> dict[str, float]:
     """Return toxicity thresholds for ``plant_type`` or defaults."""
     plant = _DATA.get(normalize_key(plant_type))
     if plant is None:
@@ -45,10 +46,10 @@ def get_toxicity_thresholds(plant_type: str) -> Dict[str, float]:
     return plant if isinstance(plant, dict) else {}
 
 
-def check_toxicities(current_levels: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+def check_toxicities(current_levels: Mapping[str, float], plant_type: str) -> dict[str, float]:
     """Return nutrient amounts exceeding toxicity thresholds."""
     thresholds = get_toxicity_thresholds(plant_type)
-    toxic: Dict[str, float] = {}
+    toxic: dict[str, float] = {}
     for nutrient, limit in thresholds.items():
         try:
             level = float(current_levels.get(nutrient, 0))
@@ -70,9 +71,7 @@ def get_toxicity_symptom(nutrient: str) -> str:
     return _SYMPTOMS.get(nutrient, "")
 
 
-def diagnose_toxicities(
-    current_levels: Mapping[str, float], plant_type: str
-) -> Dict[str, str]:
+def diagnose_toxicities(current_levels: Mapping[str, float], plant_type: str) -> dict[str, str]:
     """Return toxicity symptoms for nutrients exceeding thresholds."""
     excess = check_toxicities(current_levels, plant_type)
     return {n: get_toxicity_symptom(n) for n in excess}
@@ -85,15 +84,13 @@ def get_toxicity_treatment(nutrient: str) -> str:
 
 def recommend_toxicity_treatments(
     current_levels: Mapping[str, float], plant_type: str
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return treatments for diagnosed nutrient toxicities."""
     excess = check_toxicities(current_levels, plant_type)
     return {n: get_toxicity_treatment(n) for n in excess}
 
 
-def calculate_toxicity_index(
-    current_levels: Mapping[str, float], plant_type: str
-) -> float:
+def calculate_toxicity_index(current_levels: Mapping[str, float], plant_type: str) -> float:
     """Return weighted toxicity index for current nutrient levels.
 
     The index is 0 when all nutrients are within safe limits and increases

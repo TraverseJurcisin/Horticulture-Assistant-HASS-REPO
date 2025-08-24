@@ -1,6 +1,6 @@
 from custom_components.horticulture_assistant.utils.light_requirements import (
-    get_stage_light,
     generate_light_schedule,
+    get_stage_light,
 )
 
 

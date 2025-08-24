@@ -1,14 +1,13 @@
 """Light saturation utilities."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, list_dataset_entries, normalize_key
 from .environment_manager import calculate_dli, photoperiod_for_target_dli
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "light/light_saturation_ppfd.json"
 
-_DATA: Dict[str, float] = load_dataset(DATA_FILE)
+_DATA: dict[str, float] = load_dataset(DATA_FILE)
 
 __all__ = ["list_supported_plants", "get_saturation_ppfd", "recommend_supplemental_hours"]
 

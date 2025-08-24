@@ -1,13 +1,14 @@
 """Helpers for recommended light spectrum ratios."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "light/light_spectrum_guidelines.json"
 
-_DATA: Dict[str, Dict[str, Mapping[str, float]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, Mapping[str, float]]] = load_dataset(DATA_FILE)
 
 __all__ = ["list_supported_plants", "get_spectrum", "get_red_blue_ratio"]
 
@@ -17,11 +18,11 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_spectrum(plant_type: str, stage: str) -> Dict[str, float]:
+def get_spectrum(plant_type: str, stage: str) -> dict[str, float]:
     """Return red/blue fractions for a plant stage if available."""
     plant = _DATA.get(normalize_key(plant_type), {})
     info = plant.get(normalize_key(stage))
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     if isinstance(info, Mapping):
         for color in ("red", "blue"):
             try:

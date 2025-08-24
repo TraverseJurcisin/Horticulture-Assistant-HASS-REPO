@@ -67,9 +67,7 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
         await super().async_added_to_hass()
         if self._src:
             self.async_on_remove(
-                async_track_state_change_event(
-                    self.hass, [self._src], self._on_state
-                )
+                async_track_state_change_event(self.hass, [self._src], self._on_state)
             )
             # prime value
             self._on_state(None)

@@ -1,7 +1,8 @@
 """Helpers for working with USDA hardiness zone data."""
+
 from __future__ import annotations
 
-from typing import Iterable, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset
 

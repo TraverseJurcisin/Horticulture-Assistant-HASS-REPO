@@ -2,8 +2,8 @@ from plant_engine.environment_manager import (
     get_climate_guidelines,
     get_combined_environment_guidelines,
     get_combined_environmental_targets,
-    recommend_climate_adjustments,
     get_environmental_targets,
+    recommend_climate_adjustments,
 )
 
 

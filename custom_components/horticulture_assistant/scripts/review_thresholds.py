@@ -1,9 +1,11 @@
 import os
+
 from approval_queue import apply_approved_thresholds
-from plant_engine.utils import load_json, save_json, get_pending_dir
+from plant_engine.utils import get_pending_dir, load_json, save_json
 
 PENDING_DIR = str(get_pending_dir())
 PLANT_DIR = "plants"
+
 
 def review_pending_thresholds():
     print("🔍 Scanning for pending threshold files...\n")
@@ -52,6 +54,7 @@ def review_pending_thresholds():
             apply_approved_thresholds(plant_path, full_path)
 
     print("\n✅ Review complete.")
+
 
 if __name__ == "__main__":
     review_pending_thresholds()

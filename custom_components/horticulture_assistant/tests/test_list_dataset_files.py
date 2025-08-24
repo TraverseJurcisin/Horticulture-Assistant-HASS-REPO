@@ -1,5 +1,5 @@
-import os
-from plant_engine.utils import list_dataset_files, clear_dataset_cache
+from plant_engine.utils import clear_dataset_cache, list_dataset_files
+
 
 def test_list_dataset_files(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"

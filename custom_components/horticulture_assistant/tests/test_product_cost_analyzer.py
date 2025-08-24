@@ -1,4 +1,5 @@
 import pytest
+
 from custom_components.horticulture_assistant.utils.product_cost_analyzer import ProductCostAnalyzer
 
 
@@ -18,7 +19,11 @@ def test_compare_sources():
         {"price": 5.0, "size": 500.0, "unit": "mL"},
     ]
     result = ProductCostAnalyzer.compare_sources(data)
-    assert result == {"min_cost_per_unit": 10.0, "max_cost_per_unit": 10.0, "avg_cost_per_unit": 10.0}
+    assert result == {
+        "min_cost_per_unit": 10.0,
+        "max_cost_per_unit": 10.0,
+        "avg_cost_per_unit": 10.0,
+    }
     with pytest.raises(ValueError):
         ProductCostAnalyzer.compare_sources([])
 

@@ -1,10 +1,14 @@
 import importlib.util
 import sys
 from pathlib import Path
+
 import pytest
 
 PACKAGE = "custom_components.horticulture_assistant.utils"
-MODULE_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
+)
 spec = importlib.util.spec_from_file_location(f"{PACKAGE}.fertigation_planner", MODULE_PATH)
 fertigation_planner = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = fertigation_planner
@@ -18,11 +22,14 @@ def _hass_for(base: Path):
     class DummyConfig:
         def __init__(self, base):
             self._base = Path(base)
+
         def path(self, name: str) -> str:
             return str(Path(base) / name)
+
     class DummyHass:
         def __init__(self, base):
             self.config = DummyConfig(base)
+
     return DummyHass(base)
 
 
@@ -48,7 +55,9 @@ def test_plan_fertigation_missing_profile(tmp_path):
 def test_plan_fertigation_synergy(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
+    (plant_dir / "lettuce.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
     hass = _hass_for(tmp_path)
     plan_basic = plan_fertigation_from_profile("lettuce", 1.0, hass)
     plan_syn = plan_fertigation_from_profile("lettuce", 1.0, hass, use_synergy=True)

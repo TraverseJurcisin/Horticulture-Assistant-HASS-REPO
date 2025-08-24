@@ -1,33 +1,32 @@
 import pytest
-
+from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.irrigation_manager import (
-    recommend_irrigation_volume,
-    recommend_irrigation_with_rainfall,
-    recommend_irrigation_interval,
-    get_crop_coefficient,
+    IrrigationRecommendation,
+    adjust_irrigation_for_efficiency,
+    adjust_irrigation_for_zone,
     estimate_irrigation_demand,
-    recommend_irrigation_from_environment,
-    get_daily_irrigation_target,
-    list_supported_plants,
+    estimate_irrigation_time,
+    generate_cycle_infiltration_schedule,
+    generate_cycle_irrigation_plan,
+    generate_env_irrigation_schedule,
+    generate_env_precipitation_schedule,
     generate_irrigation_schedule,
     generate_irrigation_schedule_with_runtime,
-    summarize_irrigation_schedule,
-    generate_cycle_irrigation_plan,
-    adjust_irrigation_for_efficiency,
-    estimate_irrigation_time,
-    generate_env_irrigation_schedule,
     generate_precipitation_schedule,
-    generate_env_precipitation_schedule,
-    generate_cycle_infiltration_schedule,
-    get_rain_capture_efficiency,
+    get_crop_coefficient,
+    get_daily_irrigation_target,
     get_irrigation_zone_modifier,
-    adjust_irrigation_for_zone,
+    get_rain_capture_efficiency,
     get_recommended_interval,
-    IrrigationRecommendation,
+    list_supported_plants,
+    recommend_irrigation_from_environment,
+    recommend_irrigation_interval,
+    recommend_irrigation_volume,
+    recommend_irrigation_with_rainfall,
+    summarize_irrigation_schedule,
 )
-from plant_engine.utils import clear_dataset_cache
 from plant_engine.rootzone_model import RootZone, calculate_remaining_water
-from plant_engine.compute_transpiration import compute_transpiration
+from plant_engine.utils import clear_dataset_cache
 
 
 def test_recommend_irrigation_volume_basic():
@@ -92,15 +91,11 @@ def test_recommend_irrigation_with_rainfall():
         expected_et_ml=40.0,
         rainfall_ml=10.0,
     )
-    expected = recommend_irrigation_volume(
-        zone, 120.0, expected_et_ml=31.0
-    )
+    expected = recommend_irrigation_volume(zone, 120.0, expected_et_ml=31.0)
     assert result == expected
 
     with pytest.raises(ValueError):
-        recommend_irrigation_with_rainfall(
-            zone, 120.0, expected_et_ml=40.0, rainfall_ml=-5.0
-        )
+        recommend_irrigation_with_rainfall(zone, 120.0, expected_et_ml=40.0, rainfall_ml=-5.0)
 
 
 def test_recommend_irrigation_interval():
@@ -191,9 +186,7 @@ def test_generate_irrigation_schedule_with_method():
         total_available_water_ml=200.0,
         readily_available_water_ml=100.0,
     )
-    schedule = generate_irrigation_schedule(
-        zone, 150.0, [30.0, 30.0, 30.0], method="drip"
-    )
+    schedule = generate_irrigation_schedule(zone, 150.0, [30.0, 30.0, 30.0], method="drip")
     assert schedule[1] == 0.0
     assert schedule[2] == pytest.approx(88.9, rel=1e-2)
 
@@ -221,16 +214,12 @@ def test_generate_env_irrigation_schedule():
     sched = generate_env_irrigation_schedule(profile, env_series, zone, 150.0)
 
     m1 = compute_transpiration(profile, env)
-    vol1 = recommend_irrigation_volume(
-        zone, 150.0, m1["transpiration_ml_day"]
-    )
+    vol1 = recommend_irrigation_volume(zone, 150.0, m1["transpiration_ml_day"])
     remaining = calculate_remaining_water(
         zone, 150.0, irrigation_ml=vol1, et_ml=m1["transpiration_ml_day"]
     )
     m2 = compute_transpiration(profile, env)
-    vol2 = recommend_irrigation_volume(
-        zone, remaining, m2["transpiration_ml_day"]
-    )
+    vol2 = recommend_irrigation_volume(zone, remaining, m2["transpiration_ml_day"])
 
     assert sched[1]["volume_ml"] == vol1
     assert sched[1]["metrics"] == m1

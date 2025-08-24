@@ -4,13 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Dict, List, Tuple
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "stages/stage_tasks.json"
 
-_DATA: Dict[str, Dict[str, List[str]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, list[str]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -26,24 +25,22 @@ class TaskScheduleEntry:
     """Single task schedule record."""
 
     date: date
-    tasks: List[str]
+    tasks: list[str]
 
-    def as_tuple(self) -> Tuple[str, List[str]]:
+    def as_tuple(self) -> tuple[str, list[str]]:
         return self.date.isoformat(), list(self.tasks)
 
 
-def list_supported_plants() -> List[str]:
+def list_supported_plants() -> list[str]:
     """Return plant types with task definitions."""
 
     return list_dataset_entries(_DATA)
 
 
-def get_stage_tasks(plant_type: str, stage: str) -> List[str]:
+def get_stage_tasks(plant_type: str, stage: str) -> list[str]:
     """Return task list for a plant stage."""
 
-    return list(
-        _DATA.get(normalize_key(plant_type), {}).get(normalize_key(stage), [])
-    )
+    return list(_DATA.get(normalize_key(plant_type), {}).get(normalize_key(stage), []))
 
 
 def generate_task_schedule(
@@ -52,7 +49,7 @@ def generate_task_schedule(
     start: date,
     days: int,
     interval: int = 7,
-) -> List[TaskScheduleEntry]:
+) -> list[TaskScheduleEntry]:
     """Return repeating task schedule for the duration of a stage."""
 
     if days <= 0:
@@ -61,7 +58,7 @@ def generate_task_schedule(
         raise ValueError("interval must be positive")
 
     tasks = get_stage_tasks(plant_type, stage)
-    schedule: List[TaskScheduleEntry] = []
+    schedule: list[TaskScheduleEntry] = []
     current = start
     while current < start + timedelta(days=days):
         schedule.append(TaskScheduleEntry(current, tasks))
@@ -71,7 +68,7 @@ def generate_task_schedule(
 
 def generate_cycle_task_plan(
     plant_type: str, start: date, interval: int = 7
-) -> List[TaskScheduleEntry]:
+) -> list[TaskScheduleEntry]:
     """Return tasks for the entire growth cycle starting at ``start``.
 
     Stage durations from :mod:`growth_stage` are used to repeat stage tasks
@@ -80,7 +77,7 @@ def generate_cycle_task_plan(
 
     from . import growth_stage
 
-    schedule: List[TaskScheduleEntry] = []
+    schedule: list[TaskScheduleEntry] = []
     current = start
     for stage in growth_stage.list_growth_stages(plant_type):
         days = growth_stage.get_stage_duration(plant_type, stage)

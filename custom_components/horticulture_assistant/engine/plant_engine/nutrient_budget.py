@@ -8,19 +8,20 @@ nutrient removed per kilogram of yield. The new
 into grams of fertilizer product using purity factors from
 ``fertilizer_purity.json``.
 """
+
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Dict, Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "nutrients/nutrient_removal_rates.json"
 
 # Cached dataset loaded once at import
-_RATES: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_RATES: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 # Fertilizer solubility (grams per liter) loaded once at import
-_SOLUBILITY: Dict[str, float] = load_dataset("fertilizers/fertilizer_solubility.json")
+_SOLUBILITY: dict[str, float] = load_dataset("fertilizers/fertilizer_solubility.json")
 
 __all__ = [
     "list_supported_plants",
@@ -38,9 +39,9 @@ __all__ = [
 class RemovalEstimate:
     """Container for nutrient removal calculations."""
 
-    nutrients_g: Dict[str, float]
+    nutrients_g: dict[str, float]
 
-    def as_dict(self) -> Dict[str, Dict[str, float]]:
+    def as_dict(self) -> dict[str, dict[str, float]]:
         return {"nutrients_g": dict(self.nutrients_g)}
 
 
@@ -49,10 +50,10 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_RATES)
 
 
-def get_removal_rates(plant_type: str) -> Dict[str, float]:
+def get_removal_rates(plant_type: str) -> dict[str, float]:
     """Return per-kg nutrient removal rates for ``plant_type``."""
     raw = _RATES.get(normalize_key(plant_type), {})
-    rates: Dict[str, float] = {}
+    rates: dict[str, float] = {}
     for n, val in raw.items():
         try:
             rates[n] = float(val)
@@ -90,7 +91,7 @@ def estimate_fertilizer_requirements(
     fertilizers: Mapping[str, str],
     *,
     efficiency: float = 0.85,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return grams of each fertilizer needed for the expected yield.
 
     The calculation uses :func:`estimate_required_nutrients` to determine the
@@ -99,13 +100,11 @@ def estimate_fertilizer_requirements(
     purity factor is skipped.
     """
 
-    required = estimate_required_nutrients(
-        plant_type, yield_kg, efficiency=efficiency
-    ).nutrients_g
+    required = estimate_required_nutrients(plant_type, yield_kg, efficiency=efficiency).nutrients_g
 
     purity_data = load_dataset("fertilizers/fertilizer_purity.json")
 
-    totals: Dict[str, float] = {}
+    totals: dict[str, float] = {}
     for nutrient, grams in required.items():
         fert_id = fertilizers.get(nutrient)
         if not fert_id:
@@ -125,7 +124,7 @@ def estimate_fertilizer_requirements(
     return totals
 
 
-def estimate_solution_volume(masses: Mapping[str, float]) -> Dict[str, float]:
+def estimate_solution_volume(masses: Mapping[str, float]) -> dict[str, float]:
     """Return liters of water needed to dissolve each fertilizer mass.
 
     Solubility limits from ``fertilizer_solubility.json`` are used to
@@ -133,7 +132,7 @@ def estimate_solution_volume(masses: Mapping[str, float]) -> Dict[str, float]:
     Unknown fertilizers are ignored.
     """
 
-    volumes: Dict[str, float] = {}
+    volumes: dict[str, float] = {}
     for fert_id, grams in masses.items():
         if grams <= 0:
             continue

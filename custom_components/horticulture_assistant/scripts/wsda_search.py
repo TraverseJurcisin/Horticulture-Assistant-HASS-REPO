@@ -5,10 +5,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from typing import List
-
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,8 +16,8 @@ from scripts import ensure_repo_root_on_path
 ROOT = ensure_repo_root_on_path()
 
 from plant_engine.wsda_lookup import (
-    search_products,
     get_product_analysis_by_number,
+    search_products,
 )
 
 
@@ -28,7 +26,7 @@ def _print_analysis(analysis: dict) -> None:
     print(json.dumps(analysis, indent=2, sort_keys=True))
 
 
-def main(argv: List[str] | None = None) -> None:
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Search WSDA fertilizer database")
     parser.add_argument("query", help="search string or product number")
     parser.add_argument(

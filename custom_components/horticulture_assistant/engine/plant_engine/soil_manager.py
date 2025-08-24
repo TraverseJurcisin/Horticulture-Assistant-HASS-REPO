@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "soil/soil_nutrient_guidelines.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -25,10 +25,10 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_soil_targets(plant_type: str) -> Dict[str, float]:
+def get_soil_targets(plant_type: str) -> dict[str, float]:
     """Return soil nutrient targets for ``plant_type``."""
     entry = _DATA.get(normalize_key(plant_type), {})
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for k, v in entry.items():
         try:
             result[k] = float(v)
@@ -37,10 +37,10 @@ def get_soil_targets(plant_type: str) -> Dict[str, float]:
     return result
 
 
-def calculate_soil_deficiencies(levels: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+def calculate_soil_deficiencies(levels: Mapping[str, float], plant_type: str) -> dict[str, float]:
     """Return nutrient amounts needed to reach soil targets."""
     targets = get_soil_targets(plant_type)
-    deficits: Dict[str, float] = {}
+    deficits: dict[str, float] = {}
     for nutrient, target in targets.items():
         try:
             current = float(levels.get(nutrient, 0.0))
@@ -52,10 +52,10 @@ def calculate_soil_deficiencies(levels: Mapping[str, float], plant_type: str) ->
     return deficits
 
 
-def calculate_soil_surplus(levels: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+def calculate_soil_surplus(levels: Mapping[str, float], plant_type: str) -> dict[str, float]:
     """Return amounts exceeding soil targets."""
     targets = get_soil_targets(plant_type)
-    surplus: Dict[str, float] = {}
+    surplus: dict[str, float] = {}
     for nutrient, target in targets.items():
         try:
             current = float(levels.get(nutrient, 0.0))
@@ -89,14 +89,14 @@ def score_soil_nutrients(levels: Mapping[str, float], plant_type: str) -> float:
     return round((total / count) * 100, 1)
 
 
-def calculate_soil_balance(levels: Mapping[str, float], plant_type: str) -> Dict[str, float]:
+def calculate_soil_balance(levels: Mapping[str, float], plant_type: str) -> dict[str, float]:
     """Return ratio of current to target soil nutrient levels."""
 
     targets = get_soil_targets(plant_type)
     if not targets:
         return {}
 
-    balance: Dict[str, float] = {}
+    balance: dict[str, float] = {}
     for nutrient, target in targets.items():
         if target <= 0:
             continue
@@ -115,7 +115,7 @@ def recommend_soil_amendments(
     volume_l: float,
     fertilizers: Mapping[str, str],
     purity_overrides: Mapping[str, float] | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return fertilizer grams required to meet soil nutrient targets.
 
     Parameters
@@ -140,7 +140,7 @@ def recommend_soil_amendments(
         return {}
 
     purity_data = load_dataset("fertilizers/fertilizer_purity.json")
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for nutrient, ppm_needed in deficits.items():
         fert_id = fertilizers.get(nutrient)
         if not fert_id:

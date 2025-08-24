@@ -1,15 +1,14 @@
-import pytest
-
 import importlib
 
 import plant_engine.utils as utils
+import pytest
 from plant_engine.utils import (
-    load_json,
-    normalize_key,
-    clear_dataset_cache,
-    stage_value,
-    load_stage_dataset_value,
     clean_float_map,
+    clear_dataset_cache,
+    load_json,
+    load_stage_dataset_value,
+    normalize_key,
+    stage_value,
 )
 
 
@@ -84,15 +83,14 @@ def test_stage_value_custom_default():
 
 
 def test_load_stage_dataset_value():
-    value = load_stage_dataset_value(
-        "soil/soil_moisture_guidelines.json", "citrus", "seedling"
-    )
+    value = load_stage_dataset_value("soil/soil_moisture_guidelines.json", "citrus", "seedling")
     assert value == [30, 50]
 
     # missing stage falls back to the dataset's 'optimal' entry
-    assert load_stage_dataset_value(
-        "soil/soil_moisture_guidelines.json", "citrus", "missing"
-    ) == [30, 50]
+    assert load_stage_dataset_value("soil/soil_moisture_guidelines.json", "citrus", "missing") == [
+        30,
+        50,
+    ]
 
 
 def test_load_datasets(monkeypatch, tmp_path):
@@ -103,7 +101,9 @@ def test_load_datasets(monkeypatch, tmp_path):
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
     clear_dataset_cache()
     import importlib
+
     import plant_engine.utils as utils
+
     importlib.reload(utils)
     data = utils.load_datasets("one.json", "two.json")
     assert data == {"one.json": {"a": 1}, "two.json": {"b": 2}}

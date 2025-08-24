@@ -1,10 +1,10 @@
 """Compute water use efficiency metrics."""
+
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Mapping, Dict
 
-from .utils import load_json, load_dataset, normalize_key
+from .utils import load_dataset, load_json, normalize_key
 from .water_usage import estimate_cycle_total_use
 
 TARGET_FILE = "water/water_efficiency_targets.json"
@@ -33,7 +33,7 @@ def calculate_wue(plant_id: str, plant_type: str) -> float:
     return round(total_yield_g / (usage_ml / 1000.0), 2)
 
 
-def evaluate_wue(wue: float, plant_type: str, tolerance: float = 0.1) -> Dict[str, float | str]:
+def evaluate_wue(wue: float, plant_type: str, tolerance: float = 0.1) -> dict[str, float | str]:
     """Return assessment of WUE versus target for ``plant_type``."""
     targets = load_dataset(TARGET_FILE)
     target = float(targets.get(normalize_key(plant_type), 0))

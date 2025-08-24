@@ -2,24 +2,29 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
 from datetime import date, timedelta
-from typing import Dict, Mapping, Iterable
 
-
-from .utils import lazy_dataset, normalize_key, list_dataset_entries
 from .monitor_utils import (
-    get_interval as _get_interval,
-    next_date as _next_date,
-    generate_schedule as _generate_schedule,
     calculate_risk_score,
 )
+from .monitor_utils import (
+    generate_schedule as _generate_schedule,
+)
+from .monitor_utils import (
+    get_interval as _get_interval,
+)
+from .monitor_utils import (
+    next_date as _next_date,
+)
 from .pest_manager import (
-    recommend_treatments,
-    recommend_beneficials,
     get_pest_resistance,
     list_known_pests,
+    recommend_beneficials,
+    recommend_treatments,
 )
+from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
 DATA_FILE = "pests/pest_thresholds.json"
 STAGE_DATA_FILE = "pests/pest_thresholds_by_stage.json"
@@ -52,6 +57,8 @@ def _resolve(data):
     """Return dataset contents from a mapping or callable loader."""
 
     return data() if callable(data) else data
+
+
 _MONITOR_INTERVALS = lazy_dataset(MONITOR_INTERVAL_FILE)
 _RISK_MODIFIERS = lazy_dataset(RISK_INTERVAL_MOD_FILE)
 _SCOUTING_METHODS = lazy_dataset(SCOUTING_METHOD_FILE)
@@ -89,7 +96,7 @@ __all__ = [
 ]
 
 
-def get_pest_thresholds(plant_type: str, stage: str | None = None) -> Dict[str, int]:
+def get_pest_thresholds(plant_type: str, stage: str | None = None) -> dict[str, int]:
     """Return pest count thresholds for ``plant_type`` and optional ``stage``.
 
     Lookup is case-insensitive and spaces are ignored so ``"Citrus"`` and
@@ -173,9 +180,7 @@ def risk_adjusted_monitor_interval(
     return max(1, interval)
 
 
-def next_monitor_date(
-    plant_type: str, stage: str | None, last_date: date
-) -> date | None:
+def next_monitor_date(plant_type: str, stage: str | None, last_date: date) -> date | None:
     """Return the next pest scouting date based on interval guidelines."""
 
     return _next_date(_resolve(_MONITOR_INTERVALS), plant_type, stage, last_date)
@@ -220,7 +225,7 @@ def get_scouting_method(pest: str) -> str:
     return methods.get(normalize_key(pest), "")
 
 
-def get_severity_thresholds(pest: str) -> Dict[str, float]:
+def get_severity_thresholds(pest: str) -> dict[str, float]:
     """Return population thresholds for severity levels of ``pest``."""
 
     thresholds = _resolve(_SEVERITY_THRESHOLDS)
@@ -238,11 +243,11 @@ def get_sample_size(plant_type: str) -> int | None:
         return None
 
 
-def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
+def assess_pest_pressure(plant_type: str, observations: Mapping[str, int]) -> dict[str, bool]:
     """Return mapping of pests to ``True`` if threshold exceeded."""
 
     thresholds = get_pest_thresholds(plant_type)
-    pressure: Dict[str, bool] = {}
+    pressure: dict[str, bool] = {}
     for pest, count in observations.items():
         if count < 0:
             raise ValueError("pest counts must be non-negative")
@@ -319,7 +324,7 @@ def estimate_yield_loss(severity_map: Mapping[str, str]) -> float:
     return round(min(total, 100.0), 2)
 
 
-def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
+def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> dict[str, str]:
     """Return treatment actions for pests exceeding thresholds."""
 
     pressure = assess_pest_pressure(plant_type, observations)
@@ -331,7 +336,7 @@ def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]
 
 def recommend_biological_controls(
     plant_type: str, observations: Mapping[str, int]
-) -> Dict[str, list[str]]:
+) -> dict[str, list[str]]:
     """Return beneficial insects for pests exceeding thresholds."""
 
     pressure = assess_pest_pressure(plant_type, observations)
@@ -341,9 +346,7 @@ def recommend_biological_controls(
     return recommend_beneficials(exceeded)
 
 
-def estimate_pest_risk(
-    plant_type: str, environment: Mapping[str, float]
-) -> Dict[str, str]:
+def estimate_pest_risk(plant_type: str, environment: Mapping[str, float]) -> dict[str, str]:
     """Return pest risk level based on environmental conditions."""
 
     factors = _resolve(_RISK_FACTORS).get(normalize_key(plant_type), {})
@@ -355,13 +358,11 @@ def estimate_pest_risk(
     return estimate_condition_risk(factors, environment)
 
 
-def adjust_risk_with_resistance(
-    plant_type: str, risk_map: Mapping[str, str]
-) -> Dict[str, str]:
+def adjust_risk_with_resistance(plant_type: str, risk_map: Mapping[str, str]) -> dict[str, str]:
     """Return ``risk_map`` adjusted by pest resistance ratings."""
 
     levels = ["low", "moderate", "high"]
-    adjusted: Dict[str, str] = {}
+    adjusted: dict[str, str] = {}
     for pest, risk in risk_map.items():
         rating = get_pest_resistance(plant_type, pest)
         if rating is None or risk not in levels:
@@ -380,7 +381,7 @@ def adjust_risk_with_resistance(
 
 def estimate_adjusted_pest_risk(
     plant_type: str, environment: Mapping[str, float]
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return environment-based pest risk adjusted for crop resistance."""
 
     risk = estimate_pest_risk(plant_type, environment)
@@ -391,11 +392,11 @@ def estimate_adjusted_pest_risk(
 
 def estimate_adjusted_pest_risk_series(
     plant_type: str, series: Iterable[Mapping[str, float]]
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return combined pest risk across multiple environment readings."""
 
     levels = {"low": 1, "moderate": 2, "high": 3}
-    combined: Dict[str, int] = {}
+    combined: dict[str, int] = {}
     for env in series:
         risk = estimate_adjusted_pest_risk(plant_type, env)
         for pest, level in risk.items():
@@ -455,16 +456,14 @@ def calculate_pest_management_index_series(
             total += calculate_pest_management_index(plant_type, obs)
             count += 1
     else:
-        for obs, env in zip(series, env_series):
+        for obs, env in zip(series, env_series, strict=False):
             total += calculate_pest_management_index(plant_type, obs, env)
             count += 1
 
     return round(total / count, 1) if count else 0.0
 
 
-def classify_pest_severity(
-    plant_type: str, observations: Mapping[str, int]
-) -> Dict[str, str]:
+def classify_pest_severity(plant_type: str, observations: Mapping[str, int]) -> dict[str, str]:
     """Return ``low``, ``moderate`` or ``severe`` for each observed pest.
 
     Severity levels are determined using optional values from
@@ -474,7 +473,7 @@ def classify_pest_severity(
     """
 
     thresholds = get_pest_thresholds(plant_type)
-    severity: Dict[str, str] = {}
+    severity: dict[str, str] = {}
     for pest, count in observations.items():
         if count < 0:
             raise ValueError("pest counts must be non-negative")
@@ -503,23 +502,21 @@ def classify_pest_severity(
 class PestReport:
     """Consolidated pest monitoring report."""
 
-    severity: Dict[str, str]
-    thresholds_exceeded: Dict[str, bool]
-    treatments: Dict[str, str]
-    beneficial_insects: Dict[str, list[str]]
-    prevention: Dict[str, str]
-    severity_actions: Dict[str, str]
+    severity: dict[str, str]
+    thresholds_exceeded: dict[str, bool]
+    treatments: dict[str, str]
+    beneficial_insects: dict[str, list[str]]
+    prevention: dict[str, str]
+    severity_actions: dict[str, str]
     severity_index: float
     yield_loss: float
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         """Return report as a regular dictionary."""
         return asdict(self)
 
 
-def generate_pest_report(
-    plant_type: str, observations: Mapping[str, int]
-) -> Dict[str, object]:
+def generate_pest_report(plant_type: str, observations: Mapping[str, int]) -> dict[str, object]:
     """Return severity, treatment and prevention recommendations."""
 
     severity = classify_pest_severity(plant_type, observations)
@@ -554,7 +551,7 @@ def summarize_pest_management(
     observations: Mapping[str, int],
     environment: Mapping[str, float] | None = None,
     last_date: date | None = None,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return consolidated pest status and recommendations.
 
     Parameters
@@ -573,7 +570,7 @@ def summarize_pest_management(
 
     report = generate_pest_report(plant_type, observations)
 
-    risk: Dict[str, str] | None = None
+    risk: dict[str, str] | None = None
     risk_score: float | None = None
     next_date_val: date | None = None
     interval: int | None = None
@@ -581,9 +578,7 @@ def summarize_pest_management(
         risk = estimate_adjusted_pest_risk(plant_type, environment)
         risk_score = calculate_risk_score(risk)
         if last_date is not None:
-            interval = risk_adjusted_monitor_interval(
-                plant_type, stage, environment
-            )
+            interval = risk_adjusted_monitor_interval(plant_type, stage, environment)
             if interval is not None:
                 next_date_val = last_date + timedelta(days=interval)
 

@@ -1,7 +1,7 @@
 import json
-from pathlib import Path
 import sys
 import types
+from pathlib import Path
 
 # Minimal Home Assistant stub so the module imports without the real package
 ha = types.ModuleType("homeassistant")
@@ -10,7 +10,9 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils import threshold_approval_manager as tam
+from custom_components.horticulture_assistant.utils import (  # noqa: E402
+    threshold_approval_manager as tam,
+)
 
 
 class DummyConfig:
@@ -66,15 +68,11 @@ def test_apply_threshold_approvals_list_format(tmp_path: Path) -> None:
     pending = [
         {
             "plant_id": "plant1",
-            "changes": {
-                "ec": {"previous_value": 1, "proposed_value": 2, "status": "approved"}
-            },
+            "changes": {"ec": {"previous_value": 1, "proposed_value": 2, "status": "approved"}},
         },
         {
             "plant_id": "plant2",
-            "changes": {
-                "ph": {"previous_value": 5.5, "proposed_value": 6, "status": "pending"}
-            },
+            "changes": {"ph": {"previous_value": 5.5, "proposed_value": 6, "status": "pending"}},
         },
     ]
     (data_dir / "pending_approvals.json").write_text(json.dumps(pending))

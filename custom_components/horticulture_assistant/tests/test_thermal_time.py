@@ -1,4 +1,5 @@
 import datetime
+
 from plant_engine import thermal_time
 
 
@@ -35,7 +36,5 @@ def test_estimate_days_to_stage():
 def test_estimate_stage_completion_date():
     temps = [(20, 30)] * 10
     start = datetime.date(2025, 1, 1)
-    date = thermal_time.estimate_stage_completion_date(
-        "lettuce", "vegetative", start, temps
-    )
+    date = thermal_time.estimate_stage_completion_date("lettuce", "vegetative", start, temps)
     assert date is None or date >= start

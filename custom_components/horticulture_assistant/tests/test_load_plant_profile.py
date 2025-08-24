@@ -1,8 +1,8 @@
 import json
 
 from custom_components.horticulture_assistant.utils.load_plant_profile import (
-    load_plant_profile,
     clear_profile_cache,
+    load_plant_profile,
 )
 
 
@@ -38,6 +38,7 @@ def test_load_profile_with_validation_files(tmp_path):
 def test_load_profile_missing_dir(tmp_path):
     result = load_plant_profile("missing", base_path=tmp_path / "plants")
     assert result == {}
+
 
 def test_profile_caching(tmp_path):
     plant_dir = tmp_path / "plants" / "demo"

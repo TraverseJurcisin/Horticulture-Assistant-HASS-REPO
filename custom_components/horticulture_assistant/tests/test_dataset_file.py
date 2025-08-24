@@ -1,6 +1,5 @@
 import importlib
 import json
-import os
 
 import plant_engine.utils as utils
 

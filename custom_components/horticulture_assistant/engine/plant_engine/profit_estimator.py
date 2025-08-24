@@ -1,17 +1,18 @@
 """Utilities for estimating crop revenue and profit."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key
 from . import yield_manager
+from .utils import load_dataset, normalize_key
 
 PRICE_FILE = "economics/crop_market_prices.json"
 COST_FILE = "economics/crop_production_costs.json"
 
 # Cached datasets at import time
-_PRICES: Dict[str, float] = load_dataset(PRICE_FILE)
-_COSTS: Dict[str, float] = load_dataset(COST_FILE)
+_PRICES: dict[str, float] = load_dataset(PRICE_FILE)
+_COSTS: dict[str, float] = load_dataset(COST_FILE)
 
 __all__ = [
     "list_supported_crops",

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from typing import Any, Mapping, Iterable, Dict
+from typing import Any
 
 from .environment_manager import recommend_environment_adjustments
-from .nutrient_planner import generate_nutrient_management_report, NutrientManagementReport
+from .nutrient_planner import NutrientManagementReport, generate_nutrient_management_report
 from .pest_manager import build_pest_management_plan
 
 __all__ = ["CropAdvice", "generate_crop_advice"]
@@ -14,9 +15,9 @@ __all__ = ["CropAdvice", "generate_crop_advice"]
 class CropAdvice:
     """Aggregated management recommendations for a crop."""
 
-    environment: Dict[str, str]
+    environment: dict[str, str]
     nutrients: NutrientManagementReport
-    pests: Dict[str, Any]
+    pests: dict[str, Any]
 
 
 def generate_crop_advice(
@@ -31,9 +32,7 @@ def generate_crop_advice(
 ) -> CropAdvice:
     """Return combined environment, nutrient and pest recommendations."""
 
-    env_actions = recommend_environment_adjustments(
-        current_environment, plant_type, stage, zone
-    )
+    env_actions = recommend_environment_adjustments(current_environment, plant_type, stage, zone)
     nutrient_report = generate_nutrient_management_report(
         nutrient_levels, plant_type, stage, volume_l
     )

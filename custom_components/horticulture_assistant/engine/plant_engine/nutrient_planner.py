@@ -1,15 +1,16 @@
 """High level nutrient management recommendations."""
+
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Mapping, Dict, Optional
-
-from .nutrient_analysis import analyze_nutrient_profile, NutrientAnalysis
-from .fertigation import recommend_correction_schedule
 
 from custom_components.horticulture_assistant.fertilizer_formulator import (
     get_cheapest_product,
 )
+
+from .fertigation import recommend_correction_schedule
+from .nutrient_analysis import NutrientAnalysis, analyze_nutrient_profile
 
 __all__ = [
     "NutrientManagementReport",
@@ -24,7 +25,7 @@ class NutrientManagementReport:
     """Combined nutrient analysis and correction schedule."""
 
     analysis: NutrientAnalysis
-    corrections_g: Dict[str, float]
+    corrections_g: dict[str, float]
 
 
 @dataclass(slots=True)
@@ -32,7 +33,7 @@ class NutrientManagementCostReport(NutrientManagementReport):
     """Extends :class:`NutrientManagementReport` with cost information."""
 
     cost_total: float
-    cost_breakdown: Dict[str, float]
+    cost_breakdown: dict[str, float]
 
 
 def generate_nutrient_management_report(
@@ -80,11 +81,11 @@ def generate_nutrient_management_report(
     return NutrientManagementReport(analysis=analysis, corrections_g=corrections)
 
 
-def _estimate_correction_cost(corrections: Mapping[str, float]) -> tuple[float, Dict[str, float]]:
+def _estimate_correction_cost(corrections: Mapping[str, float]) -> tuple[float, dict[str, float]]:
     """Return total cost and per-nutrient breakdown for ``corrections``."""
 
     total = 0.0
-    breakdown: Dict[str, float] = {}
+    breakdown: dict[str, float] = {}
     for nutrient, grams in corrections.items():
         if grams <= 0:
             continue

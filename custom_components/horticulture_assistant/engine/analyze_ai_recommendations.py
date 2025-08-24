@@ -1,13 +1,15 @@
-import openai
-import os
 import json
 import logging
+import os
 from datetime import datetime
 
-from ..utils.json_io import load_json, save_json
+import openai
 from plant_engine.utils import get_pending_dir
 
+from ..utils.json_io import load_json, save_json
+
 _LOGGER = logging.getLogger(__name__)
+
 
 def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     """
@@ -53,25 +55,35 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
             moisture_val = float(moisture)
         except Exception:
             moisture_val = moisture
-        sensor_lines.append(f"Moisture: {round(moisture_val, 1)}%" if isinstance(moisture_val, (int, float)) else f"Moisture: {moisture_val}")
+        sensor_lines.append(
+            f"Moisture: {round(moisture_val, 1)}%"
+            if isinstance(moisture_val, int | float)
+            else f"Moisture: {moisture_val}"
+        )
     if ec is not None:
         try:
             ec_val = float(ec)
         except Exception:
             ec_val = ec
-        sensor_lines.append(f"EC: {round(ec_val, 2)} mS/cm" if isinstance(ec_val, (int, float)) else f"EC: {ec_val}")
+        sensor_lines.append(
+            f"EC: {round(ec_val, 2)} mS/cm" if isinstance(ec_val, int | float) else f"EC: {ec_val}"
+        )
     if temperature is not None:
         try:
             temp_val = float(temperature)
         except Exception:
             temp_val = temperature
-        sensor_lines.append(f"Temperature: {round(temp_val, 1)}°C" if isinstance(temp_val, (int, float)) else f"Temperature: {temperature}")
+        sensor_lines.append(
+            f"Temperature: {round(temp_val, 1)}°C"
+            if isinstance(temp_val, int | float)
+            else f"Temperature: {temperature}"
+        )
     if humidity is not None:
         try:
             hum_val = float(humidity)
         except Exception:
             hum_val = humidity
-        if isinstance(hum_val, (int, float)):
+        if isinstance(hum_val, int | float):
             sensor_lines.append(f"Humidity: {int(round(hum_val))}%")
         else:
             sensor_lines.append(f"Humidity: {humidity}")
@@ -80,7 +92,11 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
             light_val = float(light)
         except Exception:
             light_val = light
-        sensor_lines.append(f"Light: {int(round(light_val))} lux" if isinstance(light_val, (int, float)) else f"Light: {light}")
+        sensor_lines.append(
+            f"Light: {int(round(light_val))} lux"
+            if isinstance(light_val, int | float)
+            else f"Light: {light}"
+        )
     if sensor_lines:
         context_lines.append("Latest sensor readings:")
         for line in sensor_lines:
@@ -109,9 +125,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     # Query the AI model for recommendations
     try:
         response = openai.ChatCompletion.create(
-            model=model_name,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0
+            model=model_name, messages=[{"role": "user", "content": prompt}], temperature=0
         )
     except Exception as e:
         _LOGGER.error("Failed to get AI recommendation for plant %s: %s", plant_id, e)
@@ -128,10 +142,18 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     try:
         suggested_thresholds = json.loads(ai_message.strip())
     except json.JSONDecodeError:
-        _LOGGER.warning("AI did not return valid JSON for plant %s (output was: %r); skipping.", plant_id, ai_message)
+        _LOGGER.warning(
+            "AI did not return valid JSON for plant %s (output was: %r); skipping.",
+            plant_id,
+            ai_message,
+        )
         return
     if not isinstance(suggested_thresholds, dict):
-        _LOGGER.warning("AI response for plant %s is not a JSON object (got %s); skipping.", plant_id, type(suggested_thresholds).__name__)
+        _LOGGER.warning(
+            "AI response for plant %s is not a JSON object (got %s); skipping.",
+            plant_id,
+            type(suggested_thresholds).__name__,
+        )
         return
 
     # Compare suggested thresholds with current thresholds
@@ -141,11 +163,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     for k, new_val in new.items():
         old_val = old.get(k)
         if k not in old or old_val != new_val:
-            changes[k] = {
-                "previous_value": old_val,
-                "proposed_value": new_val,
-                "status": "pending"
-            }
+            changes[k] = {"previous_value": old_val, "proposed_value": new_val, "status": "pending"}
     if not changes:
         _LOGGER.info("No threshold changes recommended by AI for plant %s.", plant_id)
         return
@@ -156,7 +174,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         "timestamp": datetime.now().isoformat(),
         "original_thresholds": old,
         "proposed_thresholds": new,
-        "changes": changes
+        "changes": changes,
     }
 
     # Write record to data/pending_thresholds/{plant_id}_{YYYY-MM-DD}.json
@@ -177,6 +195,17 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         _LOGGER.error("Failed to save pending thresholds for plant %s: %s", plant_id, e)
         return
 
-    _LOGGER.info("Queued %d threshold change(s) for plant %s (saved to %s)", len(changes), plant_id, file_path)
+    _LOGGER.info(
+        "Queued %d threshold change(s) for plant %s (saved to %s)",
+        len(changes),
+        plant_id,
+        file_path,
+    )
     for k, info in changes.items():
-        _LOGGER.info("Plant %s: suggested change - %s: %s -> %s", plant_id, k, info.get("previous_value"), info.get("proposed_value"))
+        _LOGGER.info(
+            "Plant %s: suggested change - %s: %s -> %s",
+            plant_id,
+            k,
+            info.get("previous_value"),
+            info.get("proposed_value"),
+        )

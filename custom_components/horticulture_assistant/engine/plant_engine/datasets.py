@@ -9,9 +9,8 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
-from typing import Dict, List
 
 from . import utils
 from .utils import (
@@ -44,15 +43,11 @@ class DatasetCatalog:
     """Helper object for discovering bundled datasets."""
 
     base_dir: Path = field(default_factory=get_data_dir)
-    extra_dirs: tuple[Path, ...] = field(
-        default_factory=lambda: tuple(get_extra_dirs())
-    )
+    extra_dirs: tuple[Path, ...] = field(default_factory=lambda: tuple(get_extra_dirs()))
     overlay_dir: Path | None = field(default_factory=get_overlay_dir)
-    catalog_file: Path = field(
-        default_factory=lambda: get_data_dir() / "dataset_catalog.json"
-    )
+    catalog_file: Path = field(default_factory=lambda: get_data_dir() / "dataset_catalog.json")
 
-    @lru_cache(maxsize=None)
+    @cache
     def paths(self) -> tuple[Path, ...]:
         """Return dataset search paths including overlay when set."""
         paths = [self.base_dir]
@@ -66,12 +61,12 @@ class DatasetCatalog:
             paths.insert(0, self.overlay_dir)
         return tuple(paths)
 
-    def _iter_paths(self) -> List[Path]:
+    def _iter_paths(self) -> list[Path]:
         """Return search paths as a list for backward compatibility."""
         return list(self.paths())
 
-    @lru_cache(maxsize=None)
-    def list_datasets(self) -> List[str]:
+    @cache
+    def list_datasets(self) -> list[str]:
         """Return relative paths of available dataset files."""
         exts = {".json", ".yaml", ".yml"}
         found: set[str] = set()
@@ -85,24 +80,29 @@ class DatasetCatalog:
                 if (
                     base == self.base_dir
                     and local_dir in paths
-                    and rel.parts and rel.parts[0] == "local"
+                    and rel.parts
+                    and rel.parts[0] == "local"
                 ):
                     # Skip duplicate entries when ``local`` is scanned separately
                     continue
                 rel_path = rel.as_posix()
                 found.add(rel_path)
-                if len(rel.parts) >= 3 and rel.parts[0] == "plants" and rel.parts[1] == "temperature":
+                if (
+                    len(rel.parts) >= 3
+                    and rel.parts[0] == "plants"
+                    and rel.parts[1] == "temperature"
+                ):
                     found.add(rel.parts[-1])
         return sorted(found)
 
-    @lru_cache(maxsize=None)
-    def _load_catalog(self) -> Dict[str, str]:
-        catalogs: Dict[str, str] = {}
+    @cache
+    def _load_catalog(self) -> dict[str, str]:
+        catalogs: dict[str, str] = {}
         for base in self._iter_paths():
             path = base / "dataset_catalog.json"
             if not path.exists():
                 continue
-            with open(path, "r", encoding="utf-8") as f:
+            with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             if isinstance(data, dict):
                 catalogs.update({str(k): str(v) for k, v in data.items()})
@@ -113,15 +113,15 @@ class DatasetCatalog:
 
         return self._load_catalog().get(name)
 
-    @lru_cache(maxsize=None)
-    def list_info(self) -> Dict[str, str]:
+    @cache
+    def list_info(self) -> dict[str, str]:
         """Return mapping of dataset names to descriptions."""
 
         names = self.list_datasets()
         catalog = self._load_catalog()
         return {n: catalog.get(n, "") for n in names}
 
-    def search(self, term: str) -> Dict[str, str]:
+    def search(self, term: str) -> dict[str, str]:
         """Return datasets matching ``term`` in the name or description."""
 
         if not term:
@@ -129,17 +129,17 @@ class DatasetCatalog:
 
         term = term.lower()
         info = self.list_info()
-        result: Dict[str, str] = {}
+        result: dict[str, str] = {}
         for name, desc in info.items():
             if term in name.lower() or term in desc.lower():
                 result[name] = desc
         return result
 
-    @lru_cache(maxsize=None)
-    def list_by_category(self) -> Dict[str, List[str]]:
+    @cache
+    def list_by_category(self) -> dict[str, list[str]]:
         """Return dataset names grouped by top-level directory."""
 
-        categories: Dict[str, List[str]] = {}
+        categories: dict[str, list[str]] = {}
         for name in self.list_datasets():
             parts = name.split("/", 1)
             category = parts[0] if len(parts) > 1 else "root"
@@ -149,7 +149,7 @@ class DatasetCatalog:
             paths.sort()
         return categories
 
-    @lru_cache(maxsize=None)
+    @cache
     def find_path(self, name: str) -> Path | None:
         """Return absolute :class:`Path` to ``name`` if it exists."""
 
@@ -159,7 +159,7 @@ class DatasetCatalog:
                 return candidate
         return None
 
-    @lru_cache(maxsize=None)
+    @cache
     def load(self, name: str) -> object | None:
         """Return parsed data contents of ``name`` or ``None`` if missing.
 
@@ -187,7 +187,7 @@ class DatasetCatalog:
 DEFAULT_CATALOG = DatasetCatalog()
 
 
-def list_datasets() -> List[str]:
+def list_datasets() -> list[str]:
     """Return relative paths of available dataset files."""
 
     return DEFAULT_CATALOG.list_datasets()
@@ -199,30 +199,30 @@ def get_dataset_description(name: str) -> str | None:
     return DEFAULT_CATALOG.get_description(name)
 
 
-def list_dataset_info() -> Dict[str, str]:
+def list_dataset_info() -> dict[str, str]:
     """Return mapping of dataset names to descriptions."""
 
     return DEFAULT_CATALOG.list_info()
 
 
-def search_datasets(term: str) -> Dict[str, str]:
+def search_datasets(term: str) -> dict[str, str]:
     """Return datasets matching ``term`` in the name or description."""
 
     return DEFAULT_CATALOG.search(term)
 
 
-def list_datasets_by_category() -> Dict[str, List[str]]:
+def list_datasets_by_category() -> dict[str, list[str]]:
     """Return dataset names grouped by top-level directory."""
 
     return DEFAULT_CATALOG.list_by_category()
 
 
-def list_dataset_info_by_category() -> Dict[str, Dict[str, str]]:
+def list_dataset_info_by_category() -> dict[str, dict[str, str]]:
     """Return dataset descriptions grouped by top-level directory."""
 
     by_cat = DEFAULT_CATALOG.list_by_category()
     info = DEFAULT_CATALOG.list_info()
-    result: Dict[str, Dict[str, str]] = {}
+    result: dict[str, dict[str, str]] = {}
     for cat, names in by_cat.items():
         result[cat] = {n: info.get(n, "") for n in names}
     return result

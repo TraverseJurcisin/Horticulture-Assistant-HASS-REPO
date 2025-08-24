@@ -4,6 +4,7 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def generate_stress_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
     """
     Generate or update pest resistance and stress tolerance profile files for a given plant.
@@ -31,7 +32,7 @@ def generate_stress_profiles(plant_id: str, base_path: str = None, overwrite: bo
         "symptoms": None,
         "resistance_mechanisms": None,
         "pesticide_sensitivity": None,
-        "pest_location_targeting": None
+        "pest_location_targeting": None,
     }
 
     # Define default content for stress_tolerance.json
@@ -44,7 +45,7 @@ def generate_stress_profiles(plant_id: str, base_path: str = None, overwrite: bo
         "flooding": None,
         "frost": None,
         "pruning": None,
-        "heavy_metal_tolerance": None
+        "heavy_metal_tolerance": None,
     }
 
     profile_sections = {

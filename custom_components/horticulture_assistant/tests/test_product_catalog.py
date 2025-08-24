@@ -1,6 +1,6 @@
 from custom_components.horticulture_assistant.utils.product_catalog import (
-    ProductPackaging,
     FertilizerProduct,
+    ProductPackaging,
 )
 
 

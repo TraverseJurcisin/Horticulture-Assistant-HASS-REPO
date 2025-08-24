@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Mapping
+from typing import Any
 
-from .utils import load_json, save_json, get_pending_dir
+from .utils import get_pending_dir, load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ class ThresholdChange:
     proposed_value: Any
     status: str = "pending"
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -41,14 +42,15 @@ class ThresholdUpdateRecord:
 
     plant_id: str
     timestamp: str
-    changes: Dict[str, ThresholdChange]
+    changes: dict[str, ThresholdChange]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return {
             "plant_id": self.plant_id,
             "timestamp": self.timestamp,
             "changes": {k: c.as_dict() for k, c in self.changes.items()},
         }
+
 
 def queue_threshold_updates(
     plant_id: str,
@@ -67,12 +69,10 @@ def queue_threshold_updates(
     directory.mkdir(parents=True, exist_ok=True)
     pending_file = directory / f"{plant_id}.json"
 
-    changes: Dict[str, ThresholdChange] = {}
+    changes: dict[str, ThresholdChange] = {}
     for key, value in new.items():
         if key not in old or old[key] != value:
-            changes[key] = ThresholdChange(
-                previous_value=old.get(key), proposed_value=value
-            )
+            changes[key] = ThresholdChange(previous_value=old.get(key), proposed_value=value)
 
     record = ThresholdUpdateRecord(
         plant_id=plant_id,
@@ -84,6 +84,7 @@ def queue_threshold_updates(
 
     _LOGGER.info("Queued %d threshold changes for %s", len(changes), plant_id)
     return pending_file
+
 
 def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) -> int:
     """Apply approved threshold changes to ``plant_path`` and return count.
@@ -116,13 +117,11 @@ def apply_approved_thresholds(plant_path: str | Path, pending_file: str | Path) 
     plant["thresholds"] = updated
     save_json(plant_p, plant)
 
-    _LOGGER.info(
-        "Applied %d approved changes for %s", applied, pending.get("plant_id")
-    )
+    _LOGGER.info("Applied %d approved changes for %s", applied, pending.get("plant_id"))
     return applied
 
 
-def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> Dict[str, Any] | None:
+def list_pending_changes(plant_id: str, base_dir: Path | None = None) -> dict[str, Any] | None:
     """Return pending change mapping for ``plant_id`` if a record exists."""
 
     directory = base_dir or PENDING_DIR

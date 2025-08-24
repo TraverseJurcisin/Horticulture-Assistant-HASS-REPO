@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import os
 import logging
-from dataclasses import dataclass, asdict
-from functools import lru_cache
-from typing import Mapping, Iterable
+import os
+from collections.abc import Iterable, Mapping
+from dataclasses import asdict, dataclass
+from functools import cache, lru_cache
 
 try:
     # If running within Home Assistant, this will be available
@@ -14,23 +14,22 @@ try:
 except ImportError:
     HomeAssistant = None
 
-from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+from plant_engine.constants import get_stage_multiplier
 from plant_engine.nutrient_manager import (
-    get_recommended_levels,
     get_all_recommended_levels,
-    calculate_nutrient_adjustments,
+    get_recommended_levels,
 )
-from plant_engine.utils import load_json, save_json, load_dataset, normalize_key
+from plant_engine.utils import load_dataset, load_json, normalize_key, save_json
+
 from custom_components.horticulture_assistant.utils.path_utils import (
     config_path,
-    plants_path,
-    data_path,
     ensure_data_dir,
+    plants_path,
 )
+from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
 from custom_components.horticulture_assistant.utils.plant_registry import (
     PLANT_REGISTRY_FILE,
 )
-from plant_engine.constants import get_stage_multiplier
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,6 +46,7 @@ STAGE_SYNONYMS = {
     "fruiting": "fruiting",
 }
 
+
 # Normalize tags to lowercase with underscores for dataset lookups.
 def normalize_tag(tag: str) -> str:
     """Return normalized tag string for dataset lookups."""
@@ -59,6 +59,7 @@ def normalize_tag(tag: str) -> str:
 TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
 
 from plant_engine.nutrient_absorption import apply_absorption_rates
+
 
 @lru_cache(maxsize=1)
 def _tag_modifiers() -> dict[str, dict[str, float]]:
@@ -108,7 +109,7 @@ def _get_plant_type(plant_id: str, profile: dict, hass: HomeAssistant | None) ->
     return None
 
 
-@lru_cache(maxsize=None)
+@cache
 def _cached_load_profile(plant_id: str, base_dir: str | None) -> dict:
     """Return loaded plant profile from ``base_dir`` (cached)."""
 
@@ -171,6 +172,7 @@ def _apply_absorption_rates(targets: dict[str, float], stage_key: str) -> None:
     targets.clear()
     targets.update(adjusted)
 
+
 def _compute_nutrient_targets(
     plant_id: str, hass: HomeAssistant | None, include_micro: bool
 ) -> dict[str, float]:
@@ -198,9 +200,7 @@ def _compute_nutrient_targets(
 
     plant_type = _get_plant_type(plant_id, profile, hass)
     if plant_type and (include_micro or not base_targets):
-        guideline_func = (
-            get_all_recommended_levels if include_micro else get_recommended_levels
-        )
+        guideline_func = get_all_recommended_levels if include_micro else get_recommended_levels
         guidelines = guideline_func(plant_type, stage_key)
         if guidelines:
             if not base_targets:
@@ -229,7 +229,10 @@ def _compute_nutrient_targets(
         except (ValueError, TypeError):
             _LOGGER.warning("Invalid base nutrient value for %s: %s", nut, val)
 
-    tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
+    tags = [
+        str(t).lower()
+        for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])
+    ]
     _apply_tag_modifiers(adjusted, tags)
     _apply_absorption_rates(adjusted, stage_key)
 

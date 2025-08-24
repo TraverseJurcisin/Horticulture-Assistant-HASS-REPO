@@ -1,5 +1,6 @@
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 from custom_components.horticulture_assistant.engine.run_daily_cycle import run_daily_cycle
 
 
@@ -8,13 +9,15 @@ def test_run_daily_cycle_nutrient_analysis(tmp_path):
     plants_dir.mkdir()
     out_dir = tmp_path / "reports"
 
-    (plants_dir / "plant1.json").write_text(json.dumps({"general": {"plant_type": "citrus", "lifecycle_stage": "vegetative"}}))
+    (plants_dir / "plant1.json").write_text(
+        json.dumps({"general": {"plant_type": "citrus", "lifecycle_stage": "vegetative"}})
+    )
     plant_dir = plants_dir / "plant1"
     plant_dir.mkdir()
     log = [
         {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "nutrient_formulation": {"N": 50, "P": 20, "K": 40}
+            "timestamp": datetime.now(UTC).isoformat(),
+            "nutrient_formulation": {"N": 50, "P": 20, "K": 40},
         }
     ]
     (plant_dir / "nutrient_application_log.json").write_text(json.dumps(log))

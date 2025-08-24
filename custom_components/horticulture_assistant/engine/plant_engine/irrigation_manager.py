@@ -1,15 +1,16 @@
 """Helpers for irrigation scheduling."""
+
 from __future__ import annotations
 
-from dataclasses import dataclass
-from functools import lru_cache
-from typing import Mapping, Dict, Any
 import math
+from collections.abc import Mapping
+from dataclasses import dataclass
+from functools import cache
+from typing import Any
 
-from .utils import lazy_dataset, normalize_key, stage_value
 from .et_model import calculate_eta
-
 from .rootzone_model import RootZone, calculate_remaining_water
+from .utils import lazy_dataset, normalize_key, stage_value
 
 __all__ = [
     "recommend_irrigation_volume",
@@ -68,7 +69,7 @@ class IrrigationRecommendation:
     volume_ml: float
     metrics: Mapping[str, float]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return {
             "volume_ml": self.volume_ml,
             "metrics": dict(self.metrics),
@@ -105,7 +106,9 @@ def recommend_irrigation_volume(
     if projected >= rootzone.readily_available_water_ml:
         return 0.0
 
-    target = rootzone.total_available_water_ml if refill_to_full else rootzone.readily_available_water_ml
+    target = (
+        rootzone.total_available_water_ml if refill_to_full else rootzone.readily_available_water_ml
+    )
     required = target - projected
     max_add = rootzone.total_available_water_ml - available_ml
     required = min(required, max_add)
@@ -170,7 +173,7 @@ def recommend_irrigation_interval(
     return round(max(days, 0.0), 2)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_crop_coefficient(plant_type: str, stage: str) -> float:
     """Return crop coefficient for ``plant_type`` and ``stage``.
 
@@ -239,14 +242,12 @@ def adjust_irrigation_for_efficiency(volume_ml: float, method: str) -> float:
         raise ValueError("volume_ml must be non-negative")
 
     eff = _EFFICIENCY_DATA().get(normalize_key(method))
-    if isinstance(eff, (int, float)) and 0 < eff <= 1:
+    if isinstance(eff, int | float) and 0 < eff <= 1:
         return round(volume_ml / eff, 1)
     return volume_ml
 
 
-def estimate_irrigation_time(
-    volume_ml: float, emitter_type: str, emitters: int = 1
-) -> float:
+def estimate_irrigation_time(volume_ml: float, emitter_type: str, emitters: int = 1) -> float:
     """Return hours required to apply ``volume_ml`` with ``emitter_type``.
 
     Flow rates are loaded from :data:`irrigation/emitter_flow_rates.json` in liters per
@@ -261,7 +262,7 @@ def estimate_irrigation_time(
         raise ValueError("emitters must be positive")
 
     rate_l_h = _FLOW_DATA().get(normalize_key(emitter_type))
-    if not isinstance(rate_l_h, (int, float)) or rate_l_h <= 0:
+    if not isinstance(rate_l_h, int | float) or rate_l_h <= 0:
         return 0.0
 
     rate_ml_h = rate_l_h * 1000 * emitters
@@ -269,7 +270,7 @@ def estimate_irrigation_time(
     return round(hours, 2)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_rain_capture_efficiency(surface: str) -> float:
     """Return fraction of rainfall captured for ``surface``.
 
@@ -283,7 +284,7 @@ def get_rain_capture_efficiency(surface: str) -> float:
     return max(0.0, min(eff, 1.0))
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_irrigation_zone_modifier(zone: str) -> float:
     """Return irrigation multiplier for a climate zone.
 
@@ -312,7 +313,7 @@ def recommend_irrigation_from_environment(
     available_ml: float,
     *,
     refill_to_full: bool = True,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return irrigation recommendation using environment readings."""
 
     from .compute_transpiration import compute_transpiration
@@ -339,14 +340,14 @@ def get_daily_irrigation_target(plant_type: str, stage: str) -> float:
 
     plant = _IRRIGATION_DATA().get(normalize_key(plant_type), {})
     value = plant.get(normalize_key(stage))
-    return float(value) if isinstance(value, (int, float)) else 0.0
+    return float(value) if isinstance(value, int | float) else 0.0
 
 
 def get_recommended_interval(plant_type: str, stage: str) -> float | None:
     """Return days between irrigation events for a plant stage if known."""
 
     value = stage_value(_INTERVAL_DATA(), plant_type, stage)
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return float(value)
     # Fall back to drought tolerance data when stage-specific guidance
     # is unavailable. This ensures a sensible default interval based on
@@ -364,7 +365,7 @@ def generate_irrigation_schedule(
     *,
     refill_to_full: bool = True,
     method: str | None = None,
-) -> Dict[int, float]:
+) -> dict[int, float]:
     """Return daily irrigation volumes to maintain root zone moisture.
 
     If ``method`` is provided the returned volumes are adjusted for the
@@ -381,7 +382,7 @@ def generate_irrigation_schedule(
     if any(v < 0 for v in et_ml_series):
         raise ValueError("et_ml_series values must be non-negative")
 
-    schedule: Dict[int, float] = {}
+    schedule: dict[int, float] = {}
     remaining = float(available_ml)
     for day, et_ml in enumerate(et_ml_series, start=1):
         volume = recommend_irrigation_volume(
@@ -405,7 +406,7 @@ def generate_env_irrigation_schedule(
     *,
     refill_to_full: bool = True,
     method: str | None = None,
-) -> Dict[int, Dict[str, object]]:
+) -> dict[int, dict[str, object]]:
     """Return irrigation schedule using daily environment readings."""
 
     from .compute_transpiration import compute_transpiration
@@ -413,7 +414,7 @@ def generate_env_irrigation_schedule(
     if available_ml < 0:
         raise ValueError("available_ml must be non-negative")
 
-    schedule: Dict[int, Dict[str, object]] = {}
+    schedule: dict[int, dict[str, object]] = {}
     remaining = float(available_ml)
 
     for day, env in enumerate(env_series, start=1):
@@ -441,17 +442,17 @@ def generate_precipitation_schedule(
     refill_to_full: bool = True,
     method: str | None = None,
     surface: str = "bare_soil",
-) -> Dict[int, float]:
+) -> dict[int, float]:
     """Return irrigation schedule adjusted for rainfall."""
 
     if available_ml < 0:
         raise ValueError("available_ml must be non-negative")
 
     rain_eff = get_rain_capture_efficiency(surface)
-    schedule: Dict[int, float] = {}
+    schedule: dict[int, float] = {}
     remaining = float(available_ml)
 
-    for day, (et_ml, rain_ml) in enumerate(zip(et_ml_series, precipitation_ml), start=1):
+    for day, (et_ml, rain_ml) in enumerate(zip(et_ml_series, precipitation_ml, strict=False), start=1):
         net_et = max(0.0, et_ml - rain_ml * rain_eff)
         volume = recommend_irrigation_volume(
             rootzone, remaining, net_et, refill_to_full=refill_to_full
@@ -476,7 +477,7 @@ def generate_env_precipitation_schedule(
     refill_to_full: bool = True,
     method: str | None = None,
     surface: str = "bare_soil",
-) -> Dict[int, Dict[str, object]]:
+) -> dict[int, dict[str, object]]:
     """Return irrigation schedule using environment data and rainfall."""
 
     from .compute_transpiration import compute_transpiration
@@ -485,10 +486,10 @@ def generate_env_precipitation_schedule(
         raise ValueError("available_ml must be non-negative")
 
     rain_eff = get_rain_capture_efficiency(surface)
-    schedule: Dict[int, Dict[str, object]] = {}
+    schedule: dict[int, dict[str, object]] = {}
     remaining = float(available_ml)
 
-    for day, (env, rain) in enumerate(zip(env_series, precipitation_ml), start=1):
+    for day, (env, rain) in enumerate(zip(env_series, precipitation_ml, strict=False), start=1):
         metrics = compute_transpiration(plant_profile, env)
         net_et = max(0.0, metrics["transpiration_ml_day"] - rain * rain_eff)
         volume = recommend_irrigation_volume(
@@ -513,7 +514,7 @@ def generate_irrigation_schedule_with_runtime(
     method: str | None = None,
     emitter_type: str | None = None,
     emitters: int = 1,
-) -> Dict[int, Dict[str, float | None]]:
+) -> dict[int, dict[str, float | None]]:
     """Return daily irrigation volumes and runtime estimates."""
 
     schedule = generate_irrigation_schedule(
@@ -524,7 +525,7 @@ def generate_irrigation_schedule_with_runtime(
         method=method,
     )
 
-    result: Dict[int, Dict[str, float | None]] = {}
+    result: dict[int, dict[str, float | None]] = {}
     for day, volume in schedule.items():
         if emitter_type and volume > 0:
             runtime = estimate_irrigation_time(volume, emitter_type, emitters)
@@ -536,8 +537,8 @@ def generate_irrigation_schedule_with_runtime(
 
 
 def summarize_irrigation_schedule(
-    schedule: Mapping[int, Mapping[str, float | None]]
-) -> Dict[str, float]:
+    schedule: Mapping[int, Mapping[str, float | None]],
+) -> dict[str, float]:
     """Return total events, volume and runtime for an irrigation schedule."""
 
     total_volume = 0.0
@@ -558,7 +559,7 @@ def summarize_irrigation_schedule(
     }
 
 
-def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float]]:
+def generate_cycle_irrigation_plan(plant_type: str) -> dict[str, dict[int, float]]:
     """Return irrigation volumes for each growth stage of ``plant_type``.
 
     The plan combines daily irrigation targets with stage durations and
@@ -566,9 +567,9 @@ def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float
     per plant for each scheduled irrigation event.
     """
 
-    from .growth_stage import list_growth_stages, get_stage_duration
+    from .growth_stage import get_stage_duration, list_growth_stages
 
-    plan: Dict[str, Dict[int, float]] = {}
+    plan: dict[str, dict[int, float]] = {}
     for stage in list_growth_stages(plant_type):
         daily_ml = get_daily_irrigation_target(plant_type, stage)
         days = get_stage_duration(plant_type, stage)
@@ -576,7 +577,7 @@ def generate_cycle_irrigation_plan(plant_type: str) -> Dict[str, Dict[int, float
             continue
         interval = get_recommended_interval(plant_type, stage) or 1
         day = 1
-        stage_plan: Dict[int, float] = {}
+        stage_plan: dict[int, float] = {}
         while day <= days:
             stage_plan[day] = round(daily_ml * interval, 1)
             day += interval
@@ -640,13 +641,13 @@ def generate_cycle_infiltration_schedule(
     texture: str,
     *,
     max_hours: float = 1.0,
-) -> Dict[str, Dict[int, list[float]]]:
+) -> dict[str, dict[int, list[float]]]:
     """Return infiltration-aware irrigation bursts for an entire cycle."""
 
     plan = generate_cycle_irrigation_plan(plant_type)
-    schedule: Dict[str, Dict[int, list[float]]] = {}
+    schedule: dict[str, dict[int, list[float]]] = {}
     for stage, events in plan.items():
-        stage_sched: Dict[int, list[float]] = {}
+        stage_sched: dict[int, list[float]] = {}
         for day, volume in events.items():
             stage_sched[day] = generate_infiltration_bursts(
                 volume, area_m2, texture, max_hours=max_hours

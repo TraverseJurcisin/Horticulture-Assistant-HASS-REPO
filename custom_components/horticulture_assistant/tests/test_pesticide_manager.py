@@ -1,24 +1,24 @@
 import datetime
-import pytest
 
+import pytest
 from plant_engine.pesticide_manager import (
-    get_withdrawal_days,
-    earliest_harvest_date,
     adjust_harvest_date,
     calculate_harvest_window,
-    get_reentry_hours,
-    earliest_reentry_time,
     calculate_reentry_window,
-    get_mode_of_action,
-    list_known_pesticides,
-    get_rotation_interval,
-    suggest_rotation_schedule,
-    next_rotation_date,
-    suggest_rotation_plan,
-    get_pesticide_price,
+    earliest_harvest_date,
+    earliest_reentry_time,
     estimate_application_cost,
     estimate_rotation_plan_cost,
+    get_mode_of_action,
+    get_pesticide_price,
+    get_reentry_hours,
+    get_rotation_interval,
+    get_withdrawal_days,
+    list_known_pesticides,
+    next_rotation_date,
     suggest_pest_rotation_plan,
+    suggest_rotation_plan,
+    suggest_rotation_schedule,
 )
 
 
@@ -115,9 +115,7 @@ def test_next_rotation_date():
 
 def test_suggest_rotation_plan():
     start = datetime.date(2024, 1, 1)
-    plan = suggest_rotation_plan(
-        ["imidacloprid", "spinosad", "imidacloprid"], start
-    )
+    plan = suggest_rotation_plan(["imidacloprid", "spinosad", "imidacloprid"], start)
     assert plan == [
         ("imidacloprid", start),
         ("spinosad", start + datetime.timedelta(days=30)),
@@ -161,9 +159,9 @@ def test_calculate_application_amount():
 
 def test_summarize_pesticide_restrictions():
     from plant_engine.pesticide_manager import (
-        summarize_pesticide_restrictions,
-        earliest_reentry_time,
         earliest_harvest_date,
+        earliest_reentry_time,
+        summarize_pesticide_restrictions,
     )
 
     apps = [
@@ -212,17 +210,17 @@ def test_pesticide_efficacy_helpers():
 
 def test_estimate_rotation_plan_cost():
     import importlib
-    from plant_engine import nutrient_manager as nm
+
     import plant_engine.utils as utils
+    from plant_engine import nutrient_manager as nm
 
     utils.clear_dataset_cache()
     importlib.reload(nm)
 
     start = datetime.date(2024, 1, 1)
     plan = suggest_rotation_plan(["spinosad", "neem_oil"], start)
-    expected = (
-        estimate_application_cost("spinosad", 2.0)
-        + estimate_application_cost("neem_oil", 2.0)
+    expected = estimate_application_cost("spinosad", 2.0) + estimate_application_cost(
+        "neem_oil", 2.0
     )
     cost = estimate_rotation_plan_cost(plan, 2.0)
     assert cost == expected

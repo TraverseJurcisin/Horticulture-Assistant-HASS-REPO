@@ -1,7 +1,7 @@
-from pathlib import Path
+import os
 import subprocess
 import sys
-import os
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))

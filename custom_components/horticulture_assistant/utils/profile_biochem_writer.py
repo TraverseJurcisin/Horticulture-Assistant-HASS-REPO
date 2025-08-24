@@ -4,7 +4,10 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
-def generate_biochemistry_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
+
+def generate_biochemistry_profiles(
+    plant_id: str, base_path: str = None, overwrite: bool = False
+) -> str:
     """
     Generate or update biochemistry and metabolite profile files for a given plant.
 
@@ -31,7 +34,7 @@ def generate_biochemistry_profiles(plant_id: str, base_path: str = None, overwri
         "bioavailability": None,
         "nutrient_density": None,
         "antioxidant_load": None,
-        "toxin_profiles": None
+        "toxin_profiles": None,
     }
 
     # Define default content for metabolite_profile.json
@@ -42,7 +45,7 @@ def generate_biochemistry_profiles(plant_id: str, base_path: str = None, overwri
         "polyphenols": None,
         "enzymatic_inhibitors": None,
         "hormone_influencers": None,
-        "biosynthetic_pathway_markers": None
+        "biosynthetic_pathway_markers": None,
     }
 
     profile_sections = {

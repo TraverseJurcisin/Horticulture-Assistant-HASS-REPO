@@ -35,7 +35,7 @@
       },
       "sensors": {
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
           "ec_sensor": "EC sensor",
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor"
@@ -106,7 +106,7 @@
       },
       "init": {
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
           "ec_sensor": "EC sensor",
           "force_refresh": "Force refresh thresholds",
           "keep_stale": "Keep entities available when API fails",
@@ -119,7 +119,8 @@
           "temperature_sensor": "Temperature sensor",
           "update_interval": "Update interval (minutes)"
         },
-        "description": "Configure local sensors and behavior."
+        "description": "Configure local sensors and behavior.",
+        "title": "Horticulture Assistant — Options"
       },
       "pick_source": {
         "data": {
@@ -171,6 +172,18 @@
           "species": "Species"
         },
         "title": "OpenPlantbook species & field"
+      },
+      "profile_add": {
+        "title": "Add plant profile",
+        "data": {
+          "profile_name": "Profile name",
+          "species": "Species (optional)",
+          "copy_from": "Copy preferences from existing profile",
+          "temp_sensor": "Air temperature sensor",
+          "humidity_sensor": "Humidity sensor",
+          "light_sensor": "Light (PPFD/DLI) sensor",
+          "soil_moisture_sensor": "Soil moisture sensor"
+        }
       }
     }
   },

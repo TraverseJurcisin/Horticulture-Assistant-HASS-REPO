@@ -1,4 +1,5 @@
 import types
+
 from custom_components.horticulture_assistant.utils import (
     profile_generator,
     profile_upload_cache,
@@ -7,9 +8,7 @@ from custom_components.horticulture_assistant.utils import (
 
 def _make_hass(tmp_path):
     return types.SimpleNamespace(
-        config=types.SimpleNamespace(
-            path=lambda *parts: str(tmp_path.joinpath(*parts))
-        )
+        config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts)))
     )
 
 

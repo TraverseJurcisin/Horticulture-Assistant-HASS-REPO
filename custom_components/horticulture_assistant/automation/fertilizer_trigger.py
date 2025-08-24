@@ -77,9 +77,7 @@ def fertilizer_trigger(
             # If we reach here, consider this threshold relevant for fertilization
             relevant_thresholds[key] = value
     if not relevant_thresholds:
-        _LOGGER.error(
-            "No nutrient thresholds found in profile for plant_id %s.", plant_id
-        )
+        _LOGGER.error("No nutrient thresholds found in profile for plant_id %s.", plant_id)
         return False
 
     # Iterate through relevant nutrient thresholds and check current values

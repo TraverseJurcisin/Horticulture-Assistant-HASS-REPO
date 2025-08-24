@@ -53,9 +53,12 @@ const.Platform = types.SimpleNamespace(
 sys.modules.setdefault("homeassistant.const", const)
 
 entity = types.ModuleType("homeassistant.helpers.entity")
+
+
 class EntityCategory:  # pragma: no cover - minimal stub
     CONFIG = "config"
     DIAGNOSTIC = "diagnostic"
+
 
 entity.EntityCategory = EntityCategory
 sys.modules.setdefault("homeassistant.helpers.entity", entity)

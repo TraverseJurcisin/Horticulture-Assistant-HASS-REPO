@@ -1,12 +1,12 @@
 from plant_engine.nutrient_interactions import (
-    list_interactions,
-    get_interaction_info,
-    get_max_ratio,
-    get_interaction_message,
+    analyze_interactions,
     check_imbalances,
     get_balance_action,
+    get_interaction_info,
+    get_interaction_message,
+    get_max_ratio,
+    list_interactions,
     recommend_balance_actions,
-    analyze_interactions,
 )
 
 

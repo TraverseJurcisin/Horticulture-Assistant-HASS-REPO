@@ -9,14 +9,14 @@ contains defaults and optional per-crop overrides.
 
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset
 
 DATA_FILE = "nutrients/nutrient_recovery_factors.json"
 
 # Load dataset once using the cached loader
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -56,7 +56,7 @@ def get_recovery_factor(nutrient: str, plant_type: str | None = None) -> float:
         return 0.0
 
 
-def get_recovery_factors(plant_type: str | None = None) -> Dict[str, float]:
+def get_recovery_factors(plant_type: str | None = None) -> dict[str, float]:
     """Return mapping of recovery factors for ``plant_type``.
 
     When ``plant_type`` is ``None`` or no crop-specific data exists, the
@@ -65,7 +65,7 @@ def get_recovery_factors(plant_type: str | None = None) -> Dict[str, float]:
     """
 
     defaults = _DATA.get("default", {})
-    factors: Dict[str, float] = {}
+    factors: dict[str, float] = {}
 
     if plant_type:
         crop = _DATA.get(plant_type.lower())
@@ -86,9 +86,11 @@ def get_recovery_factors(plant_type: str | None = None) -> Dict[str, float]:
     return factors
 
 
-def estimate_recovered_amounts(levels_mg: Mapping[str, float], plant_type: str | None = None) -> Dict[str, float]:
+def estimate_recovered_amounts(
+    levels_mg: Mapping[str, float], plant_type: str | None = None
+) -> dict[str, float]:
     """Return recovered nutrient amounts (mg) given applied levels."""
-    recovered: Dict[str, float] = {}
+    recovered: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         factor = get_recovery_factor(nutrient, plant_type)
         if factor <= 0:
@@ -97,10 +99,12 @@ def estimate_recovered_amounts(levels_mg: Mapping[str, float], plant_type: str |
     return recovered
 
 
-def adjust_for_recovery(levels_mg: Mapping[str, float], plant_type: str | None = None) -> Dict[str, float]:
+def adjust_for_recovery(
+    levels_mg: Mapping[str, float], plant_type: str | None = None
+) -> dict[str, float]:
     """Return adjusted nutrient amounts accounting for recovery factors."""
     recovered = estimate_recovered_amounts(levels_mg, plant_type)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         adj = mg - recovered.get(nutrient, 0.0)
         adjusted[nutrient] = round(adj, 2)

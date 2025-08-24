@@ -1,19 +1,20 @@
 from datetime import date
+
 from plant_engine.disease_monitor import (
-    get_disease_thresholds,
+    adjust_risk_with_resistance,
     assess_disease_pressure,
     classify_disease_severity,
-    recommend_threshold_actions,
-    generate_disease_report,
-    get_monitoring_interval,
-    adjust_risk_with_resistance,
     estimate_adjusted_disease_risk,
-    risk_adjusted_monitor_interval,
-    next_monitor_date,
-    generate_monitoring_schedule,
     generate_detailed_monitoring_schedule,
+    generate_disease_report,
+    generate_monitoring_schedule,
+    get_disease_thresholds,
+    get_monitoring_interval,
     get_scouting_method,
     get_severity_action,
+    next_monitor_date,
+    recommend_threshold_actions,
+    risk_adjusted_monitor_interval,
     summarize_disease_management,
 )
 
@@ -77,6 +78,7 @@ def test_get_severity_action():
     assert get_severity_action("moderate")
     assert get_severity_action("unknown") == ""
 
+
 def test_report_includes_severity_actions():
     obs = {"citrus greening": 3}
     report = generate_disease_report("citrus", obs)
@@ -123,6 +125,7 @@ def test_summarize_disease_management():
 def test_get_scouting_method():
     method = get_scouting_method("powdery mildew")
     assert "powdery" in method.lower()
+
 
 def test_generate_detailed_monitoring_schedule():
     start = date(2023, 1, 1)

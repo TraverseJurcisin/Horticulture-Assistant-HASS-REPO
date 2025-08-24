@@ -1,10 +1,11 @@
-from pathlib import Path
-import subprocess
-import sys
 import csv
 import json
+import subprocess
+import sys
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/train_ec_model.py"
+
 
 def test_train_ec_model_cli(tmp_path: Path):
     csv_file = tmp_path / "samples.csv"
@@ -14,8 +15,24 @@ def test_train_ec_model_cli(tmp_path: Path):
             fieldnames=["moisture", "temperature", "irrigation_ml", "solution_ec", "observed_ec"],
         )
         writer.writeheader()
-        writer.writerow({"moisture": 30, "temperature": 20, "irrigation_ml": 100, "solution_ec": 1.2, "observed_ec": 1.0})
-        writer.writerow({"moisture": 40, "temperature": 22, "irrigation_ml": 150, "solution_ec": 1.5, "observed_ec": 1.4})
+        writer.writerow(
+            {
+                "moisture": 30,
+                "temperature": 20,
+                "irrigation_ml": 100,
+                "solution_ec": 1.2,
+                "observed_ec": 1.0,
+            }
+        )
+        writer.writerow(
+            {
+                "moisture": 40,
+                "temperature": 22,
+                "irrigation_ml": 150,
+                "solution_ec": 1.5,
+                "observed_ec": 1.4,
+            }
+        )
 
     out_file = tmp_path / "model.json"
     result = subprocess.run(

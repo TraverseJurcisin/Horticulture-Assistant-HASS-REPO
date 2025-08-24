@@ -1,25 +1,23 @@
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.7
-    hooks:
-      - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
       - id: end-of-file-fixer
-        exclude: ^custom_components/horticulture_assistant/data/
       - id: trailing-whitespace
-        exclude: ^custom_components/horticulture_assistant/data/
       - id: check-json
-        exclude: ^custom_components/horticulture_assistant/data/
-      - id: pretty-format-json
-        exclude: ^custom_components/horticulture_assistant/data/
-        args: ["--autofix", "--indent", "2", "--no-sort-keys"]
-  - repo: local
+      - id: check-yaml
+        args: [--unsafe]
+      - id: mixed-line-ending
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.5
     hooks:
-      - id: sort-manifest
-        name: Sort Home Assistant manifest.json
-        entry: python scripts/sort_manifest.py
-        language: system
-        files: ^custom_components/horticulture_assistant/manifest\.json$
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.17.0
+    hooks:
+      - id: pyupgrade
+        args: [--py312-plus]

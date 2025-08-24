@@ -1,4 +1,5 @@
 """Command line interface for :mod:`plant_engine.ai_model`."""
+
 from __future__ import annotations
 
 import argparse
@@ -16,6 +17,7 @@ def main() -> None:
 
     result = analyze(payload)
     import json
+
     print(json.dumps(result, indent=2))
 
 

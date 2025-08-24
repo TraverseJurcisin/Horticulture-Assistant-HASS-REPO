@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Validate that all dataset files load correctly."""
+
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root is on the Python path
 ROOT = Path(__file__).resolve().parents[1]

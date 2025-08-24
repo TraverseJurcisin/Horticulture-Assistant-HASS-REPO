@@ -1,15 +1,15 @@
 from custom_components.horticulture_assistant.utils.zone_registry import (
     ZoneConfig,
-    load_zones,
-    get_zone,
-    list_zones,
-    save_zones,
     add_zone,
     attach_plants,
-    detach_plants,
     attach_solenoids,
+    detach_plants,
     detach_solenoids,
+    get_zone,
+    list_zones,
+    load_zones,
     remove_zone,
+    save_zones,
     zones_for_plant,
 )
 
@@ -30,7 +30,9 @@ def test_zone_registry_roundtrip(tmp_path, monkeypatch):
         fake_data_path,
     )
 
-    zones = {zid: ZoneConfig(zid, info["solenoids"], info["plant_ids"]) for zid, info in data.items()}
+    zones = {
+        zid: ZoneConfig(zid, info["solenoids"], info["plant_ids"]) for zid, info in data.items()
+    }
     assert save_zones(zones)
     loaded = load_zones()
     assert set(loaded.keys()) == {"1", "2"}

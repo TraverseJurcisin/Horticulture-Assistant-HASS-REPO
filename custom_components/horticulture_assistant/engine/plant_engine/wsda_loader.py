@@ -4,26 +4,25 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Dict, Iterator, Any
+from typing import Any
 
 import pandas as pd
 
 from .utils import get_data_dir
 
-WSDA_DATA_DIR = Path(
-    os.getenv("WSDA_DATA_DIR", get_data_dir() / "wsda_refactored_sharded")
-)
+WSDA_DATA_DIR = Path(os.getenv("WSDA_DATA_DIR", get_data_dir() / "wsda_refactored_sharded"))
 WSDA_INDEX_DIR = Path(os.getenv("WSDA_INDEX_DIR", WSDA_DATA_DIR / "index_sharded"))
 WSDA_DETAIL_DIR = Path(os.getenv("WSDA_DETAIL_DIR", WSDA_DATA_DIR / "detail"))
 
 
-def stream_index() -> Iterator[Dict[str, Any]]:
+def stream_index() -> Iterator[dict[str, Any]]:
     """Yield product index records from all shards."""
     if not WSDA_INDEX_DIR.exists():
         return iter(())
     for path in sorted(WSDA_INDEX_DIR.glob("*.jsonl")):
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
                 if line:
@@ -35,7 +34,7 @@ def load_index_df() -> pd.DataFrame:
     return pd.DataFrame(stream_index())
 
 
-def load_detail(product_id: str) -> Dict[str, Any]:
+def load_detail(product_id: str) -> dict[str, Any]:
     """Return detailed record for ``product_id``.
 
     Raises
@@ -47,5 +46,5 @@ def load_detail(product_id: str) -> Dict[str, Any]:
     path = WSDA_DETAIL_DIR / prefix / f"{product_id}.json"
     if not path.exists():
         raise FileNotFoundError(path)
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)

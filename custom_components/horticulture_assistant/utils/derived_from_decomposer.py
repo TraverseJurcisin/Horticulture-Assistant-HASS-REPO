@@ -1,9 +1,8 @@
 """Estimate fertilizer ingredients from a guaranteed analysis."""
 
-from typing import Dict, List, Tuple
 
 # Simplified molecular weight fractions of common fertilizer ingredients.
-MOLECULAR_WEIGHTS: Dict[str, Dict[str, float]] = {
+MOLECULAR_WEIGHTS: dict[str, dict[str, float]] = {
     "Ammonium Nitrate": {"N": 0.33},
     "Potassium Sulfate": {"K": 0.45, "S": 0.18},
     "Magnesium Sulfate Heptahydrate": {"Mg": 0.098, "S": 0.13},
@@ -22,9 +21,9 @@ MOLECULAR_WEIGHTS: Dict[str, Dict[str, float]] = {
 
 
 def decompose_derived_from(
-    guaranteed_analysis: Dict[str, float],
-    candidate_ingredients: List[str],
-) -> List[Tuple[str, float]]:
+    guaranteed_analysis: dict[str, float],
+    candidate_ingredients: list[str],
+) -> list[tuple[str, float]]:
     """Return estimated ingredient fractions for a fertilizer label.
 
     The ``candidate_ingredients`` list should contain possible "derived from"
@@ -35,7 +34,7 @@ def decompose_derived_from(
     inclusion rate as a decimal fraction.
     """
 
-    estimated: List[Tuple[str, float]] = []
+    estimated: list[tuple[str, float]] = []
     remaining = guaranteed_analysis.copy()
 
     for ingredient in candidate_ingredients:

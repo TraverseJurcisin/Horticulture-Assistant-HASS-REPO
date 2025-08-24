@@ -1,15 +1,16 @@
 """Phenological milestone prediction utilities."""
+
 from __future__ import annotations
 
+from collections.abc import Iterable
 from datetime import date, timedelta
-from typing import Dict, Iterable
 
 from . import thermal_time
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "phenology/phenological_milestones.json"
 
-_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, dict[str, float]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -37,16 +38,14 @@ def get_milestone_gdd_requirement(plant_type: str, milestone: str) -> float | No
     """Return GDD requirement for reaching ``milestone``."""
     info = get_milestone_info(plant_type, milestone)
     value = info.get("gdd")
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
-def get_milestone_photoperiod_requirement(
-    plant_type: str, milestone: str
-) -> float | None:
+def get_milestone_photoperiod_requirement(plant_type: str, milestone: str) -> float | None:
     """Return day length requirement for ``milestone`` if available."""
     info = get_milestone_info(plant_type, milestone)
     value = info.get("photoperiod_hours")
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
 def predict_milestone(plant_type: str, milestone: str, accumulated_gdd: float) -> bool:
@@ -107,13 +106,9 @@ def format_milestone_prediction(
     for uncertainty in the forecast.
     """
 
-    days = estimate_days_to_milestone(
-        plant_type, milestone, temps, base_temp_c
-    )
+    days = estimate_days_to_milestone(plant_type, milestone, temps, base_temp_c)
     if days is None:
-        return (
-            f"{plant_name} has reached {accumulated_gdd:.0f} GDD since last reset."
-        )
+        return f"{plant_name} has reached {accumulated_gdd:.0f} GDD since last reset."
 
     low = max(0, days - 2)
     high = days + 2

@@ -1,5 +1,5 @@
-import types
 import sys
+import types
 
 # Minimal Home Assistant stub so the module imports without the real package
 ha = types.ModuleType("homeassistant")
@@ -8,10 +8,10 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.sensor_map import (
+from custom_components.horticulture_assistant.utils.sensor_map import (  # noqa: E402
+    DEFAULT_SENSORS,
     build_sensor_map,
     merge_sensor_maps,
-    DEFAULT_SENSORS,
 )
 
 

@@ -1,15 +1,14 @@
 """Functions for tracking harvest yield data."""
+
 from __future__ import annotations
 
 import os
-from pathlib import Path
 from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Dict, List
+from pathlib import Path
 
 from . import nutrient_budget
-
-from .utils import load_json, save_json, load_dataset, normalize_key
+from .utils import load_dataset, load_json, normalize_key, save_json
 
 # Default yield directory. Can be overridden with the ``HORTICULTURE_YIELD_DIR``
 # environment variable to support custom data locations during testing or
@@ -20,7 +19,7 @@ YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 YIELD_ESTIMATE_FILE = "yield/yield_estimates.json"
 
 # Cached dataset so repeated lookups avoid disk I/O
-_YIELD_ESTIMATES: Dict[str, float] = load_dataset(YIELD_ESTIMATE_FILE)
+_YIELD_ESTIMATES: dict[str, float] = load_dataset(YIELD_ESTIMATE_FILE)
 
 
 @dataclass(slots=True)
@@ -31,7 +30,7 @@ class HarvestRecord:
     yield_grams: float
     fruit_count: int | None = None
 
-    def to_dict(self) -> Dict[str, object]:
+    def to_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
@@ -40,7 +39,7 @@ def _yield_path(plant_id: str) -> Path:
     return Path(YIELD_DIR) / f"{plant_id}.json"
 
 
-def _load_raw_history(plant_id: str) -> Dict[str, List[Dict[str, object]]]:
+def _load_raw_history(plant_id: str) -> dict[str, list[dict[str, object]]]:
     """Return raw history mapping from disk."""
     path = _yield_path(plant_id)
     if path.exists():
@@ -48,7 +47,7 @@ def _load_raw_history(plant_id: str) -> Dict[str, List[Dict[str, object]]]:
     return {"harvests": []}
 
 
-def load_yield_history(plant_id: str) -> List[HarvestRecord]:
+def load_yield_history(plant_id: str) -> list[HarvestRecord]:
     """Return a list of harvest records for the plant."""
     data = _load_raw_history(plant_id)
     return [HarvestRecord(**entry) for entry in data.get("harvests", [])]

@@ -1,6 +1,6 @@
 from plant_engine.environment_manager import (
-    get_target_soil_moisture,
     evaluate_moisture_stress,
+    get_target_soil_moisture,
 )
 
 

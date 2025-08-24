@@ -1,4 +1,5 @@
 """Helpers for constructing sensor entity mappings."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
@@ -31,9 +32,7 @@ def build_sensor_map(
         default = DEFAULT_SENSORS.get(key)
         if not default:
             continue
-        result[key] = normalize_entities(
-            entry_data.get(key), default.format(plant_id=plant_id)
-        )
+        result[key] = normalize_entities(entry_data.get(key), default.format(plant_id=plant_id))
     return result
 
 

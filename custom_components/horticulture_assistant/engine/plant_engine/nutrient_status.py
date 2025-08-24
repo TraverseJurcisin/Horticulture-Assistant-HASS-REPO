@@ -5,22 +5,24 @@ status label for each nutrient. Possible labels are ``"adequate"``,
 ``"mild deficiency"``, ``"moderate deficiency"``, ``"severe deficiency``" and
 ``"excessive"``.
 """
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .nutrient_manager import get_all_recommended_levels
 from .deficiency_manager import (
     calculate_deficiencies,
     classify_deficiency_levels,
 )
+from .nutrient_manager import get_all_recommended_levels
 from .toxicity_manager import check_toxicities
 
 __all__ = ["classify_nutrient_status"]
 
+
 def classify_nutrient_status(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return classification of nutrient levels for a plant stage.
 
     Parameters
@@ -43,7 +45,7 @@ def classify_nutrient_status(
     severity = classify_deficiency_levels(deficits)
     toxic = check_toxicities(current_levels, plant_type)
 
-    status: Dict[str, str] = {}
+    status: dict[str, str] = {}
     for nutrient in recommended:
         if nutrient in toxic:
             status[nutrient] = "excessive"

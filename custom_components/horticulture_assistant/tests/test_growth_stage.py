@@ -1,25 +1,25 @@
-import pytest
-
 from datetime import date
+
+import pytest
 from plant_engine.growth_stage import (
-    get_stage_info,
-    get_stage_duration,
-    estimate_stage_from_age,
-    estimate_stage_from_date,
-    stage_bounds,
-    predict_harvest_date,
-    get_total_cycle_duration,
-    stage_progress,
-    days_until_harvest,
-    predict_next_stage_date,
-    predict_stage_end_date,
-    stage_progress_from_dates,
     cycle_progress,
     cycle_progress_from_dates,
-    get_germination_duration,
+    days_until_harvest,
     days_until_next_stage,
-    growth_stage_summary,
+    estimate_stage_from_age,
+    estimate_stage_from_date,
     generate_stage_schedule,
+    get_germination_duration,
+    get_stage_duration,
+    get_stage_info,
+    get_total_cycle_duration,
+    growth_stage_summary,
+    predict_harvest_date,
+    predict_next_stage_date,
+    predict_stage_end_date,
+    stage_bounds,
+    stage_progress,
+    stage_progress_from_dates,
     stage_schedule_df,
 )
 
@@ -86,9 +86,7 @@ def test_predict_next_stage_date():
     next_date = predict_next_stage_date("tomato", "seedling", stage_start)
     assert next_date == date(2025, 1, 31)
 
-    assert (
-        predict_next_stage_date("unknown", "seedling", stage_start) is None
-    )
+    assert predict_next_stage_date("unknown", "seedling", stage_start) is None
 
 
 def test_estimate_stage_from_date():

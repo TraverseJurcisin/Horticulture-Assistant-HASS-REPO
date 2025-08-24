@@ -5,12 +5,13 @@ This CLI tool computes optimized environment setpoints and suggested actions
 based on current sensor readings. Results are printed as JSON for easy
 integration with automation workflows.
 """
+
 from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]

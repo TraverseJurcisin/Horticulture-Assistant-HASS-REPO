@@ -1,6 +1,5 @@
 import json
 
-
 from custom_components.horticulture_assistant.utils import plant_profile_loader as loader
 
 
@@ -9,7 +8,7 @@ def test_load_profile_from_json(tmp_path):
         "general": {"plant_type": "test"},
         "thresholds": {"light": 100, "temperature": [20, 30], "EC": 1.2},
         "stages": {"seedling": {"stage_duration": 10}},
-        "nutrients": {"N": 100}
+        "nutrients": {"N": 100},
     }
     path = tmp_path / "test.json"
     path.write_text(json.dumps(data))
@@ -108,7 +107,7 @@ def test_save_and_update_sensors(tmp_path):
         plants,
     )
 
-    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    updated = json.load(open(plants / "p1.json", encoding="utf-8"))
     sensors = updated["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["new"]
     assert sensors["temperature_sensors"] == ["temp1"]
@@ -132,7 +131,7 @@ def test_detach_profile_sensors(tmp_path):
 
     loader.detach_profile_sensors("p1", {"moisture_sensors": ["a"]}, plants)
 
-    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    updated = json.load(open(plants / "p1.json", encoding="utf-8"))
     sensors = updated["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["b"]
     assert sensors["temp_sensors"] == ["t1"]
@@ -141,14 +140,12 @@ def test_detach_profile_sensors(tmp_path):
 def test_attach_profile_sensors(tmp_path):
     plants = tmp_path / "plants"
     plants.mkdir()
-    profile = {
-        "general": {"sensor_entities": {"moisture_sensors": ["a"], "temp_sensors": ["t1"]}}
-    }
+    profile = {"general": {"sensor_entities": {"moisture_sensors": ["a"], "temp_sensors": ["t1"]}}}
     loader.save_profile_by_id("p1", profile, plants)
 
     loader.attach_profile_sensors("p1", {"moisture_sensors": ["b"]}, plants)
 
-    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    updated = json.load(open(plants / "p1.json", encoding="utf-8"))
     sensors = updated["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["a", "b"]
     assert sensors["temp_sensors"] == ["t1"]

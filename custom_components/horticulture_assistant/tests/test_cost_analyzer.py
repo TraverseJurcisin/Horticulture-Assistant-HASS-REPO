@@ -1,7 +1,8 @@
 from datetime import datetime
+
 from custom_components.horticulture_assistant.utils.cost_analyzer import (
-    ProductPriceEntry,
     CostAnalyzer,
+    ProductPriceEntry,
 )
 
 

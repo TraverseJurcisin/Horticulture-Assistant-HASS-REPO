@@ -10,55 +10,70 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    plants_path,
-    data_path,
-)
-
-from custom_components.horticulture_assistant.utils.plant_profile_loader import (
-    load_profile_by_id,
-)
-from plant_engine.environment_manager import (
-    compare_environment,
-    optimize_environment,
-    score_environment,
-    classify_environment_quality,
-)
-from plant_engine.growth_stage import predict_harvest_date, stage_progress
-from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
+import plant_engine.pest_monitor as pest_monitor
+from plant_engine import water_quality
+from plant_engine.compute_transpiration import compute_transpiration
+from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.disease_manager import (
     recommend_treatments as recommend_disease_treatments,
 )
-from plant_engine.deficiency_manager import diagnose_deficiency_actions
-from plant_engine.pest_monitor import classify_pest_severity
-import plant_engine.pest_monitor as pest_monitor
-from plant_engine.utils import load_dataset
-from .cycle_helpers import (
-    load_recent_entries as _load_recent_entries,
-    load_last_entry,
-    summarize_irrigation as _summarize_irrigation,
-    aggregate_nutrients as _aggregate_nutrients,
-    average_sensor_data as _average_sensor_data,
-    compute_expected_uptake as _compute_expected_uptake,
-    load_logs as _load_logs,
-    build_root_zone_info as _build_root_zone_info,
+from plant_engine.environment_manager import (
+    classify_environment_quality,
+    compare_environment,
+    optimize_environment,
+    score_environment,
 )
 from plant_engine.fertigation import (
     recommend_nutrient_mix,
     recommend_nutrient_mix_with_cost,
 )
+from plant_engine.growth_stage import predict_harvest_date, stage_progress
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
-from plant_engine.compute_transpiration import compute_transpiration
+from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
+from plant_engine.pest_monitor import classify_pest_severity
 from plant_engine.rootzone_model import estimate_infiltration_time
-from plant_engine.yield_prediction import estimate_remaining_yield
 from plant_engine.stage_tasks import get_stage_tasks
+from plant_engine.utils import load_dataset
+from plant_engine.yield_prediction import estimate_remaining_yield
+
+from custom_components.horticulture_assistant.utils.path_utils import (
+    data_path,
+    plants_path,
+)
+from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    load_profile_by_id,
+)
 from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
     calculate_stage_deficit,
 )
-from plant_engine import water_quality
+
+from .cycle_helpers import (
+    aggregate_nutrients as _aggregate_nutrients,
+)
+from .cycle_helpers import (
+    average_sensor_data as _average_sensor_data,
+)
+from .cycle_helpers import (
+    build_root_zone_info as _build_root_zone_info,
+)
+from .cycle_helpers import (
+    compute_expected_uptake as _compute_expected_uptake,
+)
+from .cycle_helpers import (
+    load_last_entry,
+)
+from .cycle_helpers import (
+    load_logs as _load_logs,
+)
+from .cycle_helpers import (
+    load_recent_entries as _load_recent_entries,
+)
+from .cycle_helpers import (
+    summarize_irrigation as _summarize_irrigation,
+)
 
 
 @dataclass(slots=True)
@@ -97,9 +112,7 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -166,14 +179,10 @@ def run_daily_cycle(
     except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
         _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
 
-    expected, gap = _compute_expected_uptake(
-        plant_type, stage_name or "", nutrient_totals
-    )
+    expected, gap = _compute_expected_uptake(plant_type, stage_name or "", nutrient_totals)
     report.expected_uptake = expected
     report.uptake_gap = gap
-    report.stage_deficit = calculate_stage_deficit(
-        nutrient_totals, plant_type, stage_name or ""
-    )
+    report.stage_deficit = calculate_stage_deficit(nutrient_totals, plant_type, stage_name or "")
 
     # Summarize sensor readings (24h average per sensor type)
     sensor_avg = _average_sensor_data(sensor_entries)
@@ -190,13 +199,9 @@ def run_daily_cycle(
     current_env = {**latest_env, **sensor_avg}
     env_compare = compare_environment(current_env, thresholds)
     report.environment_comparison = env_compare
-    report.environment_optimization = optimize_environment(
-        current_env, plant_type, stage_name
-    )
+    report.environment_optimization = optimize_environment(current_env, plant_type, stage_name)
     report.environment_score = score_environment(current_env, plant_type, stage_name)
-    report.environment_quality = classify_environment_quality(
-        current_env, plant_type, stage_name
-    )
+    report.environment_quality = classify_environment_quality(current_env, plant_type, stage_name)
     # Pest and disease alerts (if any observed in profile)
     observed_pests = general.get("observed_pests", [])
     observed_diseases = general.get("observed_diseases", [])
@@ -228,9 +233,7 @@ def run_daily_cycle(
             if interval is not None:
                 next_date = last_date + timedelta(days=interval)
             else:
-                next_date = pest_monitor.next_monitor_date(
-                    plant_type, stage_name, last_date
-                )
+                next_date = pest_monitor.next_monitor_date(plant_type, stage_name, last_date)
             if next_date:
                 report.next_pest_monitor_date = next_date.isoformat()
         except Exception:  # noqa: BLE001 -- optional
@@ -261,9 +264,7 @@ def run_daily_cycle(
 
     # Irrigation and fertigation targets
     irrigation_data = load_dataset("irrigation/irrigation_guidelines.json")
-    report.irrigation_target_ml = irrigation_data.get(plant_type, {}).get(
-        stage_name or ""
-    )
+    report.irrigation_target_ml = irrigation_data.get(plant_type, {}).get(stage_name or "")
     if report.irrigation_target_ml:
         vol_l = report.irrigation_target_ml / 1000
         try:
@@ -301,7 +302,7 @@ def run_daily_cycle(
         if start_date_str:
             try:
                 start_date = datetime.fromisoformat(start_date_str).date()
-                days = (datetime.now(timezone.utc).date() - start_date).days
+                days = (datetime.now(UTC).date() - start_date).days
                 progress = stage_progress(plant_type, stage_name, days)
                 if progress is not None:
                     report.stage_progress_pct = progress
@@ -318,7 +319,7 @@ def run_daily_cycle(
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
-    out_file = output_dir / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
+    out_file = output_dir / f"{plant_id}_{datetime.now(UTC).date()}.json"
     try:
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)

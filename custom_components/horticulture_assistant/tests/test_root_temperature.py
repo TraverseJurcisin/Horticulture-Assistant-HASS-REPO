@@ -1,11 +1,11 @@
-from plant_engine.root_temperature import (
-    get_uptake_factor,
-    adjust_uptake,
-    list_supported_plants,
-    get_optimal_root_temperature,
-    clear_cache,
-)
 from plant_engine.nutrient_manager import get_temperature_adjusted_levels
+from plant_engine.root_temperature import (
+    adjust_uptake,
+    clear_cache,
+    get_optimal_root_temperature,
+    get_uptake_factor,
+    list_supported_plants,
+)
 
 
 def test_get_uptake_factor_basic():

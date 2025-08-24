@@ -1,30 +1,31 @@
 """Utilities for estimating plant water use via evapotranspiration."""
+
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
-from functools import lru_cache
-from typing import Dict, Iterable, Mapping
+from functools import cache
 
 import numpy as np
 import pandas as pd
 
-from .utils import load_dataset, normalize_key
-from .constants import DEFAULT_ENV
 from .canopy import estimate_canopy_area
+from .constants import DEFAULT_ENV
+from .utils import load_dataset, normalize_key
 
 MODIFIER_FILE = "coefficients/crop_coefficient_modifiers.json"
 # cached via load_dataset
-_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(MODIFIER_FILE)
+_MODIFIERS: dict[str, dict[str, float]] = load_dataset(MODIFIER_FILE)
 
 from .et_model import (
     calculate_et0,
-    calculate_eta,
     calculate_et0_series,
+    calculate_eta,
 )
 
 DATA_FILE = "coefficients/crop_coefficients.json"
 # cached via load_dataset
-_KC_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_KC_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 # Public API
 __all__ = [
@@ -48,14 +49,12 @@ class TranspirationMetrics:
     eta_mm_day: float
     transpiration_ml_day: float
 
-    def as_dict(self) -> Dict[str, float]:
+    def as_dict(self) -> dict[str, float]:
         """Return metrics as a regular dictionary."""
         return asdict(self)
 
 
-def adjust_crop_coefficient(
-    kc: float, temp_c: float | None, rh_pct: float | None
-) -> float:
+def adjust_crop_coefficient(kc: float, temp_c: float | None, rh_pct: float | None) -> float:
     """Return KC adjusted for temperature and humidity."""
     result = kc
 
@@ -80,7 +79,7 @@ def adjust_crop_coefficient(
     return float(result)
 
 
-@lru_cache(maxsize=None)
+@cache
 def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
     """Return crop coefficient for ``plant_type`` and ``stage``.
 
@@ -95,7 +94,8 @@ def lookup_crop_coefficient(plant_type: str, stage: str | None = None) -> float:
             return float(kc)
     return float(plant.get("default", 1.0))
 
-def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> Dict[str, float]:
+
+def compute_transpiration(plant_profile: Mapping, env_data: Mapping) -> dict[str, float]:
     """Return evapotranspiration metrics for a single plant profile.
 
     ``env_data`` may contain aliases such as ``temperature`` or ``humidity``
@@ -155,7 +155,7 @@ def compute_transpiration_series(
     plant_profile: Mapping,
     env_series: Iterable[Mapping] | pd.DataFrame,
     weights: Iterable[float] | pd.Series | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return weighted average transpiration metrics for ``env_series``.
 
     ``env_series`` is converted to a :class:`~pandas.DataFrame` and processed
@@ -171,14 +171,10 @@ def compute_transpiration_series(
     if df.empty:
         return TranspirationMetrics(0.0, 0.0, 0.0).as_dict()
 
-    return compute_weighted_transpiration_dataframe(
-        plant_profile, df, weights
-    )
+    return compute_weighted_transpiration_dataframe(plant_profile, df, weights)
 
 
-def compute_transpiration_dataframe(
-    plant_profile: Mapping, env_df: pd.DataFrame
-) -> pd.DataFrame:
+def compute_transpiration_dataframe(plant_profile: Mapping, env_df: pd.DataFrame) -> pd.DataFrame:
     """Return transpiration metrics for each row in ``env_df``.
 
     The input DataFrame should contain the same columns accepted by
@@ -207,18 +203,26 @@ def compute_transpiration_dataframe(
     kc_series = pd.Series(float(kc), index=df.index)
     low_t = humidity.get("low_threshold")
     if low_t is not None:
-        kc_series = np.where(df["rh_pct"] < low_t, kc_series * humidity.get("low_factor", 1.0), kc_series)
+        kc_series = np.where(
+            df["rh_pct"] < low_t, kc_series * humidity.get("low_factor", 1.0), kc_series
+        )
     high_t = humidity.get("high_threshold")
     if high_t is not None:
-        kc_series = np.where(df["rh_pct"] > high_t, kc_series * humidity.get("high_factor", 1.0), kc_series)
+        kc_series = np.where(
+            df["rh_pct"] > high_t, kc_series * humidity.get("high_factor", 1.0), kc_series
+        )
 
     temp_mod = _MODIFIERS.get("temperature", {})
     low_t = temp_mod.get("low_threshold")
     if low_t is not None:
-        kc_series = np.where(df["temp_c"] < low_t, kc_series * temp_mod.get("low_factor", 1.0), kc_series)
+        kc_series = np.where(
+            df["temp_c"] < low_t, kc_series * temp_mod.get("low_factor", 1.0), kc_series
+        )
     high_t = temp_mod.get("high_threshold")
     if high_t is not None:
-        kc_series = np.where(df["temp_c"] > high_t, kc_series * temp_mod.get("high_factor", 1.0), kc_series)
+        kc_series = np.where(
+            df["temp_c"] > high_t, kc_series * temp_mod.get("high_factor", 1.0), kc_series
+        )
 
     et0 = calculate_et0_series(
         df["temp_c"],
@@ -232,9 +236,7 @@ def compute_transpiration_dataframe(
 
     canopy = plant_profile.get("canopy_m2")
     if canopy is None:
-        canopy = estimate_canopy_area(
-            plant_profile.get("plant_type"), plant_profile.get("stage")
-        )
+        canopy = estimate_canopy_area(plant_profile.get("plant_type"), plant_profile.get("stage"))
 
     transp_ml = (eta * MM_TO_ML_PER_M2 * canopy).round(1)
 
@@ -252,7 +254,7 @@ def compute_weighted_transpiration_dataframe(
     plant_profile: Mapping,
     env_df: pd.DataFrame,
     weights: Iterable[float] | pd.Series | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return weighted average metrics for ``env_df``.
 
     Parameters
