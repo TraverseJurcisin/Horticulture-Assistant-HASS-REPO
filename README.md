@@ -143,15 +143,32 @@ like `"moisture_sensors"` or `"temperature_sensors"` with a list of entity IDs:
 }
 ```
 
-Each threshold recorded in a profile tracks how it was set. Variables can be
-resolved manually, cloned from another profile, fetched from OpenPlantbook or
-recommended by an AI sweep. The stored profile includes a `citations` section
-that surfaces this provenance, also available through Diagnostics and selected
-entity attributes.
+### Variable sources and citations
+
+When editing a plant profile via **Options**, each variable offers four source
+modes:
+
+1. **Manual** – enter the value directly.
+2. **Clone** – copy a value from another profile managed by this integration.
+3. **OpenPlantbook** – fetch a field from the OpenPlantbook API.
+4. **AI** – run the AI helper to synthesize a value from web research.
+
+Every resolved variable records its origin in a `citations` section. This
+provenance is exposed through **Diagnostics** and summarized on entities with
+attributes such as `citations_count`, `citations_summary`, and
+`citations_links_preview`.
+
+### Generate profiles in bulk
 
 For faster setup, the options flow provides a **Generate profile** action that
 can clone another profile's thresholds or populate them from OpenPlantbook or an
 AI sweep in a single step.
+
+To archive or share your work, call the `export_profiles` service with a file
+path. All stored profiles are serialized to JSON. For a single profile, use
+`export_profile` with the desired profile ID and destination path. Use the
+complementary `import_profiles` service to load a previously saved file back
+into Home Assistant.
 
 If multiple entity IDs are provided, their values are averaged. When more than
 two sensors are listed, the median of the available readings is used instead to

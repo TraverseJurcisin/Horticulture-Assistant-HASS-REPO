@@ -20,6 +20,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
 
 import voluptuous as vol
 from aiohttp import ClientError
+
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.components.sensor import SensorDeviceClass
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
@@ -50,6 +51,7 @@ except ModuleNotFoundError:  # pragma: no cover
             return None
 
 from homeassistant.core import HomeAssistant
+
 try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.exceptions import HomeAssistantError
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
@@ -345,6 +347,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         new_opts[CONF_PROFILES] = profiles
         hass.config_entries.async_update_entry(entry, options=new_opts)
         profile_coord._options = new_opts
+        from .profile.store import async_delete_profile
+
+        await async_delete_profile(hass, profile_id)
         await profile_coord.async_request_refresh()
 
     hass.services.async_register(
@@ -513,16 +518,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def _svc_resolve_profile(call):
         pid = call.data["profile_id"]
+        from .profile.store import async_save_profile_from_options
         from .resolver import PreferenceResolver
 
         await PreferenceResolver(hass).resolve_profile(entry, pid)
+        await async_save_profile_from_options(hass, entry, pid)
 
     async def _svc_resolve_all(call):
+        from .profile.store import async_save_profile_from_options
         from .resolver import PreferenceResolver
 
         r = PreferenceResolver(hass)
         for pid in entry.options.get(CONF_PROFILES, {}).keys():
             await r.resolve_profile(entry, pid)
+            await async_save_profile_from_options(hass, entry, pid)
 
     async def _svc_generate_profile(call):
         pid = call.data["profile_id"]
@@ -531,6 +540,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         from .resolver import generate_profile
 
         await generate_profile(hass, entry, pid, mode, source_profile_id)
+
+    async def _svc_export_profiles(call):
+        path = call.data["path"]
+        from .profile.export import async_export_profiles
+
+        await async_export_profiles(hass, path)
+
+    async def _svc_export_profile(call):
+        pid = call.data["profile_id"]
+        path = call.data["path"]
+        from .profile.export import async_export_profile
+
+        await async_export_profile(hass, pid, path)
+
+    async def _svc_import_profiles(call):
+        path = call.data["path"]
+        from .profile.importer import async_import_profiles
+
+        await async_import_profiles(hass, path)
 
     hass.services.async_register(
         svc_base, "resolve_profile", _svc_resolve_profile, schema=vol.Schema({vol.Required("profile_id"): str})
@@ -548,6 +576,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             }
         ),
     )
+    hass.services.async_register(
+        svc_base,
+        "export_profiles",
+        _svc_export_profiles,
+        schema=vol.Schema({vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        svc_base,
+        "export_profile",
+        _svc_export_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        svc_base,
+        "import_profiles",
+        _svc_import_profiles,
+        schema=vol.Schema({vol.Required("path"): str}),
+    )
+
+    async def _svc_clear_caches(call):
+        from .ai_client import clear_ai_cache
+        from .opb_client import clear_opb_cache
+
+        clear_ai_cache()
+        clear_opb_cache()
+
+    hass.services.async_register(svc_base, "clear_caches", _svc_clear_caches)
     return True
 
 

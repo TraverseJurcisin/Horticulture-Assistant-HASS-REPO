@@ -46,8 +46,45 @@ def slugify(value: str) -> str:  # pragma: no cover - simple stub
 util.slugify = slugify
 sys.modules.setdefault("homeassistant.util", util)
 
+const = types.ModuleType("homeassistant.const")
+const.Platform = types.SimpleNamespace(
+    SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number"
+)
+sys.modules.setdefault("homeassistant.const", const)
+
+entity = types.ModuleType("homeassistant.helpers.entity")
+class EntityCategory:  # pragma: no cover - minimal stub
+    CONFIG = "config"
+    DIAGNOSTIC = "diagnostic"
+
+entity.EntityCategory = EntityCategory
+sys.modules.setdefault("homeassistant.helpers.entity", entity)
+
+storage = types.ModuleType("homeassistant.helpers.storage")
+
+
+class Store:  # pragma: no cover - minimal in-memory store
+    def __init__(self, _hass, _version, _key) -> None:
+        self.data: dict[str, object] = {}
+
+    async def async_load(self):
+        return self.data
+
+    async def async_save(self, data) -> None:
+        self.data = data
+
+
+storage.Store = Store
+sys.modules.setdefault("homeassistant.helpers.storage", storage)
+
 
 @pytest.fixture
 def hass() -> HomeAssistant:
     """Provide a minimal Home Assistant instance."""
     return HomeAssistant()
+
+
+@pytest.fixture
+def enable_custom_integrations():
+    """Stub fixture for compatibility with Home Assistant tests."""
+    yield

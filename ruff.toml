@@ -2,13 +2,16 @@ line-length = 120
 target-version = "py312"
 extend-exclude = [
   "custom_components/horticulture_assistant/data/**",
-  "plant_engine/**",
-  "tests/**",
+  "custom_components/horticulture_assistant/engine/**",
+  "custom_components/horticulture_assistant/utils/**",
+  "custom_components/horticulture_assistant/tests/**",
+  "**/tests/**",
+  "**/scripts/**",
 ]
 
 [lint]
-select = []
-ignore = ["D", "E501"]
+select = ["E", "F", "W", "UP", "I"]
+ignore = ["D"]
 
 [lint.isort]
 known-first-party = ["custom_components.horticulture_assistant"]

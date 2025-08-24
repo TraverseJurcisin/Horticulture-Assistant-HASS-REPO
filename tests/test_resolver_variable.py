@@ -33,6 +33,7 @@ async def test_resolve_manual(hass):
     assert res.value == 21
     assert res.source == "manual"
     assert res.citations[0].source == "manual"
+    assert res.citations[0].details["note"] == "Set via options UI"
 
 
 @pytest.mark.asyncio

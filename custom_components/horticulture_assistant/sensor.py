@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime
+
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -100,6 +102,7 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         summary: dict[str, int] = {}
         links: list[str] = []
         link_set: set[str] = set()
+        latest: datetime | None = None
         for prof in profiles.values():
             for key, data in (prof.get("variables") or {}).items():
                 cits = data.get("citations") or []
@@ -114,10 +117,16 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
                     if url and url not in link_set:
                         links.append(url)
                         link_set.add(url)
+            lr = prof.get("last_resolved")
+            if lr:
+                ts = datetime.fromisoformat(lr.replace("Z", "+00:00"))
+                if latest is None or ts > latest:
+                    latest = ts
         self._citations = {
             "citations_count": total,
             "citations_summary": summary,
             "citations_links_preview": links,
+            "last_resolved_utc": latest.isoformat() if latest else None,
         }
 
     @property

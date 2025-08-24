@@ -6,10 +6,8 @@ import pytest
 pytest.importorskip("homeassistant.exceptions")
 
 from custom_components.horticulture_assistant.config_flow import OptionsFlow
-from custom_components.horticulture_assistant.resolver import (
-    PreferenceResolver,
-    generate_profile,
-)
+from custom_components.horticulture_assistant.const import OPB_FIELD_MAP
+from custom_components.horticulture_assistant.resolver import PreferenceResolver, generate_profile
 
 
 class DummyEntry:
@@ -100,7 +98,7 @@ async def test_opb_source_maps_field():
 async def test_ai_source_respects_ttl_and_caches():
     hass = make_hass()
     entry = DummyEntry({"profiles": {"p1": {"sources": {"temp_c_max": {"mode": "ai", "ai": {"ttl_hours": 720}}}}}})
-    mock = AsyncMock(return_value=(4.0, 0.9, "note"))
+    mock = AsyncMock(return_value=(4.0, 0.9, "note", []))
     with patch(
         "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
         mock,
@@ -116,7 +114,7 @@ async def test_ai_source_respects_ttl_and_caches():
 async def test_generate_profile_ai_sets_sources_and_citations():
     hass = make_hass()
     entry = DummyEntry({"profiles": {"p1": {"species": "s"}}})
-    mock = AsyncMock(return_value=(5.0, 0.8, "n"))
+    mock = AsyncMock(return_value=(5.0, 0.8, "n", []))
     with patch(
         "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
         mock,
@@ -125,6 +123,22 @@ async def test_generate_profile_ai_sets_sources_and_citations():
     prof = entry.options["profiles"]["p1"]
     assert prof["thresholds"]["temp_c_min"] == 5.0
     assert prof["citations"]["temp_c_min"]["mode"] == "ai"
+
+
+@pytest.mark.asyncio
+async def test_generate_profile_opb_sets_sources_and_citations():
+    hass = make_hass()
+    entry = DummyEntry({"opb_token": "t", "profiles": {"p1": {"species": {"slug": "sp"}}}})
+    with patch(
+        "custom_components.horticulture_assistant.opb_client.OpenPlantbookClient.species_details",
+        AsyncMock(return_value={"temperature": {"min_c": 7.0}}),
+    ):
+        await generate_profile(hass, entry, "p1", "opb")
+    prof = entry.options["profiles"]["p1"]
+    field = OPB_FIELD_MAP.get("temp_c_min", "temp_c_min")
+    assert prof["sources"]["temp_c_min"]["opb"]["field"] == field
+    assert prof["thresholds"]["temp_c_min"] == 7.0
+    assert prof["citations"]["temp_c_min"]["mode"] == "opb"
 
 
 @pytest.mark.asyncio
