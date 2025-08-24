@@ -18,6 +18,7 @@ Horticulture Assistant integrates per-plant automation and crop monitoring into 
 - [Reference Data](#reference-data)
 - [Command Line Utilities](#command-line-utilities)
 - [Advanced Usage](#advanced-usage)
+- [Calibration](#calibration)
 - [Garden Summary Lovelace Card](#garden-summary-lovelace-card)
 - [Repository Structure](#repository-structure)
 - [Troubleshooting](#troubleshooting)
@@ -420,6 +421,16 @@ python -m custom_components.horticulture_assistant.analytics.export_all_growth_y
 - `calculate_heat_index_series` averages heat index across sequential temperature and humidity readings.
 - `estimate_hvac_energy_series` and `estimate_hvac_cost_series` evaluate energy
   use and cost for sequential HVAC temperature setpoints.
+
+## Calibration
+Calibrate your Lux sensors to accurate PPFD values for better lighting metrics.
+
+1. Place your PAR meter next to the Lux sensor so they see the same light.
+2. In the integration options, open **Calibration** and select your Lux and PPFD sources.
+3. Collect at least five points across the lighting range; hold each level steady a few seconds before adding.
+4. Finish to store a model (linear, quadratic or power) with R²/RMSE quality metrics.
+
+If readings don't vary or R² is low, your sensors may be noisy or lighting unstable. Gather more points across a wider range.
 
 ### Garden Summary Lovelace Card
 Add `garden-summary-card.js` as a Lovelace resource (HACS places it under
