@@ -1,9 +1,10 @@
 """Forecast chilling injury risk based on upcoming temperatures."""
+
 from __future__ import annotations
 
-from typing import Mapping, Sequence
+from collections.abc import Mapping, Sequence
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 COLD_DATA_FILE = "local/plants/temperature/cold_stress_thresholds.json"
 SENSITIVITY_FILE = "local/plants/temperature/chill_sensitivity.json"
@@ -36,7 +37,9 @@ def get_chill_buffer(plant_type: str) -> float:
 
 def _cold_threshold(plant_type: str) -> float | None:
     try:
-        return float(_COLD_THRESHOLDS.get(normalize_key(plant_type), _COLD_THRESHOLDS.get("default")))
+        return float(
+            _COLD_THRESHOLDS.get(normalize_key(plant_type), _COLD_THRESHOLDS.get("default"))
+        )
     except (TypeError, ValueError):  # pragma: no cover - defensive
         return None
 

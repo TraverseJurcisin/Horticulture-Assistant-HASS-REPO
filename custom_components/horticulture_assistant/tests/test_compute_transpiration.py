@@ -1,10 +1,10 @@
 import pandas as pd
 from plant_engine.compute_transpiration import (
-    compute_transpiration,
-    compute_transpiration_series,
-    compute_transpiration_dataframe,
-    compute_weighted_transpiration_dataframe,
     TranspirationMetrics,
+    compute_transpiration,
+    compute_transpiration_dataframe,
+    compute_transpiration_series,
+    compute_weighted_transpiration_dataframe,
     lookup_crop_coefficient,
 )
 
@@ -94,10 +94,12 @@ def test_adjust_crop_coefficient():
 
 def test_compute_transpiration_dataframe():
     profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
-    df = pd.DataFrame([
-        {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
-        {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420},
-    ])
+    df = pd.DataFrame(
+        [
+            {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
+            {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420},
+        ]
+    )
     result = compute_transpiration_dataframe(profile, df)
     assert list(result.columns) == [
         "et0_mm_day",
@@ -117,10 +119,12 @@ def test_compute_transpiration_alias_support():
 
 def test_compute_weighted_transpiration_dataframe():
     profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
-    df = pd.DataFrame([
-        {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
-        {"temp_c": 20, "rh_pct": 60, "par_w_m2": 350},
-    ])
+    df = pd.DataFrame(
+        [
+            {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
+            {"temp_c": 20, "rh_pct": 60, "par_w_m2": 350},
+        ]
+    )
     weights = [2, 1]
     result = compute_weighted_transpiration_dataframe(profile, df, weights)
     assert result["transpiration_ml_day"] > 0
@@ -128,9 +132,11 @@ def test_compute_weighted_transpiration_dataframe():
 
 def test_compute_transpiration_series_dataframe_input():
     profile = {"plant_type": "lettuce", "stage": "vegetative", "canopy_m2": 0.25}
-    df = pd.DataFrame([
-        {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
-        {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420},
-    ])
+    df = pd.DataFrame(
+        [
+            {"temp_c": 25, "rh_pct": 50, "par_w_m2": 400},
+            {"temp_c": 24, "rh_pct": 55, "par_w_m2": 420},
+        ]
+    )
     result = compute_transpiration_series(profile, df)
     assert result["transpiration_ml_day"] > 0

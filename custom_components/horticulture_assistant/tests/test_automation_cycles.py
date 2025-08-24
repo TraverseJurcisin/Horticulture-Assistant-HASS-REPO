@@ -1,6 +1,11 @@
 import json
-from custom_components.horticulture_assistant.automation import run_automation_cycle, run_fertilizer_cycle
-from custom_components.horticulture_assistant.automation import irrigation_actuator, fertilizer_actuator
+
+from custom_components.horticulture_assistant.automation import (
+    fertilizer_actuator,
+    irrigation_actuator,
+    run_automation_cycle,
+    run_fertilizer_cycle,
+)
 
 
 def test_run_automation_cycle(tmp_path, monkeypatch):

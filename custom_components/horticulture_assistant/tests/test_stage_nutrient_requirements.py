@@ -1,6 +1,6 @@
 from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
-    get_stage_requirements,
     calculate_stage_deficit,
+    get_stage_requirements,
 )
 
 

@@ -3,8 +3,8 @@ from __future__ import annotations
 """Utility helpers for editing plant profiles from the command line."""
 
 import argparse
-from pathlib import Path
 import json
+from pathlib import Path
 
 from scripts import ensure_repo_root_on_path
 
@@ -46,9 +46,7 @@ def set_preference(
     profile = loader.load_profile_by_id(plant_id, base_dir)
     if not profile:
         return False
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
+    container = profile.get("general") if isinstance(profile.get("general"), dict) else profile
     container[key] = value
     if container is not profile:
         profile["general"] = container
@@ -96,9 +94,7 @@ def list_profile_sensors(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> 
     profile = loader.load_profile_by_id(plant_id, base_dir)
     if not profile:
         return {}
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
+    container = profile.get("general") if isinstance(profile.get("general"), dict) else profile
     sensors = container.get("sensor_entities")
     return sensors or {}
 
@@ -124,9 +120,7 @@ def show_preferences(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> dict
     profile = loader.load_profile_by_id(plant_id, base_dir)
     if not profile:
         return {}
-    container = (
-        profile.get("general") if isinstance(profile.get("general"), dict) else profile
-    )
+    container = profile.get("general") if isinstance(profile.get("general"), dict) else profile
     prefs = {k: v for k, v in container.items() if k != "sensor_entities"}
     return prefs
 
@@ -188,9 +182,7 @@ def main(argv: list[str] | None = None) -> None:
     list_sensors_cmd = sub.add_parser("list-sensors", help="list sensors for a plant")
     list_sensors_cmd.add_argument("plant_id")
 
-    list_global_cmd = sub.add_parser(
-        "list-globals", help="list available global profiles"
-    )
+    sub.add_parser("list-globals", help="list available global profiles")
 
     show_prefs_cmd = sub.add_parser("show-prefs", help="display profile preferences")
     show_prefs_cmd.add_argument("plant_id")

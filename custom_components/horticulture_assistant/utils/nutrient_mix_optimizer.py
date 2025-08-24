@@ -1,24 +1,26 @@
 """Helpers for cost-optimized nutrient mix generation."""
+
 from __future__ import annotations
 
 """Helpers for computing cost optimised fertigation mixes."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Dict, Any, Mapping
+from typing import Any
 
-from plant_engine.nutrient_manager import get_environment_adjusted_levels
 from plant_engine.fertigation import _schedule_from_totals
+from plant_engine.nutrient_manager import get_environment_adjusted_levels
 
 
 @dataclass(slots=True)
 class OptimizedMix:
     """Container for an optimized fertigation recommendation."""
 
-    schedule: Dict[str, float]
+    schedule: dict[str, float]
     cost: float
-    diagnostics: Dict[str, Any]
+    diagnostics: dict[str, Any]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return a plain dictionary representation."""
         return {
             "schedule": self.schedule,
@@ -35,7 +37,7 @@ DEFAULT_FERTILIZERS = {
 }
 
 
-def _compute_totals(targets: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def _compute_totals(targets: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Return total nutrient mass (mg) for ``volume_l`` of solution."""
 
     return {nut: ppm * volume_l for nut, ppm in targets.items()}

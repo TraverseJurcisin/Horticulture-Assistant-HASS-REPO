@@ -1,9 +1,9 @@
+from plant_engine.nutrient_manager import get_recommended_levels
 from plant_engine.surplus_manager import (
-    list_known_nutrients,
     get_surplus_action,
+    list_known_nutrients,
     recommend_surplus_actions,
 )
-from plant_engine.nutrient_manager import get_recommended_levels
 
 
 def test_list_known_nutrients():

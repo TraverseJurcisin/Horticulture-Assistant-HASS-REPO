@@ -1,7 +1,7 @@
 from plant_engine.nutrient_volatilization import (
-    get_volatilization_rate,
-    estimate_volatilization_loss,
     compensate_for_volatilization,
+    estimate_volatilization_loss,
+    get_volatilization_rate,
 )
 
 

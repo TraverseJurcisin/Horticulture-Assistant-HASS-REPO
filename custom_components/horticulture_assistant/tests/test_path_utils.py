@@ -3,11 +3,14 @@ from pathlib import Path
 
 from custom_components.horticulture_assistant.utils import path_utils
 
+
 class DummyConfig:
     def __init__(self, base):
         self._base = Path(base)
+
     def path(self, *parts):
         return str(self._base.joinpath(*parts))
+
 
 class DummyHass:
     def __init__(self, base):

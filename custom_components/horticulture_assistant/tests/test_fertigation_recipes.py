@@ -1,8 +1,7 @@
 import pytest
-
 from plant_engine.fertigation import (
-    get_fertigation_recipe,
     apply_fertigation_recipe,
+    get_fertigation_recipe,
 )
 
 

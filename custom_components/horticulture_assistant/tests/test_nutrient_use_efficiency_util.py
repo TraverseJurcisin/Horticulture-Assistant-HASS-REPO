@@ -1,20 +1,19 @@
 import json
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import NutrientUseEfficiency
+
+from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import (
+    NutrientUseEfficiency,
+)
 
 
 def test_nutrient_efficiency_basic(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "nutrient_use.json").write_text(json.dumps({
-        "plant1": [
-            {"date": "2025-01-01", "nutrients": {"N": 100}, "stage": "veg"}
-        ]
-    }))
-    (data_dir / "yield_logs.json").write_text(json.dumps({
-        "plant1": [
-            {"date": "2025-01-05", "weight": 500}
-        ]
-    }))
+    (data_dir / "nutrient_use.json").write_text(
+        json.dumps({"plant1": [{"date": "2025-01-01", "nutrients": {"N": 100}, "stage": "veg"}]})
+    )
+    (data_dir / "yield_logs.json").write_text(
+        json.dumps({"plant1": [{"date": "2025-01-05", "weight": 500}]})
+    )
     monkeypatch.chdir(tmp_path)
     nue = NutrientUseEfficiency()
     eff = nue.compute_efficiency("plant1")
@@ -43,21 +42,23 @@ def test_log_and_save(tmp_path, monkeypatch):
 def test_compare_to_expected(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
-    (data_dir / "nutrient_use.json").write_text(json.dumps({
-        "p1": [
-            {"date": "2025-01-01", "nutrients": {"N": 150, "P": 60}, "stage": "veg"}
-        ]
-    }))
+    (data_dir / "nutrient_use.json").write_text(
+        json.dumps(
+            {"p1": [{"date": "2025-01-01", "nutrients": {"N": 150, "P": 60}, "stage": "veg"}]}
+        )
+    )
     (data_dir / "yield_logs.json").write_text("{}")
     (data_dir / "nutrients").mkdir()
-    (data_dir / "nutrients" / "nutrient_uptake.json").write_text(json.dumps({
-        "tomato": {"veg": {"N": 100, "P": 40}}
-    }))
+    (data_dir / "nutrients" / "nutrient_uptake.json").write_text(
+        json.dumps({"tomato": {"veg": {"N": 100, "P": 40}}})
+    )
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     import importlib
-    import plant_engine.nutrient_uptake as nu
+
     import plant_engine.growth_stage as gs
+    import plant_engine.nutrient_uptake as nu
+
     importlib.reload(nu)
     importlib.reload(gs)
     monkeypatch.setattr(gs, "get_stage_duration", lambda a, b: 1)
@@ -68,6 +69,7 @@ def test_compare_to_expected(tmp_path, monkeypatch):
     assert diff["P"] == 20
     # restore default datasets for subsequent tests
     from plant_engine.utils import clear_dataset_cache
+
     monkeypatch.delenv("HORTICULTURE_DATA_DIR", raising=False)
     clear_dataset_cache()
     importlib.reload(nu)

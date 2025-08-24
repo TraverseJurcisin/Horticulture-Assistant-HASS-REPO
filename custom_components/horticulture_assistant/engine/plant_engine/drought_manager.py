@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "water/drought_tolerance.json"
 
-_DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, object]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -23,8 +22,8 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-@lru_cache(maxsize=None)
-def get_drought_tolerance(plant_type: str) -> Dict[str, object] | None:
+@cache
+def get_drought_tolerance(plant_type: str) -> dict[str, object] | None:
     """Return drought tolerance info for ``plant_type`` if available."""
     return _DATA.get(normalize_key(plant_type))
 

@@ -1,4 +1,5 @@
 import importlib
+
 import plant_engine.utils as utils
 
 
@@ -53,6 +54,7 @@ def test_dataset_search_paths_includes_overlay(monkeypatch, tmp_path):
     assert base in paths
     utils.clear_dataset_cache()
 
+
 def test_dataset_search_paths_env_change(monkeypatch, tmp_path):
     base1 = tmp_path / "d1"
     base2 = tmp_path / "d2"
@@ -60,6 +62,7 @@ def test_dataset_search_paths_env_change(monkeypatch, tmp_path):
     base2.mkdir()
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base1))
     import importlib
+
     importlib.reload(utils)
     paths1 = utils.dataset_search_paths()
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base2))

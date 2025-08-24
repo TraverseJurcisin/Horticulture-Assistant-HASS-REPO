@@ -1,31 +1,33 @@
 """EC (electrical conductivity) guidelines and helpers."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict, Tuple, Mapping
+from collections.abc import Mapping
+from functools import cache
 
 from .constants import get_stage_multiplier
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "ec/ec_guidelines.json"
 RECIPE_FILE = "stock/stock_solution_recipes.json"
 ADJUST_FILE = "ec/ec_adjustment_factors.json"
 
+
 # cache dataset load
-@lru_cache(maxsize=None)
-def _data() -> Dict[str, Dict[str, Tuple[float, float]]]:
+@cache
+def _data() -> dict[str, dict[str, tuple[float, float]]]:
     return load_dataset(DATA_FILE)
 
 
-@lru_cache(maxsize=None)
-def _recipes() -> Dict[str, Dict[str, Mapping[str, float]]]:
+@cache
+def _recipes() -> dict[str, dict[str, Mapping[str, float]]]:
     return load_dataset(RECIPE_FILE)
 
 
-@lru_cache(maxsize=None)
-def _adjust() -> Dict[str, float]:
+@cache
+def _adjust() -> dict[str, float]:
     return load_dataset(ADJUST_FILE)
+
 
 __all__ = [
     "list_supported_plants",
@@ -44,7 +46,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_data())
 
 
-def get_ec_range(plant_type: str, stage: str | None = None) -> Tuple[float, float] | None:
+def get_ec_range(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return (min, max) EC range for ``plant_type`` and ``stage`` if defined."""
     plant = _data().get(normalize_key(plant_type))
     if not plant:
@@ -52,10 +54,10 @@ def get_ec_range(plant_type: str, stage: str | None = None) -> Tuple[float, floa
     if stage:
         stage_key = normalize_key(stage)
         range_vals = plant.get(stage_key)
-        if isinstance(range_vals, (list, tuple)) and len(range_vals) == 2:
+        if isinstance(range_vals, list | tuple) and len(range_vals) == 2:
             return float(range_vals[0]), float(range_vals[1])
     default = plant.get("default")
-    if isinstance(default, (list, tuple)) and len(default) == 2:
+    if isinstance(default, list | tuple) and len(default) == 2:
         return float(default[0]), float(default[1])
     return None
 
@@ -72,7 +74,7 @@ def get_optimal_ec(plant_type: str, stage: str | None = None) -> float | None:
 
 def get_stage_adjusted_ec_range(
     plant_type: str, stage: str | None = None
-) -> Tuple[float, float] | None:
+) -> tuple[float, float] | None:
     """Return EC range scaled by the stage multiplier if available."""
 
     rng = get_ec_range(plant_type, stage)
@@ -130,7 +132,7 @@ def recommend_ec_correction(
     plant_type: str,
     stage: str,
     volume_l: float,
-) -> Dict[str, float] | None:
+) -> dict[str, float] | None:
     """Return stock solution volumes or dilution needed for EC correction."""
 
     target = get_optimal_ec(plant_type, stage)
@@ -146,9 +148,9 @@ def recommend_ec_correction(
     recipe = _recipes().get(normalize_key(plant_type), {}).get(normalize_key(stage), {})
     if not isinstance(recipe, Mapping) or not recipe:
         recipe = {"stock_a": 1.0}
-    total_ratio = sum(float(v) for v in recipe.values() if isinstance(v, (int, float)))
+    total_ratio = sum(float(v) for v in recipe.values() if isinstance(v, int | float))
     factors = _adjust()
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for stock, ratio in recipe.items():
         factor = factors.get(stock)
         if factor and total_ratio > 0:

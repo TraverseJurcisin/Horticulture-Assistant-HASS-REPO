@@ -1,17 +1,21 @@
 """Utilities for tracking nutrient applications and generating summaries."""
 
-from dataclasses import dataclass, field, asdict
-from typing import Dict, Optional, List, Iterable, Mapping, Any
-from datetime import datetime, timedelta
-from collections import defaultdict
 import json
+from collections import defaultdict
+from collections.abc import Iterable, Mapping
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 from plant_engine.utils import load_dataset
+
 from custom_components.horticulture_assistant.fertilizer_formulator import (
     convert_guaranteed_analysis,
 )
+
 from .nutrient_requirements import get_requirements
+
 
 @dataclass(slots=True)
 class NutrientEntry:
@@ -19,29 +23,31 @@ class NutrientEntry:
 
     element: str
     value_mg_per_kg: float
-    source_compound: Optional[str] = None
+    source_compound: str | None = None
+
 
 @dataclass(slots=True)
 class ProductNutrientProfile:
     """Profile describing nutrient concentrations for a product."""
 
     product_id: str
-    nutrient_map: Dict[str, NutrientEntry] = field(default_factory=dict)
+    nutrient_map: dict[str, NutrientEntry] = field(default_factory=dict)
 
-    def add_element(self, element: str, value: float, source: Optional[str] = None) -> None:
+    def add_element(self, element: str, value: float, source: str | None = None) -> None:
         """Register a nutrient value in ``mg/kg`` for the product."""
 
         self.nutrient_map[element] = NutrientEntry(element, value, source)
 
-    def get_ppm_from_dose(self, dose_g: float, solution_kg: float = 1.0) -> Dict[str, float]:
+    def get_ppm_from_dose(self, dose_g: float, solution_kg: float = 1.0) -> dict[str, float]:
         """Return delivered ppm for ``dose_g`` grams in ``solution_kg`` kilograms."""
 
-        ppm_map: Dict[str, float] = {}
+        ppm_map: dict[str, float] = {}
         for nutrient in self.nutrient_map.values():
             total_mg = dose_g * (nutrient.value_mg_per_kg / 1000)
             ppm = total_mg / solution_kg
             ppm_map[nutrient.element] = round(ppm, 4)
         return ppm_map
+
 
 @dataclass(slots=True)
 class NutrientDeliveryRecord:
@@ -50,10 +56,10 @@ class NutrientDeliveryRecord:
     plant_id: str
     batch_id: str
     timestamp: datetime
-    ppm_delivered: Dict[str, float]
+    ppm_delivered: dict[str, float]
     volume_l: float
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return dictionary suitable for JSON serialization."""
         data = asdict(self)
         data["timestamp"] = self.timestamp.isoformat()
@@ -71,13 +77,14 @@ class NutrientDeliveryRecord:
             volume_l=float(data.get("volume_l", 0.0)),
         )
 
+
 @dataclass(slots=True)
 class NutrientTracker:
     """Track nutrient deliveries and summarize totals."""
 
-    product_profiles: Dict[str, ProductNutrientProfile] = field(default_factory=dict)
-    delivery_log: List[NutrientDeliveryRecord] = field(default_factory=list)
-    _log_by_plant: Dict[str, List[NutrientDeliveryRecord]] = field(
+    product_profiles: dict[str, ProductNutrientProfile] = field(default_factory=dict)
+    delivery_log: list[NutrientDeliveryRecord] = field(default_factory=list)
+    _log_by_plant: dict[str, list[NutrientDeliveryRecord]] = field(
         default_factory=lambda: defaultdict(list)
     )
 
@@ -86,7 +93,9 @@ class NutrientTracker:
 
         self.product_profiles[profile.product_id] = profile
 
-    def log_delivery(self, plant_id: str, batch_id: str, product_id: str, dose_g: float, volume_l: float) -> None:
+    def log_delivery(
+        self, plant_id: str, batch_id: str, product_id: str, dose_g: float, volume_l: float
+    ) -> None:
         """Log a nutrient application for ``plant_id``."""
 
         if product_id not in self.product_profiles:
@@ -123,7 +132,7 @@ class NutrientTracker:
             self.delivery_log.append(rec)
             self._log_by_plant[rec.plant_id].append(rec)
 
-    def _records_for(self, plant_id: Optional[str]) -> Iterable[NutrientDeliveryRecord]:
+    def _records_for(self, plant_id: str | None) -> Iterable[NutrientDeliveryRecord]:
         """Return delivery records optionally filtered by ``plant_id``."""
 
         if plant_id is None:
@@ -136,19 +145,21 @@ class NutrientTracker:
             self._log_by_plant[plant_id] = stored
         return stored
 
-    def summarize_nutrients(self, plant_id: Optional[str] = None) -> Dict[str, float]:
+    def summarize_nutrients(self, plant_id: str | None = None) -> dict[str, float]:
         """Return total ppm delivered across all logged applications."""
 
-        summary: Dict[str, float] = defaultdict(float)
+        summary: dict[str, float] = defaultdict(float)
         for record in self._records_for(plant_id):
             for element, ppm in record.ppm_delivered.items():
                 summary[element] += ppm
         return dict(summary)
 
-    def summarize_mg_for_day(self, date: datetime, plant_id: Optional[str] = None) -> Dict[str, float]:
+    def summarize_mg_for_day(
+        self, date: datetime, plant_id: str | None = None
+    ) -> dict[str, float]:
         """Return total milligrams delivered on ``date``."""
 
-        summary: Dict[str, float] = defaultdict(float)
+        summary: dict[str, float] = defaultdict(float)
         for record in self._records_for(plant_id):
             if record.timestamp.date() != date.date():
                 continue
@@ -157,14 +168,14 @@ class NutrientTracker:
         return dict(summary)
 
     def summarize_mg_for_period(
-        self, start: datetime, end: datetime, plant_id: Optional[str] = None
-    ) -> Dict[str, float]:
+        self, start: datetime, end: datetime, plant_id: str | None = None
+    ) -> dict[str, float]:
         """Return milligrams delivered between ``start`` and ``end`` (inclusive)."""
 
         if start > end:
             raise ValueError("start must not be after end")
 
-        summary: Dict[str, float] = defaultdict(float)
+        summary: dict[str, float] = defaultdict(float)
         for record in self._records_for(plant_id):
             if not (start <= record.timestamp <= end):
                 continue
@@ -173,8 +184,8 @@ class NutrientTracker:
         return dict(summary)
 
     def summarize_mg_since(
-        self, days: int, plant_id: Optional[str] = None, *, now: Optional[datetime] = None
-    ) -> Dict[str, float]:
+        self, days: int, plant_id: str | None = None, *, now: datetime | None = None
+    ) -> dict[str, float]:
         """Return milligrams delivered in the last ``days`` days."""
 
         if days < 0:
@@ -184,14 +195,10 @@ class NutrientTracker:
         start = ref - timedelta(days=days)
         return self.summarize_mg_for_period(start, ref, plant_id)
 
-    def summarize_daily_totals(
-        self, plant_id: Optional[str] = None
-    ) -> Dict[str, Dict[str, float]]:
+    def summarize_daily_totals(self, plant_id: str | None = None) -> dict[str, dict[str, float]]:
         """Return milligram totals grouped by day."""
 
-        daily: Dict[str, Dict[str, float]] = defaultdict(
-            lambda: defaultdict(float)
-        )
+        daily: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
         for record in self._records_for(plant_id):
             key = record.timestamp.date().isoformat()
             for element, ppm in record.ppm_delivered.items():
@@ -202,10 +209,10 @@ class NutrientTracker:
         self,
         plant_type: str,
         days: int,
-        plant_id: Optional[str] = None,
+        plant_id: str | None = None,
         *,
-        now: Optional[datetime] = None,
-    ) -> Dict[str, float]:
+        now: datetime | None = None,
+    ) -> dict[str, float]:
         """Return unmet nutrient requirements for ``plant_type`` over ``days``.
 
         The calculation uses :func:`nutrient_requirements.get_requirements` to
@@ -222,7 +229,7 @@ class NutrientTracker:
             return {}
 
         delivered = self.summarize_mg_since(days, plant_id, now=now)
-        deficits: Dict[str, float] = {}
+        deficits: dict[str, float] = {}
         target_span = {k: v * days for k, v in requirements.items()}
         for nutrient, total_needed in target_span.items():
             applied = delivered.get(nutrient, 0.0)

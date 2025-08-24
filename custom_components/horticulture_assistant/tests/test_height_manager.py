@@ -1,7 +1,7 @@
 from plant_engine.height_manager import (
-    list_supported_plants,
-    get_height_range,
     estimate_height,
+    get_height_range,
+    list_supported_plants,
 )
 
 

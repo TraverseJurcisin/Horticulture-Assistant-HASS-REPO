@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from collections.abc import Iterable
 
-from .utils import list_dataset_entries, load_dataset, stage_value, normalize_key
+from .utils import list_dataset_entries, load_dataset, normalize_key, stage_value
 
 DATA_FILE = "ph/ph_guidelines.json"
 ADJUST_FILE = "ph/ph_adjustment_factors.json"
@@ -12,10 +12,10 @@ MEDIUM_FILE = "ph/growth_medium_ph_ranges.json"
 SOIL_PH_FILE = "soil/soil_ph_guidelines.json"
 
 # Cached dataset loaded once
-_DATA: Dict[str, Dict[str, Iterable[float]]] = load_dataset(DATA_FILE)
-_ADJUST: Dict[str, Dict[str, float]] = load_dataset(ADJUST_FILE)
-_MEDIUM: Dict[str, Iterable[float]] = load_dataset(MEDIUM_FILE)
-_SOIL: Dict[str, Iterable[float]] = load_dataset(SOIL_PH_FILE)
+_DATA: dict[str, dict[str, Iterable[float]]] = load_dataset(DATA_FILE)
+_ADJUST: dict[str, dict[str, float]] = load_dataset(ADJUST_FILE)
+_MEDIUM: dict[str, Iterable[float]] = load_dataset(MEDIUM_FILE)
+_SOIL: dict[str, Iterable[float]] = load_dataset(SOIL_PH_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -124,7 +124,7 @@ def estimate_ph_adjustment_volume(
     if not info:
         return None
     effect = info.get("effect_per_ml_per_l")
-    if not isinstance(effect, (int, float)) or effect == 0:
+    if not isinstance(effect, int | float) or effect == 0:
         return None
 
     # Effect per ml for the whole volume

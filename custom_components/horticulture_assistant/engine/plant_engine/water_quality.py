@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Dict, Tuple, Mapping, Any
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
+from typing import Any
 
 from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
@@ -36,12 +37,12 @@ __all__ = [
 class WaterProfileSummary:
     """Summary of irrigation water quality analysis."""
 
-    baseline: Dict[str, float]
-    warnings: Dict[str, Dict[str, float]]
+    baseline: dict[str, float]
+    warnings: dict[str, dict[str, float]]
     rating: str
     score: float
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -55,10 +56,12 @@ def get_threshold(analyte: str) -> float | None:
     return _thresholds().get(analyte)
 
 
-def interpret_water_profile(water_test: Dict[str, float]) -> Tuple[Dict[str, float], Dict[str, Dict[str, float]]]:
+def interpret_water_profile(
+    water_test: dict[str, float],
+) -> tuple[dict[str, float], dict[str, dict[str, float]]]:
     """Return baseline nutrients and warnings for a water quality profile."""
-    baseline: Dict[str, float] = {}
-    warnings: Dict[str, Dict[str, float]] = {}
+    baseline: dict[str, float] = {}
+    warnings: dict[str, dict[str, float]] = {}
 
     for ion, value in water_test.items():
         baseline[ion] = value
@@ -73,7 +76,7 @@ def interpret_water_profile(water_test: Dict[str, float]) -> Tuple[Dict[str, flo
     return baseline, warnings
 
 
-def classify_water_quality(water_test: Dict[str, float]) -> str:
+def classify_water_quality(water_test: dict[str, float]) -> str:
     """Return a simple quality rating for ``water_test``.
 
     The rating is ``"good"`` when no analyte exceeds its threshold,
@@ -89,7 +92,7 @@ def classify_water_quality(water_test: Dict[str, float]) -> str:
     return "poor"
 
 
-def score_water_quality(water_test: Dict[str, float]) -> float:
+def score_water_quality(water_test: dict[str, float]) -> float:
     """Return a 0-100 score based on threshold exceedances."""
     score = 100.0
     for ion, limit in _thresholds().items():
@@ -103,10 +106,11 @@ def score_water_quality(water_test: Dict[str, float]) -> float:
         score -= penalty
     return round(max(score, 0.0), 1)
 
-def recommend_treatments(water_test: Dict[str, float]) -> Dict[str, str]:
+
+def recommend_treatments(water_test: dict[str, float]) -> dict[str, str]:
     """Return recommended remediation steps for analytes exceeding thresholds."""
     _, warnings = interpret_water_profile(water_test)
-    recommendations: Dict[str, str] = {}
+    recommendations: dict[str, str] = {}
     for analyte in warnings:
         action = _actions().get(analyte)
         if action:
@@ -128,7 +132,7 @@ def summarize_water_profile(water_test: Mapping[str, float]) -> WaterProfileSumm
 
 def blend_water_profiles(
     source_a: Mapping[str, float], source_b: Mapping[str, float], ratio_a: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return analyte levels for a blend of two water sources.
 
     ``ratio_a`` indicates the fraction of ``source_a`` in the final mix. Any
@@ -138,7 +142,7 @@ def blend_water_profiles(
     if ratio_a < 0 or ratio_a > 1:
         raise ValueError("ratio_a must be between 0 and 1")
 
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     ions = set(source_a) | set(source_b)
     for ion in ions:
         val_a = float(source_a.get(ion, 0.0))

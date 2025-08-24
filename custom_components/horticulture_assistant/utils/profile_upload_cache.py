@@ -9,7 +9,7 @@ try:
 except ImportError:  # pragma: no cover - allow tests without HA installed
     HomeAssistant = None  # type: ignore
 
-from .path_utils import plants_path, ensure_data_dir
+from .path_utils import ensure_data_dir, plants_path
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ def _load_section(path: Path) -> dict | None:
     if not path.exists():
         return None
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
     except Exception as exc:  # pragma: no cover - unexpected I/O errors
         _LOGGER.error("Failed reading %s: %s", path, exc)

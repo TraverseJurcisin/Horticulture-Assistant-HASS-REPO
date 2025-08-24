@@ -1,5 +1,3 @@
-from typing import List, Dict
-
 # Reference database of common fertilizer salts and their elemental contributions
 # All values are percent by weight
 KNOWN_COMPOUNDS = {
@@ -22,10 +20,10 @@ KNOWN_COMPOUNDS = {
 
 
 def predict_ingredient_ratios(
-    derived_from_list: List[str],
-    target_composition: Dict[str, float],
-    reference_table: Dict[str, Dict[str, float]] = KNOWN_COMPOUNDS,
-) -> Dict[str, float]:
+    derived_from_list: list[str],
+    target_composition: dict[str, float],
+    reference_table: dict[str, dict[str, float]] = KNOWN_COMPOUNDS,
+) -> dict[str, float]:
     """
     Estimate relative contributions of fertilizer ingredients to match a guaranteed analysis.
     This uses a greedy approximation strategy (not a true optimization solver).
@@ -69,5 +67,5 @@ def predict_ingredient_ratios(
     return result
 
 
-def summarize_prediction(predict_result: Dict[str, float]) -> str:
+def summarize_prediction(predict_result: dict[str, float]) -> str:
     return "\n".join(f"{k}: {v:.2f}%" for k, v in predict_result.items() if v > 0)

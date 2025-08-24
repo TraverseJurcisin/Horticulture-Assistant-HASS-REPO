@@ -1,7 +1,7 @@
 from plant_engine.growth_rate_manager import (
-    list_supported_plants,
-    get_daily_growth_rate,
     estimate_growth,
+    get_daily_growth_rate,
+    list_supported_plants,
 )
 
 
@@ -29,4 +29,4 @@ def test_estimate_growth():
     except ValueError:
         pass
     else:
-        assert False, "negative days should raise"
+        raise AssertionError("negative days should raise")

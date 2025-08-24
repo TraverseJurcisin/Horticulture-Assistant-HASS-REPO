@@ -1,16 +1,18 @@
 """Species-conditioned biological clock reset utilities."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
-from .utils import load_dataset, list_dataset_entries, normalize_key
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "phenology/biological_clock_resets.json"
 
-@lru_cache(maxsize=None)
-def _data() -> Dict[str, Dict[str, float]]:
+
+@cache
+def _data() -> dict[str, dict[str, float]]:
     return load_dataset(DATA_FILE)
+
 
 __all__ = [
     "list_supported_plants",
@@ -25,7 +27,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_data())
 
 
-def get_clock_reset_info(plant_type: str) -> Dict[str, float] | None:
+def get_clock_reset_info(plant_type: str) -> dict[str, float] | None:
     """Return reset thresholds for ``plant_type`` if available."""
     return _data().get(normalize_key(plant_type))
 
@@ -65,7 +67,5 @@ def format_reset_message(
 ) -> str:
     """Return human-friendly clock reset message if triggered."""
     if check_clock_reset(plant_type, chilling_hours, drought_days, photoperiod_hours):
-        return (
-            f"{plant_name} chilling requirement satisfied. Begin ramp-up for spring emergence."
-        )
+        return f"{plant_name} chilling requirement satisfied. Begin ramp-up for spring emergence."
     return f"{plant_name} has not met biological clock reset thresholds."

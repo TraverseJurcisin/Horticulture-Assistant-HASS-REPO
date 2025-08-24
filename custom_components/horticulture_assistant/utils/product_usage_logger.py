@@ -2,8 +2,7 @@
 
 import uuid
 from datetime import datetime
-from typing import Any, Dict, Optional
-
+from typing import Any
 
 __all__ = ["log_product_usage"]
 
@@ -13,11 +12,11 @@ def log_product_usage(
     batch_id: str,
     zone_ids: list,
     volume_liters: float,
-    application_time: Optional[str] = None,
-    recipe_id: Optional[str] = None,
-    user_notes: Optional[str] = None,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
+    application_time: str | None = None,
+    recipe_id: str | None = None,
+    user_notes: str | None = None,
+    metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Return a structured usage log entry."""
     usage_record = {
         "usage_id": str(uuid.uuid4()),

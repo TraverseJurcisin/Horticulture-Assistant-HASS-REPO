@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, lazy_dataset, normalize_key
+from .utils import lazy_dataset, load_dataset, normalize_key
 
 _MULTIPLIER_FILE = "stages/stage_multipliers.json"
 _DEFAULT_MULTIPLIERS: dict[str, float] = {
@@ -53,10 +53,12 @@ def stage_multipliers() -> dict[str, float]:
     data = _multipliers() or _DEFAULT_MULTIPLIERS
     return {k: float(v) for k, v in data.items()}
 
+
 def get_stage_multiplier(stage: str) -> float:
     """Return nutrient multiplier for ``stage`` with fallback to ``1.0``."""
 
     return float(stage_multipliers().get(normalize_key(stage), 1.0))
+
 
 # Default environment readings applied when a plant profile lacks recent data.
 DEFAULT_ENV: dict[str, float] = _load_default_env()

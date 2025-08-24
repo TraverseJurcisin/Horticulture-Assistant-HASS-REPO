@@ -1,12 +1,13 @@
 import os
 from datetime import datetime
-from typing import Any, Dict
-from water_deficit_tracker import update_water_balance
+from typing import Any
+
 from plant_engine.utils import load_json, save_json
+from water_deficit_tracker import update_water_balance
+
 from custom_components.horticulture_assistant.utils.load_plant_profile import (
     load_plant_profile,
 )
-
 
 # === CONFIGURATION ===
 
@@ -17,7 +18,7 @@ AUTO_APPROVE_FIELD = "auto_approve_all"
 
 
 # === HELPER FUNCTIONS ===
-def generate_daily_report(plant_id: str, profile: Dict[str, Any]) -> Dict[str, Any]:
+def generate_daily_report(plant_id: str, profile: dict[str, Any]) -> dict[str, Any]:
     """Return a simple report dictionary for ``plant_id`` based on ``profile``."""
 
     now = datetime.now()
@@ -44,7 +45,7 @@ def generate_daily_report(plant_id: str, profile: Dict[str, Any]) -> Dict[str, A
     }
 
 
-def mock_threshold_adjustments(thresholds: Dict[str, float]) -> Dict[str, float]:
+def mock_threshold_adjustments(thresholds: dict[str, float]) -> dict[str, float]:
     """
     Placeholder: adjust thresholds based on arbitrary logic.
     Future: replace with AI model call.
@@ -59,7 +60,7 @@ def mock_threshold_adjustments(thresholds: Dict[str, float]) -> Dict[str, float]
     return adjusted
 
 
-def update_plant_profile(plant_path: str, updated_thresholds: Dict[str, float]) -> None:
+def update_plant_profile(plant_path: str, updated_thresholds: dict[str, float]) -> None:
     """Write ``updated_thresholds`` back to the profile file(s)."""
 
     if os.path.isdir(plant_path):
@@ -79,6 +80,7 @@ def update_plant_profile(plant_path: str, updated_thresholds: Dict[str, float]) 
 
 
 # === MAIN ORCHESTRATOR ===
+
 
 def run_daily_threshold_updates():
     print("🚀 Starting daily threshold recalculation...")
@@ -111,7 +113,6 @@ def run_daily_threshold_updates():
         # Step 3: Update water balance tracker
         water_status = update_water_balance(plant_id, irrigation_ml, transpiration_ml)
         report["water_deficit"] = water_status.as_dict()
-
 
         # Save daily report to disk
         date_str = datetime.now().strftime("%Y%m%d")

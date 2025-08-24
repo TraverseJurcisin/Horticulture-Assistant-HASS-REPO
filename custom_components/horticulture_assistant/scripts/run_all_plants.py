@@ -7,12 +7,9 @@ from plant_engine.utils import save_json
 PLANT_DIR = "plants"
 SUMMARY_PATH = "data/reports/summary.json"
 
+
 def get_plant_ids():
-    return [
-        f.replace(".json", "")
-        for f in os.listdir(PLANT_DIR)
-        if f.endswith(".json")
-    ]
+    return [f.replace(".json", "") for f in os.listdir(PLANT_DIR) if f.endswith(".json")]
 
 
 MAX_WORKERS = min(32, (os.cpu_count() or 1) * 2)
@@ -51,6 +48,7 @@ def run_all_plants(parallel: bool = True) -> dict:
     save_json(SUMMARY_PATH, summary)
     print(f"\n✅ Summary report written to {SUMMARY_PATH}")
     return summary
+
 
 if __name__ == "__main__":
     run_all_plants()

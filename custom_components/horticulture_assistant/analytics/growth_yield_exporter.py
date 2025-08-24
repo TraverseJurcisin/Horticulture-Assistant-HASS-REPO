@@ -47,22 +47,16 @@ def export_growth_yield(
         if isinstance(data, list):
             yield_entries = data
         elif data is not None:
-            _LOGGER.warning(
-                "Yield log for plant %s is not a list; ignoring content.", plant_id
-            )
+            _LOGGER.warning("Yield log for plant %s is not a list; ignoring content.", plant_id)
     else:
-        _LOGGER.warning(
-            "Yield tracking log not found for plant %s at %s", plant_id, yield_log_file
-        )
+        _LOGGER.warning("Yield tracking log not found for plant %s at %s", plant_id, yield_log_file)
 
     # Aggregate yield quantities by date
     yield_by_date = {}
     for entry in yield_entries:
         if not isinstance(entry, dict):
             continue
-        ts = entry.get("timestamp") or entry.get(
-            "date"
-        )  # allow "date" key fallback if used
+        ts = entry.get("timestamp") or entry.get("date")  # allow "date" key fallback if used
         if not ts:
             continue
         try:
@@ -73,9 +67,7 @@ def export_growth_yield(
                 ts_str = ts_str[:-1]
             date_obj = datetime.fromisoformat(ts_str)
         except Exception as err:
-            _LOGGER.warning(
-                "Unrecognized timestamp format in yield log (%s): %s", ts, err
-            )
+            _LOGGER.warning("Unrecognized timestamp format in yield log (%s): %s", ts, err)
             continue
         date_str = date_obj.date().isoformat()
         try:
@@ -143,19 +135,11 @@ def export_growth_yield(
         try:
             min_date = datetime.fromisoformat(min_date_str).date()
         except Exception:
-            min_date = (
-                datetime.strptime(min_date_str, "%Y-%m-%d").date()
-                if min_date_str
-                else None
-            )
+            min_date = datetime.strptime(min_date_str, "%Y-%m-%d").date() if min_date_str else None
         try:
             max_date = datetime.fromisoformat(max_date_str).date()
         except Exception:
-            max_date = (
-                datetime.strptime(max_date_str, "%Y-%m-%d").date()
-                if max_date_str
-                else None
-            )
+            max_date = datetime.strptime(max_date_str, "%Y-%m-%d").date() if max_date_str else None
 
         series = []
         current_cumulative = 0.0
@@ -204,7 +188,5 @@ def export_growth_yield(
     output_dir.mkdir(parents=True, exist_ok=True)
     out_file = output_dir / f"{plant_id}_growth_yield.json"
     save_json(out_file, series)
-    _LOGGER.info(
-        "Exported growth & yield series for plant %s to %s", plant_id, out_file
-    )
+    _LOGGER.info("Exported growth & yield series for plant %s to %s", plant_id, out_file)
     return series

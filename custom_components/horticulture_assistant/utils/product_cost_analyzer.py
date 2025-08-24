@@ -1,6 +1,6 @@
 """Utility helpers for comparing product prices across units."""
 
-from typing import Dict, List, Literal
+from typing import Literal
 
 try:
     from .unit_utils import UNIT_CONVERSIONS, to_base
@@ -22,16 +22,12 @@ __all__ = [
 ]
 
 
-
-
 class ProductCostAnalyzer:
     """Convenience methods for normalizing product pricing."""
 
     @staticmethod
     def cost_per_unit(
-        price: float,
-        size: float,
-        unit: Literal["L", "mL", "gal", "kg", "g", "oz"]
+        price: float, size: float, unit: Literal["L", "mL", "gal", "kg", "g", "oz"]
     ) -> float:
         """Return cost per liter or kilogram for a packaged product."""
 
@@ -45,9 +41,7 @@ class ProductCostAnalyzer:
         return round(price / size_in_standard, 4)
 
     @staticmethod
-    def compare_sources(
-        price_data: List[Dict[str, float]]
-    ) -> Dict[str, float]:
+    def compare_sources(price_data: list[dict[str, float]]) -> dict[str, float]:
         """
         Compares multiple listings of the same product to find best value.
         Each dict in the list should contain: price, size, and unit.
@@ -73,9 +67,7 @@ class ProductCostAnalyzer:
 
     @staticmethod
     def cost_of_dose(
-        cost_per_unit: float,
-        dose_amount: float,
-        dose_unit: Literal["L", "kg", "mL", "g", "oz"]
+        cost_per_unit: float, dose_amount: float, dose_unit: Literal["L", "kg", "mL", "g", "oz"]
     ) -> float:
         """Return cost for a single application amount."""
 

@@ -1,11 +1,12 @@
 import pytest
+from homeassistant.helpers import issue_registry as ir
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
 from custom_components.horticulture_assistant.const import (
-    DOMAIN,
     CONF_API_KEY,
     CONF_MOISTURE_SENSOR,
+    DOMAIN,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-from homeassistant.helpers import issue_registry as ir
 
 pytestmark = [
     pytest.mark.asyncio,

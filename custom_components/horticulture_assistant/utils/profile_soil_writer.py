@@ -4,6 +4,7 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def generate_soil_profiles(plant_id: str, base_dir: str = None, overwrite: bool = False) -> str:
     """
     Generate or update soil and microbiome profile files for a given plant.
@@ -33,7 +34,7 @@ def generate_soil_profiles(plant_id: str, base_dir: str = None, overwrite: bool 
         "texture_class": None,
         "allelopathy": None,
         "root_soil_response": None,
-        "media_suitability": None
+        "media_suitability": None,
     }
 
     # Define default content for microbiome.json
@@ -42,7 +43,7 @@ def generate_soil_profiles(plant_id: str, base_dir: str = None, overwrite: bool 
         "pathogenic_suppressors": None,
         "root_exudates": None,
         "microbial_diversity_index": None,
-        "co_cultured_species": None
+        "co_cultured_species": None,
     }
 
     profile_sections = {

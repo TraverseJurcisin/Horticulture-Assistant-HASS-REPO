@@ -1,4 +1,5 @@
 """Derived environmental sensors for Horticulture Assistant."""
+
 from __future__ import annotations
 
 import math
@@ -93,9 +94,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         light_sensor = self._entry.options.get("sensors", {}).get("illuminance")
         if light_sensor:
             self.async_on_remove(
-                async_track_state_change_event(
-                    self.hass, [light_sensor], self._on_illuminance
-                )
+                async_track_state_change_event(self.hass, [light_sensor], self._on_illuminance)
             )
 
     @callback
@@ -132,7 +131,9 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
     _attr_native_unit_of_measurement = "kPa"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
+    def __init__(
+        self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str
+    ) -> None:
         super().__init__(plant_name, plant_id)
         self.hass = hass
         self._entry = entry
@@ -149,9 +150,7 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
         temp = sensors.get("temperature")
         hum = sensors.get("humidity")
         self.async_on_remove(
-            async_track_state_change_event(
-                self.hass, [e for e in (temp, hum) if e], self._on_state
-            )
+            async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state)
         )
         self.hass.loop.call_soon(self._on_state, None)
 
@@ -161,9 +160,7 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
         if t is None or h is None:
             self._value = None
         else:
-            self._value = round(
-                _svp_kpa(t) * (1 - max(min(h, 100.0), 0.0) / 100.0), 3
-            )
+            self._value = round(_svp_kpa(t) * (1 - max(min(h, 100.0), 0.0) / 100.0), 3)
         self.async_write_ha_state()
 
 
@@ -175,7 +172,9 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
+    def __init__(
+        self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str
+    ) -> None:
         super().__init__(plant_name, plant_id)
         self.hass = hass
         self._entry = entry
@@ -192,9 +191,7 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
         temp = sensors.get("temperature")
         hum = sensors.get("humidity")
         self.async_on_remove(
-            async_track_state_change_event(
-                self.hass, [e for e in (temp, hum) if e], self._on_state
-            )
+            async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state)
         )
         self.hass.loop.call_soon(self._on_state, None)
 
@@ -214,7 +211,9 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
     _attr_name = "Mold Risk"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
+    def __init__(
+        self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str
+    ) -> None:
         super().__init__(plant_name, plant_id)
         self.hass = hass
         self._entry = entry
@@ -231,9 +230,7 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
         temp = sensors.get("temperature")
         hum = sensors.get("humidity")
         self.async_on_remove(
-            async_track_state_change_event(
-                self.hass, [e for e in (temp, hum) if e], self._on_state
-            )
+            async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state)
         )
         self.hass.loop.call_soon(self._on_state, None)
 

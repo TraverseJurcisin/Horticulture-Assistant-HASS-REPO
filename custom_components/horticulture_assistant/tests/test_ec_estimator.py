@@ -1,4 +1,5 @@
 import json
+
 from custom_components.horticulture_assistant.utils import ec_estimator
 
 
@@ -90,12 +91,8 @@ def test_estimate_ec_from_logs(tmp_path):
         {"sensor_type": "humidity", "value": 55},
     ]
     (plant_dir / "sensor_reading_log.json").write_text(json.dumps(sensor_log))
-    (plant_dir / "irrigation_log.json").write_text(
-        json.dumps([{"volume_applied_ml": 100}])
-    )
-    (plant_dir / "nutrient_application_log.json").write_text(
-        json.dumps([{"solution_ec": 1.2}])
-    )
+    (plant_dir / "irrigation_log.json").write_text(json.dumps([{"volume_applied_ml": 100}]))
+    (plant_dir / "nutrient_application_log.json").write_text(json.dumps([{"solution_ec": 1.2}]))
     (plant_dir / "runoff_ec_log.json").write_text(json.dumps([{"ec": 1.1}]))
 
     profile = {"general": {"plant_type": "citrus", "lifecycle_stage": "vegetative"}}

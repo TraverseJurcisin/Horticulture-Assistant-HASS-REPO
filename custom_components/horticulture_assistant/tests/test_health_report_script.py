@@ -1,9 +1,10 @@
-from pathlib import Path
 import json
 import subprocess
 import sys
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/health_report.py"
+
 
 def _write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data))

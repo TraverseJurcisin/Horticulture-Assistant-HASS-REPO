@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict, Tuple, List
+from functools import cache
 
 from .utils import load_dataset, normalize_key
 
@@ -14,22 +13,20 @@ class IngredientProfile:
     """Profile describing a fertilizer ingredient."""
 
     name: str
-    nutrient_content: Dict[str, float]
+    nutrient_content: dict[str, float]
     chemical_formula: str | None = None
     form: str | None = None
-    aliases: Tuple[str, ...] = ()
+    aliases: tuple[str, ...] = ()
 
 
-@lru_cache(maxsize=None)
-def _load_profiles() -> Tuple[Dict[str, IngredientProfile], Dict[str, str]]:
+@cache
+def _load_profiles() -> tuple[dict[str, IngredientProfile], dict[str, str]]:
     data = load_dataset(DATA_FILE)
-    profiles: Dict[str, IngredientProfile] = {}
-    alias_map: Dict[str, str] = {}
+    profiles: dict[str, IngredientProfile] = {}
+    alias_map: dict[str, str] = {}
     for name, info in data.items():
         canonical = normalize_key(name)
-        nutrient_content = {
-            k: float(v) for k, v in info.get("nutrient_content", {}).items()
-        }
+        nutrient_content = {k: float(v) for k, v in info.get("nutrient_content", {}).items()}
         aliases = tuple(info.get("aliases", []))
         profiles[canonical] = IngredientProfile(
             name=canonical,
@@ -52,7 +49,7 @@ def get_ingredient_profile(name: str) -> IngredientProfile | None:
     return profiles.get(canonical)
 
 
-def list_ingredients() -> List[str]:
+def list_ingredients() -> list[str]:
     """Return sorted canonical ingredient names."""
 
     profiles, _ = _load_profiles()

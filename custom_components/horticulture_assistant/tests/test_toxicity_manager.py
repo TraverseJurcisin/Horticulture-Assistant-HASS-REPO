@@ -1,13 +1,12 @@
 from plant_engine.toxicity_manager import (
-    list_supported_plants,
-    get_toxicity_thresholds,
     check_toxicities,
-    list_known_nutrients,
-    get_toxicity_symptom,
     diagnose_toxicities,
+    get_toxicity_symptom,
+    get_toxicity_thresholds,
     get_toxicity_treatment,
+    list_known_nutrients,
+    list_supported_plants,
     recommend_toxicity_treatments,
-    calculate_toxicity_index,
 )
 from plant_engine.utils import clear_dataset_cache
 
@@ -54,9 +53,12 @@ def test_diagnose_and_recommend_treatments():
 def test_calculate_toxicity_index():
     clear_dataset_cache()
     import importlib
+
     import plant_engine.nutrient_manager as nm
+
     importlib.reload(nm)
     import plant_engine.toxicity_manager as tm
+
     importlib.reload(tm)
     levels = {"N": 300, "K": 400}
     index = tm.calculate_toxicity_index(levels, "tomato")

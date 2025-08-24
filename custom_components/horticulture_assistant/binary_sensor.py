@@ -52,15 +52,9 @@ async def async_setup_entry(
     )
 
     sensors: list[BinarySensorEntity] = [
-        SensorHealthBinarySensor(
-            hass, entry.entry_id, plant_name, plant_id, sensor_map
-        ),
-        IrrigationReadinessBinarySensor(
-            hass, entry.entry_id, plant_name, plant_id, sensor_map
-        ),
-        FaultDetectionBinarySensor(
-            hass, entry.entry_id, plant_name, plant_id, sensor_map
-        ),
+        SensorHealthBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
+        IrrigationReadinessBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
+        FaultDetectionBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
     ]
 
     async_add_entities(sensors)

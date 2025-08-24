@@ -1,19 +1,20 @@
 """Utility helpers for fertilizer dilution limits."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Mapping, Dict
+from collections.abc import Mapping
+from functools import cache
 
 from .utils import load_dataset, normalize_key
 
 DATA_FILE = "fertilizers/fertilizer_dilution_limits.json"
 
 
-@lru_cache(maxsize=None)
-def _DATA() -> Dict[str, float]:
+@cache
+def _DATA() -> dict[str, float]:
     """Return normalized dilution limit mapping."""
     raw = load_dataset(DATA_FILE) or {}
-    limits: Dict[str, float] = {}
+    limits: dict[str, float] = {}
     for key, value in raw.items():
         try:
             limits[normalize_key(key)] = float(value)
@@ -27,12 +28,12 @@ def get_limit(fertilizer_id: str) -> float | None:
     return _DATA().get(normalize_key(fertilizer_id))
 
 
-def check_schedule(schedule: Mapping[str, float], volume_l: float) -> Dict[str, float]:
+def check_schedule(schedule: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Return overage grams per liter for items exceeding limits."""
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    warnings: Dict[str, float] = {}
+    warnings: dict[str, float] = {}
     for fert_id, grams in schedule.items():
         if grams <= 0:
             continue

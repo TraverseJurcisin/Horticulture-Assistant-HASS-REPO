@@ -24,9 +24,7 @@ async def async_export_profiles(hass: HomeAssistant, path: str | Path) -> Path:
     return out_path
 
 
-async def async_export_profile(
-    hass: HomeAssistant, plant_id: str, path: str | Path
-) -> Path:
+async def async_export_profile(hass: HomeAssistant, plant_id: str, path: str | Path) -> Path:
     """Export a single stored profile to a JSON file at ``path``."""
     import json
 

@@ -1,19 +1,26 @@
 """Disease threshold monitoring utilities."""
+
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
 from datetime import date, timedelta
-from typing import Dict, Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from . import disease_manager
+from .disease_manager import recommend_prevention, recommend_treatments
 from .monitor_utils import (
-    get_interval as _get_interval,
-    next_date as _next_date,
-    generate_schedule as _generate_schedule,
     calculate_risk_score,
 )
-from .disease_manager import recommend_treatments, recommend_prevention
-from . import disease_manager
+from .monitor_utils import (
+    generate_schedule as _generate_schedule,
+)
+from .monitor_utils import (
+    get_interval as _get_interval,
+)
+from .monitor_utils import (
+    next_date as _next_date,
+)
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "diseases/disease_thresholds.json"
 MONITOR_INTERVAL_FILE = "diseases/disease_monitoring_intervals.json"
@@ -23,13 +30,13 @@ RISK_INTERVAL_MOD_FILE = "diseases/disease_risk_interval_modifiers.json"
 SCOUTING_METHOD_FILE = "diseases/disease_scouting_methods.json"
 
 # Cached dataset
-_THRESHOLDS: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
+_THRESHOLDS: dict[str, dict[str, int]] = load_dataset(DATA_FILE)
 # Recommended days between scouting events per plant stage
-_MONITOR_INTERVALS: Dict[str, Dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
-_RISK_FACTORS: Dict[str, Dict[str, Dict[str, list]]] = load_dataset(RISK_DATA_FILE)
-_SEVERITY_ACTIONS: Dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
-_RISK_MODIFIERS: Dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
-_SCOUTING_METHODS: Dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
+_MONITOR_INTERVALS: dict[str, dict[str, int]] = load_dataset(MONITOR_INTERVAL_FILE)
+_RISK_FACTORS: dict[str, dict[str, dict[str, list]]] = load_dataset(RISK_DATA_FILE)
+_SEVERITY_ACTIONS: dict[str, str] = load_dataset(SEVERITY_ACTIONS_FILE)
+_RISK_MODIFIERS: dict[str, float] = load_dataset(RISK_INTERVAL_MOD_FILE)
+_SCOUTING_METHODS: dict[str, str] = load_dataset(SCOUTING_METHOD_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -58,16 +65,16 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_THRESHOLDS)
 
 
-def get_disease_thresholds(plant_type: str) -> Dict[str, int]:
+def get_disease_thresholds(plant_type: str) -> dict[str, int]:
     """Return disease count thresholds for ``plant_type`` with normalized keys."""
     raw = _THRESHOLDS.get(normalize_key(plant_type), {})
     return {normalize_key(k): int(v) for k, v in raw.items()}
 
 
-def assess_disease_pressure(plant_type: str, observations: Mapping[str, int]) -> Dict[str, bool]:
+def assess_disease_pressure(plant_type: str, observations: Mapping[str, int]) -> dict[str, bool]:
     """Return mapping of diseases to ``True`` if counts exceed thresholds."""
     thresholds = get_disease_thresholds(plant_type)
-    pressure: Dict[str, bool] = {}
+    pressure: dict[str, bool] = {}
     for name, count in observations.items():
         key = normalize_key(name)
         thresh = thresholds.get(key)
@@ -77,10 +84,10 @@ def assess_disease_pressure(plant_type: str, observations: Mapping[str, int]) ->
     return pressure
 
 
-def classify_disease_severity(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
+def classify_disease_severity(plant_type: str, observations: Mapping[str, int]) -> dict[str, str]:
     """Return ``low``, ``moderate`` or ``severe`` classifications."""
     thresholds = get_disease_thresholds(plant_type)
-    severity: Dict[str, str] = {}
+    severity: dict[str, str] = {}
     for name, count in observations.items():
         key = normalize_key(name)
         thresh = thresholds.get(key)
@@ -96,7 +103,7 @@ def classify_disease_severity(plant_type: str, observations: Mapping[str, int]) 
     return severity
 
 
-def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> Dict[str, str]:
+def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]) -> dict[str, str]:
     """Return treatment actions for diseases exceeding thresholds."""
     pressure = assess_disease_pressure(plant_type, observations)
     exceeded = [name for name in observations if pressure.get(normalize_key(name))]
@@ -105,9 +112,7 @@ def recommend_threshold_actions(plant_type: str, observations: Mapping[str, int]
     return recommend_treatments(plant_type, exceeded)
 
 
-def estimate_disease_risk(
-    plant_type: str, environment: Mapping[str, float]
-) -> Dict[str, str]:
+def estimate_disease_risk(plant_type: str, environment: Mapping[str, float]) -> dict[str, str]:
     """Return disease risk level based on environmental conditions."""
 
     factors = _RISK_FACTORS.get(normalize_key(plant_type), {})
@@ -119,13 +124,11 @@ def estimate_disease_risk(
     return estimate_condition_risk(factors, environment)
 
 
-def adjust_risk_with_resistance(
-    plant_type: str, risk_map: Mapping[str, str]
-) -> Dict[str, str]:
+def adjust_risk_with_resistance(plant_type: str, risk_map: Mapping[str, str]) -> dict[str, str]:
     """Return ``risk_map`` adjusted by crop disease resistance ratings."""
 
     levels = ["low", "moderate", "high"]
-    adjusted: Dict[str, str] = {}
+    adjusted: dict[str, str] = {}
     for disease, risk in risk_map.items():
         rating = disease_manager.get_disease_resistance(plant_type, disease)
         if rating is None or risk not in levels:
@@ -144,7 +147,7 @@ def adjust_risk_with_resistance(
 
 def estimate_adjusted_disease_risk(
     plant_type: str, environment: Mapping[str, float]
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return environment-based disease risk adjusted for crop resistance."""
 
     risk = estimate_disease_risk(plant_type, environment)
@@ -182,9 +185,7 @@ def risk_adjusted_monitor_interval(
     return max(1, interval)
 
 
-def next_monitor_date(
-    plant_type: str, stage: str | None, last_date: date
-) -> date | None:
+def next_monitor_date(plant_type: str, stage: str | None, last_date: date) -> date | None:
     """Return the next disease scouting date based on guidelines."""
 
     return _next_date(_MONITOR_INTERVALS, plant_type, stage, last_date)
@@ -230,17 +231,17 @@ def get_scouting_method(disease: str) -> str:
 class DiseaseReport:
     """Consolidated disease monitoring report."""
 
-    severity: Dict[str, str]
-    thresholds_exceeded: Dict[str, bool]
-    treatments: Dict[str, str]
-    prevention: Dict[str, str]
-    severity_actions: Dict[str, str]
+    severity: dict[str, str]
+    thresholds_exceeded: dict[str, bool]
+    treatments: dict[str, str]
+    prevention: dict[str, str]
+    severity_actions: dict[str, str]
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
-def generate_disease_report(plant_type: str, observations: Mapping[str, int]) -> Dict[str, object]:
+def generate_disease_report(plant_type: str, observations: Mapping[str, int]) -> dict[str, object]:
     """Return severity, treatment and prevention recommendations."""
     severity = classify_disease_severity(plant_type, observations)
     thresholds = assess_disease_pressure(plant_type, observations)
@@ -263,12 +264,12 @@ def summarize_disease_management(
     observations: Mapping[str, int],
     environment: Mapping[str, float] | None = None,
     last_date: date | None = None,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return consolidated disease status and recommendations."""
 
     report = generate_disease_report(plant_type, observations)
 
-    risk: Dict[str, str] | None = None
+    risk: dict[str, str] | None = None
     risk_score: float | None = None
     next_date_val: date | None = None
     interval: int | None = None

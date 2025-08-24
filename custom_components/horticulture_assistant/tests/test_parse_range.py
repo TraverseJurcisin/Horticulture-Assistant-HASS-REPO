@@ -1,5 +1,6 @@
 from plant_engine.utils import parse_range
 
+
 def test_parse_range_valid_list():
     assert parse_range([1, 2]) == (1.0, 2.0)
 

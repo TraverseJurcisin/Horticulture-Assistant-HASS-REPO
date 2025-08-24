@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+
 from plant_engine.rootzone_model import estimate_rootzone_depth, estimate_water_capacity
 from plant_engine.utils import load_json
 
@@ -20,6 +21,7 @@ def main() -> None:
     zone = estimate_water_capacity(depth)
     result = zone.to_dict()
     import json
+
     print(json.dumps(result, indent=2))
 
 

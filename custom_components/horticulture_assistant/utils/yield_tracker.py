@@ -1,12 +1,14 @@
 # File: custom_components/horticulture_assistant/utils/yield_tracker.py
 """Utility for tracking and recording yield entries for plants."""
+
 import json
-import os
 import logging
-from datetime import datetime, date
-from typing import List, Dict, Optional, Union
+import os
+from datetime import date, datetime
+from typing import Optional
 
 from custom_components.horticulture_assistant.utils.path_utils import data_path
+
 try:
     from homeassistant.core import HomeAssistant
 except ImportError:
@@ -14,8 +16,9 @@ except ImportError:
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class YieldTracker:
-    def __init__(self, data_file: Optional[str] = None, hass: Optional['HomeAssistant'] = None):
+    def __init__(self, data_file: str | None = None, hass: Optional['HomeAssistant'] = None):
         """
         Initialize the YieldTracker.
         Loads existing yield logs from the specified JSON file, or creates a new structure if file is absent.
@@ -27,10 +30,10 @@ class YieldTracker:
             data_file = data_path(hass, "yield_logs.json")
         self._data_file = data_file
         self._hass = hass
-        self._logs: Dict[str, List[Dict]] = {}
+        self._logs: dict[str, list[dict]] = {}
         # Load existing logs from file if available
         try:
-            with open(self._data_file, "r", encoding="utf-8") as f:
+            with open(self._data_file, encoding="utf-8") as f:
                 data = json.load(f)
             if isinstance(data, dict):
                 # Ensure all keys map to list of entries
@@ -38,18 +41,36 @@ class YieldTracker:
                     if isinstance(entries, list):
                         self._logs[pid] = entries
                     else:
-                        _LOGGER.warning("Yield log for plant %s is not a list; resetting to empty list.", pid)
+                        _LOGGER.warning(
+                            "Yield log for plant %s is not a list; resetting to empty list.", pid
+                        )
                         self._logs[pid] = []
             else:
-                _LOGGER.warning("Yield logs file format invalid (expected dict at top level); starting with empty logs.")
+                _LOGGER.warning(
+                    "Yield logs file format invalid (expected dict at top level); starting with empty logs."
+                )
         except FileNotFoundError:
-            _LOGGER.info("Yield logs file not found at %s; starting new yield log.", self._data_file)
+            _LOGGER.info(
+                "Yield logs file not found at %s; starting new yield log.", self._data_file
+            )
         except json.JSONDecodeError as e:
-            _LOGGER.error("JSON decode error reading yield logs from %s: %s; initializing empty log.", self._data_file, e)
+            _LOGGER.error(
+                "JSON decode error reading yield logs from %s: %s; initializing empty log.",
+                self._data_file,
+                e,
+            )
         except Exception as e:
-            _LOGGER.error("Error loading yield logs from %s: %s; initializing empty log.", self._data_file, e)
+            _LOGGER.error(
+                "Error loading yield logs from %s: %s; initializing empty log.", self._data_file, e
+            )
 
-    def add_entry(self, plant_id: str, weight: Union[int, float], entry_date: Optional[Union[str, date, datetime]] = None, notes: Optional[str] = None) -> None:
+    def add_entry(
+        self,
+        plant_id: str,
+        weight: int | float,
+        entry_date: str | date | datetime | None = None,
+        notes: str | None = None,
+    ) -> None:
         """
         Add a new yield entry for a given plant.
         :param plant_id: Identifier of the plant.
@@ -95,9 +116,15 @@ class YieldTracker:
         if self._hass:
             try:
                 from custom_components.horticulture_assistant.const import EVENT_YIELD_UPDATE
+
                 total = self.get_total_yield(plant_id)
                 self._hass.bus.fire(EVENT_YIELD_UPDATE, {"plant_id": plant_id, "yield": total})
-                _LOGGER.debug("Fired event %s for plant %s with total yield %.2f g", EVENT_YIELD_UPDATE, plant_id, total)
+                _LOGGER.debug(
+                    "Fired event %s for plant %s with total yield %.2f g",
+                    EVENT_YIELD_UPDATE,
+                    plant_id,
+                    total,
+                )
             except Exception as e:
                 _LOGGER.error("Error firing yield update event: %s", e)
 
@@ -124,7 +151,7 @@ class YieldTracker:
         total = sum(entry.get("weight", 0.0) for entry in entries)
         return float(total) / count
 
-    def get_entries_for_plant(self, plant_id: str) -> List[Dict]:
+    def get_entries_for_plant(self, plant_id: str) -> list[dict]:
         """
         Retrieve all yield entries for the specified plant.
         :param plant_id: Identifier of the plant.
@@ -132,7 +159,12 @@ class YieldTracker:
         """
         return [entry.copy() for entry in self._logs.get(plant_id, [])]
 
-    def get_entries_in_date_range(self, start_date: Union[str, date, datetime], end_date: Union[str, date, datetime], plant_id: Optional[str] = None) -> List[Dict]:
+    def get_entries_in_date_range(
+        self,
+        start_date: str | date | datetime,
+        end_date: str | date | datetime,
+        plant_id: str | None = None,
+    ) -> list[dict]:
         """
         Retrieve yield entries within a date range (inclusive).
         :param start_date: Start of range (string 'YYYY-MM-DD' or date/datetime object).
@@ -162,9 +194,11 @@ class YieldTracker:
                 _LOGGER.error("Invalid end_date '%s': %s", end_date, e)
                 return []
         if end_dt < start_dt:
-            _LOGGER.warning("End date %s is earlier than start date %s; returning empty list.", end_dt, start_dt)
+            _LOGGER.warning(
+                "End date %s is earlier than start date %s; returning empty list.", end_dt, start_dt
+            )
             return []
-        results: List[Dict] = []
+        results: list[dict] = []
         if plant_id:
             # Filter within specific plant
             for entry in self._logs.get(plant_id, []):

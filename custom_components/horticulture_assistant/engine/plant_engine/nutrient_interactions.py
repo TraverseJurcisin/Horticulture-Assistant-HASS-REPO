@@ -1,12 +1,14 @@
 """Utilities for detecting and correcting nutrient ratio imbalances."""
+
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Dict, Mapping, Tuple
 
-from .utils import load_dataset, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset
 
-_Pair = Tuple[str, str]
+_Pair = tuple[str, str]
+
 
 @dataclass(frozen=True)
 class InteractionInfo:
@@ -15,14 +17,15 @@ class InteractionInfo:
     max_ratio: float
     message: str = ""
 
+
 DATA_FILE = "nutrients/nutrient_interactions.json"
 ACTION_FILE = "nutrients/nutrient_interaction_actions.json"
 
 
-_DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, object]] = load_dataset(DATA_FILE)
 
 # Precompute a mapping of nutrient pairs to interaction info for faster lookups
-_PAIR_DATA: Dict[_Pair, InteractionInfo] = {}
+_PAIR_DATA: dict[_Pair, InteractionInfo] = {}
 for _key, _info in _DATA.items():
     if not isinstance(_info, dict):
         continue
@@ -37,7 +40,7 @@ for _key, _info in _DATA.items():
     msg = str(_info.get("message", ""))
     _PAIR_DATA[(n1, n2)] = InteractionInfo(max_ratio=max_ratio, message=msg)
 
-_ACTIONS: Dict[str, str] = load_dataset(ACTION_FILE)
+_ACTIONS: dict[str, str] = load_dataset(ACTION_FILE)
 
 __all__ = [
     "list_interactions",
@@ -56,7 +59,7 @@ def list_interactions() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_interaction_info(pair: str) -> Dict[str, object]:
+def get_interaction_info(pair: str) -> dict[str, object]:
     """Return dataset entry for ``pair`` if available."""
     return _DATA.get(pair, {})
 
@@ -73,9 +76,9 @@ def get_interaction_message(n1: str, n2: str) -> str:
     return info.message if info else ""
 
 
-def check_imbalances(levels: Mapping[str, float]) -> Dict[str, str]:
+def check_imbalances(levels: Mapping[str, float]) -> dict[str, str]:
     """Return warnings for nutrient ratios exceeding defined maxima."""
-    warnings: Dict[str, str] = {}
+    warnings: dict[str, str] = {}
     for (n1, n2), info in _PAIR_DATA.items():
         if n1 not in levels or n2 not in levels:
             continue
@@ -101,11 +104,11 @@ def get_balance_action(pair: str) -> str:
     return _ACTIONS.get(rev_key, "")
 
 
-def recommend_balance_actions(levels: Mapping[str, float]) -> Dict[str, str]:
+def recommend_balance_actions(levels: Mapping[str, float]) -> dict[str, str]:
     """Return actions for all detected nutrient imbalances."""
 
     warnings = check_imbalances(levels)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for pair in warnings:
         action = get_balance_action(pair)
         if action:
@@ -113,10 +116,10 @@ def recommend_balance_actions(levels: Mapping[str, float]) -> Dict[str, str]:
     return actions
 
 
-def analyze_interactions(levels: Mapping[str, float]) -> Dict[str, Dict[str, object]]:
+def analyze_interactions(levels: Mapping[str, float]) -> dict[str, dict[str, object]]:
     """Return detailed information for each detected imbalance."""
 
-    result: Dict[str, Dict[str, object]] = {}
+    result: dict[str, dict[str, object]] = {}
     for (n1, n2), info in _PAIR_DATA.items():
         if n1 not in levels or n2 not in levels:
             continue

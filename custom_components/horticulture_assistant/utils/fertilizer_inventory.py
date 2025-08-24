@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List, Optional
 
 
 @dataclass
@@ -45,29 +44,31 @@ class FertilizerProduct:
     name: str
     form: str
     unit: str
-    derived_from: Dict[str, float]
+    derived_from: dict[str, float]
     ph: float | None = None
     ec: float | None = None
-    temp_sensitive_ingredients: List[str] = field(default_factory=list)
+    temp_sensitive_ingredients: list[str] = field(default_factory=list)
     expiration: datetime | None = None
     manufactured: datetime | None = None
-    price_history: List[PriceEntry] = field(default_factory=list)
-    usage_log: List[UsageRecord] = field(default_factory=list)
+    price_history: list[PriceEntry] = field(default_factory=list)
+    usage_log: list[UsageRecord] = field(default_factory=list)
 
     def add_price_entry(
         self,
         vendor: str,
         unit_price: float,
         size: str,
-        date: Optional[datetime] = None,
+        date: datetime | None = None,
     ) -> None:
-        entry = PriceEntry(vendor=vendor, unit_price=round(unit_price, 2), size=size, date=date or datetime.now())
+        entry = PriceEntry(
+            vendor=vendor, unit_price=round(unit_price, 2), size=size, date=date or datetime.now()
+        )
         self.price_history.append(entry)
 
     def log_usage(self, amount_used: float, unit: str, zone: str) -> None:
         self.usage_log.append(UsageRecord(amount_used=amount_used, unit=unit, zone=zone))
 
-    def get_latest_price(self) -> Optional[PriceEntry]:
+    def get_latest_price(self) -> PriceEntry | None:
         if not self.price_history:
             return None
         return sorted(self.price_history, key=lambda x: x.date, reverse=True)[0]
@@ -100,22 +101,22 @@ class FertilizerProduct:
 class FertilizerInventory:
     """Container for :class:`FertilizerProduct` objects."""
 
-    products: Dict[str, FertilizerProduct] = field(default_factory=dict)
+    products: dict[str, FertilizerProduct] = field(default_factory=dict)
 
     def add_product(self, product: FertilizerProduct) -> None:
         self.products[product.product_id] = product
 
-    def get_product(self, product_id: str) -> Optional[FertilizerProduct]:
+    def get_product(self, product_id: str) -> FertilizerProduct | None:
         return self.products.get(product_id)
 
     def remove_product(self, product_id: str) -> None:
         self.products.pop(product_id, None)
 
-    def find_by_name(self, name: str) -> List[FertilizerProduct]:
+    def find_by_name(self, name: str) -> list[FertilizerProduct]:
         query = name.lower()
         return [prod for prod in self.products.values() if query in prod.name.lower()]
 
-    def find_expiring_products(self, days_before_expiry: int = 30) -> List[FertilizerProduct]:
+    def find_expiring_products(self, days_before_expiry: int = 30) -> list[FertilizerProduct]:
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         return [
             p

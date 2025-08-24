@@ -1,14 +1,13 @@
 """Access plant training guidelines by stage."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "training/training_guidelines.json"
 
 # Loaded once via :func:`load_dataset` which caches results
-_DATA: Dict[str, Dict[str, str]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, str]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",

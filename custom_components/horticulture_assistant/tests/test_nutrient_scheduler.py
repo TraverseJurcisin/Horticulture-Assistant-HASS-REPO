@@ -1,11 +1,12 @@
-from pathlib import Path
-import shutil
 import importlib.util
+import json
+import shutil
 import sys
 import types
-import json
-import pytest
+from pathlib import Path
+
 import plant_engine.utils as utils
+import pytest
 
 MODULE_PATH = (
     Path(__file__).resolve().parents[3]
@@ -43,7 +44,10 @@ def test_schedule_nutrients_dataset(tmp_path, monkeypatch):
     dest.mkdir(parents=True)
     shutil.copy(ROOT / "data/local/plants/plant_registry.json", dest / "plant_registry.json")
     (tmp_path / "plants").mkdir()
-    shutil.copy(ROOT / "plants/citrus_backyard_spring2025.json", tmp_path / "plants/citrus_backyard_spring2025.json")
+    shutil.copy(
+        ROOT / "plants/citrus_backyard_spring2025.json",
+        tmp_path / "plants/citrus_backyard_spring2025.json",
+    )
 
     class DummyConfig:
         def __init__(self, base):
@@ -83,7 +87,9 @@ def _hass_for(tmp_path: Path) -> object:
 def test_stage_synonym_resolution(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "test.json").write_text('{"general": {"plant_type": "strawberry", "stage": "veg"}}')
+    (plant_dir / "test.json").write_text(
+        '{"general": {"plant_type": "strawberry", "stage": "veg"}}'
+    )
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("test", hass=hass).as_dict()
     assert result["N"] == 93.33
@@ -92,7 +98,9 @@ def test_stage_synonym_resolution(tmp_path):
 def test_tag_based_modifier(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "tag.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling", "tags": ["high-nitrogen"]}}')
+    (plant_dir / "tag.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling", "tags": ["high-nitrogen"]}}'
+    )
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("tag", hass=hass).as_dict()
     assert result["N"] == 80.0
@@ -108,6 +116,7 @@ def test_dataset_override(tmp_path, monkeypatch):
     assert (overlay / "nutrients" / "nutrient_tag_modifiers.json").exists()
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
+
     importlib.reload(utils)
     nutrient_scheduler.load_dataset = utils.load_dataset
     utils.load_dataset.cache_clear()
@@ -177,9 +186,7 @@ def test_schedule_nutrients_bulk(tmp_path):
     (plant_dir / "p1.json").write_text(
         '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
     )
-    (plant_dir / "p2.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "harvest"}}'
-    )
+    (plant_dir / "p2.json").write_text('{"general": {"plant_type": "lettuce", "stage": "harvest"}}')
     hass = _hass_for(tmp_path)
     from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
 
@@ -192,7 +199,9 @@ def test_absorption_rates_applied(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
     # lettuce seedling profile with no explicit nutrients
-    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
+    (plant_dir / "lettuce.json").write_text(
+        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
+    )
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("lettuce", hass=hass).as_dict()
     # guideline N=80 with stage multiplier 0.5 => 40 then adjusted by absorption 1/0.6

@@ -1,29 +1,27 @@
-import asyncio
-import pytest
-from aiohttp import ClientError
 from pathlib import Path
-from homeassistant.core import HomeAssistant
+
+import pytest
+import voluptuous as vol
+from aiohttp import ClientError
 from homeassistant.config_entries import OperationNotAllowed
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-import voluptuous as vol
 
+from custom_components.horticulture_assistant.api import ChatApi
 from custom_components.horticulture_assistant.const import (
-    DOMAIN,
     CONF_API_KEY,
     CONF_MOISTURE_SENSOR,
+    DOMAIN,
 )
 from custom_components.horticulture_assistant.diagnostics import (
     async_get_config_entry_diagnostics,
 )
 from custom_components.horticulture_assistant.storage import LocalStore
-from custom_components.horticulture_assistant.api import ChatApi
-from homeassistant.helpers import issue_registry as ir
 
 
-async def setup_integration(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def setup_integration(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     async def dummy_chat(self, *args, **kwargs):
         return {"choices": [{"message": {"content": "ok"}}]}
 
@@ -72,7 +70,7 @@ async def test_coordinator_update_handles_errors(
     assert coord.retry_count == 1
 
     async def raise_timeout(*args, **kwargs):
-        raise asyncio.TimeoutError
+        raise TimeoutError
 
     monkeypatch.setattr(coord.api, "chat", raise_timeout)
     with pytest.raises(UpdateFailed):
@@ -167,9 +165,7 @@ async def test_service_validation(
     await hass.async_block_till_done()
 
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN, "update_sensors", {"plant_id": "x"}, blocking=True
-        )
+        await hass.services.async_call(DOMAIN, "update_sensors", {"plant_id": "x"}, blocking=True)
 
 
 @pytest.mark.asyncio
@@ -201,9 +197,7 @@ async def test_paths_created(
 
 
 @pytest.mark.asyncio
-async def test_missing_option_creates_issue(
-    hass: HomeAssistant, enable_custom_integrations: None
-):
+async def test_missing_option_creates_issue(hass: HomeAssistant, enable_custom_integrations: None):
     """Configured sensors that don't exist should raise a Repairs issue."""
 
     entry = MockConfigEntry(

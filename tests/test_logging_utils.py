@@ -1,10 +1,11 @@
 import logging
+
 import pytest
 
 from custom_components.horticulture_assistant.utils.logging import (
-    warn_once,
     _LAST,
     _MAX_CODES,
+    warn_once,
 )
 
 

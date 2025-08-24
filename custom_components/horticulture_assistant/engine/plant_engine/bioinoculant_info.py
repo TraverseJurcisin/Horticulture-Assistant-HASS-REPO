@@ -1,9 +1,8 @@
 """Lookup helper for microbial inoculant attributes."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import lazy_dataset, normalize_key, list_dataset_entries
+from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
 DATA_FILE = "bioinoculants/bioinoculant_attributes.json"
 
@@ -20,7 +19,7 @@ def list_inoculants() -> list[str]:
     return list_dataset_entries(_data())
 
 
-def get_inoculant_info(name: str) -> Dict[str, str]:
+def get_inoculant_info(name: str) -> dict[str, str]:
     """Return attribute mapping for ``name``.
 
     Lookup is case-insensitive and ignores spaces/underscores.

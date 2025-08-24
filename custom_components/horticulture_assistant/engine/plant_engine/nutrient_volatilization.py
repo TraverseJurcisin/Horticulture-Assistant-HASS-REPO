@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .utils import load_dataset
 
 DATA_FILE = "nutrients/nutrient_volatilization_rates.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -42,9 +42,9 @@ def get_volatilization_rate(nutrient: str, plant_type: str | None = None) -> flo
 
 def estimate_volatilization_loss(
     levels_mg: Mapping[str, float], plant_type: str | None = None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient losses (mg) from volatilization."""
-    losses: Dict[str, float] = {}
+    losses: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         rate = get_volatilization_rate(nutrient, plant_type)
         if rate <= 0:
@@ -55,10 +55,10 @@ def estimate_volatilization_loss(
 
 def compensate_for_volatilization(
     levels_mg: Mapping[str, float], plant_type: str | None = None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return adjusted nutrient amounts accounting for volatilization losses."""
     losses = estimate_volatilization_loss(levels_mg, plant_type)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, mg in levels_mg.items():
         adjusted[nutrient] = round(float(mg) + losses.get(nutrient, 0.0), 2)
     return adjusted

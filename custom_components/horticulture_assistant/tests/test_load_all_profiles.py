@@ -1,8 +1,9 @@
 import json
 import os
+
 from custom_components.horticulture_assistant.utils.load_all_profiles import (
-    load_all_profiles,
     ProfileLoadResult,
+    load_all_profiles,
 )
 
 

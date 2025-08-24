@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .nutrient_manager import calculate_all_surplus
 from .utils import load_dataset
 
 DATA_FILE = "nutrients/nutrient_surplus_actions.json"
 
-_ACTIONS: Dict[str, str] = load_dataset(DATA_FILE)
+_ACTIONS: dict[str, str] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_known_nutrients",
@@ -30,11 +30,11 @@ def get_surplus_action(nutrient: str) -> str:
 
 def recommend_surplus_actions(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return actions for nutrients exceeding recommended levels."""
 
     surplus = calculate_all_surplus(current_levels, plant_type, stage)
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for nutrient in surplus:
         action = get_surplus_action(nutrient)
         if action:

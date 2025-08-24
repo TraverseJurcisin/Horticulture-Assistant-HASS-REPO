@@ -28,9 +28,7 @@ class ChatApi:
     ):
         self._hass = hass
         self._api_key = (api_key or "").strip()
-        self._base_url = (
-            base_url.rstrip("/") if base_url else "https://api.openai.com/v1"
-        )
+        self._base_url = base_url.rstrip("/") if base_url else "https://api.openai.com/v1"
         self._model = model or "gpt-4o"
         self._timeout = timeout
         self._failures = 0
@@ -65,9 +63,7 @@ class ChatApi:
             try:
                 async with asyncio.timeout(self._timeout):
                     t0 = time.perf_counter()
-                    async with session.post(
-                        url, headers=self._headers(), json=payload
-                    ) as resp:
+                    async with session.post(url, headers=self._headers(), json=payload) as resp:
                         if resp.status in {401, 403}:
                             self._failures += 1
                             self._open = False

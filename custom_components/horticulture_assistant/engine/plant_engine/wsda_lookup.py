@@ -2,9 +2,9 @@ from __future__ import annotations
 
 """Utilities for looking up fertilizer analysis data from the WSDA database."""
 
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict, Iterable, List, Mapping, Tuple
+from functools import cache
 
 try:
     from . import wsda_loader
@@ -22,6 +22,7 @@ __all__ = [
     "recommend_products_for_nutrient",
 ]
 
+
 @dataclass(frozen=True)
 class _Product:
     """Normalized fertilizer entry."""
@@ -29,13 +30,13 @@ class _Product:
     product_id: str
     name: str
     wsda_reg_no: str
-    npk: Tuple[float | None, float | None, float | None]
+    npk: tuple[float | None, float | None, float | None]
 
 
-def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
+def _parse_analysis(raw: Mapping[str, object]) -> dict[str, float]:
     """Return numeric nutrient analysis from a raw WSDA mapping."""
 
-    parsed: Dict[str, float] = {}
+    parsed: dict[str, float] = {}
     for key, value in raw.items():
         try:
             val = float(value)
@@ -53,23 +54,23 @@ def _parse_analysis(raw: Mapping[str, object]) -> Dict[str, float]:
     return parsed
 
 
-@lru_cache(maxsize=None)
+@cache
 def _records() -> Iterable[Mapping[str, object]]:
     """Return WSDA fertilizer records loaded from sharded index."""
 
     return tuple(wsda_loader.stream_index())
 
 
-@lru_cache(maxsize=None)
-def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
+@cache
+def _build_indexes() -> tuple[dict[str, _Product], dict[str, _Product]]:
     """Return lookup tables keyed by name and product number."""
 
     records = list(_records())
     if not records:
         return {}, {}
 
-    names: Dict[str, _Product] = {}
-    numbers: Dict[str, _Product] = {}
+    names: dict[str, _Product] = {}
+    numbers: dict[str, _Product] = {}
     for rec in records:
         name = str(rec.get("label_name", "")).strip()
         number = rec.get("wsda_reg_no", "")
@@ -84,7 +85,7 @@ def _build_indexes() -> Tuple[Dict[str, _Product], Dict[str, _Product]]:
     return names, numbers
 
 
-def _extract_npk(prod: _Product | None) -> Dict[str, float]:
+def _extract_npk(prod: _Product | None) -> dict[str, float]:
     if not prod:
         return {}
     n, p, k = prod.npk
@@ -98,8 +99,8 @@ def _extract_npk(prod: _Product | None) -> Dict[str, float]:
     return result
 
 
-@lru_cache(maxsize=None)
-def _load_analysis(product_id: str) -> Dict[str, float]:
+@cache
+def _load_analysis(product_id: str) -> dict[str, float]:
     try:
         detail = wsda_loader.load_detail(product_id)
     except FileNotFoundError:
@@ -115,14 +116,14 @@ def _load_analysis(product_id: str) -> Dict[str, float]:
     return _parse_analysis(ga)
 
 
-def _extract_analysis(prod: _Product | None) -> Dict[str, float]:
+def _extract_analysis(prod: _Product | None) -> dict[str, float]:
     """Return the full nutrient analysis for ``prod`` if available."""
     if not prod:
         return {}
     return _load_analysis(prod.product_id)
 
 
-def get_product_npk_by_name(name: str) -> Dict[str, float]:
+def get_product_npk_by_name(name: str) -> dict[str, float]:
     """Return N, P and K percentages for a product ``name``.
 
     Matching is case-insensitive and the full product name should be supplied.
@@ -133,26 +134,26 @@ def get_product_npk_by_name(name: str) -> Dict[str, float]:
     return _extract_npk(names.get(name_l))
 
 
-def get_product_npk_by_number(number: str) -> Dict[str, float]:
+def get_product_npk_by_number(number: str) -> dict[str, float]:
     """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
     _, numbers = _build_indexes()
     return _extract_npk(numbers.get(number))
 
 
-def get_product_analysis_by_name(name: str) -> Dict[str, float]:
+def get_product_analysis_by_name(name: str) -> dict[str, float]:
     """Return the complete guaranteed analysis for ``name``."""
     name_l = name.lower()
     names, _ = _build_indexes()
     return _extract_analysis(names.get(name_l))
 
 
-def get_product_analysis_by_number(number: str) -> Dict[str, float]:
+def get_product_analysis_by_number(number: str) -> dict[str, float]:
     """Return guaranteed analysis for a WSDA ``number``."""
     _, numbers = _build_indexes()
     return _extract_analysis(numbers.get(number))
 
 
-def search_products(query: str, limit: int = 10) -> List[str]:
+def search_products(query: str, limit: int = 10) -> list[str]:
     """Return product names containing ``query`` case-insensitively."""
     q = query.lower()
     names, _ = _build_indexes()
@@ -161,19 +162,19 @@ def search_products(query: str, limit: int = 10) -> List[str]:
     return matches[: max(limit, 0)]
 
 
-def list_product_names() -> List[str]:
+def list_product_names() -> list[str]:
     """Return all product names sorted alphabetically."""
     names, _ = _build_indexes()
     return sorted(prod.name for prod in names.values())
 
 
-def list_product_numbers() -> List[str]:
+def list_product_numbers() -> list[str]:
     """Return all WSDA product numbers sorted alphabetically."""
     _, numbers = _build_indexes()
     return sorted(numbers.keys())
 
 
-def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> List[str]:
+def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> list[str]:
     """Return product names with the highest percentage of ``nutrient``.
 
     The search is case-insensitive and results are sorted by nutrient

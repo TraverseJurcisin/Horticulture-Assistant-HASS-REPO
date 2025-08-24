@@ -4,11 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import sys
+import zipfile
 from datetime import datetime
 from pathlib import Path
-import zipfile
-
-import sys
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +30,7 @@ def configure_root(path: Path) -> Path:
     REGISTRY_PATH = ROOT / "data/local/plants/plant_registry.json"
     DEFAULT_BACKUP_DIR = ROOT / "backups"
     return ROOT
+
 
 __all__ = [
     "create_backup",
@@ -99,9 +99,13 @@ def main(argv: list[str] | None = None) -> None:
     root_args, remaining = root_parser.parse_known_args(argv)
     configure_root(root_args.root)
 
-    parser = argparse.ArgumentParser(description="Backup or restore plant profiles", parents=[root_parser])
+    parser = argparse.ArgumentParser(
+        description="Backup or restore plant profiles", parents=[root_parser]
+    )
     parser.add_argument("--restore", metavar="ZIP", help="Restore from backup zip")
-    parser.add_argument("--output", type=Path, default=DEFAULT_BACKUP_DIR, help="directory for backups")
+    parser.add_argument(
+        "--output", type=Path, default=DEFAULT_BACKUP_DIR, help="directory for backups"
+    )
     parser.add_argument("--retain", type=int, help="keep only N recent backups")
     parser.add_argument("--list", action="store_true", help="list existing backups")
     parser.add_argument("--verify", metavar="ZIP", help="verify backup archive")

@@ -73,11 +73,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     config = load_config(args.config) if args.config else load_config()
     species = args.species or config.get("species", "Cannabis_sativa")
     media = args.media or config.get("media", "coco_coir")
-    D_base = (
-        float(args.D_base)
-        if args.D_base is not None
-        else float(config.get("D_base", 1e-5))
-    )
+    D_base = float(args.D_base) if args.D_base is not None else float(config.get("D_base", 1e-5))
 
     species_profile = get_species_profile(species)
     media_profile = get_media_profile(media)

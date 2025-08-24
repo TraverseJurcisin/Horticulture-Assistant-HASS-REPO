@@ -1,10 +1,10 @@
-from plant_engine.datasets import (
-    list_datasets,
-    get_dataset_description,
-    search_datasets,
-    list_datasets_by_category,
-)
 import plant_engine.datasets as datasets
+from plant_engine.datasets import (
+    get_dataset_description,
+    list_datasets,
+    list_datasets_by_category,
+    search_datasets,
+)
 
 
 def test_list_datasets_contains_known():
@@ -64,8 +64,7 @@ def test_search_datasets():
     assert "irrigation/irrigation_guidelines.json" in results
     assert "irrigation/irrigation_intervals.json" in results
     assert all(
-        "irrigation" in name or "irrigation" in desc.lower()
-        for name, desc in results.items()
+        "irrigation" in name or "irrigation" in desc.lower() for name, desc in results.items()
     )
 
     empty = search_datasets("does-not-exist")
@@ -136,9 +135,7 @@ def test_catalog_paths_cached(tmp_path):
     extra.mkdir()
     overlay.mkdir()
 
-    cat = datasets.DatasetCatalog(
-        base_dir=base, extra_dirs=(extra,), overlay_dir=overlay
-    )
+    cat = datasets.DatasetCatalog(base_dir=base, extra_dirs=(extra,), overlay_dir=overlay)
 
     first = cat.paths()
     second = cat.paths()
@@ -154,6 +151,7 @@ def test_get_dataset_path_and_load():
     assert isinstance(data, dict)
     path2 = datasets.get_dataset_path("pests/pest_management_guidelines.json")
     assert path2 and path2.exists()
+
 
 def test_dataset_exists():
     assert datasets.dataset_exists("nutrients/nutrient_guidelines.json")

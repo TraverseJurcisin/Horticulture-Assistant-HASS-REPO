@@ -1,17 +1,17 @@
 """Utility helpers for nutrient recommendation and analysis."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping, Iterable
+from collections.abc import Iterable, Mapping
 
 from .constants import get_stage_multiplier
-
+from .nutrient_availability import availability_for_all
 from .utils import (
+    clear_dataset_cache,
+    list_dataset_entries,
     load_dataset,
     normalize_key,
-    list_dataset_entries,
-    clear_dataset_cache,
 )
-from .nutrient_availability import availability_for_all
 
 DATA_FILE = "nutrients/nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrients/nutrient_ratio_guidelines.json"
@@ -22,14 +22,16 @@ TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
 # Ensure dataset cache respects overlay changes on reload
 clear_dataset_cache()
 # Dataset cached via :func:`load_dataset` so this only happens once
-_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
-_RATIO_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
-_WEIGHTS: Dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
-_RAW_TAG_MODIFIERS: Dict[str, Dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
+_DATA: dict[str, dict[str, dict[str, float]]] = load_dataset(DATA_FILE)
+_RATIO_DATA: dict[str, dict[str, dict[str, float]]] = load_dataset(RATIO_DATA_FILE)
+_WEIGHTS: dict[str, float] = load_dataset(WEIGHT_DATA_FILE)
+_RAW_TAG_MODIFIERS: dict[str, dict[str, float]] = load_dataset(TAG_MODIFIER_FILE)
 # Normalize modifier keys for consistent lookups regardless of hyphen/space use
-_TAG_MODIFIERS: Dict[str, Dict[str, float]] = {
-    normalize_key(k): v for k, v in _RAW_TAG_MODIFIERS.items()
-} if isinstance(_RAW_TAG_MODIFIERS, dict) else {}
+_TAG_MODIFIERS: dict[str, dict[str, float]] = (
+    {normalize_key(k): v for k, v in _RAW_TAG_MODIFIERS.items()}
+    if isinstance(_RAW_TAG_MODIFIERS, dict)
+    else {}
+)
 
 __all__ = [
     "list_supported_plants",
@@ -78,10 +80,10 @@ def _calc_diff(
     targets: Mapping[str, float],
     *,
     mode: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return positive ppm differences between ``current_levels`` and ``targets``."""
 
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for nutrient, target in targets.items():
         try:
             current = float(current_levels.get(nutrient, 0.0))
@@ -95,10 +97,12 @@ def _calc_diff(
     return result
 
 
-def _calc_balance(current_levels: Mapping[str, float], targets: Mapping[str, float]) -> Dict[str, float]:
+def _calc_balance(
+    current_levels: Mapping[str, float], targets: Mapping[str, float]
+) -> dict[str, float]:
     """Return ratio of ``current_levels`` to ``targets`` values."""
 
-    ratios: Dict[str, float] = {}
+    ratios: dict[str, float] = {}
     for nutrient, target in targets.items():
         if target <= 0:
             continue
@@ -110,7 +114,9 @@ def _calc_balance(current_levels: Mapping[str, float], targets: Mapping[str, flo
     return ratios
 
 
-def _deficiency_index_for_targets(current_levels: Mapping[str, float], targets: Mapping[str, float]) -> float:
+def _deficiency_index_for_targets(
+    current_levels: Mapping[str, float], targets: Mapping[str, float]
+) -> float:
     """Return deficiency index for ``current_levels`` against ``targets``."""
 
     total_weight = 0.0
@@ -151,7 +157,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_recommended_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return recommended nutrient levels for ``plant_type`` and ``stage``.
 
     Parameters are normalized using :func:`normalize_key` so lookups are
@@ -165,7 +171,7 @@ def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     return plant.get(normalize_key(stage), {})
 
 
-def get_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_stage_adjusted_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return recommended levels scaled by the stage multiplier."""
 
     levels = get_recommended_levels(plant_type, stage)
@@ -179,7 +185,7 @@ def calculate_deficiencies(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient deficiencies compared to guidelines.
 
     Only nutrients below the recommended level are returned with the amount
@@ -194,7 +200,7 @@ def calculate_nutrient_balance(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ratio of current to recommended nutrient levels."""
 
     targets = get_recommended_levels(plant_type, stage)
@@ -205,7 +211,7 @@ def calculate_surplus(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient amounts exceeding recommendations."""
 
     targets = get_recommended_levels(plant_type, stage)
@@ -214,11 +220,11 @@ def calculate_surplus(
 
 def calculate_nutrient_adjustments(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ppm adjustments needed to meet recommended levels."""
 
     recommended = get_recommended_levels(plant_type, stage)
-    adjustments: Dict[str, float] = {}
+    adjustments: dict[str, float] = {}
     for nutrient, target in recommended.items():
         try:
             current = float(current_levels.get(nutrient, 0.0))
@@ -230,7 +236,7 @@ def calculate_nutrient_adjustments(
     return adjustments
 
 
-def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+def get_npk_ratio(plant_type: str, stage: str) -> dict[str, float]:
     """Return normalized N:P:K ratio for a plant stage.
 
     The ratios sum to 1.0. If any nutrient is missing or all values are zero,
@@ -252,7 +258,7 @@ def get_npk_ratio(plant_type: str, stage: str) -> Dict[str, float]:
     }
 
 
-def get_stage_ratio(plant_type: str, stage: str) -> Dict[str, float]:
+def get_stage_ratio(plant_type: str, stage: str) -> dict[str, float]:
     """Return NPK ratio from :data:`nutrient_ratio_guidelines.json` if available."""
 
     plant = _RATIO_DATA.get(normalize_key(plant_type))
@@ -265,9 +271,7 @@ def get_stage_ratio(plant_type: str, stage: str) -> Dict[str, float]:
     return get_npk_ratio(plant_type, stage)
 
 
-def score_nutrient_levels(
-    current_levels: Dict[str, float], plant_type: str, stage: str
-) -> float:
+def score_nutrient_levels(current_levels: dict[str, float], plant_type: str, stage: str) -> float:
     """Return a 0-100 score for how close ``current_levels`` are to guidelines.
 
     Nutrients can be assigned importance weights in
@@ -339,7 +343,7 @@ def calculate_deficiency_index_series(
     return round(sum(indices) / len(indices), 1)
 
 
-def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_all_recommended_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return combined macro and micro nutrient guidelines."""
 
     base = get_recommended_levels(plant_type, stage)
@@ -355,7 +359,7 @@ def get_all_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
     return levels
 
 
-def get_all_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_all_stage_adjusted_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return macro and micro guidelines scaled by the stage multiplier."""
 
     levels = get_all_recommended_levels(plant_type, stage)
@@ -367,7 +371,7 @@ def get_all_stage_adjusted_levels(plant_type: str, stage: str) -> Dict[str, floa
 
 def calculate_all_deficiencies(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return overall nutrient deficiencies including micronutrients."""
 
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
@@ -379,7 +383,7 @@ def calculate_all_deficiencies(
 
 def calculate_all_surplus(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return overall nutrient surplus including micronutrients."""
 
     surplus = calculate_surplus(current_levels, plant_type, stage)
@@ -391,14 +395,14 @@ def calculate_all_surplus(
 
 def calculate_all_nutrient_balance(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ratio of current to recommended levels for all nutrients."""
 
     targets = get_all_recommended_levels(plant_type, stage)
     return _calc_balance(current_levels, targets)
 
 
-def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
+def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> dict[str, float]:
     """Return nutrient targets adjusted for solution pH availability.
 
     Parameters
@@ -419,7 +423,7 @@ def get_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, 
         return {}
 
     factors = availability_for_all(ph)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, ppm in targets.items():
         factor = factors.get(nutrient, 1.0)
         if factor <= 0:
@@ -434,14 +438,14 @@ def calculate_deficiencies_with_ph(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return deficiencies using pH-adjusted nutrient targets."""
 
     targets = get_ph_adjusted_levels(plant_type, stage, ph)
     return _calc_diff(current_levels, targets, mode="deficit")
 
 
-def get_all_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[str, float]:
+def get_all_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> dict[str, float]:
     """Return macro and micro nutrient targets adjusted for solution pH."""
 
     targets = get_all_recommended_levels(plant_type, stage)
@@ -452,7 +456,7 @@ def get_all_ph_adjusted_levels(plant_type: str, stage: str, ph: float) -> Dict[s
         raise ValueError("ph must be between 0 and 14")
 
     factors = availability_for_all(ph)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, ppm in targets.items():
         factor = factors.get(nutrient, 1.0)
         adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
@@ -464,7 +468,7 @@ def calculate_all_deficiencies_with_ph(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return overall deficiencies using pH-adjusted guidelines."""
 
     targets = get_all_ph_adjusted_levels(plant_type, stage, ph)
@@ -473,7 +477,7 @@ def calculate_all_deficiencies_with_ph(
 
 def get_temperature_adjusted_levels(
     plant_type: str, stage: str, root_temp_c: float
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient targets adjusted for root temperature uptake."""
 
     base = get_all_recommended_levels(plant_type, stage)
@@ -506,7 +510,7 @@ def recommend_ratio_adjustments(
     *,
     total_ppm: float | None = None,
     tolerance: float = 0.05,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ppm adjustments to achieve the recommended NPK ratio.
 
     Parameters
@@ -539,7 +543,7 @@ def recommend_ratio_adjustments(
     if total_ppm <= 0:
         return {}
 
-    adjustments: Dict[str, float] = {}
+    adjustments: dict[str, float] = {}
     for nutrient in ("N", "P", "K"):
         target_ppm = target_ratio.get(nutrient, 0.0) * total_ppm
         current_ppm = float(current_levels.get(nutrient, 0.0))
@@ -550,14 +554,12 @@ def recommend_ratio_adjustments(
     return adjustments
 
 
-def get_tag_modifier(tag: str) -> Dict[str, float]:
+def get_tag_modifier(tag: str) -> dict[str, float]:
     """Return nutrient multipliers for ``tag`` if defined."""
     return _TAG_MODIFIERS.get(normalize_key(tag), {})
 
 
-def apply_tag_modifiers(
-    targets: Mapping[str, float], tags: Iterable[str]
-) -> Dict[str, float]:
+def apply_tag_modifiers(targets: Mapping[str, float], tags: Iterable[str]) -> dict[str, float]:
     """Return ``targets`` adjusted by modifiers for each tag."""
 
     adjusted = {k: float(v) for k, v in targets.items()}
@@ -578,16 +580,16 @@ def apply_tag_modifiers(
 def calculate_cycle_deficiency_index(
     stage_levels: Mapping[str, Mapping[str, float]],
     plant_type: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return deficiency index for each growth stage in a cycle."""
 
-    results: Dict[str, float] = {}
+    results: dict[str, float] = {}
     for stage, levels in stage_levels.items():
         results[stage] = calculate_deficiency_index(levels, plant_type, stage)
     return results
 
 
-def get_synergy_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_synergy_adjusted_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return nutrient targets adjusted using synergy factors."""
 
     levels = get_all_recommended_levels(plant_type, stage)
@@ -598,9 +600,7 @@ def get_synergy_adjusted_levels(plant_type: str, stage: str) -> Dict[str, float]
     return apply_synergy_adjustments(levels)
 
 
-def get_ph_synergy_adjusted_levels(
-    plant_type: str, stage: str, ph: float
-) -> Dict[str, float]:
+def get_ph_synergy_adjusted_levels(plant_type: str, stage: str, ph: float) -> dict[str, float]:
     """Return nutrient targets adjusted for synergy and solution pH."""
 
     if not 0 < ph <= 14:
@@ -611,7 +611,7 @@ def get_ph_synergy_adjusted_levels(
         levels = get_all_recommended_levels(plant_type, stage)
 
     factors = availability_for_all(ph)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, ppm in levels.items():
         factor = factors.get(nutrient, 1.0)
         adjusted[nutrient] = round(ppm / factor, 2) if factor > 0 else ppm
@@ -620,7 +620,7 @@ def get_ph_synergy_adjusted_levels(
 
 def calculate_all_deficiencies_with_synergy(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return overall deficiencies using synergy-adjusted guidelines."""
 
     targets = get_synergy_adjusted_levels(plant_type, stage)
@@ -632,7 +632,7 @@ def calculate_all_deficiencies_with_ph_and_synergy(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return deficiencies using synergy- and pH-adjusted targets."""
 
     targets = get_ph_synergy_adjusted_levels(plant_type, stage, ph)
@@ -689,7 +689,7 @@ def get_environment_adjusted_levels(
     ph: float | None = None,
     root_temp_c: float | None = None,
     synergy: bool = False,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient targets adjusted for synergy, pH and temperature."""
 
     levels = get_all_recommended_levels(plant_type, stage)
@@ -705,11 +705,7 @@ def get_environment_adjusted_levels(
         if not 0 < ph <= 14:
             raise ValueError("ph must be between 0 and 14")
         factors = availability_for_all(ph)
-        levels = {
-            n: round(v / factors.get(n, 1.0), 2)
-            for n, v in levels.items()
-            if v is not None
-        }
+        levels = {n: round(v / factors.get(n, 1.0), 2) for n, v in levels.items() if v is not None}
 
     if root_temp_c is not None:
         from .root_temperature import adjust_uptake

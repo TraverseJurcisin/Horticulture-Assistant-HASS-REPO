@@ -4,7 +4,10 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
-def generate_genetics_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
+
+def generate_genetics_profiles(
+    plant_id: str, base_path: str = None, overwrite: bool = False
+) -> str:
     """
     Generate or update genetics and cultivar lineage profile files for a given plant.
 
@@ -34,7 +37,7 @@ def generate_genetics_profiles(plant_id: str, base_path: str = None, overwrite: 
         "resistance_traits": None,
         "clade": None,
         "known_mutations": None,
-        "commercial_protection": None
+        "commercial_protection": None,
     }
 
     # Define default content for cultivar_lineage.json
@@ -45,7 +48,7 @@ def generate_genetics_profiles(plant_id: str, base_path: str = None, overwrite: 
         "ancestral_traits": None,
         "naming_origin": None,
         "divergence_from_wild": None,
-        "related_commercial_varieties": None
+        "related_commercial_varieties": None,
     }
 
     profile_sections = {

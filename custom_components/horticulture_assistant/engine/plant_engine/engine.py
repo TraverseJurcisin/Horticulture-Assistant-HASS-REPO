@@ -1,13 +1,14 @@
 """Simplified daily processing pipeline for individual plant profiles."""
 
-import os
 import logging
-from typing import Dict, Mapping, Any
+import os
+from collections.abc import Mapping
+from functools import cache
 from pathlib import Path
-
-from functools import lru_cache
+from typing import Any
 
 from .utils import save_json
+
 try:
     from ..utils.plant_profile_loader import load_profile_by_id
 except ImportError:  # pragma: no cover - fallback when run as standalone
@@ -15,30 +16,30 @@ except ImportError:  # pragma: no cover - fallback when run as standalone
         load_profile_by_id,
     )
 from .ai_model import analyze
-from .compute_transpiration import compute_transpiration
-from .water_deficit_tracker import update_water_balance
-from .growth_model import update_growth_index
-from .rootzone_model import (
-    estimate_rootzone_depth,
-    estimate_water_capacity,
-)
-from .nutrient_efficiency import calculate_nue
 from .approval_queue import queue_threshold_updates
-from .environment_manager import (
-    recommend_environment_adjustments,
-    optimize_environment,
-    normalize_environment_readings,
+from .compute_transpiration import compute_transpiration
+from .constants import DEFAULT_ENV, get_stage_multiplier
+from .disease_manager import (
+    recommend_treatments as recommend_disease_treatments,
 )
+from .environment_manager import (
+    normalize_environment_readings,
+    optimize_environment,
+    recommend_environment_adjustments,
+)
+from .growth_model import update_growth_index
+from .growth_stage import get_stage_info
+from .nutrient_efficiency import calculate_nue
 from .nutrient_manager import get_recommended_levels
 from .pest_manager import (
     recommend_treatments as recommend_pest_treatments,
 )
-from .disease_manager import (
-    recommend_treatments as recommend_disease_treatments,
-)
-from .growth_stage import get_stage_info
 from .report import DailyReport
-from .constants import get_stage_multiplier, DEFAULT_ENV
+from .rootzone_model import (
+    estimate_rootzone_depth,
+    estimate_water_capacity,
+)
+from .water_deficit_tracker import update_water_balance
 
 PLANTS_DIR = "plants"
 OUTPUT_DIR = "data/reports"
@@ -46,8 +47,8 @@ OUTPUT_DIR = "data/reports"
 _LOGGER = logging.getLogger(__name__)
 
 
-@lru_cache(maxsize=None)
-def load_profile(plant_id: str) -> Dict[str, Any]:
+@cache
+def load_profile(plant_id: str) -> dict[str, Any]:
     """Return the plant profile for ``plant_id`` loaded from disk."""
     profile = load_profile_by_id(plant_id, PLANTS_DIR)
     if "general" in profile and isinstance(profile["general"], dict):
@@ -57,7 +58,7 @@ def load_profile(plant_id: str) -> Dict[str, Any]:
     return profile
 
 
-def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
+def _normalize_env(env: Mapping[str, Any]) -> dict[str, float]:
     """Return ``env`` values normalized and filtered for optimization."""
 
     normalized = normalize_environment_readings(env)
@@ -72,7 +73,9 @@ def _normalize_env(env: Mapping[str, Any]) -> Dict[str, float]:
     return {k: float(v) for k, v in normalized.items() if k in keys}
 
 
-def _generate_environment_actions(profile: Mapping[str, Any], env: Mapping[str, Any]) -> tuple[dict, dict, dict]:
+def _generate_environment_actions(
+    profile: Mapping[str, Any], env: Mapping[str, Any]
+) -> tuple[dict, dict, dict]:
     """Return environment, pest and disease action recommendations."""
 
     plant_type = profile.get("plant_type", "")
@@ -107,8 +110,7 @@ def _write_report(plant_id: str, report: Mapping[str, Any]) -> None:
     _LOGGER.info("Daily report saved for %s", plant_id)
 
 
-
-def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
+def run_daily_cycle(plant_id: str) -> dict[str, Any]:
     """Return a consolidated daily report for ``plant_id``.
 
     The function orchestrates all processing steps including transpiration
@@ -158,13 +160,9 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     guidelines, nutrient_targets = _get_nutrient_targets(profile)
 
     env_current = _normalize_env(env)
-    env_opt = optimize_environment(
-        env_current, profile.get("plant_type", ""), profile.get("stage")
-    )
+    env_opt = optimize_environment(env_current, profile.get("plant_type", ""), profile.get("stage"))
 
-    stage_info = get_stage_info(
-        profile.get("plant_type", ""), profile.get("stage", "")
-    )
+    stage_info = get_stage_info(profile.get("plant_type", ""), profile.get("stage", ""))
 
     # Step 7: AI Recommendation
     report_obj = DailyReport(
@@ -193,9 +191,7 @@ def run_daily_cycle(plant_id: str) -> Dict[str, Any]:
     if profile.get("auto_approve_all", False):
         profile["thresholds"] = recommendations
         save_json(plant_file, profile)
-        _LOGGER.info(
-            "Auto-applied AI threshold updates for %s", plant_id
-        )
+        _LOGGER.info("Auto-applied AI threshold updates for %s", plant_id)
     else:
         queue_threshold_updates(plant_id, profile["thresholds"], recommendations)
 

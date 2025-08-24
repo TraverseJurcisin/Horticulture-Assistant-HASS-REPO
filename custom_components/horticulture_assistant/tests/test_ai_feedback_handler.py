@@ -17,7 +17,9 @@ def test_process_ai_feedback_uses_global_settings(tmp_path, monkeypatch):
         "default_threshold_mode": "profile",
     }
     (data_dir / "horticulture_global_config.json").write_text(json.dumps(cfg))
-    (plants_dir / "plant1.json").write_text(json.dumps({"thresholds": {}, "auto_approve_all": False}))
+    (plants_dir / "plant1.json").write_text(
+        json.dumps({"thresholds": {}, "auto_approve_all": False})
+    )
 
     captured = {}
 

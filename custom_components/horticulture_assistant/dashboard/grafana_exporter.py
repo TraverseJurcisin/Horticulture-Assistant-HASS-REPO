@@ -88,19 +88,13 @@ def export_grafana_data(
 
     # Load and filter log data for the last 7 days
     irrigation_entries = _filter_last_7d(_load_log(plant_dir / "irrigation_log.json"))
-    nutrient_entries = _filter_last_7d(
-        _load_log(plant_dir / "nutrient_application_log.json")
-    )
+    nutrient_entries = _filter_last_7d(_load_log(plant_dir / "nutrient_application_log.json"))
     sensor_entries = _filter_last_7d(_load_log(plant_dir / "sensor_reading_log.json"))
 
     # Summarize last 7 days of irrigation events
     if irrigation_entries:
-        total_volume = sum(
-            entry.get("volume_applied_ml", 0) or 0 for entry in irrigation_entries
-        )
-        methods = {
-            entry.get("method") for entry in irrigation_entries if entry.get("method")
-        }
+        total_volume = sum(entry.get("volume_applied_ml", 0) or 0 for entry in irrigation_entries)
+        methods = {entry.get("method") for entry in irrigation_entries if entry.get("method")}
         irrigation_summary = {
             "events": len(irrigation_entries),
             "total_volume_ml": total_volume,

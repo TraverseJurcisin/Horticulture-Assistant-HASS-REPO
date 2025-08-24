@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import issue_registry as ir
@@ -19,11 +19,11 @@ class ConfigValidator:
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
 
-    def validate_sensor_entities(self, plant_id: str, sensors: Dict[str, List[str]]) -> List[str]:
+    def validate_sensor_entities(self, plant_id: str, sensors: dict[str, list[str]]) -> list[str]:
         """Validate that all sensor entities exist and return list of missing ones."""
         missing_entities = []
 
-        for sensor_type, entity_ids in sensors.items():
+        for _sensor_type, entity_ids in sensors.items():
             for entity_id in entity_ids:
                 if self.hass.states.get(entity_id) is None:
                     missing_entities.append(entity_id)
@@ -32,7 +32,7 @@ class ConfigValidator:
 
         return missing_entities
 
-    def validate_plant_profile(self, plant_id: str, profile: Dict[str, Any]) -> List[str]:
+    def validate_plant_profile(self, plant_id: str, profile: dict[str, Any]) -> list[str]:
         """Validate plant profile structure and return list of errors."""
         errors = []
 
@@ -71,7 +71,7 @@ class ConfigValidator:
             translation_placeholders={"plant_id": plant_id, "entity_id": entity_id},
         )
 
-    def validate_api_config(self, api_key: str, base_url: str) -> List[str]:
+    def validate_api_config(self, api_key: str, base_url: str) -> list[str]:
         """Validate API configuration."""
         errors = []
 

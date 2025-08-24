@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict
+from functools import cache
 
 from .utils import load_dataset, normalize_key
 
@@ -12,11 +11,11 @@ DATA_FILE = "nutrients/nutrient_conversion_factors.json"
 __all__ = ["get_conversion_factors", "oxide_to_elemental"]
 
 
-@lru_cache(maxsize=None)
-def get_conversion_factors() -> Dict[str, float]:
+@cache
+def get_conversion_factors() -> dict[str, float]:
     """Return mapping of oxide formulas to fractional elemental factors."""
     data = load_dataset(DATA_FILE)
-    factors: Dict[str, float] = {}
+    factors: dict[str, float] = {}
     for k, v in data.items():
         key = normalize_key(k).upper()
         try:

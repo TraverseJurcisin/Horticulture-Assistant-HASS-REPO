@@ -2,31 +2,32 @@
 
 from __future__ import annotations
 
-import math
 import datetime
-from dataclasses import dataclass, asdict
-from functools import lru_cache
-from typing import Any, Dict, Mapping, Tuple, Iterable, Callable
+import math
+from collections.abc import Callable, Iterable, Mapping
+from dataclasses import asdict, dataclass
+from functools import cache
 from statistics import pvariance
+from typing import Any
 
 try:  # Optional numpy for faster variance calculations
     import numpy as _np  # type: ignore
 except Exception:  # pragma: no cover - numpy missing
     _np = None
 
-RangeTuple = Tuple[float, float]
+RangeTuple = tuple[float, float]
 
+from . import ph_manager, water_quality
+from .compute_transpiration import compute_transpiration
+from .growth_stage import list_growth_stages
+from .light_spectrum import get_red_blue_ratio
 from .utils import (
+    clean_float_map,
+    list_dataset_entries,
     load_dataset,
     normalize_key,
-    list_dataset_entries,
     parse_range,
-    clean_float_map,
 )
-from . import ph_manager, water_quality
-from .growth_stage import list_growth_stages
-from .compute_transpiration import compute_transpiration
-from .light_spectrum import get_red_blue_ratio
 
 DATA_FILE = "environment/environment_guidelines.json"
 DLI_DATA_FILE = "light/light_dli_guidelines.json"
@@ -100,25 +101,23 @@ DEFAULT_ENV_ALIASES = {
     "photoperiod_hours": ["photoperiod_hours", "photoperiod", "day_length"],
 }
 
-_ALIAS_DATA: Dict[str, list[str]] = load_dataset(ALIAS_DATA_FILE)
+_ALIAS_DATA: dict[str, list[str]] = load_dataset(ALIAS_DATA_FILE)
 ENV_ALIASES = {
     key: list(map(str, aliases))
     for key, aliases in (
-        _ALIAS_DATA.items()
-        if isinstance(_ALIAS_DATA, Mapping)
-        else DEFAULT_ENV_ALIASES.items()
+        _ALIAS_DATA.items() if isinstance(_ALIAS_DATA, Mapping) else DEFAULT_ENV_ALIASES.items()
     )
 }
 for key, defaults in DEFAULT_ENV_ALIASES.items():
     ENV_ALIASES.setdefault(key, defaults)
 
 # reverse mapping for constant time alias lookups
-_ALIAS_MAP: Dict[str, str] = {
+_ALIAS_MAP: dict[str, str] = {
     alias: canonical for canonical, aliases in ENV_ALIASES.items() for alias in aliases
 }
 
 
-def get_environment_aliases() -> Dict[str, list[str]]:
+def get_environment_aliases() -> dict[str, list[str]]:
     """Return mapping of canonical environment keys to accepted aliases."""
 
     return {k: list(v) for k, v in ENV_ALIASES.items()}
@@ -150,19 +149,17 @@ class EnvironmentGuidelines:
     co2_ppm: RangeTuple | None = None
     photoperiod_hours: RangeTuple | None = None
 
-    def as_dict(self) -> Dict[str, list[float]]:
+    def as_dict(self) -> dict[str, list[float]]:
         """Return guidelines as a dictionary with list values."""
-        result: Dict[str, list[float]] = {}
+        result: dict[str, list[float]] = {}
         for k, v in asdict(self).items():
             if v is not None:
                 result[k] = [float(v[0]), float(v[1])]
         return result
 
 
-@lru_cache(maxsize=None)
-def get_environment_guidelines(
-    plant_type: str, stage: str | None = None
-) -> EnvironmentGuidelines:
+@cache
+def get_environment_guidelines(plant_type: str, stage: str | None = None) -> EnvironmentGuidelines:
     """Return :class:`EnvironmentGuidelines` for the given plant stage."""
 
     data = _lookup_stage_data(_DATA, plant_type, stage)
@@ -177,7 +174,7 @@ def get_environment_guidelines(
     )
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     """Return environmental guidelines for a climate ``zone``."""
 
@@ -193,7 +190,7 @@ def get_climate_guidelines(zone: str) -> EnvironmentGuidelines:
     )
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_frost_dates(zone: str) -> tuple[str, str] | None:
     """Return the typical last and first frost dates for ``zone``."""
 
@@ -236,7 +233,7 @@ def _intersect_range(a: RangeTuple | None, b: RangeTuple | None) -> RangeTuple |
     return (low, high) if low <= high else None
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_combined_environment_guidelines(
     plant_type: str, stage: str | None = None, zone: str | None = None
 ) -> EnvironmentGuidelines:
@@ -249,24 +246,20 @@ def get_combined_environment_guidelines(
         humidity_pct=_intersect_range(plant.humidity_pct, climate.humidity_pct),
         light_ppfd=_intersect_range(plant.light_ppfd, climate.light_ppfd),
         co2_ppm=_intersect_range(plant.co2_ppm, climate.co2_ppm),
-        photoperiod_hours=_intersect_range(
-            plant.photoperiod_hours, climate.photoperiod_hours
-        ),
+        photoperiod_hours=_intersect_range(plant.photoperiod_hours, climate.photoperiod_hours),
     )
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_combined_environmental_targets(
     plant_type: str, stage: str | None = None, zone: str | None = None
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return environment target ranges for a plant and climate zone."""
 
     return get_combined_environment_guidelines(plant_type, stage, zone).as_dict()
 
 
-def recommend_climate_adjustments(
-    current_env: Mapping[str, float], zone: str
-) -> Dict[str, str]:
+def recommend_climate_adjustments(current_env: Mapping[str, float], zone: str) -> dict[str, str]:
     """Return simple adjustment suggestions for ``zone`` based on ``current_env``.
 
     The returned mapping may include keys ``temperature``, ``humidity``, ``light``
@@ -277,7 +270,7 @@ def recommend_climate_adjustments(
     guide = get_climate_guidelines(zone)
     env = normalize_environment_readings(current_env)
 
-    suggestions: Dict[str, str] = {}
+    suggestions: dict[str, str] = {}
     guide_map = {
         "temp_c": ("temperature", "°C", "raise", "lower"),
         "humidity_pct": ("humidity", "%", "increase", "decrease"),
@@ -301,7 +294,7 @@ def recommend_climate_adjustments(
     return suggestions
 
 
-_TEMP_CONVERSIONS: Dict[str, tuple[str, Callable[[float], float]]] = {
+_TEMP_CONVERSIONS: dict[str, tuple[str, Callable[[float], float]]] = {
     "temp_f": ("temp_c", lambda v: (v - 32) * 5 / 9),
     "soil_temp_f": ("soil_temp_c", lambda v: (v - 32) * 5 / 9),
     "leaf_temp_f": ("leaf_temp_c", lambda v: (v - 32) * 5 / 9),
@@ -313,7 +306,7 @@ _TEMP_CONVERSIONS: Dict[str, tuple[str, Callable[[float], float]]] = {
 
 def normalize_environment_readings(
     readings: Mapping[str, float], *, include_unknown: bool = True
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ``readings`` mapped to canonical names with unit conversion.
 
     Any value that cannot be coerced to a finite float is skipped. Temperature
@@ -322,7 +315,7 @@ def normalize_environment_readings(
     dropped from the result.
     """
 
-    normalized: Dict[str, float] = {}
+    normalized: dict[str, float] = {}
     for key, value in readings.items():
         canonical = _ALIAS_MAP.get(key, key)
         try:
@@ -463,33 +456,33 @@ __all__ = [
 
 
 # Load environment guidelines once. ``load_dataset`` already caches results
-_DATA: Dict[str, Any] = load_dataset(DATA_FILE)
-_DLI_DATA: Dict[str, Any] = load_dataset(DLI_DATA_FILE)
-_VPD_DATA: Dict[str, Any] = load_dataset(VPD_DATA_FILE)
-_HEAT_THRESHOLDS: Dict[str, float] = load_dataset(HEAT_DATA_FILE)
-_COLD_THRESHOLDS: Dict[str, float] = load_dataset(COLD_DATA_FILE)
-_PHOTOPERIOD_DATA: Dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
-_PHOTOPERIOD_ACTIONS: Dict[str, str] = load_dataset(PHOTOPERIOD_ACTION_FILE)
-_WIND_THRESHOLDS: Dict[str, float] = load_dataset(WIND_DATA_FILE)
-_HUMIDITY_THRESHOLDS: Dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
-_HUMIDITY_ACTIONS: Dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
-_WIND_ACTIONS: Dict[str, str] = load_dataset(WIND_ACTION_FILE)
-_TEMPERATURE_ACTIONS: Dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
-_VPD_ACTIONS: Dict[str, str] = load_dataset(VPD_ACTION_FILE)
-_ENV_STRATEGIES: Dict[str, Dict[str, str]] = load_dataset(STRATEGY_FILE)
-_SCORE_WEIGHTS: Dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
-_QUALITY_THRESHOLDS: Dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
-_QUALITY_LABELS: Dict[str, float] = load_dataset(QUALITY_LABELS_FILE)
-_CO2_PRICES: Dict[str, float] = load_dataset(CO2_PRICE_FILE)
-_CO2_EFFICIENCY: Dict[str, float] = load_dataset(CO2_EFFICIENCY_FILE)
-_CLIMATE_DATA: Dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
-_MOISTURE_DATA: Dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
-_SOIL_TEMP_DATA: Dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
-_SOIL_EC_DATA: Dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
-_LEAF_TEMP_DATA: Dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
-_FROST_DATES: Dict[str, Any] = load_dataset(FROST_DATES_FILE)
-_SOIL_PH_DATA: Dict[str, Any] = load_dataset(SOIL_PH_DATA_FILE)
-_AIRFLOW_DATA: Dict[str, Any] = load_dataset(AIRFLOW_DATA_FILE)
+_DATA: dict[str, Any] = load_dataset(DATA_FILE)
+_DLI_DATA: dict[str, Any] = load_dataset(DLI_DATA_FILE)
+_VPD_DATA: dict[str, Any] = load_dataset(VPD_DATA_FILE)
+_HEAT_THRESHOLDS: dict[str, float] = load_dataset(HEAT_DATA_FILE)
+_COLD_THRESHOLDS: dict[str, float] = load_dataset(COLD_DATA_FILE)
+_PHOTOPERIOD_DATA: dict[str, Any] = load_dataset(PHOTOPERIOD_DATA_FILE)
+_PHOTOPERIOD_ACTIONS: dict[str, str] = load_dataset(PHOTOPERIOD_ACTION_FILE)
+_WIND_THRESHOLDS: dict[str, float] = load_dataset(WIND_DATA_FILE)
+_HUMIDITY_THRESHOLDS: dict[str, Any] = load_dataset(HUMIDITY_DATA_FILE)
+_HUMIDITY_ACTIONS: dict[str, str] = load_dataset(HUMIDITY_ACTION_FILE)
+_WIND_ACTIONS: dict[str, str] = load_dataset(WIND_ACTION_FILE)
+_TEMPERATURE_ACTIONS: dict[str, str] = load_dataset(TEMPERATURE_ACTION_FILE)
+_VPD_ACTIONS: dict[str, str] = load_dataset(VPD_ACTION_FILE)
+_ENV_STRATEGIES: dict[str, dict[str, str]] = load_dataset(STRATEGY_FILE)
+_SCORE_WEIGHTS: dict[str, float] = load_dataset(SCORE_WEIGHT_FILE)
+_QUALITY_THRESHOLDS: dict[str, float] = load_dataset(QUALITY_THRESHOLDS_FILE)
+_QUALITY_LABELS: dict[str, float] = load_dataset(QUALITY_LABELS_FILE)
+_CO2_PRICES: dict[str, float] = load_dataset(CO2_PRICE_FILE)
+_CO2_EFFICIENCY: dict[str, float] = load_dataset(CO2_EFFICIENCY_FILE)
+_CLIMATE_DATA: dict[str, Any] = load_dataset(CLIMATE_DATA_FILE)
+_MOISTURE_DATA: dict[str, Any] = load_dataset(MOISTURE_DATA_FILE)
+_SOIL_TEMP_DATA: dict[str, Any] = load_dataset(SOIL_TEMP_DATA_FILE)
+_SOIL_EC_DATA: dict[str, Any] = load_dataset(SOIL_EC_DATA_FILE)
+_LEAF_TEMP_DATA: dict[str, Any] = load_dataset(LEAF_TEMP_DATA_FILE)
+_FROST_DATES: dict[str, Any] = load_dataset(FROST_DATES_FILE)
+_SOIL_PH_DATA: dict[str, Any] = load_dataset(SOIL_PH_DATA_FILE)
+_AIRFLOW_DATA: dict[str, Any] = load_dataset(AIRFLOW_DATA_FILE)
 
 
 def get_score_weight(metric: str) -> float:
@@ -500,7 +493,7 @@ def get_score_weight(metric: str) -> float:
         return 1.0
 
 
-def get_environment_quality_thresholds() -> Dict[str, float]:
+def get_environment_quality_thresholds() -> dict[str, float]:
     """Return score thresholds for quality classification."""
     return {
         "good": float(_QUALITY_THRESHOLDS.get("good", 75)),
@@ -526,7 +519,7 @@ def get_environment_quality_labels() -> list[tuple[str, float]]:
 
 def _lookup_stage_data(
     dataset: Mapping[str, Any], plant_type: str, stage: str | None
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return stage specific data for ``plant_type`` or the ``optimal`` entry."""
     plant = dataset.get(normalize_key(plant_type), {})
     if stage:
@@ -550,7 +543,7 @@ def _lookup_range(
         vals = plant.get(stage_key)
     if vals is None:
         vals = plant.get("optimal")
-    if isinstance(vals, (list, tuple)) and len(vals) == 2:
+    if isinstance(vals, list | tuple) and len(vals) == 2:
         try:
             return float(vals[0]), float(vals[1])
         except (TypeError, ValueError):
@@ -570,7 +563,7 @@ def _lookup_threshold(dataset: Mapping[str, Any], plant_type: str) -> float | No
 
 def average_environment_readings(
     series: Iterable[Mapping[str, float]],
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return the average of normalized environment readings.
 
     Each mapping in ``series`` may use any of the aliases supported by
@@ -578,7 +571,7 @@ def average_environment_readings(
     The result contains canonical keys with float values.
     """
 
-    totals: Dict[str, float] = {}
+    totals: dict[str, float] = {}
     count = 0
     for reading in series:
         for key, value in normalize_environment_readings(reading).items():
@@ -593,15 +586,15 @@ def average_environment_readings(
 
 def calculate_environment_variance(
     series: Iterable[Mapping[str, float]],
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return variance for normalized environment readings."""
 
-    values: Dict[str, list[float]] = {}
+    values: dict[str, list[float]] = {}
     for reading in series:
         for key, value in normalize_environment_readings(reading).items():
             values.setdefault(key, []).append(float(value))
 
-    variance: Dict[str, float] = {}
+    variance: dict[str, float] = {}
     if _np is not None:
         for key, vals in values.items():
             if vals:
@@ -617,7 +610,7 @@ def calculate_environment_variance(
 
 def calculate_environment_stddev(
     series: Iterable[Mapping[str, float]],
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return standard deviation for normalized environment readings."""
 
     variance = calculate_environment_variance(series)
@@ -628,7 +621,7 @@ def calculate_environment_deviation(
     current: Mapping[str, float],
     plant_type: str,
     stage: str | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return fractional deviation from target midpoints for each metric.
 
     The deviation is ``0`` when the reading matches the midpoint of the
@@ -641,13 +634,9 @@ def calculate_environment_deviation(
         return {}
 
     readings = normalize_environment_readings(current)
-    deviation: Dict[str, float] = {}
+    deviation: dict[str, float] = {}
     for key, bounds in targets.items():
-        if (
-            key not in readings
-            or not isinstance(bounds, (list, tuple))
-            or len(bounds) != 2
-        ):
+        if key not in readings or not isinstance(bounds, list | tuple) or len(bounds) != 2:
             continue
         low, high = bounds
         width = high - low
@@ -664,20 +653,18 @@ def calculate_environment_deviation_series(
     series: Iterable[Mapping[str, float]],
     plant_type: str,
     stage: str | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return average deviation from target midpoints for a series."""
 
-    totals: Dict[str, float] = {}
-    counts: Dict[str, int] = {}
+    totals: dict[str, float] = {}
+    counts: dict[str, int] = {}
     for reading in series:
         dev = calculate_environment_deviation(reading, plant_type, stage)
         for key, value in dev.items():
             totals[key] = totals.get(key, 0.0) + value
             counts[key] = counts.get(key, 0) + 1
 
-    return {
-        key: round(totals[key] / counts[key], 2) for key in totals if counts.get(key, 0)
-    }
+    return {key: round(totals[key] / counts[key], 2) for key in totals if counts.get(key, 0)}
 
 
 def saturation_vapor_pressure(temp_c: float) -> float:
@@ -705,7 +692,7 @@ class EnvironmentMetrics:
     transpiration_ml_day: float | None = None
     root_uptake_factor: float | None = None
 
-    def as_dict(self) -> Dict[str, float | None]:
+    def as_dict(self) -> dict[str, float | None]:
         """Return metrics as a regular dictionary."""
         return asdict(self)
 
@@ -714,8 +701,8 @@ class EnvironmentMetrics:
 class EnvironmentOptimization:
     """Consolidated environment optimization result."""
 
-    setpoints: Dict[str, float]
-    adjustments: Dict[str, str]
+    setpoints: dict[str, float]
+    adjustments: dict[str, str]
     metrics: EnvironmentMetrics
     ph_setpoint: float | None = None
     ph_action: str | None = None
@@ -738,7 +725,7 @@ class EnvironmentOptimization:
     score: float | None = None
     water_quality: WaterQualityInfo | None = None
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return the optimization result as a serializable dictionary."""
         return {
             "setpoints": self.setpoints,
@@ -769,9 +756,7 @@ class EnvironmentOptimization:
             "soil_ec_stress": self.soil_ec_stress,
             "quality": self.quality,
             "score": self.score,
-            "water_quality": (
-                self.water_quality.as_dict() if self.water_quality else None
-            ),
+            "water_quality": (self.water_quality.as_dict() if self.water_quality else None),
         }
 
 
@@ -791,7 +776,7 @@ class StressFlags:
     soil_ec: str | None = None
     leaf_temp: str | None = None
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -802,7 +787,7 @@ class WaterQualityInfo:
     rating: str
     score: float
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -811,22 +796,20 @@ class EnvironmentSummary:
     """High level summary of current environmental conditions."""
 
     quality: str
-    adjustments: Dict[str, str]
+    adjustments: dict[str, str]
     metrics: EnvironmentMetrics
     score: float
     stress: StressFlags
     water_quality: WaterQualityInfo | None = None
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         return {
             "quality": self.quality,
             "adjustments": self.adjustments,
             "metrics": self.metrics.as_dict(),
             "score": self.score,
             "stress": self.stress.as_dict(),
-            "water_quality": (
-                self.water_quality.as_dict() if self.water_quality else None
-            ),
+            "water_quality": (self.water_quality.as_dict() if self.water_quality else None),
         }
 
 
@@ -835,10 +818,8 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-@lru_cache(maxsize=None)
-def get_environmental_targets(
-    plant_type: str, stage: str | None = None
-) -> Dict[str, Any]:
+@cache
+def get_environmental_targets(plant_type: str, stage: str | None = None) -> dict[str, Any]:
     """Return recommended environmental ranges for a plant type and stage."""
     return get_environment_guidelines(plant_type, stage).as_dict()
 
@@ -888,7 +869,7 @@ def _check_range(value: float, bounds: RangeTuple) -> str | None:
 
 def compare_environment(
     current: Mapping[str, float], targets: Mapping[str, Iterable[float]]
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return comparison of readings to target ranges.
 
     Parameters
@@ -907,13 +888,9 @@ def compare_environment(
     """
 
     normalized = normalize_environment_readings(current)
-    results: Dict[str, str] = {}
+    results: dict[str, str] = {}
     for key, bounds in targets.items():
-        if (
-            not isinstance(bounds, (list, tuple))
-            or len(bounds) != 2
-            or key not in normalized
-        ):
+        if not isinstance(bounds, list | tuple) or len(bounds) != 2 or key not in normalized:
             continue
 
         try:
@@ -932,7 +909,7 @@ def recommend_environment_adjustments(
     plant_type: str,
     stage: str | None = None,
     zone: str | None = None,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return detailed adjustment suggestions for key environment parameters.
 
     The returned mapping may include descriptive recommendations for
@@ -954,7 +931,7 @@ def recommend_environment_adjustments(
     # bypass descriptive strategies when uncommon aliases are used.
     alias_map = {_ALIAS_MAP.get(k, k): k for k in current}
 
-    actions: Dict[str, str] = {}
+    actions: dict[str, str] = {}
     for key, status in comparison.items():
         if status == "within range":
             continue
@@ -991,7 +968,7 @@ def recommend_environment_adjustments(
 
 def generate_environment_alerts(
     current: Mapping[str, float], plant_type: str, stage: str | None = None
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return human readable alerts for readings outside recommended ranges.
 
     Parameters
@@ -1009,7 +986,7 @@ def generate_environment_alerts(
     if not targets:
         return {}
 
-    alerts: Dict[str, str] = {}
+    alerts: dict[str, str] = {}
     comparison = compare_environment(current, targets)
     for key, status in comparison.items():
         if status == "within range":
@@ -1027,7 +1004,7 @@ def score_environment_components(
     current: Mapping[str, float],
     plant_type: str,
     stage: str | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return per-parameter environment scores on a 0-100 scale."""
 
     targets = get_environmental_targets(plant_type, stage)
@@ -1035,9 +1012,9 @@ def score_environment_components(
         return {}
 
     readings = normalize_environment_readings(current)
-    scores: Dict[str, float] = {}
+    scores: dict[str, float] = {}
     for key, bounds in targets.items():
-        if key not in readings or not isinstance(bounds, (list, tuple)):
+        if key not in readings or not isinstance(bounds, list | tuple):
             continue
         low, high = bounds
         val = readings[key]
@@ -1097,16 +1074,16 @@ def score_environment_series(
 
 
 def score_environment_dataframe(
-    df: "pd.DataFrame", plant_type: str, stage: str | None = None
-) -> "pd.Series":
+    df: pd.DataFrame, plant_type: str, stage: str | None = None
+) -> pd.Series:
     """Return environment scores for each row in ``df``.
 
     The calculation is vectorized for efficiency and mirrors
     :func:`score_environment` semantics.
     """
 
-    import pandas as pd
     import numpy as np
+    import pandas as pd
 
     if not isinstance(df, pd.DataFrame):
         raise TypeError("df must be a pandas DataFrame")
@@ -1118,7 +1095,7 @@ def score_environment_dataframe(
     scores = pd.DataFrame(index=df.index)
     weights = []
     for key, bounds in targets.items():
-        if key not in df or not isinstance(bounds, (list, tuple)) or len(bounds) != 2:
+        if key not in df or not isinstance(bounds, list | tuple) or len(bounds) != 2:
             continue
         low, high = float(bounds[0]), float(bounds[1])
         width = high - low
@@ -1218,9 +1195,7 @@ def score_overall_environment(
     return round(overall, 1)
 
 
-def suggest_environment_setpoints(
-    plant_type: str, stage: str | None = None
-) -> Dict[str, float]:
+def suggest_environment_setpoints(plant_type: str, stage: str | None = None) -> dict[str, float]:
     """Return midpoint setpoints for key environment parameters."""
 
     targets = get_environmental_targets(plant_type, stage)
@@ -1229,12 +1204,12 @@ def suggest_environment_setpoints(
 
 def _midpoint_setpoints(
     targets: Mapping[str, Any], plant_type: str, stage: str | None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return midpoint values for ``targets`` with soil parameters."""
 
-    setpoints: Dict[str, float] = {}
+    setpoints: dict[str, float] = {}
     for key, bounds in targets.items():
-        if isinstance(bounds, (list, tuple)) and len(bounds) == 2:
+        if isinstance(bounds, list | tuple) and len(bounds) == 2:
             setpoints[key] = round((bounds[0] + bounds[1]) / 2, 2)
 
     soil = get_target_soil_moisture(plant_type, stage)
@@ -1254,7 +1229,7 @@ def _midpoint_setpoints(
 
 def suggest_environment_setpoints_advanced(
     plant_type: str, stage: str | None = None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return midpoint setpoints with VPD fallback for humidity."""
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
@@ -1262,7 +1237,7 @@ def suggest_environment_setpoints_advanced(
         targets = get_environmental_targets(plant_type, stage)
         temp = targets.get("temp_c")
         vpd = get_target_vpd(plant_type, stage)
-        if isinstance(temp, (list, tuple)) and len(temp) == 2 and vpd is not None:
+        if isinstance(temp, list | tuple) and len(temp) == 2 and vpd is not None:
             temp_mid = (float(temp[0]) + float(temp[1])) / 2
             vpd_mid = (vpd[0] + vpd[1]) / 2
             try:
@@ -1278,7 +1253,7 @@ def energy_optimized_setpoints(
     current_temp_c: float,
     hours: float,
     system: str = "heating",
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return environment setpoints minimizing HVAC energy use.
 
     The recommended temperature setpoint is chosen from the lower or upper
@@ -1292,7 +1267,7 @@ def energy_optimized_setpoints(
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
     temp_range = get_environmental_targets(plant_type, stage).get("temp_c")
-    if not isinstance(temp_range, (list, tuple)) or len(temp_range) != 2:
+    if not isinstance(temp_range, list | tuple) or len(temp_range) != 2:
         return setpoints
 
     from .energy_manager import estimate_hvac_energy
@@ -1311,7 +1286,7 @@ def cost_optimized_setpoints(
     hours: float,
     system: str = "heating",
     region: str | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return environment setpoints minimizing HVAC cost.
 
     The temperature setpoint that results in the lowest estimated energy
@@ -1324,7 +1299,7 @@ def cost_optimized_setpoints(
 
     setpoints = suggest_environment_setpoints(plant_type, stage)
     temp_range = get_environmental_targets(plant_type, stage).get("temp_c")
-    if not isinstance(temp_range, (list, tuple)) or len(temp_range) != 2:
+    if not isinstance(temp_range, list | tuple) or len(temp_range) != 2:
         return setpoints
 
     from .energy_manager import estimate_hvac_cost
@@ -1336,10 +1311,10 @@ def cost_optimized_setpoints(
     return setpoints
 
 
-def generate_stage_environment_plan(plant_type: str) -> Dict[str, Dict[str, float]]:
+def generate_stage_environment_plan(plant_type: str) -> dict[str, dict[str, float]]:
     """Return recommended environment setpoints for all growth stages."""
 
-    plan: Dict[str, Dict[str, float]] = {}
+    plan: dict[str, dict[str, float]] = {}
     for stage in list_growth_stages(plant_type):
         plan[stage] = suggest_environment_setpoints(plant_type, stage)
     return plan
@@ -1347,33 +1322,32 @@ def generate_stage_environment_plan(plant_type: str) -> Dict[str, Dict[str, floa
 
 def suggest_environment_setpoints_zone(
     plant_type: str, stage: str | None, zone: str
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return midpoint setpoints for a plant stage adjusted for ``zone``."""
 
     targets = get_combined_environmental_targets(plant_type, stage, zone)
     return _midpoint_setpoints(targets, plant_type, stage)
 
 
-def generate_zone_environment_plan(
-    plant_type: str, zone: str
-) -> Dict[str, Dict[str, float]]:
+def generate_zone_environment_plan(plant_type: str, zone: str) -> dict[str, dict[str, float]]:
     """Return environment setpoints for each stage adjusted for ``zone``."""
 
-    plan: Dict[str, Dict[str, float]] = {}
+    plan: dict[str, dict[str, float]] = {}
     for stage in list_growth_stages(plant_type):
         plan[stage] = suggest_environment_setpoints_zone(plant_type, stage, zone)
     return plan
 
 
-def generate_stage_growth_plan(plant_type: str) -> Dict[str, Dict[str, Any]]:
+def generate_stage_growth_plan(plant_type: str) -> dict[str, dict[str, Any]]:
     """Return environment setpoints, nutrient needs and tasks per stage."""
 
     from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
         get_stage_requirements,
     )
+
     from .stage_tasks import get_stage_tasks
 
-    plan: Dict[str, Dict[str, Any]] = {}
+    plan: dict[str, dict[str, Any]] = {}
     for stage in list_growth_stages(plant_type):
         plan[stage] = {
             "environment": suggest_environment_setpoints(plant_type, stage),
@@ -1383,9 +1357,7 @@ def generate_stage_growth_plan(plant_type: str) -> Dict[str, Dict[str, Any]]:
     return plan
 
 
-def generate_cycle_growth_plan(
-    plant_type: str, start_date: date
-) -> list[dict[str, Any]]:
+def generate_cycle_growth_plan(plant_type: str, start_date: date) -> list[dict[str, Any]]:
     """Return dated growth plan for an entire crop cycle.
 
     Each entry includes the stage name, start and end dates along with the
@@ -1512,9 +1484,7 @@ def relative_humidity_from_absolute(temp_c: float, absolute_humidity_g_m3: float
         raise ValueError("absolute_humidity_g_m3 must be non-negative")
 
     # Convert absolute humidity back to vapor pressure in hPa
-    vap_pressure = (
-        absolute_humidity_g_m3 * (273.15 + temp_c) / (2.1674 * 100)
-    )
+    vap_pressure = absolute_humidity_g_m3 * (273.15 + temp_c) / (2.1674 * 100)
     svp = 6.112 * math.exp((17.67 * temp_c) / (temp_c + 243.5))
     rh = 100 * vap_pressure / svp
     return round(rh, 1)
@@ -1577,9 +1547,7 @@ def humidity_for_target_vpd(temp_c: float, target_vpd: float) -> float:
     return round(rh, 1)
 
 
-def recommend_photoperiod(
-    ppfd: float, plant_type: str, stage: str | None = None
-) -> float | None:
+def recommend_photoperiod(ppfd: float, plant_type: str, stage: str | None = None) -> float | None:
     """Return photoperiod hours to achieve the midpoint DLI target.
 
     If either the plant has no DLI guidelines or ``ppfd`` is non-positive,
@@ -1677,7 +1645,7 @@ def evaluate_humidity_stress(
     thresh = _HUMIDITY_THRESHOLDS.get(
         normalize_key(plant_type), _HUMIDITY_THRESHOLDS.get("default")
     )
-    if not isinstance(thresh, (list, tuple)) or len(thresh) != 2:
+    if not isinstance(thresh, list | tuple) or len(thresh) != 2:
         return None
 
     low, high = float(thresh[0]), float(thresh[1])
@@ -1694,9 +1662,7 @@ def get_humidity_action(level: str) -> str:
     return _HUMIDITY_ACTIONS.get(level.lower(), "")
 
 
-def recommend_humidity_action(
-    humidity_pct: float | None, plant_type: str
-) -> str | None:
+def recommend_humidity_action(humidity_pct: float | None, plant_type: str) -> str | None:
     """Return humidity adjustment recommendation if outside thresholds."""
 
     level = evaluate_humidity_stress(humidity_pct, plant_type)
@@ -1818,10 +1784,10 @@ def get_environment_strategy(parameter: str, level: str) -> str:
     return strategies.get(level.lower(), "")
 
 
-def recommend_environment_strategies(status: Mapping[str, str]) -> Dict[str, str]:
+def recommend_environment_strategies(status: Mapping[str, str]) -> dict[str, str]:
     """Return strategies for each parameter classification in ``status``."""
 
-    rec: Dict[str, str] = {}
+    rec: dict[str, str] = {}
     for key, level in status.items():
         action = get_environment_strategy(key, level)
         if action:
@@ -1829,9 +1795,7 @@ def recommend_environment_strategies(status: Mapping[str, str]) -> Dict[str, str
     return rec
 
 
-def evaluate_ph_stress(
-    ph: float | None, plant_type: str, stage: str | None = None
-) -> str | None:
+def evaluate_ph_stress(ph: float | None, plant_type: str, stage: str | None = None) -> str | None:
     """Return 'low' or 'high' if pH is outside the recommended range."""
 
     if ph is None:
@@ -1849,9 +1813,7 @@ def evaluate_ph_stress(
     return None
 
 
-def get_target_soil_moisture(
-    plant_type: str, stage: str | None = None
-) -> RangeTuple | None:
+def get_target_soil_moisture(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended soil moisture percentage range for a plant stage."""
 
     return _lookup_range(_MOISTURE_DATA, plant_type, stage)
@@ -1877,9 +1839,7 @@ def evaluate_moisture_stress(
     return None
 
 
-def get_target_soil_temperature(
-    plant_type: str, stage: str | None = None
-) -> RangeTuple | None:
+def get_target_soil_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended soil temperature range for a plant stage."""
 
     return _lookup_range(_SOIL_TEMP_DATA, plant_type, stage)
@@ -1894,7 +1854,7 @@ def get_target_soil_ec(plant_type: str, stage: str | None = None) -> RangeTuple 
 def get_target_soil_ph(plant_type: str) -> RangeTuple | None:
     """Return optimal soil pH range for ``plant_type``."""
     rng = _SOIL_PH_DATA.get(normalize_key(plant_type))
-    if isinstance(rng, (list, tuple)) and len(rng) == 2:
+    if isinstance(rng, list | tuple) and len(rng) == 2:
         try:
             return float(rng[0]), float(rng[1])
         except (TypeError, ValueError):
@@ -1902,9 +1862,7 @@ def get_target_soil_ph(plant_type: str) -> RangeTuple | None:
     return None
 
 
-def get_target_leaf_temperature(
-    plant_type: str, stage: str | None = None
-) -> RangeTuple | None:
+def get_target_leaf_temperature(plant_type: str, stage: str | None = None) -> RangeTuple | None:
     """Return recommended leaf temperature range for a plant stage."""
 
     return _lookup_range(_LEAF_TEMP_DATA, plant_type, stage)
@@ -2039,9 +1997,7 @@ def evaluate_stress_conditions(
     )
 
 
-def calculate_dli_series(
-    ppfd_values: Iterable[float], interval_hours: float = 1.0
-) -> float:
+def calculate_dli_series(ppfd_values: Iterable[float], interval_hours: float = 1.0) -> float:
     """Return Daily Light Integral from a sequence of PPFD readings.
 
     ``ppfd_values`` may be any iterable. Values are consumed lazily so large
@@ -2068,9 +2024,7 @@ def calculate_dli_series(
     return round(dli, 2)
 
 
-def calculate_vpd_series(
-    temp_values: Iterable[float], humidity_values: Iterable[float]
-) -> float:
+def calculate_vpd_series(temp_values: Iterable[float], humidity_values: Iterable[float]) -> float:
     """Return average VPD from paired temperature and humidity readings.
 
     The iterables are consumed lazily so large data sets do not require
@@ -2086,9 +2040,7 @@ def calculate_vpd_series(
 
     for t, h in zip_longest(temp_values, humidity_values, fillvalue=sentinel):
         if sentinel in (t, h):
-            raise ValueError(
-                "temperature and humidity readings must have the same length"
-            )
+            raise ValueError("temperature and humidity readings must have the same length")
 
         total += calculate_vpd(float(t), float(h))
         count += 1
@@ -2109,32 +2061,24 @@ def calculate_heat_index_series(
 
     for t, h in zip_longest(temp_values, humidity_values, fillvalue=sentinel):
         if sentinel in (t, h):
-            raise ValueError(
-                "temperature and humidity readings must have the same length"
-            )
+            raise ValueError("temperature and humidity readings must have the same length")
         total += calculate_heat_index(float(t), float(h))
         count += 1
 
     return round(total / count, 2) if count else 0.0
 
 
-def get_target_dli(
-    plant_type: str, stage: str | None = None
-) -> tuple[float, float] | None:
+def get_target_dli(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended DLI range for a plant type and stage."""
     return _lookup_range(_DLI_DATA, plant_type, stage)
 
 
-def get_target_vpd(
-    plant_type: str, stage: str | None = None
-) -> tuple[float, float] | None:
+def get_target_vpd(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended VPD range for a plant type and stage."""
     return _lookup_range(_VPD_DATA, plant_type, stage)
 
 
-def get_target_photoperiod(
-    plant_type: str, stage: str | None = None
-) -> tuple[float, float] | None:
+def get_target_photoperiod(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended photoperiod range for a plant stage."""
     return _lookup_range(_PHOTOPERIOD_DATA, plant_type, stage)
 
@@ -2148,7 +2092,7 @@ def get_target_light_intensity(
     if not isinstance(data, Mapping):
         return None
     vals = data.get("light_ppfd")
-    if isinstance(vals, (list, tuple)) and len(vals) == 2:
+    if isinstance(vals, list | tuple) and len(vals) == 2:
         try:
             return float(vals[0]), float(vals[1])
         except (TypeError, ValueError):
@@ -2156,9 +2100,7 @@ def get_target_light_intensity(
     return None
 
 
-def get_target_co2(
-    plant_type: str, stage: str | None = None
-) -> tuple[float, float] | None:
+def get_target_co2(plant_type: str, stage: str | None = None) -> tuple[float, float] | None:
     """Return recommended CO₂ range in ppm for a plant stage."""
     guide = get_environment_guidelines(plant_type, stage)
     return guide.co2_ppm
@@ -2219,7 +2161,7 @@ def recommend_co2_injection(
     return calculate_co2_injection(current_ppm, target, volume_m3)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_co2_price(method: str) -> float:
     """Return price per kg of CO₂ for ``method``.
 
@@ -2231,7 +2173,7 @@ def get_co2_price(method: str) -> float:
         return 0.0
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_co2_efficiency(method: str) -> float:
     """Return delivery efficiency factor for a CO₂ injection method."""
 
@@ -2303,9 +2245,7 @@ def calculate_co2_cost_series(
 ) -> list[float]:
     """Return cost for CO₂ injections calculated for each reading."""
 
-    injections = calculate_co2_injection_series(
-        ppm_series, plant_type, stage, volume_m3
-    )
+    injections = calculate_co2_injection_series(ppm_series, plant_type, stage, volume_m3)
     return [estimate_co2_cost(g, method) for g in injections]
 
 
@@ -2343,9 +2283,7 @@ def calculate_environment_metrics(
         et_env = {
             "temp_c": temp_c,
             "rh_pct": humidity_pct,
-            "par_w_m2": env.get("par_w_m2")
-            or env.get("par")
-            or env.get("light_ppfd", 0),
+            "par_w_m2": env.get("par_w_m2") or env.get("par") or env.get("light_ppfd", 0),
             "wind_speed_m_s": env.get("wind_speed_m_s")
             or env.get("wind_m_s")
             or env.get("wind", 1.0),
@@ -2395,10 +2333,10 @@ def calculate_environment_metrics_series(
 
 
 def calculate_environment_metrics_dataframe(
-    df: "pd.DataFrame",
+    df: pd.DataFrame,
     plant_type: str | None = None,
     stage: str | None = None,
-) -> "pd.DataFrame":
+) -> pd.DataFrame:
     """Return :class:`EnvironmentMetrics` for each row of ``df``.
 
     Parameters
@@ -2437,7 +2375,7 @@ def optimize_environment(
     water_test: Mapping[str, float] | None = None,
     *,
     zone: str | None = None,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return optimized environment data for a plant.
 
     The result includes midpoint setpoints, adjustment suggestions and key
@@ -2496,9 +2434,7 @@ def optimize_environment(
     photoperiod_hours = None
     if target_dli and "light_ppfd" in readings:
         mid_target = sum(target_dli) / 2
-        photoperiod_hours = photoperiod_for_target_dli(
-            mid_target, readings["light_ppfd"]
-        )
+        photoperiod_hours = photoperiod_for_target_dli(mid_target, readings["light_ppfd"])
 
     current_dli = readings.get("dli")
     if current_dli is None and {
@@ -2506,9 +2442,7 @@ def optimize_environment(
         "photoperiod_hours",
     }.issubset(readings):
         try:
-            current_dli = calculate_dli(
-                readings["light_ppfd"], readings["photoperiod_hours"]
-            )
+            current_dli = calculate_dli(readings["light_ppfd"], readings["photoperiod_hours"])
         except ValueError:
             current_dli = None
 
@@ -2571,7 +2505,7 @@ def summarize_environment(
     *,
     zone: str | None = None,
     include_targets: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return a consolidated environment summary for a plant stage.
 
     Parameters
@@ -2621,9 +2555,7 @@ def summarize_environment(
 
     summary = EnvironmentSummary(
         quality=classify_environment_quality(readings, plant_type, stage),
-        adjustments=recommend_environment_adjustments(
-            readings, plant_type, stage, zone
-        ),
+        adjustments=recommend_environment_adjustments(readings, plant_type, stage, zone),
         metrics=metrics,
         score=score_environment(readings, plant_type, stage),
         stress=stress,
@@ -2643,7 +2575,7 @@ def summarize_environment_series(
     *,
     zone: str | None = None,
     include_targets: bool = False,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return summary for averaged environment readings.
 
     The ``series`` argument can be any iterable of reading mappings. Each

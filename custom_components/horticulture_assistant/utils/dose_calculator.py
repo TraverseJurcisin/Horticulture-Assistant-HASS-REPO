@@ -26,12 +26,11 @@ class DoseCalculator:
     in automations and tests.
     """
 
-
     @staticmethod
     def calculate_mass_dose(
         concentration: float,
         solution_volume: float,
-        concentration_unit: Literal["mg/L", "g/L", "oz/gal", "ppm"]
+        concentration_unit: Literal["mg/L", "g/L", "oz/gal", "ppm"],
     ) -> float:
         """Return grams of fertilizer for a target concentration.
 
@@ -52,10 +51,7 @@ class DoseCalculator:
         raise ValueError(f"Unsupported concentration unit: {concentration_unit}")
 
     @staticmethod
-    def calculate_volume_dose(
-        mass_dose: float,
-        product_density: float
-    ) -> float:
+    def calculate_volume_dose(mass_dose: float, product_density: float) -> float:
         """
         Converts a solid dose mass into volume dose for liquid fertilizer.
         :param mass_dose: dose in grams
@@ -68,9 +64,7 @@ class DoseCalculator:
 
     @staticmethod
     def estimate_ppm_from_dose(
-        mass_dose: float,
-        solution_volume: float,
-        concentration_unit: Literal["g/L", "mg/L", "ppm"]
+        mass_dose: float, solution_volume: float, concentration_unit: Literal["g/L", "mg/L", "ppm"]
     ) -> float:
         """Return the concentration derived from ``mass_dose``.
 
@@ -88,11 +82,7 @@ class DoseCalculator:
         raise ValueError("Unsupported unit")
 
     @staticmethod
-    def convert_unit(
-        value: float,
-        from_unit: str,
-        to_unit: str
-    ) -> float:
+    def convert_unit(value: float, from_unit: str, to_unit: str) -> float:
         """Return ``value`` converted from ``from_unit`` to ``to_unit``."""
 
         if from_unit == to_unit:

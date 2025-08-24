@@ -1,6 +1,6 @@
 from plant_engine.environment_manager import (
-    suggest_environment_setpoints_zone,
     generate_zone_environment_plan,
+    suggest_environment_setpoints_zone,
 )
 
 

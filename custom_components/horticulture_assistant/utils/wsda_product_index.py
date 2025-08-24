@@ -2,10 +2,9 @@ from __future__ import annotations
 
 """Lightweight access to the WSDA fertilizer products index."""
 
-import json
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict, Iterable, List, Mapping
+from functools import cache
 
 from plant_engine import wsda_loader
 
@@ -45,12 +44,12 @@ def _parse_record(rec: Mapping[str, object]) -> ProductEntry:
     )
 
 
-@lru_cache(maxsize=None)
-def _load_index() -> tuple[Dict[str, ProductEntry], Dict[str, ProductEntry], List[ProductEntry]]:
+@cache
+def _load_index() -> tuple[dict[str, ProductEntry], dict[str, ProductEntry], list[ProductEntry]]:
     """Return lookup maps keyed by product_id and wsda_reg_no."""
-    by_id: Dict[str, ProductEntry] = {}
-    by_no: Dict[str, ProductEntry] = {}
-    items: List[ProductEntry] = []
+    by_id: dict[str, ProductEntry] = {}
+    by_no: dict[str, ProductEntry] = {}
+    items: list[ProductEntry] = []
 
     for rec in wsda_loader.stream_index():
         item = _parse_record(rec)
@@ -61,7 +60,7 @@ def _load_index() -> tuple[Dict[str, ProductEntry], Dict[str, ProductEntry], Lis
     return by_id, by_no, items
 
 
-def list_products() -> List[ProductEntry]:
+def list_products() -> list[ProductEntry]:
     """Return all products from the index."""
     _, _, items = _load_index()
     return list(items)
@@ -88,7 +87,9 @@ def _match_query(item: ProductEntry, query: str, fields: Iterable[str]) -> bool:
     return False
 
 
-def search_products(query: str, *, fields: Iterable[str] = ("label_name", "brand"), limit: int = 10) -> List[ProductEntry]:
+def search_products(
+    query: str, *, fields: Iterable[str] = ("label_name", "brand"), limit: int = 10
+) -> list[ProductEntry]:
     """Return products matching ``query`` in any of the specified ``fields``."""
     if not query:
         return []

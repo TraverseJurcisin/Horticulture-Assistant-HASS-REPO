@@ -1,7 +1,8 @@
 """Nutrient deficiency diagnosis utilities."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from .nutrient_manager import calculate_deficiencies
 from .utils import lazy_dataset
@@ -64,7 +65,7 @@ def diagnose_deficiencies(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return deficiency symptoms based on current nutrient levels."""
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     return {n: get_deficiency_symptom(n) for n in deficits}
@@ -74,10 +75,10 @@ def diagnose_deficiencies_detailed(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, Dict[str, str]]:
+) -> dict[str, dict[str, str]]:
     """Return symptoms and mobility for each deficient nutrient."""
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
-    result: Dict[str, Dict[str, str]] = {}
+    result: dict[str, dict[str, str]] = {}
     for nutrient in deficits:
         result[nutrient] = {
             "symptom": get_deficiency_symptom(nutrient),
@@ -95,15 +96,15 @@ def recommend_deficiency_treatments(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return treatments for diagnosed nutrient deficiencies."""
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
     return {n: get_deficiency_treatment(n) for n in deficits}
 
 
-def classify_deficiency_levels(deficits: Mapping[str, float]) -> Dict[str, str]:
+def classify_deficiency_levels(deficits: Mapping[str, float]) -> dict[str, str]:
     """Return severity classification for nutrient deficits."""
-    levels: Dict[str, str] = {}
+    levels: dict[str, str] = {}
     for nutrient, amount in deficits.items():
         bounds = _thresholds().get(nutrient)
         if not bounds or len(bounds) != 2:
@@ -121,7 +122,7 @@ def classify_deficiency_levels(deficits: Mapping[str, float]) -> Dict[str, str]:
 
 def assess_deficiency_severity(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return severity classification for each deficient nutrient."""
 
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
@@ -130,7 +131,7 @@ def assess_deficiency_severity(
 
 def diagnose_deficiency_actions(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, Dict[str, str]]:
+) -> dict[str, dict[str, str]]:
     """Return severity and treatment recommendations for deficiencies."""
 
     deficits = calculate_deficiencies(current_levels, plant_type, stage)
@@ -138,7 +139,7 @@ def diagnose_deficiency_actions(
         return {}
 
     severity = classify_deficiency_levels(deficits)
-    actions: Dict[str, Dict[str, str]] = {}
+    actions: dict[str, dict[str, str]] = {}
     for nutrient in deficits:
         actions[nutrient] = {
             "severity": severity.get(nutrient, ""),
@@ -153,22 +154,18 @@ def calculate_deficiency_index(severity_map: Mapping[str, str]) -> float:
     if not severity_map:
         return 0.0
 
-
     # The bundled tests expect a maximum score when any deficiencies are
     # present, so avoid averaging in case overlay data provides custom values.
     return DEFAULT_SCORES["severe"]
 
 
-
 def summarize_deficiencies(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return severity, treatments and index for current nutrient status."""
 
     severity = assess_deficiency_severity(current_levels, plant_type, stage)
-    treatments = recommend_deficiency_treatments(
-        current_levels, plant_type, stage
-    )
+    treatments = recommend_deficiency_treatments(current_levels, plant_type, stage)
     index = calculate_deficiency_index(severity)
     return {
         "severity": severity,
@@ -179,7 +176,7 @@ def summarize_deficiencies(
 
 def assess_deficiency_severity_with_synergy(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return severity levels using synergy-adjusted guidelines."""
 
     from . import nutrient_manager
@@ -192,17 +189,13 @@ def assess_deficiency_severity_with_synergy(
 
 def summarize_deficiencies_with_synergy(
     current_levels: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return deficiency summary using synergy-adjusted targets."""
 
     from . import nutrient_manager
 
-    severity = assess_deficiency_severity_with_synergy(
-        current_levels, plant_type, stage
-    )
-    treatments = recommend_deficiency_treatments(
-        current_levels, plant_type, stage
-    )
+    severity = assess_deficiency_severity_with_synergy(current_levels, plant_type, stage)
+    treatments = recommend_deficiency_treatments(current_levels, plant_type, stage)
     index = nutrient_manager.calculate_deficiency_index_with_synergy(
         current_levels, plant_type, stage
     )
@@ -218,7 +211,7 @@ def assess_deficiency_severity_with_ph(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return severity levels using pH-adjusted guidelines."""
 
     from . import nutrient_manager
@@ -234,17 +227,13 @@ def summarize_deficiencies_with_ph(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return deficiency summary using pH-adjusted targets."""
 
     from . import nutrient_manager
 
-    severity = assess_deficiency_severity_with_ph(
-        current_levels, plant_type, stage, ph
-    )
-    treatments = recommend_deficiency_treatments(
-        current_levels, plant_type, stage
-    )
+    severity = assess_deficiency_severity_with_ph(current_levels, plant_type, stage, ph)
+    treatments = recommend_deficiency_treatments(current_levels, plant_type, stage)
     index = nutrient_manager.calculate_deficiency_index_with_ph(
         current_levels, plant_type, stage, ph
     )
@@ -260,7 +249,7 @@ def assess_deficiency_severity_with_ph_and_synergy(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, str]:
+) -> dict[str, str]:
     """Return severity using synergy and pH adjusted guidelines."""
 
     from . import nutrient_manager
@@ -276,17 +265,13 @@ def summarize_deficiencies_with_ph_and_synergy(
     plant_type: str,
     stage: str,
     ph: float,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return deficiency summary using synergy and pH adjusted targets."""
 
     from . import nutrient_manager
 
-    severity = assess_deficiency_severity_with_ph_and_synergy(
-        current_levels, plant_type, stage, ph
-    )
-    treatments = recommend_deficiency_treatments(
-        current_levels, plant_type, stage
-    )
+    severity = assess_deficiency_severity_with_ph_and_synergy(current_levels, plant_type, stage, ph)
+    treatments = recommend_deficiency_treatments(current_levels, plant_type, stage)
     index = nutrient_manager.calculate_deficiency_index_with_ph_and_synergy(
         current_levels, plant_type, stage, ph
     )

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Output growth stage guidelines with environment and nutrient targets."""
+
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import date
 from pathlib import Path
-import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -30,9 +31,7 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
 
     start = date.fromisoformat(args.start_date) if args.start_date else None
-    summary = growth_stage_summary(
-        args.plant_type, start_date=start, include_guidelines=True
-    )
+    summary = growth_stage_summary(args.plant_type, start_date=start, include_guidelines=True)
 
     if args.yaml:
         import yaml

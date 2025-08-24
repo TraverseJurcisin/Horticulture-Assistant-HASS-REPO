@@ -3,20 +3,22 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Mapping, Dict, Any
+from typing import Any
 
 try:
     from homeassistant.core import HomeAssistant
 except Exception:  # pragma: no cover - Home Assistant not available during tests
     HomeAssistant = None  # type: ignore
 
-from .plant_profile_loader import load_profile_by_id
-from .path_utils import plants_path
 from plant_engine.fertigation import (
-    recommend_precise_fertigation,
     get_fertigation_volume,
+    recommend_precise_fertigation,
 )
+
+from .path_utils import plants_path
+from .plant_profile_loader import load_profile_by_id
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,13 +33,13 @@ class FertigationPlan:
     fertilizer in grams.
     """
 
-    schedule: Dict[str, float]
+    schedule: dict[str, float]
     cost_total: float
-    cost_breakdown: Dict[str, float]
-    warnings: Dict[str, Dict[str, float]]
-    diagnostics: Dict[str, Dict[str, float]]
+    cost_breakdown: dict[str, float]
+    warnings: dict[str, dict[str, float]]
+    diagnostics: dict[str, dict[str, float]]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return the plan as a plain serialisable dictionary."""
         return {
             "schedule": self.schedule,

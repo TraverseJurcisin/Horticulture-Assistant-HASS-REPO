@@ -1,31 +1,32 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Any, Dict, List
+from dataclasses import asdict, dataclass
+from typing import Any
 
 __all__ = ["DailyReport"]
+
 
 @dataclass(slots=True)
 class DailyReport:
     """Container for daily plant processing results."""
 
     plant_id: str
-    thresholds: Dict[str, Any]
-    growth: Dict[str, Any]
-    transpiration: Dict[str, Any]
-    water_deficit: Dict[str, Any]
-    rootzone: Dict[str, Any]
-    nue: Dict[str, Any]
-    guidelines: Dict[str, Any]
-    nutrient_targets: Dict[str, Any]
-    environment_actions: Dict[str, Any]
-    environment_optimization: Dict[str, Any]
-    pest_actions: Dict[str, Any]
-    disease_actions: Dict[str, Any]
+    thresholds: dict[str, Any]
+    growth: dict[str, Any]
+    transpiration: dict[str, Any]
+    water_deficit: dict[str, Any]
+    rootzone: dict[str, Any]
+    nue: dict[str, Any]
+    guidelines: dict[str, Any]
+    nutrient_targets: dict[str, Any]
+    environment_actions: dict[str, Any]
+    environment_optimization: dict[str, Any]
+    pest_actions: dict[str, Any]
+    disease_actions: dict[str, Any]
     lifecycle_stage: str
-    stage_info: Dict[str, Any]
-    tags: List[str]
+    stage_info: dict[str, Any]
+    tags: list[str]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return the dataclass as a serializable dictionary."""
         return asdict(self)

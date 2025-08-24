@@ -126,9 +126,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
         except Exception as err:  # pragma: no cover - unexpected
             self.latency_ms = int((time.monotonic() - start) * 1000)
             self.retry_count += 1
-            warn_once(
-                _LOGGER, "UNEXPECTED", f"Unexpected error in AI coordinator: {err}"
-            )
+            warn_once(_LOGGER, "UNEXPECTED", f"Unexpected error in AI coordinator: {err}")
             _LOGGER.exception("AI update failed unexpectedly: %s", err)
             if self.retry_count > 3:
                 self.breaker_open = True

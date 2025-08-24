@@ -1,14 +1,14 @@
 """Helpers for plant height estimation based on growth stage."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict, Tuple
+from functools import cache
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "plants/plant_height_ranges.json"
 
-_DATA: Dict[str, Dict[str, Tuple[float, float]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, tuple[float, float]]] = load_dataset(DATA_FILE)
 
 __all__ = ["list_supported_plants", "get_height_range", "estimate_height"]
 
@@ -18,17 +18,14 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-@lru_cache(maxsize=None)
-def get_height_range(plant_type: str, stage: str) -> Tuple[float, float] | None:
+@cache
+def get_height_range(plant_type: str, stage: str) -> tuple[float, float] | None:
     """Return (min_cm, max_cm) height for ``plant_type`` at ``stage``."""
     plant = _DATA.get(normalize_key(plant_type))
     if not plant:
         return None
     values = plant.get(normalize_key(stage))
-    if (
-        isinstance(values, (list, tuple))
-        and len(values) == 2
-    ):
+    if isinstance(values, list | tuple) and len(values) == 2:
         try:
             low, high = float(values[0]), float(values[1])
             return low, high

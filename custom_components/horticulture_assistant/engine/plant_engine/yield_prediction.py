@@ -1,7 +1,6 @@
 """Utility functions for predicting crop yield from logged harvests."""
-from __future__ import annotations
 
-from typing import Dict
+from __future__ import annotations
 
 from .utils import load_dataset, normalize_key
 from .yield_manager import get_total_yield
@@ -9,7 +8,7 @@ from .yield_manager import get_total_yield
 DATA_FILE = "yield/yield_estimates.json"
 
 # Cached dataset loaded at import time
-_YIELD_DATA: Dict[str, float] = load_dataset(DATA_FILE)
+_YIELD_DATA: dict[str, float] = load_dataset(DATA_FILE)
 
 __all__ = ["list_supported_plants", "get_estimated_yield", "estimate_remaining_yield"]
 

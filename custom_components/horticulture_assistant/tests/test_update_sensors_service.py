@@ -1,13 +1,17 @@
-import json
 import asyncio
+import json
 from pathlib import Path
+
 from custom_components.horticulture_assistant.__init__ import update_sensors_service
+
 
 class DummyConfig:
     def __init__(self, base: Path):
         self._base = base
+
     def path(self, name: str) -> str:
         return str(self._base / name)
+
 
 class DummyHass:
     def __init__(self, base: Path):
@@ -30,7 +34,7 @@ def test_update_service(tmp_path: Path):
 
     asyncio.run(update_sensors_service(hass, call))
 
-    updated = json.load(open(plants / "p1.json", "r", encoding="utf-8"))
+    updated = json.load(open(plants / "p1.json", encoding="utf-8"))
     sensors = updated.get("general", {}).get("sensor_entities", {})
     assert sensors["moisture_sensors"] == ["new"]
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass
-from typing import Dict, Protocol
+from typing import Protocol
 
 try:
     import openai  # Optional, only if using OpenAI's API
@@ -36,20 +36,22 @@ class AIModelConfig:
 class BaseAIModel(Protocol):
     """Protocol all AI implementations must follow."""
 
-    def adjust_thresholds(self, data: Dict) -> Dict:
+    def adjust_thresholds(self, data: dict) -> dict:
         """Return updated thresholds for ``data``."""
         raise NotImplementedError
 
-    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+    async def adjust_thresholds_async(self, data: dict) -> dict:
         """Asynchronously return updated thresholds for ``data``."""
         return self.adjust_thresholds(data)
 
+
 # === Mock model ===
+
 
 class MockAIModel:
     """Offline fallback / placeholder model."""
 
-    def adjust_thresholds(self, data: Dict) -> Dict:
+    def adjust_thresholds(self, data: dict) -> dict:
         old_thresholds = data.get("thresholds", {})
         lifecycle = data.get("lifecycle_stage", "")
         adjusted = {}
@@ -67,12 +69,13 @@ class MockAIModel:
 
         return adjusted
 
-    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+    async def adjust_thresholds_async(self, data: dict) -> dict:
         """Asynchronous wrapper for :meth:`adjust_thresholds`."""
         return self.adjust_thresholds(data)
 
 
 # === OpenAI API wrapper ===
+
 
 class OpenAIModel:
     """Simple wrapper around the OpenAI API."""
@@ -80,7 +83,7 @@ class OpenAIModel:
     def __init__(self, config: AIModelConfig) -> None:
         self.config = config
 
-    def _messages(self, data: Dict) -> list[dict[str, str]]:
+    def _messages(self, data: dict) -> list[dict[str, str]]:
         """Return formatted prompt messages for ``data``."""
 
         return [
@@ -95,7 +98,7 @@ class OpenAIModel:
             {"role": "user", "content": f"Input data:\n{json.dumps(data, indent=2)}"},
         ]
 
-    def _call(self, data: Dict, async_mode: bool = False) -> Dict:
+    def _call(self, data: dict, async_mode: bool = False) -> dict:
         """Return updated thresholds synchronously or asynchronously."""
 
         if openai is None:
@@ -128,7 +131,7 @@ class OpenAIModel:
         except json.JSONDecodeError as exc:
             raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
 
-    async def adjust_thresholds_async(self, data: Dict) -> Dict:
+    async def adjust_thresholds_async(self, data: dict) -> dict:
         """Asynchronously return updated thresholds via OpenAI."""
 
         response = await self._call(data, async_mode=True)
@@ -138,13 +141,14 @@ class OpenAIModel:
         except json.JSONDecodeError as exc:
             raise ValueError("OpenAI returned non-JSON output:\n" + text) from exc
 
-    def adjust_thresholds(self, data: Dict) -> Dict:
+    def adjust_thresholds(self, data: dict) -> dict:
         """Return updated thresholds via OpenAI synchronously."""
 
         return self._call(data)
 
 
 # === Public Interface ===
+
 
 def get_model(config: AIModelConfig | None = None) -> BaseAIModel:
     """Return an AI model instance based on ``config``."""
@@ -153,14 +157,14 @@ def get_model(config: AIModelConfig | None = None) -> BaseAIModel:
     return OpenAIModel(cfg) if cfg.use_openai else MockAIModel()
 
 
-def analyze(data: Dict, config: AIModelConfig | None = None) -> Dict:
+def analyze(data: dict, config: AIModelConfig | None = None) -> dict:
     """Return updated thresholds using the configured AI model."""
 
     model = get_model(config)
     return model.adjust_thresholds(data)
 
 
-async def analyze_async(data: Dict, config: AIModelConfig | None = None) -> Dict:
+async def analyze_async(data: dict, config: AIModelConfig | None = None) -> dict:
     """Asynchronously return updated thresholds using the configured AI model."""
 
     model = get_model(config)

@@ -1,8 +1,8 @@
 from plant_engine.companion_manager import (
-    list_supported_plants,
     get_companion_info,
-    recommend_companions,
+    list_supported_plants,
     recommend_antagonists,
+    recommend_companions,
 )
 
 

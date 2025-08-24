@@ -2,26 +2,27 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict, field as dataclass_field
-from typing import Any, Dict, List, Optional
+from dataclasses import asdict, dataclass
+from dataclasses import field as dataclass_field
+from functools import cache
+from typing import Any
 
-from functools import lru_cache
 from . import (
-    environment_manager,
-    nutrient_manager,
-    micro_manager,
-    bioinoculant_manager,
     bioinoculant_info,
-    pest_manager,
-    pest_monitor,
+    bioinoculant_manager,
     disease_manager,
     disease_monitor,
-    ph_manager,
     ec_manager,
-    irrigation_manager,
+    environment_manager,
     growth_stage,
-    stage_tasks,
     height_manager,
+    irrigation_manager,
+    micro_manager,
+    nutrient_manager,
+    pest_manager,
+    pest_monitor,
+    ph_manager,
+    stage_tasks,
     water_usage,
 )
 
@@ -32,41 +33,39 @@ __all__ = ["GuidelineSummary", "get_guideline_summary"]
 class GuidelineSummary:
     """Container for consolidated plant guideline data."""
 
-    environment: Dict[str, Any]
-    nutrients: Dict[str, float]
-    micronutrients: Dict[str, float]
-    pest_guidelines: Dict[str, str]
-    disease_guidelines: Dict[str, str]
-    disease_prevention: Dict[str, str]
-    pest_prevention: Dict[str, str] = dataclass_field(default_factory=dict)
-    ipm_guidelines: Dict[str, str] = dataclass_field(default_factory=dict)
-    pest_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
-    disease_thresholds: Dict[str, int] = dataclass_field(default_factory=dict)
-    beneficial_insects: Dict[str, list[str]] = dataclass_field(default_factory=dict)
-    bioinoculants: List[str] = dataclass_field(default_factory=list)
-    bioinoculant_details: Dict[str, Dict[str, str]] = dataclass_field(
-        default_factory=dict
-    )
-    ph_range: List[float] = dataclass_field(default_factory=list)
-    ec_range: List[float] = dataclass_field(default_factory=list)
+    environment: dict[str, Any]
+    nutrients: dict[str, float]
+    micronutrients: dict[str, float]
+    pest_guidelines: dict[str, str]
+    disease_guidelines: dict[str, str]
+    disease_prevention: dict[str, str]
+    pest_prevention: dict[str, str] = dataclass_field(default_factory=dict)
+    ipm_guidelines: dict[str, str] = dataclass_field(default_factory=dict)
+    pest_thresholds: dict[str, int] = dataclass_field(default_factory=dict)
+    disease_thresholds: dict[str, int] = dataclass_field(default_factory=dict)
+    beneficial_insects: dict[str, list[str]] = dataclass_field(default_factory=dict)
+    bioinoculants: list[str] = dataclass_field(default_factory=list)
+    bioinoculant_details: dict[str, dict[str, str]] = dataclass_field(default_factory=dict)
+    ph_range: list[float] = dataclass_field(default_factory=list)
+    ec_range: list[float] = dataclass_field(default_factory=list)
     irrigation_volume_ml: float | None = None
     irrigation_interval_days: float | None = None
     pest_monitor_interval_days: int | None = None
     pest_sample_size: int | None = None
     disease_monitor_interval_days: int | None = None
     water_daily_ml: float | None = None
-    stage_info: Optional[Dict[str, Any]] = None
-    stages: Optional[List[str]] = None
-    stage_tasks: Dict[str, List[str]] = dataclass_field(default_factory=dict)
-    height_range: List[float] | None = None
+    stage_info: dict[str, Any] | None = None
+    stages: list[str] | None = None
+    stage_tasks: dict[str, list[str]] = dataclass_field(default_factory=dict)
+    height_range: list[float] | None = None
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return guidelines as a regular dictionary."""
         return asdict(self)
 
 
-@lru_cache(maxsize=None)
-def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str, Any]:
+@cache
+def get_guideline_summary(plant_type: str, stage: str | None = None) -> dict[str, Any]:
     """Return combined environment, nutrient and pest guidelines.
 
     The summary now also includes disease management, pH guidance,
@@ -95,12 +94,8 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
 
     summary = GuidelineSummary(
         environment=environment_manager.get_environmental_targets(plant_type, stage),
-        nutrients=nutrient_manager.get_recommended_levels(plant_type, stage)
-        if stage
-        else {},
-        micronutrients=micro_manager.get_recommended_levels(plant_type, stage)
-        if stage
-        else {},
+        nutrients=nutrient_manager.get_recommended_levels(plant_type, stage) if stage else {},
+        micronutrients=micro_manager.get_recommended_levels(plant_type, stage) if stage else {},
         pest_guidelines=pest_manager.get_pest_guidelines(plant_type),
         pest_prevention=pest_manager.get_pest_prevention(plant_type),
         ipm_guidelines=pest_manager.get_ipm_guidelines(plant_type),
@@ -114,21 +109,15 @@ def get_guideline_summary(plant_type: str, stage: str | None = None) -> Dict[str
         ph_range=ph_manager.get_ph_range(plant_type, stage),
         ec_range=list(ec_manager.get_ec_range(plant_type, stage) or []),
         irrigation_volume_ml=(
-            irrigation_manager.get_daily_irrigation_target(plant_type, stage)
-            if stage
-            else None
+            irrigation_manager.get_daily_irrigation_target(plant_type, stage) if stage else None
         ),
         irrigation_interval_days=(
-            irrigation_manager.get_recommended_interval(plant_type, stage)
-            if stage
-            else None
+            irrigation_manager.get_recommended_interval(plant_type, stage) if stage else None
         ),
         pest_monitor_interval_days=pest_interval,
         pest_sample_size=pest_monitor.get_sample_size(plant_type),
         disease_monitor_interval_days=disease_interval,
-        water_daily_ml=(
-            water_usage.get_daily_use(plant_type, stage) if stage else None
-        ),
+        water_daily_ml=(water_usage.get_daily_use(plant_type, stage) if stage else None),
         stage_info=growth_stage.get_stage_info(plant_type, stage) if stage else None,
         stages=None if stage else growth_stage.list_growth_stages(plant_type),
         stage_tasks=tasks,

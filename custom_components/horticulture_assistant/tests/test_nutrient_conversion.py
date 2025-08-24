@@ -1,4 +1,4 @@
-from plant_engine.nutrient_conversion import oxide_to_elemental, get_conversion_factors
+from plant_engine.nutrient_conversion import get_conversion_factors, oxide_to_elemental
 
 
 def test_conversion_factors_loaded():
@@ -18,7 +18,7 @@ def test_unknown_oxide():
     except KeyError:
         pass
     else:
-        assert False, "Expected KeyError"
+        raise AssertionError("Expected KeyError")
 
 
 def test_negative_amount():
@@ -27,4 +27,4 @@ def test_negative_amount():
     except ValueError:
         pass
     else:
-        assert False, "Expected ValueError"
+        raise AssertionError("Expected ValueError")

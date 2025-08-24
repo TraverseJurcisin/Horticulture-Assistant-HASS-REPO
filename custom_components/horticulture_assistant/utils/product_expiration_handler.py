@@ -1,10 +1,9 @@
 from datetime import datetime
-from typing import Optional
 
 
 def is_expired(
-    expiration_date: Optional[str],
-    current_date: Optional[str] = None,
+    expiration_date: str | None,
+    current_date: str | None = None,
 ) -> bool:
     """
     Check if a product is past its expiration date.
@@ -27,10 +26,10 @@ def is_expired(
 
 def should_warn_about_expiration(
     is_biological: bool,
-    expiration_date: Optional[str],
-    manufacture_date: Optional[str] = None,
+    expiration_date: str | None,
+    manufacture_date: str | None = None,
     temperature_sensitive: bool = False,
-    storage_temp_c: Optional[float] = None,
+    storage_temp_c: float | None = None,
 ) -> bool:
     """
     Determine whether a product should raise a warning based on expiration risk.

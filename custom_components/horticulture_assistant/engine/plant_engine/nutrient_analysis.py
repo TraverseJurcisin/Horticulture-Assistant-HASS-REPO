@@ -1,17 +1,18 @@
 """High level nutrient profile analysis helpers."""
+
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Dict, Mapping
+from collections.abc import Mapping
+from dataclasses import asdict, dataclass
 
+from .nutrient_interactions import check_imbalances
 from .nutrient_manager import (
-    get_all_recommended_levels,
     calculate_all_deficiencies,
     calculate_all_surplus,
     calculate_nutrient_balance,
+    get_all_recommended_levels,
     get_stage_ratio,
 )
-from .nutrient_interactions import check_imbalances
 from .toxicity_manager import check_toxicities
 
 __all__ = ["NutrientAnalysis", "analyze_nutrient_profile"]
@@ -21,17 +22,17 @@ __all__ = ["NutrientAnalysis", "analyze_nutrient_profile"]
 class NutrientAnalysis:
     """Detailed nutrient profile analysis results."""
 
-    recommended: Dict[str, float]
-    deficiencies: Dict[str, float]
-    surplus: Dict[str, float]
-    balance: Dict[str, float]
-    interaction_warnings: Dict[str, str]
-    toxicities: Dict[str, str]
-    ratio_guideline: Dict[str, float]
-    npk_ratio: Dict[str, float]
-    ratio_delta: Dict[str, float]
+    recommended: dict[str, float]
+    deficiencies: dict[str, float]
+    surplus: dict[str, float]
+    balance: dict[str, float]
+    interaction_warnings: dict[str, str]
+    toxicities: dict[str, str]
+    ratio_guideline: dict[str, float]
+    npk_ratio: dict[str, float]
+    ratio_delta: dict[str, float]
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         """Return the analysis as a regular dictionary."""
         return asdict(self)
 
@@ -47,7 +48,7 @@ def analyze_nutrient_profile(
     balance = calculate_nutrient_balance(current_levels, plant_type, stage)
     guideline_ratio = get_stage_ratio(plant_type, stage)
 
-    def _calc_ratio(levels: Mapping[str, float]) -> Dict[str, float]:
+    def _calc_ratio(levels: Mapping[str, float]) -> dict[str, float]:
         total = sum(float(levels.get(n, 0)) for n in ("N", "P", "K"))
         if total <= 0:
             return {"N": 0.0, "P": 0.0, "K": 0.0}

@@ -7,8 +7,7 @@ import pytest
 
 spec = importlib.util.spec_from_file_location(
     "opb_client",
-    Path(__file__).resolve().parents[1]
-    / "custom_components/horticulture_assistant/opb_client.py",
+    Path(__file__).resolve().parents[1] / "custom_components/horticulture_assistant/opb_client.py",
 )
 opb_module = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
@@ -51,7 +50,9 @@ async def test_search_returns_list():
 async def test_fetch_field_converts_to_float():
     dummy_hass = SimpleNamespace(
         helpers=SimpleNamespace(
-            aiohttp_client=SimpleNamespace(async_get_clientsession=MagicMock(return_value=MagicMock()))
+            aiohttp_client=SimpleNamespace(
+                async_get_clientsession=MagicMock(return_value=MagicMock())
+            )
         )
     )
     with patch.object(
@@ -70,7 +71,9 @@ async def test_fetch_field_uses_cache():
     opb_module._SPECIES_CACHE.clear()
     dummy_hass = SimpleNamespace(
         helpers=SimpleNamespace(
-            aiohttp_client=SimpleNamespace(async_get_clientsession=MagicMock(return_value=MagicMock()))
+            aiohttp_client=SimpleNamespace(
+                async_get_clientsession=MagicMock(return_value=MagicMock())
+            )
         )
     )
     with patch.object(

@@ -1,19 +1,21 @@
-from typing import List, Dict
-from custom_components.horticulture_assistant.utils.fertilizer_inventory import FertilizerProduct, FertilizerListing
+from custom_components.horticulture_assistant.utils.fertilizer_inventory import (
+    FertilizerListing,
+    FertilizerProduct,
+)
 
 
 class FertilizerDose:
     def __init__(self, listing: FertilizerListing, dose_amount: float, dose_unit: str):
         self.listing = listing
         self.dose_amount = dose_amount  # in g or mL
-        self.dose_unit = dose_unit      # "g" or "mL"
+        self.dose_unit = dose_unit  # "g" or "mL"
 
 
 class FertilizerRecipe:
     def __init__(self, recipe_id: str, target_volume_liters: float):
         self.recipe_id = recipe_id
         self.target_volume_liters = target_volume_liters
-        self.doses: List[FertilizerDose] = []
+        self.doses: list[FertilizerDose] = []
 
     def add_dose(self, dose: FertilizerDose):
         self.doses.append(dose)
@@ -25,7 +27,7 @@ class FertilizerRecipe:
             total += dose.dose_amount * cost_per_unit
         return round(total, 2)
 
-    def compute_total_ppm(self, product_lookup: Dict[str, FertilizerProduct]) -> Dict[str, float]:
+    def compute_total_ppm(self, product_lookup: dict[str, FertilizerProduct]) -> dict[str, float]:
         ppm_totals = {}
         for dose in self.doses:
             product = product_lookup[dose.listing.product_id]
@@ -49,7 +51,9 @@ class FertilizerRecipe:
 
         return {k: round(v, 2) for k, v in ppm_totals.items()}
 
-    def compute_ingredient_breakdown(self, product_lookup: Dict[str, FertilizerProduct]) -> Dict[str, Dict[str, float]]:
+    def compute_ingredient_breakdown(
+        self, product_lookup: dict[str, FertilizerProduct]
+    ) -> dict[str, dict[str, float]]:
         result = {}
         for dose in self.doses:
             product = product_lookup[dose.listing.product_id]

@@ -1,10 +1,10 @@
 from datetime import date
 
 from plant_engine.stage_tasks import (
+    generate_cycle_task_plan,
+    generate_task_schedule,
     get_stage_tasks,
     list_supported_plants,
-    generate_task_schedule,
-    generate_cycle_task_plan,
 )
 
 
@@ -21,9 +21,7 @@ def test_list_supported_plants():
 
 
 def test_generate_task_schedule():
-    schedule = generate_task_schedule(
-        "tomato", "vegetative", date(2025, 1, 1), days=15, interval=7
-    )
+    schedule = generate_task_schedule("tomato", "vegetative", date(2025, 1, 1), days=15, interval=7)
     assert len(schedule) == 3
     assert schedule[0].tasks
     assert schedule[0].date == date(2025, 1, 1)

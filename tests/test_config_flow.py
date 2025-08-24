@@ -1,12 +1,11 @@
-import pytest
-from unittest.mock import MagicMock, patch, AsyncMock
-
 import importlib.util
+import json
 import sys
 import types
 from pathlib import Path
-import json
+from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 DOMAIN = "horticulture_assistant"
@@ -51,10 +50,7 @@ def _mock_socket():
         instance = MagicMock()
 
         def connect(*args, **kwargs):
-            if (
-                not instance.setblocking.called
-                or instance.setblocking.call_args[0][0] is not False
-            ):
+            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
                 raise ValueError("the socket must be non-blocking")
 
         instance.connect.side_effect = connect
@@ -79,6 +75,7 @@ async def test_config_flow_user(hass):
         result2 = await flow.async_step_user({CONF_API_KEY: "abc"})
     assert result2["type"] == "form"
     assert result2["step_id"] == "profile"
+
     async def _run(func, *args):
         return func(*args)
 
@@ -97,10 +94,12 @@ async def test_config_flow_user(hass):
             side_effect=fake_generate,
         ) as gen_mock,
     ):
-        result3 = await flow.async_step_profile({
-            CONF_PLANT_NAME: "Mint",
-            CONF_PLANT_TYPE: "Herb",
-        })
+        result3 = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
         assert result3["type"] == "form"
         assert result3["step_id"] == "threshold_source"
         result4 = await flow.async_step_threshold_source({"method": "manual"})
@@ -121,17 +120,11 @@ async def test_config_flow_user(hass):
     }
     assert exec_mock.call_count == 3
     gen_mock.assert_called_once()
-    general = json.loads(
-        Path(hass.config.path("plants", "mint", "general.json")).read_text()
-    )
+    general = json.loads(Path(hass.config.path("plants", "mint", "general.json")).read_text())
     assert general["sensor_entities"] == {"moisture_sensors": ["sensor.good"]}
     assert general["plant_type"] == "herb"
     registry = json.loads(
-        Path(
-            hass.config.path(
-                "data", "local", "plants", "plant_registry.json"
-            )
-        ).read_text()
+        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
     )
     assert registry["mint"]["display_name"] == "Mint"
     assert registry["mint"]["plant_type"] == "Herb"
@@ -160,13 +153,17 @@ async def test_config_flow_profile_error(hass):
         return_value=None,
     ):
         await flow.async_step_user({CONF_API_KEY: "abc"})
+
     async def _run(func, *args):
         return ""
+
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
-        result = await flow.async_step_profile({
-            CONF_PLANT_NAME: "Mint",
-            CONF_PLANT_TYPE: "Herb",
-        })
+        result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
     assert result["type"] == "form"
     assert result["errors"] == {"base": "profile_error"}
 
@@ -179,10 +176,12 @@ async def test_config_flow_profile_requires_name(hass):
         return_value=None,
     ):
         await flow.async_step_user({CONF_API_KEY: "abc"})
-    result = await flow.async_step_profile({
-        CONF_PLANT_NAME: "",
-        CONF_PLANT_TYPE: "Herb",
-    })
+    result = await flow.async_step_profile(
+        {
+            CONF_PLANT_NAME: "",
+            CONF_PLANT_TYPE: "Herb",
+        }
+    )
     assert result["type"] == "form"
     assert result["errors"] == {CONF_PLANT_NAME: "required"}
 
@@ -195,16 +194,23 @@ async def test_config_flow_sensor_not_found(hass):
         return_value=None,
     ):
         await flow.async_step_user({CONF_API_KEY: "abc"})
+
     async def _run(func, *args):
         return func(*args)
-    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
-        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
-        return_value="mint",
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
     ):
-        await flow.async_step_profile({
-            CONF_PLANT_NAME: "Mint",
-            CONF_PLANT_TYPE: "Herb",
-        })
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
         await flow.async_step_threshold_source({"method": "manual"})
         await flow.async_step_thresholds({})
         result = await flow.async_step_sensors({"moisture_sensor": "sensor.bad"})
@@ -221,6 +227,7 @@ async def test_config_flow_without_sensors(hass):
         return_value=None,
     ):
         await flow.async_step_user({CONF_API_KEY: "abc"})
+
     async def _run(func, *args):
         return func(*args)
 
@@ -238,9 +245,7 @@ async def test_config_flow_without_sensors(hass):
     sensors = general.get("sensor_entities", {})
     assert all(not values for values in sensors.values())
     registry = json.loads(
-        Path(
-            hass.config.path("data", "local", "plants", "plant_registry.json")
-        ).read_text()
+        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
     )
     assert registry["rose"]["display_name"] == "Rose"
     assert "plant_type" not in registry["rose"]
@@ -373,9 +378,7 @@ async def test_options_force_refresh(hass, hass_admin_user):
         ) as gen_mock,
     ):
         await flow.async_step_init()
-        result = await flow.async_step_init(
-            {"species_display": "Tomato", "force_refresh": True}
-        )
+        result = await flow.async_step_init({"species_display": "Tomato", "force_refresh": True})
     assert result["type"] == "create_entry"
     assert result["data"]["species_display"] == "Tomato"
     gen_mock.assert_called_once()
@@ -405,6 +408,7 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
     assert data["opb_location_share"] == "country"
     assert data["opb_enable_upload"] is True
 
+
 async def test_config_flow_openplantbook_prefill(hass):
     flow = ConfigFlow()
     flow.hass = hass
@@ -426,9 +430,12 @@ async def test_config_flow_openplantbook_prefill(hass):
         path.write_text(json.dumps(data), encoding="utf-8")
         return plant_id
 
-    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
-        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
-        side_effect=fake_generate,
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
     ):
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint", CONF_PLANT_TYPE: "Herb"})
         with patch(
@@ -436,13 +443,23 @@ async def test_config_flow_openplantbook_prefill(hass):
         ) as mock_client:
             instance = mock_client.return_value
             instance.search = AsyncMock(return_value=[{"pid": "pid123", "display": "Mint"}])
-            instance.get_details = AsyncMock(return_value={"min_temp": 1, "max_temp": 2, "min_hum": 3, "max_hum": 4, "image_url": "http://example.com/img.jpg"})
+            instance.get_details = AsyncMock(
+                return_value={
+                    "min_temp": 1,
+                    "max_temp": 2,
+                    "min_hum": 3,
+                    "max_hum": 4,
+                    "image_url": "http://example.com/img.jpg",
+                }
+            )
             instance.download_image = AsyncMock(return_value="/local/mint.jpg")
             await flow.async_step_threshold_source({"method": "openplantbook"})
             await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
             await flow.async_step_opb_species_search({"query": "mint"})
             await flow.async_step_opb_species_select({"pid": "pid123"})
-        await flow.async_step_thresholds({"temperature_min": 1, "temperature_max": 2, "humidity_min": 3, "humidity_max": 4})
+        await flow.async_step_thresholds(
+            {"temperature_min": 1, "temperature_max": 2, "humidity_min": 3, "humidity_max": 4}
+        )
         hass.states.async_set("sensor.good", 0)
         result = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
     assert result["type"] == "create_entry"
@@ -477,17 +494,19 @@ async def test_config_flow_openplantbook_no_auto_download(hass):
     )
     flow._async_current_entries = MagicMock(return_value=[entry])
 
-    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
-        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
-        return_value="pid",
-    ), patch(
-        "custom_components.horticulture_assistant.config_flow.OpenPlantbookClient",
-    ) as mock_client:
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="pid",
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.OpenPlantbookClient",
+        ) as mock_client,
+    ):
         instance = mock_client.return_value
         instance.search = AsyncMock(return_value=[{"pid": "pid123", "display": "Mint"}])
-        instance.get_details = AsyncMock(
-            return_value={"image_url": "http://example.com/img.jpg"}
-        )
+        instance.get_details = AsyncMock(return_value={"image_url": "http://example.com/img.jpg"})
         instance.download_image = AsyncMock(return_value="/local/mint.jpg")
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
         await flow.async_step_threshold_source({"method": "openplantbook"})
@@ -515,9 +534,12 @@ async def test_config_flow_opb_missing_sdk(hass):
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
 
-    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
-        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
-        return_value="pid",
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="pid",
+        ),
     ):
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
         await flow.async_step_threshold_source({"method": "openplantbook"})
@@ -525,9 +547,7 @@ async def test_config_flow_opb_missing_sdk(hass):
             "custom_components.horticulture_assistant.config_flow.OpenPlantbookClient",
             side_effect=RuntimeError,
         ):
-            result = await flow.async_step_opb_credentials(
-                {"client_id": "id", "secret": "sec"}
-            )
+            result = await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
     assert result["type"] == "form"
     assert result["errors"] == {"base": "opb_missing"}
 
@@ -545,12 +565,16 @@ async def test_config_flow_opb_search_failure_falls_back(hass):
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
 
-    with patch.object(hass, "async_add_executor_job", side_effect=_run), patch(
-        "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
-        return_value="pid",
-    ), patch(
-        "custom_components.horticulture_assistant.config_flow.OpenPlantbookClient",
-    ) as mock_client:
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="pid",
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.OpenPlantbookClient",
+        ) as mock_client,
+    ):
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
         await flow.async_step_threshold_source({"method": "openplantbook"})
         instance = mock_client.return_value

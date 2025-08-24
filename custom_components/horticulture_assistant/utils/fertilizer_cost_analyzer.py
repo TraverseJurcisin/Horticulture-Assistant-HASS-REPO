@@ -9,8 +9,8 @@ active ingredient across options.
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Dict, Iterable
 
 try:
     from .unit_utils import UNIT_CONVERSIONS, to_base
@@ -28,8 +28,6 @@ except ImportError:  # pragma: no cover - fallback for direct execution
     to_base = mod.to_base  # type: ignore
 
 
-
-
 @dataclass
 class ProductOption:
     """Fertilizer purchase option."""
@@ -38,7 +36,7 @@ class ProductOption:
     quantity: float
     unit: str
     supplier: str
-    ingredients: Dict[str, float] | None = None
+    ingredients: dict[str, float] | None = None
 
     def price_per_unit(self) -> float:
         """Return price normalized to the base unit (kg or L)."""
@@ -68,9 +66,9 @@ def get_cheapest_option(options: Iterable[ProductOption]) -> ProductOption | Non
     return best
 
 
-def compare_ingredient_costs(options: Iterable[ProductOption]) -> Dict[str, float]:
+def compare_ingredient_costs(options: Iterable[ProductOption]) -> dict[str, float]:
     """Return lowest cost per mg for each ingredient across options."""
-    costs: Dict[str, float] = {}
+    costs: dict[str, float] = {}
     for opt in options:
         if not opt.ingredients:
             continue

@@ -1,13 +1,12 @@
 """Plant spacing guidelines and density calculations."""
+
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "plants/plant_density_guidelines.json"
 
-_DATA: Dict[str, float] = load_dataset(DATA_FILE)
+_DATA: dict[str, float] = load_dataset(DATA_FILE)
 
 __all__ = ["list_supported_plants", "get_spacing_cm", "plants_per_area"]
 
@@ -20,7 +19,7 @@ def list_supported_plants() -> list[str]:
 def get_spacing_cm(plant_type: str) -> float | None:
     """Return recommended in-row spacing in centimeters."""
     value = _DATA.get(normalize_key(plant_type))
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
 def plants_per_area(plant_type: str, area_m2: float) -> float | None:

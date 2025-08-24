@@ -35,7 +35,9 @@ class AIClient:
         self.provider = provider
         self.model = model
 
-    async def generate_setpoint(self, context: dict[str, Any]) -> tuple[float, float, str, list[str]]:
+    async def generate_setpoint(
+        self, context: dict[str, Any]
+    ) -> tuple[float, float, str, list[str]]:
         """Return (value, confidence, summary, links)."""
         session = async_get_clientsession(self.hass)
         key = context.get("key")
@@ -94,7 +96,10 @@ class AIClient:
             try:
                 async with session.post(
                     "https://api.openai.com/v1/chat/completions",
-                    headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "Content-Type": "application/json",
+                    },
                     data=json.dumps(body),
                     timeout=30,
                 ) as resp:

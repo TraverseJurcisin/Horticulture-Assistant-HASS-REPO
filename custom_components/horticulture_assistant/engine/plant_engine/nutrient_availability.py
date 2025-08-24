@@ -1,14 +1,15 @@
 """Nutrient availability estimation based on solution pH."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict, Iterable, Tuple
+from collections.abc import Iterable
+from functools import cache
 
-from .utils import load_dataset, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset
 
 DATA_FILE = "nutrients/nutrient_availability_ph.json"
 
-_DATA: Dict[str, Iterable[float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, Iterable[float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_nutrients",
@@ -17,16 +18,16 @@ __all__ = [
     "availability_for_all",
 ]
 
-Range = Tuple[float, float]
+Range = tuple[float, float]
 
 
-@lru_cache(maxsize=None)
+@cache
 def list_supported_nutrients() -> list[str]:
     """Return nutrient codes with availability data."""
     return list_dataset_entries(_DATA)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_optimal_ph(nutrient: str) -> Range | None:
     """Return optimal pH range for ``nutrient`` if known."""
     rng = _DATA.get(nutrient)
@@ -55,6 +56,6 @@ def availability_factor(nutrient: str, ph: float) -> float:
     return round(factor, 2)
 
 
-def availability_for_all(ph: float) -> Dict[str, float]:
+def availability_for_all(ph: float) -> dict[str, float]:
     """Return availability factors for all known nutrients at ``ph``."""
     return {n: availability_factor(n, ph) for n in list_supported_nutrients()}

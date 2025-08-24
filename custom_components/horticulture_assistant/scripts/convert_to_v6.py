@@ -1,4 +1,5 @@
-import json, sys
+import json
+import sys
 
 TEMPLATE = {
     "schema_version": "v6.0.0",
@@ -16,20 +17,15 @@ TEMPLATE = {
                 "cas": None,
                 "cipac": None,
                 "epa_reg_no": None,
-                "pmra_reg_no": None
+                "pmra_reg_no": None,
             },
-            "registration_numbers": {
-                "WSDA": None,
-                "CDFA": None,
-                "EU_FPR": None,
-                "others": []
-            },
+            "registration_numbers": {"WSDA": None, "CDFA": None, "EU_FPR": None, "others": []},
             "regulatory_details": {
                 "us_fifra_category": None,
                 "eu_pc_number": None,
                 "uk_hse_number": None,
                 "global_product_identifier": None,
-                "statuses": {}
+                "statuses": {},
             },
             "certifications": [],
             "biostimulant_categories": [],
@@ -38,12 +34,12 @@ TEMPLATE = {
                 "manufacturer_name": None,
                 "sites": [],
                 "batch_format": None,
-                "typical_shelf_life_months": None
+                "typical_shelf_life_months": None,
             },
             "quality_assurance": {
                 "qc_parameters": {},
                 "iso_certifications": [],
-                "last_qc_date": None
+                "last_qc_date": None,
             },
             "density_kg_l": None,
             "viscosity_cP": None,
@@ -55,16 +51,31 @@ TEMPLATE = {
                 "logKow": None,
                 "vapour_pressure_Pa": None,
                 "henry_constant_Pa_m3_mol": None,
-                "melting_point_c": None
+                "melting_point_c": None,
             },
             "particle_size_distribution": {},
             "crush_strength_N": None,
             "hygroscopicity_pct": None,
             "nutrients": {
-                "N_total": None, "N_ammoniacal": None, "N_nitrate": None, "N_urea": None,
-                "P": None, "K": None, "Ca": None, "Mg": None, "S": None,
-                "B": None, "Cl": None, "Cu": None, "Fe": None, "Mn": None,
-                "Mo": None, "Ni": None, "Zn": None, "Si": None, "Na": None
+                "N_total": None,
+                "N_ammoniacal": None,
+                "N_nitrate": None,
+                "N_urea": None,
+                "P": None,
+                "K": None,
+                "Ca": None,
+                "Mg": None,
+                "S": None,
+                "B": None,
+                "Cl": None,
+                "Cu": None,
+                "Fe": None,
+                "Mn": None,
+                "Mo": None,
+                "Ni": None,
+                "Zn": None,
+                "Si": None,
+                "Na": None,
             },
             "nutrients_verified": False,
             "heavy_metals": {
@@ -76,7 +87,7 @@ TEMPLATE = {
                 "Ni": {"value": None, "detected": False, "detection_limit": None},
                 "Pb": {"value": None, "detected": False, "detection_limit": None},
                 "Se": {"value": None, "detected": False, "detection_limit": None},
-                "Zn": {"value": None, "detected": False, "detection_limit": None}
+                "Zn": {"value": None, "detected": False, "detection_limit": None},
             },
             "heavy_metals_verified": False,
             "organic_contaminants": {},
@@ -96,7 +107,7 @@ TEMPLATE = {
                 "lc50_inhalation_mg_l_rat": None,
                 "skin_irritation": None,
                 "eye_irritation": None,
-                "sensitisation": None
+                "sensitisation": None,
             },
             "toxicology_refvals": {},
             "ecotox": {},
@@ -105,28 +116,23 @@ TEMPLATE = {
                 "classification": None,
                 "pictograms": [],
                 "signal_word": None,
-                "hazard_statements": []
+                "hazard_statements": [],
             },
             "transport": {
                 "un_number": None,
                 "dot_class": None,
                 "adr_class": None,
                 "imdg_class": None,
-                "iata_class": None
+                "iata_class": None,
             },
             "whmis_pictograms": [],
             "clp_precautionary_statements": [],
             "ehs_profile": {
                 "ppe_recommendations": None,
-                "ppe_details": {
-                    "body": None,
-                    "hand": None,
-                    "eye": None,
-                    "respiratory": None
-                },
+                "ppe_details": {"body": None, "hand": None, "eye": None, "respiratory": None},
                 "spill_response": None,
                 "disposal_instructions": None,
-                "environmental_statements": None
+                "environmental_statements": None,
             },
             "packaging": [
                 {
@@ -142,7 +148,7 @@ TEMPLATE = {
                     "returnable": False,
                     "recycled_content_pct": None,
                     "recyclability_code": None,
-                    "reuse_program": False
+                    "reuse_program": False,
                 }
             ],
             "storage_conditions": None,
@@ -171,7 +177,7 @@ TEMPLATE = {
             "digital_connectivity": {
                 "gs1_digital_link": None,
                 "smartlabel_url": None,
-                "qr_payload": None
+                "qr_payload": None,
             },
             "gs1_digital_twin_id": None,
             "packaging_verified": False,
@@ -189,7 +195,7 @@ TEMPLATE = {
                 "doses": [],
                 "tank_mix_compatibility": None,
                 "mode_of_action": None,
-                "general_notes": None
+                "general_notes": None,
             },
             "ingredient_estimates_mgkg": {},
             "data_quality_score": None,
@@ -198,9 +204,9 @@ TEMPLATE = {
             "notes": "",
             "created_at": None,
             "updated_by": None,
-            "last_updated": "2025-07-26T00:00:00Z"
+            "last_updated": "2025-07-26T00:00:00Z",
         }
-    ]
+    ],
 }
 
 
@@ -230,7 +236,9 @@ def convert(old):
     prod["label_name"] = old.get("metadata", {}).get("label_name")
     prod["brand"] = old.get("metadata", {}).get("registrant")
     prod["manufacturer"] = old.get("source_wsda_record", {}).get("company_info", {}).get("company")
-    prod["registration_numbers"]["WSDA"] = old.get("source_wsda_record", {}).get("wsda_product_number")
+    prod["registration_numbers"]["WSDA"] = old.get("source_wsda_record", {}).get(
+        "wsda_product_number"
+    )
     comp = old.get("composition", {})
     ga = comp.get("guaranteed_analysis", {})
     nutrients = prod["nutrients"]
@@ -249,7 +257,7 @@ def convert(old):
         "Manganese (Mn)": "Mn",
         "Molybdenum (Mo)": "Mo",
         "Sodium (Na)": "Na",
-        "Zinc (Zn)": "Zn"
+        "Zinc (Zn)": "Zn",
     }
     for k, v in ga.items():
         key = mapping.get(k)
@@ -266,7 +274,7 @@ def convert(old):
         "Nickel": "Ni",
         "Lead": "Pb",
         "Selenium": "Se",
-        "Zinc": "Zn"
+        "Zinc": "Zn",
     }
     for k, v in hm.items():
         dest = hm_map.get(k)
@@ -279,6 +287,7 @@ def convert(old):
                 prod["heavy_metals"][dest]["detection_limit"] = limit
     new["products"][0] = prod
     return new
+
 
 if __name__ == "__main__":
     infile = sys.argv[1]

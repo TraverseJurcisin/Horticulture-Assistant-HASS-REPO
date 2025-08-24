@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 import json
-import os
 import logging
+import os
 from datetime import datetime
 
 # Reuse the central evapotranspiration formulas from plant_engine
 from plant_engine.et_model import calculate_et0, calculate_eta
+
 from custom_components.horticulture_assistant.utils.path_utils import (
-    plants_path,
     data_path,
+    plants_path,
 )
 
 try:
@@ -20,12 +21,7 @@ except ImportError:
 _LOGGER = logging.getLogger(__name__)
 
 # Growth rate modifiers for each lifecycle stage (stage-based multiplier for vegetative growth)
-STAGE_GROWTH_MODIFIERS = {
-    "seedling": 0.5,
-    "vegetative": 1.0,
-    "flowering": 0.7,
-    "fruiting": 0.5
-}
+STAGE_GROWTH_MODIFIERS = {"seedling": 0.5, "vegetative": 1.0, "flowering": 0.7, "fruiting": 0.5}
 
 # Ideal environmental conditions (used for expected growth calculations)
 IDEAL_ENV_DEFAULT = {
@@ -33,10 +29,11 @@ IDEAL_ENV_DEFAULT = {
     "temp_c_max": 30.0,
     "temp_c_min": 22.0,
     "rh_pct": 65.0,
-    "par": 350.0,               # approximate PAR (W/m²) for a bright day
+    "par": 350.0,  # approximate PAR (W/m²) for a bright day
     "wind_speed_m_s": 1.2,
-    "elevation_m": 200.0
+    "elevation_m": 200.0,
 }
+
 
 def update_growth_index(
     hass: HomeAssistant | None,
@@ -57,22 +54,29 @@ def update_growth_index(
     profile = {}
     try:
         from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+
         base_dir = plants_path(hass)
         profile = load_profile(plant_id=plant_id, base_dir=base_dir)
     except Exception as e:
         _LOGGER.error("Could not load profile for plant %s: %s", plant_id, e)
         profile = {}
     if not profile:
-        _LOGGER.error("Plant profile for '%s' is missing or empty. Cannot update growth index.", plant_id)
+        _LOGGER.error(
+            "Plant profile for '%s' is missing or empty. Cannot update growth index.", plant_id
+        )
         return {}
 
     # Determine current lifecycle stage
-    stage = (profile.get("general", {}).get("lifecycle_stage")
-             or profile.get("general", {}).get("stage")
-             or "unknown")
+    stage = (
+        profile.get("general", {}).get("lifecycle_stage")
+        or profile.get("general", {}).get("stage")
+        or "unknown"
+    )
     stage_lower = str(stage).lower()
     # Get stage details (duration, optional growth modifiers)
-    stage_data = profile.get("stages", {}).get(stage, {}) or profile.get("stages", {}).get(stage_lower, {})
+    stage_data = profile.get("stages", {}).get(stage, {}) or profile.get("stages", {}).get(
+        stage_lower, {}
+    )
     stage_duration_days = stage_data.get("stage_duration") if isinstance(stage_data, dict) else None
 
     # Base temperature for GDD (threshold below which no growth accrues)
@@ -124,8 +128,12 @@ def update_growth_index(
             if light_val is not None:
                 # Rough conversion: ~1 W/m² per 120 lux for sunlight spectrum
                 par_val = light_val / 120.0
-                _LOGGER.debug("Approximating PAR from lux for %s: %s lux -> %.2f W/m²",
-                              plant_id, light_val, par_val)
+                _LOGGER.debug(
+                    "Approximating PAR from lux for %s: %s lux -> %.2f W/m²",
+                    plant_id,
+                    light_val,
+                    par_val,
+                )
         if par_val is not None:
             try:
                 par_val = float(par_val)
@@ -140,7 +148,9 @@ def update_growth_index(
             # No light data available for this day
             par_mj = 0.0
             dli_mol = 0.0
-            _LOGGER.warning("No light/DLI data for plant %s; setting growth index to 0 for today.", plant_id)
+            _LOGGER.warning(
+                "No light/DLI data for plant %s; setting growth index to 0 for today.", plant_id
+            )
 
     # Determine transpiration factor (daily water use) in liters
     if transpiration_ml is not None:
@@ -190,7 +200,9 @@ def update_growth_index(
         except (ValueError, TypeError):
             canopy_m2 = 0.25
         # Compute ET₀ and ETₐ (mm/day)
-        et0_mm = calculate_et0(temp_for_et, rh_for_et, solar_for_et, wind_m_s=wind_for_et, elevation_m=elev_for_et)
+        et0_mm = calculate_et0(
+            temp_for_et, rh_for_et, solar_for_et, wind_m_s=wind_for_et, elevation_m=elev_for_et
+        )
         eta_mm = calculate_eta(et0_mm, kc)
         # Convert ETa (mm) over the plant's canopy area to liters of water transpired
         et_liters = max(eta_mm * canopy_m2, 0.0)
@@ -223,7 +235,7 @@ def update_growth_index(
     # Load existing growth trends file (if any)
     try:
         if os.path.exists(trends_path):
-            with open(trends_path, "r", encoding="utf-8") as f:
+            with open(trends_path, encoding="utf-8") as f:
                 growth_trends = json.load(f)
         else:
             growth_trends = {}
@@ -243,7 +255,7 @@ def update_growth_index(
         "dli": round(dli_mol, 2) if dli_mol is not None else None,
         "par_mj": round(par_mj, 2),
         "et_liters": round(et_liters, 3),
-        "stage": stage
+        "stage": stage,
     }
 
     # Save updated trends to JSON
@@ -315,17 +327,23 @@ def update_growth_index(
             canopy_m2 = float(canopy_m2)
         except Exception:
             canopy_m2 = 0.25
-        et0_ideal = calculate_et0(ideal_temp, ideal_rh, ideal_par_w, wind_m_s=ideal_wind, elevation_m=ideal_elev)
+        et0_ideal = calculate_et0(
+            ideal_temp, ideal_rh, ideal_par_w, wind_m_s=ideal_wind, elevation_m=ideal_elev
+        )
         eta_ideal = calculate_eta(et0_ideal, kc)
         transp_l_ideal = max(eta_ideal * canopy_m2, 0.0)
-        base_vgi_ideal_day = ideal_gdd * (ideal_par_w * 0.0864) * transp_l_ideal  # use ideal PAR (W to MJ)
+        base_vgi_ideal_day = (
+            ideal_gdd * (ideal_par_w * 0.0864) * transp_l_ideal
+        )  # use ideal PAR (W to MJ)
         base_vgi_ideal_day = max(base_vgi_ideal_day, 0.0)
         # Use same stage growth factor for ideal scenario
         ideal_growth_factor = growth_factor
         vgi_ideal_day = base_vgi_ideal_day * ideal_growth_factor
         expected_stage_vgi_total = vgi_ideal_day * float(stage_duration_days)
         if expected_stage_vgi_total > 0:
-            stage_progress_vgi_pct = round(min((stage_vgi_total / expected_stage_vgi_total) * 100.0, 100.0), 1)
+            stage_progress_vgi_pct = round(
+                min((stage_vgi_total / expected_stage_vgi_total) * 100.0, 100.0), 1
+            )
         else:
             stage_progress_vgi_pct = 0.0
 
@@ -335,7 +353,7 @@ def update_growth_index(
         "vgi_today": vgi_today,
         "vgi_total": total_vgi,
         "days_tracked": days_tracked,
-        "stage": stage
+        "stage": stage,
     }
     if stage_progress_time_pct is not None:
         summary["stage_progress_time_pct"] = stage_progress_time_pct
@@ -344,8 +362,11 @@ def update_growth_index(
 
     _LOGGER.info(
         "Updated growth index for %s: VGI today=%.2f, total=%.2f, stage=%s (Stage progress: %.1f%% time, %.1f%% growth)",
-        plant_id, vgi_today, total_vgi, stage,
+        plant_id,
+        vgi_today,
+        total_vgi,
+        stage,
         stage_progress_time_pct if stage_progress_time_pct is not None else 0.0,
-        stage_progress_vgi_pct if stage_progress_vgi_pct is not None else 0.0
+        stage_progress_vgi_pct if stage_progress_vgi_pct is not None else 0.0,
     )
     return summary

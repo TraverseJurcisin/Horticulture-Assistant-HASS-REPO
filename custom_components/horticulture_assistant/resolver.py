@@ -32,7 +32,9 @@ class PreferenceResolver:
         changed = False
 
         for key, *_ in VARIABLE_SPECS:
-            res = await self._resolve_variable(entry, profile_id, key, sources.get(key), thresholds, entry.options)
+            res = await self._resolve_variable(
+                entry, profile_id, key, sources.get(key), thresholds, entry.options
+            )
             if res is None:
                 continue
             if thresholds.get(key) != res.value:
@@ -109,7 +111,9 @@ class PreferenceResolver:
                     )
             from .ai_client import AIClient
 
-            client = AIClient(self.hass, ai.get("provider", "openai"), ai.get("model", "gpt-4o-mini"))
+            client = AIClient(
+                self.hass, ai.get("provider", "openai"), ai.get("model", "gpt-4o-mini")
+            )
             context = {
                 "species": entry.options.get("profiles", {}).get(profile_id, {}).get("species"),
                 "location": self.hass.config.location_name,

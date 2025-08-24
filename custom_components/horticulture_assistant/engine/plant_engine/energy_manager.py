@@ -1,8 +1,9 @@
 """Energy usage estimation utilities for HVAC systems and lighting."""
+
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict, Iterable
+from collections.abc import Iterable
+from functools import cache
 
 from .utils import load_dataset, normalize_key
 
@@ -12,10 +13,10 @@ LIGHT_EFF_FILE = "light/light_efficiency.json"
 EMISSION_FILE = "energy/energy_emission_factors.json"
 
 # Cache datasets via load_dataset
-_HVAC_DATA: Dict[str, Dict[str, float]] = load_dataset(HVAC_FILE)
-_RATES: Dict[str, float] = load_dataset(RATE_FILE)
-_LIGHT_EFF: Dict[str, Dict[str, float]] = load_dataset(LIGHT_EFF_FILE)
-_EMISSION_FACTORS: Dict[str, float] = load_dataset(EMISSION_FILE)
+_HVAC_DATA: dict[str, dict[str, float]] = load_dataset(HVAC_FILE)
+_RATES: dict[str, float] = load_dataset(RATE_FILE)
+_LIGHT_EFF: dict[str, dict[str, float]] = load_dataset(LIGHT_EFF_FILE)
+_EMISSION_FACTORS: dict[str, float] = load_dataset(EMISSION_FILE)
 
 __all__ = [
     "get_energy_coefficient",
@@ -35,7 +36,7 @@ __all__ = [
 ]
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_energy_coefficient(system: str) -> float:
     """Return kWh per degree-day coefficient for an HVAC ``system``."""
     entry = _HVAC_DATA.get(normalize_key(system), {})
@@ -62,7 +63,7 @@ def estimate_hvac_energy(
     return round(kwh, 2)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_electricity_rate(region: str | None = None) -> float:
     """Return cost per kWh for ``region`` or the default rate."""
 
@@ -85,9 +86,7 @@ def estimate_lighting_energy(power_watts: float, hours: float) -> float:
     return round(kwh, 2)
 
 
-def estimate_lighting_cost(
-    power_watts: float, hours: float, region: str | None = None
-) -> float:
+def estimate_lighting_cost(power_watts: float, hours: float, region: str | None = None) -> float:
     """Return lighting energy cost for ``power_watts`` and ``hours``."""
 
     kwh = estimate_lighting_energy(power_watts, hours)
@@ -95,7 +94,7 @@ def estimate_lighting_cost(
     return round(kwh * rate, 2)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_emission_factor(source: str | None = None) -> float:
     """Return kg CO₂ per kWh emission factor for an energy ``source``."""
 
@@ -147,7 +146,7 @@ def estimate_hvac_emissions(
     return round(energy * factor, 3)
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_light_efficiency(fixture: str) -> float:
     """Return µmol per joule efficiency for a lighting ``fixture``."""
 
@@ -216,9 +215,7 @@ def estimate_hvac_cost_series(
 ) -> list[float]:
     """Return cost estimates for sequential HVAC setpoints."""
 
-    energies = estimate_hvac_energy_series(
-        start_temp_c, target_temps, hours_per_step, system
-    )
+    energies = estimate_hvac_energy_series(start_temp_c, target_temps, hours_per_step, system)
     rate = get_electricity_rate(region)
     return [round(e * rate, 2) for e in energies]
 
@@ -232,8 +229,6 @@ def estimate_hvac_emissions_series(
 ) -> list[float]:
     """Return emission estimates for sequential HVAC setpoints."""
 
-    energies = estimate_hvac_energy_series(
-        start_temp_c, target_temps, hours_per_step, system
-    )
+    energies = estimate_hvac_energy_series(start_temp_c, target_temps, hours_per_step, system)
     factor = get_emission_factor(source)
     return [round(e * factor, 3) for e in energies]

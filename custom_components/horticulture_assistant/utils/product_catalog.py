@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field, asdict
-from typing import Dict, List
+from dataclasses import asdict, dataclass, field
 
 
 @dataclass
@@ -18,7 +17,7 @@ class ProductPackaging:
         """Return price normalized to a single unit."""
         return self.price / self.volume if self.volume else 0.0
 
-    def describe(self) -> Dict:
+    def describe(self) -> dict:
         """Return a serialisable representation including unit cost."""
         data = asdict(self)
         data["cost_per_unit"] = self.cost_per_unit()
@@ -32,11 +31,11 @@ class FertilizerProduct:
     name: str
     manufacturer: str
     form: str
-    derived_from: List[str]
-    base_composition: Dict[str, float]
+    derived_from: list[str]
+    base_composition: dict[str, float]
     density_kg_per_L: float | None = None
     bio_based: bool = False
-    packaging_options: List[ProductPackaging] = field(default_factory=list)
+    packaging_options: list[ProductPackaging] = field(default_factory=list)
 
     def add_packaging(self, packaging: ProductPackaging) -> None:
         """Register an available package size."""
@@ -51,7 +50,7 @@ class FertilizerProduct:
         ]
         return min(prices) if prices else None
 
-    def describe(self) -> Dict:
+    def describe(self) -> dict:
         """Return a serialisable summary including best unit price."""
         data = asdict(self)
         data["best_price_per_unit"] = self.get_best_price_per_unit()

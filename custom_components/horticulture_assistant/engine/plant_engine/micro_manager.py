@@ -1,14 +1,15 @@
 """Micronutrient guideline utilities."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "nutrients/micronutrient_guidelines.json"
 
 # Cached dataset loaded once
-_DATA: Dict[str, Dict[str, Dict[str, float]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, dict[str, float]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -24,7 +25,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_recommended_levels(plant_type: str, stage: str) -> Dict[str, float]:
+def get_recommended_levels(plant_type: str, stage: str) -> dict[str, float]:
     """Return recommended micronutrient levels."""
     plant = _DATA.get(normalize_key(plant_type))
     if not plant:
@@ -38,7 +39,7 @@ def _calculate_diff(
     stage: str,
     *,
     mode: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return difference from guidelines for ``mode``.
 
     ``mode`` may be ``"deficit"`` or ``"surplus"``.
@@ -46,7 +47,7 @@ def _calculate_diff(
     """
 
     target = get_recommended_levels(plant_type, stage)
-    result: Dict[str, float] = {}
+    result: dict[str, float] = {}
     for nutrient, rec in target.items():
         try:
             current = float(current_levels.get(nutrient, 0.0))
@@ -64,7 +65,7 @@ def calculate_deficiencies(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return micronutrient deficiencies compared to guidelines."""
     return _calculate_diff(current_levels, plant_type, stage, mode="deficit")
 
@@ -73,7 +74,7 @@ def calculate_surplus(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return micronutrient surpluses above recommended levels."""
 
     return _calculate_diff(current_levels, plant_type, stage, mode="surplus")
@@ -83,11 +84,11 @@ def calculate_balance(
     current_levels: Mapping[str, float],
     plant_type: str,
     stage: str,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return ratio of current to recommended micronutrient levels."""
 
     target = get_recommended_levels(plant_type, stage)
-    ratios: Dict[str, float] = {}
+    ratios: dict[str, float] = {}
     for nutrient, rec in target.items():
         if rec <= 0:
             continue

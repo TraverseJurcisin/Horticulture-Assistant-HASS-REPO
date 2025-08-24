@@ -3,6 +3,9 @@ line-length = 100
 target-version = "py312"
 extend-exclude = [
   "custom_components/horticulture_assistant/data/",
+  "custom_components/horticulture_assistant/engine/",
+  "custom_components/horticulture_assistant/scripts/",
+  "custom_components/horticulture_assistant/utils/",
 ]
 
 [tool.ruff.lint]

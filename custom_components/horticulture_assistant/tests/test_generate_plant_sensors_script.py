@@ -3,7 +3,7 @@ from pathlib import Path
 
 import yaml
 
-from scripts.generate_plant_sensors import generate_template_yaml, generate_from_directory
+from scripts.generate_plant_sensors import generate_from_directory, generate_template_yaml
 
 
 def _sample_report():
@@ -12,7 +12,7 @@ def _sample_report():
         "transpiration": {"transpiration_ml_day": 150},
         "water_deficit": {"ml_available": 500, "depletion_pct": 0.25, "mad_crossed": False},
         "nue": {"nue": {"N": 1.5}},
-        "thresholds": {"N": 100}
+        "thresholds": {"N": 100},
     }
 
 

@@ -1,13 +1,14 @@
 """Dissolved oxygen management utilities."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "water/dissolved_oxygen_guidelines.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",

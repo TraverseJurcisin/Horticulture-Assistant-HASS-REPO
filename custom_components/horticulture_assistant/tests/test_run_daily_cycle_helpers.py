@@ -1,12 +1,10 @@
-import pytest
-
 from custom_components.horticulture_assistant.engine.run_daily_cycle import (
-    _summarize_irrigation,
     _aggregate_nutrients,
     _average_sensor_data,
+    _build_root_zone_info,
     _compute_expected_uptake,
     _load_logs,
-    _build_root_zone_info,
+    _summarize_irrigation,
 )
 
 

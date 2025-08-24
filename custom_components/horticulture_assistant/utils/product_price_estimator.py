@@ -1,11 +1,8 @@
-from typing import Dict, List
-
-
 def calculate_cost_per_element_ppm(
     price_usd: float,
     weight_kg: float,
-    composition: Dict[str, float],
-) -> Dict[str, float]:
+    composition: dict[str, float],
+) -> dict[str, float]:
     """
     Estimate the cost (in USD) per ppm of each element provided by a fertilizer product.
 
@@ -29,9 +26,9 @@ def calculate_cost_per_element_ppm(
 
 
 def compare_product_prices(
-    products: List[Dict],
+    products: list[dict],
     element: str,
-) -> List[Dict]:
+) -> list[dict]:
     """
     Given a list of fertilizer products, compare them by cost per ppm for a specific element.
 
@@ -54,11 +51,13 @@ def compare_product_prices(
 
         ppm_cost = cost.get(element)
         if ppm_cost is not None:
-            estimates.append({
-                "name": name,
-                "cost_per_ppm": round(ppm_cost, 5),
-                "price": product["price"],
-                "weight_kg": product["weight_kg"],
-            })
+            estimates.append(
+                {
+                    "name": name,
+                    "cost_per_ppm": round(ppm_cost, 5),
+                    "price": product["price"],
+                    "weight_kg": product["weight_kg"],
+                }
+            )
 
     return sorted(estimates, key=lambda x: x["cost_per_ppm"])

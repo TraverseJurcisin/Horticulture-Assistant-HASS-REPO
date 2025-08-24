@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional
 
 from .product_inventory import ProductInventory
 
@@ -17,7 +16,7 @@ class UsageEvent:
     batch_id: str
     amount: float
     unit: str
-    zone: Optional[str] = None
+    zone: str | None = None
     date: datetime = field(default_factory=datetime.now)
 
 
@@ -26,15 +25,15 @@ class UsageForecaster:
 
     def __init__(self, inventory: ProductInventory) -> None:
         self.inventory = inventory
-        self.usage_log: Dict[str, List[UsageEvent]] = {}
+        self.usage_log: dict[str, list[UsageEvent]] = {}
 
     def apply_product(
         self,
         product_id: str,
         amount: float,
         unit: str,
-        zone: Optional[str] = None,
-        date: Optional[datetime] = None,
+        zone: str | None = None,
+        date: datetime | None = None,
     ) -> str:
         """Deduct ``amount`` from inventory and log the usage.
 
@@ -57,7 +56,7 @@ class UsageForecaster:
         self.usage_log.setdefault(product_id, []).append(event)
         return batch_id
 
-    def forecast_runout(self, product_id: str, lookback_days: int = 30) -> Optional[float]:
+    def forecast_runout(self, product_id: str, lookback_days: int = 30) -> float | None:
         """Return estimated days until ``product_id`` is depleted.
 
         Uses the average daily usage over the last ``lookback_days`` days. If no

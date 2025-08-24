@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from functools import lru_cache
-from typing import Dict, List, Optional
 
 from .json_io import load_json, save_json
 from .path_utils import data_path
@@ -15,6 +14,7 @@ ZONE_REGISTRY_FILE = "zones.json"
 def _registry_path(hass=None) -> str:
     """Return the absolute path to ``zones.json`` under ``data/local``."""
     return data_path(hass, "local", ZONE_REGISTRY_FILE)
+
 
 __all__ = [
     "ZoneConfig",
@@ -37,22 +37,22 @@ class ZoneConfig:
     """Configuration for an irrigation zone."""
 
     zone_id: str
-    solenoids: List[str]
-    plant_ids: List[str]
+    solenoids: list[str]
+    plant_ids: list[str]
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
 @lru_cache(maxsize=1)
-def _load_registry(path: str) -> Dict[str, ZoneConfig]:
+def _load_registry(path: str) -> dict[str, ZoneConfig]:
     try:
         raw = load_json(path)
     except FileNotFoundError:
         return {}
     except Exception:  # pragma: no cover - invalid file
         return {}
-    registry: Dict[str, ZoneConfig] = {}
+    registry: dict[str, ZoneConfig] = {}
     for zid, data in raw.items():
         sol = data.get("solenoids") or []
         plants = data.get("plant_ids") or []
@@ -60,36 +60,34 @@ def _load_registry(path: str) -> Dict[str, ZoneConfig]:
     return registry
 
 
-def load_zones(hass=None) -> Dict[str, ZoneConfig]:
+def load_zones(hass=None) -> dict[str, ZoneConfig]:
     """Return mapping of zone_id to :class:`ZoneConfig`."""
 
     path = _registry_path(hass)
     return _load_registry(path)
 
 
-def get_zone(zone_id: str, hass=None) -> Optional[ZoneConfig]:
+def get_zone(zone_id: str, hass=None) -> ZoneConfig | None:
     """Return zone configuration for ``zone_id`` if available."""
 
     zones = load_zones(hass)
     return zones.get(str(zone_id))
 
 
-def list_zones(hass=None) -> List[str]:
+def list_zones(hass=None) -> list[str]:
     """Return all known zone IDs sorted alphabetically."""
 
     return sorted(load_zones(hass).keys())
 
 
-def zones_for_plant(plant_id: str, hass=None) -> List[str]:
+def zones_for_plant(plant_id: str, hass=None) -> list[str]:
     """Return zone IDs containing ``plant_id`` sorted alphabetically."""
 
     pid = str(plant_id)
-    return sorted(
-        zid for zid, zone in load_zones(hass).items() if pid in zone.plant_ids
-    )
+    return sorted(zid for zid, zone in load_zones(hass).items() if pid in zone.plant_ids)
 
 
-def save_zones(zones: Dict[str, ZoneConfig], hass=None) -> bool:
+def save_zones(zones: dict[str, ZoneConfig], hass=None) -> bool:
     """Persist ``zones`` to ``zones.json``."""
 
     path = _registry_path(hass)
@@ -102,8 +100,9 @@ def save_zones(zones: Dict[str, ZoneConfig], hass=None) -> bool:
     return True
 
 
-def add_zone(zone_id: str, solenoids: List[str] | None = None,
-             plant_ids: List[str] | None = None, hass=None) -> bool:
+def add_zone(
+    zone_id: str, solenoids: list[str] | None = None, plant_ids: list[str] | None = None, hass=None
+) -> bool:
     """Add a new irrigation zone and persist it.
 
     Returns ``False`` if the zone already exists.
@@ -112,13 +111,11 @@ def add_zone(zone_id: str, solenoids: List[str] | None = None,
     zones = load_zones(hass)
     if str(zone_id) in zones:
         return False
-    zones[str(zone_id)] = ZoneConfig(
-        str(zone_id), list(solenoids or []), list(plant_ids or [])
-    )
+    zones[str(zone_id)] = ZoneConfig(str(zone_id), list(solenoids or []), list(plant_ids or []))
     return save_zones(zones, hass)
 
 
-def attach_plants(zone_id: str, plant_ids: List[str], hass=None) -> bool:
+def attach_plants(zone_id: str, plant_ids: list[str], hass=None) -> bool:
     """Attach ``plant_ids`` to ``zone_id`` and persist the registry."""
 
     zones = load_zones(hass)
@@ -131,7 +128,7 @@ def attach_plants(zone_id: str, plant_ids: List[str], hass=None) -> bool:
     return save_zones(zones, hass)
 
 
-def detach_plants(zone_id: str, plant_ids: List[str], hass=None) -> bool:
+def detach_plants(zone_id: str, plant_ids: list[str], hass=None) -> bool:
     """Remove ``plant_ids`` from ``zone_id`` and persist the registry."""
 
     zones = load_zones(hass)
@@ -142,7 +139,7 @@ def detach_plants(zone_id: str, plant_ids: List[str], hass=None) -> bool:
     return save_zones(zones, hass)
 
 
-def attach_solenoids(zone_id: str, solenoids: List[str], hass=None) -> bool:
+def attach_solenoids(zone_id: str, solenoids: list[str], hass=None) -> bool:
     """Attach ``solenoids`` to ``zone_id`` and persist the registry."""
 
     zones = load_zones(hass)
@@ -155,7 +152,7 @@ def attach_solenoids(zone_id: str, solenoids: List[str], hass=None) -> bool:
     return save_zones(zones, hass)
 
 
-def detach_solenoids(zone_id: str, solenoids: List[str], hass=None) -> bool:
+def detach_solenoids(zone_id: str, solenoids: list[str], hass=None) -> bool:
     """Remove ``solenoids`` from ``zone_id`` and persist the registry."""
 
     zones = load_zones(hass)

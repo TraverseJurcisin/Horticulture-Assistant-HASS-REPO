@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
 import logging
-from typing import Dict
+from datetime import datetime, timedelta
 
-_LAST: Dict[str, datetime] = {}
+_LAST: dict[str, datetime] = {}
 _WINDOW = timedelta(seconds=60)
 
 

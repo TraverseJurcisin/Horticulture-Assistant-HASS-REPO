@@ -7,8 +7,8 @@ irrigation schedule.  ``Schedule.from_dict`` converts the loosely-typed mapping
 stored in plant profiles into a structured object.
 """
 
-from dataclasses import dataclass, asdict
-from typing import Dict, Iterable, List, Mapping, Optional
+from collections.abc import Iterable, Mapping
+from dataclasses import asdict, dataclass
 
 __all__ = ["Schedule", "parse_schedule"]
 
@@ -18,13 +18,13 @@ class Schedule:
     """Representation of an irrigation schedule."""
 
     method: str
-    time: Optional[str] = None
-    duration_min: Optional[float] = None
-    volume_l: Optional[float] = None
-    target_moisture_pct: Optional[float] = None
-    pulses: Optional[Dict[str, List[str]]] = None
+    time: str | None = None
+    duration_min: float | None = None
+    volume_l: float | None = None
+    target_moisture_pct: float | None = None
+    pulses: dict[str, list[str]] | None = None
 
-    def as_dict(self) -> Dict[str, object]:
+    def as_dict(self) -> dict[str, object]:
         return asdict(self)
 
     # ------------------------------------------------------------------
@@ -32,10 +32,10 @@ class Schedule:
     # ------------------------------------------------------------------
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, object]) -> "Schedule":
+    def from_dict(cls, data: Mapping[str, object]) -> Schedule:
         """Create an instance from a generic mapping."""
 
-        def _to_float(val: object) -> Optional[float]:
+        def _to_float(val: object) -> float | None:
             try:
                 return float(val)  # type: ignore[arg-type]
             except Exception:
@@ -50,7 +50,7 @@ class Schedule:
 
         pulses = data.get("pulses")
         if isinstance(pulses, Mapping):
-            parsed: Dict[str, List[str]] = {
+            parsed: dict[str, list[str]] = {
                 phase: [str(t) for t in times]
                 for phase, times in pulses.items()
                 if isinstance(times, Iterable)

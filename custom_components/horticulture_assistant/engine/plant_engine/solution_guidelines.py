@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
-from typing import Dict, Iterable, Mapping
+from collections.abc import Iterable, Mapping
+from dataclasses import asdict, dataclass
 
-from .utils import load_dataset, list_dataset_entries, normalize_key, parse_range
+from .utils import list_dataset_entries, load_dataset, normalize_key, parse_range
 
 DATA_FILE = "solution/solution_guidelines.json"
 
-_DATA: Dict[str, Dict[str, Mapping[str, Iterable[float]]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, Mapping[str, Iterable[float]]]] = load_dataset(DATA_FILE)
+
 
 @dataclass(slots=True, frozen=True)
 class SolutionGuidelines:
@@ -16,8 +17,8 @@ class SolutionGuidelines:
     temp_c: tuple[float, float] | None = None
     do_mg_l: tuple[float, float] | None = None
 
-    def as_dict(self) -> Dict[str, list[float]]:
-        result: Dict[str, list[float]] = {}
+    def as_dict(self) -> dict[str, list[float]]:
+        result: dict[str, list[float]] = {}
         for key, val in asdict(self).items():
             if val is not None:
                 result[key] = [float(val[0]), float(val[1])]
@@ -42,12 +43,10 @@ def get_solution_guidelines(plant_type: str, stage: str) -> SolutionGuidelines:
     )
 
 
-def evaluate_solution(
-    readings: Mapping[str, float], plant_type: str, stage: str
-) -> Dict[str, str]:
+def evaluate_solution(readings: Mapping[str, float], plant_type: str, stage: str) -> dict[str, str]:
     """Return 'low' or 'high' indicators when readings fall outside ranges."""
     guide = get_solution_guidelines(plant_type, stage)
-    result: Dict[str, str] = {}
+    result: dict[str, str] = {}
     if guide.ec is not None and "ec" in readings:
         if readings["ec"] < guide.ec[0]:
             result["ec"] = "low"

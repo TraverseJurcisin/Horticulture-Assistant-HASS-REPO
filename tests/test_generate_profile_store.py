@@ -1,24 +1,35 @@
 import sys
 import types
-from typing import Any, Dict
+from typing import Any
 from unittest.mock import AsyncMock, patch
 
 import pytest
+
+from custom_components.horticulture_assistant.resolver import generate_profile
 
 ha = types.ModuleType("homeassistant")
 ha.const = types.SimpleNamespace(Platform=types.SimpleNamespace(SENSOR="sensor"))
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.const", ha.const)
 config_entries = types.ModuleType("homeassistant.config_entries")
+
+
 class ConfigEntry:  # minimal stub
     pass
+
+
 config_entries.ConfigEntry = ConfigEntry
 sys.modules.setdefault("homeassistant.config_entries", config_entries)
 sys.modules.setdefault("homeassistant.exceptions", types.ModuleType("homeassistant.exceptions"))
 helpers = types.ModuleType("homeassistant.helpers")
 sys.modules.setdefault("homeassistant.helpers", helpers)
-sys.modules.setdefault("homeassistant.helpers.entity_registry", types.ModuleType("homeassistant.helpers.entity_registry"))
-sys.modules.setdefault("homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event"))
+sys.modules.setdefault(
+    "homeassistant.helpers.entity_registry",
+    types.ModuleType("homeassistant.helpers.entity_registry"),
+)
+sys.modules.setdefault(
+    "homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event")
+)
 update_coordinator = types.ModuleType("homeassistant.helpers.update_coordinator")
 
 
@@ -34,8 +45,6 @@ util = types.ModuleType("homeassistant.util")
 util.slugify = lambda x: x
 sys.modules.setdefault("homeassistant.util", util)
 
-from custom_components.horticulture_assistant.resolver import generate_profile
-
 
 class DummyEntry:
     def __init__(self, options):
@@ -48,7 +57,9 @@ def make_hass():
 
     return types.SimpleNamespace(
         config_entries=types.SimpleNamespace(async_update_entry=update_entry),
-        helpers=types.SimpleNamespace(aiohttp_client=types.SimpleNamespace(async_get_clientsession=AsyncMock())),
+        helpers=types.SimpleNamespace(
+            aiohttp_client=types.SimpleNamespace(async_get_clientsession=AsyncMock())
+        ),
     )
 
 
@@ -114,9 +125,7 @@ async def test_async_load_profiles_returns_dataclasses(monkeypatch):
         "p2": {
             "plant_id": "p2",
             "display_name": "Two",
-            "variables": {
-                "temp": {"value": 2, "source": "manual", "citations": []}
-            },
+            "variables": {"temp": {"value": 2, "source": "manual", "citations": []}},
         },
     }
 
@@ -139,7 +148,7 @@ async def test_async_load_profiles_returns_dataclasses(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_async_save_profile_accepts_dataclass(monkeypatch):
-    saved: Dict[str, Dict[str, Any]] = {}
+    saved: dict[str, dict[str, Any]] = {}
 
     class DummyStore:
         async def async_save(self, data):
@@ -157,12 +166,12 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
         fake_load_all,
     )
 
-    from custom_components.horticulture_assistant.profile.store import (
-        async_save_profile,
-    )
     from custom_components.horticulture_assistant.profile.schema import (
         PlantProfile,
         VariableValue,
+    )
+    from custom_components.horticulture_assistant.profile.store import (
+        async_save_profile,
     )
 
     profile = PlantProfile(

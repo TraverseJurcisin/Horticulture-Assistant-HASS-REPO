@@ -2,19 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 from .fertigation import (
-    recommend_loss_adjusted_fertigation,
     get_fertigation_interval,
+    recommend_loss_adjusted_fertigation,
 )
 
 __all__ = ["generate_fertigation_plan"]
 
 
-def generate_fertigation_plan(
-    plant_type: str, stage: str, volume_l: float
-) -> Dict[str, Any]:
+def generate_fertigation_plan(plant_type: str, stage: str, volume_l: float) -> dict[str, Any]:
     """Return fertigation schedule and interval for a plant stage.
 
     The schedule is loss-adjusted using dataset factors and includes an
@@ -29,8 +27,8 @@ def generate_fertigation_plan(
     ``interval_days`` - recommended days between fertigation events
     """
 
-    schedule, cost, breakdown, warnings, diagnostics = (
-        recommend_loss_adjusted_fertigation(plant_type, stage, volume_l)
+    schedule, cost, breakdown, warnings, diagnostics = recommend_loss_adjusted_fertigation(
+        plant_type, stage, volume_l
     )
 
     interval = get_fertigation_interval(plant_type, stage)

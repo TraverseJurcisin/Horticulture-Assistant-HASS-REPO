@@ -1,19 +1,20 @@
 import json
+
 import pytest
 from plant_engine.nutrient_manager import (
-    get_recommended_levels,
-    get_all_recommended_levels,
-    calculate_deficiencies,
     calculate_all_deficiencies,
+    calculate_all_nutrient_balance,
+    calculate_all_surplus,
+    calculate_deficiencies,
+    calculate_deficiency_index,
     calculate_nutrient_balance,
     calculate_surplus,
-    calculate_all_surplus,
-    calculate_all_nutrient_balance,
+    get_all_recommended_levels,
     get_npk_ratio,
+    get_recommended_levels,
     get_stage_ratio,
     score_nutrient_levels,
     score_nutrient_series,
-    calculate_deficiency_index,
 )
 
 
@@ -96,7 +97,9 @@ def test_score_nutrient_levels_weighted(tmp_path, monkeypatch):
     (overlay / "nutrients" / "nutrient_weights.json").write_text(json.dumps(weights))
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
+
     import plant_engine.nutrient_manager as nm
+
     importlib.reload(nm)
     current = {"N": 80, "P": 30, "K": 60}
     score = nm.score_nutrient_levels(current, "tomato", "fruiting")
@@ -142,8 +145,8 @@ def test_score_nutrient_series():
 
 def test_calculate_deficiency_index_series():
     from plant_engine.nutrient_manager import (
-        calculate_deficiency_index_series,
         calculate_deficiency_index,
+        calculate_deficiency_index_series,
         get_all_recommended_levels,
     )
 
@@ -287,9 +290,7 @@ def test_calculate_all_deficiencies_with_ph_and_synergy():
         "B": 0.5,
     }
 
-    deficits = calculate_all_deficiencies_with_ph_and_synergy(
-        current, "tomato", "fruiting", 7.5
-    )
+    deficits = calculate_all_deficiencies_with_ph_and_synergy(current, "tomato", "fruiting", 7.5)
 
     assert deficits["P"] > 0
     assert deficits["Fe"] > 0
@@ -343,14 +344,10 @@ def test_calculate_deficiency_index_with_ph_and_synergy():
 
     guidelines = get_ph_synergy_adjusted_levels("tomato", "fruiting", 6.5)
     current = {n: 0 for n in guidelines}
-    idx = calculate_deficiency_index_with_ph_and_synergy(
-        current, "tomato", "fruiting", 6.5
-    )
+    idx = calculate_deficiency_index_with_ph_and_synergy(current, "tomato", "fruiting", 6.5)
     assert 99 <= idx <= 100
 
-    idx2 = calculate_deficiency_index_with_ph_and_synergy(
-        guidelines, "tomato", "fruiting", 6.5
-    )
+    idx2 = calculate_deficiency_index_with_ph_and_synergy(guidelines, "tomato", "fruiting", 6.5)
     assert idx2 == 0.0
 
 
@@ -393,12 +390,8 @@ def test_calculate_deficiency_index_with_temperature():
 
     guidelines = get_temperature_adjusted_levels("tomato", "fruiting", 15)
     current = {n: 0 for n in guidelines}
-    idx = calculate_deficiency_index_with_temperature(
-        current, "tomato", "fruiting", 15
-    )
+    idx = calculate_deficiency_index_with_temperature(current, "tomato", "fruiting", 15)
     assert 99 <= idx <= 100
 
-    idx2 = calculate_deficiency_index_with_temperature(
-        guidelines, "tomato", "fruiting", 15
-    )
+    idx2 = calculate_deficiency_index_with_temperature(guidelines, "tomato", "fruiting", 15)
     assert idx2 == 0.0

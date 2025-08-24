@@ -1,16 +1,16 @@
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from statistics import mean
 
 from custom_components.horticulture_assistant.utils.path_utils import (
-    plants_path,
     data_path,
+    plants_path,
 )
-
 from custom_components.horticulture_assistant.utils.plant_profile_loader import (
     load_plant_profile,
 )
+
 from ..utils.json_io import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ def _load_log(log_path):
 
 
 def _filter_last_24h(entries):
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     threshold = now - timedelta(days=1)
     return [
         e
@@ -59,7 +59,7 @@ def build_daily_report(
         "sensor_summary": {},
         "visual_summary": {},
         "yield": None,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
     }
 
     # Load profile and current thresholds
@@ -119,9 +119,7 @@ def build_daily_report(
 
     # Ensure output path exists
     Path(output_path).mkdir(parents=True, exist_ok=True)
-    out_file = (
-        Path(output_path) / f"{plant_id}_{datetime.now(timezone.utc).date()}.json"
-    )
+    out_file = Path(output_path) / f"{plant_id}_{datetime.now(UTC).date()}.json"
     try:
         save_json(str(out_file), report)
         _LOGGER.info("Saved daily report for %s to %s", plant_id, out_file)

@@ -2,12 +2,12 @@ import pytest
 
 pytest.importorskip("dafe.main")
 
-from dafe import (
-    get_species_profile,
-    get_media_profile,
+from dafe import (  # noqa: E402
     calculate_effective_diffusion,
     generate_pulse_schedule,
     get_current_ec,
+    get_media_profile,
+    get_species_profile,
     load_config,
 )
 
@@ -20,9 +20,7 @@ def test_generate_pulse_schedule():
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
     wc = species.ideal_wc_plateau - 0.01
-    D_eff = calculate_effective_diffusion(
-        1e-5, wc, media.porosity, media.tortuosity
-    )
+    D_eff = calculate_effective_diffusion(1e-5, wc, media.porosity, media.tortuosity)
     base_volume = int(30 + D_eff * 100000)
 
     schedule = generate_pulse_schedule(
@@ -36,9 +34,7 @@ def test_generate_pulse_schedule():
         hours=6,
     )
     assert schedule
-    assert all(
-        "time" in p and "volume" in p and "mass_mg" in p for p in schedule
-    )
+    assert all("time" in p and "volume" in p and "mass_mg" in p for p in schedule)
 
     high_ec_schedule = generate_pulse_schedule(
         wc, 3.0, D_eff, species, media, nutrient_params={"D_base": 1e-5}
@@ -57,9 +53,7 @@ def test_custom_pulse_window():
     species = get_species_profile("Cannabis_sativa")
     media = get_media_profile("coco_coir")
     wc = species.ideal_wc_plateau - 0.01
-    D_eff = calculate_effective_diffusion(
-        1e-5, wc, media.porosity, media.tortuosity
-    )
+    D_eff = calculate_effective_diffusion(1e-5, wc, media.porosity, media.tortuosity)
 
     schedule = generate_pulse_schedule(
         wc,
@@ -80,8 +74,8 @@ def test_custom_pulse_window():
 @pytest.mark.skip(reason="dafe CLI not available")
 def test_main_json_output():
     import json
-    import sys
     import subprocess
+    import sys
 
     result1 = subprocess.run(
         [sys.executable, "-m", "dafe.main", "--json", "--hours=2"],

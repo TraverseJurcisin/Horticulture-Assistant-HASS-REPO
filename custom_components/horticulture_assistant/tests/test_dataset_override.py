@@ -36,12 +36,8 @@ def test_dataset_overlay_deep(tmp_path, monkeypatch):
     overlay = tmp_path / "overlay"
     base.mkdir()
     overlay.mkdir()
-    (base / "sample.json").write_text(
-        json.dumps({"foo": {"a": 1, "b": 2}, "bar": 2})
-    )
-    (overlay / "sample.json").write_text(
-        json.dumps({"foo": {"b": 5, "c": 9}})
-    )
+    (base / "sample.json").write_text(json.dumps({"foo": {"a": 1, "b": 2}, "bar": 2}))
+    (overlay / "sample.json").write_text(json.dumps({"foo": {"b": 5, "c": 9}}))
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(base))
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))

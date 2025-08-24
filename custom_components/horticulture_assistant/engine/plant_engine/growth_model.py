@@ -1,7 +1,8 @@
 """Wrapper for advanced growth index logic."""
+
 from __future__ import annotations
 
-from typing import Mapping, Dict
+from collections.abc import Mapping
 
 from custom_components.horticulture_assistant.utils.growth_model import (
     update_growth_index as _advanced_update,
@@ -16,6 +17,6 @@ def update_growth_index(
     plant_id: str,
     env_data: Mapping,
     transpiration_ml: float,
-) -> Dict:
+) -> dict:
     """Return vegetative growth index using the shared util implementation."""
     return _advanced_update(None, plant_id, dict(env_data), transpiration_ml)

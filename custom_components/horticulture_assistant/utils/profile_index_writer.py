@@ -1,9 +1,10 @@
-import os
 import json
 import logging
+import os
 from pathlib import Path
 
 _LOGGER = logging.getLogger(__name__)
+
 
 def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
     """
@@ -49,19 +50,28 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     profiles_index = {}
     # Scan for all JSON profile files in the plant directory
     try:
-        for file_path in sorted([p for p in plant_dir.iterdir() if p.is_file() and p.suffix.lower() == ".json"], key=lambda x: x.name):
+        for file_path in sorted(
+            [p for p in plant_dir.iterdir() if p.is_file() and p.suffix.lower() == ".json"],
+            key=lambda x: x.name,
+        ):
             if file_path.name == "profile_index.json":
                 continue  # skip the index file itself
             stat_info = file_path.stat()
             profiles_index[file_path.name] = {
                 "exists": True,
                 "last_updated": int(stat_info.st_mtime),
-                "size": stat_info.st_size
+                "size": stat_info.st_size,
             }
             # Log each profile indexed with metadata
             from datetime import datetime
+
             ts_str = datetime.fromtimestamp(stat_info.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
-            _LOGGER.info("Indexed profile file: %s (last_updated: %s, size: %d bytes)", file_path, ts_str, stat_info.st_size)
+            _LOGGER.info(
+                "Indexed profile file: %s (last_updated: %s, size: %d bytes)",
+                file_path,
+                ts_str,
+                stat_info.st_size,
+            )
     except Exception as e:
         _LOGGER.error("Failed to scan profiles for plant '%s': %s", plant_id, e)
         return ""
@@ -81,7 +91,10 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     # Log summary of indexing
     total_profiles = len(profiles_index)
     from datetime import datetime
+
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    _LOGGER.info("Profile index generated for '%s' with %d profiles at %s", plant_id, total_profiles, now_str)
+    _LOGGER.info(
+        "Profile index generated for '%s' with %d profiles at %s", plant_id, total_profiles, now_str
+    )
 
     return plant_id

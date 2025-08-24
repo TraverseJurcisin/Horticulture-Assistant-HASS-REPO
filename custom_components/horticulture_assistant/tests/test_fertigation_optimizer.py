@@ -1,4 +1,3 @@
-import pytest
 from plant_engine import fertigation_optimizer
 
 
@@ -12,9 +11,7 @@ def test_generate_fertigation_plan_basic(monkeypatch):
     monkeypatch.setattr(
         fertigation_optimizer, "recommend_loss_adjusted_fertigation", fake_recommend
     )
-    monkeypatch.setattr(
-        fertigation_optimizer, "get_fertigation_interval", fake_interval
-    )
+    monkeypatch.setattr(fertigation_optimizer, "get_fertigation_interval", fake_interval)
 
     plan = fertigation_optimizer.generate_fertigation_plan("lettuce", "seedling", 10)
     assert plan["interval_days"] == 1

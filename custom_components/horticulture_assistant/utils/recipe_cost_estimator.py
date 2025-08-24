@@ -1,14 +1,13 @@
 """Helpers for estimating fertigation recipe costs."""
 
-from typing import Dict
 
 
 def estimate_recipe_cost(
-    product_dose_rates: Dict[str, float],
-    product_costs_per_unit: Dict[str, float],
+    product_dose_rates: dict[str, float],
+    product_costs_per_unit: dict[str, float],
     total_volume_liters: float,
     unit_type: str = "L",
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return cost estimate for a nutrient recipe.
 
     Parameters
@@ -30,7 +29,7 @@ def estimate_recipe_cost(
     if total_volume_liters <= 0:
         raise ValueError("total_volume_liters must be positive")
 
-    product_cost_breakdown: Dict[str, float] = {}
+    product_cost_breakdown: dict[str, float] = {}
     total_cost = 0.0
 
     for product_id, dose_per_liter in product_dose_rates.items():

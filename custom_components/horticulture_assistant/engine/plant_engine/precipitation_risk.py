@@ -1,13 +1,14 @@
 """Mineral precipitation risk assessment utilities."""
+
 from __future__ import annotations
 
-from typing import Dict, Iterable, Mapping
+from collections.abc import Iterable, Mapping
 
-from .utils import load_dataset, list_dataset_entries, normalize_key
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "species/species_precipitation_risk.json"
 
-_DATA: Dict[str, Iterable[Dict[str, object]]] = load_dataset(DATA_FILE)
+_DATA: dict[str, Iterable[dict[str, object]]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -21,7 +22,7 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_precipitation_rules(plant_type: str) -> Iterable[Dict[str, object]]:
+def get_precipitation_rules(plant_type: str) -> Iterable[dict[str, object]]:
     """Return precipitation risk rules for ``plant_type``."""
     data = _DATA.get(normalize_key(plant_type))
     return data if isinstance(data, Iterable) else []
@@ -32,7 +33,7 @@ def estimate_precipitation_risk(
     dosing_history: Mapping[str, float],
     ph: float,
     ec: float,
-) -> Dict[str, Dict[str, object]]:
+) -> dict[str, dict[str, object]]:
     """Return precipitation risk levels for ``plant_type``.
 
     Parameters
@@ -48,7 +49,7 @@ def estimate_precipitation_risk(
     """
 
     rules = get_precipitation_rules(plant_type)
-    risks: Dict[str, Dict[str, object]] = {}
+    risks: dict[str, dict[str, object]] = {}
     for rule in rules:
         nutrients = rule.get("nutrients")
         if not isinstance(nutrients, Iterable):

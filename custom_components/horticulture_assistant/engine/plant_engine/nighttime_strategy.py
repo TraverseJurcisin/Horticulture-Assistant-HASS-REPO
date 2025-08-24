@@ -1,13 +1,12 @@
 """Nighttime optimization guidelines for each plant species."""
+
 from __future__ import annotations
 
-from typing import Dict, Mapping
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "nighttime/nighttime_strategies.json"
 
-_DATA: Dict[str, Dict[str, object]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, object]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
@@ -21,18 +20,18 @@ def list_supported_plants() -> list[str]:
     return list_dataset_entries(_DATA)
 
 
-def get_nighttime_strategy(plant_type: str) -> Dict[str, object]:
+def get_nighttime_strategy(plant_type: str) -> dict[str, object]:
     """Return nighttime strategy mapping for ``plant_type``."""
     return _DATA.get(normalize_key(plant_type), {})
 
 
-def recommend_nighttime_actions(plant_type: str) -> Dict[str, object]:
+def recommend_nighttime_actions(plant_type: str) -> dict[str, object]:
     """Return recommended nighttime actions for ``plant_type``."""
     strategy = get_nighttime_strategy(plant_type)
     if not strategy:
         return {}
 
-    actions: Dict[str, object] = {}
+    actions: dict[str, object] = {}
     if not strategy.get("irrigate", True):
         actions["skip_irrigation"] = True
     else:

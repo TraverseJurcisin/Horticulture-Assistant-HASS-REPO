@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timedelta, timezone
+from collections.abc import Mapping
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from statistics import mean
-from typing import Mapping
 
 from plant_engine.nutrient_uptake import get_daily_uptake
 from plant_engine.rootzone_model import estimate_water_capacity
@@ -39,7 +39,7 @@ def load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
     except Exception:
         return []
 
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
+    cutoff = datetime.now(UTC) - timedelta(hours=hours)
     result: list[dict] = []
     for entry in data:
         ts = entry.get("timestamp")

@@ -1,14 +1,13 @@
 """Simple engine for fertilizer and irrigation suggestions."""
 
 from dataclasses import dataclass
-from functools import lru_cache
-from typing import Dict, List, Optional
+from functools import cache
 
-from plant_engine.irrigation_manager import get_daily_irrigation_target
 from plant_engine.environment_manager import (
     generate_environment_alerts,
     optimize_environment,
 )
+from plant_engine.irrigation_manager import get_daily_irrigation_target
 
 
 @dataclass
@@ -25,7 +24,7 @@ class FertilizerRecommendation:
 @dataclass
 class IrrigationRecommendation:
     volume_liters: float
-    zones: List[str]
+    zones: list[str]
     justification: str
 
 
@@ -33,16 +32,16 @@ class IrrigationRecommendation:
 class EnvironmentRecommendation:
     """Recommended environment adjustments and target setpoints."""
 
-    adjustments: Dict[str, str]
-    setpoints: Dict[str, float]
+    adjustments: dict[str, str]
+    setpoints: dict[str, float]
 
 
 @dataclass
 class RecommendationBundle:
-    fertilizers: List[FertilizerRecommendation]
-    irrigation: Optional[IrrigationRecommendation]
-    environment: Optional[EnvironmentRecommendation]
-    notes: List[str]
+    fertilizers: list[FertilizerRecommendation]
+    irrigation: IrrigationRecommendation | None
+    environment: EnvironmentRecommendation | None
+    notes: list[str]
     requires_approval: bool
 
 
@@ -60,13 +59,13 @@ class RecommendationEngine:
     def __init__(self) -> None:
         """Initialize empty state containers."""
         self.auto_approve = False
-        self.plant_profiles: Dict[str, Dict] = {}
-        self.sensor_data: Dict[str, Dict] = {}
-        self.product_availability: Dict[str, Dict] = {}
-        self.ai_feedback: Dict[str, Dict] = {}
-        self.environment_data: Dict[str, Dict] = {}
+        self.plant_profiles: dict[str, dict] = {}
+        self.sensor_data: dict[str, dict] = {}
+        self.product_availability: dict[str, dict] = {}
+        self.ai_feedback: dict[str, dict] = {}
+        self.environment_data: dict[str, dict] = {}
         # Internal mapping of nutrient element -> product id
-        self._element_map: Dict[str, str] = {}
+        self._element_map: dict[str, str] = {}
 
     # ------------------------------------------------------------------
     # Update helpers
@@ -76,15 +75,15 @@ class RecommendationEngine:
         """Enable or disable automatic approval of recommendations."""
         self.auto_approve = value
 
-    def update_plant_profile(self, plant_id: str, profile_data: Dict) -> None:
+    def update_plant_profile(self, plant_id: str, profile_data: dict) -> None:
         """Store profile information for ``plant_id``."""
         self.plant_profiles[plant_id] = profile_data
 
-    def update_sensor_data(self, plant_id: str, sensor_payload: Dict) -> None:
+    def update_sensor_data(self, plant_id: str, sensor_payload: dict) -> None:
         """Record the latest sensor payload for ``plant_id``."""
         self.sensor_data[plant_id] = sensor_payload
 
-    def update_product_availability(self, product_payload: Dict) -> None:
+    def update_product_availability(self, product_payload: dict) -> None:
         """Set the currently available fertilizer products.
 
         The nutrient-to-product cache is rebuilt whenever availability changes
@@ -95,7 +94,7 @@ class RecommendationEngine:
 
     def _refresh_element_map(self) -> None:
         """Rebuild the nutrient element lookup cache."""
-        mapping: Dict[str, str] = {}
+        mapping: dict[str, str] = {}
         for pid, data in self.product_availability.items():
             for element in data.get("elements", []):
                 mapping.setdefault(element, pid)
@@ -110,15 +109,15 @@ class RecommendationEngine:
         self.environment_data.clear()
         self._element_map.clear()
 
-    def recommend_all(self) -> Dict[str, RecommendationBundle]:
+    def recommend_all(self) -> dict[str, RecommendationBundle]:
         """Return recommendations for every known plant."""
         return {pid: self.recommend(pid) for pid in self.plant_profiles.keys()}
 
-    def update_ai_feedback(self, plant_id: str, ai_feedback: Dict) -> None:
+    def update_ai_feedback(self, plant_id: str, ai_feedback: dict) -> None:
         """Cache AI feedback notes for ``plant_id``."""
         self.ai_feedback[plant_id] = ai_feedback
 
-    def update_environment_data(self, plant_id: str, env_payload: Dict) -> None:
+    def update_environment_data(self, plant_id: str, env_payload: dict) -> None:
         """Record latest environmental readings for ``plant_id``."""
         self.environment_data[plant_id] = env_payload
 
@@ -126,14 +125,14 @@ class RecommendationEngine:
     # Recommendation logic
     # ------------------------------------------------------------------
 
-    @lru_cache(maxsize=None)
+    @cache
     def _get_irrigation_target(self, plant_type: str, stage: str) -> float:
         """Return daily irrigation volume (mL) for a plant stage."""
         if not plant_type or not stage:
             return 0.0
         return get_daily_irrigation_target(plant_type, stage)
 
-    def _calculate_nutrient_deficits(self, plant_id: str) -> Dict[str, float]:
+    def _calculate_nutrient_deficits(self, plant_id: str) -> dict[str, float]:
         """Return ppm deficits using dataset guidelines."""
         profile = self.plant_profiles.get(plant_id, {})
         plant_type = profile.get("plant_type")
@@ -152,9 +151,7 @@ class RecommendationEngine:
             return {}
         return calculate_all_deficiencies(current, plant_type, stage)
 
-    def _generate_environment_recs(
-        self, plant_id: str
-    ) -> Optional[EnvironmentRecommendation]:
+    def _generate_environment_recs(self, plant_id: str) -> EnvironmentRecommendation | None:
         """Return environment optimization suggestions for ``plant_id``."""
 
         env = self.environment_data.get(plant_id)
@@ -173,7 +170,7 @@ class RecommendationEngine:
         except Exception:
             return None
 
-    def _generate_fertilizer_recs(self, plant_id: str) -> List[FertilizerRecommendation]:
+    def _generate_fertilizer_recs(self, plant_id: str) -> list[FertilizerRecommendation]:
         """Return fertilizer recommendations based on nutrient deficiencies."""
 
         deficits = self._calculate_nutrient_deficits(plant_id)
@@ -192,7 +189,7 @@ class RecommendationEngine:
         except Exception:
             severity_map = {}
 
-        recommendations: List[FertilizerRecommendation] = []
+        recommendations: list[FertilizerRecommendation] = []
         for nutrient, deficit in deficits.items():
             product = self._select_best_product(nutrient)
             if not product:
@@ -213,7 +210,7 @@ class RecommendationEngine:
         profile = self.plant_profiles.get(plant_id, {})
         sensors = self.sensor_data.get(plant_id, {})
         ai_notes = self.ai_feedback.get(plant_id, {})
-        notes: List[str] = []
+        notes: list[str] = []
         fert_recs = self._generate_fertilizer_recs(plant_id)
         env_rec = self._generate_environment_recs(plant_id)
 
@@ -227,7 +224,7 @@ class RecommendationEngine:
             irrigation = IrrigationRecommendation(
                 volume_liters=target_ml / 1000.0,
                 zones=profile.get("zones", []),
-                justification="Soil moisture below threshold"
+                justification="Soil moisture below threshold",
             )
 
         # Environment adjustment notes
@@ -253,6 +250,6 @@ class RecommendationEngine:
             requires_approval=requires_approval,
         )
 
-    def _select_best_product(self, element: str) -> Optional[str]:
+    def _select_best_product(self, element: str) -> str | None:
         """Return the first product containing ``element`` if any."""
         return self._element_map.get(element)

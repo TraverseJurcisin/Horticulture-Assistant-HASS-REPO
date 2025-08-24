@@ -9,14 +9,14 @@ import pytest
 # module placeholder with an explicit path for submodule resolution.
 pkg = types.ModuleType("custom_components.horticulture_assistant")
 pkg.__path__ = [
-    str(pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant")
+    str(
+        pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant"
+    )
 ]
 sys.modules.setdefault("custom_components.horticulture_assistant", pkg)
 
 const = importlib.import_module("custom_components.horticulture_assistant.const")
-coordinator_mod = importlib.import_module(
-    "custom_components.horticulture_assistant.coordinator"
-)
+coordinator_mod = importlib.import_module("custom_components.horticulture_assistant.coordinator")
 entity_mod = importlib.import_module("custom_components.horticulture_assistant.entity")
 sensor_mod = importlib.import_module("custom_components.horticulture_assistant.sensor")
 

@@ -1,16 +1,17 @@
 """Generate consolidated plant health reports."""
+
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Dict
+from collections.abc import Iterable, Mapping
 
 from . import (
-    environment_manager,
-    nutrient_manager,
     deficiency_manager,
-    nutrient_interactions,
-    pest_manager,
     disease_manager,
+    environment_manager,
     growth_stage,
+    nutrient_interactions,
+    nutrient_manager,
+    pest_manager,
     stage_tasks,
 )
 
@@ -24,7 +25,7 @@ def generate_health_report(
     pests: Iterable[str] = (),
     diseases: Iterable[str] = (),
     water_test: Mapping[str, float] | None = None,
-) -> Dict[str, object]:
+) -> dict[str, object]:
     """Return a consolidated health report for a plant.
 
     The report includes optimized environment data, nutrient deficiencies with
@@ -34,12 +35,8 @@ def generate_health_report(
     env_opt = environment_manager.optimize_environment(
         env, plant_type, stage, water_test=water_test
     )
-    deficits = nutrient_manager.calculate_deficiencies(
-        nutrient_levels, plant_type, stage
-    )
-    symptoms = deficiency_manager.diagnose_deficiencies(
-        nutrient_levels, plant_type, stage
-    )
+    deficits = nutrient_manager.calculate_deficiencies(nutrient_levels, plant_type, stage)
+    symptoms = deficiency_manager.diagnose_deficiencies(nutrient_levels, plant_type, stage)
     treatments = deficiency_manager.recommend_deficiency_treatments(
         nutrient_levels, plant_type, stage
     )
@@ -60,5 +57,6 @@ def generate_health_report(
         "stage_info": stage_info,
         "stage_tasks": tasks,
     }
+
 
 __all__ = ["generate_health_report"]

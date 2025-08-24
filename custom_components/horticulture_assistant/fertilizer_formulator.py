@@ -92,9 +92,7 @@ def calculate_fertilizer_cost(fertilizer_id: str, volume_ml: float) -> float:
     return round(cost, 2)
 
 
-def calculate_fertilizer_nutrients_from_mass(
-    fertilizer_id: str, grams: float
-) -> dict[str, float]:
+def calculate_fertilizer_nutrients_from_mass(fertilizer_id: str, grams: float) -> dict[str, float]:
     """Return nutrient mass (mg) for ``grams`` of fertilizer product."""
 
     if grams <= 0:
@@ -108,9 +106,7 @@ def calculate_fertilizer_nutrients_from_mass(
     return {element: round(grams * pct * 1000, 2) for element, pct in ga.items()}
 
 
-def calculate_fertilizer_ppm(
-    fertilizer_id: str, grams: float, volume_l: float
-) -> dict[str, float]:
+def calculate_fertilizer_ppm(fertilizer_id: str, grams: float, volume_l: float) -> dict[str, float]:
     """Return nutrient ppm for ``grams`` dissolved in ``volume_l`` solution."""
 
     if volume_l <= 0:
@@ -218,9 +214,7 @@ def estimate_mix_cost(schedule: Mapping[str, float]) -> float:
     return round(total, 2)
 
 
-def estimate_mix_cost_per_plant(
-    schedule: Mapping[str, float], num_plants: int
-) -> float:
+def estimate_mix_cost_per_plant(schedule: Mapping[str, float], num_plants: int) -> float:
     """Return cost per plant for ``schedule`` applied to ``num_plants``.
 
     ``num_plants`` must be positive. Costs are estimated using
@@ -292,9 +286,7 @@ def calculate_mix_nutrients(schedule: Mapping[str, float]) -> dict[str, float]:
     return totals
 
 
-def calculate_mix_ppm(
-    schedule: Mapping[str, float], volume_l: float
-) -> dict[str, float]:
+def calculate_mix_ppm(schedule: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Return nutrient concentration (ppm) for ``schedule`` dissolved in ``volume_l``.
 
     ``volume_l`` is the final solution volume in liters. The returned mapping
@@ -358,9 +350,7 @@ def estimate_solution_mass(schedule: Mapping[str, float], volume_l: float) -> fl
     return round(volume_l + fertilizer_mass_kg, 3)
 
 
-def estimate_mix_cost_per_liter(
-    schedule: Mapping[str, float], volume_l: float
-) -> float:
+def estimate_mix_cost_per_liter(schedule: Mapping[str, float], volume_l: float) -> float:
     """Return cost per liter of solution for ``schedule`` and ``volume_l``.
 
     This helper builds on :func:`estimate_mix_cost` to expose the relative cost
@@ -375,9 +365,7 @@ def estimate_mix_cost_per_liter(
     return round(total / volume_l, 4)
 
 
-def check_solubility_limits(
-    schedule: Mapping[str, float], volume_l: float
-) -> dict[str, float]:
+def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Return grams per liter exceeding solubility limits.
 
     Parameters
@@ -410,9 +398,7 @@ def check_solubility_limits(
     return warnings
 
 
-def check_dilution_limits(
-    schedule: Mapping[str, float], volume_l: float
-) -> dict[str, float]:
+def check_dilution_limits(schedule: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Return grams per liter exceeding recommended dilution limits."""
 
     return fertilizer_limits.check_schedule(schedule, volume_l)
@@ -586,9 +572,7 @@ def estimate_deficiency_correction_cost(
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    deficits = nutrient_manager.calculate_all_deficiencies(
-        current_levels, plant_type, stage
-    )
+    deficits = nutrient_manager.calculate_all_deficiencies(current_levels, plant_type, stage)
     total = 0.0
     for nutrient, deficit_ppm in deficits.items():
         if deficit_ppm <= 0:
@@ -619,9 +603,7 @@ def recommend_deficiency_correction_mix(
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    deficits = nutrient_manager.calculate_all_deficiencies(
-        current_levels, plant_type, stage
-    )
+    deficits = nutrient_manager.calculate_all_deficiencies(current_levels, plant_type, stage)
     schedule: dict[str, float] = {}
     for nutrient, deficit_ppm in deficits.items():
         if deficit_ppm <= 0:
@@ -651,9 +633,7 @@ def recommend_deficiency_correction_plan(
     if num_plants <= 0:
         raise ValueError("num_plants must be positive")
 
-    mix = recommend_deficiency_correction_mix(
-        current_levels, plant_type, stage, volume_l
-    )
+    mix = recommend_deficiency_correction_mix(current_levels, plant_type, stage, volume_l)
     cost = estimate_mix_cost(mix) if mix else 0.0
     ppm = calculate_mix_ppm(mix, volume_l) if mix else {}
 
@@ -665,9 +645,7 @@ def recommend_deficiency_correction_plan(
     }
 
 
-def recommend_fertigation_mix(
-    plant_type: str, stage: str, volume_l: float
-) -> dict[str, float]:
+def recommend_fertigation_mix(plant_type: str, stage: str, volume_l: float) -> dict[str, float]:
     """Return fertilizer grams for ``volume_l`` solution using cheapest products.
 
     The nutrient guidelines for ``plant_type`` and ``stage`` are loaded via

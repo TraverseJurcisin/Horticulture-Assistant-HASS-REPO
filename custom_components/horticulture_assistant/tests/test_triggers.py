@@ -1,9 +1,10 @@
 import json
-from custom_components.horticulture_assistant.automation.irrigation_trigger import (
-    irrigation_trigger,
-)
+
 from custom_components.horticulture_assistant.automation.fertilizer_trigger import (
     fertilizer_trigger,
+)
+from custom_components.horticulture_assistant.automation.irrigation_trigger import (
+    irrigation_trigger,
 )
 
 

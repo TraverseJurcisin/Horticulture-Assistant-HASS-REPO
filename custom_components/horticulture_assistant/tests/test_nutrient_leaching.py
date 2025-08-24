@@ -1,10 +1,9 @@
 import pytest
-
 from plant_engine.nutrient_leaching import (
-    get_leaching_rate,
-    estimate_leaching_loss,
     compensate_for_leaching,
     estimate_cumulative_leaching_loss,
+    estimate_leaching_loss,
+    get_leaching_rate,
     project_levels_after_leaching,
 )
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.utils import load_json
 
@@ -18,6 +19,7 @@ def main() -> None:
 
     result = compute_transpiration(profile, env)
     import json
+
     print(json.dumps(result, indent=2))
 
 

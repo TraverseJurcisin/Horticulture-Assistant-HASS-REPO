@@ -1,12 +1,11 @@
-from typing import Dict, Optional
-
-
 class TissueTestParser:
     def __init__(self):
-        self.test_log: Dict[str, Dict] = {}
-        self.thresholds: Dict[str, Dict[str, Dict[str, float]]] = {}  # plant_id → nutrient → range type
+        self.test_log: dict[str, dict] = {}
+        self.thresholds: dict[
+            str, dict[str, dict[str, float]]
+        ] = {}  # plant_id → nutrient → range type
 
-    def log_tissue_test(self, plant_id: str, raw_data: Dict[str, str]):
+    def log_tissue_test(self, plant_id: str, raw_data: dict[str, str]):
         """
         Store raw test data (e.g., from user entry or file) and normalize to ppm.
         Example raw_data:
@@ -25,7 +24,7 @@ class TissueTestParser:
                 normalized[nutrient] = ppm
         self.test_log[plant_id] = normalized
 
-    def _normalize_to_ppm(self, value_str: str) -> Optional[float]:
+    def _normalize_to_ppm(self, value_str: str) -> float | None:
         """
         Convert input string to ppm. Supports % and ppm.
         """
@@ -47,7 +46,7 @@ class TissueTestParser:
             except ValueError:
                 return None
 
-    def set_thresholds(self, plant_id: str, nutrient_thresholds: Dict[str, Dict[str, float]]):
+    def set_thresholds(self, plant_id: str, nutrient_thresholds: dict[str, dict[str, float]]):
         """
         Set deficiency/toxicity thresholds for a specific plant.
         Example:
@@ -58,7 +57,7 @@ class TissueTestParser:
         """
         self.thresholds[plant_id] = nutrient_thresholds
 
-    def evaluate_test(self, plant_id: str) -> Optional[Dict[str, str]]:
+    def evaluate_test(self, plant_id: str) -> dict[str, str] | None:
         """
         Compare normalized test data against thresholds. Return flags.
         Output example:

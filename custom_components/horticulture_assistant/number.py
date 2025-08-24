@@ -84,9 +84,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         def _handle(event) -> None:
             self.hass.add_job(self.async_write_ha_state)
 
-        self.async_on_remove(
-            self.hass.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, _handle)
-        )
+        self.async_on_remove(self.hass.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, _handle))
 
     @property
     def native_value(self) -> float | None:

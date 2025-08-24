@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,12 +15,12 @@ from scripts import ensure_repo_root_on_path
 ROOT = ensure_repo_root_on_path()
 
 from plant_engine.datasets import (
-    list_datasets,
-    list_dataset_info,
-    list_datasets_by_category,
-    list_dataset_info_by_category,
-    search_datasets,
     get_dataset_description,
+    list_dataset_info,
+    list_dataset_info_by_category,
+    list_datasets,
+    list_datasets_by_category,
+    search_datasets,
 )
 
 
@@ -45,9 +45,7 @@ def main(argv: list[str] | None = None) -> None:
         help="include dataset descriptions in output",
     )
 
-    desc_parser = sub.add_parser(
-        "describe", help="show description for a specific dataset"
-    )
+    desc_parser = sub.add_parser("describe", help="show description for a specific dataset")
     desc_parser.add_argument("name", help="dataset file name")
 
     args = parser.parse_args(argv)

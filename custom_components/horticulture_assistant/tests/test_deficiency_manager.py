@@ -1,28 +1,30 @@
+import pytest
 from plant_engine import deficiency_manager as dm
+from plant_engine import utils
 from plant_engine.deficiency_manager import (
-    list_known_nutrients,
-    get_deficiency_symptom,
+    assess_deficiency_severity,
+    calculate_deficiency_index,
     diagnose_deficiencies,
     diagnose_deficiencies_detailed,
+    diagnose_deficiency_actions,
+    get_deficiency_symptom,
     get_deficiency_treatment,
     get_nutrient_mobility,
-    assess_deficiency_severity,
+    list_known_nutrients,
     recommend_deficiency_treatments,
-    diagnose_deficiency_actions,
-    calculate_deficiency_index,
     summarize_deficiencies,
-    summarize_deficiencies_with_synergy,
     summarize_deficiencies_with_ph,
     summarize_deficiencies_with_ph_and_synergy,
+    summarize_deficiencies_with_synergy,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine import utils
-import pytest
+
 
 @pytest.fixture(autouse=True)
 def _reset_cache():
     utils.clear_dataset_cache()
     from plant_engine import deficiency_manager as dm
+
     dm._symptoms.cache_clear()
     dm._treatments.cache_clear()
     dm._mobility.cache_clear()
@@ -137,8 +139,6 @@ def test_summarize_deficiencies_with_ph():
 def test_summarize_deficiencies_with_ph_and_synergy():
     guidelines = get_recommended_levels("tomato", "fruiting")
     current = {n: 0 for n in guidelines}
-    summary = summarize_deficiencies_with_ph_and_synergy(
-        current, "tomato", "fruiting", 6.5
-    )
+    summary = summarize_deficiencies_with_ph_and_synergy(current, "tomato", "fruiting", 6.5)
     assert summary["severity_index"] > 0
     assert "K" in summary["severity"]

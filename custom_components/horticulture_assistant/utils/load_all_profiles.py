@@ -2,7 +2,7 @@
 
 import logging
 import os
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from fnmatch import fnmatch
 from pathlib import Path
 
@@ -28,6 +28,7 @@ class ProfileLoadResult:
     def as_dict(self) -> dict:
         """Return result as a plain dictionary."""
         return asdict(self)
+
 
 def load_all_profiles(
     base_path: str | None = None,
@@ -93,10 +94,14 @@ def load_all_profiles(
     total_profiles = len(profiles)
     profiles_with_issues = sum(1 for data in profiles.values() if data.issues)
     if validate:
-        _LOGGER.info("Loaded %d profiles, %d with validation issues.", total_profiles, profiles_with_issues)
+        _LOGGER.info(
+            "Loaded %d profiles, %d with validation issues.", total_profiles, profiles_with_issues
+        )
     else:
         if profiles_with_issues:
-            _LOGGER.info("Loaded %d profiles, %d with issues.", total_profiles, profiles_with_issues)
+            _LOGGER.info(
+                "Loaded %d profiles, %d with issues.", total_profiles, profiles_with_issues
+            )
         else:
             _LOGGER.info("Loaded %d profiles with no issues.", total_profiles)
     return profiles

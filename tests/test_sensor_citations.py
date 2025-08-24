@@ -18,9 +18,7 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
             "air_temp_min": {
                 "value": 10,
                 "source": "manual",
-                "citations": [
-                    {"source": "manual", "title": "note", "url": "http://a"}
-                ],
+                "citations": [{"source": "manual", "title": "note", "url": "http://a"}],
             },
             "air_temp_max": {
                 "value": 20,

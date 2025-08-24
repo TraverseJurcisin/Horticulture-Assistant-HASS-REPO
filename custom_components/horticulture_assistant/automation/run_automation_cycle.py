@@ -155,11 +155,7 @@ def run_automation_cycle(base_path: str | None = None) -> None:
         try:
             append_json_log(log_file, entry)
         except Exception as e:  # noqa: BLE001 - log and continue
-            _LOGGER.error(
-                "Failed to write irrigation log for plant %s: %s", plant_id, e
-            )
+            _LOGGER.error("Failed to write irrigation log for plant %s: %s", plant_id, e)
 
     if not found:
-        _LOGGER.info(
-            "No plant profile JSON files found in %s. Nothing to do.", plants_dir
-        )
+        _LOGGER.info("No plant profile JSON files found in %s. Nothing to do.", plants_dir)

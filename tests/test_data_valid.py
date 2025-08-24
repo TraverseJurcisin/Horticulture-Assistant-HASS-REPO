@@ -11,9 +11,7 @@ SCHEMA = json.loads(
 
 
 def test_fertilizer_json_valid():
-    data_dir = Path(
-        "custom_components/horticulture_assistant/data/fertilizers/detail"
-    )
+    data_dir = Path("custom_components/horticulture_assistant/data/fertilizers/detail")
     for path in data_dir.rglob("*.json"):
         obj = json.loads(path.read_text())
         jsonschema.validate(obj, SCHEMA)

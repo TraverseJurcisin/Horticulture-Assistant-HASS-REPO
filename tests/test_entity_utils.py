@@ -1,7 +1,8 @@
 import pytest
-from custom_components.horticulture_assistant.entity_utils import ensure_entities_exist
-from custom_components.horticulture_assistant.const import DOMAIN
 from homeassistant.helpers import issue_registry as ir
+
+from custom_components.horticulture_assistant.const import DOMAIN
+from custom_components.horticulture_assistant.entity_utils import ensure_entities_exist
 
 pytestmark = pytest.mark.asyncio
 

@@ -2,24 +2,24 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from functools import lru_cache
-from typing import Dict, Mapping
 
 from .utils import (
+    clean_float_map,
+    list_dataset_entries,
     load_dataset,
     normalize_key,
-    list_dataset_entries,
-    clean_float_map,
 )
 
 DATA_FILE = "nutrients/nutrient_absorption_rates.json"
 
 
 @lru_cache(maxsize=1)
-def _rates() -> Dict[str, Dict[str, float]]:
+def _rates() -> dict[str, dict[str, float]]:
     """Return cached absorption rates mapped by normalized stage."""
     raw = load_dataset(DATA_FILE)
-    rates: Dict[str, Dict[str, float]] = {}
+    rates: dict[str, dict[str, float]] = {}
     for stage, data in raw.items():
         if not isinstance(data, Mapping):
             continue
@@ -35,17 +35,17 @@ def list_stages() -> list[str]:
     return list_dataset_entries(_rates())
 
 
-def get_absorption_rates(stage: str) -> Dict[str, float]:
+def get_absorption_rates(stage: str) -> dict[str, float]:
     """Return nutrient absorption rates for ``stage``."""
     return _rates().get(normalize_key(stage), {})
 
 
-def apply_absorption_rates(schedule: Mapping[str, float], stage: str) -> Dict[str, float]:
+def apply_absorption_rates(schedule: Mapping[str, float], stage: str) -> dict[str, float]:
     """Return ``schedule`` adjusted for nutrient absorption efficiency."""
     rates = get_absorption_rates(stage)
     if not rates:
         return dict(schedule)
-    adjusted: Dict[str, float] = {}
+    adjusted: dict[str, float] = {}
     for nutrient, grams in schedule.items():
         rate = rates.get(nutrient)
         try:

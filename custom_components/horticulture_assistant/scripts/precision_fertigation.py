@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root is on the Python path when executed directly
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,8 +14,8 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.fertigation import recommend_precise_fertigation_with_injection
 import yaml
+from plant_engine.fertigation import recommend_precise_fertigation_with_injection
 
 
 def load_water_profile(path: str) -> dict:
@@ -40,9 +40,7 @@ def load_water_profile(path: str) -> dict:
 def main(argv: list[str] | None = None) -> None:
     """Entry point for the ``precision_fertigation.py`` script."""
 
-    parser = argparse.ArgumentParser(
-        description="Generate precise fertigation plan"
-    )
+    parser = argparse.ArgumentParser(description="Generate precise fertigation plan")
     parser.add_argument("plant_type")
     parser.add_argument("stage")
     parser.add_argument("volume_l", type=float)
@@ -53,7 +51,9 @@ def main(argv: list[str] | None = None) -> None:
         action="store_true",
         help="Apply nutrient synergy adjustments",
     )
-    parser.add_argument("--use-stock-recipe", action="store_true", help="Include preset stock solution ratios")
+    parser.add_argument(
+        "--use-stock-recipe", action="store_true", help="Include preset stock solution ratios"
+    )
     parser.add_argument("--yaml", action="store_true", dest="as_yaml")
     args = parser.parse_args(argv)
 

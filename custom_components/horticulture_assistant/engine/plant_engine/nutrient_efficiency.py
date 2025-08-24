@@ -6,11 +6,12 @@ recommended targets loaded from :data:`nutrient_efficiency_targets.json`.
 """
 
 import os
-from functools import lru_cache
+from collections.abc import Mapping
+from functools import cache
 from pathlib import Path
-from typing import Dict, Tuple, Mapping, Any
+from typing import Any
 
-from .utils import load_json, load_dataset, normalize_key
+from .utils import load_dataset, load_json, normalize_key
 
 __all__ = [
     "calculate_nue",
@@ -28,7 +29,8 @@ TARGET_FILE = "nutrients/nutrient_efficiency_targets.json"
 NUTRIENT_DIR = os.getenv("HORTICULTURE_NUTRIENT_DIR", "data/nutrients_applied")
 YIELD_DIR = os.getenv("HORTICULTURE_YIELD_DIR", "data/yield")
 
-def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
+
+def _load_totals(plant_id: str) -> tuple[dict[str, float], float]:
     """Return total nutrients applied (mg) and total yield (g)."""
 
     nutrient_dir = Path(NUTRIENT_DIR)
@@ -40,7 +42,7 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
 
     nutrient_log = load_json(path_nutrients)
 
-    total_applied_mg: Dict[str, float] = {}
+    total_applied_mg: dict[str, float] = {}
     for entry in nutrient_log.get("records", []):
         for k, v in entry.get("nutrients_mg", {}).items():
             total_applied_mg[k] = total_applied_mg.get(k, 0.0) + float(v)
@@ -56,12 +58,12 @@ def _load_totals(plant_id: str) -> Tuple[Dict[str, float], float]:
     return total_applied_mg, total_yield_g
 
 
-def calculate_nue(plant_id: str) -> Dict:
+def calculate_nue(plant_id: str) -> dict:
     """Return nutrient use efficiency for all nutrients."""
 
     total_applied_mg, total_yield_g = _load_totals(plant_id)
 
-    nue: Dict[str, float | None] = {}
+    nue: dict[str, float | None] = {}
     for nutrient, mg in total_applied_mg.items():
         g_applied = mg / 1000
         nue[nutrient] = round(total_yield_g / g_applied, 2) if g_applied else None
@@ -80,8 +82,8 @@ def calculate_nue_for_nutrient(plant_id: str, nutrient: str) -> float | None:
     return round(total_yield_g / g_applied, 2) if g_applied else None
 
 
-@lru_cache(maxsize=None)
-def _load_targets(plant_type: str) -> Dict[str, float]:
+@cache
+def _load_targets(plant_type: str) -> dict[str, float]:
     """Return NUE targets for ``plant_type`` from the dataset.
 
     Results are cached so repeated evaluations avoid disk access. Call
@@ -93,7 +95,9 @@ def _load_targets(plant_type: str) -> Dict[str, float]:
     return data.get(normalize_key(plant_type), {}) if isinstance(data, Mapping) else {}
 
 
-def evaluate_nue(nue: Mapping[str, float], plant_type: str, tolerance: float = 0.1) -> Dict[str, Dict[str, Any]]:
+def evaluate_nue(
+    nue: Mapping[str, float], plant_type: str, tolerance: float = 0.1
+) -> dict[str, dict[str, Any]]:
     """Return NUE assessment compared to targets.
 
     Parameters
@@ -107,7 +111,7 @@ def evaluate_nue(nue: Mapping[str, float], plant_type: str, tolerance: float = 0
     """
 
     targets = _load_targets(plant_type)
-    results: Dict[str, Dict[str, Any]] = {}
+    results: dict[str, dict[str, Any]] = {}
     for nutrient, value in nue.items():
         try:
             val = float(value)
@@ -129,7 +133,9 @@ def evaluate_nue(nue: Mapping[str, float], plant_type: str, tolerance: float = 0
     return results
 
 
-def evaluate_plant_nue(plant_id: str, plant_type: str, tolerance: float = 0.1) -> Dict[str, Dict[str, Any]]:
+def evaluate_plant_nue(
+    plant_id: str, plant_type: str, tolerance: float = 0.1
+) -> dict[str, dict[str, Any]]:
     """Return NUE evaluation for a plant using logged data."""
 
     info = calculate_nue(plant_id)

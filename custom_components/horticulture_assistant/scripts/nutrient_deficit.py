@@ -1,10 +1,11 @@
 """CLI for calculating nutrient deficits from totals."""
+
 from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure project root on sys.path when executed directly
 ROOT = Path(__file__).resolve().parents[1]

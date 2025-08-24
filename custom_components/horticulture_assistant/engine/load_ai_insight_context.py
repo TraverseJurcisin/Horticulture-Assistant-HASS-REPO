@@ -2,13 +2,14 @@ import logging
 from pathlib import Path
 
 from custom_components.horticulture_assistant.utils.path_utils import (
-    plants_path,
     data_path,
+    plants_path,
 )
 
 from ..utils.json_io import load_json
 
 _LOGGER = logging.getLogger(__name__)
+
 
 def load_ai_insight_context(
     plant_id: str,
@@ -39,7 +40,7 @@ def load_ai_insight_context(
         "lifecycle_stage": "unknown",
         "current_thresholds": {},
         "growth_trend": [],
-        "yield_cumulative": 0.0
+        "yield_cumulative": 0.0,
     }
 
     if base_path is None:
@@ -68,8 +69,12 @@ def load_ai_insight_context(
         return context
 
     # Extract lifecycle stage (with fallback to nested structure if applicable)
-    lifecycle_stage = profile.get("lifecycle_stage") or profile.get("general", {}).get("lifecycle_stage") \
-                      or profile.get("general", {}).get("stage") or "unknown"
+    lifecycle_stage = (
+        profile.get("lifecycle_stage")
+        or profile.get("general", {}).get("lifecycle_stage")
+        or profile.get("general", {}).get("stage")
+        or "unknown"
+    )
     context["lifecycle_stage"] = lifecycle_stage
 
     # Extract current thresholds (ensure dictionary)
@@ -77,7 +82,9 @@ def load_ai_insight_context(
     if thresholds is None:
         thresholds = {}
     elif not isinstance(thresholds, dict):
-        _LOGGER.warning("Unexpected thresholds format in profile %s; defaulting to empty dict.", plant_id)
+        _LOGGER.warning(
+            "Unexpected thresholds format in profile %s; defaulting to empty dict.", plant_id
+        )
         thresholds = {}
     context["current_thresholds"] = thresholds
 
@@ -88,9 +95,13 @@ def load_ai_insight_context(
         if isinstance(data, list):
             series = data
         else:
-            _LOGGER.warning("Growth/yield data for plant %s is not a list; ignoring content.", plant_id)
+            _LOGGER.warning(
+                "Growth/yield data for plant %s is not a list; ignoring content.", plant_id
+            )
     except FileNotFoundError:
-        _LOGGER.warning("Growth/yield data file not found for plant %s at %s", plant_id, analytics_file)
+        _LOGGER.warning(
+            "Growth/yield data file not found for plant %s at %s", plant_id, analytics_file
+        )
     except Exception as e:
         _LOGGER.error("Failed to read growth/yield data for plant '%s': %s", plant_id, e)
 
@@ -100,11 +111,21 @@ def load_ai_insight_context(
         if isinstance(last_entry, dict):
             context["yield_cumulative"] = last_entry.get("cumulative_yield", 0.0)
         else:
-            _LOGGER.warning("Last entry in growth/yield data for plant %s is not a dict: %s", plant_id, last_entry)
+            _LOGGER.warning(
+                "Last entry in growth/yield data for plant %s is not a dict: %s",
+                plant_id,
+                last_entry,
+            )
             context["yield_cumulative"] = 0.0
         # Collect the last up to 7 growth metric values
-        growth_entries = [entry for entry in series if isinstance(entry, dict) and entry.get("growth_metric") is not None]
-        context["growth_trend"] = [entry.get("growth_metric") for entry in growth_entries[-7:]] if growth_entries else []
+        growth_entries = [
+            entry
+            for entry in series
+            if isinstance(entry, dict) and entry.get("growth_metric") is not None
+        ]
+        context["growth_trend"] = (
+            [entry.get("growth_metric") for entry in growth_entries[-7:]] if growth_entries else []
+        )
     else:
         # No data available, leave defaults (growth_trend empty, yield_cumulative 0.0)
         context["growth_trend"] = []

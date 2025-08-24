@@ -2,16 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "water/water_usage_guidelines.json"
 
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
-from .plant_density import get_spacing_cm
 from .growth_stage import get_stage_duration, list_growth_stages
+from .plant_density import get_spacing_cm
 
 __all__ = [
     "list_supported_plants",
@@ -174,9 +172,7 @@ def estimate_daily_plant_cost(
     return estimate_water_cost(volume_l, region)
 
 
-def estimate_stage_water_cost(
-    plant_type: str, stage: str, region: str | None = None
-) -> float:
+def estimate_stage_water_cost(plant_type: str, stage: str, region: str | None = None) -> float:
     """Return estimated cost for watering ``plant_type`` during ``stage``."""
 
     total_ml = estimate_stage_total_use(plant_type, stage)

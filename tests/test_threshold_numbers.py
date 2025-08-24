@@ -1,9 +1,8 @@
 import pytest
-
+from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, Platform, UnitOfTemperature
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-from homeassistant.const import Platform, UnitOfTemperature, EVENT_CORE_CONFIG_UPDATE
 
-from custom_components.horticulture_assistant.const import DOMAIN, CONF_API_KEY
+from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
 
 pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("enable_custom_integrations")]
 

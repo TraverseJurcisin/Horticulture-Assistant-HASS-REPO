@@ -41,9 +41,7 @@ async def test_async_export_profile(tmp_path, monkeypatch, hass):
             return {
                 "plant_id": "p1",
                 "display_name": "Plant 1",
-                "variables": {
-                    "temp": {"value": 20, "source": "manual", "citations": []}
-                },
+                "variables": {"temp": {"value": 20, "source": "manual", "citations": []}},
             }
         return None
 

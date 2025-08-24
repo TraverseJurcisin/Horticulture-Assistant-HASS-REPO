@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import logging
-from pathlib import Path
-from functools import lru_cache
 import os
-from typing import Any, Mapping, Iterable
+from collections.abc import Iterable, Mapping
+from functools import cache
+from pathlib import Path
+from typing import Any
 
 from .json_io import load_json, save_json
 
@@ -31,6 +32,8 @@ def profile_base_dir(base_dir: str | Path | None = None) -> Path:
         return Path(base_dir)
     env = os.getenv(PROFILE_DIR_ENV)
     return Path(env).expanduser() if env else DEFAULT_BASE_DIR
+
+
 # Supported file extensions for profile files
 PROFILE_EXTS: tuple[str, ...] = (".json", ".yaml", ".yml")
 
@@ -120,7 +123,8 @@ def get_profile_path(
             return path
     return None
 
-@lru_cache(maxsize=None)
+
+@cache
 def load_profile_from_path(path: str | Path) -> dict:
     """
     Load a plant profile from a file (YAML or JSON) given a filesystem path.
@@ -155,12 +159,7 @@ def load_profile_from_path(path: str | Path) -> dict:
         return {}
 
     # Initialize structured profile
-    profile = {
-        "general": {},
-        "thresholds": {},
-        "stages": {},
-        "nutrients": {}
-    }
+    profile = {"general": {}, "thresholds": {}, "stages": {}, "nutrients": {}}
     # Fill sections if present
     general = data.get("general")
     if isinstance(general, dict):
@@ -194,13 +193,16 @@ def load_profile_from_path(path: str | Path) -> dict:
                 _LOGGER.debug("Stage '%s' in %s is not a dict", stage_name, path)
                 continue
             if REQUIRED_STAGE_KEY not in stage_data:
-                _LOGGER.debug("Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path)
+                _LOGGER.debug(
+                    "Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path
+                )
     else:
         _LOGGER.debug("No stages defined in profile %s", path)
 
     return profile
 
-@lru_cache(maxsize=None)
+
+@cache
 def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dict:
     """Return structured profile data for ``plant_id``."""
 
@@ -215,6 +217,7 @@ def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dic
         directory,
     )
     return {}
+
 
 def load_profile(
     plant_id: str | None = None,
@@ -264,9 +267,7 @@ def save_profile_to_path(profile: dict, path: str | Path) -> bool:
     return True
 
 
-def save_profile_by_id(
-    plant_id: str, profile: dict, base_dir: str | Path | None = None
-) -> bool:
+def save_profile_by_id(plant_id: str, profile: dict, base_dir: str | Path | None = None) -> bool:
     """Write profile for ``plant_id`` under ``base_dir``."""
     directory = profile_base_dir(base_dir)
     file_path = directory / f"{plant_id}.json"

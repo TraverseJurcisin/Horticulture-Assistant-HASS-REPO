@@ -6,16 +6,17 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-
-from custom_components.horticulture_assistant.utils.path_utils import (
-    plants_path,
-    data_path,
-)
-from typing import Any, Dict, Tuple, Iterable
+from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from .json_io import load_json as _strict_load_json, save_json as _strict_save_json
+from custom_components.horticulture_assistant.utils.path_utils import (
+    data_path,
+    plants_path,
+)
+
+from .json_io import load_json as _strict_load_json
+from .json_io import save_json as _strict_save_json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -32,14 +33,14 @@ def _load_json(path: str | Path) -> Any:
         return None
 
 
-def _load_pending(path: str) -> Tuple[Dict[str, Any], Any]:
+def _load_pending(path: str) -> tuple[dict[str, Any], Any]:
     """Return normalized mapping of pending approvals and the raw data."""
 
     data = _load_json(path)
     if not data:
         return {}, data
     if isinstance(data, list):
-        out: Dict[str, Any] = {}
+        out: dict[str, Any] = {}
         for entry in data:
             pid = entry.get("plant_id")
             if pid:
@@ -60,7 +61,7 @@ def _save_json(path: str | Path, data: Any) -> None:
     _strict_save_json(str(path), data)
 
 
-def _serialize_pending(pending: Dict[str, Any], original: Any) -> Any:
+def _serialize_pending(pending: dict[str, Any], original: Any) -> Any:
     """Return ``pending`` converted to the same structure as ``original``.
 
     ``pending`` is stored as a mapping keyed by plant ID internally but the
@@ -71,7 +72,9 @@ def _serialize_pending(pending: Dict[str, Any], original: Any) -> Any:
 
     if isinstance(original, list):
         return list(pending.values())
-    if isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
+    if isinstance(original, dict) and any(
+        k in original for k in ("plant_id", "changes", "timestamp")
+    ):
         return next(iter(pending.values()), {})
     return pending
 
@@ -104,7 +107,11 @@ def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
         plant_file_path = base_plants_dir / f"{plant_id}.json"
         profile = _load_json(plant_file_path)
         if not isinstance(profile, dict):
-            _LOGGER.error("Plant profile file not found or invalid for '%s' at %s; skipping these changes.", plant_id, plant_file_path)
+            _LOGGER.error(
+                "Plant profile file not found or invalid for '%s' at %s; skipping these changes.",
+                plant_id,
+                plant_file_path,
+            )
             # Do not remove these changes so they can be applied later when profile exists
             continue
 
@@ -113,16 +120,22 @@ def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
         if thresholds is None:
             thresholds = {}
         elif not isinstance(thresholds, dict):
-            _LOGGER.warning("Unexpected thresholds format in profile %s; resetting to empty dict.", plant_id)
+            _LOGGER.warning(
+                "Unexpected thresholds format in profile %s; resetting to empty dict.", plant_id
+            )
             thresholds = {}
 
         # Apply all approved changes for this plant
-        approved_nutrients = [nut for nut, info in changes.items() if info.get("status") == "approved"]
+        approved_nutrients = [
+            nut for nut, info in changes.items() if info.get("status") == "approved"
+        ]
         if not approved_nutrients:
             # No approved changes for this plant; log and skip (leave pending data unchanged)
             for nut, info in changes.items():
                 status = info.get("status", "pending")
-                _LOGGER.info("Skipping threshold change for plant %s: %s (status: %s)", plant_id, nut, status)
+                _LOGGER.info(
+                    "Skipping threshold change for plant %s: %s (status: %s)", plant_id, nut, status
+                )
             continue
 
         applied_this_plant = 0
@@ -133,7 +146,13 @@ def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
             old_val = change.get("previous_value")
             new_val = change.get("proposed_value")
             thresholds[nutrient] = new_val
-            _LOGGER.info("Applied approved threshold change for plant %s: %s from %s to %s", plant_id, nutrient, old_val, new_val)
+            _LOGGER.info(
+                "Applied approved threshold change for plant %s: %s from %s to %s",
+                plant_id,
+                nutrient,
+                old_val,
+                new_val,
+            )
             applied_this_plant += 1
 
         if applied_this_plant == 0:

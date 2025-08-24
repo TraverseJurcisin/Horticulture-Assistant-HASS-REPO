@@ -1,93 +1,91 @@
-import pytest
-import math
 import datetime
+import math
 
+import pytest
 from plant_engine.environment_manager import (
-    get_environmental_targets,
-    recommend_environment_adjustments,
-    suggest_environment_setpoints,
-    suggest_environment_setpoints_advanced,
-    saturation_vapor_pressure,
+    _check_range,
     actual_vapor_pressure,
-    calculate_vpd,
-    calculate_dew_point,
-    calculate_heat_index,
-    calculate_heat_index_series,
-    relative_humidity_from_dew_point,
-    relative_humidity_from_absolute,
+    average_environment_readings,
     calculate_absolute_humidity,
+    calculate_co2_cost_series,
+    calculate_co2_injection,
+    calculate_co2_injection_series,
+    calculate_dew_point,
     calculate_dli,
     calculate_dli_series,
-    calculate_vpd_series,
-    photoperiod_for_target_dli,
-    ppfd_for_target_dli,
-    get_target_dli,
-    get_target_vpd,
-    get_target_photoperiod,
-    get_target_co2,
-    get_target_light_intensity,
-    get_target_light_ratio,
-    get_target_airflow,
-    calculate_co2_injection,
-    recommend_co2_injection,
-    get_co2_price,
-    get_co2_efficiency,
-    estimate_co2_cost,
-    recommend_co2_injection_with_cost,
-    calculate_co2_injection_series,
-    calculate_co2_cost_series,
-    humidity_for_target_vpd,
-    recommend_photoperiod,
-    recommend_light_intensity,
-    evaluate_heat_stress,
-    evaluate_cold_stress,
-    evaluate_light_stress,
-    evaluate_wind_stress,
-    get_wind_action,
-    recommend_wind_action,
-    evaluate_humidity_stress,
-    evaluate_vpd,
-    recommend_vpd_action,
-    recommend_photoperiod_action,
-    get_photoperiod_action,
-    evaluate_ph_stress,
-    evaluate_stress_conditions,
-    evaluate_soil_temperature_stress,
-    evaluate_soil_ec_stress,
-    evaluate_soil_ph_stress,
-    evaluate_leaf_temperature_stress,
-    score_environment,
-    score_environment_series,
-    score_environment_dataframe,
-    score_environment_components,
-    optimize_environment,
-    calculate_environment_metrics,
-    compare_environment,
-    classify_value_range,
-    _check_range,
-    generate_environment_alerts,
-    classify_environment_quality,
-    classify_environment_quality_series,
-    score_overall_environment,
-    normalize_environment_readings,
-    summarize_environment,
-    summarize_environment_series,
-    calculate_environment_metrics_series,
-    calculate_environment_metrics_dataframe,
-    average_environment_readings,
-    calculate_environment_variance,
-    calculate_environment_stddev,
     calculate_environment_deviation,
     calculate_environment_deviation_series,
+    calculate_environment_metrics,
+    calculate_environment_metrics_dataframe,
+    calculate_environment_metrics_series,
+    calculate_environment_stddev,
+    calculate_environment_variance,
+    calculate_heat_index,
+    calculate_heat_index_series,
+    calculate_vpd,
+    calculate_vpd_series,
+    classify_environment_quality,
+    classify_environment_quality_series,
+    classify_value_range,
     clear_environment_cache,
-    get_target_soil_temperature,
+    compare_environment,
+    cost_optimized_setpoints,
+    energy_optimized_setpoints,
+    estimate_co2_cost,
+    evaluate_cold_stress,
+    evaluate_heat_stress,
+    evaluate_humidity_stress,
+    evaluate_leaf_temperature_stress,
+    evaluate_light_stress,
+    evaluate_ph_stress,
+    evaluate_soil_ec_stress,
+    evaluate_soil_ph_stress,
+    evaluate_soil_temperature_stress,
+    evaluate_stress_conditions,
+    evaluate_vpd,
+    evaluate_wind_stress,
+    generate_environment_alerts,
+    get_co2_efficiency,
+    get_co2_price,
+    get_environmental_targets,
+    get_frost_dates,
+    get_photoperiod_action,
+    get_target_airflow,
+    get_target_co2,
+    get_target_dli,
+    get_target_leaf_temperature,
+    get_target_light_intensity,
+    get_target_light_ratio,
+    get_target_photoperiod,
     get_target_soil_ec,
     get_target_soil_ph,
-    get_target_leaf_temperature,
-    energy_optimized_setpoints,
-    cost_optimized_setpoints,
-    get_frost_dates,
+    get_target_soil_temperature,
+    get_target_vpd,
+    humidity_for_target_vpd,
     is_frost_free,
+    normalize_environment_readings,
+    optimize_environment,
+    photoperiod_for_target_dli,
+    ppfd_for_target_dli,
+    recommend_co2_injection,
+    recommend_co2_injection_with_cost,
+    recommend_environment_adjustments,
+    recommend_light_intensity,
+    recommend_photoperiod,
+    recommend_photoperiod_action,
+    recommend_vpd_action,
+    relative_humidity_from_absolute,
+    relative_humidity_from_dew_point,
+    saturation_vapor_pressure,
+    score_environment,
+    score_environment_components,
+    score_environment_dataframe,
+    score_environment_series,
+    score_overall_environment,
+    suggest_environment_setpoints,
+    suggest_environment_setpoints_advanced,
+    summarize_environment,
+    summarize_environment_series,
 )
 
 
@@ -245,7 +243,7 @@ def test_calculate_heat_index_invalid():
 def test_calculate_heat_index_series():
     temps = [30, 32, 28]
     humidity = [70, 65, 80]
-    expected = sum(calculate_heat_index(t, h) for t, h in zip(temps, humidity)) / len(
+    expected = sum(calculate_heat_index(t, h) for t, h in zip(temps, humidity, strict=False)) / len(
         temps
     )
     assert calculate_heat_index_series(temps, humidity) == round(expected, 2)
@@ -662,9 +660,7 @@ def test_classify_environment_quality():
 def test_classify_environment_quality_custom():
     good = {"temp_c": 22, "humidity_pct": 70, "light_ppfd": 250, "co2_ppm": 450}
     thresholds = {"good": 105, "fair": 80}
-    assert (
-        classify_environment_quality(good, "citrus", "seedling", thresholds) == "fair"
-    )
+    assert classify_environment_quality(good, "citrus", "seedling", thresholds) == "fair"
 
 
 def test_classify_environment_quality_series():
@@ -682,9 +678,7 @@ def test_classify_environment_quality_series_custom():
         {"temp_c": 24, "humidity_pct": 72, "light_ppfd": 260, "co2_ppm": 460},
     ]
     thresholds = {"good": 105, "fair": 80}
-    result = classify_environment_quality_series(
-        series, "citrus", "seedling", thresholds
-    )
+    result = classify_environment_quality_series(series, "citrus", "seedling", thresholds)
     assert result == "fair"
 
 
@@ -987,9 +981,7 @@ def test_evaluate_soil_ph_stress():
 
 
 def test_evaluate_stress_conditions():
-    stress = evaluate_stress_conditions(
-        32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12, 6.5
-    )
+    stress = evaluate_stress_conditions(32, 70, 8, 7.5, 16, 45, 30, "lettuce", "seedling", 12, 6.5)
     assert stress.heat is True
     assert stress.cold is False
     assert stress.light == "low"
@@ -1008,9 +1000,7 @@ def test_evaluate_stress_conditions():
 
 
 def test_score_environment_components():
-    scores = score_environment_components(
-        {"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling"
-    )
+    scores = score_environment_components({"temp_c": 24, "humidity_pct": 70}, "citrus", "seedling")
     assert scores["temp_c"] == 100.0
     assert scores["humidity_pct"] == 100.0
 
@@ -1018,7 +1008,7 @@ def test_score_environment_components():
 def test_calculate_vpd_series():
     temps = [20, 22, 24]
     humidity = [70, 65, 60]
-    expected = sum(calculate_vpd(t, h) for t, h in zip(temps, humidity)) / 3
+    expected = sum(calculate_vpd(t, h) for t, h in zip(temps, humidity, strict=False)) / 3
     assert calculate_vpd_series(temps, humidity) == round(expected, 3)
 
     with pytest.raises(ValueError):
@@ -1032,14 +1022,14 @@ def test_calculate_vpd_series_generator():
     """Ensure VPD calculation works with generator inputs."""
 
     def temps():
-        for t in [20, 22, 24]:
-            yield t
+        yield from [20, 22, 24]
 
     def hums():
-        for h in [70, 65, 60]:
-            yield h
+        yield from [70, 65, 60]
 
-    expected = sum(calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60])) / 3
+    expected = (
+        sum(calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60], strict=False)) / 3
+    )
     assert calculate_vpd_series(temps(), hums()) == round(expected, 3)
 
 
@@ -1073,9 +1063,7 @@ def test_summarize_environment_series():
         {"temp_c": 22, "humidity_pct": 74},
     ]
     summary = summarize_environment_series(series, "citrus", "seedling")
-    avg = summarize_environment(
-        {"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling"
-    )
+    avg = summarize_environment({"temp_c": 21, "humidity_pct": 72}, "citrus", "seedling")
     assert summary["quality"] == avg["quality"]
     assert summary["metrics"]["vpd"] == avg["metrics"]["vpd"]
 
@@ -1155,9 +1143,7 @@ def test_co2_price_and_cost():
     assert get_co2_price("bulk_tank") == 0.7
     assert estimate_co2_cost(1000, "bulk_tank") == 0.7
     assert get_co2_efficiency("cartridge") == 0.85
-    grams, cost = recommend_co2_injection_with_cost(
-        300, "citrus", "seedling", 100.0, "cartridge"
-    )
+    grams, cost = recommend_co2_injection_with_cost(300, "citrus", "seedling", 100.0, "cartridge")
     assert grams > 0
     assert cost == estimate_co2_cost(grams, "cartridge")
 
@@ -1211,9 +1197,7 @@ def test_add_environment_alias():
     em.add_environment_alias("temp_c", "air_temp")
     try:
         assert em.resolve_environment_alias("air_temp") == "temp_c"
-        data = em.normalize_environment_readings(
-            {"air_temp": 20}, include_unknown=False
-        )
+        data = em.normalize_environment_readings({"air_temp": 20}, include_unknown=False)
         assert data["temp_c"] == 20
     finally:
         em.ENV_ALIASES["temp_c"].remove("air_temp")

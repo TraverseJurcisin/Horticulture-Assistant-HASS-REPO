@@ -1,6 +1,6 @@
 from plant_engine.nutrient_absorption import (
-    get_absorption_rates,
     apply_absorption_rates,
+    get_absorption_rates,
     list_stages,
 )
 

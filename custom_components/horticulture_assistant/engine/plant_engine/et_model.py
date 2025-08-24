@@ -1,20 +1,20 @@
 """Evapotranspiration model and reference lookups."""
 
 import math
-from functools import lru_cache
-from typing import Optional
+from functools import cache
 
 import numpy as np
 import pandas as pd
 
 from .utils import load_dataset, normalize_key
 
+
 def calculate_et0(
     temperature_c: float,
     rh_percent: float,
     solar_rad_w_m2: float,
-    wind_m_s: Optional[float] = 1.0,
-    elevation_m: Optional[float] = 200
+    wind_m_s: float | None = 1.0,
+    elevation_m: float | None = 200,
 ) -> float:
     """
     Calculate ET₀ (reference evapotranspiration) using the FAO-56 Penman-Monteith equation approximation.
@@ -26,7 +26,7 @@ def calculate_et0(
     solar_rad_mj = solar_rad_w_m2 * 0.0864
 
     # Psychrometric constant (kPa/°C)
-    gamma = 0.665e-3 * (101.3 * ((293 - 0.0065 * elevation_m) / 293)**5.26)
+    gamma = 0.665e-3 * (101.3 * ((293 - 0.0065 * elevation_m) / 293) ** 5.26)
 
     # Saturation vapor pressure (kPa)
     es = 0.6108 * math.exp((17.27 * temperature_c) / (temperature_c + 237.3))
@@ -35,16 +35,15 @@ def calculate_et0(
     ea = es * (rh_percent / 100)
 
     # Slope of vapor pressure curve (Δ) (kPa/°C)
-    delta = 4098 * es / ((temperature_c + 237.3)**2)
+    delta = 4098 * es / ((temperature_c + 237.3) ** 2)
 
     # Net radiation estimate (assuming albedo 0.23)
     rn = 0.77 * solar_rad_mj  # MJ/m²/day
 
     # ET₀ estimate
-    et0 = (
-        (0.408 * delta * rn) +
-        (gamma * 900 * wind_m_s * (es - ea) / (temperature_c + 273))
-    ) / (delta + gamma * (1 + 0.34 * wind_m_s))
+    et0 = ((0.408 * delta * rn) + (gamma * 900 * wind_m_s * (es - ea) / (temperature_c + 273))) / (
+        delta + gamma * (1 + 0.34 * wind_m_s)
+    )
 
     return round(et0, 2)  # mm/day
 
@@ -76,17 +75,14 @@ def calculate_et0_series(
         elevation = pd.Series(float(elevation_m), index=temp.index)
 
     solar_rad_mj = solar * 0.0864
-    gamma = 0.665e-3 * (
-        101.3 * ((293 - 0.0065 * elevation) / 293) ** 5.26
-    )
+    gamma = 0.665e-3 * (101.3 * ((293 - 0.0065 * elevation) / 293) ** 5.26)
     es = 0.6108 * np.exp((17.27 * temp) / (temp + 237.3))
     ea = es * (rh / 100)
     delta = 4098 * es / ((temp + 237.3) ** 2)
     rn = 0.77 * solar_rad_mj
-    et0 = (
-        (0.408 * delta * rn)
-        + (gamma * 900 * wind * (es - ea) / (temp + 273))
-    ) / (delta + gamma * (1 + 0.34 * wind))
+    et0 = ((0.408 * delta * rn) + (gamma * 900 * wind * (es - ea) / (temp + 273))) / (
+        delta + gamma * (1 + 0.34 * wind)
+    )
     return et0.round(2)
 
 
@@ -95,7 +91,7 @@ ET0_RANGE_FILE = "et0/reference_et0_range.json"
 ET0_CLIMATE_FILE = "et0/et0_climate_adjustments.json"
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_reference_et0(month: int) -> float | None:
     """Return typical reference ET₀ for the given month if known."""
 
@@ -104,10 +100,10 @@ def get_reference_et0(month: int) -> float | None:
 
     data = load_dataset(ET0_DATA_FILE)
     value = data.get(str(month))
-    return float(value) if isinstance(value, (int, float)) else None
+    return float(value) if isinstance(value, int | float) else None
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_reference_et0_range(month: int) -> tuple[float, float] | None:
     """Return (min, max) ET₀ for ``month`` if available."""
 
@@ -117,16 +113,16 @@ def get_reference_et0_range(month: int) -> tuple[float, float] | None:
     data = load_dataset(ET0_RANGE_FILE)
     value = data.get(str(month))
     if (
-        isinstance(value, (list, tuple))
+        isinstance(value, list | tuple)
         and len(value) >= 2
-        and all(isinstance(v, (int, float)) for v in value[:2])
+        and all(isinstance(v, int | float) for v in value[:2])
     ):
         low, high = float(value[0]), float(value[1])
         return (low, high) if low <= high else (high, low)
     return None
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_et0_climate_adjustment(zone: str) -> float:
     """Return ET₀ multiplier for a climate ``zone`` if defined."""
 

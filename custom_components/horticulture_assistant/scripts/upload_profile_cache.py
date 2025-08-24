@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import argparse
 import sys
-from pathlib import Path
 import urllib.request as urlreq
+from pathlib import Path
 
 from scripts import ensure_repo_root_on_path
 

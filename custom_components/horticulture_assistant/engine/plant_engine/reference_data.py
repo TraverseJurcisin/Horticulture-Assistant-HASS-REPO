@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Any, Dict
+from functools import cache
+from typing import Any
 
-from .utils import load_dataset, normalize_key, clear_dataset_cache
+from .utils import clear_dataset_cache, load_dataset, normalize_key
 
 # Mapping of logical keys to dataset file names used across the project.
 # Additional datasets can be appended here without altering code that
@@ -39,8 +39,8 @@ __all__ = [
 ]
 
 
-@lru_cache(maxsize=None)
-def load_reference_data() -> Dict[str, Dict[str, Any]]:
+@cache
+def load_reference_data() -> dict[str, dict[str, Any]]:
     """Return consolidated horticultural reference datasets.
 
     Results are cached so repeated lookups do not trigger additional disk
@@ -49,20 +49,20 @@ def load_reference_data() -> Dict[str, Dict[str, Any]]:
     invalid).
     """
 
-    data: Dict[str, Dict[str, Any]] = {}
+    data: dict[str, dict[str, Any]] = {}
     for key, filename in REFERENCE_FILES.items():
         content = load_dataset(filename)
         data[key] = content if isinstance(content, dict) else {}
     return data
 
 
-def get_reference_dataset(name: str) -> Dict[str, Any]:
+def get_reference_dataset(name: str) -> dict[str, Any]:
     """Return a specific reference dataset by ``name``."""
 
     return load_reference_data().get(name, {})
 
 
-def get_plant_overview(plant_type: str) -> Dict[str, Any]:
+def get_plant_overview(plant_type: str) -> dict[str, Any]:
     """Return consolidated reference info for ``plant_type``.
 
     The overview includes nutrient, environment and pest guidelines along with
@@ -73,7 +73,7 @@ def get_plant_overview(plant_type: str) -> Dict[str, Any]:
     key = normalize_key(plant_type)
     data = load_reference_data()
 
-    def entry(name: str) -> Dict[str, Any]:
+    def entry(name: str) -> dict[str, Any]:
         dataset = data.get(name, {})
         if isinstance(dataset, dict):
             return dataset.get(key, {}) if dataset else {}

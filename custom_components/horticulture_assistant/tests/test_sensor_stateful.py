@@ -5,11 +5,15 @@ import types
 from datetime import datetime
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/sensor.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/sensor.py"
+)
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     sys.modules[PACKAGE] = types.ModuleType(PACKAGE)
-CONST_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/const.py"
+CONST_PATH = (
+    Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/const.py"
+)
 const_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.const", CONST_PATH)
 const_mod = importlib.util.module_from_spec(const_spec)
 sys.modules[const_spec.name] = const_mod
@@ -23,18 +27,27 @@ sys.modules[spec.name] = sensor
 ha = types.ModuleType("homeassistant")
 ha.components = types.ModuleType("homeassistant.components")
 ha_sensor_mod = types.ModuleType("homeassistant.components.sensor")
+
+
 class SensorEntity:
     def __init__(self):
         self._attr_native_value = None
+
     @property
     def native_value(self):
         return getattr(self, "_attr_native_value", None)
+
+
 class SensorDeviceClass:
     MOISTURE = "moisture"
     PRECIPITATION = "precipitation"
     WEIGHT = "weight"
+
+
 class SensorStateClass:
     MEASUREMENT = "measurement"
+
+
 ha_sensor_mod.SensorEntity = SensorEntity
 ha_sensor_mod.SensorDeviceClass = SensorDeviceClass
 ha_sensor_mod.SensorStateClass = SensorStateClass
@@ -74,12 +87,15 @@ EstimatedWiltingPointSensor = sensor.EstimatedWiltingPointSensor
 DailyNitrogenAppliedSensor = sensor.DailyNitrogenAppliedSensor
 DOMAIN = sensor.DOMAIN
 
+
 class DummyStates:
     def __init__(self):
         self._data = {}
+
     def get(self, eid):
         val = self._data.get(eid)
         return types.SimpleNamespace(state=val) if val is not None else None
+
 
 class DummyHass:
     def __init__(self):
@@ -116,17 +132,11 @@ def test_daily_nitrogen_applied():
     hass = DummyHass()
     tracker = hass.data[DOMAIN]["nutrient_tracker"]
     now = datetime.now()
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("pid", "b1", now, {"N": 50}, 2.0)
-    )
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("other", "b2", now, {"N": 30}, 1.0)
-    )
+    tracker.delivery_log.append(NutrientDeliveryRecord("pid", "b1", now, {"N": 50}, 2.0))
+    tracker.delivery_log.append(NutrientDeliveryRecord("other", "b2", now, {"N": 30}, 1.0))
     sensor_entity = DailyNitrogenAppliedSensor(hass, "Plant", "pid")
     asyncio.run(sensor_entity.async_update())
     assert sensor_entity.native_value == 100.0
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("pid", "b3", now, {"N": 20}, 1.0)
-    )
+    tracker.delivery_log.append(NutrientDeliveryRecord("pid", "b3", now, {"N": 20}, 1.0))
     asyncio.run(sensor_entity.async_update())
     assert sensor_entity.native_value == 120.0

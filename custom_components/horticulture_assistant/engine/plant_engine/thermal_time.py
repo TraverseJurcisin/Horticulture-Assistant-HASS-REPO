@@ -1,15 +1,16 @@
 """Growing Degree Day (GDD) utilities for growth stage tracking."""
+
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from collections.abc import Iterable
 from datetime import date, timedelta
 
-from .utils import load_dataset, normalize_key, list_dataset_entries
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "local/plants/temperature/gdd_requirements.json"
 
 # Cached dataset loaded once
-_DATA: Dict[str, Dict[str, int]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, int]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "calculate_gdd",
@@ -42,7 +43,7 @@ def get_stage_gdd_requirement(plant_type: str, stage: str) -> int | None:
     if not plant:
         return None
     value = plant.get(normalize_key(stage))
-    return int(value) if isinstance(value, (int, float)) else None
+    return int(value) if isinstance(value, int | float) else None
 
 
 def predict_stage_completion(plant_type: str, stage: str, accumulated_gdd: float) -> bool:

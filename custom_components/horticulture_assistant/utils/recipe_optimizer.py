@@ -2,9 +2,9 @@
 Core module for optimizing fertilizer recipes to meet plant nutrient targets.
 """
 
-from typing import List, Dict
 
-def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Dict:
+
+def optimize_recipe(plant_profile: dict[str, float], products: list[dict]) -> dict:
     """
     Generate a fertilizer recipe to meet nutrient targets specified in a plant profile.
 
@@ -53,7 +53,7 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
     # Initialize remaining targets (mg)
     remaining = {nut: val for nut, val in targets.items() if val > 0}
     # Track doses (grams for solids, mL for liquids) for each product by name
-    doses: Dict[str, float] = {}
+    doses: dict[str, float] = {}
     # Total additional volume (mL) from liquid products
     liquid_volume_ml = 0.0
 
@@ -122,12 +122,9 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
         unit = "g" if prod.get("form") == "solid" else "mL"
         price = prod.get("price_per_unit", 0.0)
         cost = dose * price
-        recipe_ingredients.append({
-            "product": prod_name,
-            "dose": dose,
-            "unit": unit,
-            "cost": round(cost, 2)
-        })
+        recipe_ingredients.append(
+            {"product": prod_name, "dose": dose, "unit": unit, "cost": round(cost, 2)}
+        )
         total_cost += cost
 
     total_volume_liters = (1000.0 + liquid_volume_ml) / 1000.0  # base 1L plus liquids
@@ -135,8 +132,9 @@ def optimize_recipe(plant_profile: Dict[str, float], products: List[Dict]) -> Di
     return {
         "ingredients": recipe_ingredients,
         "total_cost": round(total_cost, 2),
-        "total_volume": round(total_volume_liters, 3)
+        "total_volume": round(total_volume_liters, 3),
     }
+
 
 # Example usage (mock data for demonstration)
 if __name__ == "__main__":
@@ -144,11 +142,31 @@ if __name__ == "__main__":
         "nutrient_targets": {"N": 150.0, "P": 50.0, "K": 150.0, "Fe": 2.0, "Mg": 20.0}
     }
     example_products = [
-        {"name": "CalNitrate", "form": "solid", "analysis": {"N": 15.5, "Ca": 19.0}, "price_per_unit": 0.01},
-        {"name": "SuperPhosphate", "form": "solid", "analysis": {"P": 20.0, "Ca": 15.0}, "price_per_unit": 0.015},
-        {"name": "PotassiumNitrate", "form": "solid", "analysis": {"K": 13.0, "N": 13.0}, "price_per_unit": 0.012},
-        {"name": "MagnesiumSulfate", "form": "solid", "analysis": {"Mg": 9.6, "S": 13.0}, "price_per_unit": 0.008},
-        {"name": "IronChelate", "form": "solid", "analysis": {"Fe": 6.0}, "price_per_unit": 0.05}
+        {
+            "name": "CalNitrate",
+            "form": "solid",
+            "analysis": {"N": 15.5, "Ca": 19.0},
+            "price_per_unit": 0.01,
+        },
+        {
+            "name": "SuperPhosphate",
+            "form": "solid",
+            "analysis": {"P": 20.0, "Ca": 15.0},
+            "price_per_unit": 0.015,
+        },
+        {
+            "name": "PotassiumNitrate",
+            "form": "solid",
+            "analysis": {"K": 13.0, "N": 13.0},
+            "price_per_unit": 0.012,
+        },
+        {
+            "name": "MagnesiumSulfate",
+            "form": "solid",
+            "analysis": {"Mg": 9.6, "S": 13.0},
+            "price_per_unit": 0.008,
+        },
+        {"name": "IronChelate", "form": "solid", "analysis": {"Fe": 6.0}, "price_per_unit": 0.05},
     ]
     try:
         recipe = optimize_recipe(example_profile, example_products)

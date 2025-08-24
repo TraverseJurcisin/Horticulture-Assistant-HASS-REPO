@@ -1,5 +1,5 @@
-import types
 import sys
+import types
 
 # Provide minimal 'homeassistant.core' stub so the helper module imports cleanly
 ha = types.ModuleType("homeassistant")
@@ -8,10 +8,10 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.state_helpers import (
+from custom_components.horticulture_assistant.utils.state_helpers import (  # noqa: E402
+    aggregate_sensor_values,
     get_numeric_state,
     normalize_entities,
-    aggregate_sensor_values,
     parse_entities,
 )
 
@@ -79,9 +79,7 @@ def test_normalize_entities_split_and_unique():
 
 
 def test_normalize_entities_iterable_and_default():
-    result = normalize_entities(
-        ["sensor.a", "sensor.b", "sensor.a", "sensor.c"], "sensor.default"
-    )
+    result = normalize_entities(["sensor.a", "sensor.b", "sensor.a", "sensor.c"], "sensor.default")
     assert result == ["sensor.a", "sensor.b", "sensor.c"]
     assert normalize_entities(None, "sensor.default") == ["sensor.default"]
 

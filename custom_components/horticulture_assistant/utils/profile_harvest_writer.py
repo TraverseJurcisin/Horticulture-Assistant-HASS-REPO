@@ -4,6 +4,7 @@ from .profile_helpers import write_profile_sections
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def generate_harvest_profiles(plant_id: str, base_dir: str = None, overwrite: bool = False) -> str:
     """
     Generate or update harvest and yield profile files for a given plant.
@@ -31,7 +32,7 @@ def generate_harvest_profiles(plant_id: str, base_dir: str = None, overwrite: bo
         "harvesting_method": None,
         "postharvest_storage": None,
         "spoilage_rate": None,
-        "market_channels": None
+        "market_channels": None,
     }
 
     # Define default content for yield.json
@@ -41,11 +42,11 @@ def generate_harvest_profiles(plant_id: str, base_dir: str = None, overwrite: bo
         "per_area_volume_metrics": {
             "per_acre": None,
             "per_cubic_ft": None,
-            "per_gallon_media": None
+            "per_gallon_media": None,
         },
         "historical_yield": None,
         "yield_density_range": None,
-        "projected_yield_model": None
+        "projected_yield_model": None,
     }
 
     profile_sections = {

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+
 from plant_engine.growth_model import update_growth_index
 from plant_engine.utils import load_json
 
@@ -18,6 +19,7 @@ def main() -> None:
 
     result = update_growth_index(args.plant_id, env, args.transpiration_ml)
     import json
+
     print(json.dumps(result, indent=2))
 
 

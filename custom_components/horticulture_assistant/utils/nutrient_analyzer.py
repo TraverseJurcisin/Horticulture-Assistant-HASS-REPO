@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Mapping
+from collections.abc import Mapping
 
 from plant_engine.nutrient_manager import calculate_nutrient_adjustments
 
@@ -14,7 +14,7 @@ def recommend_adjustments(
     plant_type: str,
     stage: str,
     volume_l: float | None = None,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """Return nutrient ppm adjustments and optional milligram totals.
 
     Parameters
@@ -35,7 +35,7 @@ def recommend_adjustments(
     if volume_l is None or not ppm_adjust:
         return ppm_adjust
 
-    mg_adjust: Dict[str, float] = {}
+    mg_adjust: dict[str, float] = {}
     for nutrient, ppm in ppm_adjust.items():
         mg_adjust[f"{nutrient}_mg"] = ppm * volume_l
     ppm_adjust.update(mg_adjust)

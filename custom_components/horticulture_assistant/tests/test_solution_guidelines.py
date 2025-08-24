@@ -1,7 +1,7 @@
 from plant_engine.solution_guidelines import (
-    list_supported_plants,
-    get_solution_guidelines,
     evaluate_solution,
+    get_solution_guidelines,
+    list_supported_plants,
 )
 
 

@@ -1,7 +1,7 @@
 from plant_engine.heat_memory import (
-    list_supported_plants,
-    get_heat_memory_info,
     calculate_heat_memory_index,
+    get_heat_memory_info,
+    list_supported_plants,
     recommend_heat_recovery,
 )
 

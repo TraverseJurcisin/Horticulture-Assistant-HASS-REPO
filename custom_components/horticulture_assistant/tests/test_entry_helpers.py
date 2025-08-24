@@ -1,21 +1,25 @@
-from types import SimpleNamespace
 from pathlib import Path
+from types import SimpleNamespace
+
 from custom_components.horticulture_assistant.utils.entry_helpers import (
-    get_entry_plant_info,
-    store_entry_data,
-    remove_entry_data,
     get_entry_data,
     get_entry_data_by_plant_id,
+    get_entry_plant_info,
+    remove_entry_data,
+    store_entry_data,
 )
+
 
 class DummyEntry(SimpleNamespace):
     pass
+
 
 def test_get_entry_plant_info_defaults():
     entry = DummyEntry(entry_id="eid", data={})
     pid, name = get_entry_plant_info(entry)
     assert pid == "eid"
     assert name.startswith("Plant ")
+
 
 def test_get_entry_plant_info_explicit():
     entry = DummyEntry(entry_id="eid", data={"plant_id": "pid1", "plant_name": "Tom"})
@@ -41,7 +45,9 @@ def test_store_and_remove_entry_data(tmp_path):
     assert get_entry_data(hass, entry) is stored
     assert get_entry_data_by_plant_id(hass, "e1") is stored
     remove_entry_data(hass, "e1")
-    assert "horticulture_assistant" not in hass.data or "e1" not in hass.data["horticulture_assistant"]
+    assert (
+        "horticulture_assistant" not in hass.data or "e1" not in hass.data["horticulture_assistant"]
+    )
     assert get_entry_data(hass, "e1") is None
     assert get_entry_data_by_plant_id(hass, "e1") is None
 

@@ -13,6 +13,7 @@ except ImportError:
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def _slugify(text: str) -> str:
     """Helper to slugify a string (lowercase, underscores for non-alphanumeric)."""
     text = text.lower()
@@ -23,7 +24,10 @@ def _slugify(text: str) -> str:
         text = text.replace('__', '_')
     return text
 
-def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bool = False, base_dir: str = None) -> str:
+
+def generate_profile(
+    metadata: dict, hass: 'HomeAssistant' = None, overwrite: bool = False, base_dir: str = None
+) -> str:
     """
     Generate a new plant profile directory with template JSON files.
 
@@ -44,9 +48,7 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     # Determine the plant identifier (plant_id)
     plant_id = metadata.get("plant_id") or metadata.get("id")
     display_name = (
-        metadata.get("display_name")
-        or metadata.get("name")
-        or metadata.get("plant_name")
+        metadata.get("display_name") or metadata.get("name") or metadata.get("plant_name")
     )
     if not plant_id:
         if display_name:
@@ -112,10 +114,16 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     general_data["lifecycle_stage"] = lifecycle_stage if lifecycle_stage is not None else "TBD"
 
     # Set automation flags (default to False if not provided)
-    general_data["auto_lifecycle_mode"] = bool(metadata.get("auto_lifecycle") or metadata.get("auto_lifecycle_mode")) \
-        if ("auto_lifecycle" in metadata or "auto_lifecycle_mode" in metadata) else False
-    general_data["auto_approve_all"] = bool(metadata.get("auto_approve_actions") or metadata.get("auto_approve_all")) \
-        if ("auto_approve_actions" in metadata or "auto_approve_all" in metadata) else False
+    general_data["auto_lifecycle_mode"] = (
+        bool(metadata.get("auto_lifecycle") or metadata.get("auto_lifecycle_mode"))
+        if ("auto_lifecycle" in metadata or "auto_lifecycle_mode" in metadata)
+        else False
+    )
+    general_data["auto_approve_all"] = (
+        bool(metadata.get("auto_approve_actions") or metadata.get("auto_approve_all"))
+        if ("auto_approve_actions" in metadata or "auto_approve_all" in metadata)
+        else False
+    )
 
     # Compile tags from provided list and known metadata fields
     tags = []
@@ -145,13 +153,19 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     if "start_date" in general_data:
         try:
             from datetime import datetime
+
             dt = datetime.fromisoformat(str(general_data["start_date"]))
             year = dt.year
             month = dt.month
-            season = ("winter" if month in (12, 1, 2) else
-                      "spring" if month in (3, 4, 5) else
-                      "summer" if month in (6, 7, 8) else
-                      "fall")
+            season = (
+                "winter"
+                if month in (12, 1, 2)
+                else "spring"
+                if month in (3, 4, 5)
+                else "summer"
+                if month in (6, 7, 8)
+                else "fall"
+            )
             season_tag = f"{season}_{year}"
             if season_tag not in tags_lower:
                 tags.append(season_tag)
@@ -191,7 +205,7 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
         "humidity": None,
         "hardiness_zone": str(zone_val) if zone_val else "TBD",
         "EC": None,
-        "pH": None
+        "pH": None,
     }
 
     # Nutrition profile section (nutrient thresholds placeholders in ppm)
@@ -215,18 +229,18 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
         "leaf_mercury_ppm": None,
         "leaf_nickel_ppm": None,
         "leaf_cobalt_ppm": None,
-        "leaf_selenium_ppm": None
+        "leaf_selenium_ppm": None,
     }
 
     # Irrigation profile section (irrigation settings/thresholds)
-    irrigation_data = {
-        "soil_moisture_pct": None
-    }
+    irrigation_data = {"soil_moisture_pct": None}
 
     # Stages profile section (growth stages and durations)
-    stage_name = (general_data["lifecycle_stage"]
-                  if general_data.get("lifecycle_stage") not in (None, "", "TBD")
-                  else "initial_stage")
+    stage_name = (
+        general_data["lifecycle_stage"]
+        if general_data.get("lifecycle_stage") not in (None, "", "TBD")
+        else "initial_stage"
+    )
     provided_stage_len = metadata.get("stage_length") or metadata.get("stage_duration")
     stage_duration_val = None
     if provided_stage_len is not None:
@@ -240,7 +254,7 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
     stages_data = {
         stage_name: {
             "stage_duration": stage_duration_val if stage_duration_val is not None else None,
-            "notes": "TBD"
+            "notes": "TBD",
         }
     }
 
@@ -250,7 +264,7 @@ def generate_profile(metadata: dict, hass: 'HomeAssistant' = None, overwrite: bo
         "environment.json": environment_data,
         "nutrition.json": nutrition_data,
         "irrigation.json": irrigation_data,
-        "stages.json": stages_data
+        "stages.json": stages_data,
     }
     for filename, data in profile_sections.items():
         file_path = plant_dir / filename

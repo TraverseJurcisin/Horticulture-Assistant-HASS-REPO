@@ -39,9 +39,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         except Exception as err:  # pragma: no cover - simple stub
             raise UpdateFailed(str(err)) from err
 
-    async def _compute_metrics(
-        self, profile_id: str, profile: dict[str, Any]
-    ) -> dict[str, Any]:
+    async def _compute_metrics(self, profile_id: str, profile: dict[str, Any]) -> dict[str, Any]:
         """Compute metrics for a profile.
 
         Currently only derives a rudimentary Daily Light Integral (DLI) based on the

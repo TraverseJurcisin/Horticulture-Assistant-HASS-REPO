@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Dict, Optional, Any
+from pathlib import Path
+from typing import Any
 
 from .utils import load_json, save_json
 
@@ -27,14 +27,12 @@ class WaterBalance:
     taw_ml: float
     mad_pct: float
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return a serializable dictionary representation."""
         return asdict(self)
 
     def __getitem__(self, item: str) -> Any:  # convenience for legacy dict access
         return getattr(self, item)
-
-
 
 
 def update_water_balance(
@@ -43,7 +41,7 @@ def update_water_balance(
     transpiration_ml: float,
     storage_path: str = STORAGE_PATH,
     *,
-    rootzone_ml: Optional[float] = None,
+    rootzone_ml: float | None = None,
     mad_pct: float = 0.5,
 ) -> WaterBalance:
     """Update and return the daily water balance for a plant.
@@ -74,10 +72,7 @@ def update_water_balance(
     else:
         history = {}
 
-    history[today] = {
-        "irrigated": irrigation_ml,
-        "et": transpiration_ml
-    }
+    history[today] = {"irrigated": irrigation_ml, "et": transpiration_ml}
 
     # Only keep recent history
     sorted_keys = sorted(history.keys())[-MAX_LOG_DAYS:]
@@ -116,7 +111,7 @@ def update_water_balance(
     return summary
 
 
-def load_water_balance(plant_id: str, storage_path: str = STORAGE_PATH) -> Dict[str, Any]:
+def load_water_balance(plant_id: str, storage_path: str = STORAGE_PATH) -> dict[str, Any]:
     """Return the logged water balance history for ``plant_id``."""
     file_path = Path(storage_path) / f"{plant_id}.json"
     if not file_path.exists():

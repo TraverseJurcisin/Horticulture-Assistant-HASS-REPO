@@ -9,9 +9,9 @@ default to speed up loading in production.
 import json
 import logging
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,9 +23,9 @@ class PlantProfile:
     """Loaded plant profile data."""
 
     plant_id: str
-    profile_data: Dict[str, Dict[str, Any]]
+    profile_data: dict[str, dict[str, Any]]
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return profile data as a plain dictionary."""
         return {"plant_id": self.plant_id, "profile_data": self.profile_data}
 
@@ -34,7 +34,7 @@ class PlantProfile:
         return self.as_dict()[item]
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_plant_profile(
     plant_id: str,
     base_path: str | None = None,
@@ -95,7 +95,7 @@ def load_plant_profile(
                 continue
             # Attempt to load and parse the JSON file
             try:
-                with open(file_path, "r", encoding="utf-8") as f:
+                with open(file_path, encoding="utf-8") as f:
                     data = json.load(f)
             except Exception as e:
                 _LOGGER.error("Failed to parse JSON file %s: %s", file_path, e)

@@ -1,8 +1,7 @@
-from pathlib import Path
+import os
 import subprocess
 import sys
-import json
-import os
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts/estimate_profit.py"
 

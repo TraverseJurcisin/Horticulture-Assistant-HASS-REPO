@@ -1,6 +1,6 @@
 from plant_engine.tissue_analysis import (
-    get_target_ranges,
     evaluate_tissue_levels,
+    get_target_ranges,
     score_tissue_levels,
 )
 

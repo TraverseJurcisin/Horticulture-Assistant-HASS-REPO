@@ -2,14 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict
-
-from .utils import load_dataset, list_dataset_entries, normalize_key
+from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "stages/growth_rate_guidelines.json"
 
 # Load dataset once at import time using cached helper
-_DATA: Dict[str, Dict[str, float]] = load_dataset(DATA_FILE)
+_DATA: dict[str, dict[str, float]] = load_dataset(DATA_FILE)
 
 __all__ = [
     "list_supported_plants",
