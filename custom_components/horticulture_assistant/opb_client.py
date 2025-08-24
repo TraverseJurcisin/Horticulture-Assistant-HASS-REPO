@@ -7,34 +7,51 @@ import aiohttp
 
 BASE_URL = "https://api.openplantbook.org"
 _SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}
+_SEARCH_CACHE: dict[str, tuple[list[dict[str, Any]], datetime]] = {}
 _CACHE_TTL = timedelta(hours=12)
+_TIMEOUT = aiohttp.ClientTimeout(total=20)
 
 
 class OpenPlantbookError(Exception): ...
 
 
 class OpenPlantbookClient:
-    def __init__(self, session: aiohttp.ClientSession, token: str):
+    def __init__(self, session: aiohttp.ClientSession, token: str | None):
+        """Wrap a session with optional bearer token headers."""
         self._s = session
         self._h = {"Authorization": f"Bearer {token}"} if token else {}
 
+    async def _get(self, path: str) -> Any:
+        url = f"{BASE_URL}{path}"
+        try:
+            async with self._s.get(url, headers=self._h, timeout=_TIMEOUT) as r:
+                if r.status != 200:
+                    raise OpenPlantbookError(f"request failed: {r.status}")
+                try:
+                    return await r.json()
+                except aiohttp.ContentTypeError as err:
+                    raise OpenPlantbookError("invalid response") from err
+        except (TimeoutError, aiohttp.ClientError) as err:
+            raise OpenPlantbookError(str(err)) from err
+
     async def species_details(self, slug: str) -> dict[str, Any]:
-        url = f"{BASE_URL}/v1/species/{slug}"
-        async with self._s.get(url, headers=self._h, timeout=20) as r:
-            if r.status != 200:
-                raise OpenPlantbookError(f"details failed: {r.status}")
-            return await r.json()
+        data = await self._get(f"/v1/species/{slug}")
+        return data if isinstance(data, dict) else {}
 
     async def search(self, query: str) -> list[dict[str, Any]]:
-        url = f"{BASE_URL}/v1/species?search={query}"
-        async with self._s.get(url, headers=self._h, timeout=20) as r:
-            if r.status != 200:
-                raise OpenPlantbookError(f"search failed: {r.status}")
-            data = await r.json()
-            return data if isinstance(data, list) else []
+        now = datetime.now(UTC)
+        cached = _SEARCH_CACHE.get(query)
+        if cached and now - cached[1] < _CACHE_TTL:
+            return cached[0]
+        data = await self._get(f"/v1/species?search={query}")
+        results = data if isinstance(data, list) else []
+        _SEARCH_CACHE[query] = (results, now)
+        return results
 
 
-async def async_fetch_field(hass, species: str, field: str) -> tuple[float | None, str]:
+async def async_fetch_field(
+    hass, species: str, field: str, token: str | None = None
+) -> tuple[float | None, str]:
     """Fetch a numeric field for a species from OpenPlantbook.
 
     Returns a `(value, url)` tuple where ``value`` is coerced to ``float`` when
@@ -42,7 +59,6 @@ async def async_fetch_field(hass, species: str, field: str) -> tuple[float | Non
     it can be used for citation links.
     """
     session = hass.helpers.aiohttp_client.async_get_clientsession()
-    token = None
     client = OpenPlantbookClient(session, token)
     now = datetime.now(UTC)
     cached = _SPECIES_CACHE.get(species)
@@ -66,5 +82,6 @@ async def async_fetch_field(hass, species: str, field: str) -> tuple[float | Non
 
 
 def clear_opb_cache() -> None:
-    """Clear cached species lookups."""
+    """Clear cached species and search lookups."""
     _SPECIES_CACHE.clear()
+    _SEARCH_CACHE.clear()
