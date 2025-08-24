@@ -43,8 +43,13 @@ jobs:
           pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component pre-commit
       - name: Validate plant profiles
         run: python scripts/validate_profiles.py
-      - run: pre-commit run --all-files
-      - name: Type check (non-blocking)
-        run: mypy --explicit-package-bases acme/crypto_util.py || true
+      - name: Run pre-commit on entire repo
+        run: pre-commit run --all-files
+      - name: Static type checks (non-blocking)
+        run: |
+          mypy --explicit-package-bases \
+            custom_components/horticulture_assistant/__init__.py \
+            custom_components/horticulture_assistant/api.py \
+            custom_components/horticulture_assistant/fertilizer_formulator.py || true
       - name: Run tests
         run: pytest -q

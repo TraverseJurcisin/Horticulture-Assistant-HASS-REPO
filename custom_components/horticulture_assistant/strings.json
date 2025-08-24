@@ -47,17 +47,23 @@
   },
   "options": {
     "step": {
+      "action": {
+        "data": {
+          "action": "Action"
+        },
+        "title": "Profile action"
+      },
       "apply": {
         "data": {
           "resolve_now": "Resolve now"
         },
         "title": "Apply"
       },
-      "action": {
+      "generate": {
         "data": {
-          "action": "Action"
+          "mode": "Source"
         },
-        "title": "Profile action"
+        "title": "Generate profile"
       },
       "init": {
         "data": {
@@ -83,12 +89,6 @@
           "variable": "Variable"
         },
         "title": "Pick variable"
-      },
-      "generate": {
-        "data": {
-          "mode": "Source"
-        },
-        "title": "Generate profile"
       },
       "profile": {
         "data": {

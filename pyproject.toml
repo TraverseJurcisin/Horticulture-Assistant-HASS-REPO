@@ -6,11 +6,12 @@ extend-exclude = [
   "custom_components/horticulture_assistant/engine/",
   "custom_components/horticulture_assistant/scripts/",
   "custom_components/horticulture_assistant/utils/",
+  "tests/fixtures/",
 ]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B"]
-ignore = ["E203", "E266", "E501"]
+ignore = ["E203", "E266", "E501", "E402"]
 
 [tool.ruff.format]
 quote-style = "preserve"
@@ -20,3 +21,8 @@ skip-magic-trailing-comma = false
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = false

@@ -1,106 +1,106 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Plant Profile",
-  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sensors": {
+      "additionalProperties": false,
+      "properties": {
+        "co2_entities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ec_entities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "moisture_entities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "temperature_entities": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "targets": {
+      "additionalProperties": true,
+      "properties": {
+        "rh_pct": {
+          "properties": {
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ],
+          "type": "object"
+        },
+        "temp_f": {
+          "properties": {
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ],
+          "type": "object"
+        },
+        "vpd_kpa": {
+          "properties": {
+            "max": {
+              "type": "number"
+            },
+            "min": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "zone_id": {
+      "type": "string"
+    }
+  },
   "required": [
     "id",
     "name",
     "sensors",
     "targets"
   ],
-  "properties": {
-    "id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "name": {
-      "type": "string",
-      "minLength": 1
-    },
-    "zone_id": {
-      "type": "string"
-    },
-    "sensors": {
-      "type": "object",
-      "properties": {
-        "moisture_entities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "temperature_entities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "ec_entities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "co2_entities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "targets": {
-      "type": "object",
-      "properties": {
-        "temp_f": {
-          "type": "object",
-          "properties": {
-            "min": {
-              "type": "number"
-            },
-            "max": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ]
-        },
-        "rh_pct": {
-          "type": "object",
-          "properties": {
-            "min": {
-              "type": "number"
-            },
-            "max": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ]
-        },
-        "vpd_kpa": {
-          "type": "object",
-          "properties": {
-            "min": {
-              "type": "number"
-            },
-            "max": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ]
-        }
-      },
-      "additionalProperties": true
-    }
-  },
-  "additionalProperties": true
+  "title": "Plant Profile",
+  "type": "object"
 }

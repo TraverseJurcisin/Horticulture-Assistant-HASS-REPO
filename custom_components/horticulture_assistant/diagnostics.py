@@ -17,7 +17,11 @@ async def async_get_config_entry_diagnostics(hass, entry):
     ai = entry_data.get("coordinator_ai")
     plants = store.data.get("plants", {}) if store else {}
     zones = store.data.get("zones", {}) if store else {}
-    profiles = await async_load_all(hass)
+    registry = hass.data.get(DOMAIN, {}).get("profile_registry")
+    if registry:
+        profiles = {p.plant_id: p.to_json() for p in registry}
+    else:
+        profiles = await async_load_all(hass)
     # Summarize citation provenance across all profiles
     total_citations = 0
     citation_summary: dict[str, int] = {}

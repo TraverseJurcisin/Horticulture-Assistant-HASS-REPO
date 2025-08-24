@@ -54,6 +54,16 @@ class PlantProfile:
             "last_resolved": self.last_resolved,
         }
 
+    def summary(self) -> dict[str, Any]:
+        """Return a lightweight summary of the profile."""
+
+        return {
+            "plant_id": self.plant_id,
+            "name": self.display_name,
+            "species": self.species,
+            "variables": {k: v.value for k, v in self.variables.items()},
+        }
+
     @staticmethod
     def from_json(data: dict[str, Any]) -> PlantProfile:
         """Create a PlantProfile from a dictionary."""
