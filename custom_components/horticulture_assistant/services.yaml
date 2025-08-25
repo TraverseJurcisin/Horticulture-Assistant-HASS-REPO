@@ -1,79 +1,36 @@
-create_profile:
-  name: Create plant profile
-  description: Create a new plant profile managed by Horticulture Assistant.
-  fields:
-    name:
-      required: true
-      selector:
-        text:
+# Describes the service actions exposed by the Horticulture Assistant
+# These reflect registrations in __init__.py and services.py
 
-duplicate_profile:
-  name: Duplicate plant profile
-  description: Clone an existing plant profile under a new name.
-  fields:
-    source_profile_id:
-      required: true
-      selector:
-        text:
-    new_name:
-      required: true
-      selector:
-        text:
-
-delete_profile:
-  name: Delete plant profile
-  description: Remove a plant profile, its stored data, and any associated sensors.
-  fields:
-    profile_id:
-      required: true
-      selector:
-        text:
-
-link_sensors:
-  name: Link sensors to profile
-  description: Attach sensor entity IDs to a plant profile.
-  fields:
-    profile_id:
-      required: true
-      selector:
-        text:
-    temperature:
-      selector:
-        entity:
-          domain: sensor
-    humidity:
-      selector:
-        entity:
-          domain: sensor
-    illuminance:
-      selector:
-        entity:
-          domain: sensor
-    moisture:
-      selector:
-        entity:
-          domain: sensor
+refresh:
+  name: Refresh
+  description: Refresh all coordinators (AI and local).
 
 update_sensors:
-  name: Update plant sensors
-  description: Attach or replace sensor entity IDs for a plant profile.
+  name: Update Sensors (legacy)
+  description: Update the sensors mapping for a plant ID (legacy compatibility).
   fields:
     plant_id:
       required: true
-      example: citrus_backyard_spring2025
       selector:
         text:
     sensors:
       required: true
-      example:
-        moisture_sensors: [sensor.soil_moist_1, sensor.soil_moist_2]
-        temperature_sensors: [sensor.greenhouse_temp]
-        ec_sensors: [sensor.substrate_ec]
+      description: "Mapping of measurement -> list of entity_ids (e.g. {\"temperature\": [\"sensor.foo\"]})"
       selector:
         object:
 
+recompute:
+  name: Recompute
+  description: Recompute derived values for a specific profile (or all if omitted).
+  fields:
+    profile_id:
+      required: false
+      selector:
+        text:
+
 recalculate_targets:
-  name: Recalculate nutrient/environment targets
+  name: Recalculate Targets
+  description: Recalculate targets for a stored plant by its plant_id (legacy local store).
   fields:
     plant_id:
       required: true
@@ -81,7 +38,8 @@ recalculate_targets:
         text:
 
 run_recommendation:
-  name: Run recommendation
+  name: Run Recommendation
+  description: Trigger a new AI recommendation. Optionally approve and persist it.
   fields:
     plant_id:
       required: true
@@ -93,45 +51,69 @@ run_recommendation:
       selector:
         boolean:
 
-refresh:
-  name: Manual refresh
-  description: Trigger both local and AI coordinators to refresh now.
+create_profile:
+  name: Create Profile
+  description: Create a new empty profile with the given display name.
+  fields:
+    name:
+      required: true
+      selector:
+        text:
 
-recompute:
-  name: Recompute Metrics
-  description: Force coordinator to recompute metrics for all profiles or one profile.
+duplicate_profile:
+  name: Duplicate Profile
+  description: Clone an existing profile to a new one with a new display name.
+  fields:
+    source_profile_id:
+      required: true
+      selector:
+        text:
+    new_name:
+      required: true
+      selector:
+        text:
+
+delete_profile:
+  name: Delete Profile
+  description: Delete a profile by id.
   fields:
     profile_id:
+      required: true
+      selector:
+        text:
+
+link_sensors:
+  name: Link Sensors
+  description: Link specific sensor entities to a profile.
+  fields:
+    profile_id:
+      required: true
+      selector:
+        text:
+    temperature:
       required: false
       selector:
-        text:
-
-replace_sensor:
-  name: Replace a mapped sensor
-  description: Swap the source sensor feeding a plant profile.
-  fields:
-    profile_id:
-      required: true
+        entity:
+          domain: sensor
+    humidity:
+      required: false
       selector:
-        text:
-    measurement:
-      required: true
+        entity:
+          domain: sensor
+    illuminance:
+      required: false
       selector:
-        select:
-          options:
-            - temperature
-            - humidity
-            - illuminance
-            - moisture
-    entity_id:
-      required: true
+        entity:
+          domain: sensor
+    moisture:
+      required: false
       selector:
         entity:
           domain: sensor
 
 apply_irrigation_plan:
-  name: Apply irrigation plan
-  description: Use Smart Irrigation recommendation and run via Irrigation Unlimited or OpenSprinkler.
+  name: Apply Irrigation Plan
+  description: Apply the current irrigation recommendation via a provider.
   fields:
     profile_id:
       required: true
@@ -152,8 +134,8 @@ apply_irrigation_plan:
         text:
 
 resolve_profile:
-  name: Resolve profile preferences
-  description: Resolve all per-variable sources into numeric thresholds for a profile.
+  name: Resolve Profile
+  description: Resolve thresholds/preferences for a single profile.
   fields:
     profile_id:
       required: true
@@ -161,12 +143,12 @@ resolve_profile:
         text:
 
 resolve_all:
-  name: Resolve all profiles
-  description: Resolve all profiles that have needs_resolution=true or expired AI TTL.
+  name: Resolve All Profiles
+  description: Resolve thresholds/preferences for all profiles.
 
 generate_profile:
-  name: Generate profile
-  description: Populate all variables for a profile from a single source.
+  name: Generate Profile
+  description: Generate a profile by cloning, OpenPlantBook, or AI.
   fields:
     profile_id:
       required: true
@@ -185,82 +167,28 @@ generate_profile:
       selector:
         text:
 
-export_profiles:
-  name: Export profiles
-  description: Write all stored profiles to a JSON file on disk.
-  fields:
-    path:
-      required: true
-      selector:
-        text:
 export_profile:
-  name: Export profile
-  description: Write a single profile to a JSON file on disk.
+  name: Export Profile
+  description: Export a single profile to a JSON file path.
   fields:
     profile_id:
       required: true
       selector:
         text:
-    path:
-      required: true
-      selector:
-        text:
-import_profiles:
-  name: Import profiles
-  description: Load profiles from a JSON file and merge into storage.
-  fields:
     path:
       required: true
       selector:
         text:
 
-refresh_species:
-  name: Refresh species data
-  description: Re-fetch species thresholds and images for a profile.
+import_profiles:
+  name: Import Profiles
+  description: Import profiles from a JSON file path.
   fields:
-    profile_id:
+    path:
       required: true
       selector:
         text:
 
 clear_caches:
-  name: Clear caches
-  description: Remove cached AI recommendations and OpenPlantbook lookups.
-
-start_calibration:
-  name: Start Lux→PPFD calibration
-  description: Begin a calibration session for a Lux sensor against a PPFD reference.
-  fields:
-    lux_entity_id: { required: true, selector: { entity: { domain: sensor, device_class: illuminance } } }
-    ppfd_entity_id: { required: false, selector: { entity: { domain: sensor } } }
-    model:
-      required: false
-      default: linear
-      selector: { select: { options: ["linear","quadratic","power"] } }
-    averaging_seconds:
-      required: false
-      default: 3
-      selector: { number: { min: 1, max: 30, step: 1, mode: box } }
-    notes: { required: false, selector: { text: {} } }
-
-add_calibration_point:
-  name: Add calibration point
-  description: Capture a Lux/PPFD pair for the active session.
-  fields:
-    session_id: { required: true, selector: { text: {} } }
-    ppfd_value:
-      required: false
-      description: "If no PPFD entity was chosen, enter the current PPFD reading from your PAR sensor."
-      selector: { number: { min: 0, max: 3000, step: 1, mode: box } }
-
-finish_calibration:
-  name: Finish calibration
-  description: Finalize the curve fit, store coefficients, and apply to derived PPFD/DLI.
-  fields:
-    session_id: { required: true, selector: { text: {} } }
-
-abort_calibration:
-  name: Abort calibration
-  description: Cancel a running calibration session.
-  fields:
-    session_id: { required: true, selector: { text: {} } }
+  name: Clear Caches
+  description: Clear local caches for AI and OpenPlantbook clients.
