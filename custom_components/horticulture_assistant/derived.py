@@ -69,7 +69,7 @@ def _current_temp_humidity(
 class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
     """Sensor calculating Daily Light Integral for a plant."""
 
-    _attr_name = "Daily Light Integral"
+    _attr_translation_key = "dli"
     _attr_native_unit_of_measurement = "mol/m²/d"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
@@ -138,7 +138,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
 class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
     """Sensor providing calibrated PPFD from Lux."""
 
-    _attr_name = "PPFD"
+    _attr_translation_key = "ppfd"
     _attr_native_unit_of_measurement = "µmol/m²/s"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
@@ -209,7 +209,7 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
 class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
     """Sensor providing Vapor Pressure Deficit in kPa."""
 
-    _attr_name = "Vapor Pressure Deficit"
+    _attr_translation_key = "vpd"
     _attr_native_unit_of_measurement = "kPa"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
@@ -249,7 +249,7 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
 class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
     """Sensor providing dew point temperature in Celsius."""
 
-    _attr_name = "Dew Point"
+    _attr_translation_key = "dew_point"
     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
@@ -290,7 +290,7 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
 class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
     """Sensor estimating mold growth risk on a 0..6 scale."""
 
-    _attr_name = "Mold Risk"
+    _attr_translation_key = "mold_risk"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
     def __init__(

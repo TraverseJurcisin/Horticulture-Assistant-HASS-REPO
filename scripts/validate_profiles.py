@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -28,4 +29,29 @@ if issues:
     for i in issues:
         print(" -", i)
     sys.exit(1)
+
+data_dir = (
+    ROOT
+    / "custom_components"
+    / "horticulture_assistant"
+    / "data"
+    / "fertilizers"
+    / "detail"
+)
+
+errors = 0
+for path in data_dir.rglob("*.json"):
+    text = path.read_text(encoding="utf-8")
+    try:
+        json.loads(text)
+    except Exception as e:  # pragma: no cover - debug aid
+        print(f"[JSON] {path}: {e}")
+        errors += 1
+    if not text.endswith("\n") or text.endswith("\n\n"):
+        print(f"[EOL] {path}: file must end with exactly one newline")
+        errors += 1
+
+if errors:
+    sys.exit(1)
+
 print("Profile validation passed.")

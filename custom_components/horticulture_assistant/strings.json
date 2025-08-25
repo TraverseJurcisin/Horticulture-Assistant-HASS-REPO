@@ -15,7 +15,7 @@
       },
       "sensors": {
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
           "ec_sensor": "EC sensor",
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor"
@@ -30,8 +30,8 @@
           "model": "Model",
           "update_interval": "Update interval (minutes)"
         },
-        "description": "Enter AI settings and defaults.",
-        "title": "Connect AI"
+        "description": "Create or connect plant profiles and sensors.",
+        "title": "Set up Horticulture Assistant"
       }
     }
   },
@@ -66,17 +66,21 @@
         "title": "Generate profile"
       },
       "init": {
+        "title": "Options",
+        "description": "Configure local sensors and behavior.",
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
+          "copy_from_profile_id": "Copy settings from profile",
           "ec_sensor": "EC sensor",
           "force_refresh": "Force refresh thresholds",
           "keep_stale": "Keep entities available when AI fails",
           "moisture_sensor": "Moisture sensor",
+          "profile_id": "Profile",
+          "sensors": "Attached sensors",
           "species_display": "Species",
           "temperature_sensor": "Temperature sensor",
           "update_interval": "Update interval (minutes)"
-        },
-        "title": "Options"
+        }
       },
       "pick_source": {
         "data": {
@@ -125,5 +129,34 @@
       }
     }
   },
-  "title": "Horticulture Assistant"
+  "title": "Horticulture Assistant",
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "ok": "OK",
+          "error": "Error"
+        }
+      },
+      "recommendation": {
+        "name": "Recommendation"
+      },
+      "ppfd": {
+        "name": "PPFD"
+      },
+      "dli": {
+        "name": "Daily Light Integral"
+      },
+      "vpd": {
+        "name": "Vapor Pressure Deficit"
+      },
+      "dew_point": {
+        "name": "Dew Point"
+      },
+      "mold_risk": {
+        "name": "Mold Risk"
+      }
+    }
+  }
 }

@@ -303,6 +303,40 @@ async def test_options_flow_persists_sensors(hass, hass_admin_user):
     assert general["sensor_entities"]["moisture_sensors"] == ["sensor.good"]
 
 
+async def test_options_flow_ec_co2_sensors(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", CONF_PLANT_ID: "pid", CONF_PLANT_NAME: "Plant"},
+        title="title",
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    profile_dir = Path(hass.config.path("plants", "pid"))
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    (profile_dir / "general.json").write_text("{}")
+    hass.states.async_set("sensor.ec", 0)
+    hass.states.async_set("sensor.co2", 400, {"device_class": "carbon_dioxide"})
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        await flow.async_step_init()
+        result = await flow.async_step_init(
+            {"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"}
+        )
+
+    assert result["type"] == "create_entry"
+    assert result["data"]["ec_sensor"] == "sensor.ec"
+    assert result["data"]["co2_sensor"] == "sensor.co2"
+    assert result["data"]["sensors"]["conductivity"] == "sensor.ec"
+    assert result["data"]["sensors"]["co2"] == "sensor.co2"
+    general = json.loads((profile_dir / "general.json").read_text())
+    container = general["sensor_entities"]
+    assert container["ec_sensors"] == ["sensor.ec"]
+    assert container["co2_sensors"] == ["sensor.co2"]
+
+
 async def test_options_flow_removes_sensor(hass, hass_admin_user):
     entry = MockConfigEntry(
         domain=DOMAIN,
