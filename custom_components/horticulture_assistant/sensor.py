@@ -5,9 +5,11 @@ from datetime import datetime
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
+    SensorEntityDescription,
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -27,6 +29,46 @@ from .entity import HorticultureBaseEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
+HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
+    key="status",
+    translation_key="status",
+    device_class=SensorDeviceClass.ENUM,
+    entity_category=EntityCategory.DIAGNOSTIC,
+    options=["ok", "error"],
+)
+
+HORTI_RECOMMENDATION_DESCRIPTION = SensorEntityDescription(
+    key="recommendation",
+    translation_key="recommendation",
+    entity_category=EntityCategory.DIAGNOSTIC,
+)
+
+
+PROFILE_SENSOR_DESCRIPTIONS = {
+    "dli": SensorEntityDescription(
+        key="dli",
+        translation_key="dli",
+        native_unit_of_measurement="mol/m²·day",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:weather-sunny-alert",
+    ),
+    "vpd": SensorEntityDescription(
+        key="vpd",
+        translation_key="vpd",
+        native_unit_of_measurement="kPa",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:water-percent",
+    ),
+    "dew_point": SensorEntityDescription(
+        key="dew_point",
+        translation_key="dew_point",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:thermometer-water",
+    ),
+}
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
@@ -38,8 +80,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     plant_name: str = stored["plant_name"]
 
     sensors = [
-        HortiStatusSensor(coord_ai, coord_local, entry.entry_id, keep_stale),
-        HortiRecommendationSensor(coord_ai, entry.entry_id, keep_stale),
+        HortiStatusSensor(
+            coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale
+        ),
+        HortiRecommendationSensor(
+            coord_ai, entry.entry_id, plant_name, plant_id, keep_stale
+        ),
         PlantPPFDSensor(hass, entry, plant_name, plant_id),
         PlantDLISensor(hass, entry, plant_name, plant_id),
     ]
@@ -61,29 +107,50 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     if profile_coord and profiles:
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
-            sensors.append(ProfileDLISensor(profile_coord, pid, name))
+            sensors.append(
+                ProfileMetricSensor(
+                    profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"]
+                )
+            )
+            prof_sensors = profile.get("sensors", {})
+            if prof_sensors.get("temperature") and prof_sensors.get("humidity"):
+                sensors.append(
+                    ProfileMetricSensor(
+                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["vpd"]
+                    )
+                )
+                sensors.append(
+                    ProfileMetricSensor(
+                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dew_point"]
+                    )
+                )
 
     async_add_entities(sensors, True)
 
 
 class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
-    _attr_name = "Horticulture Assistant Status"
-    _attr_device_class = SensorDeviceClass.ENUM
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
-    _attr_options = ["ok", "error"]
+    entity_description = HORTI_STATUS_DESCRIPTION
+    _attr_has_entity_name = True
 
     def __init__(
         self,
         coordinator: HortiAICoordinator,
         local: HortiLocalCoordinator,
         entry_id: str,
+        plant_name: str,
+        plant_id: str,
         keep_stale: bool,
-    ):
+    ) -> None:
         super().__init__(coordinator)
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_status"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"plant:{plant_id}")},
+            name=plant_name,
+            manufacturer="Horticulture Assistant",
+            model="Plant Profile",
+        )
         self._local = local
         self._keep_stale = keep_stale
-        self._attr_has_entity_name = True
         self._citations: dict | None = None
 
     async def async_added_to_hass(self) -> None:
@@ -165,37 +232,35 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
             return True
         return super().available
 
-    @property
-    def device_info(self) -> DeviceInfo:
-        return DeviceInfo(
-            identifiers={(DOMAIN, "horticulture_assistant")},
-            name="Horticulture Assistant",
-            manufacturer="Traverse Jurcisin",
-        )
 
 
 class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
-    _attr_name = "Horticulture Assistant Recommendation"
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    entity_description = HORTI_RECOMMENDATION_DESCRIPTION
+    _attr_has_entity_name = True
 
-    def __init__(self, coordinator: HortiAICoordinator, entry_id: str, keep_stale: bool):
+    def __init__(
+        self,
+        coordinator: HortiAICoordinator,
+        entry_id: str,
+        plant_name: str,
+        plant_id: str,
+        keep_stale: bool,
+    ) -> None:
         super().__init__(coordinator)
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_recommendation"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"plant:{plant_id}")},
+            name=plant_name,
+            manufacturer="Horticulture Assistant",
+            model="Plant Profile",
+        )
         self._keep_stale = keep_stale
-        self._attr_has_entity_name = True
 
     @property
     def native_value(self):
         data = self.coordinator.data or {}
         return data.get("recommendation")
 
-    @property
-    def device_info(self) -> DeviceInfo:
-        return DeviceInfo(
-            identifiers={(DOMAIN, "horticulture_assistant")},
-            name="Horticulture Assistant",
-            manufacturer="Traverse Jurcisin",
-        )
 
     @property
     def available(self) -> bool:
@@ -204,19 +269,23 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         return super().available
 
 
-class ProfileDLISensor(HorticultureBaseEntity, SensorEntity):
-    """DLI sensor backed by the profile coordinator."""
+class ProfileMetricSensor(HorticultureBaseEntity, SensorEntity):
+    """Generic profile metric sensor backed by the coordinator."""
 
-    _attr_native_unit_of_measurement = "mol/m²·day"
-    _attr_state_class = SensorStateClass.MEASUREMENT
-    _attr_icon = "mdi:weather-sunny-alert"
+    entity_description: SensorEntityDescription
 
     def __init__(
-        self, coordinator: HorticultureCoordinator, profile_id: str, profile_name: str
+        self,
+        coordinator: HorticultureCoordinator,
+        profile_id: str,
+        profile_name: str,
+        description: SensorEntityDescription,
     ) -> None:
         super().__init__(coordinator, profile_id, profile_name)
-        self._attr_unique_id = f"{profile_id}:dli"
-        self._attr_name = "Daily Light Integral"
+        self.entity_description = description
+        self._attr_unique_id = f"{profile_id}:{description.key}"
+        if description.name:
+            self._attr_name = description.name
 
     @property
     def native_value(self):
@@ -225,5 +294,5 @@ class ProfileDLISensor(HorticultureBaseEntity, SensorEntity):
             .get("profiles", {})
             .get(self._profile_id, {})
             .get("metrics", {})
-            .get("dli")
+            .get(self.entity_description.key)
         )

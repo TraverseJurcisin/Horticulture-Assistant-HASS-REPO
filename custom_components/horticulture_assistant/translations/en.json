@@ -2,29 +2,9 @@
   "config": {
     "abort": {},
     "error": {
-      "cannot_connect": "Could not reach AI endpoint.",
-      "opb_missing": "OpenPlantbook SDK not available",
       "profile_error": "Failed to create plant profile"
     },
     "step": {
-      "opb_credentials": {
-        "data": {
-          "client_id": "Client ID",
-          "secret": "Client Secret"
-        },
-        "description": "Enter client_id and secret to search species and pre-fill thresholds.",
-        "title": "OpenPlantbook credentials"
-      },
-      "opb_species_search": {
-        "data": {
-          "query": "Species or keyword"
-        },
-        "title": "Search OpenPlantbook"
-      },
-      "opb_species_select": {
-        "description": "Choose the best match to pre-fill thresholds and image.",
-        "title": "Select species"
-      },
       "profile": {
         "data": {
           "plant_name": "Plant name",
@@ -35,34 +15,13 @@
       },
       "sensors": {
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
           "ec_sensor": "EC sensor",
           "moisture_sensor": "Moisture sensor",
           "temperature_sensor": "Temperature sensor"
         },
         "description": "Select sensor entities (optional; can be added later).",
         "title": "Sensors"
-      },
-      "threshold_source": {
-        "data": {
-          "method": "Method"
-        },
-        "description": "Choose how to pre-fill thresholds.",
-        "title": "Prefill thresholds"
-      },
-      "thresholds": {
-        "data": {
-          "conductivity_max": "Max conductivity",
-          "conductivity_min": "Min conductivity",
-          "humidity_max": "Max humidity",
-          "humidity_min": "Min humidity",
-          "illuminance_max": "Max illuminance",
-          "illuminance_min": "Min illuminance",
-          "temperature_max": "Max temperature",
-          "temperature_min": "Min temperature"
-        },
-        "description": "Set initial threshold values (optional).",
-        "title": "Thresholds"
       },
       "user": {
         "data": {
@@ -71,8 +30,8 @@
           "model": "Model",
           "update_interval": "Update interval (minutes)"
         },
-        "description": "Enter AI settings and defaults.",
-        "title": "Connect AI"
+        "description": "Create or connect plant profiles and sensors.",
+        "title": "Set up Horticulture Assistant"
       }
     }
   },
@@ -82,15 +41,11 @@
       "title": "Missing sensor for {plant_id}"
     },
     "missing_entity_option": {
-      "description": "The entity {entity_id} no longer exists. Update the integration options.",
-      "title": "Missing configured entity"
+      "description": "A configured sensor no longer exists.",
+      "title": "Missing entity {entity_id}"
     }
   },
   "options": {
-    "error": {
-      "invalid_interval": "Update interval must be at least 1 minute",
-      "not_found": "Entity not found"
-    },
     "step": {
       "action": {
         "data": {
@@ -111,22 +66,21 @@
         "title": "Generate profile"
       },
       "init": {
+        "title": "Options",
+        "description": "Configure local sensors and behavior.",
         "data": {
-          "co2_sensor": "CO\u2082 sensor",
+          "co2_sensor": "CO₂ sensor",
+          "copy_from_profile_id": "Copy settings from profile",
           "ec_sensor": "EC sensor",
           "force_refresh": "Force refresh thresholds",
-          "keep_stale": "Keep entities available when API fails",
+          "keep_stale": "Keep entities available when AI fails",
           "moisture_sensor": "Moisture sensor",
-          "opb_auto_download_images": "Auto-download species image",
-          "opb_download_dir": "Image download directory",
-          "opb_enable_upload": "Enable daily upload to OpenPlantbook",
-          "opb_location_share": "Share location when uploading (off/country/coordinates)",
+          "profile_id": "Profile",
+          "sensors": "Attached sensors",
           "species_display": "Species",
           "temperature_sensor": "Temperature sensor",
           "update_interval": "Update interval (minutes)"
-        },
-        "description": "Configure local sensors and behavior.",
-        "title": "Horticulture Assistant \u2014 Options"
+        }
       },
       "pick_source": {
         "data": {
@@ -145,18 +99,6 @@
           "profile_id": "Profile"
         },
         "title": "Pick profile"
-      },
-      "profile_add": {
-        "data": {
-          "copy_from": "Copy preferences from existing profile",
-          "humidity_sensor": "Humidity sensor",
-          "light_sensor": "Light (PPFD/DLI) sensor",
-          "profile_name": "Profile name",
-          "soil_moisture_sensor": "Soil moisture sensor",
-          "species": "Species (optional)",
-          "temp_sensor": "Air temperature sensor"
-        },
-        "title": "Add plant profile"
       },
       "src_ai": {
         "data": {
@@ -187,5 +129,34 @@
       }
     }
   },
-  "title": "Horticulture Assistant"
+  "title": "Horticulture Assistant",
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "ok": "OK",
+          "error": "Error"
+        }
+      },
+      "recommendation": {
+        "name": "Recommendation"
+      },
+      "ppfd": {
+        "name": "PPFD"
+      },
+      "dli": {
+        "name": "Daily Light Integral"
+      },
+      "vpd": {
+        "name": "Vapor Pressure Deficit"
+      },
+      "dew_point": {
+        "name": "Dew Point"
+      },
+      "mold_risk": {
+        "name": "Mold Risk"
+      }
+    }
+  }
 }

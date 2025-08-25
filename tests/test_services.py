@@ -1,17 +1,88 @@
+import importlib
+import json
+import pathlib
+import sys
+import types
 from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
-from homeassistant.helpers import issue_registry as ir
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
-from custom_components.horticulture_assistant.services import er
+try:
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+except Exception:  # pragma: no cover
+    MockConfigEntry = None
+
+try:
+    from homeassistant.helpers import issue_registry as ir
+except Exception:  # pragma: no cover
+    ir = None
+if MockConfigEntry is None:
+    # Create a minimal package placeholder so service modules import even when
+    # the Home Assistant test harness isn't available. When the plugin is
+    # present, tests import the real integration instead.
+    pkg = types.ModuleType("custom_components.horticulture_assistant")
+    pkg.__path__ = [
+        str(
+            pathlib.Path(__file__).resolve().parents[1]
+            / "custom_components"
+            / "horticulture_assistant"
+        )
+    ]
+    sys.modules.setdefault("custom_components.horticulture_assistant", pkg)
+else:  # pragma: no cover - exercised only when plugin installed
+    import custom_components.horticulture_assistant  # noqa: F401
+
+services = importlib.import_module("custom_components.horticulture_assistant.services")
+const = importlib.import_module("custom_components.horticulture_assistant.const")
+CONF_API_KEY = const.CONF_API_KEY
+DOMAIN = const.DOMAIN
 
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
+    pytest.mark.skipif(MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"),
 ]
+
+
+class _DummyRegistry:
+    def __init__(self):
+        self._entries = {}
+
+    def async_get_or_create(
+        self, _domain, _platform, _unique_id, suggested_object_id=None, original_device_class=None
+    ):
+        eid = suggested_object_id or _unique_id
+        entry = types.SimpleNamespace(
+            device_class=original_device_class, original_device_class=original_device_class
+        )
+        self._entries[eid] = entry
+        return entry
+
+    def async_get(self, entity_id):
+        key = entity_id.split(".")[-1]
+        return self._entries.get(key)
+
+
+@pytest.fixture(autouse=True)
+def dummy_entity_registry(monkeypatch):
+    reg = _DummyRegistry()
+    monkeypatch.setattr(services.er, "async_get", lambda hass: reg)
+    return reg
+
+
+@pytest.fixture(autouse=True)
+def patch_coordinators():
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        yield
 
 
 async def test_update_sensors_service(hass):
@@ -21,9 +92,16 @@ async def test_update_sensors_service(hass):
         title="Plant 1",
     )
     entry.add_to_hass(hass)
-    from custom_components.horticulture_assistant import async_setup_entry
+    import custom_components.horticulture_assistant as hca
 
-    await async_setup_entry(hass, entry)
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
@@ -39,8 +117,9 @@ async def test_update_sensors_service(hass):
             {"plant_id": "plant1", "sensors": {"moisture_sensors": ["sensor.miss"]}},
             blocking=True,
         )
-    issues = ir.async_get(hass).issues
-    assert any(issue_id.startswith("missing_entity") for (_, issue_id) in issues)
+    if ir is not None:
+        issues = ir.async_get(hass).issues
+        assert any(issue_id.startswith("missing_entity") for (_, issue_id) in issues)
     hass.states.async_set("sensor.good", 1)
     await hass.services.async_call(
         DOMAIN,
@@ -64,7 +143,7 @@ async def test_replace_sensor_service(hass):
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
-    reg = er.async_get(hass)
+    reg = services.er.async_get(hass)
     reg.async_get_or_create(
         "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
     )
@@ -92,6 +171,61 @@ async def test_replace_sensor_service(hass):
     assert (
         entry.options["profiles"]["plant1"]["sensors"]["moisture"] == "sensor.good"
     )
+
+
+async def test_replace_sensor_service_device_class_mismatch(hass):
+    """Replacement must match the expected device class."""
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        title="Plant 1",
+        options={
+            "profiles": {"plant1": {"name": "Plant 1", "sensors": {"moisture": "sensor.old"}}}
+        },
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    reg = services.er.async_get(hass)
+    reg.async_get_or_create(
+        "sensor",
+        "test",
+        "sensor_old",
+        suggested_object_id="old",
+        original_device_class="moisture",
+    )
+    # Register a candidate sensor with an incompatible device class
+    reg.async_get_or_create(
+        "sensor",
+        "test",
+        "sensor_bad",
+        suggested_object_id="bad",
+        original_device_class="humidity",
+    )
+
+    hass.states.async_set("sensor.old", 1)
+    hass.states.async_set("sensor.bad", 2)
+    with pytest.raises(vol.Invalid):
+        await hass.services.async_call(
+            DOMAIN,
+            "replace_sensor",
+            {
+                "profile_id": "plant1",
+                "measurement": "moisture",
+                "entity_id": "sensor.bad",
+            },
+            blocking=True,
+        )
 
 
 async def test_refresh_service(hass):
@@ -327,6 +461,122 @@ async def test_link_sensors_service(hass):
             {"profile_id": "p1", "temperature": "sensor.miss"},
             blocking=True,
         )
+
+
+async def test_export_profiles_service(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={"profiles": {"p1": {"name": "Plant 1"}}},
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+    from custom_components.horticulture_assistant.profile.schema import PlantProfile
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    registry = hass.data[DOMAIN]["profile_registry"]
+    registry._profiles["p2"] = PlantProfile("p2", "Plant 2")  # type: ignore[attr-defined]
+
+    out = tmp_path / "profiles.json"
+    await hass.services.async_call(
+        DOMAIN, "export_profiles", {"path": str(out)}, blocking=True
+    )
+
+    data = json.loads(out.read_text())
+    ids = {p["plant_id"] for p in data}
+    assert ids == {"p1", "p2"}
+
+
+async def test_export_profile_service(hass, tmp_path):
+    """Ensure the export_profile service writes a single profile."""
+    hass.config.path = lambda *p: str(tmp_path.joinpath(*p))
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={"profiles": {"p1": {"name": "Plant 1"}}},
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    async def fake_get_profile(_hass, pid):
+        if pid == "p1":
+            return {
+                "plant_id": "p1",
+                "display_name": "Plant 1",
+                "variables": {},
+            }
+        return None
+
+    with patch(
+        "custom_components.horticulture_assistant.profile.export.async_get_profile",
+        side_effect=fake_get_profile,
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "export_profile",
+            {"profile_id": "p1", "path": "one.json"},
+            blocking=True,
+        )
+        data = json.loads((tmp_path / "one.json").read_text())
+        assert data["plant_id"] == "p1"
+        with pytest.raises(ValueError):
+            await hass.services.async_call(
+                DOMAIN,
+                "export_profile",
+                {"profile_id": "bad", "path": "bad.json"},
+                blocking=True,
+            )
+
+
+
+async def test_import_profiles_service(hass, tmp_path):
+    hass.config.path = lambda *p: str(tmp_path.joinpath(*p))
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    registry = hass.data[DOMAIN]["profile_registry"]
+    assert registry.get("p1") is None
+
+    profiles = {"p1": {"plant_id": "p1", "display_name": "Plant 1", "variables": {}}}
+    (tmp_path / "profiles.json").write_text(json.dumps(profiles))
+
+    await hass.services.async_call(
+        DOMAIN, "import_profiles", {"path": "profiles.json"}, blocking=True
+    )
+
+    prof = registry.get("p1")
+    assert prof is not None
+    assert prof.display_name == "Plant 1"
 
 
 async def test_clear_caches_service(hass):

@@ -491,6 +491,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         from .profile.importer import async_import_profiles
 
         await async_import_profiles(hass, path)
+        registry = hass.data[DOMAIN]["profile_registry"]
+        await registry.async_initialize()
 
     hass.services.async_register(
         svc_base,
