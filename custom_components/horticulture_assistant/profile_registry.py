@@ -112,7 +112,7 @@ class ProfileRegistry:
 
         p = Path(path)
         if not p.is_absolute():
-            p = Path(self.hass.config.path(p))  # type: ignore[attr-defined]
+            p = Path(self.hass.config.path(str(p)))  # type: ignore[attr-defined]
         p.parent.mkdir(parents=True, exist_ok=True)
         data = [p_.to_json() for p_ in self._profiles.values()]
         with p.open("w", encoding="utf-8") as fp:

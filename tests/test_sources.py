@@ -1,3 +1,4 @@
+import asyncio
 import os
 import tempfile
 import types
@@ -22,6 +23,7 @@ class DummyEntry:
 
 def make_hass():
     tmpdir = tempfile.mkdtemp()
+    loop = asyncio.get_event_loop()
 
     def update_entry(entry, *, options):
         entry.options = options
@@ -52,6 +54,7 @@ def make_hass():
         state=None,
         async_create_task=async_create_task,
         async_add_executor_job=async_add_executor_job,
+        loop=loop,
     )
 
 
