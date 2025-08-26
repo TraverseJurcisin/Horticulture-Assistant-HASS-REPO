@@ -1,3 +1,6 @@
+import asyncio
+import os
+import tempfile
 import types
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -19,6 +22,9 @@ class DummyEntry:
 
 
 def make_hass():
+    tmpdir = tempfile.mkdtemp()
+    loop = asyncio.get_event_loop()
+
     def update_entry(entry, *, options):
         entry.options = options
 
@@ -31,7 +37,7 @@ def make_hass():
         return func(*args)
 
     def config_path(*_args):
-        return "/tmp/test.json"
+        return os.path.join(tmpdir, "test.json")
 
     return types.SimpleNamespace(
         config_entries=types.SimpleNamespace(async_update_entry=update_entry),
@@ -39,6 +45,7 @@ def make_hass():
             location_name="loc",
             units=types.SimpleNamespace(name="metric"),
             path=config_path,
+            config_dir=tmpdir,
         ),
         helpers=types.SimpleNamespace(
             aiohttp_client=types.SimpleNamespace(async_get_clientsession=MagicMock())
@@ -47,6 +54,7 @@ def make_hass():
         state=None,
         async_create_task=async_create_task,
         async_add_executor_job=async_add_executor_job,
+        loop=loop,
     )
 
 

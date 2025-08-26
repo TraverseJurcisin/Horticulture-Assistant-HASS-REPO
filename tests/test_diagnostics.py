@@ -1,48 +1,37 @@
-from unittest.mock import patch
-
 import pytest
 from homeassistant.components.diagnostics import REDACTED
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.horticulture_assistant.diagnostics import (
-    async_get_config_entry_diagnostics,
-)
+from custom_components.horticulture_assistant.const import DOMAIN
+from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
 
 
-class _States:
-    def async_all(self):
-        return []
+class DummyRegistry:
+    def summaries(self):
+        return [{"id": "p1"}]
+
+
+class DummyCoordinator:
+    last_update_success = True
+    _last_update_success_time = "2024-01-01T00:00:00+00:00"
+    update_interval = 0
 
 
 @pytest.mark.asyncio
 async def test_async_get_config_entry_diagnostics(hass):
-    hass.states = _States()
     entry = MockConfigEntry(
-        domain="horticulture_assistant",
+        domain=DOMAIN,
         data={"foo": "bar"},
-        options={"api_key": "secret"},
+        options={"api_key": "secret", "profiles": {"p1": {}}},
     )
-    sample_profiles = {
-        "plant1": {
-            "plant_id": "plant1",
-            "display_name": "Plant",
-            "last_resolved": "2024-01-01T00:00:00+00:00",
-            "variables": {
-                "air_temp_min": {
-                    "value": 10,
-                    "source": "manual",
-                    "citations": [{"source": "manual", "title": "note"}],
-                }
-            },
-        }
+    hass.data[DOMAIN] = {
+        "profile_registry": DummyRegistry(),
+        "coordinator_ai": DummyCoordinator(),
     }
-    with patch(
-        "custom_components.horticulture_assistant.diagnostics.async_load_all",
-        return_value=sample_profiles,
-    ):
-        result = await async_get_config_entry_diagnostics(hass, entry)
-    assert result["options"]["api_key"] == REDACTED
-    assert result["profiles"] == sample_profiles
-    assert result["citations_count"] == 1
-    assert result["citations_summary"] == {"air_temp_min": 1}
-    assert result["last_resolved_utc"] == "2024-01-01T00:00:00+00:00"
+
+    result = await async_get_config_entry_diagnostics(hass, entry)
+
+    assert result["entry"]["options"]["api_key"] is REDACTED
+    assert result["profiles"] == [{"id": "p1"}]
+    assert result["coordinators"]["ai"]["last_update_success"] is True
+    assert result["options_profiles"] == ["p1"]

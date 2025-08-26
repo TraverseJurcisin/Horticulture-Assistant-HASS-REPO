@@ -28,7 +28,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from dataclasses import dataclass
 
     @dataclass
-    class ConfigEntry:  # type: ignore[too-many-instance-attributes]
+    class ConfigEntry:  # type: ignore[no-redef, too-many-instance-attributes]
         """Minimal stub for tests when Home Assistant isn't installed."""
 
         entry_id: str | None = None
@@ -52,12 +52,12 @@ try:  # pragma: no cover - allow import without Home Assistant installed
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
     import types
 
-    er = types.SimpleNamespace()
+    er = types.SimpleNamespace()  # type: ignore[assignment]
 
     async def async_track_time_interval(*args, **kwargs):  # type: ignore[override]
         return None
 
-    class UpdateFailed(Exception):
+    class UpdateFailed(Exception):  # type: ignore[no-redef]
         """Fallback update failure."""
 
     def slugify(value: str) -> str:

@@ -25,7 +25,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
     import types
     from enum import Enum
 
-    class SensorDeviceClass(str, Enum):  # type: ignore[misc]
+    class SensorDeviceClass(str, Enum):  # type: ignore[misc, no-redef]
         HUMIDITY = "humidity"
         TEMPERATURE = "temperature"
         ILLUMINANCE = "illuminance"
@@ -60,9 +60,9 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
     def async_get(_hass):  # pylint: disable=unused-argument
         return _dummy_registry
 
-    er = types.SimpleNamespace(async_get=async_get)
+    er = types.SimpleNamespace(async_get=async_get)  # type: ignore[assignment]
 
-    class HomeAssistant:  # type: ignore[empty-body]
+    class HomeAssistant:  # type: ignore[empty-body, no-redef]
         pass
 
 _LOGGER = logging.getLogger(__name__)
@@ -143,7 +143,12 @@ async def async_setup_services(
     if entry.options.get("sensors") and CONF_PROFILES not in entry.options:
         _LOGGER.debug("Migrating legacy sensors mapping into profile registry")
         profile_id = entry.options.get("plant_id", "profile")
-        registry.entry.options.setdefault(CONF_PROFILES, {})[profile_id] = {
+        profiles = dict(entry.options.get(CONF_PROFILES, {}))
+        profiles[profile_id] = {
             "name": entry.title or profile_id,
             "sensors": dict(entry.options.get("sensors")),
         }
+        new_opts = dict(entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_opts)
+        entry.options = new_opts

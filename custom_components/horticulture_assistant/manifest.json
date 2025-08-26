@@ -1,22 +1,17 @@
 {
   "domain": "horticulture_assistant",
   "name": "Horticulture Assistant",
-  "after_dependencies": [
-    "recorder"
-  ],
   "codeowners": [
     "@TraverseJurcisin"
   ],
   "config_flow": true,
-  "dependencies": [],
-  "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO",
-  "integration_type": "helper",
-  "iot_class": "calculated",
-  "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues",
-  "loggers": [
-    "custom_components.horticulture_assistant"
+  "dependencies": [
+    "recorder"
   ],
-  "quality_scale": "bronze",
+  "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO#readme",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues",
   "requirements": [],
-  "version": "2025.08.0"
+  "version": "0.10.5"
 }
