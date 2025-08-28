@@ -11,11 +11,13 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterable
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.util import slugify
 
 from .const import CONF_PROFILES
 from .profile import store as profile_store
@@ -66,9 +68,7 @@ class ProfileRegistry:
     # ---------------------------------------------------------------------
     # Mutation helpers
     # ---------------------------------------------------------------------
-    async def async_replace_sensor(
-        self, profile_id: str, measurement: str, entity_id: str
-    ) -> None:
+    async def async_replace_sensor(self, profile_id: str, measurement: str, entity_id: str) -> None:
         """Update a profile's bound sensor entity.
 
         This mirrors the behaviour of the ``replace_sensor`` service but
@@ -118,6 +118,99 @@ class ProfileRegistry:
         with p.open("w", encoding="utf-8") as fp:
             json.dump(data, fp, indent=2)
         return p
+
+    async def async_create_profile(self, name: str) -> str:
+        """Create a new profile with ``name`` and return its id."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        base = slugify(name) or "profile"
+        candidate = base
+        idx = 1
+        while candidate in profiles:
+            idx += 1
+            candidate = f"{base}_{idx}"
+        profiles[candidate] = {"name": name}
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+        self._profiles[candidate] = PlantProfile(plant_id=candidate, display_name=name)
+        return candidate
+
+    async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
+        """Duplicate ``source_id`` into a new profile with ``new_name``."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        src = profiles.get(source_id)
+        if src is None:
+            raise ValueError(f"unknown profile {source_id}")
+        base = slugify(new_name) or "profile"
+        candidate = base
+        idx = 1
+        while candidate in profiles:
+            idx += 1
+            candidate = f"{base}_{idx}"
+        profiles[candidate] = new_profile = deepcopy(src)
+        new_profile["name"] = new_name
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+        prof_obj = PlantProfile(
+            plant_id=candidate,
+            display_name=new_name,
+            species=new_profile.get("species"),
+        )
+        prof_obj.general.setdefault("sensors", new_profile.get("sensors", {}))
+        self._profiles[candidate] = prof_obj
+        return candidate
+
+    async def async_delete_profile(self, profile_id: str) -> None:
+        """Remove ``profile_id`` from the registry and storage."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        if profile_id not in profiles:
+            raise ValueError(f"unknown profile {profile_id}")
+        profiles.pop(profile_id)
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+        self._profiles.pop(profile_id, None)
+        await profile_store.async_delete_profile(self.hass, profile_id)
+
+    async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
+        """Link multiple sensor entities to ``profile_id``."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profile = profiles.get(profile_id)
+        if profile is None:
+            raise ValueError(f"unknown profile {profile_id}")
+        prof = dict(profile)
+        prof["sensors"] = sensors
+        profiles[profile_id] = prof
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+        if prof_obj := self._profiles.get(profile_id):
+            prof_obj.general["sensors"] = sensors
+
+    async def async_export_profile(self, profile_id: str, path: str | Path) -> Path:
+        """Export a single profile to ``path`` and return it."""
+
+        from .profile.export import async_export_profile
+
+        return await async_export_profile(self.hass, profile_id, path)
+
+    async def async_import_profiles(self, path: str | Path) -> int:
+        """Import profiles from ``path`` and reload the registry."""
+
+        from .profile.importer import async_import_profiles
+
+        count = await async_import_profiles(self.hass, path)
+        await self.async_initialize()
+        return count
 
     # ------------------------------------------------------------------
     # Utility helpers primarily for diagnostics

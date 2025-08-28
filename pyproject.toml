@@ -2,27 +2,21 @@
 line-length = 100
 target-version = "py312"
 extend-exclude = [
-  "custom_components/horticulture_assistant/data/",
-  "custom_components/horticulture_assistant/engine/",
-  "custom_components/horticulture_assistant/scripts/",
-  "custom_components/horticulture_assistant/utils/",
-  "tests/fixtures/",
+  "custom_components/horticulture_assistant/data",
+  "custom_components/horticulture_assistant/engine/plant_engine",
+  "custom_components/horticulture_assistant/utils",
+  "custom_components/horticulture_assistant/scripts",
+  "tests/fixtures",
 ]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B"]
-ignore = ["E203", "E266", "E501", "E402"]
+ignore = ["E203", "E266", "E501"]
 
 [tool.ruff.format]
 quote-style = "preserve"
 indent-style = "space"
-skip-magic-trailing-comma = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-
-[tool.mypy]
-python_version = "3.12"
-ignore_missing_imports = true
-warn_unused_ignores = false

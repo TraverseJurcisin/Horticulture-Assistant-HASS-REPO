@@ -23,7 +23,9 @@ async def test_registry_len_and_iter(hass):
 
 
 async def test_len_stable_after_sensor_updates(hass):
-    entry = MockConfigEntry(domain=DOMAIN, data={}, options={CONF_PROFILES: {"p1": {"name": "One"}}})
+    entry = MockConfigEntry(
+        domain=DOMAIN, data={}, options={CONF_PROFILES: {"p1": {"name": "One"}}}
+    )
     entry.add_to_hass(hass)
     reg = ProfileRegistry(hass, entry)
     await reg.async_initialize()

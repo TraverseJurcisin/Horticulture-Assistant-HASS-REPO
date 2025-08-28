@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from copy import deepcopy
 from datetime import timedelta
 
 try:  # pragma: no cover - allow import without Home Assistant installed
@@ -48,7 +47,6 @@ try:  # pragma: no cover - allow import without Home Assistant installed
     from homeassistant.helpers import entity_registry as er
     from homeassistant.helpers.event import async_track_time_interval
     from homeassistant.helpers.update_coordinator import UpdateFailed
-    from homeassistant.util import slugify
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
     import types
 
@@ -59,9 +57,6 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover
 
     class UpdateFailed(Exception):  # type: ignore[no-redef]
         """Fallback update failure."""
-
-    def slugify(value: str) -> str:
-        return value
 
 
 from .api import ChatApi
@@ -100,7 +95,6 @@ SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
-
 
 
 async def async_setup(hass: HomeAssistant, _config) -> bool:
@@ -213,10 +207,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         entry_data["opb_unsub"] = async_track_time_interval(hass, _opb_upload, timedelta(days=1))
 
-    async def _handle_refresh(call):
-        await ai_coord.async_request_refresh()
-        await local_coord.async_request_refresh()
-
     async def _handle_update_sensors(call):
         plant_id = call.data["plant_id"]
         sensors = call.data["sensors"]
@@ -256,142 +246,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     svc_base = DOMAIN
     hass.services.async_register(
         svc_base,
-        "refresh",
-        _handle_refresh,
-        schema=vol.Schema({}),
-    )
-    hass.services.async_register(
-        svc_base,
         "update_sensors",
         _handle_update_sensors,
         schema=vol.Schema({vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}),
     )
-
-    async def _handle_create_profile(call):
-        name: str = call.data["name"]
-        profiles = dict(entry.options.get(CONF_PROFILES, {}))
-        base = slugify(name) or "profile"
-        candidate = base
-        idx = 1
-        while candidate in profiles:
-            idx += 1
-            candidate = f"{base}_{idx}"
-        profiles[candidate] = {"name": name}
-        new_opts = dict(entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        hass.config_entries.async_update_entry(entry, options=new_opts)
-        profile_coord._options = new_opts
-        await profile_coord.async_request_refresh()
-
-    hass.services.async_register(
-        svc_base,
-        "create_profile",
-        _handle_create_profile,
-        schema=vol.Schema({vol.Required("name"): str}),
-    )
-
-    async def _handle_duplicate_profile(call):
-        source_id = call.data["source_profile_id"]
-        new_name = call.data["new_name"]
-        profiles = dict(entry.options.get(CONF_PROFILES, {}))
-        if source_id not in profiles:
-            raise vol.Invalid(f"unknown profile {source_id}")
-        base = slugify(new_name)
-        candidate = base
-        idx = 0
-        while candidate in profiles:
-            idx += 1
-            candidate = f"{base}_{idx}"
-        new_profile = deepcopy(profiles[source_id])
-        new_profile["name"] = new_name
-        profiles[candidate] = new_profile
-        new_opts = dict(entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        hass.config_entries.async_update_entry(entry, options=new_opts)
-        profile_coord._options = new_opts
-        await profile_coord.async_request_refresh()
-
-    hass.services.async_register(
-        svc_base,
-        "duplicate_profile",
-        _handle_duplicate_profile,
-        schema=vol.Schema({vol.Required("source_profile_id"): str, vol.Required("new_name"): str}),
-    )
-
-    async def _handle_delete_profile(call):
-        profile_id = call.data["profile_id"]
-        profiles = dict(entry.options.get(CONF_PROFILES, {}))
-        if profile_id not in profiles:
-            raise vol.Invalid(f"unknown profile {profile_id}")
-        profiles.pop(profile_id)
-        new_opts = dict(entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        hass.config_entries.async_update_entry(entry, options=new_opts)
-        profile_coord._options = new_opts
-        from .profile.store import async_delete_profile
-
-        await async_delete_profile(hass, profile_id)
-        await profile_coord.async_request_refresh()
-
-    hass.services.async_register(
-        svc_base,
-        "delete_profile",
-        _handle_delete_profile,
-        schema=vol.Schema({vol.Required("profile_id"): str}),
-    )
-
-    async def _handle_link_sensors(call):
-        profile_id = call.data["profile_id"]
-        profiles = dict(entry.options.get(CONF_PROFILES, {}))
-        if profile_id not in profiles:
-            raise vol.Invalid(f"unknown profile {profile_id}")
-        sensors: dict[str, str] = {}
-        for role in ("temperature", "humidity", "illuminance", "moisture"):
-            entity_id = call.data.get(role)
-            if not entity_id:
-                continue
-            if hass.states.get(entity_id) is None:
-                raise vol.Invalid(f"missing entity {entity_id}")
-            sensors[role] = entity_id
-        prof = dict(profiles[profile_id])
-        prof["sensors"] = sensors
-        profiles[profile_id] = prof
-        new_opts = dict(entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        hass.config_entries.async_update_entry(entry, options=new_opts)
-        profile_coord._options = new_opts
-        await profile_coord.async_request_refresh()
-
-    hass.services.async_register(
-        svc_base,
-        "link_sensors",
-        _handle_link_sensors,
-        schema=vol.Schema(
-            {
-                vol.Required("profile_id"): str,
-                vol.Optional("temperature"): cv.entity_id,
-                vol.Optional("humidity"): cv.entity_id,
-                vol.Optional("illuminance"): cv.entity_id,
-                vol.Optional("moisture"): cv.entity_id,
-            }
-        ),
-    )
-
-    async def _handle_recompute(call):
-        profile_id = call.data.get("profile_id")
-        if profile_id:
-            profiles = entry.options.get(CONF_PROFILES, {})
-            if profile_id not in profiles:
-                raise vol.Invalid(f"unknown profile {profile_id}")
-        await profile_coord.async_request_refresh()
-
-    hass.services.async_register(
-        svc_base,
-        "recompute",
-        _handle_recompute,
-        schema=vol.Schema({vol.Optional("profile_id"): str}),
-    )
-
 
     hass.services.async_register(
         svc_base,
@@ -479,21 +337,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         await generate_profile(hass, entry, pid, mode, source_profile_id)
 
-    async def _svc_export_profile(call):
-        pid = call.data["profile_id"]
-        path = call.data["path"]
-        from .profile.export import async_export_profile
-
-        await async_export_profile(hass, pid, path)
-
-    async def _svc_import_profiles(call):
-        path = call.data["path"]
-        from .profile.importer import async_import_profiles
-
-        await async_import_profiles(hass, path)
-        registry = hass.data[DOMAIN]["profile_registry"]
-        await registry.async_initialize()
-
     hass.services.async_register(
         svc_base,
         "resolve_profile",
@@ -512,18 +355,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 vol.Optional("source_profile_id"): str,
             }
         ),
-    )
-    hass.services.async_register(
-        svc_base,
-        "export_profile",
-        _svc_export_profile,
-        schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
-    )
-    hass.services.async_register(
-        svc_base,
-        "import_profiles",
-        _svc_import_profiles,
-        schema=vol.Schema({vol.Required("path"): str}),
     )
 
     async def _svc_clear_caches(call):

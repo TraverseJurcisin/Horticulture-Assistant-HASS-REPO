@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import math
 from datetime import date
 
 import numpy as np
@@ -22,19 +21,8 @@ from .calibration.apply import lux_to_ppfd
 from .calibration.fit import eval_model
 from .calibration.store import async_get_for_entity
 from .const import DOMAIN
+from .engine.metrics import dew_point_c, vpd_kpa
 from .entity_base import HorticultureBaseEntity
-
-
-def _svp_kpa(t_c: float) -> float:
-    """Return saturation vapor pressure in kPa."""
-    return 0.6108 * math.exp((17.27 * t_c) / (t_c + 237.3))
-
-
-def dew_point_c(t_c: float, rh: float) -> float:
-    """Return dew point temperature in Celsius using Magnus formula."""
-    a, b = 17.27, 237.3
-    alpha = ((a * t_c) / (b + t_c)) + math.log(max(rh, 1e-6) / 100.0)
-    return (b * alpha) / (a - alpha)
 
 
 def _current_temp_humidity(
@@ -242,7 +230,7 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
         if t is None or h is None:
             self._value = None
         else:
-            self._value = round(_svp_kpa(t) * (1 - max(min(h, 100.0), 0.0) / 100.0), 3)
+            self._value = vpd_kpa(t, h)
         self.async_write_ha_state()
 
 

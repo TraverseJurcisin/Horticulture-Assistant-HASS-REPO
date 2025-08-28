@@ -1,143 +1,29 @@
 {
+  "title": "Horticulture Assistant",
   "config": {
-    "abort": {},
-    "error": {
-      "profile_error": "Failed to create plant profile"
-    },
     "step": {
-      "profile": {
-        "data": {
-          "plant_name": "Plant name",
-          "plant_type": "Plant type (optional)"
-        },
-        "description": "Create a plant profile.",
-        "title": "Plant profile"
-      },
-      "sensors": {
-        "data": {
-          "co2_sensor": "CO₂ sensor",
-          "ec_sensor": "EC sensor",
-          "moisture_sensor": "Moisture sensor",
-          "temperature_sensor": "Temperature sensor"
-        },
-        "description": "Select sensor entities (optional; can be added later).",
-        "title": "Sensors"
-      },
       "user": {
-        "data": {
-          "api_key": "API key",
-          "base_url": "Base URL",
-          "model": "Model",
-          "update_interval": "Update interval (minutes)"
-        },
-        "description": "Create or connect plant profiles and sensors.",
-        "title": "Set up Horticulture Assistant"
+        "title": "Set up Horticulture Assistant",
+        "description": "Create or connect a plant profile."
       }
-    }
-  },
-  "issues": {
-    "missing_entity": {
-      "description": "A referenced sensor no longer exists. Open Options to update the mapping.",
-      "title": "Missing sensor for {plant_id}"
-    },
-    "missing_entity_option": {
-      "description": "A configured sensor no longer exists.",
-      "title": "Missing entity {entity_id}"
     }
   },
   "options": {
     "step": {
-      "action": {
-        "data": {
-          "action": "Action"
-        },
-        "title": "Profile action"
-      },
-      "apply": {
-        "data": {
-          "resolve_now": "Resolve now"
-        },
-        "title": "Apply"
-      },
-      "generate": {
-        "data": {
-          "mode": "Source"
-        },
-        "title": "Generate profile"
-      },
       "init": {
-        "title": "Options",
-        "description": "Configure local sensors and behavior.",
+        "title": "Profile options",
         "data": {
-          "co2_sensor": "CO₂ sensor",
-          "copy_from_profile_id": "Copy settings from profile",
-          "ec_sensor": "EC sensor",
-          "force_refresh": "Force refresh thresholds",
-          "keep_stale": "Keep entities available when AI fails",
-          "moisture_sensor": "Moisture sensor",
           "profile_id": "Profile",
-          "sensors": "Attached sensors",
-          "species_display": "Species",
-          "temperature_sensor": "Temperature sensor",
-          "update_interval": "Update interval (minutes)"
+          "copy_from_profile_id": "Copy settings from",
+          "sensors": "Linked sensors"
         }
-      },
-      "pick_source": {
-        "data": {
-          "mode": "Source"
-        },
-        "title": "Pick source"
-      },
-      "pick_variable": {
-        "data": {
-          "variable": "Variable"
-        },
-        "title": "Pick variable"
-      },
-      "profile": {
-        "data": {
-          "profile_id": "Profile"
-        },
-        "title": "Pick profile"
-      },
-      "src_ai": {
-        "data": {
-          "model": "Model",
-          "provider": "Provider",
-          "ttl_hours": "TTL hours"
-        },
-        "title": "AI provider/model/TTL"
-      },
-      "src_clone": {
-        "data": {
-          "copy_from": "Profile"
-        },
-        "title": "Copy from profile"
-      },
-      "src_manual": {
-        "data": {
-          "value": "Value"
-        },
-        "title": "Manual value"
-      },
-      "src_opb": {
-        "data": {
-          "field": "Field",
-          "species": "Species"
-        },
-        "title": "OpenPlantbook species & field"
       }
     }
   },
-  "title": "Horticulture Assistant",
   "entity": {
     "sensor": {
       "status": {
-        "name": "Status",
-        "state": {
-          "ok": "OK",
-          "error": "Error"
-        }
+        "name": "Status"
       },
       "recommendation": {
         "name": "Recommendation"
@@ -146,16 +32,16 @@
         "name": "PPFD"
       },
       "dli": {
-        "name": "Daily Light Integral"
+        "name": "DLI"
       },
       "vpd": {
-        "name": "Vapor Pressure Deficit"
+        "name": "VPD"
       },
       "dew_point": {
         "name": "Dew Point"
       },
-      "mold_risk": {
-        "name": "Mold Risk"
+      "moisture": {
+        "name": "Moisture"
       }
     }
   }

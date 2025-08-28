@@ -1,69 +1,24 @@
-from __future__ import annotations
-
 """Service handlers for Horticulture Assistant.
 
 These services expose high level operations for manipulating plant profiles
-at runtime.  They are intentionally lightweight wrappers around the
+at runtime. They are intentionally lightweight wrappers around the
 :class:`ProfileRegistry` to keep the integration's ``__init__`` module from
 becoming monolithic.
 """
+
+from __future__ import annotations
 
 import logging
 from typing import Final
 
 import voluptuous as vol
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import entity_registry as er
 
-from .const import CONF_PROFILES, DOMAIN  # noqa: E402
-from .profile_registry import ProfileRegistry  # noqa: E402
-
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.components.sensor import SensorDeviceClass
-    from homeassistant.core import HomeAssistant
-    from homeassistant.helpers import config_validation as cv
-    from homeassistant.helpers import entity_registry as er
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    import types
-    from enum import Enum
-
-    class SensorDeviceClass(str, Enum):  # type: ignore[misc, no-redef]
-        HUMIDITY = "humidity"
-        TEMPERATURE = "temperature"
-        ILLUMINANCE = "illuminance"
-        MOISTURE = "moisture"
-
-    class _ConfigValidationFallback:  # pylint: disable=too-few-public-methods
-        entity_id = str
-
-    cv = _ConfigValidationFallback()  # type: ignore[assignment]
-
-    class _DummyEntry:
-        def __init__(self, dc=None):
-            self.device_class = dc
-            self.original_device_class = dc
-
-    class _DummyRegistry:
-        def __init__(self):
-            self._entries = {}
-
-        def async_get_or_create(
-            self, _domain, _platform, _unique_id, suggested_object_id=None, original_device_class=None
-        ):
-            eid = suggested_object_id or _unique_id
-            self._entries[eid] = _DummyEntry(original_device_class)
-            return self._entries[eid]
-
-        def async_get(self, entity_id):
-            return self._entries.get(entity_id)
-
-    _dummy_registry = _DummyRegistry()
-
-    def async_get(_hass):  # pylint: disable=unused-argument
-        return _dummy_registry
-
-    er = types.SimpleNamespace(async_get=async_get)  # type: ignore[assignment]
-
-    class HomeAssistant:  # type: ignore[empty-body, no-redef]
-        pass
+from .const import CONF_PROFILES, DOMAIN
+from .profile_registry import ProfileRegistry
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,10 +32,14 @@ MEASUREMENT_CLASSES: Final = {
 }
 
 
-async def async_setup_services(
-    hass: HomeAssistant, entry, registry: ProfileRegistry
-) -> None:
+async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegistry) -> None:
     """Register high level profile services."""
+
+    async def _refresh_profile() -> None:
+        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
+        coord = data.get("coordinator")
+        if coord:
+            await coord.async_request_refresh()
 
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -102,6 +61,7 @@ async def async_setup_services(
             raise vol.Invalid("device class mismatch")
 
         await registry.async_replace_sensor(profile_id, measurement, entity_id)
+        await _refresh_profile()
 
     async def _srv_refresh_species(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -111,6 +71,78 @@ async def async_setup_services(
         path = call.data["path"]
         p = await registry.async_export(path)
         _LOGGER.info("Exported %d profiles to %s", len(registry), p)
+
+    async def _srv_create_profile(call) -> None:
+        name: str = call.data["name"]
+        await registry.async_create_profile(name)
+        await _refresh_profile()
+
+    async def _srv_duplicate_profile(call) -> None:
+        src = call.data["source_profile_id"]
+        new_name = call.data["new_name"]
+        try:
+            await registry.async_duplicate_profile(src, new_name)
+        except ValueError as err:
+            raise vol.Invalid(str(err)) from err
+        await _refresh_profile()
+
+    async def _srv_delete_profile(call) -> None:
+        pid = call.data["profile_id"]
+        try:
+            await registry.async_delete_profile(pid)
+        except ValueError as err:
+            raise vol.Invalid(str(err)) from err
+        await _refresh_profile()
+
+    async def _srv_link_sensors(call) -> None:
+        pid = call.data["profile_id"]
+        sensors: dict[str, str] = {}
+        for role in ("temperature", "humidity", "illuminance", "moisture"):
+            if ent := call.data.get(role):
+                if hass.states.get(ent) is None:
+                    raise vol.Invalid(f"missing entity {ent}")
+                sensors[role] = ent
+        try:
+            await registry.async_link_sensors(pid, sensors)
+        except ValueError as err:
+            raise vol.Invalid(str(err)) from err
+        await _refresh_profile()
+
+    async def _srv_export_profile(call) -> None:
+        pid = call.data["profile_id"]
+        path = call.data["path"]
+        out = await registry.async_export_profile(pid, path)
+        _LOGGER.info("Exported profile %s to %s", pid, out)
+
+    async def _srv_import_profiles(call) -> None:
+        path = call.data["path"]
+        await registry.async_import_profiles(path)
+        await _refresh_profile()
+
+    async def _srv_refresh(call) -> None:
+        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
+        for key in ("coordinator_ai", "coordinator_local", "coordinator"):
+            coord = data.get(key)
+            if coord:
+                await coord.async_request_refresh()
+
+    async def _srv_recompute(call) -> None:
+        profile_id: str | None = call.data.get("profile_id")
+        if profile_id:
+            profiles = entry.options.get(CONF_PROFILES, {})
+            if profile_id not in profiles:
+                raise vol.Invalid(f"unknown profile {profile_id}")
+        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
+        coord = data.get("coordinator")
+        if coord:
+            await coord.async_request_refresh()
+
+    async def _srv_reset_dli(call) -> None:
+        profile_id: str | None = call.data.get("profile_id")
+        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
+        coord = data.get("coordinator")
+        if coord:
+            await coord.async_reset_dli(profile_id)
 
     hass.services.async_register(
         DOMAIN,
@@ -132,9 +164,71 @@ async def async_setup_services(
     )
     hass.services.async_register(
         DOMAIN,
+        "create_profile",
+        _srv_create_profile,
+        schema=vol.Schema({vol.Required("name"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "duplicate_profile",
+        _srv_duplicate_profile,
+        schema=vol.Schema({vol.Required("source_profile_id"): str, vol.Required("new_name"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "delete_profile",
+        _srv_delete_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "link_sensors",
+        _srv_link_sensors,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("temperature"): cv.entity_id,
+                vol.Optional("humidity"): cv.entity_id,
+                vol.Optional("illuminance"): cv.entity_id,
+                vol.Optional("moisture"): cv.entity_id,
+            }
+        ),
+    )
+    hass.services.async_register(
+        DOMAIN,
         "export_profiles",
         _srv_export_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "export_profile",
+        _srv_export_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "import_profiles",
+        _srv_import_profiles,
+        schema=vol.Schema({vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "refresh",
+        _srv_refresh,
+        schema=vol.Schema({}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "recompute",
+        _srv_recompute,
+        schema=vol.Schema({vol.Optional("profile_id"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "reset_dli",
+        _srv_reset_dli,
+        schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
 
     # Preserve backwards compatible top-level sensors mapping if it exists.
