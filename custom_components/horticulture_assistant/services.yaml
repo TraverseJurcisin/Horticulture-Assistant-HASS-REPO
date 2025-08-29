@@ -1,194 +1,121 @@
-# Describes the service actions exposed by the Horticulture Assistant
-# These reflect registrations in __init__.py and services.py
-
 refresh:
   name: Refresh
-  description: Refresh all coordinators (AI and local).
-
-update_sensors:
-  name: Update Sensors (legacy)
-  description: Update the sensors mapping for a plant ID (legacy compatibility).
-  fields:
-    plant_id:
-      required: true
-      selector:
-        text:
-    sensors:
-      required: true
-      description: "Mapping of measurement -> list of entity_ids (e.g. {\"temperature\": [\"sensor.foo\"]})"
-      selector:
-        object:
+  description: Refresh all Horticulture Assistant coordinators.
 
 recompute:
   name: Recompute
-  description: Recompute derived values for a specific profile (or all if omitted).
+  description: Recompute derived metrics for a profile (or all if omitted).
   fields:
     profile_id:
       required: false
-      selector:
-        text:
+      selector: { text: {} }
 
-recalculate_targets:
-  name: Recalculate Targets
-  description: Recalculate targets for a stored plant by its plant_id (legacy local store).
+reset_dli:
+  name: Reset DLI
+  description: Clear the accumulated daily light integral for a profile or all profiles.
   fields:
-    plant_id:
-      required: true
-      selector:
-        text:
-
-run_recommendation:
-  name: Run Recommendation
-  description: Trigger a new AI recommendation. Optionally approve and persist it.
-  fields:
-    plant_id:
-      required: true
-      selector:
-        text:
-    approve:
+    profile_id:
       required: false
-      default: false
-      selector:
-        boolean:
+      selector: { text: {} }
+
+refresh_species:
+  name: Refresh Species
+  description: Refresh species data for a profile.
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
 
 create_profile:
   name: Create Profile
-  description: Create a new empty profile with the given display name.
   fields:
     name:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
 
 duplicate_profile:
   name: Duplicate Profile
-  description: Clone an existing profile to a new one with a new display name.
   fields:
     source_profile_id:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
     new_name:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
 
 delete_profile:
   name: Delete Profile
-  description: Delete a profile by id.
   fields:
     profile_id:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
 
 link_sensors:
   name: Link Sensors
-  description: Link specific sensor entities to a profile.
   fields:
     profile_id:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
     temperature:
-      required: false
-      selector:
-        entity:
-          domain: sensor
+      selector: { entity: { domain: sensor } }
     humidity:
-      required: false
-      selector:
-        entity:
-          domain: sensor
+      selector: { entity: { domain: sensor } }
     illuminance:
-      required: false
-      selector:
-        entity:
-          domain: sensor
+      selector: { entity: { domain: sensor } }
     moisture:
-      required: false
+      selector: { entity: { domain: sensor } }
+
+replace_sensor:
+  name: Replace Sensor
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    measurement:
+      required: true
       selector:
-        entity:
-          domain: sensor
+        select:
+          options: [temperature, humidity, illuminance, moisture]
+    entity_id:
+      required: true
+      selector: { entity: { domain: sensor } }
 
 apply_irrigation_plan:
   name: Apply Irrigation Plan
-  description: Apply the current irrigation recommendation via a provider.
   fields:
     profile_id:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
     provider:
-      required: false
       default: auto
       selector:
         select:
-          options:
-            - auto
-            - irrigation_unlimited
-            - opensprinkler
+          options: [auto, irrigation_unlimited, opensprinkler]
     zone:
       required: false
-      selector:
-        text:
-
-resolve_profile:
-  name: Resolve Profile
-  description: Resolve thresholds/preferences for a single profile.
-  fields:
-    profile_id:
-      required: true
-      selector:
-        text:
-
-resolve_all:
-  name: Resolve All Profiles
-  description: Resolve thresholds/preferences for all profiles.
-
-generate_profile:
-  name: Generate Profile
-  description: Generate a profile by cloning, OpenPlantBook, or AI.
-  fields:
-    profile_id:
-      required: true
-      selector:
-        text:
-    mode:
-      required: true
-      selector:
-        select:
-          options:
-            - clone
-            - opb
-            - ai
-    source_profile_id:
-      required: false
-      selector:
-        text:
+      selector: { text: {} }
 
 export_profile:
   name: Export Profile
-  description: Export a single profile to a JSON file path.
   fields:
     profile_id:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
     path:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
 
-import_profiles:
-  name: Import Profiles
-  description: Import profiles from a JSON file path.
+export_profiles:
+  name: Export Profiles
+  description: Export all profiles to a file.
   fields:
     path:
       required: true
-      selector:
-        text:
+      selector: { text: {} }
 
-clear_caches:
-  name: Clear Caches
-  description: Clear local caches for AI and OpenPlantbook clients.
+import_profiles:
+  name: Import Profiles
+  fields:
+    path:
+      required: true
+      selector: { text: {} }

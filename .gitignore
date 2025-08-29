@@ -9,3 +9,4 @@ custom_components/horticulture_assistant/data/pending_thresholds/
 *.zip
 *.tar
 *.tar.gz
+.venv/

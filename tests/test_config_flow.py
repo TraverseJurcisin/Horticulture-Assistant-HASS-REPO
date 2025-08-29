@@ -322,9 +322,7 @@ async def test_options_flow_ec_co2_sensors(hass):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init(
-            {"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"}
-        )
+        result = await flow.async_step_init({"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"})
 
     assert result["type"] == "create_entry"
     assert result["data"]["ec_sensor"] == "sensor.ec"

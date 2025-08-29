@@ -9,7 +9,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import UnitOfTemperature
+from homeassistant.const import PERCENTAGE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -25,7 +25,7 @@ from .derived import (
     PlantPPFDSensor,
     PlantVPDSensor,
 )
-from .entity import HorticultureBaseEntity
+from .entity import HorticultureEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
@@ -45,6 +45,13 @@ HORTI_RECOMMENDATION_DESCRIPTION = SensorEntityDescription(
 
 
 PROFILE_SENSOR_DESCRIPTIONS = {
+    "ppfd": SensorEntityDescription(
+        key="ppfd",
+        translation_key="ppfd",
+        native_unit_of_measurement="µmol/m²·s",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:white-balance-sunny",
+    ),
     "dli": SensorEntityDescription(
         key="dli",
         translation_key="dli",
@@ -67,6 +74,14 @@ PROFILE_SENSOR_DESCRIPTIONS = {
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:thermometer-water",
     ),
+    "moisture": SensorEntityDescription(
+        key="moisture",
+        translation_key="moisture",
+        native_unit_of_measurement=PERCENTAGE,
+        state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.MOISTURE,
+        icon="mdi:water-percent",
+    ),
 }
 
 
@@ -80,12 +95,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     plant_name: str = stored["plant_name"]
 
     sensors = [
-        HortiStatusSensor(
-            coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale
-        ),
-        HortiRecommendationSensor(
-            coord_ai, entry.entry_id, plant_name, plant_id, keep_stale
-        ),
+        HortiStatusSensor(coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale),
+        HortiRecommendationSensor(coord_ai, entry.entry_id, plant_name, plant_id, keep_stale),
         PlantPPFDSensor(hass, entry, plant_name, plant_id),
         PlantDLISensor(hass, entry, plant_name, plant_id),
     ]
@@ -108,9 +119,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
             sensors.append(
-                ProfileMetricSensor(
-                    profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"]
-                )
+                ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["ppfd"])
+            )
+            sensors.append(
+                ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"])
             )
             prof_sensors = profile.get("sensors", {})
             if prof_sensors.get("temperature") and prof_sensors.get("humidity"):
@@ -122,6 +134,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 sensors.append(
                     ProfileMetricSensor(
                         profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dew_point"]
+                    )
+                )
+            if prof_sensors.get("moisture"):
+                sensors.append(
+                    ProfileMetricSensor(
+                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]
                     )
                 )
 
@@ -233,7 +251,6 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         return super().available
 
 
-
 class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
     entity_description = HORTI_RECOMMENDATION_DESCRIPTION
     _attr_has_entity_name = True
@@ -261,7 +278,6 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         data = self.coordinator.data or {}
         return data.get("recommendation")
 
-
     @property
     def available(self) -> bool:
         if self._keep_stale:
@@ -269,7 +285,7 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         return super().available
 
 
-class ProfileMetricSensor(HorticultureBaseEntity, SensorEntity):
+class ProfileMetricSensor(HorticultureEntity, SensorEntity):
     """Generic profile metric sensor backed by the coordinator."""
 
     entity_description: SensorEntityDescription

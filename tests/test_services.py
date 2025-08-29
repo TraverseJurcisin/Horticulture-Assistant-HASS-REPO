@@ -41,7 +41,9 @@ DOMAIN = const.DOMAIN
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
-    pytest.mark.skipif(MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"),
+    pytest.mark.skipif(
+        MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"
+    ),
 ]
 
 
@@ -168,9 +170,7 @@ async def test_replace_sensor_service(hass):
         blocking=True,
     )
     await hass.async_block_till_done()
-    assert (
-        entry.options["profiles"]["plant1"]["sensors"]["moisture"] == "sensor.good"
-    )
+    assert entry.options["profiles"]["plant1"]["sensors"]["moisture"] == "sensor.good"
 
 
 async def test_replace_sensor_service_device_class_mismatch(hass):
@@ -302,6 +302,35 @@ async def test_recompute_service(hass, expected_lingering_timers):
     await hass.services.async_call(DOMAIN, "recompute", {"profile_id": "p1"}, blocking=True)
     await hass.services.async_call(DOMAIN, "recompute", {}, blocking=True)
     assert coord.async_request_refresh.call_count == 2
+
+
+async def test_reset_dli_service(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={"profiles": {"p1": {"name": "Plant"}, "p2": {"name": "Two"}}},
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    coord._dli_totals = {"p1": 1.2, "p2": 3.4}
+
+    await hass.services.async_call(DOMAIN, "reset_dli", {"profile_id": "p1"}, blocking=True)
+    assert "p1" not in coord._dli_totals and "p2" in coord._dli_totals
+
+    await hass.services.async_call(DOMAIN, "reset_dli", {}, blocking=True)
+    assert coord._dli_totals == {}
 
 
 async def test_create_profile_service(hass):
@@ -487,9 +516,7 @@ async def test_export_profiles_service(hass, tmp_path):
     registry._profiles["p2"] = PlantProfile("p2", "Plant 2")  # type: ignore[attr-defined]
 
     out = tmp_path / "profiles.json"
-    await hass.services.async_call(
-        DOMAIN, "export_profiles", {"path": str(out)}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "export_profiles", {"path": str(out)}, blocking=True)
 
     data = json.loads(out.read_text())
     ids = {p["plant_id"] for p in data}
@@ -545,7 +572,6 @@ async def test_export_profile_service(hass, tmp_path):
                 {"profile_id": "bad", "path": "bad.json"},
                 blocking=True,
             )
-
 
 
 async def test_import_profiles_service(hass, tmp_path):
