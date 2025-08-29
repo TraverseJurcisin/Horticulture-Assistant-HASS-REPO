@@ -84,6 +84,46 @@ helpers = types.ModuleType("homeassistant.helpers")
 helpers.__path__ = []
 sys.modules["homeassistant.helpers"] = helpers
 
+config_validation = types.ModuleType("homeassistant.helpers.config_validation")
+
+
+def string(value):  # pragma: no cover - minimal validator
+    return str(value)
+
+
+config_validation.string = string
+sys.modules["homeassistant.helpers.config_validation"] = config_validation
+
+selector = types.ModuleType("homeassistant.helpers.selector")
+
+
+class SelectSelectorConfig:  # pragma: no cover - minimal container
+    def __init__(self, *, options=None, domain=None, device_class=None):
+        self.options = options or []
+        self.domain = domain
+        self.device_class = device_class
+
+
+class SelectSelector:  # pragma: no cover - minimal container
+    def __init__(self, config):
+        self.config = config
+
+
+class EntitySelectorConfig(SelectSelectorConfig):
+    pass
+
+
+class EntitySelector:  # pragma: no cover - minimal container
+    def __init__(self, config):
+        self.config = config
+
+
+selector.SelectSelectorConfig = SelectSelectorConfig
+selector.SelectSelector = SelectSelector
+selector.EntitySelectorConfig = EntitySelectorConfig
+selector.EntitySelector = EntitySelector
+sys.modules["homeassistant.helpers.selector"] = selector
+
 aiohttp_client = types.ModuleType("homeassistant.helpers.aiohttp_client")
 
 
@@ -111,6 +151,10 @@ const.Platform = types.SimpleNamespace(
 const.UnitOfTemperature = types.SimpleNamespace(CELSIUS="°C", FAHRENHEIT="°F")
 sys.modules["homeassistant.const"] = const
 
+exceptions = types.ModuleType("homeassistant.exceptions")
+exceptions.HomeAssistantError = type("HomeAssistantError", (Exception,), {})
+sys.modules["homeassistant.exceptions"] = exceptions
+
 config_entries = types.ModuleType("homeassistant.config_entries")
 
 
@@ -122,7 +166,36 @@ class ConfigEntry:  # pragma: no cover - minimal stub
         self.title = title
 
 
+class _BaseFlow:  # pragma: no cover - provide basic flow helpers
+    def async_show_form(self, *, step_id, data_schema=None, errors=None):
+        return {
+            "type": "form",
+            "step_id": step_id,
+            "data_schema": data_schema,
+            "errors": errors or {},
+        }
+
+    def async_create_entry(self, *, title="", data=None):
+        return {"type": "create_entry", "title": title, "data": data or {}}
+
+    def async_abort(self, *, reason):
+        return {"type": "abort", "reason": reason}
+
+
+class ConfigFlow(_BaseFlow):  # pragma: no cover - minimal stub
+    def __init_subclass__(cls, *, domain=None, **kwargs):
+        super().__init_subclass__(**kwargs)
+        cls.domain = domain
+
+
+class OptionsFlow(_BaseFlow):  # pragma: no cover - minimal stub
+    def __init_subclass__(cls, **kwargs):  # ignore extra kwargs
+        super().__init_subclass__(**kwargs)
+
+
 config_entries.ConfigEntry = ConfigEntry
+config_entries.ConfigFlow = ConfigFlow
+config_entries.OptionsFlow = OptionsFlow
 sys.modules["homeassistant.config_entries"] = config_entries
 
 entity = types.ModuleType("homeassistant.helpers.entity")
