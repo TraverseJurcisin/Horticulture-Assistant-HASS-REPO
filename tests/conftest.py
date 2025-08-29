@@ -144,6 +144,18 @@ def slugify(value: str) -> str:  # pragma: no cover - simple stub
 util.slugify = slugify
 sys.modules["homeassistant.util"] = util
 
+# Provide logging helpers used by the pytest HA plugin.
+util_logging = types.ModuleType("homeassistant.util.logging")
+
+
+def log_exception(*_args, **_kwargs):  # pragma: no cover - stub
+    return None
+
+
+util_logging.log_exception = log_exception
+sys.modules["homeassistant.util.logging"] = util_logging
+util.logging = util_logging
+
 const = types.ModuleType("homeassistant.const")
 const.Platform = types.SimpleNamespace(
     SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number"
