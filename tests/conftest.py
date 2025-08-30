@@ -143,6 +143,7 @@ def slugify(value: str) -> str:  # pragma: no cover - simple stub
 
 util.slugify = slugify
 sys.modules["homeassistant.util"] = util
+ha_pkg.util = util
 
 # Provide logging helpers used by the pytest HA plugin.
 util_logging = types.ModuleType("homeassistant.util.logging")
