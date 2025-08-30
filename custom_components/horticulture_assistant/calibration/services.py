@@ -42,7 +42,7 @@ async def _avg_entity(hass: HomeAssistant, entity_id: str, seconds: int) -> floa
     return float(sum(samples) / len(samples))
 
 
-async def _handle_start(hass: HomeAssistant, call: ServiceCall) -> None:
+async def _handle_start(hass: HomeAssistant, call: ServiceCall) -> dict[str, str]:
     session_id = uuid.uuid4().hex
     session = CalibrationSession(
         session_id=session_id,

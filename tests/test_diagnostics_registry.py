@@ -22,7 +22,7 @@ async def test_diagnostics_prefers_registry(hass):
     )
     entry.add_to_hass(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     hass.data.setdefault(DOMAIN, {})["profile_registry"] = reg
 
     with patch(

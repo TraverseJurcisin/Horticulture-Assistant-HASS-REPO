@@ -3,63 +3,18 @@ from __future__ import annotations
 import logging
 from datetime import timedelta
 
-try:  # pragma: no cover - allow import without Home Assistant installed
-    import homeassistant.helpers.config_validation as cv
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-
-    class _ConfigValidationFallback:  # pylint: disable=too-few-public-methods
-        """Minimal stub for tests when Home Assistant isn't installed."""
-
-        entity_id = str
-
-        @staticmethod
-        def config_entry_only_config_schema(_domain):
-            return {}
-
-    cv = _ConfigValidationFallback()  # type: ignore[assignment]
-
+import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from aiohttp import ClientError
-
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.config_entries import ConfigEntry
-except ModuleNotFoundError:  # pragma: no cover
-    from dataclasses import dataclass
-
-    @dataclass
-    class ConfigEntry:  # type: ignore[no-redef, too-many-instance-attributes]
-        """Minimal stub for tests when Home Assistant isn't installed."""
-
-        entry_id: str | None = None
-        data: dict | None = None
-        options: dict | None = None
-        title: str | None = None
-
-        def add_update_listener(self, _):  # pragma: no cover - stub
-            return None
-
-
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.helpers.update_coordinator import UpdateFailed
 
-from .calibration import services as calibration_services
-
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.helpers import entity_registry as er
-    from homeassistant.helpers.event import async_track_time_interval
-    from homeassistant.helpers.update_coordinator import UpdateFailed
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    import types
-
-    er = types.SimpleNamespace()  # type: ignore[assignment]
-
-    async def async_track_time_interval(*args, **kwargs):  # type: ignore[override]
-        return None
-
-    class UpdateFailed(Exception):  # type: ignore[no-redef]
-        """Fallback update failure."""
-
-
+from . import services as ha_services
 from .api import ChatApi
+from .calibration import services as calibration_services
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -85,7 +40,6 @@ from .entity_utils import ensure_entities_exist
 from .irrigation_bridge import async_apply_irrigation
 from .opb_client import OpenPlantbookClient
 from .profile_registry import ProfileRegistry
-from .services import async_setup_services
 from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
@@ -138,9 +92,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except Exception as err:  # pragma: no cover - unexpected
         _LOGGER.exception("Initial data refresh failed: %s", err)
     registry = ProfileRegistry(hass, entry)
-    await registry.async_initialize()
+    await registry.async_load()
     hass.data[DOMAIN]["profile_registry"] = registry
-    await async_setup_services(hass, entry, registry)
+    await ha_services.async_register_all(
+        hass=hass,
+        entry=entry,
+        ai_coord=ai_coord,
+        local_coord=local_coord,
+        profile_coord=profile_coord,
+        registry=registry,
+    )
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
         {

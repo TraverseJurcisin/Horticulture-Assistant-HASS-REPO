@@ -404,8 +404,15 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._var: str | None = None
         self._mode: str | None = None
         self._cal_session: str | None = None
+        self._new_profile_id: str | None = None
 
     async def async_step_init(self, user_input=None):
+        return self.async_show_menu(
+            step_id="init",
+            menu_options=["basic", "add_profile"],
+        )
+
+    async def async_step_basic(self, user_input=None):
         defaults = {
             CONF_MODEL: self._entry.data.get(CONF_MODEL, DEFAULT_MODEL),
             CONF_BASE_URL: self._entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
@@ -491,7 +498,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"
             if errors:
-                return self.async_show_form(step_id="init", data_schema=schema, errors=errors)
+                return self.async_show_form(step_id="basic", data_schema=schema, errors=errors)
             sensor_map: dict[str, list[str]] = {}
             if moisture := user_input.get(CONF_MOISTURE_SENSOR):
                 sensor_map["moisture_sensors"] = [moisture]
@@ -585,7 +592,55 @@ class OptionsFlow(config_entries.OptionsFlow):
                     )
             return self.async_create_entry(title="", data=opts)
 
-        return self.async_show_form(step_id="init", data_schema=schema)
+        return self.async_show_form(step_id="basic", data_schema=schema)
+
+    async def async_step_add_profile(self, user_input=None):
+        from .profile_registry import ProfileRegistry
+
+        registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
+        if user_input is not None:
+            pid = await registry.async_add_profile(user_input["name"], user_input.get("copy_from"))
+            self._new_profile_id = pid
+            return await self.async_step_attach_sensors()
+        profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
+        schema = vol.Schema(
+            {
+                vol.Required("name"): str,
+                vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
+            }
+        )
+        return self.async_show_form(step_id="add_profile", data_schema=schema)
+
+    async def async_step_attach_sensors(self, user_input=None):
+        from .profile_registry import ProfileRegistry
+
+        registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
+        pid = self._new_profile_id
+        if user_input is not None and pid:
+            sensors: dict[str, str] = {}
+            for role in ("temperature", "humidity", "illuminance", "moisture"):
+                if ent := user_input.get(role):
+                    sensors[role] = ent
+            if sensors:
+                await registry.async_link_sensors(pid, sensors)
+            return self.async_create_entry(title="", data={})
+        schema = vol.Schema(
+            {
+                vol.Optional("temperature"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
+                ),
+                vol.Optional("humidity"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["humidity"])
+                ),
+                vol.Optional("illuminance"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["illuminance"])
+                ),
+                vol.Optional("moisture"): sel.EntitySelector(
+                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
+                ),
+            }
+        )
+        return self.async_show_form(step_id="attach_sensors", data_schema=schema)
 
     async def async_step_calibration(self, user_input=None):
         schema = vol.Schema(
