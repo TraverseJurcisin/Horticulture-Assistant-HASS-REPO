@@ -256,9 +256,10 @@ async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({})
+    result2 = await flow.async_step_basic({})
     assert result2["type"] == "create_entry"
 
 
@@ -272,7 +273,8 @@ async def test_options_flow_preserves_thresholds(hass, hass_admin_user):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
-    result = await flow.async_step_init({})
+    await flow.async_step_basic()
+    result = await flow.async_step_basic({})
     assert result["data"]["thresholds"]["temperature_min"] == 2.0
 
 
@@ -294,7 +296,8 @@ async def test_options_flow_persists_sensors(hass, hass_admin_user):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({"moisture_sensor": "sensor.good"})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"moisture_sensor": "sensor.good"})
 
     assert result["type"] == "create_entry"
     assert result["data"]["sensors"]["moisture"] == "sensor.good"
@@ -322,7 +325,8 @@ async def test_options_flow_ec_co2_sensors(hass):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"})
 
     assert result["type"] == "create_entry"
     assert result["data"]["ec_sensor"] == "sensor.ec"
@@ -355,7 +359,8 @@ async def test_options_flow_removes_sensor(hass, hass_admin_user):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({})
 
     assert result["type"] == "create_entry"
     assert result["data"]["sensors"] == {}
@@ -369,9 +374,10 @@ async def test_options_flow_invalid_entity(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({"moisture_sensor": "sensor.bad"})
+    result2 = await flow.async_step_basic({"moisture_sensor": "sensor.bad"})
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
 
@@ -380,9 +386,10 @@ async def test_options_flow_invalid_interval(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({"update_interval": 0})
+    result2 = await flow.async_step_basic({"update_interval": 0})
     assert result2["type"] == "form"
     assert result2["errors"] == {"update_interval": "invalid_interval"}
 
@@ -410,7 +417,8 @@ async def test_options_force_refresh(hass, hass_admin_user):
         ) as gen_mock,
     ):
         await flow.async_step_init()
-        result = await flow.async_step_init({"species_display": "Tomato", "force_refresh": True})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"species_display": "Tomato", "force_refresh": True})
     assert result["type"] == "create_entry"
     assert result["data"]["species_display"] == "Tomato"
     gen_mock.assert_called_once()
@@ -425,7 +433,8 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
-    result = await flow.async_step_init(
+    await flow.async_step_basic()
+    result = await flow.async_step_basic(
         {
             "opb_auto_download_images": False,
             "opb_download_dir": "/tmp/opb",

@@ -32,14 +32,19 @@ MEASUREMENT_CLASSES: Final = {
 }
 
 
-async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegistry) -> None:
+async def async_register_all(
+    hass: HomeAssistant,
+    entry,
+    ai_coord,
+    local_coord,
+    profile_coord,
+    registry: ProfileRegistry,
+) -> None:
     """Register high level profile services."""
 
     async def _refresh_profile() -> None:
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -74,7 +79,7 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
 
     async def _srv_create_profile(call) -> None:
         name: str = call.data["name"]
-        await registry.async_create_profile(name)
+        await registry.async_add_profile(name)
         await _refresh_profile()
 
     async def _srv_duplicate_profile(call) -> None:
@@ -120,11 +125,12 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
         await _refresh_profile()
 
     async def _srv_refresh(call) -> None:
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        for key in ("coordinator_ai", "coordinator_local", "coordinator"):
-            coord = data.get(key)
-            if coord:
-                await coord.async_request_refresh()
+        if ai_coord:
+            await ai_coord.async_request_refresh()
+        if local_coord:
+            await local_coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
     async def _srv_recompute(call) -> None:
         profile_id: str | None = call.data.get("profile_id")
@@ -132,17 +138,13 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
             profiles = entry.options.get(CONF_PROFILES, {})
             if profile_id not in profiles:
                 raise vol.Invalid(f"unknown profile {profile_id}")
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
     async def _srv_reset_dli(call) -> None:
         profile_id: str | None = call.data.get("profile_id")
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_reset_dli(profile_id)
+        if profile_coord:
+            await profile_coord.async_reset_dli(profile_id)
 
     hass.services.async_register(
         DOMAIN,

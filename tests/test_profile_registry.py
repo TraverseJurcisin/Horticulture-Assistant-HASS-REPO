@@ -27,7 +27,7 @@ async def test_initialize_merges_storage_and_options(hass):
 
     entry = await _make_entry(hass, {CONF_PROFILES: {"p2": {"name": "Opt"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
 
     ids = {p.plant_id for p in reg.list_profiles()}
     assert ids == {"p1", "p2"}
@@ -39,7 +39,7 @@ async def test_replace_sensor_updates_entry_and_registry(hass):
 
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
 
     await reg.async_replace_sensor("p1", "temperature", "sensor.temp")
 
@@ -51,7 +51,7 @@ async def test_replace_sensor_updates_entry_and_registry(hass):
 async def test_replace_sensor_unknown_profile_raises(hass):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     with pytest.raises(ValueError):
         await reg.async_replace_sensor("missing", "temperature", "sensor.temp")
 
@@ -59,7 +59,7 @@ async def test_replace_sensor_unknown_profile_raises(hass):
 async def test_refresh_species_marks_profile(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_refresh_species("p1")
     prof = reg.get("p1")
     assert prof.last_resolved == "1970-01-01T00:00:00Z"
@@ -68,7 +68,7 @@ async def test_refresh_species_marks_profile(hass):
 async def test_refresh_species_unknown_profile(hass):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     with pytest.raises(ValueError):
         await reg.async_refresh_species("bad")
 
@@ -76,7 +76,7 @@ async def test_refresh_species_unknown_profile(hass):
 async def test_export_creates_file_with_profiles(hass, tmp_path):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
 
     path = tmp_path / "profiles.json"
     out = await reg.async_export(path)
@@ -89,7 +89,7 @@ async def test_export_creates_file_with_profiles(hass, tmp_path):
 async def test_summaries_return_serialisable_data(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_replace_sensor("p1", "humidity", "sensor.h")
     summaries = reg.summaries()
     assert summaries == [
@@ -105,7 +105,7 @@ async def test_summaries_return_serialisable_data(hass):
 async def test_iteration_and_len(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     assert len(reg) == 1
     assert [p.plant_id for p in reg] == ["p1"]
 
@@ -113,7 +113,7 @@ async def test_iteration_and_len(hass):
 async def test_multiple_sensor_replacements(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
 
     await reg.async_replace_sensor("p1", "temperature", "sensor.t1")
     await reg.async_replace_sensor("p1", "humidity", "sensor.h1")
@@ -128,7 +128,7 @@ async def test_multiple_sensor_replacements(hass):
 async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
 
     monkeypatch.setattr(
         hass, "config", type("cfg", (), {"path": lambda self, p: str(tmp_path / p)})()
@@ -141,7 +141,7 @@ async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):
 async def test_replace_sensor_updates_options_without_existing_sensors(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant", "sensors": {}}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_replace_sensor("p1", "moisture", "sensor.m")
     assert entry.options[CONF_PROFILES]["p1"]["sensors"]["moisture"] == "sensor.m"
 
@@ -157,7 +157,7 @@ async def test_replace_sensor_preserves_other_profiles(hass):
         },
     )
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_replace_sensor("p2", "temperature", "sensor.t")
     assert "sensors" not in entry.options[CONF_PROFILES]["p1"]
 
@@ -165,7 +165,7 @@ async def test_replace_sensor_preserves_other_profiles(hass):
 async def test_refresh_species_persists_to_store(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_refresh_species("p1")
     loaded = await profile_store.async_load_profile(hass, "p1")
     assert loaded and loaded.last_resolved == "1970-01-01T00:00:00Z"
@@ -174,14 +174,14 @@ async def test_refresh_species_persists_to_store(hass):
 async def test_get_returns_none_for_missing(hass):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     assert reg.get("absent") is None
 
 
 async def test_export_creates_parent_directories(hass, tmp_path):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     nested = tmp_path / "deep" / "dir" / "profiles.json"
     await reg.async_export(nested)
     assert nested.exists()
@@ -190,7 +190,7 @@ async def test_export_creates_parent_directories(hass, tmp_path):
 async def test_replace_sensor_overwrites_previous_value(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     await reg.async_replace_sensor("p1", "temperature", "sensor.one")
     await reg.async_replace_sensor("p1", "temperature", "sensor.two")
     sensors = entry.options[CONF_PROFILES]["p1"]["sensors"]
@@ -200,7 +200,7 @@ async def test_replace_sensor_overwrites_previous_value(hass):
 async def test_export_round_trip(hass, tmp_path):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     path = tmp_path / "profiles.json"
     await reg.async_export(path)
     text = path.read_text()
@@ -211,7 +211,7 @@ async def test_export_round_trip(hass, tmp_path):
 async def test_len_after_additions(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     assert len(reg) == 1
     await reg.async_replace_sensor("p1", "temperature", "sensor.t")
     assert len(reg) == 1
