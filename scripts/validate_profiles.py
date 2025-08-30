@@ -30,14 +30,7 @@ if issues:
         print(" -", i)
     sys.exit(1)
 
-data_dir = (
-    ROOT
-    / "custom_components"
-    / "horticulture_assistant"
-    / "data"
-    / "fertilizers"
-    / "detail"
-)
+data_dir = ROOT / "custom_components" / "horticulture_assistant" / "data" / "fertilizers" / "detail"
 
 errors = 0
 for path in data_dir.rglob("*.json"):

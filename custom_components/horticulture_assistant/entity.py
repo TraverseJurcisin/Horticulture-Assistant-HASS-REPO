@@ -8,8 +8,8 @@ from .const import DOMAIN
 from .coordinator import HorticultureCoordinator
 
 
-class HorticultureBaseEntity(CoordinatorEntity[HorticultureCoordinator]):
-    """Base entity tied to a plant profile."""
+class HorticultureEntity(CoordinatorEntity[HorticultureCoordinator]):
+    """Entity tied to a plant profile."""
 
     _attr_has_entity_name = True
 

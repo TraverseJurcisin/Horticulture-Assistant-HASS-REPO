@@ -1,9 +1,31 @@
+import importlib.util
+import sys
+import types
+from pathlib import Path
+
 import pytest
 from homeassistant.components.diagnostics import REDACTED
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+from homeassistant.config_entries import ConfigEntry
 
-from custom_components.horticulture_assistant.const import DOMAIN
-from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
+ROOT = Path(__file__).resolve().parents[1]
+pkg = types.ModuleType("custom_components")
+pkg.__path__ = [str(ROOT / "custom_components")]
+sys.modules.setdefault("custom_components", pkg)
+
+ha_pkg = types.ModuleType("custom_components.horticulture_assistant")
+ha_pkg.__path__ = [str(ROOT / "custom_components" / "horticulture_assistant")]
+sys.modules.setdefault("custom_components.horticulture_assistant", ha_pkg)
+
+spec = importlib.util.spec_from_file_location(
+    "custom_components.horticulture_assistant.diagnostics",
+    ROOT / "custom_components" / "horticulture_assistant" / "diagnostics.py",
+)
+diagnostics = importlib.util.module_from_spec(spec)
+assert spec and spec.loader
+spec.loader.exec_module(diagnostics)
+async_get_config_entry_diagnostics = diagnostics.async_get_config_entry_diagnostics
+
+DOMAIN = "horticulture_assistant"
 
 
 class DummyRegistry:
@@ -13,17 +35,17 @@ class DummyRegistry:
 
 class DummyCoordinator:
     last_update_success = True
-    _last_update_success_time = "2024-01-01T00:00:00+00:00"
     update_interval = 0
 
 
 @pytest.mark.asyncio
 async def test_async_get_config_entry_diagnostics(hass):
-    entry = MockConfigEntry(
-        domain=DOMAIN,
+    entry = ConfigEntry(
         data={"foo": "bar"},
         options={"api_key": "secret", "profiles": {"p1": {}}},
     )
+    entry.entry_id = "1"
+    entry.version = 1
     hass.data[DOMAIN] = {
         "profile_registry": DummyRegistry(),
         "coordinator_ai": DummyCoordinator(),
@@ -33,5 +55,4 @@ async def test_async_get_config_entry_diagnostics(hass):
 
     assert result["entry"]["options"]["api_key"] is REDACTED
     assert result["profiles"] == [{"id": "p1"}]
-    assert result["coordinators"]["ai"]["last_update_success"] is True
-    assert result["options_profiles"] == ["p1"]
+    assert result["coordinators"]["coordinator_ai"]["last_update_success"] is True

@@ -3,9 +3,12 @@ import logging
 import pathlib
 import sys
 import types
+from datetime import datetime, timedelta
+from unittest.mock import patch
 
 import pytest
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.util import dt as dt_util
 
 # Bypass the package __init__ which pulls in Home Assistant by creating a minimal
 # module placeholder with an explicit path for submodule resolution.
@@ -24,7 +27,7 @@ sensor_mod = importlib.import_module("custom_components.horticulture_assistant.s
 
 CONF_PROFILES = const.CONF_PROFILES
 HorticultureCoordinator = coordinator_mod.HorticultureCoordinator
-HorticultureBaseEntity = entity_mod.HorticultureBaseEntity
+HorticultureEntity = entity_mod.HorticultureEntity
 ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
 
@@ -55,7 +58,7 @@ async def test_base_entity_device_info(hass):
     coordinator = HorticultureCoordinator(hass, "entry1", options)
     await coordinator.async_config_entry_first_refresh()
 
-    entity = HorticultureBaseEntity(coordinator, "avocado", "Avocado")
+    entity = HorticultureEntity(coordinator, "avocado", "Avocado")
     info = entity.device_info
     assert info["name"] == "Avocado"
     assert info["identifiers"] == {("horticulture_assistant", "profile:avocado")}
@@ -75,10 +78,66 @@ async def test_dli_sensor_reads_illuminance(hass):
     coordinator = HorticultureCoordinator(hass, "entry1", options)
     await coordinator.async_config_entry_first_refresh()
 
-    sensor = ProfileMetricSensor(
+    ppfd_sensor = ProfileMetricSensor(
+        coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["ppfd"]
+    )
+    dli_sensor = ProfileMetricSensor(
         coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["dli"]
     )
-    assert sensor.native_value == pytest.approx(0.02)
+    # 2000 lux -> 37 PPFD; over a 5-minute interval yields ~0.011 mol/m²·day
+    assert ppfd_sensor.native_value == pytest.approx(37.0, rel=1e-2)
+    assert dli_sensor.native_value == pytest.approx(0.011, rel=1e-2)
+
+
+@pytest.mark.asyncio
+async def test_dli_accumulates_over_updates(hass):
+    hass.states.async_set("sensor.light", 2000)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {"illuminance": "sensor.light"},
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+    await coordinator.async_request_refresh()
+
+    dli_sensor = ProfileMetricSensor(
+        coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["dli"]
+    )
+    assert dli_sensor.native_value == pytest.approx(0.022, rel=1e-2)
+
+
+@pytest.mark.asyncio
+async def test_dli_resets_daily(hass):
+    hass.states.async_set("sensor.light", 2000)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {"illuminance": "sensor.light"},
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    start = datetime(2024, 1, 1, tzinfo=dt_util.UTC)
+    with patch(
+        "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
+        return_value=start,
+    ):
+        await coordinator.async_config_entry_first_refresh()
+    dli_sensor = ProfileMetricSensor(
+        coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["dli"]
+    )
+    assert dli_sensor.native_value == pytest.approx(0.011, rel=1e-2)
+    with patch(
+        "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
+        return_value=start + timedelta(days=1),
+    ):
+        await coordinator.async_request_refresh()
+    assert dli_sensor.native_value == pytest.approx(0.011, rel=1e-2)
 
 
 @pytest.mark.asyncio
@@ -107,6 +166,26 @@ async def test_profile_vpd_and_dew_point_sensors(hass):
 
 
 @pytest.mark.asyncio
+async def test_profile_moisture_sensor(hass):
+    hass.states.async_set("sensor.m", 55)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {"moisture": "sensor.m"},
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    moisture_sensor = ProfileMetricSensor(
+        coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["moisture"]
+    )
+    assert moisture_sensor.native_value == 55
+
+
+@pytest.mark.asyncio
 async def test_status_and_recommendation_device_info(hass):
     async def _async_update():
         return {}
@@ -117,12 +196,8 @@ async def test_status_and_recommendation_device_info(hass):
     local = DataUpdateCoordinator(
         hass, logging.getLogger(__name__), name="local", update_method=_async_update
     )
-    status = sensor_mod.HortiStatusSensor(
-        ai, local, "entry1", "Plant", "pid", True
-    )
-    rec = sensor_mod.HortiRecommendationSensor(
-        ai, "entry1", "Plant", "pid", True
-    )
+    status = sensor_mod.HortiStatusSensor(ai, local, "entry1", "Plant", "pid", True)
+    rec = sensor_mod.HortiRecommendationSensor(ai, "entry1", "Plant", "pid", True)
     info = status.device_info
     assert info["identifiers"] == {("horticulture_assistant", "plant:pid")}
     assert info["name"] == "Plant"

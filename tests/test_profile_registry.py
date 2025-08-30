@@ -130,7 +130,9 @@ async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):
     reg = ProfileRegistry(hass, entry)
     await reg.async_initialize()
 
-    monkeypatch.setattr(hass, "config", type("cfg", (), {"path": lambda self, p: str(tmp_path / p)})())
+    monkeypatch.setattr(
+        hass, "config", type("cfg", (), {"path": lambda self, p: str(tmp_path / p)})()
+    )
     out = await reg.async_export("rel.json")
     assert out == tmp_path / "rel.json"
     assert out.exists()
