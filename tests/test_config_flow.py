@@ -28,9 +28,7 @@ CONF_PLANT_NAME = const.CONF_PLANT_NAME
 CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
 
-cfg_spec = importlib.util.spec_from_file_location(
-    f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py"
-)
+cfg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py")
 cfg = importlib.util.module_from_spec(cfg_spec)
 sys.modules[cfg_spec.name] = cfg
 cfg_spec.loader.exec_module(cfg)
@@ -123,9 +121,7 @@ async def test_config_flow_user(hass):
     general = json.loads(Path(hass.config.path("plants", "mint", "general.json")).read_text())
     assert general["sensor_entities"] == {"moisture_sensors": ["sensor.good"]}
     assert general["plant_type"] == "herb"
-    registry = json.loads(
-        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
-    )
+    registry = json.loads(Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text())
     assert registry["mint"]["display_name"] == "Mint"
     assert registry["mint"]["plant_type"] == "Herb"
 
@@ -244,9 +240,7 @@ async def test_config_flow_without_sensors(hass):
     general = json.loads(Path(hass.config.path("plants", "rose", "general.json")).read_text())
     sensors = general.get("sensor_entities", {})
     assert all(not values for values in sensors.values())
-    registry = json.loads(
-        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
-    )
+    registry = json.loads(Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text())
     assert registry["rose"]["display_name"] == "Rose"
     assert "plant_type" not in registry["rose"]
     assert general["plant_type"] == "TBD"
@@ -350,9 +344,7 @@ async def test_options_flow_removes_sensor(hass, hass_admin_user):
     flow.hass = hass
     profile_dir = Path(hass.config.path("plants", "pid"))
     profile_dir.mkdir(parents=True, exist_ok=True)
-    (profile_dir / "general.json").write_text(
-        json.dumps({"sensor_entities": {"moisture_sensors": ["sensor.old"]}})
-    )
+    (profile_dir / "general.json").write_text(json.dumps({"sensor_entities": {"moisture_sensors": ["sensor.old"]}}))
 
     async def _run(func, *args):
         return func(*args)

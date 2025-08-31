@@ -41,9 +41,7 @@ DATA_SCHEMA = vol.Schema(
         vol.Required(CONF_API_KEY): str,
         vol.Optional(CONF_MODEL, default=DEFAULT_MODEL): str,
         vol.Optional(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
-        vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_MINUTES): vol.All(
-            int, vol.Range(min=1)
-        ),
+        vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_MINUTES): vol.All(int, vol.Range(min=1)),
     }
 )
 
@@ -172,9 +170,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
     async def async_step_opb_species_search(self, user_input=None):
         if self._opb_credentials is None:
             return self.async_abort(reason="unknown")
-        client = OpenPlantbookClient(
-            self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"]
-        )
+        client = OpenPlantbookClient(self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"])
         if user_input is not None:
             try:
                 results = await client.search(user_input["query"])
@@ -191,9 +187,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
     async def async_step_opb_species_select(self, user_input=None):
         if self._opb_credentials is None:
             return self.async_abort(reason="unknown")
-        client = OpenPlantbookClient(
-            self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"]
-        )
+        client = OpenPlantbookClient(self.hass, self._opb_credentials["client_id"], self._opb_credentials["secret"])
         results = self._opb_results
         if user_input is not None:
             pid = user_input["pid"]
@@ -234,9 +228,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         schema = vol.Schema(
             {
                 vol.Required("pid"): sel.SelectSelector(
-                    sel.SelectSelectorConfig(
-                        options=[{"value": r["pid"], "label": r["display"]} for r in results]
-                    )
+                    sel.SelectSelectorConfig(options=[{"value": r["pid"], "label": r["display"]} for r in results])
                 )
             }
         )
@@ -249,30 +241,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         defaults = self._thresholds
         schema = vol.Schema(
             {
-                vol.Optional(
-                    "temperature_min", default=defaults.get("temperature_min")
-                ): vol.Coerce(float),
-                vol.Optional(
-                    "temperature_max", default=defaults.get("temperature_max")
-                ): vol.Coerce(float),
-                vol.Optional("humidity_min", default=defaults.get("humidity_min")): vol.Coerce(
-                    float
-                ),
-                vol.Optional("humidity_max", default=defaults.get("humidity_max")): vol.Coerce(
-                    float
-                ),
-                vol.Optional(
-                    "illuminance_min", default=defaults.get("illuminance_min")
-                ): vol.Coerce(float),
-                vol.Optional(
-                    "illuminance_max", default=defaults.get("illuminance_max")
-                ): vol.Coerce(float),
-                vol.Optional(
-                    "conductivity_min", default=defaults.get("conductivity_min")
-                ): vol.Coerce(float),
-                vol.Optional(
-                    "conductivity_max", default=defaults.get("conductivity_max")
-                ): vol.Coerce(float),
+                vol.Optional("temperature_min", default=defaults.get("temperature_min")): vol.Coerce(float),
+                vol.Optional("temperature_max", default=defaults.get("temperature_max")): vol.Coerce(float),
+                vol.Optional("humidity_min", default=defaults.get("humidity_min")): vol.Coerce(float),
+                vol.Optional("humidity_max", default=defaults.get("humidity_max")): vol.Coerce(float),
+                vol.Optional("illuminance_min", default=defaults.get("illuminance_min")): vol.Coerce(float),
+                vol.Optional("illuminance_max", default=defaults.get("illuminance_max")): vol.Coerce(float),
+                vol.Optional("conductivity_min", default=defaults.get("conductivity_min")): vol.Coerce(float),
+                vol.Optional("conductivity_max", default=defaults.get("conductivity_max")): vol.Coerce(float),
             }
         )
 
@@ -289,15 +265,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         schema = vol.Schema(
             {
                 vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
                     str,
                 ),
                 vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
                     str,
                 ),
                 vol.Optional(CONF_EC_SENSOR): vol.Any(
@@ -305,9 +277,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     str,
                 ),
                 vol.Optional(CONF_CO2_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
                     str,
                 ),
             }
@@ -357,11 +327,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 {
                     "display_name": self._profile[CONF_PLANT_NAME],
                     "profile_path": f"plants/{plant_id}/general.json",
-                    **(
-                        {"plant_type": self._profile[CONF_PLANT_TYPE]}
-                        if self._profile.get(CONF_PLANT_TYPE)
-                        else {}
-                    ),
+                    **({"plant_type": self._profile[CONF_PLANT_TYPE]} if self._profile.get(CONF_PLANT_TYPE) else {}),
                 },
                 self.hass,
             )
@@ -386,9 +352,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 options["image_url"] = self._image_url
             if self._opb_credentials:
                 options["opb_credentials"] = self._opb_credentials
-            return self.async_create_entry(
-                title=self._profile[CONF_PLANT_NAME], data=data, options=options
-            )
+            return self.async_create_entry(title=self._profile[CONF_PLANT_NAME], data=data, options=options)
 
         return self.async_show_form(step_id="sensors", data_schema=schema)
 
@@ -421,9 +385,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
             ),
             CONF_KEEP_STALE: self._entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
-            "species_display": self._entry.options.get(
-                "species_display", self._entry.data.get(CONF_PLANT_TYPE, "")
-            ),
+            "species_display": self._entry.options.get("species_display", self._entry.data.get(CONF_PLANT_TYPE, "")),
             "opb_auto_download_images": self._entry.options.get("opb_auto_download_images", True),
             "opb_download_dir": self._entry.options.get(
                 "opb_download_dir",
@@ -439,15 +401,11 @@ class OptionsFlow(config_entries.OptionsFlow):
                 vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
                 vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): int,
                 vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
                     str,
                 ),
                 vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
                     str,
                 ),
                 vol.Optional(CONF_EC_SENSOR): vol.Any(
@@ -455,9 +413,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     str,
                 ),
                 vol.Optional(CONF_CO2_SENSOR): vol.Any(
-                    sel.EntitySelector(
-                        sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])
-                    ),
+                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
                     str,
                 ),
                 vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
@@ -648,9 +604,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 vol.Required("lux_entity_id"): sel.EntitySelector(
                     sel.EntitySelectorConfig(domain="sensor", device_class="illuminance")
                 ),
-                vol.Optional("ppfd_entity_id"): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain="sensor")
-                ),
+                vol.Optional("ppfd_entity_id"): sel.EntitySelector(sel.EntitySelectorConfig(domain="sensor")),
                 vol.Optional("model", default="linear"): vol.In(["linear", "quadratic", "power"]),
                 vol.Optional("averaging_seconds", default=3): int,
                 vol.Optional("notes"): str,
@@ -687,9 +641,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 data = {"session_id": self._cal_session}
                 if user_input.get("ppfd_value") is not None:
                     data["ppfd_value"] = user_input["ppfd_value"]
-                await self.hass.services.async_call(
-                    DOMAIN, "add_calibration_point", data, blocking=True
-                )
+                await self.hass.services.async_call(DOMAIN, "add_calibration_point", data, blocking=True)
                 return await self.async_step_calibration_collect()
             if action == "finish":
                 await self.hass.services.async_call(
@@ -719,11 +671,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="profile",
             data_schema=vol.Schema(
-                {
-                    vol.Required("profile_id"): vol.In(
-                        {pid: p["name"] for pid, p in profiles.items()}
-                    )
-                }
+                {vol.Required("profile_id"): vol.In({pid: p["name"] for pid, p in profiles.items()})}
             ),
         )
 
@@ -747,9 +695,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_pick_source()
         return self.async_show_form(
             step_id="pick_variable",
-            data_schema=vol.Schema(
-                {vol.Required("variable"): vol.In([k for k, *_ in VARIABLE_SPECS])}
-            ),
+            data_schema=vol.Schema({vol.Required("variable"): vol.In([k for k, *_ in VARIABLE_SPECS])}),
         )
 
     async def async_step_pick_source(self, user_input=None):

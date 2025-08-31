@@ -61,9 +61,7 @@ class ProfileRegistry:
             )
 
     async def async_save(self) -> None:
-        await self._store.async_save(
-            {"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}}
-        )
+        await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
 
     # Backwards compatibility for previous method name
     async_initialize = async_load
