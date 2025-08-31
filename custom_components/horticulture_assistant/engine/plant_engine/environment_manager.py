@@ -10,6 +10,8 @@ from functools import cache
 from statistics import pvariance
 from typing import Any
 
+from ..metrics import dew_point_c, svp_kpa, vpd_kpa
+
 try:  # Optional numpy for faster variance calculations
     import numpy as _np  # type: ignore
 except Exception:  # pragma: no cover - numpy missing
@@ -669,14 +671,14 @@ def calculate_environment_deviation_series(
 
 def saturation_vapor_pressure(temp_c: float) -> float:
     """Return saturation vapor pressure (kPa) at ``temp_c``."""
-    return 0.6108 * math.exp((17.27 * temp_c) / (temp_c + 237.3))
+    return svp_kpa(temp_c)
 
 
 def actual_vapor_pressure(temp_c: float, humidity_pct: float) -> float:
     """Return actual vapor pressure (kPa) given temperature and relative humidity."""
     if not 0 <= humidity_pct <= 100:
         raise ValueError("humidity_pct must be between 0 and 100")
-    return saturation_vapor_pressure(temp_c) * humidity_pct / 100
+    return svp_kpa(temp_c) * humidity_pct / 100
 
 
 @dataclass(slots=True)
@@ -1391,23 +1393,17 @@ def generate_cycle_growth_plan(plant_type: str, start_date: date) -> list[dict[s
 
 
 def calculate_vpd(temp_c: float, humidity_pct: float) -> float:
-    """Return Vapor Pressure Deficit (kPa) using :func:`saturation_vapor_pressure`."""
-    ea = actual_vapor_pressure(temp_c, humidity_pct)
-    es = saturation_vapor_pressure(temp_c)
-    vpd = es - ea
-    return round(vpd, 3)
+    """Return Vapor Pressure Deficit (kPa)."""
+    if not 0 <= humidity_pct <= 100:
+        raise ValueError("humidity_pct must be between 0 and 100")
+    return vpd_kpa(temp_c, humidity_pct)
 
 
 def calculate_dew_point(temp_c: float, humidity_pct: float) -> float:
-    """Return dew point temperature (°C) using the Magnus formula."""
+    """Return dew point temperature (°C)."""
     if not 0 <= humidity_pct <= 100:
         raise ValueError("humidity_pct must be between 0 and 100")
-
-    a = 17.27
-    b = 237.7
-    alpha = ((a * temp_c) / (b + temp_c)) + math.log(humidity_pct / 100.0)
-    dew_point = (b * alpha) / (a - alpha)
-    return round(dew_point, 2)
+    return dew_point_c(temp_c, humidity_pct)
 
 
 def calculate_heat_index(temp_c: float, humidity_pct: float) -> float:
