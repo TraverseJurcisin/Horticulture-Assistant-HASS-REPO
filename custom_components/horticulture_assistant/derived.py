@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from datetime import date
 
-import numpy as np
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
@@ -18,16 +17,18 @@ from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .calibration.apply import lux_to_ppfd
-from .calibration.fit import eval_model
 from .calibration.store import async_get_for_entity
 from .const import DOMAIN
 from .engine.metrics import (
     accumulate_dli,
     dew_point_c,
+    lux_model_ppfd,
     mold_risk,
     vpd_kpa,
 )
-from .engine.metrics import lux_to_ppfd as metric_lux_to_ppfd
+from .engine.metrics import (
+    lux_to_ppfd as metric_lux_to_ppfd,
+)
 from .entity_base import HorticultureBaseEntity
 
 
@@ -165,7 +166,7 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
         rec = await async_get_for_entity(self.hass, self._light_sensor) if self._light_sensor else None
         if rec:
             model = rec["model"]
-            ppfd = float(eval_model(model["model"], model["coefficients"], np.array([lx]))[0])
+            ppfd = lux_model_ppfd(model["model"], model["coefficients"], lx)
             self._attrs = {
                 "model": model["model"],
                 "coefficients": model["coefficients"],

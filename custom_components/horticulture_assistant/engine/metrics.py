@@ -3,6 +3,11 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Sequence
+
+import numpy as np
+
+from ..calibration.fit import eval_model
 
 
 def svp_kpa(t_c: float) -> float:
@@ -27,6 +32,12 @@ def dew_point_c(t_c: float, rh_pct: float) -> float:
 def lux_to_ppfd(lux: float, coeff: float = 0.0185) -> float:
     """Approximate PPFD (µmol m⁻² s⁻¹) from lux."""
     return max(0.0, lux) * coeff
+
+
+def lux_model_ppfd(model: str, coeffs: Sequence[float], lux: float) -> float:
+    """Convert lux to PPFD using a calibrated model."""
+
+    return float(eval_model(model, list(coeffs), np.array([lux], dtype=float))[0])
 
 
 def dli_from_ppfd(ppfd_umol_m2_s: float, seconds: float) -> float:
@@ -84,6 +95,7 @@ __all__ = [
     "vpd_kpa",
     "dew_point_c",
     "lux_to_ppfd",
+    "lux_model_ppfd",
     "dli_from_ppfd",
     "accumulate_dli",
     "mold_risk",

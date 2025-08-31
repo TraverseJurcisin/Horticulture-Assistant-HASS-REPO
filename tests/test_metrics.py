@@ -22,6 +22,7 @@ dli_from_ppfd = metrics.dli_from_ppfd
 accumulate_dli = metrics.accumulate_dli
 mold_risk = metrics.mold_risk
 profile_status = metrics.profile_status
+lux_model_ppfd = metrics.lux_model_ppfd
 
 
 def test_vpd_and_dew_point() -> None:
@@ -36,6 +37,12 @@ def test_light_conversions() -> None:
     assert ppfd == pytest.approx(18.5)
     dli = dli_from_ppfd(ppfd, 3600)
     assert dli == pytest.approx(0.0666, rel=1e-3)
+
+
+def test_lux_model_ppfd_linear() -> None:
+    """Calibrated lux model should evaluate using provided coefficients."""
+
+    assert lux_model_ppfd("linear", [0.02, 1.0], 1000) == pytest.approx(21.0)
 
 
 def test_saturation_vapor_pressure() -> None:
