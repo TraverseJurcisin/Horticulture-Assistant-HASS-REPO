@@ -230,3 +230,17 @@ async def test_add_profile_copy_from(hass):
     assert sensors["temperature"] == "sensor.t"
     prof = reg.get(pid)
     assert prof.general["sensors"]["temperature"] == "sensor.t"
+
+
+async def test_import_template_creates_profile(hass):
+    """Bundled templates can seed new profiles."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_import_template("basil")
+
+    prof = reg.get(pid)
+    assert prof and prof.display_name == "Basil"
+    assert prof.species == "Ocimum basilicum"

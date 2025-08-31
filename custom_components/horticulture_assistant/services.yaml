@@ -163,6 +163,20 @@ import_profiles:
       required: true
       selector: { text: {} }
 
+import_template:
+  name: Import Template
+  description: Create a profile from a bundled template.
+  fields:
+    template:
+      description: Template identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+    name:
+      description: Optional name for the new profile.
+      example: Patio Basil
+      selector: { text: {} }
+
 recommend_watering:
   name: Recommend Watering
   description: Suggest a watering duration for a profile based on soil moisture and light deficit.

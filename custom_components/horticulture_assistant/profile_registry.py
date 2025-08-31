@@ -209,6 +209,31 @@ class ProfileRegistry:
             prof_obj.general["sensors"] = sensors
         await self.async_save()
 
+    async def async_import_template(self, template: str, name: str | None = None) -> str:
+        """Create a profile from a bundled template.
+
+        Templates are stored under ``data/templates/<template>.json`` and
+        contain a serialised :class:`PlantProfile`.  The new profile will copy
+        variables and metadata from the template while generating a unique
+        identifier based on ``name`` or the template's display name.
+        """
+
+        template_path = Path(__file__).parent / "data" / "templates" / f"{template}.json"
+        if not template_path.exists():
+            raise ValueError(f"unknown template {template}")
+
+        text = template_path.read_text(encoding="utf-8")
+        data = json.loads(text)
+        prof = PlantProfile.from_json(data)
+        pid = await self.async_add_profile(name or prof.display_name)
+        new_prof = self._profiles[pid]
+        new_prof.species = prof.species
+        new_prof.variables = prof.variables
+        new_prof.general.update(prof.general)
+        new_prof.citations = prof.citations
+        await self.async_save()
+        return pid
+
     async def async_export_profile(self, profile_id: str, path: str | Path) -> Path:
         """Export a single profile to ``path`` and return it."""
 

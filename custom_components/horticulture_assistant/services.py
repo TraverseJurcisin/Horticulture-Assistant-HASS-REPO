@@ -124,6 +124,15 @@ async def async_register_all(
         await registry.async_import_profiles(path)
         await _refresh_profile()
 
+    async def _srv_import_template(call) -> None:
+        template = call.data["template"]
+        name = call.data.get("name")
+        try:
+            await registry.async_import_template(template, name)
+        except ValueError as err:
+            raise vol.Invalid(str(err)) from err
+        await _refresh_profile()
+
     async def _srv_refresh(call) -> None:
         if ai_coord:
             await ai_coord.async_request_refresh()
@@ -234,6 +243,12 @@ async def async_register_all(
         "import_profiles",
         _srv_import_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "import_template",
+        _srv_import_template,
+        schema=vol.Schema({vol.Required("template"): str, vol.Optional("name"): str}),
     )
     hass.services.async_register(
         DOMAIN,
