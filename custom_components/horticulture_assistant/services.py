@@ -13,7 +13,7 @@ from typing import Final
 
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
 
@@ -150,12 +150,12 @@ async def async_register_all(
         if profile_coord:
             await profile_coord.async_request_refresh()
 
-    async def _srv_reset_dli(call) -> None:
+    async def _srv_reset_dli(call: ServiceCall) -> None:
         profile_id: str | None = call.data.get("profile_id")
         if profile_coord:
             await profile_coord.async_reset_dli(profile_id)
 
-    async def _srv_recommend_watering(call) -> dict[str, int]:
+    async def _srv_recommend_watering(call: ServiceCall) -> ServiceResponse:
         """Suggest a watering duration based on profile metrics."""
 
         pid: str = call.data["profile_id"]
