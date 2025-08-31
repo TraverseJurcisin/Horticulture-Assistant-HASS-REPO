@@ -2,15 +2,13 @@ from __future__ import annotations
 
 import contextlib
 import logging
-from datetime import timedelta
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from . import services as ha_services
@@ -39,7 +37,6 @@ from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .irrigation_bridge import async_apply_irrigation
-from .opb_client import OpenPlantbookClient
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
@@ -130,50 +127,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 placeholders={"entity_id": entity_id},
             )
 
-    if entry.options.get("opb_enable_upload"):
-
-        async def _opb_upload(_now):
-            opb = entry.options.get("opb_credentials")
-            pid = entry.options.get("species_pid")
-            sensors_map: dict[str, str] = entry.options.get("sensors", {})
-            if not opb or not pid or not sensors_map:
-                return
-            client = OpenPlantbookClient(hass, opb.get("client_id", ""), opb.get("secret", ""))
-            values: dict[str, float] = {}
-            for role, entity_id in sensors_map.items():
-                state = hass.states.get(entity_id)
-                if state is None:
-                    continue
-                try:
-                    values[role] = float(state.state)
-                except (ValueError, TypeError):
-                    continue
-            if not values:
-                return
-            loc = entry.options.get("opb_location_share", "off")
-            kwargs: dict[str, float | str] = {}
-            if loc == "country":
-                if hass.config.country:
-                    kwargs["location_country"] = hass.config.country
-            elif loc == "coordinates":
-                if hass.config.country:
-                    kwargs["location_country"] = hass.config.country
-                if hass.config.longitude is not None and hass.config.latitude is not None:
-                    kwargs["location_lon"] = float(hass.config.longitude)
-                    kwargs["location_lat"] = float(hass.config.latitude)
-            await client.upload(entry.entry_id, pid, values, **kwargs)
-
-        entry_data["opb_unsub"] = async_track_time_interval(hass, _opb_upload, timedelta(days=1))
-
-    async def _handle_recalculate(call):
+    async def _handle_recalculate(call: ServiceCall) -> None:
         plant_id = call.data["plant_id"]
+        assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
         await local_coord.async_request_refresh()
 
-    async def _handle_run_reco(call):
+    async def _handle_run_reco(call: ServiceCall) -> None:
         plant_id = call.data["plant_id"]
+        assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
@@ -203,7 +167,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
 
-    async def _handle_apply_irrigation(call):
+    async def _handle_apply_irrigation(call: ServiceCall) -> None:
         profile_id = call.data["profile_id"]
         provider = call.data.get("provider", "auto")
         zone = call.data.get("zone")
