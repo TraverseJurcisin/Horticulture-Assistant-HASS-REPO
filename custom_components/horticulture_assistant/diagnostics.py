@@ -3,11 +3,11 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
+from .utils.redact import redact
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,8 +21,8 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigE
             "entry_id": entry.entry_id,
             "title": entry.title,
             "version": entry.version,
-            "data": async_redact_data(dict(entry.data), REDACT),
-            "options": async_redact_data(dict(entry.options), REDACT),
+            "data": redact(dict(entry.data), REDACT),
+            "options": redact(dict(entry.options), REDACT),
         },
         "coordinators": {},
         "profile_count": 0,
