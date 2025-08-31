@@ -137,8 +137,8 @@ class ProfileRegistry:
             json.dump(data, fp, indent=2)
         return p
 
-    async def async_add_profile(self, name: str) -> str:
-        """Create a new profile with ``name`` and return its id."""
+    async def async_add_profile(self, name: str, base_id: str | None = None) -> str:
+        """Create a new profile and optionally clone from ``base_id``."""
 
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
         base = slugify(name) or "profile"
@@ -147,43 +147,35 @@ class ProfileRegistry:
         while candidate in profiles or candidate in self._profiles:
             idx += 1
             candidate = f"{base}_{idx}"
-        profiles[candidate] = {"name": name}
+
+        new_profile: dict[str, Any] = {"name": name}
+        if base_id:
+            source = profiles.get(base_id)
+            if source is None:
+                raise ValueError(f"unknown profile {base_id}")
+            new_profile = deepcopy(source)
+            new_profile["name"] = name
+
+        profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
-        self._profiles[candidate] = PlantProfile(plant_id=candidate, display_name=name)
-        await self.async_save()
-        return candidate
 
-    async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
-        """Duplicate ``source_id`` into a new profile with ``new_name``."""
-
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
-        src = profiles.get(source_id)
-        if src is None:
-            raise ValueError(f"unknown profile {source_id}")
-        base = slugify(new_name) or "profile"
-        candidate = base
-        idx = 1
-        while candidate in profiles:
-            idx += 1
-            candidate = f"{base}_{idx}"
-        profiles[candidate] = new_profile = deepcopy(src)
-        new_profile["name"] = new_name
-        new_opts = dict(self.entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
-        self.entry.options = new_opts
         prof_obj = PlantProfile(
             plant_id=candidate,
-            display_name=new_name,
+            display_name=name,
             species=new_profile.get("species"),
         )
         prof_obj.general.setdefault("sensors", new_profile.get("sensors", {}))
         self._profiles[candidate] = prof_obj
         await self.async_save()
         return candidate
+
+    async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
+        """Duplicate ``source_id`` into a new profile with ``new_name``."""
+
+        return await self.async_add_profile(new_name, base_id=source_id)
 
     async def async_delete_profile(self, profile_id: str) -> None:
         """Remove ``profile_id`` from the registry and storage."""

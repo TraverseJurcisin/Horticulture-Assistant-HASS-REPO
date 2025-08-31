@@ -214,3 +214,19 @@ async def test_len_after_additions(hass):
     assert len(reg) == 1
     await reg.async_replace_sensor("p1", "temperature", "sensor.t")
     assert len(reg) == 1
+
+
+async def test_add_profile_copy_from(hass):
+    """Profiles can be created by copying an existing profile."""
+
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant", "sensors": {"temperature": "sensor.t"}}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone", base_id="p1")
+
+    assert pid != "p1"
+    sensors = entry.options[CONF_PROFILES][pid]["sensors"]
+    assert sensors["temperature"] == "sensor.t"
+    prof = reg.get(pid)
+    assert prof.general["sensors"]["temperature"] == "sensor.t"
