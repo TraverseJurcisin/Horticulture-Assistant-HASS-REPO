@@ -29,6 +29,13 @@ def dew_point_c(t_c: float, rh_pct: float) -> float:
     return round((b * alpha) / (a - alpha), 2)
 
 
+def humidity_from_dew_point(t_c: float, dew_point_c: float) -> float:
+    """Relative humidity (%) from air and dew point temperatures."""
+    if dew_point_c > t_c:
+        raise ValueError("dew_point_c cannot exceed t_c")
+    return round(100.0 * svp_kpa(dew_point_c) / svp_kpa(t_c), 1)
+
+
 def lux_to_ppfd(lux: float, coeff: float = 0.0185) -> float:
     """Approximate PPFD (µmol m⁻² s⁻¹) from lux."""
     return max(0.0, lux) * coeff
@@ -100,4 +107,5 @@ __all__ = [
     "accumulate_dli",
     "mold_risk",
     "profile_status",
+    "humidity_from_dew_point",
 ]

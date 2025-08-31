@@ -10,7 +10,7 @@ from functools import cache
 from statistics import pvariance
 from typing import Any
 
-from ..metrics import dew_point_c, svp_kpa, vpd_kpa
+from ..metrics import dew_point_c, humidity_from_dew_point, svp_kpa, vpd_kpa
 
 try:  # Optional numpy for faster variance calculations
     import numpy as _np  # type: ignore
@@ -1436,22 +1436,8 @@ def calculate_heat_index(temp_c: float, humidity_pct: float) -> float:
 
 
 def relative_humidity_from_dew_point(temp_c: float, dew_point_c: float) -> float:
-    """Return relative humidity (%) from dew point and temperature.
-
-    Parameters
-    ----------
-    temp_c: float
-        Current air temperature in °C.
-    dew_point_c: float
-        Dew point temperature in °C. Must not exceed ``temp_c``.
-    """
-    if dew_point_c > temp_c:
-        raise ValueError("dew_point_c cannot exceed temp_c")
-
-    es = saturation_vapor_pressure(temp_c)
-    ea = saturation_vapor_pressure(dew_point_c)
-    rh = 100 * ea / es
-    return round(rh, 1)
+    """Return relative humidity (%) from dew point and temperature."""
+    return humidity_from_dew_point(temp_c, dew_point_c)
 
 
 def calculate_absolute_humidity(temp_c: float, humidity_pct: float) -> float:

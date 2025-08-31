@@ -23,12 +23,18 @@ accumulate_dli = metrics.accumulate_dli
 mold_risk = metrics.mold_risk
 profile_status = metrics.profile_status
 lux_model_ppfd = metrics.lux_model_ppfd
+humidity_from_dew_point = metrics.humidity_from_dew_point
 
 
 def test_vpd_and_dew_point() -> None:
     """VPD and dew point calculations should match known values."""
     assert vpd_kpa(25, 50) == pytest.approx(1.584, rel=1e-3)
     assert dew_point_c(25, 50) == pytest.approx(13.86, rel=1e-3)
+
+
+def test_humidity_from_dew_point() -> None:
+    """Relative humidity should invert dew point calculation."""
+    assert humidity_from_dew_point(25, 13.86) == pytest.approx(50.0, rel=1e-2)
 
 
 def test_light_conversions() -> None:
