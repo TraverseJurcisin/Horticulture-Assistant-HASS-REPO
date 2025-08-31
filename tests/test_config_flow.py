@@ -28,15 +28,19 @@ CONF_PLANT_NAME = const.CONF_PLANT_NAME
 CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
 
-cfg_spec = importlib.util.spec_from_file_location(
-    f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py"
-)
+cfg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py")
 cfg = importlib.util.module_from_spec(cfg_spec)
 sys.modules[cfg_spec.name] = cfg
 cfg_spec.loader.exec_module(cfg)
 
+reg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.profile_registry", BASE_PATH / "profile_registry.py")
+reg = importlib.util.module_from_spec(reg_spec)
+sys.modules[reg_spec.name] = reg
+reg_spec.loader.exec_module(reg)
+
 ConfigFlow = cfg.ConfigFlow
 OptionsFlow = cfg.OptionsFlow
+ProfileRegistry = reg.ProfileRegistry
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -123,9 +127,7 @@ async def test_config_flow_user(hass):
     general = json.loads(Path(hass.config.path("plants", "mint", "general.json")).read_text())
     assert general["sensor_entities"] == {"moisture_sensors": ["sensor.good"]}
     assert general["plant_type"] == "herb"
-    registry = json.loads(
-        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
-    )
+    registry = json.loads(Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text())
     assert registry["mint"]["display_name"] == "Mint"
     assert registry["mint"]["plant_type"] == "Herb"
 
@@ -244,9 +246,7 @@ async def test_config_flow_without_sensors(hass):
     general = json.loads(Path(hass.config.path("plants", "rose", "general.json")).read_text())
     sensors = general.get("sensor_entities", {})
     assert all(not values for values in sensors.values())
-    registry = json.loads(
-        Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text()
-    )
+    registry = json.loads(Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text())
     assert registry["rose"]["display_name"] == "Rose"
     assert "plant_type" not in registry["rose"]
     assert general["plant_type"] == "TBD"
@@ -256,9 +256,10 @@ async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({})
+    result2 = await flow.async_step_basic({})
     assert result2["type"] == "create_entry"
 
 
@@ -272,7 +273,8 @@ async def test_options_flow_preserves_thresholds(hass, hass_admin_user):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
-    result = await flow.async_step_init({})
+    await flow.async_step_basic()
+    result = await flow.async_step_basic({})
     assert result["data"]["thresholds"]["temperature_min"] == 2.0
 
 
@@ -294,7 +296,8 @@ async def test_options_flow_persists_sensors(hass, hass_admin_user):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({"moisture_sensor": "sensor.good"})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"moisture_sensor": "sensor.good"})
 
     assert result["type"] == "create_entry"
     assert result["data"]["sensors"]["moisture"] == "sensor.good"
@@ -322,7 +325,8 @@ async def test_options_flow_ec_co2_sensors(hass):
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"ec_sensor": "sensor.ec", "co2_sensor": "sensor.co2"})
 
     assert result["type"] == "create_entry"
     assert result["data"]["ec_sensor"] == "sensor.ec"
@@ -346,16 +350,15 @@ async def test_options_flow_removes_sensor(hass, hass_admin_user):
     flow.hass = hass
     profile_dir = Path(hass.config.path("plants", "pid"))
     profile_dir.mkdir(parents=True, exist_ok=True)
-    (profile_dir / "general.json").write_text(
-        json.dumps({"sensor_entities": {"moisture_sensors": ["sensor.old"]}})
-    )
+    (profile_dir / "general.json").write_text(json.dumps({"sensor_entities": {"moisture_sensors": ["sensor.old"]}}))
 
     async def _run(func, *args):
         return func(*args)
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_init()
-        result = await flow.async_step_init({})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({})
 
     assert result["type"] == "create_entry"
     assert result["data"]["sensors"] == {}
@@ -369,9 +372,10 @@ async def test_options_flow_invalid_entity(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({"moisture_sensor": "sensor.bad"})
+    result2 = await flow.async_step_basic({"moisture_sensor": "sensor.bad"})
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
 
@@ -380,9 +384,10 @@ async def test_options_flow_invalid_interval(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
-    result = await flow.async_step_init()
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
     assert result["type"] == "form"
-    result2 = await flow.async_step_init({"update_interval": 0})
+    result2 = await flow.async_step_basic({"update_interval": 0})
     assert result2["type"] == "form"
     assert result2["errors"] == {"update_interval": "invalid_interval"}
 
@@ -410,7 +415,8 @@ async def test_options_force_refresh(hass, hass_admin_user):
         ) as gen_mock,
     ):
         await flow.async_step_init()
-        result = await flow.async_step_init({"species_display": "Tomato", "force_refresh": True})
+        await flow.async_step_basic()
+        result = await flow.async_step_basic({"species_display": "Tomato", "force_refresh": True})
     assert result["type"] == "create_entry"
     assert result["data"]["species_display"] == "Tomato"
     gen_mock.assert_called_once()
@@ -425,7 +431,8 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
-    result = await flow.async_step_init(
+    await flow.async_step_basic()
+    result = await flow.async_step_basic(
         {
             "opb_auto_download_images": False,
             "opb_download_dir": "/tmp/opb",
@@ -610,8 +617,28 @@ async def test_config_flow_opb_search_failure_falls_back(hass):
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
         await flow.async_step_threshold_source({"method": "openplantbook"})
         instance = mock_client.return_value
-        instance.search = AsyncMock(side_effect=RuntimeError)
-        await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
-        result = await flow.async_step_opb_species_search({"query": "mint"})
+    instance.search = AsyncMock(side_effect=RuntimeError)
+    await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
+    result = await flow.async_step_opb_species_search({"query": "mint"})
 
     assert result["step_id"] == "thresholds"
+
+
+async def test_options_flow_add_profile_attach_sensors(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["profile_registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    result = await flow.async_step_add_profile({"name": "Basil"})
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+    hass.states.async_set("sensor.temp", 20, {"device_class": "temperature"})
+    result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
+    assert result2["type"] == "create_entry"
+    prof = registry.get_profile("basil")
+    assert prof is not None
+    assert prof.general["sensors"]["temperature"] == "sensor.temp"

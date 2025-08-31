@@ -1,0 +1,9 @@
+{
+  "plant_id": "basil",
+  "display_name": "Basil",
+  "species": "Ocimum basilicum",
+  "variables": {
+    "min_moisture": {"value": 30, "source": "manual"},
+    "max_moisture": {"value": 60, "source": "manual"}
+  }
+}

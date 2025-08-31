@@ -7,6 +7,8 @@ recompute:
   description: Recompute derived metrics for a profile (or all if omitted).
   fields:
     profile_id:
+      description: Profile identifier. Omit to process all profiles.
+      example: basil
       required: false
       selector: { text: {} }
 
@@ -16,6 +18,8 @@ reset_dli:
   fields:
     profile_id:
       required: false
+      description: Profile identifier. Omit to reset all profiles.
+      example: basil
       selector: { text: {} }
 
 refresh_species:
@@ -23,85 +27,127 @@ refresh_species:
   description: Refresh species data for a profile.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
 
 create_profile:
   name: Create Profile
+  description: Create a new plant profile.
   fields:
     name:
+      description: Friendly name for the profile.
+      example: Basil
       required: true
       selector: { text: {} }
 
 duplicate_profile:
   name: Duplicate Profile
+  description: Copy an existing profile to a new name.
   fields:
     source_profile_id:
+      description: ID of the source profile.
+      example: basil
       required: true
       selector: { text: {} }
     new_name:
+      description: Name for the duplicated profile.
+      example: Mint Clone
       required: true
       selector: { text: {} }
 
 delete_profile:
   name: Delete Profile
+  description: Remove a profile and unlink its sensors.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
 
-link_sensors:
-  name: Link Sensors
+update_sensors:
+  name: Update Sensors
+  description: Link sensor entities to a profile.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     temperature:
+      description: Temperature sensor entity.
+      example: sensor.temp1
       selector: { entity: { domain: sensor } }
     humidity:
+      description: Humidity sensor entity.
+      example: sensor.hum1
       selector: { entity: { domain: sensor } }
     illuminance:
+      description: Illuminance sensor entity.
+      example: sensor.light1
       selector: { entity: { domain: sensor } }
     moisture:
+      description: Moisture sensor entity.
+      example: sensor.moisture1
       selector: { entity: { domain: sensor } }
 
 replace_sensor:
   name: Replace Sensor
+  description: Replace a single measurement's sensor entity for a profile.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     measurement:
+      description: Measurement to replace.
+      example: temperature
       required: true
       selector:
         select:
           options: [temperature, humidity, illuminance, moisture]
     entity_id:
+      description: Sensor entity to link.
+      example: sensor.temp2
       required: true
       selector: { entity: { domain: sensor } }
 
 apply_irrigation_plan:
   name: Apply Irrigation Plan
+  description: Execute an irrigation plan using a supported provider.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     provider:
+      description: Irrigation provider to use.
       default: auto
       selector:
         select:
           options: [auto, irrigation_unlimited, opensprinkler]
     zone:
+      description: Optional provider-specific zone.
+      example: "front_lawn"
       required: false
       selector: { text: {} }
 
 export_profile:
   name: Export Profile
+  description: Export a profile to a file.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     path:
+      description: Filesystem path to write.
+      example: /config/profile.json
       required: true
       selector: { text: {} }
 
@@ -110,12 +156,41 @@ export_profiles:
   description: Export all profiles to a file.
   fields:
     path:
+      description: Destination path for the export.
+      example: /config/profiles.json
       required: true
       selector: { text: {} }
 
 import_profiles:
   name: Import Profiles
+  description: Import profiles from a file.
   fields:
     path:
+      description: Path to a profile export file.
+      example: /config/profiles.json
+      required: true
+      selector: { text: {} }
+
+import_template:
+  name: Import Template
+  description: Create a profile from a bundled template.
+  fields:
+    template:
+      description: Template identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+    name:
+      description: Optional name for the new profile.
+      example: Patio Basil
+      selector: { text: {} }
+
+recommend_watering:
+  name: Recommend Watering
+  description: Suggest a watering duration for a profile based on soil moisture and light deficit.
+  fields:
+    profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }

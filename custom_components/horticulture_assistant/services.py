@@ -13,9 +13,11 @@ from typing import Final
 
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.core import HomeAssistant
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import CONF_PROFILES, DOMAIN
 from .profile_registry import ProfileRegistry
@@ -23,7 +25,7 @@ from .profile_registry import ProfileRegistry
 _LOGGER = logging.getLogger(__name__)
 
 # Mapping of measurement names to expected device classes.  These roughly
-# correspond to the roles supported by :mod:`link_sensors`.
+# correspond to the roles supported by :mod:`update_sensors`.
 MEASUREMENT_CLASSES: Final = {
     "temperature": SensorDeviceClass.TEMPERATURE,
     "humidity": SensorDeviceClass.HUMIDITY,
@@ -32,14 +34,19 @@ MEASUREMENT_CLASSES: Final = {
 }
 
 
-async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegistry) -> None:
+async def async_register_all(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    ai_coord: DataUpdateCoordinator | None,
+    local_coord: DataUpdateCoordinator | None,
+    profile_coord: DataUpdateCoordinator | None,
+    registry: ProfileRegistry,
+) -> None:
     """Register high level profile services."""
 
     async def _refresh_profile() -> None:
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -74,7 +81,7 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
 
     async def _srv_create_profile(call) -> None:
         name: str = call.data["name"]
-        await registry.async_create_profile(name)
+        await registry.async_add_profile(name)
         await _refresh_profile()
 
     async def _srv_duplicate_profile(call) -> None:
@@ -94,7 +101,7 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
             raise vol.Invalid(str(err)) from err
         await _refresh_profile()
 
-    async def _srv_link_sensors(call) -> None:
+    async def _srv_update_sensors(call) -> None:
         pid = call.data["profile_id"]
         sensors: dict[str, str] = {}
         for role in ("temperature", "humidity", "illuminance", "moisture"):
@@ -119,12 +126,22 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
         await registry.async_import_profiles(path)
         await _refresh_profile()
 
+    async def _srv_import_template(call) -> None:
+        template = call.data["template"]
+        name = call.data.get("name")
+        try:
+            await registry.async_import_template(template, name)
+        except ValueError as err:
+            raise vol.Invalid(str(err)) from err
+        await _refresh_profile()
+
     async def _srv_refresh(call) -> None:
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        for key in ("coordinator_ai", "coordinator_local", "coordinator"):
-            coord = data.get(key)
-            if coord:
-                await coord.async_request_refresh()
+        if ai_coord:
+            await ai_coord.async_request_refresh()
+        if local_coord:
+            await local_coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
     async def _srv_recompute(call) -> None:
         profile_id: str | None = call.data.get("profile_id")
@@ -132,17 +149,34 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
             profiles = entry.options.get(CONF_PROFILES, {})
             if profile_id not in profiles:
                 raise vol.Invalid(f"unknown profile {profile_id}")
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_request_refresh()
+        if profile_coord:
+            await profile_coord.async_request_refresh()
 
-    async def _srv_reset_dli(call) -> None:
+    async def _srv_reset_dli(call: ServiceCall) -> None:
         profile_id: str | None = call.data.get("profile_id")
-        data = hass.data.get(DOMAIN, {}).get(entry.entry_id, {})
-        coord = data.get("coordinator")
-        if coord:
-            await coord.async_reset_dli(profile_id)
+        if profile_coord:
+            await profile_coord.async_reset_dli(profile_id)
+
+    async def _srv_recommend_watering(call: ServiceCall) -> ServiceResponse:
+        """Suggest a watering duration based on profile metrics."""
+
+        pid: str = call.data["profile_id"]
+        if profile_coord is None:
+            raise vol.Invalid("profile coordinator unavailable")
+        metrics = profile_coord.data.get("profiles", {}).get(pid, {}).get("metrics") if profile_coord.data else None
+        if metrics is None:
+            raise vol.Invalid(f"unknown profile {pid}")
+        moisture = metrics.get("moisture")
+        dli = metrics.get("dli")
+        minutes = 0
+        if moisture is not None:
+            if moisture < 20:
+                minutes += 10
+            elif moisture < 30:
+                minutes += 5
+        if dli is not None and dli < 8:
+            minutes += 5
+        return {"minutes": minutes}
 
     hass.services.async_register(
         DOMAIN,
@@ -182,8 +216,8 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
     )
     hass.services.async_register(
         DOMAIN,
-        "link_sensors",
-        _srv_link_sensors,
+        "update_sensors",
+        _srv_update_sensors,
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
@@ -214,6 +248,12 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
     )
     hass.services.async_register(
         DOMAIN,
+        "import_template",
+        _srv_import_template,
+        schema=vol.Schema({vol.Required("template"): str, vol.Optional("name"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
         "refresh",
         _srv_refresh,
         schema=vol.Schema({}),
@@ -229,6 +269,13 @@ async def async_setup_services(hass: HomeAssistant, entry, registry: ProfileRegi
         "reset_dli",
         _srv_reset_dli,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "recommend_watering",
+        _srv_recommend_watering,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
+        supports_response=True,
     )
 
     # Preserve backwards compatible top-level sensors mapping if it exists.

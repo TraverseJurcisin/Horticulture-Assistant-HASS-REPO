@@ -30,12 +30,14 @@ DOMAIN = "horticulture_assistant"
 
 class DummyRegistry:
     def summaries(self):
-        return [{"id": "p1"}]
+        return [{"plant_id": "p1", "name": "P1", "sensors": {}, "variables": {}, "species": None}]
 
 
 class DummyCoordinator:
     last_update_success = True
     update_interval = 0
+    last_update = "2024-01-01T00:00:00"
+    last_exception = None
 
 
 @pytest.mark.asyncio
@@ -54,5 +56,9 @@ async def test_async_get_config_entry_diagnostics(hass):
     result = await async_get_config_entry_diagnostics(hass, entry)
 
     assert result["entry"]["options"]["api_key"] is REDACTED
-    assert result["profiles"] == [{"id": "p1"}]
+    assert result["profile_count"] == 1
+    assert result["profiles"][0]["plant_id"] == "p1"
     assert result["coordinators"]["coordinator_ai"]["last_update_success"] is True
+    assert "last_update" in result["coordinators"]["coordinator_ai"]
+    assert "last_exception" in result["coordinators"]["coordinator_ai"]
+    assert result["schema_version"] == 2

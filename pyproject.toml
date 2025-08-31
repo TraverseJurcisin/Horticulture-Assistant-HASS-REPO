@@ -1,5 +1,5 @@
 [tool.ruff]
-line-length = 100
+line-length = 120
 target-version = "py312"
 extend-exclude = [
   "custom_components/horticulture_assistant/data",
@@ -10,8 +10,8 @@ extend-exclude = [
 ]
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP", "B"]
-ignore = ["E203", "E266", "E501"]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
+ignore = ["ANN101", "ANN102"]
 
 [tool.ruff.format]
 quote-style = "preserve"
@@ -20,3 +20,4 @@ indent-style = "space"
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+filterwarnings = ["error"]

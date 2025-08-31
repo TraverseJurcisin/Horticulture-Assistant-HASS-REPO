@@ -17,18 +17,16 @@ async def test_registry_len_and_iter(hass):
     )
     entry.add_to_hass(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     assert len(reg) == 2
     assert {p.plant_id for p in reg} == {"p1", "p2"}
 
 
 async def test_len_stable_after_sensor_updates(hass):
-    entry = MockConfigEntry(
-        domain=DOMAIN, data={}, options={CONF_PROFILES: {"p1": {"name": "One"}}}
-    )
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={CONF_PROFILES: {"p1": {"name": "One"}}})
     entry.add_to_hass(hass)
     reg = ProfileRegistry(hass, entry)
-    await reg.async_initialize()
+    await reg.async_load()
     assert len(reg) == 1
     await reg.async_replace_sensor("p1", "temperature", "sensor.x")
     assert len(reg) == 1

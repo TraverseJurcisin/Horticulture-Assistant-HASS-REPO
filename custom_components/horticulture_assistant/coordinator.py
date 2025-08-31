@@ -11,7 +11,14 @@ from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .const import CONF_PROFILES, DOMAIN
-from .engine.metrics import dew_point_c, dli_from_ppfd, lux_to_ppfd, vpd_kpa
+from .engine.metrics import (
+    accumulate_dli,
+    dew_point_c,
+    lux_to_ppfd,
+    mold_risk,
+    profile_status,
+    vpd_kpa,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -78,6 +85,8 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         vpd: float | None = None
         dew_point: float | None = None
         moisture_pct: float | None = None
+        mold: float | None = None
+        status: str | None = None
 
         if illuminance:
             state = self.hass.states.get(illuminance)
@@ -88,8 +97,11 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     lux = None
                 if lux is not None:
                     ppfd = lux_to_ppfd(lux)
-                    dli_inc = dli_from_ppfd(ppfd, self.update_interval.total_seconds())
-                    total = self._dli_totals.get(profile_id, 0.0) + dli_inc
+                    total = accumulate_dli(
+                        self._dli_totals.get(profile_id, 0.0),
+                        ppfd,
+                        self.update_interval.total_seconds(),
+                    )
                     self._dli_totals[profile_id] = total
                     dli = total
 
@@ -104,9 +116,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 if t is not None:
                     unit = t_state.attributes.get("unit_of_measurement")
                     if unit == UnitOfTemperature.FAHRENHEIT:
-                        t = TemperatureConverter.convert(
-                            t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS
-                        )
+                        t = TemperatureConverter.convert(t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS)
                     t_c = t
 
         h: float | None = None
@@ -129,6 +139,9 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if t_c is not None and h is not None:
             dew_point = dew_point_c(t_c, h)
             vpd = vpd_kpa(t_c, h)
+            mold = mold_risk(t_c, h)
+
+        status = profile_status(mold, moisture_pct)
 
         return {
             "ppfd": ppfd,
@@ -136,4 +149,6 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "vpd": vpd,
             "dew_point": dew_point,
             "moisture": moisture_pct,
+            "mold_risk": mold,
+            "status": status,
         }

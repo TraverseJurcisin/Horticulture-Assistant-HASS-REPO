@@ -11,6 +11,8 @@ repos:
       - id: pretty-format-json
         args: ["--autofix", "--no-ensure-ascii", "--indent", "2", "--no-sort-keys"]
         exclude: ^custom_components/horticulture_assistant/data/
+      - id: check-merge-conflict
+      - id: check-toml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.9

@@ -61,6 +61,7 @@ class PlantProfile:
             "plant_id": self.plant_id,
             "name": self.display_name,
             "species": self.species,
+            "sensors": self.general.get("sensors", {}),
             "variables": {k: v.value for k, v in self.variables.items()},
         }
 

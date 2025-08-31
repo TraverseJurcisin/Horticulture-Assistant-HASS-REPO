@@ -13,23 +13,26 @@ try:
 except Exception:  # pragma: no cover
     MockConfigEntry = None
 
-try:
-    from homeassistant.helpers import issue_registry as ir
-except Exception:  # pragma: no cover
-    ir = None
 if MockConfigEntry is None:
     # Create a minimal package placeholder so service modules import even when
     # the Home Assistant test harness isn't available. When the plugin is
     # present, tests import the real integration instead.
     pkg = types.ModuleType("custom_components.horticulture_assistant")
-    pkg.__path__ = [
-        str(
-            pathlib.Path(__file__).resolve().parents[1]
-            / "custom_components"
-            / "horticulture_assistant"
-        )
-    ]
+    pkg.__path__ = [str(pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant")]
     sys.modules.setdefault("custom_components.horticulture_assistant", pkg)
+    comps = types.ModuleType("homeassistant.components")
+    sensor = types.ModuleType("homeassistant.components.sensor")
+
+    class SensorDeviceClass:  # pragma: no cover - minimal enum
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        ILLUMINANCE = "illuminance"
+        MOISTURE = "moisture"
+
+    sensor.SensorDeviceClass = SensorDeviceClass
+    sys.modules.setdefault("homeassistant.components", comps)
+    sys.modules.setdefault("homeassistant.components.sensor", sensor)
+    sys.modules.setdefault("homeassistant.helpers.entity_registry", types.ModuleType("entity_registry"))
 else:  # pragma: no cover - exercised only when plugin installed
     import custom_components.horticulture_assistant  # noqa: F401
 
@@ -41,9 +44,7 @@ DOMAIN = const.DOMAIN
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
-    pytest.mark.skipif(
-        MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"
-    ),
+    pytest.mark.skipif(MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"),
 ]
 
 
@@ -51,13 +52,9 @@ class _DummyRegistry:
     def __init__(self):
         self._entries = {}
 
-    def async_get_or_create(
-        self, _domain, _platform, _unique_id, suggested_object_id=None, original_device_class=None
-    ):
+    def async_get_or_create(self, _domain, _platform, _unique_id, suggested_object_id=None, original_device_class=None):
         eid = suggested_object_id or _unique_id
-        entry = types.SimpleNamespace(
-            device_class=original_device_class, original_device_class=original_device_class
-        )
+        entry = types.SimpleNamespace(device_class=original_device_class, original_device_class=original_device_class)
         self._entries[eid] = entry
         return entry
 
@@ -87,68 +84,18 @@ def patch_coordinators():
         yield
 
 
-async def test_update_sensors_service(hass):
-    entry = MockConfigEntry(
-        domain=DOMAIN,
-        data={CONF_API_KEY: "key", "plant_id": "plant1", "plant_name": "Plant 1"},
-        title="Plant 1",
-    )
-    entry.add_to_hass(hass)
-    import custom_components.horticulture_assistant as hca
-
-    hca.PLATFORMS = []
-    with (
-        patch.object(hca, "HortiAICoordinator") as mock_ai,
-        patch.object(hca, "HortiLocalCoordinator") as mock_local,
-    ):
-        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
-        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
-        await hca.async_setup_entry(hass, entry)
-    await hass.async_block_till_done()
-    with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN,
-            "update_sensors",
-            {"plant_id": "plant1", "sensors": {"moisture_sensors": "sensor.miss"}},
-            blocking=True,
-        )
-    with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN,
-            "update_sensors",
-            {"plant_id": "plant1", "sensors": {"moisture_sensors": ["sensor.miss"]}},
-            blocking=True,
-        )
-    if ir is not None:
-        issues = ir.async_get(hass).issues
-        assert any(issue_id.startswith("missing_entity") for (_, issue_id) in issues)
-    hass.states.async_set("sensor.good", 1)
-    await hass.services.async_call(
-        DOMAIN,
-        "update_sensors",
-        {"plant_id": "plant1", "sensors": {"moisture_sensors": ["sensor.good"]}},
-        blocking=True,
-    )
-    store = hass.data[DOMAIN][entry.entry_id]["store"]
-    assert store.data["plants"]["plant1"]["sensors"]["moisture_sensors"] == ["sensor.good"]
-
-
 async def test_replace_sensor_service(hass):
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_API_KEY: "key"},
         title="Plant 1",
-        options={
-            "profiles": {"plant1": {"name": "Plant 1", "sensors": {"moisture": "sensor.old"}}}
-        },
+        options={"profiles": {"plant1": {"name": "Plant 1", "sensors": {"moisture": "sensor.old"}}}},
     )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
     reg = services.er.async_get(hass)
-    reg.async_get_or_create(
-        "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
-    )
+    reg.async_get_or_create("sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture")
     reg.async_get_or_create(
         "sensor",
         "test",
@@ -179,9 +126,7 @@ async def test_replace_sensor_service_device_class_mismatch(hass):
         domain=DOMAIN,
         data={CONF_API_KEY: "key"},
         title="Plant 1",
-        options={
-            "profiles": {"plant1": {"name": "Plant 1", "sensors": {"moisture": "sensor.old"}}}
-        },
+        options={"profiles": {"plant1": {"name": "Plant 1", "sensors": {"moisture": "sensor.old"}}}},
     )
     entry.add_to_hass(hass)
     import custom_components.horticulture_assistant as hca
@@ -254,9 +199,7 @@ async def test_recalculate_and_run_recommendation_services(hass):
     local = hass.data[DOMAIN][entry.entry_id]["coordinator_local"]
 
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True
-        )
+        await hass.services.async_call(DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True)
 
     store.data.setdefault("plants", {})["p1"] = {}
     local.async_request_refresh = AsyncMock(wraps=local.async_request_refresh)
@@ -441,12 +384,10 @@ async def test_delete_profile_service(hass):
     assert await async_get_profile(hass, "p1") is None
 
     with pytest.raises(vol.Invalid):
-        await hass.services.async_call(
-            DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True
-        )
+        await hass.services.async_call(DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True)
 
 
-async def test_link_sensors_service(hass):
+async def test_update_sensors_service(hass):
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_API_KEY: "key"},
@@ -470,7 +411,7 @@ async def test_link_sensors_service(hass):
     hass.states.async_set("sensor.temp", 10)
     await hass.services.async_call(
         DOMAIN,
-        "link_sensors",
+        "update_sensors",
         {"profile_id": "p1", "temperature": "sensor.temp"},
         blocking=True,
     )
@@ -479,14 +420,14 @@ async def test_link_sensors_service(hass):
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
             DOMAIN,
-            "link_sensors",
+            "update_sensors",
             {"profile_id": "bad", "temperature": "sensor.temp"},
             blocking=True,
         )
     with pytest.raises(vol.Invalid):
         await hass.services.async_call(
             DOMAIN,
-            "link_sensors",
+            "update_sensors",
             {"profile_id": "p1", "temperature": "sensor.miss"},
             blocking=True,
         )
@@ -596,9 +537,7 @@ async def test_import_profiles_service(hass, tmp_path):
     profiles = {"p1": {"plant_id": "p1", "display_name": "Plant 1", "variables": {}}}
     (tmp_path / "profiles.json").write_text(json.dumps(profiles))
 
-    await hass.services.async_call(
-        DOMAIN, "import_profiles", {"path": "profiles.json"}, blocking=True
-    )
+    await hass.services.async_call(DOMAIN, "import_profiles", {"path": "profiles.json"}, blocking=True)
 
     prof = registry.get("p1")
     assert prof is not None
@@ -732,3 +671,44 @@ async def test_resolve_all_persists_every_profile(hass):
     prof2 = await async_get_profile(hass, "p2")
     assert prof1["variables"]["temp_c_min"]["value"] == 5
     assert prof2["variables"]["temp_c_min"]["value"] == 7
+
+
+async def test_recommend_watering_service(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "Plant 1",
+                    "sensors": {"moisture": "sensor.moist", "illuminance": "sensor.light"},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    hass.states.async_set("sensor.moist", 15)
+    hass.states.async_set("sensor.light", 0)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    await coord.async_request_refresh()
+
+    result = await hass.services.async_call(
+        DOMAIN,
+        "recommend_watering",
+        {"profile_id": "p1"},
+        blocking=True,
+        return_response=True,
+    )
+    assert result["minutes"] >= 10

@@ -89,7 +89,7 @@ Examples:
 - `horticulture_assistant.create_profile`
 - `horticulture_assistant.duplicate_profile`
 - `horticulture_assistant.delete_profile`
-- `horticulture_assistant.link_sensors`
+- `horticulture_assistant.update_sensors`
 - `horticulture_assistant.recompute`
 - `horticulture_assistant.generate_profile` (clone / AI / species template)
 - `horticulture_assistant.apply_irrigation_plan`

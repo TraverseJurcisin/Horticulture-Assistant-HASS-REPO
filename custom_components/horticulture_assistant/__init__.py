@@ -1,65 +1,19 @@
 from __future__ import annotations
 
+import contextlib
 import logging
-from datetime import timedelta
 
-try:  # pragma: no cover - allow import without Home Assistant installed
-    import homeassistant.helpers.config_validation as cv
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-
-    class _ConfigValidationFallback:  # pylint: disable=too-few-public-methods
-        """Minimal stub for tests when Home Assistant isn't installed."""
-
-        entity_id = str
-
-        @staticmethod
-        def config_entry_only_config_schema(_domain):
-            return {}
-
-    cv = _ConfigValidationFallback()  # type: ignore[assignment]
-
+import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 from aiohttp import ClientError
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.update_coordinator import UpdateFailed
 
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.config_entries import ConfigEntry
-except ModuleNotFoundError:  # pragma: no cover
-    from dataclasses import dataclass
-
-    @dataclass
-    class ConfigEntry:  # type: ignore[no-redef, too-many-instance-attributes]
-        """Minimal stub for tests when Home Assistant isn't installed."""
-
-        entry_id: str | None = None
-        data: dict | None = None
-        options: dict | None = None
-        title: str | None = None
-
-        def add_update_listener(self, _):  # pragma: no cover - stub
-            return None
-
-
-from homeassistant.core import HomeAssistant
-
-from .calibration import services as calibration_services
-
-try:  # pragma: no cover - allow import without Home Assistant installed
-    from homeassistant.helpers import entity_registry as er
-    from homeassistant.helpers.event import async_track_time_interval
-    from homeassistant.helpers.update_coordinator import UpdateFailed
-except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    import types
-
-    er = types.SimpleNamespace()  # type: ignore[assignment]
-
-    async def async_track_time_interval(*args, **kwargs):  # type: ignore[override]
-        return None
-
-    class UpdateFailed(Exception):  # type: ignore[no-redef]
-        """Fallback update failure."""
-
-
+from . import services as ha_services
 from .api import ChatApi
+from .calibration import services as calibration_services
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -83,14 +37,10 @@ from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .irrigation_bridge import async_apply_irrigation
-from .opb_client import OpenPlantbookClient
 from .profile_registry import ProfileRegistry
-from .services import async_setup_services
 from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
-
-SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -124,9 +74,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
     keep_stale = entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
-    ai_coord = HortiAICoordinator(
-        hass, api, store, update_minutes=minutes, initial=stored.get("recommendation")
-    )
+    ai_coord = HortiAICoordinator(hass, api, store, update_minutes=minutes, initial=stored.get("recommendation"))
     local_coord = HortiLocalCoordinator(hass, store, update_minutes=1)
     profile_coord = HorticultureCoordinator(hass, entry.entry_id, entry.options)
     try:
@@ -138,9 +86,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except Exception as err:  # pragma: no cover - unexpected
         _LOGGER.exception("Initial data refresh failed: %s", err)
     registry = ProfileRegistry(hass, entry)
-    await registry.async_initialize()
+    await registry.async_load()
     hass.data[DOMAIN]["profile_registry"] = registry
-    await async_setup_services(hass, entry, registry)
+    await ha_services.async_register_all(
+        hass=hass,
+        entry=entry,
+        ai_coord=ai_coord,
+        local_coord=local_coord,
+        profile_coord=profile_coord,
+        registry=registry,
+    )
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
         {
@@ -172,85 +127,28 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 placeholders={"entity_id": entity_id},
             )
 
-    if entry.options.get("opb_enable_upload"):
-
-        async def _opb_upload(_now):
-            opb = entry.options.get("opb_credentials")
-            pid = entry.options.get("species_pid")
-            sensors_map: dict[str, str] = entry.options.get("sensors", {})
-            if not opb or not pid or not sensors_map:
-                return
-            client = OpenPlantbookClient(hass, opb.get("client_id", ""), opb.get("secret", ""))
-            values: dict[str, float] = {}
-            for role, entity_id in sensors_map.items():
-                state = hass.states.get(entity_id)
-                if state is None:
-                    continue
-                try:
-                    values[role] = float(state.state)
-                except (ValueError, TypeError):
-                    continue
-            if not values:
-                return
-            loc = entry.options.get("opb_location_share", "off")
-            kwargs: dict[str, float | str] = {}
-            if loc == "country":
-                if hass.config.country:
-                    kwargs["location_country"] = hass.config.country
-            elif loc == "coordinates":
-                if hass.config.country:
-                    kwargs["location_country"] = hass.config.country
-                if hass.config.longitude is not None and hass.config.latitude is not None:
-                    kwargs["location_lon"] = float(hass.config.longitude)
-                    kwargs["location_lat"] = float(hass.config.latitude)
-            await client.upload(entry.entry_id, pid, values, **kwargs)
-
-        entry_data["opb_unsub"] = async_track_time_interval(hass, _opb_upload, timedelta(days=1))
-
-    async def _handle_update_sensors(call):
+    async def _handle_recalculate(call: ServiceCall) -> None:
         plant_id = call.data["plant_id"]
-        sensors = call.data["sensors"]
-        all_entities = [eid for v in sensors.values() for eid in v]
-        missing = [eid for eid in all_entities if hass.states.get(eid) is None]
-        ensure_entities_exist(hass, plant_id, all_entities)
-        if missing:
-            _LOGGER.warning("update_sensors missing entity %s", missing[0])
-            raise vol.Invalid(f"missing entity {missing[0]}")
-        store.data.setdefault("plants", {})
-        store.data["plants"].setdefault(plant_id, {})["sensors"] = sensors
-        await store.save()
-
-    async def _handle_recalculate(call):
-        plant_id = call.data["plant_id"]
+        assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
         await local_coord.async_request_refresh()
 
-    async def _handle_run_reco(call):
+    async def _handle_run_reco(call: ServiceCall) -> None:
         plant_id = call.data["plant_id"]
+        assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
         prev = ai_coord.data.get("recommendation")
-        try:
+        with contextlib.suppress(UpdateFailed):
             await ai_coord.async_request_refresh()
-        except UpdateFailed:
-            pass
         if call.data.get("approve"):
-            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get(
-                "recommendation", prev
-            )
+            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation", prev)
             await store.save()
 
     svc_base = DOMAIN
-    hass.services.async_register(
-        svc_base,
-        "update_sensors",
-        _handle_update_sensors,
-        schema=vol.Schema({vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}),
-    )
-
     hass.services.async_register(
         svc_base,
         "recalculate_targets",
@@ -269,7 +167,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
 
-    async def _handle_apply_irrigation(call):
+    async def _handle_apply_irrigation(call: ServiceCall) -> None:
         profile_id = call.data["profile_id"]
         provider = call.data.get("provider", "auto")
         zone = call.data.get("zone")
@@ -304,9 +202,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
-                vol.Optional("provider", default="auto"): vol.In(
-                    ["auto", "irrigation_unlimited", "opensprinkler"]
-                ),
+                vol.Optional("provider", default="auto"): vol.In(["auto", "irrigation_unlimited", "opensprinkler"]),
                 vol.Optional("zone"): str,
             }
         ),
@@ -325,7 +221,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         from .resolver import PreferenceResolver
 
         r = PreferenceResolver(hass)
-        for pid in entry.options.get(CONF_PROFILES, {}).keys():
+        for pid in entry.options.get(CONF_PROFILES, {}):
             await r.resolve_profile(entry, pid)
             await async_save_profile_from_options(hass, entry, pid)
 
@@ -373,17 +269,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
     unsub = data.get("opb_unsub")
     if unsub:
-        try:
+        with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
             unsub()
-        except Exception:  # pragma: no cover - best effort cleanup
-            pass
     for key in ("coordinator_ai", "coordinator_local", "coordinator"):
         coord = data.get(key)
         if coord and hasattr(coord, "async_shutdown"):
-            try:
+            with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
                 await coord.async_shutdown()
-            except Exception:  # pragma: no cover - best effort cleanup
-                pass
     return unload_ok
 
 

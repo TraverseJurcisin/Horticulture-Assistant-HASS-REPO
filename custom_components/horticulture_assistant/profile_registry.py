@@ -17,11 +17,14 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.storage import Store
 from homeassistant.util import slugify
 
 from .const import CONF_PROFILES
-from .profile import store as profile_store
 from .profile.schema import PlantProfile
+
+STORAGE_VERSION = 2
+STORAGE_KEY = "horticulture_assistant_profiles"
 
 
 class ProfileRegistry:
@@ -30,16 +33,24 @@ class ProfileRegistry:
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         self.hass = hass
         self.entry = entry
+        self._store: Store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self._profiles: dict[str, PlantProfile] = {}
 
     # ---------------------------------------------------------------------
     # Initialization and access helpers
     # ---------------------------------------------------------------------
-    async def async_initialize(self) -> None:
+    async def async_load(self) -> None:
         """Load profiles from storage and config entry options."""
 
-        stored = await profile_store.async_load_profiles(self.hass)
-        self._profiles.update(stored)
+        data = await self._store.async_load() or {}
+
+        # Older versions stored profiles as a list; convert to the new mapping
+        # structure keyed by ``plant_id``.
+        if isinstance(data, list):  # pragma: no cover - legacy format
+            data = {"profiles": {p["plant_id"]: p for p in data if "plant_id" in p}}
+
+        profiles = data.get("profiles", {})
+        self._profiles = {pid: PlantProfile.from_json(p) for pid, p in profiles.items()}
 
         # Merge in any profiles referenced only in config entry options.
         for pid, data in self.entry.options.get(CONF_PROFILES, {}).items():
@@ -55,15 +66,27 @@ class ProfileRegistry:
                 species=data.get("species"),
             )
 
+    async def async_save(self) -> None:
+        await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
+
+    # Backwards compatibility for previous method name
+    async_initialize = async_load
+
     def list_profiles(self) -> list[PlantProfile]:
         """Return all known profiles."""
 
         return list(self._profiles.values())
 
-    def get(self, plant_id: str) -> PlantProfile | None:
+    def iter_profiles(self) -> list[PlantProfile]:
+        return self.list_profiles()
+
+    def get_profile(self, plant_id: str) -> PlantProfile | None:
         """Return a specific profile by id."""
 
         return self._profiles.get(plant_id)
+
+    # Backwards compatibility for existing tests
+    get = get_profile
 
     # ---------------------------------------------------------------------
     # Mutation helpers
@@ -92,6 +115,7 @@ class ProfileRegistry:
         # Mirror changes into in-memory structure if profile exists.
         if prof_obj := self._profiles.get(profile_id):
             prof_obj.general.setdefault("sensors", {})[measurement] = entity_id
+        await self.async_save()
 
     async def async_refresh_species(self, profile_id: str) -> None:
         """Placeholder for species refresh logic.
@@ -105,7 +129,7 @@ class ProfileRegistry:
         if not prof:
             raise ValueError(f"unknown profile {profile_id}")
         prof.last_resolved = "1970-01-01T00:00:00Z"
-        await profile_store.async_save_profile(self.hass, prof)
+        await self.async_save()
 
     async def async_export(self, path: str | Path) -> Path:
         """Export all profiles to a JSON file and return the path."""
@@ -119,51 +143,45 @@ class ProfileRegistry:
             json.dump(data, fp, indent=2)
         return p
 
-    async def async_create_profile(self, name: str) -> str:
-        """Create a new profile with ``name`` and return its id."""
+    async def async_add_profile(self, name: str, base_id: str | None = None) -> str:
+        """Create a new profile and optionally clone from ``base_id``."""
 
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
         base = slugify(name) or "profile"
         candidate = base
         idx = 1
-        while candidate in profiles:
+        while candidate in profiles or candidate in self._profiles:
             idx += 1
             candidate = f"{base}_{idx}"
-        profiles[candidate] = {"name": name}
+
+        new_profile: dict[str, Any] = {"name": name}
+        if base_id:
+            source = profiles.get(base_id)
+            if source is None:
+                raise ValueError(f"unknown profile {base_id}")
+            new_profile = deepcopy(source)
+            new_profile["name"] = name
+
+        profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
-        self._profiles[candidate] = PlantProfile(plant_id=candidate, display_name=name)
+
+        prof_obj = PlantProfile(
+            plant_id=candidate,
+            display_name=name,
+            species=new_profile.get("species"),
+        )
+        prof_obj.general.setdefault("sensors", new_profile.get("sensors", {}))
+        self._profiles[candidate] = prof_obj
+        await self.async_save()
         return candidate
 
     async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
         """Duplicate ``source_id`` into a new profile with ``new_name``."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
-        src = profiles.get(source_id)
-        if src is None:
-            raise ValueError(f"unknown profile {source_id}")
-        base = slugify(new_name) or "profile"
-        candidate = base
-        idx = 1
-        while candidate in profiles:
-            idx += 1
-            candidate = f"{base}_{idx}"
-        profiles[candidate] = new_profile = deepcopy(src)
-        new_profile["name"] = new_name
-        new_opts = dict(self.entry.options)
-        new_opts[CONF_PROFILES] = profiles
-        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
-        self.entry.options = new_opts
-        prof_obj = PlantProfile(
-            plant_id=candidate,
-            display_name=new_name,
-            species=new_profile.get("species"),
-        )
-        prof_obj.general.setdefault("sensors", new_profile.get("sensors", {}))
-        self._profiles[candidate] = prof_obj
-        return candidate
+        return await self.async_add_profile(new_name, base_id=source_id)
 
     async def async_delete_profile(self, profile_id: str) -> None:
         """Remove ``profile_id`` from the registry and storage."""
@@ -177,7 +195,7 @@ class ProfileRegistry:
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
         self._profiles.pop(profile_id, None)
-        await profile_store.async_delete_profile(self.hass, profile_id)
+        await self.async_save()
 
     async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
@@ -195,6 +213,32 @@ class ProfileRegistry:
         self.entry.options = new_opts
         if prof_obj := self._profiles.get(profile_id):
             prof_obj.general["sensors"] = sensors
+        await self.async_save()
+
+    async def async_import_template(self, template: str, name: str | None = None) -> str:
+        """Create a profile from a bundled template.
+
+        Templates are stored under ``data/templates/<template>.json`` and
+        contain a serialised :class:`PlantProfile`.  The new profile will copy
+        variables and metadata from the template while generating a unique
+        identifier based on ``name`` or the template's display name.
+        """
+
+        template_path = Path(__file__).parent / "data" / "templates" / f"{template}.json"
+        if not template_path.exists():
+            raise ValueError(f"unknown template {template}")
+
+        text = template_path.read_text(encoding="utf-8")
+        data = json.loads(text)
+        prof = PlantProfile.from_json(data)
+        pid = await self.async_add_profile(name or prof.display_name)
+        new_prof = self._profiles[pid]
+        new_prof.species = prof.species
+        new_prof.variables = prof.variables
+        new_prof.general.update(prof.general)
+        new_prof.citations = prof.citations
+        await self.async_save()
+        return pid
 
     async def async_export_profile(self, profile_id: str, path: str | Path) -> Path:
         """Export a single profile to ``path`` and return it."""
@@ -209,7 +253,7 @@ class ProfileRegistry:
         from .profile.importer import async_import_profiles
 
         count = await async_import_profiles(self.hass, path)
-        await self.async_initialize()
+        await self.async_load()
         return count
 
     # ------------------------------------------------------------------
