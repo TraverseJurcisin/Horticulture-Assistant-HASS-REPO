@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import asyncio
+from typing import Any
 
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 STORAGE_KEY = "horticulture_assistant.data"
 STORAGE_VERSION = 2
 _LOCK = asyncio.Lock()
 
-DEFAULT_DATA: dict = {
+DEFAULT_DATA: dict[str, Any] = {
     "recipes": [],
     "inventory": {},
     "history": [],
@@ -20,11 +22,11 @@ DEFAULT_DATA: dict = {
 
 
 class LocalStore:
-    def __init__(self, hass):
-        self._store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
-        self.data: dict | None = None
+    def __init__(self, hass: HomeAssistant) -> None:
+        self._store: Store[dict[str, Any]] = Store(hass, STORAGE_VERSION, STORAGE_KEY)
+        self.data: dict[str, Any] | None = None
 
-    async def load(self) -> dict:
+    async def load(self) -> dict[str, Any]:
         data = await self._store.async_load()
         if not data:
             data = DEFAULT_DATA.copy()
@@ -34,7 +36,7 @@ class LocalStore:
         self.data = data
         return data
 
-    async def save(self, data: dict | None = None) -> None:
+    async def save(self, data: dict[str, Any] | None = None) -> None:
         if data is not None:
             self.data = data
         elif self.data is None:
