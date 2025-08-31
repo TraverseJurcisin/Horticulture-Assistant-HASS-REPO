@@ -13,9 +13,11 @@ from typing import Final
 
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import CONF_PROFILES, DOMAIN
 from .profile_registry import ProfileRegistry
@@ -34,10 +36,10 @@ MEASUREMENT_CLASSES: Final = {
 
 async def async_register_all(
     hass: HomeAssistant,
-    entry,
-    ai_coord,
-    local_coord,
-    profile_coord,
+    entry: ConfigEntry,
+    ai_coord: DataUpdateCoordinator | None,
+    local_coord: DataUpdateCoordinator | None,
+    profile_coord: DataUpdateCoordinator | None,
     registry: ProfileRegistry,
 ) -> None:
     """Register high level profile services."""
