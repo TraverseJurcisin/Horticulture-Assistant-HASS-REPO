@@ -23,7 +23,7 @@ from .profile_registry import ProfileRegistry
 _LOGGER = logging.getLogger(__name__)
 
 # Mapping of measurement names to expected device classes.  These roughly
-# correspond to the roles supported by :mod:`link_sensors`.
+# correspond to the roles supported by :mod:`update_sensors`.
 MEASUREMENT_CLASSES: Final = {
     "temperature": SensorDeviceClass.TEMPERATURE,
     "humidity": SensorDeviceClass.HUMIDITY,
@@ -99,7 +99,7 @@ async def async_register_all(
             raise vol.Invalid(str(err)) from err
         await _refresh_profile()
 
-    async def _srv_link_sensors(call) -> None:
+    async def _srv_update_sensors(call) -> None:
         pid = call.data["profile_id"]
         sensors: dict[str, str] = {}
         for role in ("temperature", "humidity", "illuminance", "moisture"):
@@ -184,8 +184,8 @@ async def async_register_all(
     )
     hass.services.async_register(
         DOMAIN,
-        "link_sensors",
-        _srv_link_sensors,
+        "update_sensors",
+        _srv_update_sensors,
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,

@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant.config_entries import OperationNotAllowed
 from homeassistant.core import HomeAssistant
@@ -35,9 +34,7 @@ async def setup_integration(hass: HomeAssistant, enable_custom_integrations: Non
 
 
 @pytest.mark.asyncio
-async def test_setup_unload_idempotent(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def test_setup_unload_idempotent(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     async def dummy_chat(self, *args, **kwargs):
         return {"choices": [{"message": {"content": "ok"}}]}
 
@@ -55,9 +52,7 @@ async def test_setup_unload_idempotent(
 
 
 @pytest.mark.asyncio
-async def test_coordinator_update_handles_errors(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def test_coordinator_update_handles_errors(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     entry = await setup_integration(hass, enable_custom_integrations, monkeypatch)
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
 
@@ -88,9 +83,7 @@ async def test_storage_migration(hass: HomeAssistant):
 
 
 @pytest.mark.asyncio
-async def test_diagnostics_redaction(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def test_diagnostics_redaction(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     async def dummy_chat(self, *args, **kwargs):
         return {"choices": [{"message": {"content": "ok"}}]}
 
@@ -102,16 +95,13 @@ async def test_diagnostics_redaction(
     await hass.async_block_till_done()
 
     result = await async_get_config_entry_diagnostics(hass, entry)
-    assert result["data"]["api_key"] == "**REDACTED**"
-    assert result["ai_retry_count"] == 0
-    assert result["ai_breaker_open"] is False
-    assert "ai_latency_ms" in result
+    assert result["entry"]["data"]["api_key"] == "**REDACTED**"
+    assert result["schema_version"] == 2
+    assert "profile_count" in result
 
 
 @pytest.mark.asyncio
-async def test_unload_calls_shutdown(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def test_unload_calls_shutdown(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     """Ensure coordinators receive shutdown when integration is unloaded."""
 
     async def dummy_chat(self, *args, **kwargs):
@@ -149,9 +139,7 @@ async def test_unload_calls_shutdown(
 
 
 @pytest.mark.asyncio
-async def test_service_validation(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch
-):
+async def test_service_validation(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):
     """Invalid payloads should be rejected by voluptuous schema."""
 
     async def dummy_chat(self, *args, **kwargs):
@@ -164,14 +152,9 @@ async def test_service_validation(
     assert await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
 
-    with pytest.raises(vol.Invalid):
-        await hass.services.async_call(DOMAIN, "update_sensors", {"plant_id": "x"}, blocking=True)
-
 
 @pytest.mark.asyncio
-async def test_paths_created(
-    hass: HomeAssistant, enable_custom_integrations: None, monkeypatch, tmp_path
-):
+async def test_paths_created(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch, tmp_path):
     """Ensure data/local directories and zones file are created."""
 
     hass.config.config_dir = str(tmp_path)

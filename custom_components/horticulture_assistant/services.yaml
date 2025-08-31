@@ -28,18 +28,26 @@ refresh_species:
 
 create_profile:
   name: Create Profile
+  description: Create a new plant profile.
   fields:
     name:
+      description: Friendly name for the profile.
+      example: Basil
       required: true
       selector: { text: {} }
 
 duplicate_profile:
   name: Duplicate Profile
+  description: Copy an existing profile to a new name.
   fields:
     source_profile_id:
+      description: ID of the source profile.
+      example: basil
       required: true
       selector: { text: {} }
     new_name:
+      description: Name for the duplicated profile.
+      example: Mint Clone
       required: true
       selector: { text: {} }
 
@@ -50,19 +58,25 @@ delete_profile:
       required: true
       selector: { text: {} }
 
-link_sensors:
-  name: Link Sensors
+update_sensors:
+  name: Update Sensors
+  description: Link sensor entities to a profile.
   fields:
     profile_id:
+      description: Profile identifier.
       required: true
       selector: { text: {} }
     temperature:
+      description: Temperature sensor entity.
       selector: { entity: { domain: sensor } }
     humidity:
+      description: Humidity sensor entity.
       selector: { entity: { domain: sensor } }
     illuminance:
+      description: Illuminance sensor entity.
       selector: { entity: { domain: sensor } }
     moisture:
+      description: Moisture sensor entity.
       selector: { entity: { domain: sensor } }
 
 replace_sensor:
@@ -97,11 +111,14 @@ apply_irrigation_plan:
 
 export_profile:
   name: Export Profile
+  description: Export a profile to a file.
   fields:
     profile_id:
+      description: Profile identifier.
       required: true
       selector: { text: {} }
     path:
+      description: Filesystem path to write.
       required: true
       selector: { text: {} }
 
@@ -115,7 +132,9 @@ export_profiles:
 
 import_profiles:
   name: Import Profiles
+  description: Import profiles from a file.
   fields:
     path:
+      description: Path to a profile export file.
       required: true
       selector: { text: {} }

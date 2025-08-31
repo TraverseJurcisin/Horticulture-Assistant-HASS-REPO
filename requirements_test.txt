@@ -1,13 +1,12 @@
-aiohttp
-homeassistant>=2024.6,<2025.1; python_version >= '3.12'
-homeassistant==2024.3.3; python_version < '3.12'
+aiohttp>=3.9,<3.12
+homeassistant>=2024.12,<2025.2
+pytest>=8,<9
+pytest-asyncio>=0.23,<2
+pytest-homeassistant-custom-component>=0.13
+PyYAML>=6.0.1
 josepy>=1.13.0,<2.0.0
 numpy>=1.25
 pandas>=2.3
-pytest>=7.0
-pytest-asyncio>=0.23
-pytest-homeassistant-custom-component
-PyYAML>=6.0.1
 types-PyYAML
 voluptuous==0.13.1
 jsonschema>=4.0

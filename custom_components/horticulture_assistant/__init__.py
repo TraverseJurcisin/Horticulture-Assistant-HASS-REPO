@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import logging
 from datetime import timedelta
 
@@ -44,8 +45,6 @@ from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
 
-SENSORS_SCHEMA = vol.Schema({str: [cv.entity_id]}, extra=vol.PREVENT_EXTRA)
-
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
@@ -78,9 +77,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
     keep_stale = entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
-    ai_coord = HortiAICoordinator(
-        hass, api, store, update_minutes=minutes, initial=stored.get("recommendation")
-    )
+    ai_coord = HortiAICoordinator(hass, api, store, update_minutes=minutes, initial=stored.get("recommendation"))
     local_coord = HortiLocalCoordinator(hass, store, update_minutes=1)
     profile_coord = HorticultureCoordinator(hass, entry.entry_id, entry.options)
     try:
@@ -168,19 +165,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         entry_data["opb_unsub"] = async_track_time_interval(hass, _opb_upload, timedelta(days=1))
 
-    async def _handle_update_sensors(call):
-        plant_id = call.data["plant_id"]
-        sensors = call.data["sensors"]
-        all_entities = [eid for v in sensors.values() for eid in v]
-        missing = [eid for eid in all_entities if hass.states.get(eid) is None]
-        ensure_entities_exist(hass, plant_id, all_entities)
-        if missing:
-            _LOGGER.warning("update_sensors missing entity %s", missing[0])
-            raise vol.Invalid(f"missing entity {missing[0]}")
-        store.data.setdefault("plants", {})
-        store.data["plants"].setdefault(plant_id, {})["sensors"] = sensors
-        await store.save()
-
     async def _handle_recalculate(call):
         plant_id = call.data["plant_id"]
         plants = store.data.setdefault("plants", {})
@@ -194,24 +178,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if plant_id not in plants:
             raise vol.Invalid(f"unknown plant {plant_id}")
         prev = ai_coord.data.get("recommendation")
-        try:
+        with contextlib.suppress(UpdateFailed):
             await ai_coord.async_request_refresh()
-        except UpdateFailed:
-            pass
         if call.data.get("approve"):
-            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get(
-                "recommendation", prev
-            )
+            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation", prev)
             await store.save()
 
     svc_base = DOMAIN
-    hass.services.async_register(
-        svc_base,
-        "update_sensors",
-        _handle_update_sensors,
-        schema=vol.Schema({vol.Required("plant_id"): str, vol.Required("sensors"): SENSORS_SCHEMA}),
-    )
-
     hass.services.async_register(
         svc_base,
         "recalculate_targets",
@@ -265,9 +238,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
-                vol.Optional("provider", default="auto"): vol.In(
-                    ["auto", "irrigation_unlimited", "opensprinkler"]
-                ),
+                vol.Optional("provider", default="auto"): vol.In(["auto", "irrigation_unlimited", "opensprinkler"]),
                 vol.Optional("zone"): str,
             }
         ),
@@ -286,7 +257,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         from .resolver import PreferenceResolver
 
         r = PreferenceResolver(hass)
-        for pid in entry.options.get(CONF_PROFILES, {}).keys():
+        for pid in entry.options.get(CONF_PROFILES, {}):
             await r.resolve_profile(entry, pid)
             await async_save_profile_from_options(hass, entry, pid)
 
@@ -334,17 +305,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
     unsub = data.get("opb_unsub")
     if unsub:
-        try:
+        with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
             unsub()
-        except Exception:  # pragma: no cover - best effort cleanup
-            pass
     for key in ("coordinator_ai", "coordinator_local", "coordinator"):
         coord = data.get(key)
         if coord and hasattr(coord, "async_shutdown"):
-            try:
+            with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
                 await coord.async_shutdown()
-            except Exception:  # pragma: no cover - best effort cleanup
-                pass
     return unload_ok
 
 

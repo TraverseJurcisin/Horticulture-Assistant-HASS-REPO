@@ -7,8 +7,7 @@ import pytest
 # Home Assistant integration package, which requires heavy dependencies.
 _spec = importlib.util.spec_from_file_location(
     "metrics",
-    Path(__file__).resolve().parent.parent
-    / "custom_components/horticulture_assistant/engine/metrics.py",
+    Path(__file__).resolve().parent.parent / "custom_components/horticulture_assistant/engine/metrics.py",
 )
 metrics = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
@@ -39,3 +38,11 @@ def test_light_conversions() -> None:
 def test_saturation_vapor_pressure() -> None:
     """SVP baseline sanity check."""
     assert svp_kpa(25) == pytest.approx(3.1678, rel=1e-3)
+
+
+def test_clamping_and_rounding() -> None:
+    """Edge cases should be clamped and rounded appropriately."""
+    assert lux_to_ppfd(-5) == 0.0
+    assert vpd_kpa(25, -10) == vpd_kpa(25, 0)
+    assert vpd_kpa(25, 150) == vpd_kpa(25, 100)
+    assert dli_from_ppfd(500, 0) == 0.0
