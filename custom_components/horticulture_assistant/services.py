@@ -146,6 +146,27 @@ async def async_register_all(
         if profile_coord:
             await profile_coord.async_reset_dli(profile_id)
 
+    async def _srv_recommend_watering(call) -> dict[str, int]:
+        """Suggest a watering duration based on profile metrics."""
+
+        pid: str = call.data["profile_id"]
+        if profile_coord is None:
+            raise vol.Invalid("profile coordinator unavailable")
+        metrics = profile_coord.data.get("profiles", {}).get(pid, {}).get("metrics") if profile_coord.data else None
+        if metrics is None:
+            raise vol.Invalid(f"unknown profile {pid}")
+        moisture = metrics.get("moisture")
+        dli = metrics.get("dli")
+        minutes = 0
+        if moisture is not None:
+            if moisture < 20:
+                minutes += 10
+            elif moisture < 30:
+                minutes += 5
+        if dli is not None and dli < 8:
+            minutes += 5
+        return {"minutes": minutes}
+
     hass.services.async_register(
         DOMAIN,
         "replace_sensor",
@@ -231,6 +252,13 @@ async def async_register_all(
         "reset_dli",
         _srv_reset_dli,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        "recommend_watering",
+        _srv_recommend_watering,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
+        supports_response=True,
     )
 
     # Preserve backwards compatible top-level sensors mapping if it exists.

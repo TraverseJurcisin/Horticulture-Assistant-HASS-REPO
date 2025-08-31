@@ -162,3 +162,13 @@ import_profiles:
       example: /config/profiles.json
       required: true
       selector: { text: {} }
+
+recommend_watering:
+  name: Recommend Watering
+  description: Suggest a watering duration for a profile based on soil moisture and light deficit.
+  fields:
+    profile_id:
+      description: Profile identifier.
+      example: basil
+      required: true
+      selector: { text: {} }

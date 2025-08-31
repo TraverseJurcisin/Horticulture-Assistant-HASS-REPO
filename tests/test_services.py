@@ -20,6 +20,19 @@ if MockConfigEntry is None:
     pkg = types.ModuleType("custom_components.horticulture_assistant")
     pkg.__path__ = [str(pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant")]
     sys.modules.setdefault("custom_components.horticulture_assistant", pkg)
+    comps = types.ModuleType("homeassistant.components")
+    sensor = types.ModuleType("homeassistant.components.sensor")
+
+    class SensorDeviceClass:  # pragma: no cover - minimal enum
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        ILLUMINANCE = "illuminance"
+        MOISTURE = "moisture"
+
+    sensor.SensorDeviceClass = SensorDeviceClass
+    sys.modules.setdefault("homeassistant.components", comps)
+    sys.modules.setdefault("homeassistant.components.sensor", sensor)
+    sys.modules.setdefault("homeassistant.helpers.entity_registry", types.ModuleType("entity_registry"))
 else:  # pragma: no cover - exercised only when plugin installed
     import custom_components.horticulture_assistant  # noqa: F401
 
@@ -658,3 +671,44 @@ async def test_resolve_all_persists_every_profile(hass):
     prof2 = await async_get_profile(hass, "p2")
     assert prof1["variables"]["temp_c_min"]["value"] == 5
     assert prof2["variables"]["temp_c_min"]["value"] == 7
+
+
+async def test_recommend_watering_service(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "Plant 1",
+                    "sensors": {"moisture": "sensor.moist", "illuminance": "sensor.light"},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    hass.states.async_set("sensor.moist", 15)
+    hass.states.async_set("sensor.light", 0)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    await coord.async_request_refresh()
+
+    result = await hass.services.async_call(
+        DOMAIN,
+        "recommend_watering",
+        {"profile_id": "p1"},
+        blocking=True,
+        return_response=True,
+    )
+    assert result["minutes"] >= 10
