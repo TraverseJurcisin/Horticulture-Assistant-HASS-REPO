@@ -57,6 +57,7 @@ duplicate_profile:
 
 delete_profile:
   name: Delete Profile
+  description: Remove a profile and unlink its sensors.
   fields:
     profile_id:
       description: Profile identifier.
@@ -92,6 +93,7 @@ update_sensors:
 
 replace_sensor:
   name: Replace Sensor
+  description: Replace a single measurement's sensor entity for a profile.
   fields:
     profile_id:
       description: Profile identifier.
@@ -113,6 +115,7 @@ replace_sensor:
 
 apply_irrigation_plan:
   name: Apply Irrigation Plan
+  description: Execute an irrigation plan using a supported provider.
   fields:
     profile_id:
       required: true
