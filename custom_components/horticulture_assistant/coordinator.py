@@ -11,7 +11,14 @@ from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .const import CONF_PROFILES, DOMAIN
-from .engine.metrics import accumulate_dli, dew_point_c, lux_to_ppfd, mold_risk, vpd_kpa
+from .engine.metrics import (
+    accumulate_dli,
+    dew_point_c,
+    lux_to_ppfd,
+    mold_risk,
+    profile_status,
+    vpd_kpa,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,6 +86,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         dew_point: float | None = None
         moisture_pct: float | None = None
         mold: float | None = None
+        status: str | None = None
 
         if illuminance:
             state = self.hass.states.get(illuminance)
@@ -133,6 +141,8 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             vpd = vpd_kpa(t_c, h)
             mold = mold_risk(t_c, h)
 
+        status = profile_status(mold, moisture_pct)
+
         return {
             "ppfd": ppfd,
             "dli": dli,
@@ -140,4 +150,5 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "dew_point": dew_point,
             "moisture": moisture_pct,
             "mold_risk": mold,
+            "status": status,
         }

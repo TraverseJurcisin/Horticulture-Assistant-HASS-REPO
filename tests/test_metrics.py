@@ -21,6 +21,7 @@ lux_to_ppfd = metrics.lux_to_ppfd
 dli_from_ppfd = metrics.dli_from_ppfd
 accumulate_dli = metrics.accumulate_dli
 mold_risk = metrics.mold_risk
+profile_status = metrics.profile_status
 
 
 def test_vpd_and_dew_point() -> None:
@@ -60,3 +61,11 @@ def test_mold_risk_index() -> None:
 def test_accumulate_dli() -> None:
     """Accumulation helper should add new light to existing total."""
     assert accumulate_dli(1.0, 500, 3600) == pytest.approx(1.0 + dli_from_ppfd(500, 3600))
+
+
+def test_profile_status() -> None:
+    """Status classification should escalate with risk factors."""
+    assert profile_status(0.0, 50.0) == "ok"
+    assert profile_status(3.5, 50.0) == "warn"
+    assert profile_status(5.0, 50.0) == "critical"
+    assert profile_status(None, 5.0) == "critical"

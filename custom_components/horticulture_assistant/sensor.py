@@ -82,6 +82,13 @@ PROFILE_SENSOR_DESCRIPTIONS = {
         device_class=SensorDeviceClass.MOISTURE,
         icon="mdi:water-percent",
     ),
+    "status": SensorEntityDescription(
+        key="status",
+        translation_key="status",
+        device_class=SensorDeviceClass.ENUM,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        options=["ok", "warn", "critical"],
+    ),
 }
 
 
@@ -118,30 +125,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     if profile_coord and profiles:
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
-            sensors.append(
-                ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["ppfd"])
-            )
-            sensors.append(
-                ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"])
-            )
+            sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["ppfd"]))
+            sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"]))
             prof_sensors = profile.get("sensors", {})
             if prof_sensors.get("temperature") and prof_sensors.get("humidity"):
-                sensors.append(
-                    ProfileMetricSensor(
-                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["vpd"]
-                    )
-                )
-                sensors.append(
-                    ProfileMetricSensor(
-                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dew_point"]
-                    )
-                )
+                sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["vpd"]))
+                sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dew_point"]))
             if prof_sensors.get("moisture"):
-                sensors.append(
-                    ProfileMetricSensor(
-                        profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]
-                    )
-                )
+                sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]))
+                sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
 
     async_add_entities(sensors, True)
 

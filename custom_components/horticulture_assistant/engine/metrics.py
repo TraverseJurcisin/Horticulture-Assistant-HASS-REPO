@@ -62,6 +62,23 @@ def mold_risk(t_c: float, rh_pct: float) -> float:
     return round(risk, 1)
 
 
+def profile_status(mold: float | None, moisture_pct: float | None) -> str:
+    """Classify plant health based on mold risk and moisture level."""
+
+    status = "ok"
+    if moisture_pct is not None:
+        if moisture_pct < 10:
+            return "critical"
+        if moisture_pct < 20:
+            status = "warn"
+    if mold is not None:
+        if mold >= 5:
+            return "critical"
+        if mold >= 3 and status == "ok":
+            status = "warn"
+    return status
+
+
 __all__ = [
     "svp_kpa",
     "vpd_kpa",
@@ -70,4 +87,5 @@ __all__ = [
     "dli_from_ppfd",
     "accumulate_dli",
     "mold_risk",
+    "profile_status",
 ]

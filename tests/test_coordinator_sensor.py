@@ -170,6 +170,29 @@ async def test_profile_moisture_sensor(hass):
 
 
 @pytest.mark.asyncio
+async def test_profile_status_sensor(hass):
+    hass.states.async_set("sensor.m", 5)
+    hass.states.async_set("sensor.t", 25)
+    hass.states.async_set("sensor.h", 95)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {
+                    "moisture": "sensor.m",
+                    "temperature": "sensor.t",
+                    "humidity": "sensor.h",
+                },
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+    status_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["status"])
+    assert status_sensor.native_value == "critical"
+
+
+@pytest.mark.asyncio
 async def test_status_and_recommendation_device_info(hass):
     async def _async_update():
         return {}
