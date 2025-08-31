@@ -33,8 +33,14 @@ cfg = importlib.util.module_from_spec(cfg_spec)
 sys.modules[cfg_spec.name] = cfg
 cfg_spec.loader.exec_module(cfg)
 
+reg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.profile_registry", BASE_PATH / "profile_registry.py")
+reg = importlib.util.module_from_spec(reg_spec)
+sys.modules[reg_spec.name] = reg
+reg_spec.loader.exec_module(reg)
+
 ConfigFlow = cfg.ConfigFlow
 OptionsFlow = cfg.OptionsFlow
+ProfileRegistry = reg.ProfileRegistry
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -611,8 +617,28 @@ async def test_config_flow_opb_search_failure_falls_back(hass):
         await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
         await flow.async_step_threshold_source({"method": "openplantbook"})
         instance = mock_client.return_value
-        instance.search = AsyncMock(side_effect=RuntimeError)
-        await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
-        result = await flow.async_step_opb_species_search({"query": "mint"})
+    instance.search = AsyncMock(side_effect=RuntimeError)
+    await flow.async_step_opb_credentials({"client_id": "id", "secret": "sec"})
+    result = await flow.async_step_opb_species_search({"query": "mint"})
 
     assert result["step_id"] == "thresholds"
+
+
+async def test_options_flow_add_profile_attach_sensors(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["profile_registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    result = await flow.async_step_add_profile({"name": "Basil"})
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+    hass.states.async_set("sensor.temp", 20, {"device_class": "temperature"})
+    result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
+    assert result2["type"] == "create_entry"
+    prof = registry.get_profile("basil")
+    assert prof is not None
+    assert prof.general["sensors"]["temperature"] == "sensor.temp"
