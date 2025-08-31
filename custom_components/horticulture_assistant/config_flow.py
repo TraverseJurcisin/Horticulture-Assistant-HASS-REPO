@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
+
+if TYPE_CHECKING:
+    from homeassistant.data_entry_flow import FlowResult
 
 from .api import ChatApi
 from .const import (
@@ -258,7 +262,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
         return self.async_show_form(step_id="thresholds", data_schema=schema)
 
-    async def async_step_sensors(self, user_input=None):
+    async def async_step_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         if self._config is None or self._profile is None:
             return self.async_abort(reason="unknown")
 
@@ -362,7 +366,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
 
 class OptionsFlow(config_entries.OptionsFlow):
-    def __init__(self, entry):
+    def __init__(self, entry: config_entries.ConfigEntry) -> None:
         self._entry = entry
         self._pid: str | None = None
         self._var: str | None = None
@@ -370,13 +374,13 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._cal_session: str | None = None
         self._new_profile_id: str | None = None
 
-    async def async_step_init(self, user_input=None):
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         return self.async_show_menu(
             step_id="init",
             menu_options=["basic", "add_profile"],
         )
 
-    async def async_step_basic(self, user_input=None):
+    async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
             CONF_MODEL: self._entry.data.get(CONF_MODEL, DEFAULT_MODEL),
             CONF_BASE_URL: self._entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
@@ -550,7 +554,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         return self.async_show_form(step_id="basic", data_schema=schema)
 
-    async def async_step_add_profile(self, user_input=None):
+    async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
@@ -567,7 +571,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
         return self.async_show_form(step_id="add_profile", data_schema=schema)
 
-    async def async_step_attach_sensors(self, user_input=None):
+    async def async_step_attach_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
