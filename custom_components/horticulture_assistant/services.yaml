@@ -7,6 +7,8 @@ recompute:
   description: Recompute derived metrics for a profile (or all if omitted).
   fields:
     profile_id:
+      description: Profile identifier. Omit to process all profiles.
+      example: basil
       required: false
       selector: { text: {} }
 
@@ -118,14 +120,19 @@ apply_irrigation_plan:
   description: Execute an irrigation plan using a supported provider.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     provider:
+      description: Irrigation provider to use.
       default: auto
       selector:
         select:
           options: [auto, irrigation_unlimited, opensprinkler]
     zone:
+      description: Optional provider-specific zone.
+      example: "front_lawn"
       required: false
       selector: { text: {} }
 
@@ -135,6 +142,7 @@ export_profile:
   fields:
     profile_id:
       description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     path:
