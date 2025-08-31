@@ -43,6 +43,12 @@ class ProfileRegistry:
         """Load profiles from storage and config entry options."""
 
         data = await self._store.async_load() or {}
+
+        # Older versions stored profiles as a list; convert to the new mapping
+        # structure keyed by ``plant_id``.
+        if isinstance(data, list):  # pragma: no cover - legacy format
+            data = {"profiles": {p["plant_id"]: p for p in data if "plant_id" in p}}
+
         profiles = data.get("profiles", {})
         self._profiles = {pid: PlantProfile.from_json(p) for pid, p in profiles.items()}
 

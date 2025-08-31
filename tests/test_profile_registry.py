@@ -1,4 +1,5 @@
 import json
+from unittest.mock import patch
 
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -32,6 +33,18 @@ async def test_initialize_merges_storage_and_options(hass):
     ids = {p.plant_id for p in reg.list_profiles()}
     assert ids == {"p1", "p2"}
     assert reg.get("p2").display_name == "Opt"
+
+
+async def test_async_load_migrates_list_format(hass):
+    """Registry converts legacy list storage to dict mapping."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    with patch.object(reg._store, "async_load", return_value=[{"plant_id": "legacy", "display_name": "Legacy"}]):
+        await reg.async_load()
+
+    prof = reg.get("legacy")
+    assert prof and prof.display_name == "Legacy"
 
 
 async def test_replace_sensor_updates_entry_and_registry(hass):
