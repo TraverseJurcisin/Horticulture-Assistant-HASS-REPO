@@ -34,10 +34,16 @@ def dli_from_ppfd(ppfd_umol_m2_s: float, seconds: float) -> float:
     return (ppfd_umol_m2_s * seconds) / 1_000_000.0
 
 
+def accumulate_dli(current: float, ppfd_umol_m2_s: float, seconds: float) -> float:
+    """Accumulate DLI using PPFD over a period of time."""
+    return current + dli_from_ppfd(ppfd_umol_m2_s, seconds)
+
+
 __all__ = [
     "svp_kpa",
     "vpd_kpa",
     "dew_point_c",
     "lux_to_ppfd",
     "dli_from_ppfd",
+    "accumulate_dli",
 ]

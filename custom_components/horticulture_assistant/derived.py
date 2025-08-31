@@ -22,13 +22,11 @@ from .calibration.fit import eval_model
 from .calibration.store import async_get_for_entity
 from .const import DOMAIN
 from .engine.metrics import (
+    accumulate_dli,
     dew_point_c,
-    dli_from_ppfd,
     vpd_kpa,
 )
-from .engine.metrics import (
-    lux_to_ppfd as metric_lux_to_ppfd,
-)
+from .engine.metrics import lux_to_ppfd as metric_lux_to_ppfd
 from .entity_base import HorticultureBaseEntity
 
 
@@ -115,7 +113,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
             coeff = self._entry.options.get("thresholds", {}).get("lux_to_ppfd", 0.0185)
             ppfd = metric_lux_to_ppfd(lx, coeff)
         seconds = 60.0 if self._last_ts is None else max(0.0, (now - self._last_ts).total_seconds())
-        self._accum += dli_from_ppfd(ppfd, seconds)
+        self._accum = accumulate_dli(self._accum, ppfd, seconds)
         self._value = round(self._accum, 2)
         self._last_ts = now
         self.async_write_ha_state()

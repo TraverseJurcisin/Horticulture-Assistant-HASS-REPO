@@ -19,6 +19,7 @@ vpd_kpa = metrics.vpd_kpa
 dew_point_c = metrics.dew_point_c
 lux_to_ppfd = metrics.lux_to_ppfd
 dli_from_ppfd = metrics.dli_from_ppfd
+accumulate_dli = metrics.accumulate_dli
 
 
 def test_vpd_and_dew_point() -> None:
@@ -46,3 +47,8 @@ def test_clamping_and_rounding() -> None:
     assert vpd_kpa(25, -10) == vpd_kpa(25, 0)
     assert vpd_kpa(25, 150) == vpd_kpa(25, 100)
     assert dli_from_ppfd(500, 0) == 0.0
+
+
+def test_accumulate_dli() -> None:
+    """Accumulation helper should add new light to existing total."""
+    assert accumulate_dli(1.0, 500, 3600) == pytest.approx(1.0 + dli_from_ppfd(500, 3600))

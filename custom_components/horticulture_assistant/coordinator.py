@@ -11,7 +11,7 @@ from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .const import CONF_PROFILES, DOMAIN
-from .engine.metrics import dew_point_c, dli_from_ppfd, lux_to_ppfd, vpd_kpa
+from .engine.metrics import accumulate_dli, dew_point_c, lux_to_ppfd, vpd_kpa
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -88,8 +88,11 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     lux = None
                 if lux is not None:
                     ppfd = lux_to_ppfd(lux)
-                    dli_inc = dli_from_ppfd(ppfd, self.update_interval.total_seconds())
-                    total = self._dli_totals.get(profile_id, 0.0) + dli_inc
+                    total = accumulate_dli(
+                        self._dli_totals.get(profile_id, 0.0),
+                        ppfd,
+                        self.update_interval.total_seconds(),
+                    )
                     self._dli_totals[profile_id] = total
                     dli = total
 
@@ -104,9 +107,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 if t is not None:
                     unit = t_state.attributes.get("unit_of_measurement")
                     if unit == UnitOfTemperature.FAHRENHEIT:
-                        t = TemperatureConverter.convert(
-                            t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS
-                        )
+                        t = TemperatureConverter.convert(t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS)
                     t_c = t
 
         h: float | None = None
