@@ -20,6 +20,7 @@ dew_point_c = metrics.dew_point_c
 lux_to_ppfd = metrics.lux_to_ppfd
 dli_from_ppfd = metrics.dli_from_ppfd
 accumulate_dli = metrics.accumulate_dli
+mold_risk = metrics.mold_risk
 
 
 def test_vpd_and_dew_point() -> None:
@@ -47,6 +48,13 @@ def test_clamping_and_rounding() -> None:
     assert vpd_kpa(25, -10) == vpd_kpa(25, 0)
     assert vpd_kpa(25, 150) == vpd_kpa(25, 100)
     assert dli_from_ppfd(500, 0) == 0.0
+
+
+def test_mold_risk_index() -> None:
+    """Mold risk should increase with humidity and clamp to range."""
+    assert mold_risk(25, 60) == 0.0
+    assert mold_risk(25, 95) == 6.0
+    assert mold_risk(25, 75) == pytest.approx(1.1, rel=1e-2)
 
 
 def test_accumulate_dli() -> None:

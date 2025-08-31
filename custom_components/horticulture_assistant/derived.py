@@ -24,6 +24,7 @@ from .const import DOMAIN
 from .engine.metrics import (
     accumulate_dli,
     dew_point_c,
+    mold_risk,
     vpd_kpa,
 )
 from .engine.metrics import lux_to_ppfd as metric_lux_to_ppfd
@@ -286,16 +287,5 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
         if t is None or h is None:
             self._value = None
         else:
-            dp = dew_point_c(t, h)
-            proximity = max(0.0, 1.0 - (t - dp) / 5.0)
-            if h < 70:
-                base = 0
-            elif h < 80:
-                base = 1
-            elif h < 90:
-                base = 3
-            else:
-                base = 5
-            risk = min(6.0, base + proximity * 2.0)
-            self._value = round(risk, 1)
+            self._value = mold_risk(t, h)
         self.async_write_ha_state()

@@ -16,6 +16,8 @@ reset_dli:
   fields:
     profile_id:
       required: false
+      description: Profile identifier. Omit to reset all profiles.
+      example: basil
       selector: { text: {} }
 
 refresh_species:
@@ -23,6 +25,8 @@ refresh_species:
   description: Refresh species data for a profile.
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
 
@@ -55,6 +59,8 @@ delete_profile:
   name: Delete Profile
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
 
@@ -64,33 +70,44 @@ update_sensors:
   fields:
     profile_id:
       description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     temperature:
       description: Temperature sensor entity.
+      example: sensor.temp1
       selector: { entity: { domain: sensor } }
     humidity:
       description: Humidity sensor entity.
+      example: sensor.hum1
       selector: { entity: { domain: sensor } }
     illuminance:
       description: Illuminance sensor entity.
+      example: sensor.light1
       selector: { entity: { domain: sensor } }
     moisture:
       description: Moisture sensor entity.
+      example: sensor.moisture1
       selector: { entity: { domain: sensor } }
 
 replace_sensor:
   name: Replace Sensor
   fields:
     profile_id:
+      description: Profile identifier.
+      example: basil
       required: true
       selector: { text: {} }
     measurement:
+      description: Measurement to replace.
+      example: temperature
       required: true
       selector:
         select:
           options: [temperature, humidity, illuminance, moisture]
     entity_id:
+      description: Sensor entity to link.
+      example: sensor.temp2
       required: true
       selector: { entity: { domain: sensor } }
 
@@ -119,6 +136,7 @@ export_profile:
       selector: { text: {} }
     path:
       description: Filesystem path to write.
+      example: /config/profile.json
       required: true
       selector: { text: {} }
 
@@ -127,6 +145,8 @@ export_profiles:
   description: Export all profiles to a file.
   fields:
     path:
+      description: Destination path for the export.
+      example: /config/profiles.json
       required: true
       selector: { text: {} }
 
@@ -136,5 +156,6 @@ import_profiles:
   fields:
     path:
       description: Path to a profile export file.
+      example: /config/profiles.json
       required: true
       selector: { text: {} }

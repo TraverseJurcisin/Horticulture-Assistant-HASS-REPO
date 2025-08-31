@@ -39,6 +39,29 @@ def accumulate_dli(current: float, ppfd_umol_m2_s: float, seconds: float) -> flo
     return current + dli_from_ppfd(ppfd_umol_m2_s, seconds)
 
 
+def mold_risk(t_c: float, rh_pct: float) -> float:
+    """Return an estimated mold risk on a 0..6 scale.
+
+    The algorithm is adapted from common indoor gardening guidelines.  Risk
+    increases with higher relative humidity and when the ambient temperature is
+    close to the dew point.  Values are clamped to the 0..6 range and rounded to
+    one decimal place for stable sensor readings.
+    """
+
+    dp = dew_point_c(t_c, rh_pct)
+    proximity = max(0.0, 1.0 - (t_c - dp) / 5.0)
+    if rh_pct < 70:
+        base = 0.0
+    elif rh_pct < 80:
+        base = 1.0
+    elif rh_pct < 90:
+        base = 3.0
+    else:
+        base = 5.0
+    risk = min(6.0, base + proximity * 2.0)
+    return round(risk, 1)
+
+
 __all__ = [
     "svp_kpa",
     "vpd_kpa",
@@ -46,4 +69,5 @@ __all__ = [
     "lux_to_ppfd",
     "dli_from_ppfd",
     "accumulate_dli",
+    "mold_risk",
 ]
