@@ -22,6 +22,10 @@ reset_dli:
       example: basil
       selector: { text: {} }
 
+list_profiles:
+  name: List Profiles
+  description: Return all known profile identifiers and names.
+
 refresh_species:
   name: Refresh Species
   description: Refresh species data for a profile.
@@ -194,3 +198,70 @@ recommend_watering:
       example: basil
       required: true
       selector: { text: {} }
+  response:
+    description: Recommended watering duration in minutes.
+    example:
+      minutes: 5
+
+recalculate_targets:
+  name: Recalculate Targets
+  description: Recompute target values for a specific plant profile.
+  fields:
+    plant_id:
+      description: Plant identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+
+run_recommendation:
+  name: Run Recommendation
+  description: Refresh AI recommendations and optionally approve them.
+  fields:
+    plant_id:
+      description: Plant identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+    approve:
+      description: Persist the refreshed recommendation.
+      required: false
+      selector: { boolean: {} }
+
+resolve_profile:
+  name: Resolve Profile
+  description: Populate missing data for a profile from preferred sources.
+  fields:
+    profile_id:
+      description: Profile identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+
+resolve_all:
+  name: Resolve All Profiles
+  description: Resolve data for all configured profiles.
+
+generate_profile:
+  name: Generate Profile
+  description: Create a profile via cloning, OpenPlantBook, or AI.
+  fields:
+    profile_id:
+      description: Identifier for the new profile.
+      example: basil
+      required: true
+      selector: { text: {} }
+    mode:
+      description: Generation mode.
+      example: opb
+      required: true
+      selector:
+        select:
+          options: [clone, opb, ai]
+    source_profile_id:
+      description: Source profile when cloning.
+      required: false
+      selector: { text: {} }
+
+clear_caches:
+  name: Clear Caches
+  description: Purge cached data from external providers.
