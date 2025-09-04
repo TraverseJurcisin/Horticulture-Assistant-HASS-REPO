@@ -25,6 +25,12 @@ reset_dli:
 list_profiles:
   name: List Profiles
   description: Return all known profile identifiers and names.
+  response:
+    description: Mapping of profile identifiers to their friendly names.
+    example:
+      profiles:
+        basil: Basil
+        mint: Mint
 
 refresh_species:
   name: Refresh Species
