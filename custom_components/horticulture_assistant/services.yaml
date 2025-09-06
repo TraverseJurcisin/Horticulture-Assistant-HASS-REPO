@@ -25,8 +25,10 @@ reset_dli:
 list_profiles:
   name: List Profiles
   description: Return all known profile identifiers and names.
+  target:
+    entity:
+      integration: horticulture_assistant
   response:
-    description: Mapping of profile identifiers to their friendly names.
     example:
       profiles:
         basil: Basil
@@ -204,8 +206,10 @@ recommend_watering:
       example: basil
       required: true
       selector: { text: {} }
+  target:
+    entity:
+      integration: horticulture_assistant
   response:
-    description: Recommended watering duration in minutes.
     example:
       minutes: 5
 
