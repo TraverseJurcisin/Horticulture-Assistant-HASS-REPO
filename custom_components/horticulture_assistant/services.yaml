@@ -27,12 +27,14 @@ list_profiles:
   description: Return all known profile identifiers and names.
   target:
     entity:
-      integration: horticulture_assistant
+      domain: sensor
   response:
-    example:
+    fields:
       profiles:
-        basil: Basil
-        mint: Mint
+        description: Mapping of profile identifiers to their friendly names.
+        example:
+          basil: Basil
+          mint: Mint
 
 refresh_species:
   name: Refresh Species
@@ -208,10 +210,12 @@ recommend_watering:
       selector: { text: {} }
   target:
     entity:
-      integration: horticulture_assistant
+      domain: plant
   response:
-    example:
-      minutes: 5
+    fields:
+      minutes:
+        description: Recommended watering duration in minutes.
+        example: 5
 
 recalculate_targets:
   name: Recalculate Targets
