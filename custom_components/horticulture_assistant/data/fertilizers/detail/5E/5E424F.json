@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5E424F","source_wsda_record":{"wsda_product_number":"(#1733-0042)","product_name":"TURF FUEL VERTICAL 0-0-8","company_info":{"company":"TARGET SPECIALTY PRODUCTS","Mailing Address":"15415 Marquardt Ave","Post Office Box":null,"City":"Santa Fe Springs","State":"CA","Postal Code":"90670","Telephone Number":"502 802-2238","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0300","Cadmium":"=0.4250","Cobalt":"=0.4120","Mercury":"=0.0050","Molybdenum":"=0.4580","Nickel":"=1.3700","Lead":"=0.5330","Selenium":"=0.9900","Zinc":"=12.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0300","Cadmium":"=0.4250","Cobalt":"=0.4120","Mercury":"=0.0050","Molybdenum":"=0.4580","Nickel":"=1.3700","Lead":"=0.5330","Selenium":"=0.9900","Zinc":"=12.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TARGET SPECIALTY PRODUCTS","label_name":"TURF FUEL VERTICAL 0-0-8","wsda_reg_no":"(#1733-0042)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "commerce": {
+    "price_history": [],
+    "sku_list": []
+  },
+  "composition": {
+    "derived_from_raw": null,
+    "derived_from_tokens": null,
+    "guaranteed_analysis": {
+      "Available Phosphoric Acid (P2O5)": null,
+      "Boron (B)": null,
+      "Calcium (Ca)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Magnesium (Mg)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Soluble Potash (K2O)": 8.0,
+      "Sulfur (S)": null,
+      "Total Nitrogen (N)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.0300",
+      "Cadmium": "=0.4250",
+      "Cobalt": "=0.4120",
+      "Lead": "=0.5330",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.4580",
+      "Nickel": "=1.3700",
+      "Selenium": "=0.9900",
+      "Zinc": "=12.6000"
+    }
+  },
+  "metadata": {
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "first_seen": "2025-07-25",
+    "formulation": null,
+    "label_name": "TURF FUEL VERTICAL 0-0-8",
+    "registrant": "TARGET SPECIALTY PRODUCTS",
+    "wsda_reg_no": "(#1733-0042)"
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ec_ms_cm": null,
+    "ph": {
+      "max": null,
+      "min": null
+    }
+  },
+  "product_id": "5E424F",
+  "schema_version": "2025-07-v1",
+  "source_wsda_record": {
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null,
+      "Magnesium Carbonate (MgCO3)": null
+    },
+    "company_info": {
+      "City": "Santa Fe Springs",
+      "Fax Number": null,
+      "Mailing Address": "15415 Marquardt Ave",
+      "Post Office Box": null,
+      "Postal Code": "90670",
+      "State": "CA",
+      "Telephone Number": "502 802-2238",
+      "company": "TARGET SPECIALTY PRODUCTS"
+    },
+    "guaranteed_analysis": {
+      "Available Phosphoric Acid (P2O5)": null,
+      "Boron (B)": null,
+      "Calcium (Ca)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Magnesium (Mg)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Soluble Potash (K2O)": 8.0,
+      "Sulfur (S)": null,
+      "Total Nitrogen (N)": null,
+      "Zinc (Zn)": null
+    },
+    "micronutrient_fertilizer": "N",
+    "product_name": "TURF FUEL VERTICAL 0-0-8",
+    "reported_metals": {
+      "Arsenic": "=1.0300",
+      "Cadmium": "=0.4250",
+      "Cobalt": "=0.4120",
+      "Lead": "=0.5330",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.4580",
+      "Nickel": "=1.3700",
+      "Selenium": "=0.9900",
+      "Zinc": "=12.6000"
+    },
+    "waste_derived_fertilizer": "N",
+    "wsda_product_number": "(#1733-0042)"
+  }
+}

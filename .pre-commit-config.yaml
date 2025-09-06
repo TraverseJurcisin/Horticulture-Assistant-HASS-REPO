@@ -1,21 +1,23 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: mixed-line-ending
-      - id: check-yaml
-        args: ["--unsafe"]
       - id: check-json
+        files: \.(json)$
+      - id: check-yaml
+        files: \.(yaml|yml)$
+        exclude: custom_components/horticulture_assistant/blueprints/automation/.*\.yaml
       - id: pretty-format-json
-        args: ["--autofix", "--no-ensure-ascii", "--indent", "2", "--no-sort-keys"]
-        exclude: ^custom_components/horticulture_assistant/data/
+        files: ^custom_components/horticulture_assistant/data/.*\.json$
+        args: ["--autofix", "--indent", "2", "--no-ensure-ascii"]
       - id: check-merge-conflict
       - id: check-toml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.12.11
     hooks:
       - id: ruff
         args: [--fix]

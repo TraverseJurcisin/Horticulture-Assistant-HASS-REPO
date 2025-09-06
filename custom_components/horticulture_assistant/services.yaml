@@ -194,3 +194,117 @@ recommend_watering:
       example: basil
       required: true
       selector: { text: {} }
+
+run_recommendation:
+  name: Run Recommendation
+  description: Execute the recommendation engine for a profile.
+  fields:
+    profile_id:
+      description: Profile identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+
+resolve_profile:
+  name: Resolve Profile
+  description: Populate missing profile data using bundled defaults.
+  fields:
+    profile_id:
+      description: Profile identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+
+resolve_all:
+  name: Resolve All Profiles
+  description: Resolve missing profile data for all profiles.
+
+start_calibration:
+  name: Start Calibration
+  description: Begin a calibration session for a sensor.
+  fields:
+    entity_id:
+      description: Sensor entity being calibrated.
+      example: sensor.temp1
+      required: true
+      selector: { entity: { domain: sensor } }
+    model:
+      description: Calibration model to fit.
+      selector:
+        select:
+          options: [linear, quadratic, power]
+
+add_calibration_point:
+  name: Add Calibration Point
+  description: Record a measurement for an active calibration session.
+  fields:
+    session_id:
+      description: Calibration session identifier.
+      example: 123e4567
+      required: true
+      selector: { text: {} }
+    reading:
+      description: Sensor reading for this point.
+      example: 42.5
+      required: true
+      selector: { number: { min: 0, max: 1000, step: 0.1 } }
+    reference:
+      description: Reference value for this point.
+      example: 40.0
+      required: true
+      selector: { number: { min: 0, max: 1000, step: 0.1 } }
+
+finish_calibration:
+  name: Finish Calibration
+  description: Fit the calibration model and save coefficients.
+  fields:
+    session_id:
+      description: Calibration session identifier.
+      example: 123e4567
+      required: true
+      selector: { text: {} }
+
+abort_calibration:
+  name: Abort Calibration
+  description: Cancel an active calibration session.
+  fields:
+    session_id:
+      description: Calibration session identifier.
+      example: 123e4567
+      required: true
+      selector: { text: {} }
+
+recalculate_targets:
+  name: Recalculate Targets
+  description: Recompute target thresholds for a plant profile.
+  fields:
+    plant_id:
+      description: Profile identifier.
+      example: basil
+      required: true
+      selector: { text: {} }
+
+generate_profile:
+  name: Generate Profile
+  description: Create a profile using a clone, OpenPlantBook template, or AI.
+  fields:
+    profile_id:
+      description: Identifier for the new profile.
+      example: basil_clone
+      required: true
+      selector: { text: {} }
+    mode:
+      description: Generation mode.
+      example: opb
+      required: true
+      selector:
+        select:
+          options: [clone, opb, ai]
+    source_profile_id:
+      description: Source profile when cloning.
+      example: basil
+      selector: { text: {} }
+
+clear_caches:
+  name: Clear Caches
+  description: Purge cached data from external providers.

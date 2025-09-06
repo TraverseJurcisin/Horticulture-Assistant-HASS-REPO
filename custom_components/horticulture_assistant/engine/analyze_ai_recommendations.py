@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from contextlib import suppress
 from datetime import datetime
 
 import openai
@@ -65,9 +66,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
             ec_val = float(ec)
         except Exception:
             ec_val = ec
-        sensor_lines.append(
-            f"EC: {round(ec_val, 2)} mS/cm" if isinstance(ec_val, int | float) else f"EC: {ec_val}"
-        )
+        sensor_lines.append(f"EC: {round(ec_val, 2)} mS/cm" if isinstance(ec_val, int | float) else f"EC: {ec_val}")
     if temperature is not None:
         try:
             temp_val = float(temperature)
@@ -93,9 +92,7 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
         except Exception:
             light_val = light
         sensor_lines.append(
-            f"Light: {int(round(light_val))} lux"
-            if isinstance(light_val, int | float)
-            else f"Light: {light}"
+            f"Light: {int(round(light_val))} lux" if isinstance(light_val, int | float) else f"Light: {light}"
         )
     if sensor_lines:
         context_lines.append("Latest sensor readings:")
@@ -183,10 +180,8 @@ def analyze_ai_recommendations(plant_id: str, report_path: str) -> None:
     date_str = datetime.now().date().isoformat()
     ts = report.get("timestamp")
     if ts:
-        try:
+        with suppress(Exception):
             date_str = datetime.fromisoformat(ts).date().isoformat()
-        except Exception:
-            pass
     filename = f"{plant_id}_{date_str}.json"
     file_path = os.path.join(str(base_dir), filename)
     try:

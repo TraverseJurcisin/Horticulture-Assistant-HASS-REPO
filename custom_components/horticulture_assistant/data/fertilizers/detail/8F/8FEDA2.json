@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8FEDA2","source_wsda_record":{"wsda_product_number":"(#1589-0071)","product_name":"POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0","company_info":{"company":"TWO RIVERS TERMINAL - PASCO WA - GL","Mailing Address":"PO Box 2327","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99302","Telephone Number":"509 547-7776","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":15.0,"Sulfur (S)":21.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=23.1000","Cadmium":"=1.8500","Cobalt":"=4.6300","Mercury":"=0.0439","Molybdenum":"=9.2600","Nickel":"=13.9000","Lead":"=13.9000","Selenium":"=23.1000","Zinc":"=18.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":15.0,"Sulfur (S)":21.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=23.1000","Cadmium":"=1.8500","Cobalt":"=4.6300","Mercury":"=0.0439","Molybdenum":"=9.2600","Nickel":"=13.9000","Lead":"=13.9000","Selenium":"=23.1000","Zinc":"=18.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TWO RIVERS TERMINAL - PASCO WA - GL","label_name":"POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0","wsda_reg_no":"(#1589-0071)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "commerce": {
+    "price_history": [],
+    "sku_list": []
+  },
+  "composition": {
+    "derived_from_raw": null,
+    "derived_from_tokens": null,
+    "guaranteed_analysis": {
+      "Available Phosphoric Acid (P2O5)": null,
+      "Boron (B)": null,
+      "Calcium (Ca)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Magnesium (Mg)": 15.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Soluble Potash (K2O)": null,
+      "Sulfur (S)": 21.0,
+      "Total Nitrogen (N)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=23.1000",
+      "Cadmium": "=1.8500",
+      "Cobalt": "=4.6300",
+      "Lead": "=13.9000",
+      "Mercury": "=0.0439",
+      "Molybdenum": "=9.2600",
+      "Nickel": "=13.9000",
+      "Selenium": "=23.1000",
+      "Zinc": "=18.5000"
+    }
+  },
+  "metadata": {
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "first_seen": "2025-07-25",
+    "formulation": "Dry",
+    "label_name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
+    "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "wsda_reg_no": "(#1589-0071)"
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ec_ms_cm": null,
+    "ph": {
+      "max": null,
+      "min": null
+    }
+  },
+  "product_id": "8FEDA2",
+  "schema_version": "2025-07-v1",
+  "source_wsda_record": {
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null,
+      "Magnesium Carbonate (MgCO3)": null
+    },
+    "company_info": {
+      "City": "Pasco",
+      "Fax Number": null,
+      "Mailing Address": "PO Box 2327",
+      "Post Office Box": null,
+      "Postal Code": "99302",
+      "State": "WA",
+      "Telephone Number": "509 547-7776",
+      "company": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    },
+    "guaranteed_analysis": {
+      "Available Phosphoric Acid (P2O5)": null,
+      "Boron (B)": null,
+      "Calcium (Ca)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Magnesium (Mg)": 15.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Soluble Potash (K2O)": null,
+      "Sulfur (S)": 21.0,
+      "Total Nitrogen (N)": null,
+      "Zinc (Zn)": null
+    },
+    "micronutrient_fertilizer": "N",
+    "product_name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
+    "reported_metals": {
+      "Arsenic": "=23.1000",
+      "Cadmium": "=1.8500",
+      "Cobalt": "=4.6300",
+      "Lead": "=13.9000",
+      "Mercury": "=0.0439",
+      "Molybdenum": "=9.2600",
+      "Nickel": "=13.9000",
+      "Selenium": "=23.1000",
+      "Zinc": "=18.5000"
+    },
+    "waste_derived_fertilizer": "N",
+    "wsda_product_number": "(#1589-0071)"
+  }
+}

@@ -9,15 +9,25 @@ becoming monolithic.
 from __future__ import annotations
 
 import logging
-from typing import Final
+from typing import TYPE_CHECKING, Any, Final
 
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
-from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.exceptions import HomeAssistantError
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
+    from homeassistant.helpers import config_validation as cv
+    from homeassistant.helpers import entity_registry as er
+    from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+else:  # pragma: no cover - fallback for tests without Home Assistant
+    HomeAssistant = Any
+    ServiceCall = Any
+    ServiceResponse = Any
+    er = Any
+    DataUpdateCoordinator = Any
+    cv = Any
 
 from .const import CONF_PROFILES, DOMAIN
 from .profile_registry import ProfileRegistry
@@ -32,6 +42,39 @@ MEASUREMENT_CLASSES: Final = {
     "illuminance": SensorDeviceClass.ILLUMINANCE,
     "moisture": SensorDeviceClass.MOISTURE,
 }
+
+# Service name constants for profile management.
+SERVICE_REPLACE_SENSOR = "replace_sensor"
+SERVICE_REFRESH_SPECIES = "refresh_species"
+SERVICE_CREATE_PROFILE = "create_profile"
+SERVICE_DUPLICATE_PROFILE = "duplicate_profile"
+SERVICE_DELETE_PROFILE = "delete_profile"
+SERVICE_UPDATE_SENSORS = "update_sensors"
+SERVICE_EXPORT_PROFILES = "export_profiles"
+SERVICE_EXPORT_PROFILE = "export_profile"
+SERVICE_IMPORT_PROFILES = "import_profiles"
+SERVICE_IMPORT_TEMPLATE = "import_template"
+SERVICE_REFRESH = "refresh"
+SERVICE_RECOMPUTE = "recompute"
+SERVICE_RESET_DLI = "reset_dli"
+SERVICE_RECOMMEND_WATERING = "recommend_watering"
+
+SERVICE_NAMES: Final[tuple[str, ...]] = (
+    SERVICE_REPLACE_SENSOR,
+    SERVICE_REFRESH_SPECIES,
+    SERVICE_CREATE_PROFILE,
+    SERVICE_DUPLICATE_PROFILE,
+    SERVICE_DELETE_PROFILE,
+    SERVICE_UPDATE_SENSORS,
+    SERVICE_EXPORT_PROFILES,
+    SERVICE_EXPORT_PROFILE,
+    SERVICE_IMPORT_PROFILES,
+    SERVICE_IMPORT_TEMPLATE,
+    SERVICE_REFRESH,
+    SERVICE_RECOMPUTE,
+    SERVICE_RESET_DLI,
+    SERVICE_RECOMMEND_WATERING,
+)
 
 
 async def async_register_all(
@@ -54,9 +97,9 @@ async def async_register_all(
         entity_id: str = call.data["entity_id"]
 
         if measurement not in MEASUREMENT_CLASSES:
-            raise vol.Invalid(f"unknown measurement {measurement}")
+            raise HomeAssistantError(f"unknown measurement {measurement}")
         if hass.states.get(entity_id) is None:
-            raise vol.Invalid(f"missing entity {entity_id}")
+            raise HomeAssistantError(f"missing entity {entity_id}")
 
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
@@ -65,7 +108,7 @@ async def async_register_all(
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
         if expected and (reg_entry is None or actual != expected.value):
-            raise vol.Invalid("device class mismatch")
+            raise HomeAssistantError("device class mismatch")
 
         await registry.async_replace_sensor(profile_id, measurement, entity_id)
         await _refresh_profile()
@@ -90,7 +133,7 @@ async def async_register_all(
         try:
             await registry.async_duplicate_profile(src, new_name)
         except ValueError as err:
-            raise vol.Invalid(str(err)) from err
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_delete_profile(call) -> None:
@@ -98,7 +141,7 @@ async def async_register_all(
         try:
             await registry.async_delete_profile(pid)
         except ValueError as err:
-            raise vol.Invalid(str(err)) from err
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_update_sensors(call) -> None:
@@ -107,18 +150,21 @@ async def async_register_all(
         for role in ("temperature", "humidity", "illuminance", "moisture"):
             if ent := call.data.get(role):
                 if hass.states.get(ent) is None:
-                    raise vol.Invalid(f"missing entity {ent}")
+                    raise HomeAssistantError(f"missing entity {ent}")
                 sensors[role] = ent
         try:
             await registry.async_link_sensors(pid, sensors)
         except ValueError as err:
-            raise vol.Invalid(str(err)) from err
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_export_profile(call) -> None:
         pid = call.data["profile_id"]
         path = call.data["path"]
-        out = await registry.async_export_profile(pid, path)
+        try:
+            out = await registry.async_export_profile(pid, path)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
         _LOGGER.info("Exported profile %s to %s", pid, out)
 
     async def _srv_import_profiles(call) -> None:
@@ -132,7 +178,7 @@ async def async_register_all(
         try:
             await registry.async_import_template(template, name)
         except ValueError as err:
-            raise vol.Invalid(str(err)) from err
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_refresh(call) -> None:
@@ -148,7 +194,7 @@ async def async_register_all(
         if profile_id:
             profiles = entry.options.get(CONF_PROFILES, {})
             if profile_id not in profiles:
-                raise vol.Invalid(f"unknown profile {profile_id}")
+                raise HomeAssistantError(f"unknown profile {profile_id}")
         if profile_coord:
             await profile_coord.async_request_refresh()
 
@@ -162,10 +208,10 @@ async def async_register_all(
 
         pid: str = call.data["profile_id"]
         if profile_coord is None:
-            raise vol.Invalid("profile coordinator unavailable")
+            raise HomeAssistantError("profile coordinator unavailable")
         metrics = profile_coord.data.get("profiles", {}).get(pid, {}).get("metrics") if profile_coord.data else None
         if metrics is None:
-            raise vol.Invalid(f"unknown profile {pid}")
+            raise HomeAssistantError(f"unknown profile {pid}")
         moisture = metrics.get("moisture")
         dli = metrics.get("dli")
         minutes = 0
@@ -180,7 +226,7 @@ async def async_register_all(
 
     hass.services.async_register(
         DOMAIN,
-        "replace_sensor",
+        SERVICE_REPLACE_SENSOR,
         _srv_replace_sensor,
         schema=vol.Schema(
             {
@@ -192,31 +238,31 @@ async def async_register_all(
     )
     hass.services.async_register(
         DOMAIN,
-        "refresh_species",
+        SERVICE_REFRESH_SPECIES,
         _srv_refresh_species,
         schema=vol.Schema({vol.Required("profile_id"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "create_profile",
+        SERVICE_CREATE_PROFILE,
         _srv_create_profile,
         schema=vol.Schema({vol.Required("name"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "duplicate_profile",
+        SERVICE_DUPLICATE_PROFILE,
         _srv_duplicate_profile,
         schema=vol.Schema({vol.Required("source_profile_id"): str, vol.Required("new_name"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "delete_profile",
+        SERVICE_DELETE_PROFILE,
         _srv_delete_profile,
         schema=vol.Schema({vol.Required("profile_id"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "update_sensors",
+        SERVICE_UPDATE_SENSORS,
         _srv_update_sensors,
         schema=vol.Schema(
             {
@@ -230,49 +276,49 @@ async def async_register_all(
     )
     hass.services.async_register(
         DOMAIN,
-        "export_profiles",
+        SERVICE_EXPORT_PROFILES,
         _srv_export_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "export_profile",
+        SERVICE_EXPORT_PROFILE,
         _srv_export_profile,
         schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "import_profiles",
+        SERVICE_IMPORT_PROFILES,
         _srv_import_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "import_template",
+        SERVICE_IMPORT_TEMPLATE,
         _srv_import_template,
         schema=vol.Schema({vol.Required("template"): str, vol.Optional("name"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "refresh",
+        SERVICE_REFRESH,
         _srv_refresh,
         schema=vol.Schema({}),
     )
     hass.services.async_register(
         DOMAIN,
-        "recompute",
+        SERVICE_RECOMPUTE,
         _srv_recompute,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "reset_dli",
+        SERVICE_RESET_DLI,
         _srv_reset_dli,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
     hass.services.async_register(
         DOMAIN,
-        "recommend_watering",
+        SERVICE_RECOMMEND_WATERING,
         _srv_recommend_watering,
         schema=vol.Schema({vol.Required("profile_id"): str}),
         supports_response=True,
@@ -293,3 +339,11 @@ async def async_register_all(
         new_opts[CONF_PROFILES] = profiles
         hass.config_entries.async_update_entry(entry, options=new_opts)
         entry.options = new_opts
+
+
+async def async_unload_services(hass: HomeAssistant) -> None:
+    """Remove registered profile services."""
+
+    for name in SERVICE_NAMES:
+        if hass.services.has_service(DOMAIN, name):
+            hass.services.async_remove(DOMAIN, name)

@@ -37,9 +37,7 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
     # Pattern for pending threshold files: {plant_id}_YYYY-MM-DD.json
     file_pattern = re.compile(r"^.+_\d{4}-\d{2}-\d{2}\.json$")
     if not pending_dir.is_dir():
-        _LOGGER.info(
-            "Pending thresholds directory not found at %s; no changes to approve.", pending_dir
-        )
+        _LOGGER.info("Pending thresholds directory not found at %s; no changes to approve.", pending_dir)
         print(f"No pending thresholds directory found at {pending_dir}.")
         return
     # Gather all JSON files matching the pattern
@@ -68,9 +66,7 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
             _LOGGER.info("No pending threshold changes in file %s; skipping.", file_path.name)
             # No pending entries to approve in this file
             continue
-        print(
-            f"\nReviewing pending threshold changes for plant '{plant_id}' (file: {file_path.name}):"
-        )
+        print(f"\nReviewing pending threshold changes for plant '{plant_id}' (file: {file_path.name}):")
         file_modified = False
         any_rejected = False
         approved_list = []
@@ -142,17 +138,11 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
                     plant_id,
                     plant_file_path,
                 )
-                print(
-                    f"Warning: profile for plant '{plant_id}' not found. Approved changes will remain pending."
-                )
+                print(f"Warning: profile for plant '{plant_id}' not found. Approved changes will remain pending.")
                 profile_update_failed = True
             except Exception as e:
-                _LOGGER.error(
-                    "Failed to read profile for plant '%s': %s; skipping its changes.", plant_id, e
-                )
-                print(
-                    f"Warning: profile for plant '{plant_id}' is invalid. Approved changes will remain pending."
-                )
+                _LOGGER.error("Failed to read profile for plant '%s': %s; skipping its changes.", plant_id, e)
+                print(f"Warning: profile for plant '{plant_id}' is invalid. Approved changes will remain pending.")
                 profile_update_failed = True
             else:
                 # Ensure thresholds section exists and is a dict
@@ -184,7 +174,8 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
                 except Exception as e:
                     _LOGGER.error("Failed to write updated profile for plant '%s': %s", plant_id, e)
                     print(
-                        f"Warning: could not write profile for plant '{plant_id}'. Approved changes will remain pending."
+                        f"Warning: could not write profile for plant '{plant_id}'. "
+                        "Approved changes will remain pending."
                     )
                     profile_update_failed = True
                 else:
@@ -220,9 +211,7 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
                     file_path.name,
                     e,
                 )
-                print(
-                    f"Error: failed to update pending file {file_path.name}. Changes may not be saved."
-                )
+                print(f"Error: failed to update pending file {file_path.name}. Changes may not be saved.")
     # End for each file
     _LOGGER.info(
         "Threshold approval review complete: %d approved, %d rejected, %d skipped.",
@@ -230,9 +219,7 @@ def approve_threshold_queue(hass: HomeAssistant = None) -> None:
         total_rejected,
         total_skipped,
     )
-    print(
-        f"\nReview complete. Approved: {total_approved}, Rejected: {total_rejected}, Skipped: {total_skipped}."
-    )
+    print(f"\nReview complete. Approved: {total_approved}, Rejected: {total_rejected}, Skipped: {total_skipped}.")
 
 
 if __name__ == "__main__":

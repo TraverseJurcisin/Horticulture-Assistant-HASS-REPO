@@ -43,6 +43,12 @@ jobs:
           pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component pre-commit
       - name: Validate plant profiles
         run: python scripts/validate_profiles.py
+      - name: HACS validation (non-blocking)
+        if: always()
+        uses: hacs/action@main
+        with:
+          category: integration
+        continue-on-error: true
       - name: Run pre-commit on entire repo
         run: pre-commit run --all-files
       - name: Static type checks (non-blocking)

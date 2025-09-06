@@ -1,3 +1,4 @@
+import contextlib
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -99,16 +100,12 @@ def export_growth_yield(
                         else:
                             # Fallbacks: 'growth_index' or canopy size if present
                             gm_value = (
-                                metrics.get("growth_index")
-                                or metrics.get("canopy")
-                                or metrics.get("canopy_size")
+                                metrics.get("growth_index") or metrics.get("canopy") or metrics.get("canopy_size")
                             )
                         # Convert to float if possible
-                        try:
+                        with contextlib.suppress(Exception):
                             if gm_value is not None:
                                 gm_value = float(gm_value)
-                        except Exception:
-                            pass
                         growth_by_date[date_key] = gm_value
                     elif metrics is not None:
                         # If metrics is a direct numeric value
@@ -162,10 +159,8 @@ def export_growth_yield(
                 # Add yield for the day if present
                 if has_yield:
                     y_val = yield_by_date.get(date_str, 0)
-                    try:
+                    with contextlib.suppress(Exception):
                         y_val = float(y_val)
-                    except Exception:
-                        pass
                     # Round yield to two decimals (or leave as int if whole number)
                     y_val = round(y_val, 2)
                     entry["yield_quantity"] = y_val
@@ -175,9 +170,7 @@ def export_growth_yield(
                     current_cumulative += 0
                 # Record cumulative yield up to this day
                 entry["cumulative_yield"] = (
-                    round(current_cumulative, 2)
-                    if isinstance(current_cumulative, float)
-                    else current_cumulative
+                    round(current_cumulative, 2) if isinstance(current_cumulative, float) else current_cumulative
                 )
                 series.append(entry)
             # Move to the next day

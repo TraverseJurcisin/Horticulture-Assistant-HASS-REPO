@@ -1,3 +1,4 @@
+import contextlib
 import json
 import logging
 import os
@@ -32,10 +33,7 @@ def _generate_mock_reply(thresholds: dict) -> dict:
         if isinstance(value, int | float):
             new_val = value * 1.05
             # Round values: integers back to int, floats to 2 decimal places
-            if isinstance(value, int):
-                new_val = int(round(new_val))
-            else:
-                new_val = round(new_val, 2)
+            new_val = int(round(new_val)) if isinstance(value, int) else round(new_val, 2)
             proposed[key] = new_val
             count += 1
         elif isinstance(value, list):
@@ -45,10 +43,7 @@ def _generate_mock_reply(thresholds: dict) -> dict:
             for elem in value:
                 if isinstance(elem, int | float):
                     new_elem = elem * 1.05
-                    if isinstance(elem, int):
-                        new_elem = int(round(new_elem))
-                    else:
-                        new_elem = round(new_elem, 2)
+                    new_elem = int(round(new_elem)) if isinstance(elem, int) else round(new_elem, 2)
                     new_list.append(new_elem)
                 else:
                     all_numbers = False
@@ -75,11 +70,8 @@ def dispatch_ai_context(
     date_str = datetime.now().date().isoformat()
     context_ts = context_dict.get("timestamp")
     if context_ts:
-        try:
+        with contextlib.suppress(Exception):
             date_str = datetime.fromisoformat(str(context_ts)).date().isoformat()
-        except Exception:
-            # If context timestamp is not parseable, use current date
-            pass
     # Save the context_dict to a JSON file
     context_filename = f"{plant_id}_{date_str}.json"
     context_path = os.path.join(ai_dir, context_filename)
@@ -119,7 +111,10 @@ def dispatch_ai_context(
                         messages=[
                             {
                                 "role": "system",
-                                "content": "You are a horticulture AI assistant optimizing plant yield and health. Return improved threshold values based on data.",
+                                "content": (
+                                    "You are a horticulture AI assistant optimizing plant yield and health. "
+                                    "Return improved threshold values based on data."
+                                ),
                             },
                             {"role": "user", "content": json.dumps(context_dict)},
                         ],
@@ -133,9 +128,7 @@ def dispatch_ai_context(
                     try:
                         ai_raw_response = response["choices"][0]["message"]["content"]
                     except Exception as e:
-                        _LOGGER.error(
-                            "Unexpected OpenAI response format for plant %s: %s", plant_id, e
-                        )
+                        _LOGGER.error("Unexpected OpenAI response format for plant %s: %s", plant_id, e)
                         ai_raw_response = ""
                     # Parse AI response if possible
                     if ai_raw_response:

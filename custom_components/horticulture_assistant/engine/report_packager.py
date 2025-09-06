@@ -27,11 +27,7 @@ def _load_log(log_path):
 def _filter_last_24h(entries):
     now = datetime.now(UTC)
     threshold = now - timedelta(days=1)
-    return [
-        e
-        for e in entries
-        if "timestamp" in e and datetime.fromisoformat(e["timestamp"]) >= threshold
-    ]
+    return [e for e in entries if "timestamp" in e and datetime.fromisoformat(e["timestamp"]) >= threshold]
 
 
 def build_daily_report(
@@ -64,10 +60,7 @@ def build_daily_report(
 
     # Load profile and current thresholds
     profile = load_plant_profile(plant_id, base_path)
-    if isinstance(profile, dict):
-        profile_data = profile.get("profile_data", {})
-    else:
-        profile_data = profile.profile_data
+    profile_data = profile.get("profile_data", {}) if isinstance(profile, dict) else profile.profile_data
     stage_data = profile_data.get("stage", {})
     thresholds = profile_data.get("thresholds", {})
 
@@ -105,9 +98,7 @@ def build_daily_report(
         stype = e.get("sensor_type")
         if stype and "value" in e:
             sensor_types.setdefault(stype, []).append(e["value"])
-    report["sensor_summary"] = {
-        stype: round(mean(vals), 2) for stype, vals in sensor_types.items() if vals
-    }
+    report["sensor_summary"] = {stype: round(mean(vals), 2) for stype, vals in sensor_types.items() if vals}
 
     # Visual Summary
     if visuals:

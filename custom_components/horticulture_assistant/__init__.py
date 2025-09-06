@@ -8,6 +8,7 @@ import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
@@ -132,7 +133,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
-            raise vol.Invalid(f"unknown plant {plant_id}")
+            raise HomeAssistantError(f"unknown plant {plant_id}")
         await local_coord.async_request_refresh()
 
     async def _handle_run_reco(call: ServiceCall) -> None:
@@ -140,7 +141,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
-            raise vol.Invalid(f"unknown plant {plant_id}")
+            raise HomeAssistantError(f"unknown plant {plant_id}")
         prev = ai_coord.data.get("recommendation")
         with contextlib.suppress(UpdateFailed):
             await ai_coord.async_request_refresh()
@@ -183,7 +184,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             except (TypeError, ValueError):
                 seconds = None
         if seconds is None:
-            raise vol.Invalid("no recommendation available")
+            raise HomeAssistantError("no recommendation available")
 
         if provider == "auto":
             if hass.services.has_service("irrigation_unlimited", "run_zone"):
@@ -191,7 +192,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             elif hass.services.has_service("opensprinkler", "run_once"):
                 provider = "opensprinkler"
             else:
-                raise vol.Invalid("no irrigation provider")
+                raise HomeAssistantError("no irrigation provider")
 
         await async_apply_irrigation(hass, provider, zone, seconds)
 
@@ -266,6 +267,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    await ha_services.async_unload_services(hass)
+    for name in (
+        "recalculate_targets",
+        "run_recommendation",
+        "apply_irrigation_plan",
+        "resolve_profile",
+        "resolve_all",
+        "generate_profile",
+        "clear_caches",
+    ):
+        if hass.services.has_service(DOMAIN, name):
+            hass.services.async_remove(DOMAIN, name)
     data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
     unsub = data.get("opb_unsub")
     if unsub:
