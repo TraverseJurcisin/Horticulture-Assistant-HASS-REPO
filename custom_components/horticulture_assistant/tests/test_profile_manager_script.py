@@ -17,7 +17,8 @@ def test_load_default_profile(tmp_path: Path):
 
     ok = pm.load_default_profile("demo", "demo1", plants_dir, global_dir)
     assert ok
-    created = json.load(open(plants_dir / "demo1.json", encoding="utf-8"))
+    with open(plants_dir / "demo1.json", encoding="utf-8") as file:
+        created = json.load(file)
     assert created["general"]["plant_id"] == "demo1"
     assert created["general"]["plant_type"] == "demo"
 
@@ -88,14 +89,12 @@ def test_attach_and_detach_sensor(tmp_path: Path):
 
     ok = pm.attach_sensor("p1", "moisture_sensors", ["b"], plants_dir)
     assert ok
-    sensors = json.load(open(plants_dir / "p1.json", encoding="utf-8"))["general"][
-        "sensor_entities"
-    ]
+    with open(plants_dir / "p1.json", encoding="utf-8") as file:
+        sensors = json.load(file)["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["a", "b"]
 
     ok = pm.detach_sensor("p1", "moisture_sensors", ["a"], plants_dir)
     assert ok
-    sensors = json.load(open(plants_dir / "p1.json", encoding="utf-8"))["general"][
-        "sensor_entities"
-    ]
+    with open(plants_dir / "p1.json", encoding="utf-8") as file:
+        sensors = json.load(file)["general"]["sensor_entities"]
     assert sensors["moisture_sensors"] == ["b"]

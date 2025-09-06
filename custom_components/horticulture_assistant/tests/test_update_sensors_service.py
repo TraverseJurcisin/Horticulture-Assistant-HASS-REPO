@@ -34,7 +34,8 @@ def test_update_service(tmp_path: Path):
 
     asyncio.run(update_sensors_service(hass, call))
 
-    updated = json.load(open(plants / "p1.json", encoding="utf-8"))
+    with open(plants / "p1.json", encoding="utf-8") as file:
+        updated = json.load(file)
     sensors = updated.get("general", {}).get("sensor_entities", {})
     assert sensors["moisture_sensors"] == ["new"]
 
