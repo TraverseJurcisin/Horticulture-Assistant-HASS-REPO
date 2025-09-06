@@ -7,6 +7,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
+from homeassistant import exceptions
 
 try:
     from pytest_homeassistant_custom_component.common import MockConfigEntry
@@ -160,7 +161,7 @@ async def test_replace_sensor_service_device_class_mismatch(hass):
 
     hass.states.async_set("sensor.old", 1)
     hass.states.async_set("sensor.bad", 2)
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(
             DOMAIN,
             "replace_sensor",
@@ -198,7 +199,7 @@ async def test_recalculate_and_run_recommendation_services(hass):
     ai = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
     local = hass.data[DOMAIN][entry.entry_id]["coordinator_local"]
 
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(DOMAIN, "recalculate_targets", {"plant_id": "p1"}, blocking=True)
 
     store.data.setdefault("plants", {})["p1"] = {}
@@ -240,7 +241,7 @@ async def test_recompute_service(hass, expected_lingering_timers):
     await hass.async_block_till_done()
     coord = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     coord.async_request_refresh = AsyncMock(wraps=coord.async_request_refresh)
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(DOMAIN, "recompute", {"profile_id": "bad"}, blocking=True)
     await hass.services.async_call(DOMAIN, "recompute", {"profile_id": "p1"}, blocking=True)
     await hass.services.async_call(DOMAIN, "recompute", {}, blocking=True)
@@ -341,7 +342,7 @@ async def test_duplicate_profile_service(hass):
     assert profiles[new_id]["sensors"] == {"temperature": "sensor.temp"}
     assert profiles[new_id]["thresholds"] == {"temp_min": 1}
 
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(
             DOMAIN,
             "duplicate_profile",
@@ -383,7 +384,7 @@ async def test_delete_profile_service(hass):
     assert "p1" not in entry.options.get("profiles", {})
     assert await async_get_profile(hass, "p1") is None
 
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(DOMAIN, "delete_profile", {"profile_id": "p1"}, blocking=True)
 
 
@@ -417,14 +418,14 @@ async def test_update_sensors_service(hass):
     )
     assert coord.async_request_refresh.called
     assert entry.options["profiles"]["p1"]["sensors"] == {"temperature": "sensor.temp"}
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(
             DOMAIN,
             "update_sensors",
             {"profile_id": "bad", "temperature": "sensor.temp"},
             blocking=True,
         )
-    with pytest.raises(vol.Invalid):
+    with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(
             DOMAIN,
             "update_sensors",
@@ -506,13 +507,13 @@ async def test_export_profile_service(hass, tmp_path):
         )
         data = json.loads((tmp_path / "one.json").read_text())
         assert data["plant_id"] == "p1"
-        with pytest.raises(ValueError):
-            await hass.services.async_call(
-                DOMAIN,
-                "export_profile",
-                {"profile_id": "bad", "path": "bad.json"},
-                blocking=True,
-            )
+    with pytest.raises(exceptions.HomeAssistantError):
+        await hass.services.async_call(
+            DOMAIN,
+            "export_profile",
+            {"profile_id": "bad", "path": "bad.json"},
+            blocking=True,
+        )
 
 
 async def test_import_profiles_service(hass, tmp_path):
