@@ -28,12 +28,6 @@ list_profiles:
   target:
     entity:
       domain: sensor
-  response:
-    description: Mapping of profile identifiers to their friendly names.
-    example:
-      profiles:
-        basil: Basil
-        mint: Mint
 
 refresh_species:
   name: Refresh Species
@@ -210,10 +204,6 @@ recommend_watering:
   target:
     entity:
       domain: plant
-  response:
-    description: Recommended watering duration in minutes.
-    example:
-      minutes: 5
 
 recalculate_targets:
   name: Recalculate Targets
