@@ -8,6 +8,6 @@ josepy>=1.13.0,<2.0.0
 numpy>=1.25
 pandas>=2.3
 types-PyYAML
-voluptuous>=0.13.1,<0.14
+voluptuous>=0.13.1
 jsonschema>=4.0
 requests_mock>=1.11.0
