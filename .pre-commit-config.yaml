@@ -9,6 +9,7 @@ repos:
         files: \.(json)$
       - id: check-yaml
         files: \.(yaml|yml)$
+        exclude: custom_components/horticulture_assistant/blueprints/automation/.*\.yaml
       - id: pretty-format-json
         files: ^custom_components/horticulture_assistant/data/.*\.json$
         args: ["--autofix", "--indent", "2", "--no-ensure-ascii"]
