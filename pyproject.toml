@@ -11,7 +11,6 @@ extend-exclude = [
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
-ignore = ["ANN101", "ANN102"]
 
 [tool.ruff.format]
 quote-style = "preserve"
