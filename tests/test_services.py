@@ -673,6 +673,26 @@ async def test_resolve_all_persists_every_profile(hass):
     assert prof2["variables"]["temp_c_min"]["value"] == 7
 
 
+async def test_list_profiles_service(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={"profiles": {"p1": {"name": "Plant 1"}, "p2": {"name": "Plant 2"}}},
+    )
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    result = await hass.services.async_call(
+        DOMAIN,
+        "list_profiles",
+        {},
+        blocking=True,
+        return_response=True,
+    )
+    assert result == {"profiles": {"p1": "Plant 1", "p2": "Plant 2"}}
+
+
 async def test_recommend_watering_service(hass):
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -712,3 +732,25 @@ async def test_recommend_watering_service(hass):
         return_response=True,
     )
     assert result["minutes"] >= 10
+
+
+async def test_services_unregistered_on_unload(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    assert hass.services.has_service(DOMAIN, "refresh")
+
+    await hca.async_unload_entry(hass, entry)
+    await hass.async_block_till_done()
+    assert not hass.services.has_service(DOMAIN, "refresh")
