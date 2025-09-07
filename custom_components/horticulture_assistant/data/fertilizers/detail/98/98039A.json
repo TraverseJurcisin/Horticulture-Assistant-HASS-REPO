@@ -1,106 +1,106 @@
 {
-  "commerce": {
-    "price_history": [],
-    "sku_list": []
-  },
-  "composition": {
-    "derived_from_raw": null,
-    "derived_from_tokens": null,
+  "schema_version": "2025-07-v1",
+  "product_id": "98039A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3990-0003)",
+    "product_name": "CHAMBERLIN AGRICULTURE FRUIT \"CA\"RE 0-0-0",
+    "company_info": {
+      "company": "MADAM BIO-GENETIX LLC",
+      "Mailing Address": "5138 Montiano Lane",
+      "Post Office Box": null,
+      "City": "Dublin",
+      "State": "CA",
+      "Postal Code": "94568",
+      "Telephone Number": "415 654-3128",
+      "Fax Number": null
+    },
     "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
       "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
+      "Soluble Potash (K2O)": null,
       "Calcium (Ca)": 17.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
       "Chlorine (Cl)": null,
       "Cobalt (Co)": null,
       "Copper (Cu)": null,
       "Iron (Fe)": null,
-      "Magnesium (Mg)": null,
       "Manganese (Mn)": null,
       "Molybdenum (Mo)": null,
       "Sodium (Na)": null,
-      "Soluble Potash (K2O)": null,
-      "Sulfur (S)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0600",
+      "Cadmium": "=0.0300",
+      "Cobalt": "=0.0600",
+      "Mercury": "<0.0100",
+      "Molybdenum": "=0.0600",
+      "Nickel": "=0.7900",
+      "Lead": "=1.0100",
+      "Selenium": "=2.5600",
+      "Zinc": "=4.4100"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
       "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 17.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
       "Zinc (Zn)": null
     },
     "heavy_metals": {
       "Arsenic": "=0.0600",
       "Cadmium": "=0.0300",
       "Cobalt": "=0.0600",
-      "Lead": "=1.0100",
       "Mercury": "<0.0100",
       "Molybdenum": "=0.0600",
       "Nickel": "=0.7900",
+      "Lead": "=1.0100",
       "Selenium": "=2.5600",
       "Zinc": "=4.4100"
-    }
-  },
-  "metadata": {
-    "detail_updated_at": "2025-07-25T11:15:37Z",
-    "first_seen": "2025-07-25",
-    "formulation": null,
-    "label_name": "CHAMBERLIN AGRICULTURE FRUIT \"CA\"RE 0-0-0",
-    "registrant": "MADAM BIO-GENETIX LLC",
-    "wsda_reg_no": "(#3990-0003)"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
   },
   "physicochemical": {
     "density_kg_per_l": null,
-    "ec_ms_cm": null,
     "ph": {
-      "max": null,
-      "min": null
-    }
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
   },
-  "product_id": "98039A",
-  "schema_version": "2025-07-v1",
-  "source_wsda_record": {
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null,
-      "Magnesium Carbonate (MgCO3)": null
-    },
-    "company_info": {
-      "City": "Dublin",
-      "Fax Number": null,
-      "Mailing Address": "5138 Montiano Lane",
-      "Post Office Box": null,
-      "Postal Code": "94568",
-      "State": "CA",
-      "Telephone Number": "415 654-3128",
-      "company": "MADAM BIO-GENETIX LLC"
-    },
-    "guaranteed_analysis": {
-      "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
-      "Calcium (Ca)": 17.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Magnesium (Mg)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Soluble Potash (K2O)": null,
-      "Sulfur (S)": null,
-      "Total Nitrogen (N)": null,
-      "Zinc (Zn)": null
-    },
-    "micronutrient_fertilizer": "N",
-    "product_name": "CHAMBERLIN AGRICULTURE FRUIT \"CA\"RE 0-0-0",
-    "reported_metals": {
-      "Arsenic": "=0.0600",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.0600",
-      "Lead": "=1.0100",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=0.0600",
-      "Nickel": "=0.7900",
-      "Selenium": "=2.5600",
-      "Zinc": "=4.4100"
-    },
-    "waste_derived_fertilizer": "N",
-    "wsda_product_number": "(#3990-0003)"
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "MADAM BIO-GENETIX LLC",
+    "label_name": "CHAMBERLIN AGRICULTURE FRUIT \"CA\"RE 0-0-0",
+    "wsda_reg_no": "(#3990-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
   }
 }
