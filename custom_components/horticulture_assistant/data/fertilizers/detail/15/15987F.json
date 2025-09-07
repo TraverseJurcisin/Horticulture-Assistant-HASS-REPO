@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"15987F","source_wsda_record":{"wsda_product_number":"(#1855-0001)","product_name":"SPI BOILER ASH 0-0.3-0.4","company_info":{"company":"SIERRA PACIFIC INDUSTRIES","Mailing Address":"14353 McFarland Rd","Post Office Box":null,"City":"Mount Vernon","State":"WA","Postal Code":"98273-8232","Telephone Number":"360 424-7619","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.4,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.2,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":0.4,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.7500","Cadmium":"=1.6400","Cobalt":"=6.1700","Mercury":"=0.0916","Molybdenum":"=1.4500","Nickel":"=26.0000","Lead":"=15.1000","Selenium":"=0.2360","Zinc":"=204.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.4,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.2,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":0.4,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.7500","Cadmium":"=1.6400","Cobalt":"=6.1700","Mercury":"=0.0916","Molybdenum":"=1.4500","Nickel":"=26.0000","Lead":"=15.1000","Selenium":"=0.2360","Zinc":"=204.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIERRA PACIFIC INDUSTRIES","label_name":"SPI BOILER ASH 0-0.3-0.4","wsda_reg_no":"(#1855-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "15987F",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1855-0001)",
+    "product_name": "SPI BOILER ASH 0-0.3-0.4",
+    "company_info": {
+      "company": "SIERRA PACIFIC INDUSTRIES",
+      "Mailing Address": "14353 McFarland Rd",
+      "Post Office Box": null,
+      "City": "Mount Vernon",
+      "State": "WA",
+      "Postal Code": "98273-8232",
+      "Telephone Number": "360 424-7619",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 0.3,
+      "Soluble Potash (K2O)": 0.4,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.2,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": 0.4,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=5.7500",
+      "Cadmium": "=1.6400",
+      "Cobalt": "=6.1700",
+      "Mercury": "=0.0916",
+      "Molybdenum": "=1.4500",
+      "Nickel": "=26.0000",
+      "Lead": "=15.1000",
+      "Selenium": "=0.2360",
+      "Zinc": "=204.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 0.3,
+      "Soluble Potash (K2O)": 0.4,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.2,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": 0.4,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.7500",
+      "Cadmium": "=1.6400",
+      "Cobalt": "=6.1700",
+      "Mercury": "=0.0916",
+      "Molybdenum": "=1.4500",
+      "Nickel": "=26.0000",
+      "Lead": "=15.1000",
+      "Selenium": "=0.2360",
+      "Zinc": "=204.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SIERRA PACIFIC INDUSTRIES",
+    "label_name": "SPI BOILER ASH 0-0.3-0.4",
+    "wsda_reg_no": "(#1855-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

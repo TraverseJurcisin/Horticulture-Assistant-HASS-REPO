@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"18EAE4","source_wsda_record":{"wsda_product_number":"(#2230-0175)","product_name":"ROCKET SEEDS MOLY SHINE 0-5-0","company_info":{"company":"KOCH AGRONOMIC SERVICES LLC","Mailing Address":"4111 E 37th St N","Post Office Box":"Attn: H2A","City":"Wichita","State":"KS","Postal Code":"67220-3203","Telephone Number":"316 828-6706","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":3.0,"Molybdenum (Mo)":2.5,"Sodium (Na)":null,"Zinc (Zn)":10.5},"reported_metals":{"Arsenic":"=18.0000","Cadmium":"=1.2000","Cobalt":"=137.0000","Mercury":"=0.0100","Molybdenum":"=38500.0000","Nickel":"=12.0000","Lead":"=11.0000","Selenium":"=0.6000","Zinc":"=189000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":3.0,"Molybdenum (Mo)":2.5,"Sodium (Na)":null,"Zinc (Zn)":10.5},"heavy_metals":{"Arsenic":"=18.0000","Cadmium":"=1.2000","Cobalt":"=137.0000","Mercury":"=0.0100","Molybdenum":"=38500.0000","Nickel":"=12.0000","Lead":"=11.0000","Selenium":"=0.6000","Zinc":"=189000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KOCH AGRONOMIC SERVICES LLC","label_name":"ROCKET SEEDS MOLY SHINE 0-5-0","wsda_reg_no":"(#2230-0175)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "18EAE4",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2230-0175)",
+    "product_name": "ROCKET SEEDS MOLY SHINE 0-5-0",
+    "company_info": {
+      "company": "KOCH AGRONOMIC SERVICES LLC",
+      "Mailing Address": "4111 E 37th St N",
+      "Post Office Box": "Attn: H2A",
+      "City": "Wichita",
+      "State": "KS",
+      "Postal Code": "67220-3203",
+      "Telephone Number": "316 828-6706",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 3.0,
+      "Molybdenum (Mo)": 2.5,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.5
+    },
+    "reported_metals": {
+      "Arsenic": "=18.0000",
+      "Cadmium": "=1.2000",
+      "Cobalt": "=137.0000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=38500.0000",
+      "Nickel": "=12.0000",
+      "Lead": "=11.0000",
+      "Selenium": "=0.6000",
+      "Zinc": "=189000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 3.0,
+      "Molybdenum (Mo)": 2.5,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.5
+    },
+    "heavy_metals": {
+      "Arsenic": "=18.0000",
+      "Cadmium": "=1.2000",
+      "Cobalt": "=137.0000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=38500.0000",
+      "Nickel": "=12.0000",
+      "Lead": "=11.0000",
+      "Selenium": "=0.6000",
+      "Zinc": "=189000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "KOCH AGRONOMIC SERVICES LLC",
+    "label_name": "ROCKET SEEDS MOLY SHINE 0-5-0",
+    "wsda_reg_no": "(#2230-0175)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

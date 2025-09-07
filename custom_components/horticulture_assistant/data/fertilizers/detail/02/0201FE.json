@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0201FE","source_wsda_record":{"wsda_product_number":"(#3132-0035)","product_name":"VALLEY AGRONOMICS FERTILIZER 0-0-21 K-MAG 0-0-21","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":10.5,"Sulfur (S)":21.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3350","Cadmium":"<0.0686","Cobalt":"<0.0680","Mercury":"<0.0050","Molybdenum":"<0.3430","Nickel":"<0.3420","Lead":"<0.6800","Selenium":"<0.6890","Zinc":"=0.3350"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":10.5,"Sulfur (S)":21.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3350","Cadmium":"<0.0686","Cobalt":"<0.0680","Mercury":"<0.0050","Molybdenum":"<0.3430","Nickel":"<0.3420","Lead":"<0.6800","Selenium":"<0.6890","Zinc":"=0.3350"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 0-0-21 K-MAG 0-0-21","wsda_reg_no":"(#3132-0035)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0201FE",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3132-0035)",
+    "product_name": "VALLEY AGRONOMICS FERTILIZER 0-0-21 K-MAG 0-0-21",
+    "company_info": {
+      "company": "VALLEY AGRONOMICS LLC",
+      "Mailing Address": "PO Box 365",
+      "Post Office Box": null,
+      "City": "Rupert",
+      "State": "ID",
+      "Postal Code": "83350",
+      "Telephone Number": "503 845-8125",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 10.5,
+      "Sulfur (S)": 21.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.3350",
+      "Cadmium": "<0.0686",
+      "Cobalt": "<0.0680",
+      "Mercury": "<0.0050",
+      "Molybdenum": "<0.3430",
+      "Nickel": "<0.3420",
+      "Lead": "<0.6800",
+      "Selenium": "<0.6890",
+      "Zinc": "=0.3350"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 10.5,
+      "Sulfur (S)": 21.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.3350",
+      "Cadmium": "<0.0686",
+      "Cobalt": "<0.0680",
+      "Mercury": "<0.0050",
+      "Molybdenum": "<0.3430",
+      "Nickel": "<0.3420",
+      "Lead": "<0.6800",
+      "Selenium": "<0.6890",
+      "Zinc": "=0.3350"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 0-0-21 K-MAG 0-0-21",
+    "wsda_reg_no": "(#3132-0035)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

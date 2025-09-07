@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0EA473","source_wsda_record":{"wsda_product_number":"(#2214-0009)","product_name":"GREEN DIAMOND MYKOS PRO 30 MYCORRHIZAL INOCULANT 6-2-4","company_info":{"company":"REFORESTATION TECHNOLOGIES INTERNAT","Mailing Address":"5355 Monterey Frontage Rd","Post Office Box":null,"City":"Gilroy","State":"CA","Postal Code":"95020","Telephone Number":"408 848-9604","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3500","Cadmium":"=0.9600","Cobalt":"=1.3000","Mercury":"=0.0500","Molybdenum":"=5.4000","Nickel":"=14.9000","Lead":"=4.8000","Selenium":"=2.9000","Zinc":"=55.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3500","Cadmium":"=0.9600","Cobalt":"=1.3000","Mercury":"=0.0500","Molybdenum":"=5.4000","Nickel":"=14.9000","Lead":"=4.8000","Selenium":"=2.9000","Zinc":"=55.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REFORESTATION TECHNOLOGIES INTERNAT","label_name":"GREEN DIAMOND MYKOS PRO 30 MYCORRHIZAL INOCULANT 6-2-4","wsda_reg_no":"(#2214-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0EA473",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2214-0009)",
+    "product_name": "GREEN DIAMOND MYKOS PRO 30 MYCORRHIZAL INOCULANT 6-2-4",
+    "company_info": {
+      "company": "REFORESTATION TECHNOLOGIES INTERNAT",
+      "Mailing Address": "5355 Monterey Frontage Rd",
+      "Post Office Box": null,
+      "City": "Gilroy",
+      "State": "CA",
+      "Postal Code": "95020",
+      "Telephone Number": "408 848-9604",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.3500",
+      "Cadmium": "=0.9600",
+      "Cobalt": "=1.3000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=5.4000",
+      "Nickel": "=14.9000",
+      "Lead": "=4.8000",
+      "Selenium": "=2.9000",
+      "Zinc": "=55.6000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.3500",
+      "Cadmium": "=0.9600",
+      "Cobalt": "=1.3000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=5.4000",
+      "Nickel": "=14.9000",
+      "Lead": "=4.8000",
+      "Selenium": "=2.9000",
+      "Zinc": "=55.6000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "REFORESTATION TECHNOLOGIES INTERNAT",
+    "label_name": "GREEN DIAMOND MYKOS PRO 30 MYCORRHIZAL INOCULANT 6-2-4",
+    "wsda_reg_no": "(#2214-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

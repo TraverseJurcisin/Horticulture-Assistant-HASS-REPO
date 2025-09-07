@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"033554","source_wsda_record":{"wsda_product_number":"(#1546-0001)","product_name":"E.B. STONE ORGANICS ALL PURPOSE PLANT FOOD 5-5-5","company_info":{"company":"E B STONE & SON INC","Mailing Address":"P O Box 550","Post Office Box":null,"City":"Suisun","State":"CA","Postal Code":"94585","Telephone Number":"707 426-2500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1000","Cadmium":"<0.0100","Cobalt":"=1.3000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=9.4000","Lead":"=7.0000","Selenium":"<5.5000","Zinc":"=95.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1000","Cadmium":"<0.0100","Cobalt":"=1.3000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=9.4000","Lead":"=7.0000","Selenium":"<5.5000","Zinc":"=95.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"E B STONE & SON INC","label_name":"E.B. STONE ORGANICS ALL PURPOSE PLANT FOOD 5-5-5","wsda_reg_no":"(#1546-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "033554",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1546-0001)",
+    "product_name": "E.B. STONE ORGANICS ALL PURPOSE PLANT FOOD 5-5-5",
+    "company_info": {
+      "company": "E B STONE & SON INC",
+      "Mailing Address": "P O Box 550",
+      "Post Office Box": null,
+      "City": "Suisun",
+      "State": "CA",
+      "Postal Code": "94585",
+      "Telephone Number": "707 426-2500",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.1000",
+      "Cadmium": "<0.0100",
+      "Cobalt": "=1.3000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=9.4000",
+      "Lead": "=7.0000",
+      "Selenium": "<5.5000",
+      "Zinc": "=95.5000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.1000",
+      "Cadmium": "<0.0100",
+      "Cobalt": "=1.3000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=9.4000",
+      "Lead": "=7.0000",
+      "Selenium": "<5.5000",
+      "Zinc": "=95.5000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "E B STONE & SON INC",
+    "label_name": "E.B. STONE ORGANICS ALL PURPOSE PLANT FOOD 5-5-5",
+    "wsda_reg_no": "(#1546-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0E1C7C","source_wsda_record":{"wsda_product_number":"(#3031-0025)","product_name":"HGS BIOSCIENCE HUMIK ONE 0-0-10","company_info":{"company":"HUMIC GROWTH SOLUTIONS INC","Mailing Address":"709 Eastport Rd","Post Office Box":null,"City":"Jacksonville","State":"FL","Postal Code":"32218","Telephone Number":"904 329-1012","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=2.8800","Mercury":"<0.0500","Molybdenum":"=1.6000","Nickel":"=8.3000","Lead":"=6.4000","Selenium":"<5.0000","Zinc":"=136.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=2.8800","Mercury":"<0.0500","Molybdenum":"=1.6000","Nickel":"=8.3000","Lead":"=6.4000","Selenium":"<5.0000","Zinc":"=136.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HUMIC GROWTH SOLUTIONS INC","label_name":"HGS BIOSCIENCE HUMIK ONE 0-0-10","wsda_reg_no":"(#3031-0025)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0E1C7C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3031-0025)",
+    "product_name": "HGS BIOSCIENCE HUMIK ONE 0-0-10",
+    "company_info": {
+      "company": "HUMIC GROWTH SOLUTIONS INC",
+      "Mailing Address": "709 Eastport Rd",
+      "Post Office Box": null,
+      "City": "Jacksonville",
+      "State": "FL",
+      "Postal Code": "32218",
+      "Telephone Number": "904 329-1012",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.8800",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.6000",
+      "Nickel": "=8.3000",
+      "Lead": "=6.4000",
+      "Selenium": "<5.0000",
+      "Zinc": "=136.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.8800",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.6000",
+      "Nickel": "=8.3000",
+      "Lead": "=6.4000",
+      "Selenium": "<5.0000",
+      "Zinc": "=136.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HUMIC GROWTH SOLUTIONS INC",
+    "label_name": "HGS BIOSCIENCE HUMIK ONE 0-0-10",
+    "wsda_reg_no": "(#3031-0025)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

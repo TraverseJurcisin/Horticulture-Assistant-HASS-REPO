@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0E12AC","source_wsda_record":{"wsda_product_number":"(#4093-0003)","product_name":"BURPEE ENHANCED ORGANIC TOMATO + EDIBLES PLANT FOOD 8-4-4","company_info":{"company":"VOGEL SEED & FERTILIZER, LLC","Mailing Address":"1891 Spring Valley Road","Post Office Box":null,"City":"Jackson","State":"WI","Postal Code":"53037","Telephone Number":"262 677-2273","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.5600","Cadmium":"<0.0526","Cobalt":"=0.8660","Mercury":"=0.0236","Molybdenum":"=3.9800","Nickel":"=4.3300","Lead":"=6.2600","Selenium":"=1.2900","Zinc":"=314.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.5600","Cadmium":"<0.0526","Cobalt":"=0.8660","Mercury":"=0.0236","Molybdenum":"=3.9800","Nickel":"=4.3300","Lead":"=6.2600","Selenium":"=1.2900","Zinc":"=314.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOGEL SEED & FERTILIZER, LLC","label_name":"BURPEE ENHANCED ORGANIC TOMATO + EDIBLES PLANT FOOD 8-4-4","wsda_reg_no":"(#4093-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0E12AC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4093-0003)",
+    "product_name": "BURPEE ENHANCED ORGANIC TOMATO + EDIBLES PLANT FOOD 8-4-4",
+    "company_info": {
+      "company": "VOGEL SEED & FERTILIZER, LLC",
+      "Mailing Address": "1891 Spring Valley Road",
+      "Post Office Box": null,
+      "City": "Jackson",
+      "State": "WI",
+      "Postal Code": "53037",
+      "Telephone Number": "262 677-2273",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.5600",
+      "Cadmium": "<0.0526",
+      "Cobalt": "=0.8660",
+      "Mercury": "=0.0236",
+      "Molybdenum": "=3.9800",
+      "Nickel": "=4.3300",
+      "Lead": "=6.2600",
+      "Selenium": "=1.2900",
+      "Zinc": "=314.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.5600",
+      "Cadmium": "<0.0526",
+      "Cobalt": "=0.8660",
+      "Mercury": "=0.0236",
+      "Molybdenum": "=3.9800",
+      "Nickel": "=4.3300",
+      "Lead": "=6.2600",
+      "Selenium": "=1.2900",
+      "Zinc": "=314.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VOGEL SEED & FERTILIZER, LLC",
+    "label_name": "BURPEE ENHANCED ORGANIC TOMATO + EDIBLES PLANT FOOD 8-4-4",
+    "wsda_reg_no": "(#4093-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

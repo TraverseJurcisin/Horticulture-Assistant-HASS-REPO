@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0A532A","source_wsda_record":{"wsda_product_number":"(#1877-0133)","product_name":"TRUE ORGANIC VEGETABLE & HERB POTTING MIX 0.3-0.24-0.3","company_info":{"company":"TRUE ORGANIC PRODUCTS INC","Mailing Address":"PO Box 7192","Post Office Box":null,"City":"Spreckels","State":"CA","Postal Code":"93962","Telephone Number":"831 375-4796","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":0.24,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2600","Cadmium":"=0.2330","Cobalt":"=1.5100","Mercury":"=0.4270","Molybdenum":"=0.5820","Nickel":"=2.4700","Lead":"=0.7800","Selenium":"=1.1700","Zinc":"=20.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":0.24,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2600","Cadmium":"=0.2330","Cobalt":"=1.5100","Mercury":"=0.4270","Molybdenum":"=0.5820","Nickel":"=2.4700","Lead":"=0.7800","Selenium":"=1.1700","Zinc":"=20.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TRUE ORGANIC PRODUCTS INC","label_name":"TRUE ORGANIC VEGETABLE & HERB POTTING MIX 0.3-0.24-0.3","wsda_reg_no":"(#1877-0133)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0A532A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1877-0133)",
+    "product_name": "TRUE ORGANIC VEGETABLE & HERB POTTING MIX 0.3-0.24-0.3",
+    "company_info": {
+      "company": "TRUE ORGANIC PRODUCTS INC",
+      "Mailing Address": "PO Box 7192",
+      "Post Office Box": null,
+      "City": "Spreckels",
+      "State": "CA",
+      "Postal Code": "93962",
+      "Telephone Number": "831 375-4796",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.3,
+      "Available Phosphoric Acid (P2O5)": 0.24,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.2600",
+      "Cadmium": "=0.2330",
+      "Cobalt": "=1.5100",
+      "Mercury": "=0.4270",
+      "Molybdenum": "=0.5820",
+      "Nickel": "=2.4700",
+      "Lead": "=0.7800",
+      "Selenium": "=1.1700",
+      "Zinc": "=20.6000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.3,
+      "Available Phosphoric Acid (P2O5)": 0.24,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.2600",
+      "Cadmium": "=0.2330",
+      "Cobalt": "=1.5100",
+      "Mercury": "=0.4270",
+      "Molybdenum": "=0.5820",
+      "Nickel": "=2.4700",
+      "Lead": "=0.7800",
+      "Selenium": "=1.1700",
+      "Zinc": "=20.6000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TRUE ORGANIC PRODUCTS INC",
+    "label_name": "TRUE ORGANIC VEGETABLE & HERB POTTING MIX 0.3-0.24-0.3",
+    "wsda_reg_no": "(#1877-0133)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

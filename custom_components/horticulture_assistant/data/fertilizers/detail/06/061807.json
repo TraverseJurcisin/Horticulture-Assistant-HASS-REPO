@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"061807","source_wsda_record":{"wsda_product_number":"(#1589-0073)","product_name":"POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14","company_info":{"company":"TWO RIVERS TERMINAL - PASCO WA - GL","Mailing Address":"PO Box 2327","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99302","Telephone Number":"509 547-7776","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.9,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=24.0000","Cadmium":"=1.9200","Cobalt":"=4.8100","Mercury":"=0.0568","Molybdenum":"=9.6200","Nickel":"=14.4000","Lead":"=14.4000","Selenium":"=24.0000","Zinc":"=19.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.9,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=24.0000","Cadmium":"=1.9200","Cobalt":"=4.8100","Mercury":"=0.0568","Molybdenum":"=9.6200","Nickel":"=14.4000","Lead":"=14.4000","Selenium":"=24.0000","Zinc":"=19.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TWO RIVERS TERMINAL - PASCO WA - GL","label_name":"POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14","wsda_reg_no":"(#1589-0073)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "061807",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1589-0073)",
+    "product_name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
+    "company_info": {
+      "company": "TWO RIVERS TERMINAL - PASCO WA - GL",
+      "Mailing Address": "PO Box 2327",
+      "Post Office Box": null,
+      "City": "Pasco",
+      "State": "WA",
+      "Postal Code": "99302",
+      "Telephone Number": "509 547-7776",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 11.9,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=24.0000",
+      "Cadmium": "=1.9200",
+      "Cobalt": "=4.8100",
+      "Mercury": "=0.0568",
+      "Molybdenum": "=9.6200",
+      "Nickel": "=14.4000",
+      "Lead": "=14.4000",
+      "Selenium": "=24.0000",
+      "Zinc": "=19.2000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 11.9,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=24.0000",
+      "Cadmium": "=1.9200",
+      "Cobalt": "=4.8100",
+      "Mercury": "=0.0568",
+      "Molybdenum": "=9.6200",
+      "Nickel": "=14.4000",
+      "Lead": "=14.4000",
+      "Selenium": "=24.0000",
+      "Zinc": "=19.2000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "label_name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
+    "wsda_reg_no": "(#1589-0073)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

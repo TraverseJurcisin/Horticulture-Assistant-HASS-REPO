@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"17CA90","source_wsda_record":{"wsda_product_number":"(#1168-0092)","product_name":"EARTH JUICE PRIMAL HARVEST 0-8-0","company_info":{"company":"OGM","Mailing Address":"PO Box 3442","Post Office Box":null,"City":"Chico","State":"CA","Postal Code":"95973","Telephone Number":"530 961-4659","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=11.3600","Cadmium":"=4.0500","Cobalt":"=2.3000","Mercury":"=0.0300","Molybdenum":"=2.4000","Nickel":"=10.8000","Lead":"=16.5000","Selenium":"=0.9000","Zinc":"=112.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=11.3600","Cadmium":"=4.0500","Cobalt":"=2.3000","Mercury":"=0.0300","Molybdenum":"=2.4000","Nickel":"=10.8000","Lead":"=16.5000","Selenium":"=0.9000","Zinc":"=112.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"OGM","label_name":"EARTH JUICE PRIMAL HARVEST 0-8-0","wsda_reg_no":"(#1168-0092)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "17CA90",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1168-0092)",
+    "product_name": "EARTH JUICE PRIMAL HARVEST 0-8-0",
+    "company_info": {
+      "company": "OGM",
+      "Mailing Address": "PO Box 3442",
+      "Post Office Box": null,
+      "City": "Chico",
+      "State": "CA",
+      "Postal Code": "95973",
+      "Telephone Number": "530 961-4659",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=11.3600",
+      "Cadmium": "=4.0500",
+      "Cobalt": "=2.3000",
+      "Mercury": "=0.0300",
+      "Molybdenum": "=2.4000",
+      "Nickel": "=10.8000",
+      "Lead": "=16.5000",
+      "Selenium": "=0.9000",
+      "Zinc": "=112.1000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=11.3600",
+      "Cadmium": "=4.0500",
+      "Cobalt": "=2.3000",
+      "Mercury": "=0.0300",
+      "Molybdenum": "=2.4000",
+      "Nickel": "=10.8000",
+      "Lead": "=16.5000",
+      "Selenium": "=0.9000",
+      "Zinc": "=112.1000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "OGM",
+    "label_name": "EARTH JUICE PRIMAL HARVEST 0-8-0",
+    "wsda_reg_no": "(#1168-0092)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
