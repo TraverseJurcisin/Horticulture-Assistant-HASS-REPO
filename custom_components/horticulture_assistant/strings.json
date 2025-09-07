@@ -3,45 +3,19 @@
   "config": {
     "step": {
       "user": {
-        "title": "Set up Horticulture Assistant",
-        "description": "Create or connect a plant profile."
+        "title": "Add Horticulture Assistant",
+        "description": "Create and manage plant profiles.",
+        "data": {
+          "create_initial_profile": "Create an initial plant profile"
+        }
       }
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Profile options",
-        "data": {
-          "profile_id": "Profile",
-          "copy_from_profile_id": "Copy settings from",
-          "sensors": "Linked sensors"
-        }
-      }
-    }
-  },
-  "entity": {
-    "sensor": {
-      "status": {
-        "name": "Status"
-      },
-      "recommendation": {
-        "name": "Recommendation"
-      },
-      "ppfd": {
-        "name": "PPFD"
-      },
-      "dli": {
-        "name": "DLI"
-      },
-      "vpd": {
-        "name": "VPD"
-      },
-      "dew_point": {
-        "name": "Dew Point"
-      },
-      "moisture": {
-        "name": "Moisture"
+        "title": "Horticulture Assistant options",
+        "description": "Manage plant profiles and defaults."
       }
     }
   }

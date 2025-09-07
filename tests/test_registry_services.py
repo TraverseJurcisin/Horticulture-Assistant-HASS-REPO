@@ -39,9 +39,7 @@ async def _setup_entry_with_profile(hass, tmp_path):
 async def test_replace_sensor_updates_registry(hass, tmp_path):
     entry = await _setup_entry_with_profile(hass, tmp_path)
     reg = er.async_get(hass)
-    reg.async_get_or_create(
-        "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
-    )
+    reg.async_get_or_create("sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture")
     reg.async_get_or_create(
         "sensor",
         "test",
@@ -59,7 +57,7 @@ async def test_replace_sensor_updates_registry(hass, tmp_path):
         blocking=True,
     )
     await hass.async_block_till_done()
-    registry = hass.data[DOMAIN]["profile_registry"]
+    registry = hass.data[DOMAIN]["registry"]
     prof = registry.get("p1")
     assert prof.general["sensors"]["moisture"] == "sensor.good"
     assert entry.options["profiles"]["p1"]["sensors"]["moisture"] == "sensor.good"
@@ -116,9 +114,7 @@ async def test_replace_sensor_missing_entity(hass, tmp_path):
 async def test_replace_sensor_device_class_mismatch(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     reg = er.async_get(hass)
-    reg.async_get_or_create(
-        "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
-    )
+    reg.async_get_or_create("sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture")
     reg.async_get_or_create(
         "sensor",
         "test",
@@ -139,9 +135,7 @@ async def test_replace_sensor_device_class_mismatch(hass, tmp_path):
 async def test_refresh_species_unknown_profile(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     with pytest.raises(ValueError):
-        await hass.services.async_call(
-            DOMAIN, "refresh_species", {"profile_id": "unknown"}, blocking=True
-        )
+        await hass.services.async_call(DOMAIN, "refresh_species", {"profile_id": "unknown"}, blocking=True)
 
 
 async def test_export_profiles_creates_parent_dir(hass, tmp_path):
@@ -230,12 +224,8 @@ async def test_replace_sensor_migrates_legacy_options(hass, tmp_path):
         await hca.async_setup_entry(hass, entry)
 
     reg = er.async_get(hass)
-    reg.async_get_or_create(
-        "sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture"
-    )
-    reg.async_get_or_create(
-        "sensor", "test", "sensor_new", suggested_object_id="new", original_device_class="moisture"
-    )
+    reg.async_get_or_create("sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture")
+    reg.async_get_or_create("sensor", "test", "sensor_new", suggested_object_id="new", original_device_class="moisture")
     hass.states.async_set("sensor.old", 1)
     hass.states.async_set("sensor.new", 2)
     pid = next(iter(entry.options["profiles"].keys()))

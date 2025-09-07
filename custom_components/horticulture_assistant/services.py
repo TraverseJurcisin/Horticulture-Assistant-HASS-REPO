@@ -8,6 +8,7 @@ becoming monolithic.
 
 from __future__ import annotations
 
+import contextlib
 import logging
 from typing import TYPE_CHECKING, Any, Final
 
@@ -20,17 +21,20 @@ if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
     from homeassistant.helpers import config_validation as cv
     from homeassistant.helpers import entity_registry as er
-    from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+    from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 else:  # pragma: no cover - fallback for tests without Home Assistant
     HomeAssistant = Any
     ServiceCall = Any
     ServiceResponse = Any
     er = Any
     DataUpdateCoordinator = Any
+    UpdateFailed = Any
     cv = Any
 
 from .const import CONF_PROFILES, DOMAIN
+from .irrigation_bridge import async_apply_irrigation
 from .profile_registry import ProfileRegistry
+from .storage import LocalStore
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,6 +49,7 @@ MEASUREMENT_CLASSES: Final = {
 
 # Service name constants for profile management.
 SERVICE_REPLACE_SENSOR = "replace_sensor"
+SERVICE_LINK_SENSOR = "link_sensor"
 SERVICE_REFRESH_SPECIES = "refresh_species"
 SERVICE_CREATE_PROFILE = "create_profile"
 SERVICE_DUPLICATE_PROFILE = "duplicate_profile"
@@ -58,9 +63,17 @@ SERVICE_REFRESH = "refresh"
 SERVICE_RECOMPUTE = "recompute"
 SERVICE_RESET_DLI = "reset_dli"
 SERVICE_RECOMMEND_WATERING = "recommend_watering"
+SERVICE_RECALCULATE_TARGETS = "recalculate_targets"
+SERVICE_RUN_RECOMMENDATION = "run_recommendation"
+SERVICE_APPLY_IRRIGATION_PLAN = "apply_irrigation_plan"
+SERVICE_RESOLVE_PROFILE = "resolve_profile"
+SERVICE_RESOLVE_ALL = "resolve_all"
+SERVICE_GENERATE_PROFILE = "generate_profile"
+SERVICE_CLEAR_CACHES = "clear_caches"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
+    SERVICE_LINK_SENSOR,
     SERVICE_REFRESH_SPECIES,
     SERVICE_CREATE_PROFILE,
     SERVICE_DUPLICATE_PROFILE,
@@ -74,6 +87,13 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_RECOMPUTE,
     SERVICE_RESET_DLI,
     SERVICE_RECOMMEND_WATERING,
+    SERVICE_RECALCULATE_TARGETS,
+    SERVICE_RUN_RECOMMENDATION,
+    SERVICE_APPLY_IRRIGATION_PLAN,
+    SERVICE_RESOLVE_PROFILE,
+    SERVICE_RESOLVE_ALL,
+    SERVICE_GENERATE_PROFILE,
+    SERVICE_CLEAR_CACHES,
 )
 
 
@@ -84,6 +104,7 @@ async def async_register_all(
     local_coord: DataUpdateCoordinator | None,
     profile_coord: DataUpdateCoordinator | None,
     registry: ProfileRegistry,
+    store: LocalStore,
 ) -> None:
     """Register high level profile services."""
 
@@ -109,13 +130,44 @@ async def async_register_all(
             actual = reg_entry.device_class or reg_entry.original_device_class
         if expected and (reg_entry is None or actual != expected.value):
             raise HomeAssistantError("device class mismatch")
+        try:
+            await registry.async_replace_sensor(profile_id, measurement, entity_id)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
+        await _refresh_profile()
 
-        await registry.async_replace_sensor(profile_id, measurement, entity_id)
+    async def _srv_link_sensor(call) -> None:
+        profile_id: str = call.data["profile_id"]
+        role: str = call.data["role"]
+        entity_id: str = call.data["entity_id"]
+
+        measurement = "moisture" if role == "soil_moisture" else role
+        if measurement not in MEASUREMENT_CLASSES:
+            raise HomeAssistantError(f"unknown role {role}")
+        if hass.states.get(entity_id) is None:
+            raise HomeAssistantError(f"missing entity {entity_id}")
+
+        reg = er.async_get(hass)
+        reg_entry = reg.async_get(entity_id)
+        expected = MEASUREMENT_CLASSES[measurement]
+        actual = None
+        if reg_entry:
+            actual = reg_entry.device_class or reg_entry.original_device_class
+        if expected and (reg_entry is None or actual != expected.value):
+            raise HomeAssistantError("device class mismatch")
+
+        try:
+            await registry.async_replace_sensor(profile_id, measurement, entity_id)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_refresh_species(call) -> None:
         profile_id: str = call.data["profile_id"]
-        await registry.async_refresh_species(profile_id)
+        try:
+            await registry.async_refresh_species(profile_id)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
 
     async def _srv_export_profiles(call) -> None:
         path = call.data["path"]
@@ -124,7 +176,10 @@ async def async_register_all(
 
     async def _srv_create_profile(call) -> None:
         name: str = call.data["name"]
-        await registry.async_add_profile(name)
+        try:
+            await registry.async_add_profile(name)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
         await _refresh_profile()
 
     async def _srv_duplicate_profile(call) -> None:
@@ -224,6 +279,88 @@ async def async_register_all(
             minutes += 5
         return {"minutes": minutes}
 
+    async def _srv_recalculate_targets(call) -> None:
+        plant_id = call.data["plant_id"]
+        assert store.data is not None
+        plants = store.data.setdefault("plants", {})
+        if plant_id not in plants:
+            raise HomeAssistantError(f"unknown plant {plant_id}")
+        if local_coord:
+            await local_coord.async_request_refresh()
+
+    async def _srv_run_recommendation(call) -> None:
+        plant_id = call.data["plant_id"]
+        assert store.data is not None
+        plants = store.data.setdefault("plants", {})
+        if plant_id not in plants:
+            raise HomeAssistantError(f"unknown plant {plant_id}")
+        prev = ai_coord.data.get("recommendation") if ai_coord else None
+        if ai_coord:
+            with contextlib.suppress(UpdateFailed):
+                await ai_coord.async_request_refresh()
+        if call.data.get("approve") and ai_coord:
+            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation", prev)
+            await store.save()
+
+    async def _srv_apply_irrigation(call) -> None:
+        profile_id = call.data["profile_id"]
+        provider = call.data.get("provider", "auto")
+        zone = call.data.get("zone")
+        reg = er.async_get(hass)
+        unique_id = f"{DOMAIN}_{entry.entry_id}_{profile_id}_irrigation_rec"
+        rec_entity = reg.async_get_entity_id("sensor", DOMAIN, unique_id)
+        seconds: float | None = None
+        if rec_entity:
+            state = hass.states.get(rec_entity)
+            try:
+                seconds = float(state.state)
+            except (TypeError, ValueError):
+                seconds = None
+        if seconds is None:
+            raise HomeAssistantError("no recommendation available")
+
+        if provider == "auto":
+            if hass.services.has_service("irrigation_unlimited", "run_zone"):
+                provider = "irrigation_unlimited"
+            elif hass.services.has_service("opensprinkler", "run_once"):
+                provider = "opensprinkler"
+            else:
+                raise HomeAssistantError("no irrigation provider")
+
+        await async_apply_irrigation(hass, provider, zone, seconds)
+
+    async def _srv_resolve_profile(call) -> None:
+        pid = call.data["profile_id"]
+        from .profile.store import async_save_profile_from_options
+        from .resolver import PreferenceResolver
+
+        await PreferenceResolver(hass).resolve_profile(entry, pid)
+        await async_save_profile_from_options(hass, entry, pid)
+
+    async def _srv_resolve_all(call) -> None:
+        from .profile.store import async_save_profile_from_options
+        from .resolver import PreferenceResolver
+
+        resolver = PreferenceResolver(hass)
+        for pid in entry.options.get(CONF_PROFILES, {}):
+            await resolver.resolve_profile(entry, pid)
+            await async_save_profile_from_options(hass, entry, pid)
+
+    async def _srv_generate_profile(call) -> None:
+        pid = call.data["profile_id"]
+        mode = call.data["mode"]
+        source_profile_id = call.data.get("source_profile_id")
+        from .resolver import generate_profile
+
+        await generate_profile(hass, entry, pid, mode, source_profile_id)
+
+    async def _srv_clear_caches(call) -> None:
+        from .ai_client import clear_ai_cache
+        from .opb_client import clear_opb_cache
+
+        clear_ai_cache()
+        clear_opb_cache()
+
     hass.services.async_register(
         DOMAIN,
         SERVICE_REPLACE_SENSOR,
@@ -233,6 +370,27 @@ async def async_register_all(
                 vol.Required("profile_id"): str,
                 vol.Required("measurement"): vol.In(sorted(MEASUREMENT_CLASSES)),
                 vol.Required("entity_id"): cv.entity_id,
+            }
+        ),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_LINK_SENSOR,
+        _srv_link_sensor,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("entity_id"): cv.entity_id,
+                vol.Required("role"): vol.In(
+                    [
+                        "temperature",
+                        "humidity",
+                        "soil_moisture",
+                        "illuminance",
+                        "co2",
+                        "ph",
+                    ]
+                ),
             }
         ),
     )
@@ -323,6 +481,55 @@ async def async_register_all(
         schema=vol.Schema({vol.Required("profile_id"): str}),
         supports_response=True,
     )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RECALCULATE_TARGETS,
+        _srv_recalculate_targets,
+        schema=vol.Schema({vol.Required("plant_id"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RUN_RECOMMENDATION,
+        _srv_run_recommendation,
+        schema=vol.Schema(
+            {
+                vol.Required("plant_id"): str,
+                vol.Optional("approve", default=False): bool,
+            }
+        ),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_APPLY_IRRIGATION_PLAN,
+        _srv_apply_irrigation,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("provider", default="auto"): vol.In(["auto", "irrigation_unlimited", "opensprinkler"]),
+                vol.Optional("zone"): str,
+            }
+        ),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RESOLVE_PROFILE,
+        _srv_resolve_profile,
+        schema=vol.Schema({vol.Required("profile_id"): str}),
+    )
+    hass.services.async_register(DOMAIN, SERVICE_RESOLVE_ALL, _srv_resolve_all)
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_GENERATE_PROFILE,
+        _srv_generate_profile,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("mode"): vol.In(["clone", "opb", "ai"]),
+                vol.Optional("source_profile_id"): str,
+            }
+        ),
+    )
+    hass.services.async_register(DOMAIN, SERVICE_CLEAR_CACHES, _srv_clear_caches)
 
     # Preserve backwards compatible top-level sensors mapping if it exists.
     # This mirrors the behaviour of earlier versions of the integration where

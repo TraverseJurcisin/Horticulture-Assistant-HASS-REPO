@@ -1,52 +1,41 @@
 from __future__ import annotations
 
-import logging
 from typing import Any
 
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
-from .utils.redact import redact
+from .profile_registry import ProfileRegistry
 
-LOGGER = logging.getLogger(__name__)
-
-REDACT = {"api_key", "secret", "client_id"}
+TO_REDACT: set[str] = set()
 
 
-async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigEntry) -> dict[str, Any]:
-    data: dict[str, Any] = {
-        "schema_version": 2,
+async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict[str, Any]:
+    """Return diagnostics for a config entry."""
+    data = hass.data.get(DOMAIN, {})
+    reg: ProfileRegistry | None = data.get("registry")
+    payload: dict[str, Any] = {
         "entry": {
-            "entry_id": entry.entry_id,
             "title": entry.title,
-            "version": entry.version,
-            "data": redact(dict(entry.data), REDACT),
-            "options": redact(dict(entry.options), REDACT),
+            "data": dict(entry.data),
+            "options": dict(entry.options),
         },
-        "coordinators": {},
         "profile_count": 0,
         "profiles": [],
+        "coordinators": {},
+        "schema_version": 2,
     }
-
-    # Pull optional registries/coordinators if set in hass.data
-    bag: dict[str, Any] = hass.data.get(DOMAIN, {})
-    for key in ("coordinator_ai", "coordinator_local", "coordinator"):
-        coord = bag.get(key)
-        if coord:
-            data["coordinators"][key] = {
-                "last_update_success": coord.last_update_success,
-                "last_update": getattr(coord, "last_update", None),
-                "update_interval": str(getattr(coord, "update_interval", None)),
-                "last_exception": repr(getattr(coord, "last_exception", None)),
-            }
-
-    reg = bag.get("profile_registry")
-    if reg and hasattr(reg, "summaries"):
-        try:
-            data["profiles"] = reg.summaries()
-        except Exception:  # pragma: no cover - defensive
-            LOGGER.exception("Failed to summarize profile registry")
-        data["profile_count"] = len(data["profiles"])
-
-    return data
+    if reg:
+        profiles = reg.summaries()
+        payload["profiles"] = profiles
+        payload["profile_count"] = len(profiles)
+    for key, coord in data.items():
+        if not key.startswith("coordinator"):
+            continue
+        payload["coordinators"][key] = {
+            "last_update_success": getattr(coord, "last_update_success", False),
+            "last_update": getattr(coord, "last_update", None),
+            "last_exception": getattr(coord, "last_exception", None),
+        }
+    return async_redact_data(payload, TO_REDACT)

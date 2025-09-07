@@ -4,12 +4,9 @@ import contextlib
 import logging
 
 import homeassistant.helpers.config_validation as cv
-import voluptuous as vol
 from aiohttp import ClientError
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, ServiceCall
-from homeassistant.exceptions import HomeAssistantError
-from homeassistant.helpers import entity_registry as er
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from . import services as ha_services
@@ -23,7 +20,6 @@ from .const import (
     CONF_KEEP_STALE,
     CONF_MODEL,
     CONF_MOISTURE_SENSOR,
-    CONF_PROFILES,
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
@@ -37,7 +33,6 @@ from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
-from .irrigation_bridge import async_apply_irrigation
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
@@ -88,7 +83,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER.exception("Initial data refresh failed: %s", err)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data[DOMAIN]["profile_registry"] = registry
+    hass.data[DOMAIN]["registry"] = registry
     await ha_services.async_register_all(
         hass=hass,
         entry=entry,
@@ -96,6 +91,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         local_coord=local_coord,
         profile_coord=profile_coord,
         registry=registry,
+        store=store,
     )
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
@@ -127,158 +123,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 translation_key="missing_entity_option",
                 placeholders={"entity_id": entity_id},
             )
-
-    async def _handle_recalculate(call: ServiceCall) -> None:
-        plant_id = call.data["plant_id"]
-        assert store.data is not None
-        plants = store.data.setdefault("plants", {})
-        if plant_id not in plants:
-            raise HomeAssistantError(f"unknown plant {plant_id}")
-        await local_coord.async_request_refresh()
-
-    async def _handle_run_reco(call: ServiceCall) -> None:
-        plant_id = call.data["plant_id"]
-        assert store.data is not None
-        plants = store.data.setdefault("plants", {})
-        if plant_id not in plants:
-            raise HomeAssistantError(f"unknown plant {plant_id}")
-        prev = ai_coord.data.get("recommendation")
-        with contextlib.suppress(UpdateFailed):
-            await ai_coord.async_request_refresh()
-        if call.data.get("approve"):
-            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation", prev)
-            await store.save()
-
-    svc_base = DOMAIN
-    hass.services.async_register(
-        svc_base,
-        "recalculate_targets",
-        _handle_recalculate,
-        schema=vol.Schema({vol.Required("plant_id"): str}),
-    )
-    hass.services.async_register(
-        svc_base,
-        "run_recommendation",
-        _handle_run_reco,
-        schema=vol.Schema(
-            {
-                vol.Required("plant_id"): str,
-                vol.Optional("approve", default=False): bool,
-            }
-        ),
-    )
-
-    async def _handle_apply_irrigation(call: ServiceCall) -> None:
-        profile_id = call.data["profile_id"]
-        provider = call.data.get("provider", "auto")
-        zone = call.data.get("zone")
-        # fetch recommendation sensor
-        reg = er.async_get(hass)
-        unique_id = f"{DOMAIN}_{entry.entry_id}_{profile_id}_irrigation_rec"
-        rec_entity = reg.async_get_entity_id("sensor", DOMAIN, unique_id)
-        seconds: float | None = None
-        if rec_entity:
-            state = hass.states.get(rec_entity)
-            try:
-                seconds = float(state.state)
-            except (TypeError, ValueError):
-                seconds = None
-        if seconds is None:
-            raise HomeAssistantError("no recommendation available")
-
-        if provider == "auto":
-            if hass.services.has_service("irrigation_unlimited", "run_zone"):
-                provider = "irrigation_unlimited"
-            elif hass.services.has_service("opensprinkler", "run_once"):
-                provider = "opensprinkler"
-            else:
-                raise HomeAssistantError("no irrigation provider")
-
-        await async_apply_irrigation(hass, provider, zone, seconds)
-
-    hass.services.async_register(
-        svc_base,
-        "apply_irrigation_plan",
-        _handle_apply_irrigation,
-        schema=vol.Schema(
-            {
-                vol.Required("profile_id"): str,
-                vol.Optional("provider", default="auto"): vol.In(["auto", "irrigation_unlimited", "opensprinkler"]),
-                vol.Optional("zone"): str,
-            }
-        ),
-    )
-
-    async def _svc_resolve_profile(call):
-        pid = call.data["profile_id"]
-        from .profile.store import async_save_profile_from_options
-        from .resolver import PreferenceResolver
-
-        await PreferenceResolver(hass).resolve_profile(entry, pid)
-        await async_save_profile_from_options(hass, entry, pid)
-
-    async def _svc_resolve_all(call):
-        from .profile.store import async_save_profile_from_options
-        from .resolver import PreferenceResolver
-
-        r = PreferenceResolver(hass)
-        for pid in entry.options.get(CONF_PROFILES, {}):
-            await r.resolve_profile(entry, pid)
-            await async_save_profile_from_options(hass, entry, pid)
-
-    async def _svc_generate_profile(call):
-        pid = call.data["profile_id"]
-        mode = call.data["mode"]
-        source_profile_id = call.data.get("source_profile_id")
-        from .resolver import generate_profile
-
-        await generate_profile(hass, entry, pid, mode, source_profile_id)
-
-    hass.services.async_register(
-        svc_base,
-        "resolve_profile",
-        _svc_resolve_profile,
-        schema=vol.Schema({vol.Required("profile_id"): str}),
-    )
-    hass.services.async_register(svc_base, "resolve_all", _svc_resolve_all)
-    hass.services.async_register(
-        svc_base,
-        "generate_profile",
-        _svc_generate_profile,
-        schema=vol.Schema(
-            {
-                vol.Required("profile_id"): str,
-                vol.Required("mode"): vol.In(["clone", "opb", "ai"]),
-                vol.Optional("source_profile_id"): str,
-            }
-        ),
-    )
-
-    async def _svc_clear_caches(call):
-        from .ai_client import clear_ai_cache
-        from .opb_client import clear_opb_cache
-
-        clear_ai_cache()
-        clear_opb_cache()
-
-    hass.services.async_register(svc_base, "clear_caches", _svc_clear_caches)
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     await ha_services.async_unload_services(hass)
-    for name in (
-        "recalculate_targets",
-        "run_recommendation",
-        "apply_irrigation_plan",
-        "resolve_profile",
-        "resolve_all",
-        "generate_profile",
-        "clear_caches",
-    ):
-        if hass.services.has_service(DOMAIN, name):
-            hass.services.async_remove(DOMAIN, name)
     data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
     unsub = data.get("opb_unsub")
     if unsub:
