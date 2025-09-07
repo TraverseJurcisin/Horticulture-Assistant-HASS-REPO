@@ -49,7 +49,7 @@ async def test_async_get_config_entry_diagnostics(hass):
     entry.entry_id = "1"
     entry.version = 1
     hass.data[DOMAIN] = {
-        "profile_registry": DummyRegistry(),
+        "registry": DummyRegistry(),
         "coordinator_ai": DummyCoordinator(),
     }
 

@@ -1,310 +1,75 @@
-refresh:
-  name: Refresh
-  description: Refresh all Horticulture Assistant coordinators.
-
-recompute:
-  name: Recompute
-  description: Recompute derived metrics for a profile (or all if omitted).
-  fields:
-    profile_id:
-      description: Profile identifier. Omit to process all profiles.
-      example: basil
-      required: false
-      selector: { text: {} }
-
-reset_dli:
-  name: Reset DLI
-  description: Clear the accumulated daily light integral for a profile or all profiles.
-  fields:
-    profile_id:
-      required: false
-      description: Profile identifier. Omit to reset all profiles.
-      example: basil
-      selector: { text: {} }
-
-refresh_species:
-  name: Refresh Species
-  description: Refresh species data for a profile.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-
 create_profile:
-  name: Create Profile
-  description: Create a new plant profile.
+  name: "Create plant profile"
+  description: "Create a new plant profile stored locally."
   fields:
+    profile_id:
+      required: true
+      example: "avocado_tree_1"
+      selector: { text: {} }
     name:
-      description: Friendly name for the profile.
-      example: Basil
+      required: true
+      example: "Avocado Tree"
+      selector: { text: {} }
+    template:
+      required: false
+      example: "Persea americana"
+      selector: { text: {} }
+    targets:
+      required: false
+      description: "Manual targets to override template (temperature/humidity/light/etc)."
+      selector: { object: {} }
+
+link_sensor:
+  name: "Link sensor to profile"
+  description: "Attach an HA sensor entity to a profile for a specific role."
+  fields:
+    profile_id:
       required: true
       selector: { text: {} }
+    entity_id:
+      required: true
+      selector: { entity: { domain: sensor } }
+    role:
+      required: true
+      description: "temperature | humidity | soil_moisture | illuminance | co2 | ph"
+      selector: { select: { options: ["temperature","humidity","soil_moisture","illuminance","co2","ph"] } }
 
 duplicate_profile:
-  name: Duplicate Profile
-  description: Copy an existing profile to a new name.
+  name: "Duplicate a profile"
   fields:
-    source_profile_id:
-      description: ID of the source profile.
-      example: basil
+    from_profile_id:
+      required: true
+      selector: { text: {} }
+    new_profile_id:
       required: true
       selector: { text: {} }
     new_name:
-      description: Name for the duplicated profile.
-      example: Mint Clone
       required: true
       selector: { text: {} }
 
-delete_profile:
-  name: Delete Profile
-  description: Remove a profile and unlink its sensors.
+reset_dli:
+  name: "Reset DLI accumulator"
+  description: "Resets the Daily Light Integral accumulator for the given profile."
   fields:
     profile_id:
-      description: Profile identifier.
-      example: basil
       required: true
-      selector: { text: {} }
-
-update_sensors:
-  name: Update Sensors
-  description: Link sensor entities to a profile.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-    temperature:
-      description: Temperature sensor entity.
-      example: sensor.temp1
-      selector: { entity: { domain: sensor } }
-    humidity:
-      description: Humidity sensor entity.
-      example: sensor.hum1
-      selector: { entity: { domain: sensor } }
-    illuminance:
-      description: Illuminance sensor entity.
-      example: sensor.light1
-      selector: { entity: { domain: sensor } }
-    moisture:
-      description: Moisture sensor entity.
-      example: sensor.moisture1
-      selector: { entity: { domain: sensor } }
-
-replace_sensor:
-  name: Replace Sensor
-  description: Replace a single measurement's sensor entity for a profile.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-    measurement:
-      description: Measurement to replace.
-      example: temperature
-      required: true
-      selector:
-        select:
-          options: [temperature, humidity, illuminance, moisture]
-    entity_id:
-      description: Sensor entity to link.
-      example: sensor.temp2
-      required: true
-      selector: { entity: { domain: sensor } }
-
-apply_irrigation_plan:
-  name: Apply Irrigation Plan
-  description: Execute an irrigation plan using a supported provider.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-    provider:
-      description: Irrigation provider to use.
-      default: auto
-      selector:
-        select:
-          options: [auto, irrigation_unlimited, opensprinkler]
-    zone:
-      description: Optional provider-specific zone.
-      example: "front_lawn"
-      required: false
       selector: { text: {} }
 
 export_profile:
-  name: Export Profile
-  description: Export a profile to a file.
+  name: "Export profile JSON"
   fields:
     profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-    path:
-      description: Filesystem path to write.
-      example: /config/profile.json
-      required: true
-      selector: { text: {} }
-
-export_profiles:
-  name: Export Profiles
-  description: Export all profiles to a file.
-  fields:
-    path:
-      description: Destination path for the export.
-      example: /config/profiles.json
       required: true
       selector: { text: {} }
 
 import_profiles:
-  name: Import Profiles
-  description: Import profiles from a file.
+  name: "Import profile JSON(s)"
+  description: "Accepts a list of profile docs (e.g., from Developer Tools → Services) and merges into local storage."
   fields:
-    path:
-      description: Path to a profile export file.
-      example: /config/profiles.json
+    profiles:
       required: true
-      selector: { text: {} }
+      selector: { object: {} }
 
-import_template:
-  name: Import Template
-  description: Create a profile from a bundled template.
-  fields:
-    template:
-      description: Template identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-    name:
-      description: Optional name for the new profile.
-      example: Patio Basil
-      selector: { text: {} }
-
-recommend_watering:
-  name: Recommend Watering
-  description: Suggest a watering duration for a profile based on soil moisture and light deficit.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-
-run_recommendation:
-  name: Run Recommendation
-  description: Execute the recommendation engine for a profile.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-
-resolve_profile:
-  name: Resolve Profile
-  description: Populate missing profile data using bundled defaults.
-  fields:
-    profile_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-
-resolve_all:
-  name: Resolve All Profiles
-  description: Resolve missing profile data for all profiles.
-
-start_calibration:
-  name: Start Calibration
-  description: Begin a calibration session for a sensor.
-  fields:
-    entity_id:
-      description: Sensor entity being calibrated.
-      example: sensor.temp1
-      required: true
-      selector: { entity: { domain: sensor } }
-    model:
-      description: Calibration model to fit.
-      selector:
-        select:
-          options: [linear, quadratic, power]
-
-add_calibration_point:
-  name: Add Calibration Point
-  description: Record a measurement for an active calibration session.
-  fields:
-    session_id:
-      description: Calibration session identifier.
-      example: 123e4567
-      required: true
-      selector: { text: {} }
-    reading:
-      description: Sensor reading for this point.
-      example: 42.5
-      required: true
-      selector: { number: { min: 0, max: 1000, step: 0.1 } }
-    reference:
-      description: Reference value for this point.
-      example: 40.0
-      required: true
-      selector: { number: { min: 0, max: 1000, step: 0.1 } }
-
-finish_calibration:
-  name: Finish Calibration
-  description: Fit the calibration model and save coefficients.
-  fields:
-    session_id:
-      description: Calibration session identifier.
-      example: 123e4567
-      required: true
-      selector: { text: {} }
-
-abort_calibration:
-  name: Abort Calibration
-  description: Cancel an active calibration session.
-  fields:
-    session_id:
-      description: Calibration session identifier.
-      example: 123e4567
-      required: true
-      selector: { text: {} }
-
-recalculate_targets:
-  name: Recalculate Targets
-  description: Recompute target thresholds for a plant profile.
-  fields:
-    plant_id:
-      description: Profile identifier.
-      example: basil
-      required: true
-      selector: { text: {} }
-
-generate_profile:
-  name: Generate Profile
-  description: Create a profile using a clone, OpenPlantBook template, or AI.
-  fields:
-    profile_id:
-      description: Identifier for the new profile.
-      example: basil_clone
-      required: true
-      selector: { text: {} }
-    mode:
-      description: Generation mode.
-      example: opb
-      required: true
-      selector:
-        select:
-          options: [clone, opb, ai]
-    source_profile_id:
-      description: Source profile when cloning.
-      example: basil
-      selector: { text: {} }
-
-clear_caches:
-  name: Clear Caches
-  description: Purge cached data from external providers.
+refresh:
+  name: "Refresh computations"
+  description: "Triggers a data refresh (coordinator update) for all profiles."

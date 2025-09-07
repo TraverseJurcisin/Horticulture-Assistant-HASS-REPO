@@ -557,7 +557,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
-        registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
+        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         if user_input is not None:
             pid = await registry.async_add_profile(user_input["name"], user_input.get("copy_from"))
             self._new_profile_id = pid
@@ -574,7 +574,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_attach_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
-        registry: ProfileRegistry = self.hass.data[DOMAIN]["profile_registry"]
+        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         pid = self._new_profile_id
         if user_input is not None and pid:
             sensors: dict[str, str] = {}

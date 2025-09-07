@@ -454,7 +454,7 @@ async def test_export_profiles_service(hass, tmp_path):
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    registry = hass.data[DOMAIN]["profile_registry"]
+    registry = hass.data[DOMAIN]["registry"]
     registry._profiles["p2"] = PlantProfile("p2", "Plant 2")  # type: ignore[attr-defined]
 
     out = tmp_path / "profiles.json"
@@ -532,7 +532,7 @@ async def test_import_profiles_service(hass, tmp_path):
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    registry = hass.data[DOMAIN]["profile_registry"]
+    registry = hass.data[DOMAIN]["registry"]
     assert registry.get("p1") is None
 
     profiles = {"p1": {"plant_id": "p1", "display_name": "Plant 1", "variables": {}}}

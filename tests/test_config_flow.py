@@ -629,7 +629,7 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["profile_registry"] = registry
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
