@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"2F333E","source_wsda_record":{"wsda_product_number":"(#3906-0001)","product_name":"BUILDASOIL BUILDABLOOM 2-10-5","company_info":{"company":"BUILDASOIL LLC","Mailing Address":"5016 N Townsend Ave","Post Office Box":null,"City":"Montrose","State":"CO","Postal Code":"81401","Telephone Number":"855 877-7645","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=20.8000","Cadmium":"=1.0000","Cobalt":"=2.0000","Mercury":"=0.7200","Molybdenum":"=2.0000","Nickel":"=3.6000","Lead":"=10.0000","Selenium":"=20.0000","Zinc":"=44.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=20.8000","Cadmium":"=1.0000","Cobalt":"=2.0000","Mercury":"=0.7200","Molybdenum":"=2.0000","Nickel":"=3.6000","Lead":"=10.0000","Selenium":"=20.0000","Zinc":"=44.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BUILDASOIL LLC","label_name":"BUILDASOIL BUILDABLOOM 2-10-5","wsda_reg_no":"(#3906-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "2F333E",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3906-0001)",
+    "product_name": "BUILDASOIL BUILDABLOOM 2-10-5",
+    "company_info": {
+      "company": "BUILDASOIL LLC",
+      "Mailing Address": "5016 N Townsend Ave",
+      "Post Office Box": null,
+      "City": "Montrose",
+      "State": "CO",
+      "Postal Code": "81401",
+      "Telephone Number": "855 877-7645",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=20.8000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.7200",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=3.6000",
+      "Lead": "=10.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=44.4000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=20.8000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.7200",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=3.6000",
+      "Lead": "=10.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=44.4000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BUILDASOIL LLC",
+    "label_name": "BUILDASOIL BUILDABLOOM 2-10-5",
+    "wsda_reg_no": "(#3906-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

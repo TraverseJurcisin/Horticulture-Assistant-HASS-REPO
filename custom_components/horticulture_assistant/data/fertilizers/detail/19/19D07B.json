@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"19D07B","source_wsda_record":{"wsda_product_number":"(#1214-0090)","product_name":"LILLY MILLER SUPER SWEET 0-0-0","company_info":{"company":"LILLY MILLER BRANDS","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153","Telephone Number":"540 375-8826","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":34.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<3.5000","Cadmium":"=0.4850","Cobalt":"<0.5000","Mercury":"=0.1010","Molybdenum":"<0.5000","Nickel":"=2.6700","Lead":"=5.7000","Selenium":"<0.0500","Zinc":"=22.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"86.0000","Calcium Carbonate Equivalent (CaCO3)":"86.0000","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":34.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<3.5000","Cadmium":"=0.4850","Cobalt":"<0.5000","Mercury":"=0.1010","Molybdenum":"<0.5000","Nickel":"=2.6700","Lead":"=5.7000","Selenium":"<0.0500","Zinc":"=22.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LILLY MILLER BRANDS","label_name":"LILLY MILLER SUPER SWEET 0-0-0","wsda_reg_no":"(#1214-0090)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "19D07B",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1214-0090)",
+    "product_name": "LILLY MILLER SUPER SWEET 0-0-0",
+    "company_info": {
+      "company": "LILLY MILLER BRANDS",
+      "Mailing Address": "PO Box 1019",
+      "Post Office Box": null,
+      "City": "Salem",
+      "State": "VA",
+      "Postal Code": "24153",
+      "Telephone Number": "540 375-8826",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 34.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<3.5000",
+      "Cadmium": "=0.4850",
+      "Cobalt": "<0.5000",
+      "Mercury": "=0.1010",
+      "Molybdenum": "<0.5000",
+      "Nickel": "=2.6700",
+      "Lead": "=5.7000",
+      "Selenium": "<0.0500",
+      "Zinc": "=22.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": "86.0000",
+      "Calcium Carbonate Equivalent (CaCO3)": "86.0000",
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 34.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<3.5000",
+      "Cadmium": "=0.4850",
+      "Cobalt": "<0.5000",
+      "Mercury": "=0.1010",
+      "Molybdenum": "<0.5000",
+      "Nickel": "=2.6700",
+      "Lead": "=5.7000",
+      "Selenium": "<0.0500",
+      "Zinc": "=22.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LILLY MILLER BRANDS",
+    "label_name": "LILLY MILLER SUPER SWEET 0-0-0",
+    "wsda_reg_no": "(#1214-0090)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

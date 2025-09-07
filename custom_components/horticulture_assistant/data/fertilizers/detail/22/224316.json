@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"224316","source_wsda_record":{"wsda_product_number":"(#4235-0002)","product_name":"PHINITE GOLD 3-12-0","company_info":{"company":"PHINITE INC","Mailing Address":"247 Prospect Ave Ste 4G","Post Office Box":null,"City":"Brooklyn","State":"NY","Postal Code":"11215","Telephone Number":"949 419-7000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<203.6500","Cadmium":"<54.1700","Cobalt":"<407.3100","Mercury":"<13.0200","Molybdenum":"<54.1700","Nickel":"<488.9100","Lead":"<1358.4000","Selenium":"<37.7100","Zinc":"<5025.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<203.6500","Cadmium":"<54.1700","Cobalt":"<407.3100","Mercury":"<13.0200","Molybdenum":"<54.1700","Nickel":"<488.9100","Lead":"<1358.4000","Selenium":"<37.7100","Zinc":"<5025.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PHINITE INC","label_name":"PHINITE GOLD 3-12-0","wsda_reg_no":"(#4235-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "224316",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4235-0002)",
+    "product_name": "PHINITE GOLD 3-12-0",
+    "company_info": {
+      "company": "PHINITE INC",
+      "Mailing Address": "247 Prospect Ave Ste 4G",
+      "Post Office Box": null,
+      "City": "Brooklyn",
+      "State": "NY",
+      "Postal Code": "11215",
+      "Telephone Number": "949 419-7000",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 12.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<203.6500",
+      "Cadmium": "<54.1700",
+      "Cobalt": "<407.3100",
+      "Mercury": "<13.0200",
+      "Molybdenum": "<54.1700",
+      "Nickel": "<488.9100",
+      "Lead": "<1358.4000",
+      "Selenium": "<37.7100",
+      "Zinc": "<5025.6000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 12.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<203.6500",
+      "Cadmium": "<54.1700",
+      "Cobalt": "<407.3100",
+      "Mercury": "<13.0200",
+      "Molybdenum": "<54.1700",
+      "Nickel": "<488.9100",
+      "Lead": "<1358.4000",
+      "Selenium": "<37.7100",
+      "Zinc": "<5025.6000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "PHINITE INC",
+    "label_name": "PHINITE GOLD 3-12-0",
+    "wsda_reg_no": "(#4235-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

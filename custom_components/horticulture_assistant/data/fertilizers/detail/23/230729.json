@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"230729","source_wsda_record":{"wsda_product_number":"(#2745-0030)","product_name":"COOP POOP ORGANIC ALL PURPOSE PLANT FOOD 4-4-4","company_info":{"company":"PEARL VALLEY ORGANIX","Mailing Address":"968 S Kent Rd","Post Office Box":null,"City":"Pearl City","State":"IL","Postal Code":"61062","Telephone Number":"815 443-2170","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.2500","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=2.6000","Nickel":"=6.9000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=327.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.2500","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=2.6000","Nickel":"=6.9000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=327.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PEARL VALLEY ORGANIX","label_name":"COOP POOP ORGANIC ALL PURPOSE PLANT FOOD 4-4-4","wsda_reg_no":"(#2745-0030)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "230729",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2745-0030)",
+    "product_name": "COOP POOP ORGANIC ALL PURPOSE PLANT FOOD 4-4-4",
+    "company_info": {
+      "company": "PEARL VALLEY ORGANIX",
+      "Mailing Address": "968 S Kent Rd",
+      "Post Office Box": null,
+      "City": "Pearl City",
+      "State": "IL",
+      "Postal Code": "61062",
+      "Telephone Number": "815 443-2170",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.2500",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=2.6000",
+      "Nickel": "=6.9000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=327.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.2500",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=2.6000",
+      "Nickel": "=6.9000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=327.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "PEARL VALLEY ORGANIX",
+    "label_name": "COOP POOP ORGANIC ALL PURPOSE PLANT FOOD 4-4-4",
+    "wsda_reg_no": "(#2745-0030)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

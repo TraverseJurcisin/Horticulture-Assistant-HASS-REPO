@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"1E286E","source_wsda_record":{"wsda_product_number":"(#2687-0008)","product_name":"TAKE OFF PHITE MZ 3-0-7","company_info":{"company":"VERDESIAN LIFE SCIENCES U.S. LLC","Mailing Address":"1001 Winstead Drive Ste 480","Post Office Box":null,"City":"Cary","State":"NC","Postal Code":"27513","Telephone Number":"919 825-1901","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0900","Cobalt":"=0.3000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=5698.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0900","Cobalt":"=0.3000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=5698.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDESIAN LIFE SCIENCES U.S. LLC","label_name":"TAKE OFF PHITE MZ 3-0-7","wsda_reg_no":"(#2687-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "1E286E",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2687-0008)",
+    "product_name": "TAKE OFF PHITE MZ 3-0-7",
+    "company_info": {
+      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+      "Mailing Address": "1001 Winstead Drive Ste 480",
+      "Post Office Box": null,
+      "City": "Cary",
+      "State": "NC",
+      "Postal Code": "27513",
+      "Telephone Number": "919 825-1901",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0900",
+      "Cobalt": "=0.3000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.1000",
+      "Nickel": "=0.1000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=5698.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0900",
+      "Cobalt": "=0.3000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.1000",
+      "Nickel": "=0.1000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=5698.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "label_name": "TAKE OFF PHITE MZ 3-0-7",
+    "wsda_reg_no": "(#2687-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

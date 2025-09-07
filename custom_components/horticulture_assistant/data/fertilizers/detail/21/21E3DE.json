@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"21E3DE","source_wsda_record":{"wsda_product_number":"(#0001-0013)","product_name":"ASL LIQUID SEAWEED EXTRACT 0.1-0.4-1.6","company_info":{"company":"ACADIAN SEAPLANTS LTD","Mailing Address":"30 Brown Ave","Post Office Box":null,"City":"Dartmouth","State":"NS","Postal Code":"B3B1X8","Telephone Number":"902 468-2840","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.4,"Soluble Potash (K2O)":1.6,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.5000","Molybdenum":"=2.0000","Nickel":"=2.0000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=15.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.4,"Soluble Potash (K2O)":1.6,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.5000","Molybdenum":"=2.0000","Nickel":"=2.0000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=15.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ACADIAN SEAPLANTS LTD","label_name":"ASL LIQUID SEAWEED EXTRACT 0.1-0.4-1.6","wsda_reg_no":"(#0001-0013)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "21E3DE",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0001-0013)",
+    "product_name": "ASL LIQUID SEAWEED EXTRACT 0.1-0.4-1.6",
+    "company_info": {
+      "company": "ACADIAN SEAPLANTS LTD",
+      "Mailing Address": "30 Brown Ave",
+      "Post Office Box": null,
+      "City": "Dartmouth",
+      "State": "NS",
+      "Postal Code": "B3B1X8",
+      "Telephone Number": "902 468-2840",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.1,
+      "Available Phosphoric Acid (P2O5)": 0.4,
+      "Soluble Potash (K2O)": 1.6,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.5000",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=2.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=15.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.1,
+      "Available Phosphoric Acid (P2O5)": 0.4,
+      "Soluble Potash (K2O)": 1.6,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.5000",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=2.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=15.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ACADIAN SEAPLANTS LTD",
+    "label_name": "ASL LIQUID SEAWEED EXTRACT 0.1-0.4-1.6",
+    "wsda_reg_no": "(#0001-0013)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

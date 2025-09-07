@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"26E64C","source_wsda_record":{"wsda_product_number":"(#3163-0001)","product_name":"SUPER GREENSAND MICRONIZED 0-0-0.2","company_info":{"company":"VERDE AGRITECH PLC","Mailing Address":"Salatin House 19 Cedar Rd","Post Office Box":null,"City":"Surrey","State":"BC","Postal Code":"SM2 5DA","Telephone Number":"208 652-2700","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.2,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2000","Cadmium":"=3.2000","Cobalt":"=7.3000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=22.0000","Lead":"=23.0000","Selenium":"=3.2000","Zinc":"=65.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.2,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2000","Cadmium":"=3.2000","Cobalt":"=7.3000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=22.0000","Lead":"=23.0000","Selenium":"=3.2000","Zinc":"=65.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDE AGRITECH PLC","label_name":"SUPER GREENSAND MICRONIZED 0-0-0.2","wsda_reg_no":"(#3163-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "26E64C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3163-0001)",
+    "product_name": "SUPER GREENSAND MICRONIZED 0-0-0.2",
+    "company_info": {
+      "company": "VERDE AGRITECH PLC",
+      "Mailing Address": "Salatin House 19 Cedar Rd",
+      "Post Office Box": null,
+      "City": "Surrey",
+      "State": "BC",
+      "Postal Code": "SM2 5DA",
+      "Telephone Number": "208 652-2700",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.2,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.2000",
+      "Cadmium": "=3.2000",
+      "Cobalt": "=7.3000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.5000",
+      "Nickel": "=22.0000",
+      "Lead": "=23.0000",
+      "Selenium": "=3.2000",
+      "Zinc": "=65.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.2,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.2000",
+      "Cadmium": "=3.2000",
+      "Cobalt": "=7.3000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.5000",
+      "Nickel": "=22.0000",
+      "Lead": "=23.0000",
+      "Selenium": "=3.2000",
+      "Zinc": "=65.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VERDE AGRITECH PLC",
+    "label_name": "SUPER GREENSAND MICRONIZED 0-0-0.2",
+    "wsda_reg_no": "(#3163-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

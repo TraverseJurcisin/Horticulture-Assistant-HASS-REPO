@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"234443","source_wsda_record":{"wsda_product_number":"(#4057-0018)","product_name":"HY-GEN NUTRIENTS SEA ESSENTIALS 0.16-0.16-0.5","company_info":{"company":"HYDROPONIC GENERATIONS","Mailing Address":"PO Box 1159 - East Victoria Pa","Post Office Box":null,"City":"Western Australia","State":"Au","Postal Code":"6981","Telephone Number":"+61 8 9356 8","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.16,"Available Phosphoric Acid (P2O5)":0.16,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=0.7000","Lead":"=0.7000","Selenium":"=0.3000","Zinc":"=1.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.16,"Available Phosphoric Acid (P2O5)":0.16,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=0.7000","Lead":"=0.7000","Selenium":"=0.3000","Zinc":"=1.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROPONIC GENERATIONS","label_name":"HY-GEN NUTRIENTS SEA ESSENTIALS 0.16-0.16-0.5","wsda_reg_no":"(#4057-0018)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "234443",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4057-0018)",
+    "product_name": "HY-GEN NUTRIENTS SEA ESSENTIALS 0.16-0.16-0.5",
+    "company_info": {
+      "company": "HYDROPONIC GENERATIONS",
+      "Mailing Address": "PO Box 1159 - East Victoria Pa",
+      "Post Office Box": null,
+      "City": "Western Australia",
+      "State": "Au",
+      "Postal Code": "6981",
+      "Telephone Number": "+61 8 9356 8",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.16,
+      "Available Phosphoric Acid (P2O5)": 0.16,
+      "Soluble Potash (K2O)": 0.5,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.3000",
+      "Nickel": "=0.7000",
+      "Lead": "=0.7000",
+      "Selenium": "=0.3000",
+      "Zinc": "=1.3000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.16,
+      "Available Phosphoric Acid (P2O5)": 0.16,
+      "Soluble Potash (K2O)": 0.5,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.3000",
+      "Nickel": "=0.7000",
+      "Lead": "=0.7000",
+      "Selenium": "=0.3000",
+      "Zinc": "=1.3000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HYDROPONIC GENERATIONS",
+    "label_name": "HY-GEN NUTRIENTS SEA ESSENTIALS 0.16-0.16-0.5",
+    "wsda_reg_no": "(#4057-0018)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
