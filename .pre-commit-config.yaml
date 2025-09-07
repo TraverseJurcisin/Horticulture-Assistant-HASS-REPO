@@ -12,7 +12,7 @@ repos:
         exclude: custom_components/horticulture_assistant/blueprints/automation/.*\.yaml
       - id: pretty-format-json
         files: ^custom_components/horticulture_assistant/data/.*\.json$
-        args: ["--autofix", "--indent", "2", "--no-ensure-ascii"]
+        args: ["--autofix", "--indent", "2", "--no-ensure-ascii", "--no-sort-keys"]
       - id: check-merge-conflict
       - id: check-toml
 
