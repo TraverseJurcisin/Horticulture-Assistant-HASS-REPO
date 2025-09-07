@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"044A3C","source_wsda_record":{"wsda_product_number":"(#0185-0215)","product_name":"PREEN ONE LAWNCARE 24-0-6","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1242","Cadmium":"=0.1214","Cobalt":"=0.1056","Mercury":"=0.0100","Molybdenum":"=0.1306","Nickel":"=0.1698","Lead":"=0.1522","Selenium":"=0.2820","Zinc":"=3.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1242","Cadmium":"=0.1214","Cobalt":"=0.1056","Mercury":"=0.0100","Molybdenum":"=0.1306","Nickel":"=0.1698","Lead":"=0.1522","Selenium":"=0.2820","Zinc":"=3.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"PREEN ONE LAWNCARE 24-0-6","wsda_reg_no":"(#0185-0215)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "044A3C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0185-0215)",
+    "product_name": "PREEN ONE LAWNCARE 24-0-6",
+    "company_info": {
+      "company": "LEBANON SEABOARD CORPORATION",
+      "Mailing Address": "1600 E Cumberland St",
+      "Post Office Box": null,
+      "City": "Lebanon",
+      "State": "PA",
+      "Postal Code": "17042",
+      "Telephone Number": "800 532-0090",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 3.3,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1242",
+      "Cadmium": "=0.1214",
+      "Cobalt": "=0.1056",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.1306",
+      "Nickel": "=0.1698",
+      "Lead": "=0.1522",
+      "Selenium": "=0.2820",
+      "Zinc": "=3.5000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 3.3,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1242",
+      "Cadmium": "=0.1214",
+      "Cobalt": "=0.1056",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.1306",
+      "Nickel": "=0.1698",
+      "Lead": "=0.1522",
+      "Selenium": "=0.2820",
+      "Zinc": "=3.5000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "PREEN ONE LAWNCARE 24-0-6",
+    "wsda_reg_no": "(#0185-0215)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

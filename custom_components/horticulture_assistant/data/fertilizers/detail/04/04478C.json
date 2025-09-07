@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"04478C","source_wsda_record":{"wsda_product_number":"(#0064-0030)","product_name":"MICRONA PRILL-LIME 90% CCE 0-0-0","company_info":{"company":"COLUMBIA RIVER CARBONATES","Mailing Address":"300 N Pekin Rd","Post Office Box":null,"City":"Woodland","State":"WA","Postal Code":"98674","Telephone Number":"360 225-4151","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":36.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.8000","Cadmium":"<0.1000","Cobalt":"=0.3000","Mercury":"<0.0100","Molybdenum":"=3.1000","Nickel":"=0.6000","Lead":"<1.0000","Selenium":"=0.9000","Zinc":"=7.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"90.0000","Calcium Carbonate Equivalent (CaCO3)":"90.0000","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":36.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.8000","Cadmium":"<0.1000","Cobalt":"=0.3000","Mercury":"<0.0100","Molybdenum":"=3.1000","Nickel":"=0.6000","Lead":"<1.0000","Selenium":"=0.9000","Zinc":"=7.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COLUMBIA RIVER CARBONATES","label_name":"MICRONA PRILL-LIME 90% CCE 0-0-0","wsda_reg_no":"(#0064-0030)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "04478C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0064-0030)",
+    "product_name": "MICRONA PRILL-LIME 90% CCE 0-0-0",
+    "company_info": {
+      "company": "COLUMBIA RIVER CARBONATES",
+      "Mailing Address": "300 N Pekin Rd",
+      "Post Office Box": null,
+      "City": "Woodland",
+      "State": "WA",
+      "Postal Code": "98674",
+      "Telephone Number": "360 225-4151",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 36.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.8000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=0.3000",
+      "Mercury": "<0.0100",
+      "Molybdenum": "=3.1000",
+      "Nickel": "=0.6000",
+      "Lead": "<1.0000",
+      "Selenium": "=0.9000",
+      "Zinc": "=7.3000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": "90.0000",
+      "Calcium Carbonate Equivalent (CaCO3)": "90.0000",
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 36.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.8000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=0.3000",
+      "Mercury": "<0.0100",
+      "Molybdenum": "=3.1000",
+      "Nickel": "=0.6000",
+      "Lead": "<1.0000",
+      "Selenium": "=0.9000",
+      "Zinc": "=7.3000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "COLUMBIA RIVER CARBONATES",
+    "label_name": "MICRONA PRILL-LIME 90% CCE 0-0-0",
+    "wsda_reg_no": "(#0064-0030)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

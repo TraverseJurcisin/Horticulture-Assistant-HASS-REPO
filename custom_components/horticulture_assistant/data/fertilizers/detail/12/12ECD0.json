@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"12ECD0","source_wsda_record":{"wsda_product_number":"(#0580-0003)","product_name":"ROW VIGOR LIQUID BANDING STARTER NUTRIENTS 3-8-3","company_info":{"company":"R & A PLANT/SOIL INC","Mailing Address":"4461 Venture Place PR","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99301-4465","Telephone Number":"509 302-0362","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.8500","Cadmium":"<0.3800","Cobalt":"<0.2000","Mercury":"<0.0010","Molybdenum":"=17.6000","Nickel":"=1.0800","Lead":"<2.6000","Selenium":"<3.1500","Zinc":"=5110.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.8500","Cadmium":"<0.3800","Cobalt":"<0.2000","Mercury":"<0.0010","Molybdenum":"=17.6000","Nickel":"=1.0800","Lead":"<2.6000","Selenium":"<3.1500","Zinc":"=5110.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"R & A PLANT/SOIL INC","label_name":"ROW VIGOR LIQUID BANDING STARTER NUTRIENTS 3-8-3","wsda_reg_no":"(#0580-0003)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "12ECD0",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0580-0003)",
+    "product_name": "ROW VIGOR LIQUID BANDING STARTER NUTRIENTS 3-8-3",
+    "company_info": {
+      "company": "R & A PLANT/SOIL INC",
+      "Mailing Address": "4461 Venture Place PR",
+      "Post Office Box": null,
+      "City": "Pasco",
+      "State": "WA",
+      "Postal Code": "99301-4465",
+      "Telephone Number": "509 302-0362",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=3.8500",
+      "Cadmium": "<0.3800",
+      "Cobalt": "<0.2000",
+      "Mercury": "<0.0010",
+      "Molybdenum": "=17.6000",
+      "Nickel": "=1.0800",
+      "Lead": "<2.6000",
+      "Selenium": "<3.1500",
+      "Zinc": "=5110.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=3.8500",
+      "Cadmium": "<0.3800",
+      "Cobalt": "<0.2000",
+      "Mercury": "<0.0010",
+      "Molybdenum": "=17.6000",
+      "Nickel": "=1.0800",
+      "Lead": "<2.6000",
+      "Selenium": "<3.1500",
+      "Zinc": "=5110.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "R & A PLANT/SOIL INC",
+    "label_name": "ROW VIGOR LIQUID BANDING STARTER NUTRIENTS 3-8-3",
+    "wsda_reg_no": "(#0580-0003)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

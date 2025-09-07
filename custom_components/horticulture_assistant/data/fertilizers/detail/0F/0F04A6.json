@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0F04A6","source_wsda_record":{"wsda_product_number":"(#1815-0011)","product_name":"MANGANESE SULFATE GRANULAR 0-0-0","company_info":{"company":"CASCADE COLUMBIA DISTRIBUTION CO","Mailing Address":"6900 Fox Ave S","Post Office Box":null,"City":"Seattle","State":"WA","Postal Code":"98108","Telephone Number":"503 625-5293","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":31.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3400","Cadmium":"=0.9340","Cobalt":"=3.3900","Mercury":"=0.0018","Molybdenum":"=2.3400","Nickel":"=246.0000","Lead":"=0.9340","Selenium":"=4.6700","Zinc":"=183.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":31.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3400","Cadmium":"=0.9340","Cobalt":"=3.3900","Mercury":"=0.0018","Molybdenum":"=2.3400","Nickel":"=246.0000","Lead":"=0.9340","Selenium":"=4.6700","Zinc":"=183.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CASCADE COLUMBIA DISTRIBUTION CO","label_name":"MANGANESE SULFATE GRANULAR 0-0-0","wsda_reg_no":"(#1815-0011)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0F04A6",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1815-0011)",
+    "product_name": "MANGANESE SULFATE GRANULAR 0-0-0",
+    "company_info": {
+      "company": "CASCADE COLUMBIA DISTRIBUTION CO",
+      "Mailing Address": "6900 Fox Ave S",
+      "Post Office Box": null,
+      "City": "Seattle",
+      "State": "WA",
+      "Postal Code": "98108",
+      "Telephone Number": "503 625-5293",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 18.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 31.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.3400",
+      "Cadmium": "=0.9340",
+      "Cobalt": "=3.3900",
+      "Mercury": "=0.0018",
+      "Molybdenum": "=2.3400",
+      "Nickel": "=246.0000",
+      "Lead": "=0.9340",
+      "Selenium": "=4.6700",
+      "Zinc": "=183.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 18.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 31.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.3400",
+      "Cadmium": "=0.9340",
+      "Cobalt": "=3.3900",
+      "Mercury": "=0.0018",
+      "Molybdenum": "=2.3400",
+      "Nickel": "=246.0000",
+      "Lead": "=0.9340",
+      "Selenium": "=4.6700",
+      "Zinc": "=183.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "CASCADE COLUMBIA DISTRIBUTION CO",
+    "label_name": "MANGANESE SULFATE GRANULAR 0-0-0",
+    "wsda_reg_no": "(#1815-0011)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

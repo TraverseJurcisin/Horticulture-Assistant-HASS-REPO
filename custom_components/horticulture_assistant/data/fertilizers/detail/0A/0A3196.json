@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0A3196","source_wsda_record":{"wsda_product_number":"(#0169-0777)","product_name":"BEST FULL SEASON 24-4-8","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.25,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7000","Cadmium":"=5.1000","Cobalt":"=2.2000","Mercury":"<0.0100","Molybdenum":"=1.0000","Nickel":"=7.5000","Lead":"=7.9000","Selenium":"=1.6000","Zinc":"=104.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.25,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7000","Cadmium":"=5.1000","Cobalt":"=2.2000","Mercury":"<0.0100","Molybdenum":"=1.0000","Nickel":"=7.5000","Lead":"=7.9000","Selenium":"=1.6000","Zinc":"=104.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"BEST FULL SEASON 24-4-8","wsda_reg_no":"(#0169-0777)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0A3196",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0169-0777)",
+    "product_name": "BEST FULL SEASON 24-4-8",
+    "company_info": {
+      "company": "J R SIMPLOT COMPANY",
+      "Mailing Address": "PO Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.25,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.7000",
+      "Cadmium": "=5.1000",
+      "Cobalt": "=2.2000",
+      "Mercury": "<0.0100",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=7.5000",
+      "Lead": "=7.9000",
+      "Selenium": "=1.6000",
+      "Zinc": "=104.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.25,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.7000",
+      "Cadmium": "=5.1000",
+      "Cobalt": "=2.2000",
+      "Mercury": "<0.0100",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=7.5000",
+      "Lead": "=7.9000",
+      "Selenium": "=1.6000",
+      "Zinc": "=104.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "BEST FULL SEASON 24-4-8",
+    "wsda_reg_no": "(#0169-0777)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

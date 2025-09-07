@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"188E97","source_wsda_record":{"wsda_product_number":"(#3621-0015)","product_name":"ELEGANT GARDEN GENERAL PURPOSE FERTILIZER 16-16-16","company_info":{"company":"TURF CARE SUPPLY LLC","Mailing Address":"50 Pearl Rd Ste 200","Post Office Box":null,"City":"Brunswick","State":"OH","Postal Code":"44212","Telephone Number":"330 558-0910","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.0100","Cadmium":"=24.2100","Cobalt":"=0.8000","Mercury":"<0.0500","Molybdenum":"=3.7000","Nickel":"=44.2000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=370.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.0100","Cadmium":"=24.2100","Cobalt":"=0.8000","Mercury":"<0.0500","Molybdenum":"=3.7000","Nickel":"=44.2000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=370.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TURF CARE SUPPLY LLC","label_name":"ELEGANT GARDEN GENERAL PURPOSE FERTILIZER 16-16-16","wsda_reg_no":"(#3621-0015)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "188E97",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3621-0015)",
+    "product_name": "ELEGANT GARDEN GENERAL PURPOSE FERTILIZER 16-16-16",
+    "company_info": {
+      "company": "TURF CARE SUPPLY LLC",
+      "Mailing Address": "50 Pearl Rd Ste 200",
+      "Post Office Box": null,
+      "City": "Brunswick",
+      "State": "OH",
+      "Postal Code": "44212",
+      "Telephone Number": "330 558-0910",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 16.0,
+      "Soluble Potash (K2O)": 16.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=4.0100",
+      "Cadmium": "=24.2100",
+      "Cobalt": "=0.8000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=3.7000",
+      "Nickel": "=44.2000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=370.4000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 16.0,
+      "Soluble Potash (K2O)": 16.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=4.0100",
+      "Cadmium": "=24.2100",
+      "Cobalt": "=0.8000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=3.7000",
+      "Nickel": "=44.2000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=370.4000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TURF CARE SUPPLY LLC",
+    "label_name": "ELEGANT GARDEN GENERAL PURPOSE FERTILIZER 16-16-16",
+    "wsda_reg_no": "(#3621-0015)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

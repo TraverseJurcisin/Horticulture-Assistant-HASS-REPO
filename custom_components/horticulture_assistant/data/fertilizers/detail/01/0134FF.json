@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"0134FF","source_wsda_record":{"wsda_product_number":"(#2786-0009)","product_name":"EARTHBOX ALL NATURAL DOLOMITE 0-0-0","company_info":{"company":"NOVELTY MANUFACTURING CO","Mailing Address":"1330 Loop Rd","Post Office Box":null,"City":"Lancaster","State":"PA","Postal Code":"17601","Telephone Number":"717 392-1128","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":12.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.0900","Cadmium":"=0.5000","Cobalt":"=0.2200","Mercury":"=0.5000","Molybdenum":"=0.5600","Nickel":"=1.1900","Lead":"=5.9100","Selenium":"=1.0000","Zinc":"=34.0100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"52.4000","Calcium Carbonate Equivalent (CaCO3)":"98.1000","Magnesium Carbonate (MgCO3)":"41.6000","Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":12.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.0900","Cadmium":"=0.5000","Cobalt":"=0.2200","Mercury":"=0.5000","Molybdenum":"=0.5600","Nickel":"=1.1900","Lead":"=5.9100","Selenium":"=1.0000","Zinc":"=34.0100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NOVELTY MANUFACTURING CO","label_name":"EARTHBOX ALL NATURAL DOLOMITE 0-0-0","wsda_reg_no":"(#2786-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "0134FF",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2786-0009)",
+    "product_name": "EARTHBOX ALL NATURAL DOLOMITE 0-0-0",
+    "company_info": {
+      "company": "NOVELTY MANUFACTURING CO",
+      "Mailing Address": "1330 Loop Rd",
+      "Post Office Box": null,
+      "City": "Lancaster",
+      "State": "PA",
+      "Postal Code": "17601",
+      "Telephone Number": "717 392-1128",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 21.0,
+      "Magnesium (Mg)": 12.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.0900",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.2200",
+      "Mercury": "=0.5000",
+      "Molybdenum": "=0.5600",
+      "Nickel": "=1.1900",
+      "Lead": "=5.9100",
+      "Selenium": "=1.0000",
+      "Zinc": "=34.0100"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": "52.4000",
+      "Calcium Carbonate Equivalent (CaCO3)": "98.1000",
+      "Magnesium Carbonate (MgCO3)": "41.6000",
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 21.0,
+      "Magnesium (Mg)": 12.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.0900",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.2200",
+      "Mercury": "=0.5000",
+      "Molybdenum": "=0.5600",
+      "Nickel": "=1.1900",
+      "Lead": "=5.9100",
+      "Selenium": "=1.0000",
+      "Zinc": "=34.0100"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NOVELTY MANUFACTURING CO",
+    "label_name": "EARTHBOX ALL NATURAL DOLOMITE 0-0-0",
+    "wsda_reg_no": "(#2786-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

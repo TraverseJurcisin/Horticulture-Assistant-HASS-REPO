@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"040D65","source_wsda_record":{"wsda_product_number":"(#3019-0001)","product_name":"ELEMENT NUTIENTS FLOWER FUEL 1-34-32","company_info":{"company":"ELEMENT NUTRIENTS","Mailing Address":"2006 196th Street SW","Post Office Box":"Suite 109","City":"Lynnwood","State":"WA","Postal Code":"98036","Telephone Number":"206 494-0028","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":34.0,"Soluble Potash (K2O)":32.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.1,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3300","Cadmium":"=0.5000","Cobalt":"=2.2000","Mercury":"=0.0110","Molybdenum":"=7.0000","Nickel":"=2.7000","Lead":"=1.3000","Selenium":"<0.4000","Zinc":"=192.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":34.0,"Soluble Potash (K2O)":32.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.1,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3300","Cadmium":"=0.5000","Cobalt":"=2.2000","Mercury":"=0.0110","Molybdenum":"=7.0000","Nickel":"=2.7000","Lead":"=1.3000","Selenium":"<0.4000","Zinc":"=192.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ELEMENT NUTRIENTS","label_name":"ELEMENT NUTIENTS FLOWER FUEL 1-34-32","wsda_reg_no":"(#3019-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "040D65",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3019-0001)",
+    "product_name": "ELEMENT NUTIENTS FLOWER FUEL 1-34-32",
+    "company_info": {
+      "company": "ELEMENT NUTRIENTS",
+      "Mailing Address": "2006 196th Street SW",
+      "Post Office Box": "Suite 109",
+      "City": "Lynnwood",
+      "State": "WA",
+      "Postal Code": "98036",
+      "Telephone Number": "206 494-0028",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 34.0,
+      "Soluble Potash (K2O)": 32.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.1,
+      "Boron (B)": 0.03,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0006,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.3300",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.2000",
+      "Mercury": "=0.0110",
+      "Molybdenum": "=7.0000",
+      "Nickel": "=2.7000",
+      "Lead": "=1.3000",
+      "Selenium": "<0.4000",
+      "Zinc": "=192.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 34.0,
+      "Soluble Potash (K2O)": 32.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.1,
+      "Boron (B)": 0.03,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0006,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.3300",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.2000",
+      "Mercury": "=0.0110",
+      "Molybdenum": "=7.0000",
+      "Nickel": "=2.7000",
+      "Lead": "=1.3000",
+      "Selenium": "<0.4000",
+      "Zinc": "=192.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ELEMENT NUTRIENTS",
+    "label_name": "ELEMENT NUTIENTS FLOWER FUEL 1-34-32",
+    "wsda_reg_no": "(#3019-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

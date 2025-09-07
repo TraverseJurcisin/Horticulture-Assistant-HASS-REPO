@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"1967CC","source_wsda_record":{"wsda_product_number":"(#2687-0105)","product_name":"MICROSYNC COPPER 2-0-0","company_info":{"company":"VERDESIAN LIFE SCIENCES U.S. LLC","Mailing Address":"1001 Winstead Drive Ste 480","Post Office Box":null,"City":"Cary","State":"NC","Postal Code":"27513","Telephone Number":"919 825-1901","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"=2.7000","Mercury":"<0.0500","Molybdenum":"=1.1000","Nickel":"=10.4000","Lead":"=80.3000","Selenium":"<10.0000","Zinc":"=116.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"=2.7000","Mercury":"<0.0500","Molybdenum":"=1.1000","Nickel":"=10.4000","Lead":"=80.3000","Selenium":"<10.0000","Zinc":"=116.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDESIAN LIFE SCIENCES U.S. LLC","label_name":"MICROSYNC COPPER 2-0-0","wsda_reg_no":"(#2687-0105)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "1967CC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2687-0105)",
+    "product_name": "MICROSYNC COPPER 2-0-0",
+    "company_info": {
+      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+      "Mailing Address": "1001 Winstead Drive Ste 480",
+      "Post Office Box": null,
+      "City": "Cary",
+      "State": "NC",
+      "Postal Code": "27513",
+      "Telephone Number": "919 825-1901",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 5.0,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<10.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.7000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=10.4000",
+      "Lead": "=80.3000",
+      "Selenium": "<10.0000",
+      "Zinc": "=116.2000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 5.0,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<10.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.7000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=10.4000",
+      "Lead": "=80.3000",
+      "Selenium": "<10.0000",
+      "Zinc": "=116.2000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "label_name": "MICROSYNC COPPER 2-0-0",
+    "wsda_reg_no": "(#2687-0105)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
