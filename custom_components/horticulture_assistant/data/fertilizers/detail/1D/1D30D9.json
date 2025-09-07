@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"1D30D9","source_wsda_record":{"wsda_product_number":"(#4225-0003)","product_name":"BIG FOOT BIG FOOT MYCORRHIZAE GRANULAR 0.41-0.41-2","company_info":{"company":"THE AMERICAN ROOT COMPANY LLC","Mailing Address":"1576 SE N St","Post Office Box":null,"City":"Grants Pass","State":"OR","Postal Code":"97526","Telephone Number":null,"Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.41,"Available Phosphoric Acid (P2O5)":0.41,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.1600","Cadmium":"=1.5800","Cobalt":"=3.5600","Mercury":"=0.0180","Molybdenum":"=3.4500","Nickel":"=38.7200","Lead":"=5.0700","Selenium":"=3.6500","Zinc":"=87.2400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.41,"Available Phosphoric Acid (P2O5)":0.41,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.1600","Cadmium":"=1.5800","Cobalt":"=3.5600","Mercury":"=0.0180","Molybdenum":"=3.4500","Nickel":"=38.7200","Lead":"=5.0700","Selenium":"=3.6500","Zinc":"=87.2400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"THE AMERICAN ROOT COMPANY LLC","label_name":"BIG FOOT BIG FOOT MYCORRHIZAE GRANULAR 0.41-0.41-2","wsda_reg_no":"(#4225-0003)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "1D30D9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4225-0003)",
+    "product_name": "BIG FOOT BIG FOOT MYCORRHIZAE GRANULAR 0.41-0.41-2",
+    "company_info": {
+      "company": "THE AMERICAN ROOT COMPANY LLC",
+      "Mailing Address": "1576 SE N St",
+      "Post Office Box": null,
+      "City": "Grants Pass",
+      "State": "OR",
+      "Postal Code": "97526",
+      "Telephone Number": null,
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.41,
+      "Available Phosphoric Acid (P2O5)": 0.41,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.1600",
+      "Cadmium": "=1.5800",
+      "Cobalt": "=3.5600",
+      "Mercury": "=0.0180",
+      "Molybdenum": "=3.4500",
+      "Nickel": "=38.7200",
+      "Lead": "=5.0700",
+      "Selenium": "=3.6500",
+      "Zinc": "=87.2400"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.41,
+      "Available Phosphoric Acid (P2O5)": 0.41,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.1600",
+      "Cadmium": "=1.5800",
+      "Cobalt": "=3.5600",
+      "Mercury": "=0.0180",
+      "Molybdenum": "=3.4500",
+      "Nickel": "=38.7200",
+      "Lead": "=5.0700",
+      "Selenium": "=3.6500",
+      "Zinc": "=87.2400"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "THE AMERICAN ROOT COMPANY LLC",
+    "label_name": "BIG FOOT BIG FOOT MYCORRHIZAE GRANULAR 0.41-0.41-2",
+    "wsda_reg_no": "(#4225-0003)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

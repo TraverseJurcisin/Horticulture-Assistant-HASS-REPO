@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"25B7E1","source_wsda_record":{"wsda_product_number":"(#0989-0062)","product_name":"KNOX FERTILIZER EMPRO 9-9-9","company_info":{"company":"KNOX FERTILIZER COMPANY INC","Mailing Address":"PO Box 248","Post Office Box":null,"City":"Knox","State":"IN","Postal Code":"46534","Telephone Number":"574 772-6278","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":11.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.4800","Cadmium":"=6.0000","Cobalt":"=6.0000","Mercury":"=0.0080","Molybdenum":"=6.0000","Nickel":"=15.0000","Lead":"=1.0000","Selenium":"=20.0000","Zinc":"=40.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":11.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.4800","Cadmium":"=6.0000","Cobalt":"=6.0000","Mercury":"=0.0080","Molybdenum":"=6.0000","Nickel":"=15.0000","Lead":"=1.0000","Selenium":"=20.0000","Zinc":"=40.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KNOX FERTILIZER COMPANY INC","label_name":"KNOX FERTILIZER EMPRO 9-9-9","wsda_reg_no":"(#0989-0062)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "25B7E1",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0989-0062)",
+    "product_name": "KNOX FERTILIZER EMPRO 9-9-9",
+    "company_info": {
+      "company": "KNOX FERTILIZER COMPANY INC",
+      "Mailing Address": "PO Box 248",
+      "Post Office Box": null,
+      "City": "Knox",
+      "State": "IN",
+      "Postal Code": "46534",
+      "Telephone Number": "574 772-6278",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 9.0,
+      "Soluble Potash (K2O)": 9.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 11.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=7.4800",
+      "Cadmium": "=6.0000",
+      "Cobalt": "=6.0000",
+      "Mercury": "=0.0080",
+      "Molybdenum": "=6.0000",
+      "Nickel": "=15.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=40.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 9.0,
+      "Soluble Potash (K2O)": 9.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 11.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=7.4800",
+      "Cadmium": "=6.0000",
+      "Cobalt": "=6.0000",
+      "Mercury": "=0.0080",
+      "Molybdenum": "=6.0000",
+      "Nickel": "=15.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=40.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "KNOX FERTILIZER COMPANY INC",
+    "label_name": "KNOX FERTILIZER EMPRO 9-9-9",
+    "wsda_reg_no": "(#0989-0062)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

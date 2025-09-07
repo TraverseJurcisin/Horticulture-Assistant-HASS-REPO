@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"26D622","source_wsda_record":{"wsda_product_number":"(#3259-0013)","product_name":"WARTHOG 4-0-1","company_info":{"company":"ORO AGRI INC","Mailing Address":"2788 S Maple Ave","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93725","Telephone Number":"559 442-4996","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=21.2500","Cadmium":"=20.0000","Cobalt":"=20.0000","Mercury":"=20.0000","Molybdenum":"=20.0000","Nickel":"=20.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=23.4700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=21.2500","Cadmium":"=20.0000","Cobalt":"=20.0000","Mercury":"=20.0000","Molybdenum":"=20.0000","Nickel":"=20.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=23.4700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ORO AGRI INC","label_name":"WARTHOG 4-0-1","wsda_reg_no":"(#3259-0013)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "26D622",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3259-0013)",
+    "product_name": "WARTHOG 4-0-1",
+    "company_info": {
+      "company": "ORO AGRI INC",
+      "Mailing Address": "2788 S Maple Ave",
+      "Post Office Box": null,
+      "City": "Fresno",
+      "State": "CA",
+      "Postal Code": "93725",
+      "Telephone Number": "559 442-4996",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=21.2500",
+      "Cadmium": "=20.0000",
+      "Cobalt": "=20.0000",
+      "Mercury": "=20.0000",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=20.0000",
+      "Lead": "=20.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=23.4700"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=21.2500",
+      "Cadmium": "=20.0000",
+      "Cobalt": "=20.0000",
+      "Mercury": "=20.0000",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=20.0000",
+      "Lead": "=20.0000",
+      "Selenium": "=20.0000",
+      "Zinc": "=23.4700"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ORO AGRI INC",
+    "label_name": "WARTHOG 4-0-1",
+    "wsda_reg_no": "(#3259-0013)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

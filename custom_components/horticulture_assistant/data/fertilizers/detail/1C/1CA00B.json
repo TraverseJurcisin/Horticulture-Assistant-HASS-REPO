@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"1CA00B","source_wsda_record":{"wsda_product_number":"(#1632-0065)","product_name":"PORTLAND ROSE SOCIETY 15-0-0 15-10-10","company_info":{"company":"SIMPLOT GROWER SOLUTIONS","Mailing Address":"P O Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":2.5,"Sulfur (S)":8.5,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":0.5,"Manganese (Mn)":0.22,"Molybdenum (Mo)":0.0022,"Sodium (Na)":null,"Zinc (Zn)":0.21},"reported_metals":{"Arsenic":"=15.7000","Cadmium":"=26.3300","Cobalt":"=4.0800","Mercury":"=0.0417","Molybdenum":"=8.3300","Nickel":"=8.1000","Lead":"=51.4000","Selenium":"=16.7000","Zinc":"=3310.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":2.5,"Sulfur (S)":8.5,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":0.5,"Manganese (Mn)":0.22,"Molybdenum (Mo)":0.0022,"Sodium (Na)":null,"Zinc (Zn)":0.21},"heavy_metals":{"Arsenic":"=15.7000","Cadmium":"=26.3300","Cobalt":"=4.0800","Mercury":"=0.0417","Molybdenum":"=8.3300","Nickel":"=8.1000","Lead":"=51.4000","Selenium":"=16.7000","Zinc":"=3310.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT GROWER SOLUTIONS","label_name":"PORTLAND ROSE SOCIETY 15-0-0 15-10-10","wsda_reg_no":"(#1632-0065)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "1CA00B",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1632-0065)",
+    "product_name": "PORTLAND ROSE SOCIETY 15-0-0 15-10-10",
+    "company_info": {
+      "company": "SIMPLOT GROWER SOLUTIONS",
+      "Mailing Address": "P O Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 15.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 8.5,
+      "Boron (B)": 0.08,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.1,
+      "Iron (Fe)": 0.5,
+      "Manganese (Mn)": 0.22,
+      "Molybdenum (Mo)": 0.0022,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.21
+    },
+    "reported_metals": {
+      "Arsenic": "=15.7000",
+      "Cadmium": "=26.3300",
+      "Cobalt": "=4.0800",
+      "Mercury": "=0.0417",
+      "Molybdenum": "=8.3300",
+      "Nickel": "=8.1000",
+      "Lead": "=51.4000",
+      "Selenium": "=16.7000",
+      "Zinc": "=3310.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 15.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 8.5,
+      "Boron (B)": 0.08,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.1,
+      "Iron (Fe)": 0.5,
+      "Manganese (Mn)": 0.22,
+      "Molybdenum (Mo)": 0.0022,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.21
+    },
+    "heavy_metals": {
+      "Arsenic": "=15.7000",
+      "Cadmium": "=26.3300",
+      "Cobalt": "=4.0800",
+      "Mercury": "=0.0417",
+      "Molybdenum": "=8.3300",
+      "Nickel": "=8.1000",
+      "Lead": "=51.4000",
+      "Selenium": "=16.7000",
+      "Zinc": "=3310.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SIMPLOT GROWER SOLUTIONS",
+    "label_name": "PORTLAND ROSE SOCIETY 15-0-0 15-10-10",
+    "wsda_reg_no": "(#1632-0065)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

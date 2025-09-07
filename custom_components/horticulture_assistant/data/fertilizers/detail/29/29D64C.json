@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"29D64C","source_wsda_record":{"wsda_product_number":"(#0969-0005)","product_name":"IGNITES2 1-0-1","company_info":{"company":"AGRI-GRO MARKETING INC","Mailing Address":"PO Box 520","Post Office Box":null,"City":"Doniphan","State":"MO","Postal Code":"63935","Telephone Number":"573 996-7384","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.3,"Molybdenum (Mo)":0.04,"Sodium (Na)":null,"Zinc (Zn)":0.3},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.2000","Cobalt":"=350.0000","Mercury":"=0.0133","Molybdenum":"=500.0000","Nickel":"=1.0000","Lead":"=0.3000","Selenium":"=1.0000","Zinc":"=5000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.3,"Molybdenum (Mo)":0.04,"Sodium (Na)":null,"Zinc (Zn)":0.3},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.2000","Cobalt":"=350.0000","Mercury":"=0.0133","Molybdenum":"=500.0000","Nickel":"=1.0000","Lead":"=0.3000","Selenium":"=1.0000","Zinc":"=5000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGRI-GRO MARKETING INC","label_name":"IGNITES2 1-0-1","wsda_reg_no":"(#0969-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "29D64C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0969-0005)",
+    "product_name": "IGNITES2 1-0-1",
+    "company_info": {
+      "company": "AGRI-GRO MARKETING INC",
+      "Mailing Address": "PO Box 520",
+      "Post Office Box": null,
+      "City": "Doniphan",
+      "State": "MO",
+      "Postal Code": "63935",
+      "Telephone Number": "573 996-7384",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.1,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.02,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.3,
+      "Molybdenum (Mo)": 0.04,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.3
+    },
+    "reported_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.2000",
+      "Cobalt": "=350.0000",
+      "Mercury": "=0.0133",
+      "Molybdenum": "=500.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=0.3000",
+      "Selenium": "=1.0000",
+      "Zinc": "=5000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.1,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.02,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.3,
+      "Molybdenum (Mo)": 0.04,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.3
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.2000",
+      "Cobalt": "=350.0000",
+      "Mercury": "=0.0133",
+      "Molybdenum": "=500.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=0.3000",
+      "Selenium": "=1.0000",
+      "Zinc": "=5000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AGRI-GRO MARKETING INC",
+    "label_name": "IGNITES2 1-0-1",
+    "wsda_reg_no": "(#0969-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

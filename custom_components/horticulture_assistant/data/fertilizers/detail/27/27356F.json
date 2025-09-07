@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"27356F","source_wsda_record":{"wsda_product_number":"(#2629-0082)","product_name":"HARRELL'S MAX NITRATE PLUS 6-0-0","company_info":{"company":"HARRELL'S LLC","Mailing Address":"PO Box 807","Post Office Box":null,"City":"Lakeland","State":"FL","Postal Code":"33802","Telephone Number":"863 687-2774","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":5.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=19.0000","Mercury":"<0.0500","Molybdenum":"=2.9000","Nickel":"=29.0000","Lead":"=38.0000","Selenium":"=1.0000","Zinc":"=5450.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":5.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=19.0000","Mercury":"<0.0500","Molybdenum":"=2.9000","Nickel":"=29.0000","Lead":"=38.0000","Selenium":"=1.0000","Zinc":"=5450.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HARRELL'S LLC","label_name":"HARRELL'S MAX NITRATE PLUS 6-0-0","wsda_reg_no":"(#2629-0082)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "27356F",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2629-0082)",
+    "product_name": "HARRELL'S MAX NITRATE PLUS 6-0-0",
+    "company_info": {
+      "company": "HARRELL'S LLC",
+      "Mailing Address": "PO Box 807",
+      "Post Office Box": null,
+      "City": "Lakeland",
+      "State": "FL",
+      "Postal Code": "33802",
+      "Telephone Number": "863 687-2774",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 5.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "reported_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=19.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=2.9000",
+      "Nickel": "=29.0000",
+      "Lead": "=38.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=5450.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 5.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "heavy_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=19.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=2.9000",
+      "Nickel": "=29.0000",
+      "Lead": "=38.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=5450.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HARRELL'S LLC",
+    "label_name": "HARRELL'S MAX NITRATE PLUS 6-0-0",
+    "wsda_reg_no": "(#2629-0082)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

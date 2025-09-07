@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"2CD77C","source_wsda_record":{"wsda_product_number":"(#0705-0085)","product_name":"NUTRIAG MAXI-BOOST 0-0-1.4","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.4,"Calcium (Ca)":null,"Magnesium (Mg)":1.05,"Sulfur (S)":1.38,"Boron (B)":0.25,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":null,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.004,"Sodium (Na)":null,"Zinc (Zn)":0.14},"reported_metals":{"Arsenic":"=1.7900","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"<0.1000","Molybdenum":"=50.8000","Nickel":"=1.0000","Lead":"=16.9900","Selenium":"=1.0700","Zinc":"=1430.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.4,"Calcium (Ca)":null,"Magnesium (Mg)":1.05,"Sulfur (S)":1.38,"Boron (B)":0.25,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":null,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.004,"Sodium (Na)":null,"Zinc (Zn)":0.14},"heavy_metals":{"Arsenic":"=1.7900","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"<0.1000","Molybdenum":"=50.8000","Nickel":"=1.0000","Lead":"=16.9900","Selenium":"=1.0700","Zinc":"=1430.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NUTRIAG MAXI-BOOST 0-0-1.4","wsda_reg_no":"(#0705-0085)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "2CD77C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0705-0085)",
+    "product_name": "NUTRIAG MAXI-BOOST 0-0-1.4",
+    "company_info": {
+      "company": "NUTRIAG LTD",
+      "Mailing Address": "172 Belfield Rd",
+      "Post Office Box": null,
+      "City": "Toronto",
+      "State": "ON",
+      "Postal Code": "M9W 1H1",
+      "Telephone Number": "416 572-1968",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.4,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.05,
+      "Sulfur (S)": 1.38,
+      "Boron (B)": 0.25,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.25,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.25,
+      "Molybdenum (Mo)": 0.004,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.14
+    },
+    "reported_metals": {
+      "Arsenic": "=1.7900",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=50.8000",
+      "Nickel": "=1.0000",
+      "Lead": "=16.9900",
+      "Selenium": "=1.0700",
+      "Zinc": "=1430.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.4,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.05,
+      "Sulfur (S)": 1.38,
+      "Boron (B)": 0.25,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.25,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.25,
+      "Molybdenum (Mo)": 0.004,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.14
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.7900",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=50.8000",
+      "Nickel": "=1.0000",
+      "Lead": "=16.9900",
+      "Selenium": "=1.0700",
+      "Zinc": "=1430.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NUTRIAG MAXI-BOOST 0-0-1.4",
+    "wsda_reg_no": "(#0705-0085)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

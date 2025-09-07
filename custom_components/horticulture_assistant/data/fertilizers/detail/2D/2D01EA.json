@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"2D01EA","source_wsda_record":{"wsda_product_number":"(#0997-0108)","product_name":"STA-GREEN MOISTURE MAX POTTING MIX 0.14-0.11-0.08","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.14,"Available Phosphoric Acid (P2O5)":0.11,"Soluble Potash (K2O)":0.08,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2200","Cadmium":"<0.4410","Cobalt":"=0.8930","Mercury":"=0.0415","Molybdenum":"<0.4410","Nickel":"=1.5700","Lead":"=5.3500","Selenium":"<1.3200","Zinc":"=21.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.14,"Available Phosphoric Acid (P2O5)":0.11,"Soluble Potash (K2O)":0.08,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2200","Cadmium":"<0.4410","Cobalt":"=0.8930","Mercury":"=0.0415","Molybdenum":"<0.4410","Nickel":"=1.5700","Lead":"=5.3500","Selenium":"<1.3200","Zinc":"=21.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"STA-GREEN MOISTURE MAX POTTING MIX 0.14-0.11-0.08","wsda_reg_no":"(#0997-0108)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "2D01EA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0997-0108)",
+    "product_name": "STA-GREEN MOISTURE MAX POTTING MIX 0.14-0.11-0.08",
+    "company_info": {
+      "company": "SWISS FARM PRODUCTS INC",
+      "Mailing Address": "14111 Scottslawn Rd",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 645-2523",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.14,
+      "Available Phosphoric Acid (P2O5)": 0.11,
+      "Soluble Potash (K2O)": 0.08,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.2200",
+      "Cadmium": "<0.4410",
+      "Cobalt": "=0.8930",
+      "Mercury": "=0.0415",
+      "Molybdenum": "<0.4410",
+      "Nickel": "=1.5700",
+      "Lead": "=5.3500",
+      "Selenium": "<1.3200",
+      "Zinc": "=21.5000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.14,
+      "Available Phosphoric Acid (P2O5)": 0.11,
+      "Soluble Potash (K2O)": 0.08,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.2200",
+      "Cadmium": "<0.4410",
+      "Cobalt": "=0.8930",
+      "Mercury": "=0.0415",
+      "Molybdenum": "<0.4410",
+      "Nickel": "=1.5700",
+      "Lead": "=5.3500",
+      "Selenium": "<1.3200",
+      "Zinc": "=21.5000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "STA-GREEN MOISTURE MAX POTTING MIX 0.14-0.11-0.08",
+    "wsda_reg_no": "(#0997-0108)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

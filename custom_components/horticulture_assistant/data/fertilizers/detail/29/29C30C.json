@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"29C30C","source_wsda_record":{"wsda_product_number":"(#0126-0061)","product_name":"IRONITE PLUS 12-10-10","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=1.3100","Cadmium":"=3.6200","Cobalt":"=1.6100","Mercury":"=0.0400","Molybdenum":"=4.9200","Nickel":"=6.4200","Lead":"=5.2300","Selenium":"=0.2000","Zinc":"=61.6600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=1.3100","Cadmium":"=3.6200","Cobalt":"=1.6100","Mercury":"=0.0400","Molybdenum":"=4.9200","Nickel":"=6.4200","Lead":"=5.2300","Selenium":"=0.2000","Zinc":"=61.6600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"IRONITE PLUS 12-10-10","wsda_reg_no":"(#0126-0061)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "29C30C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0126-0061)",
+    "product_name": "IRONITE PLUS 12-10-10",
+    "company_info": {
+      "company": "GRO TEC INC",
+      "Mailing Address": "14481 Lochridge Blvd",
+      "Post Office Box": null,
+      "City": "Covington",
+      "State": "GA",
+      "Postal Code": "30014",
+      "Telephone Number": "770 788-4519",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.0,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.0005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.1
+    },
+    "reported_metals": {
+      "Arsenic": "=1.3100",
+      "Cadmium": "=3.6200",
+      "Cobalt": "=1.6100",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=4.9200",
+      "Nickel": "=6.4200",
+      "Lead": "=5.2300",
+      "Selenium": "=0.2000",
+      "Zinc": "=61.6600"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.0,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.0005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.1
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.3100",
+      "Cadmium": "=3.6200",
+      "Cobalt": "=1.6100",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=4.9200",
+      "Nickel": "=6.4200",
+      "Lead": "=5.2300",
+      "Selenium": "=0.2000",
+      "Zinc": "=61.6600"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "IRONITE PLUS 12-10-10",
+    "wsda_reg_no": "(#0126-0061)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

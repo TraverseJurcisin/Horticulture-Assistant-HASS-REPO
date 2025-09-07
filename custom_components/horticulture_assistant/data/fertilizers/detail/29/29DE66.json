@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"29DE66","source_wsda_record":{"wsda_product_number":"(#1937-0036)","product_name":"NUTRIFIELD CARGO BOOST 1-0.09-0.02","company_info":{"company":"NUTRIFIELD PTY LTD","Mailing Address":"4 Glomin Ln","Post Office Box":null,"City":"Pottsboro","State":"TX","Postal Code":"75076","Telephone Number":"909 980-2542","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.09,"Soluble Potash (K2O)":0.02,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0590","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"=0.0110","Molybdenum":"=0.2080","Nickel":"=0.0340","Lead":"<0.0150","Selenium":"=0.1530","Zinc":"=0.7290"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.09,"Soluble Potash (K2O)":0.02,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0590","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"=0.0110","Molybdenum":"=0.2080","Nickel":"=0.0340","Lead":"<0.0150","Selenium":"=0.1530","Zinc":"=0.7290"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIFIELD PTY LTD","label_name":"NUTRIFIELD CARGO BOOST 1-0.09-0.02","wsda_reg_no":"(#1937-0036)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "29DE66",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1937-0036)",
+    "product_name": "NUTRIFIELD CARGO BOOST 1-0.09-0.02",
+    "company_info": {
+      "company": "NUTRIFIELD PTY LTD",
+      "Mailing Address": "4 Glomin Ln",
+      "Post Office Box": null,
+      "City": "Pottsboro",
+      "State": "TX",
+      "Postal Code": "75076",
+      "Telephone Number": "909 980-2542",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 0.09,
+      "Soluble Potash (K2O)": 0.02,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0590",
+      "Cadmium": "<0.0150",
+      "Cobalt": "<0.0150",
+      "Mercury": "=0.0110",
+      "Molybdenum": "=0.2080",
+      "Nickel": "=0.0340",
+      "Lead": "<0.0150",
+      "Selenium": "=0.1530",
+      "Zinc": "=0.7290"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 0.09,
+      "Soluble Potash (K2O)": 0.02,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.0590",
+      "Cadmium": "<0.0150",
+      "Cobalt": "<0.0150",
+      "Mercury": "=0.0110",
+      "Molybdenum": "=0.2080",
+      "Nickel": "=0.0340",
+      "Lead": "<0.0150",
+      "Selenium": "=0.1530",
+      "Zinc": "=0.7290"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NUTRIFIELD PTY LTD",
+    "label_name": "NUTRIFIELD CARGO BOOST 1-0.09-0.02",
+    "wsda_reg_no": "(#1937-0036)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

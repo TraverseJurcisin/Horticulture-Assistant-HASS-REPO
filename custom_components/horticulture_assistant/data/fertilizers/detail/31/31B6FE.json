@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"31B6FE","source_wsda_record":{"wsda_product_number":"(#2800-0003)","product_name":"CALI PRO BLOOM A 3-0-3","company_info":{"company":"EMERALD HARVEST","Mailing Address":"1399 Corporate Center Parkway","Post Office Box":null,"City":"Santa Rosa","State":"CA","Postal Code":"95407","Telephone Number":"888 733-4343","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":0.005,"Iron (Fe)":0.1,"Manganese (Mn)":0.04,"Molybdenum (Mo)":0.002,"Sodium (Na)":0.1,"Zinc (Zn)":0.02},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=5.3000","Mercury":"<0.0500","Molybdenum":"=26.1000","Nickel":"<0.1000","Lead":"=0.6000","Selenium":"<0.5000","Zinc":"=257.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":0.005,"Iron (Fe)":0.1,"Manganese (Mn)":0.04,"Molybdenum (Mo)":0.002,"Sodium (Na)":0.1,"Zinc (Zn)":0.02},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=5.3000","Mercury":"<0.0500","Molybdenum":"=26.1000","Nickel":"<0.1000","Lead":"=0.6000","Selenium":"<0.5000","Zinc":"=257.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EMERALD HARVEST","label_name":"CALI PRO BLOOM A 3-0-3","wsda_reg_no":"(#2800-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "31B6FE",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2800-0003)",
+    "product_name": "CALI PRO BLOOM A 3-0-3",
+    "company_info": {
+      "company": "EMERALD HARVEST",
+      "Mailing Address": "1399 Corporate Center Parkway",
+      "Post Office Box": null,
+      "City": "Santa Rosa",
+      "State": "CA",
+      "Postal Code": "95407",
+      "Telephone Number": "888 733-4343",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.0005,
+      "Copper (Cu)": 0.005,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.04,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": 0.1,
+      "Zinc (Zn)": 0.02
+    },
+    "reported_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<0.0300",
+      "Cobalt": "=5.3000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=26.1000",
+      "Nickel": "<0.1000",
+      "Lead": "=0.6000",
+      "Selenium": "<0.5000",
+      "Zinc": "=257.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.0005,
+      "Copper (Cu)": 0.005,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.04,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": 0.1,
+      "Zinc (Zn)": 0.02
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<0.0300",
+      "Cobalt": "=5.3000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=26.1000",
+      "Nickel": "<0.1000",
+      "Lead": "=0.6000",
+      "Selenium": "<0.5000",
+      "Zinc": "=257.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EMERALD HARVEST",
+    "label_name": "CALI PRO BLOOM A 3-0-3",
+    "wsda_reg_no": "(#2800-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

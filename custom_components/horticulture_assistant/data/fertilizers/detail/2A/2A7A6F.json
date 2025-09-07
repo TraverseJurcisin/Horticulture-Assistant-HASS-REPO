@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"2A7A6F","source_wsda_record":{"wsda_product_number":"(#3445-0003)","product_name":"AMBROSIA CROPZ MAG MG 9% 0-0-0","company_info":{"company":"AMBROZIA CROPZ","Mailing Address":"PO Box 306","Post Office Box":null,"City":"Florence","State":"CO","Postal Code":"81226","Telephone Number":"719 201-4312","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":9.0,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=0.9900","Mercury":"<0.2000","Molybdenum":"<0.1000","Nickel":"=8.5600","Lead":"=1.8100","Selenium":"<0.0500","Zinc":"=3.1600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":9.0,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=0.9900","Mercury":"<0.2000","Molybdenum":"<0.1000","Nickel":"=8.5600","Lead":"=1.8100","Selenium":"<0.0500","Zinc":"=3.1600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AMBROZIA CROPZ","label_name":"AMBROSIA CROPZ MAG MG 9% 0-0-0","wsda_reg_no":"(#3445-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "2A7A6F",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3445-0003)",
+    "product_name": "AMBROSIA CROPZ MAG MG 9% 0-0-0",
+    "company_info": {
+      "company": "AMBROZIA CROPZ",
+      "Mailing Address": "PO Box 306",
+      "Post Office Box": null,
+      "City": "Florence",
+      "State": "CO",
+      "Postal Code": "81226",
+      "Telephone Number": "719 201-4312",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 9.0,
+      "Sulfur (S)": 12.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.1000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=0.9900",
+      "Mercury": "<0.2000",
+      "Molybdenum": "<0.1000",
+      "Nickel": "=8.5600",
+      "Lead": "=1.8100",
+      "Selenium": "<0.0500",
+      "Zinc": "=3.1600"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 9.0,
+      "Sulfur (S)": 12.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.1000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=0.9900",
+      "Mercury": "<0.2000",
+      "Molybdenum": "<0.1000",
+      "Nickel": "=8.5600",
+      "Lead": "=1.8100",
+      "Selenium": "<0.0500",
+      "Zinc": "=3.1600"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AMBROZIA CROPZ",
+    "label_name": "AMBROSIA CROPZ MAG MG 9% 0-0-0",
+    "wsda_reg_no": "(#3445-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

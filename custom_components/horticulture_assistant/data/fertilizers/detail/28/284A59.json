@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"284A59","source_wsda_record":{"wsda_product_number":"(#0305-0019)","product_name":"CROP PROD W 4-9-4","company_info":{"company":"SOIL SPRAY AID INC","Mailing Address":"1249 Nanto Rd NE","Post Office Box":null,"City":"Moses Lake","State":"WA","Postal Code":"98837-9144","Telephone Number":"509 765-4811","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.0100","Cadmium":"=103.0100","Cobalt":"<0.0500","Mercury":"=0.0005","Molybdenum":"=4.3200","Nickel":"<0.0200","Lead":"<0.0150","Selenium":"<0.0200","Zinc":"=2753.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.0100","Cadmium":"=103.0100","Cobalt":"<0.0500","Mercury":"=0.0005","Molybdenum":"=4.3200","Nickel":"<0.0200","Lead":"<0.0150","Selenium":"<0.0200","Zinc":"=2753.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SOIL SPRAY AID INC","label_name":"CROP PROD W 4-9-4","wsda_reg_no":"(#0305-0019)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "284A59",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0305-0019)",
+    "product_name": "CROP PROD W 4-9-4",
+    "company_info": {
+      "company": "SOIL SPRAY AID INC",
+      "Mailing Address": "1249 Nanto Rd NE",
+      "Post Office Box": null,
+      "City": "Moses Lake",
+      "State": "WA",
+      "Postal Code": "98837-9144",
+      "Telephone Number": "509 765-4811",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 9.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.0100",
+      "Cadmium": "=103.0100",
+      "Cobalt": "<0.0500",
+      "Mercury": "=0.0005",
+      "Molybdenum": "=4.3200",
+      "Nickel": "<0.0200",
+      "Lead": "<0.0150",
+      "Selenium": "<0.0200",
+      "Zinc": "=2753.3000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 9.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.0100",
+      "Cadmium": "=103.0100",
+      "Cobalt": "<0.0500",
+      "Mercury": "=0.0005",
+      "Molybdenum": "=4.3200",
+      "Nickel": "<0.0200",
+      "Lead": "<0.0150",
+      "Selenium": "<0.0200",
+      "Zinc": "=2753.3000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SOIL SPRAY AID INC",
+    "label_name": "CROP PROD W 4-9-4",
+    "wsda_reg_no": "(#0305-0019)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

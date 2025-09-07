@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"29C62C","source_wsda_record":{"wsda_product_number":"(#3922-0012)","product_name":"BIOPRO NUTRISOLVE 0-0-0","company_info":{"company":"BIOPRO TECHNOLOGIES, LLC","Mailing Address":"c/o Delta Analytical Corporati","Post Office Box":"12510 Prosperity Dr Ste 160","City":"Silver Springs","State":"MD","Postal Code":"20904","Telephone Number":"352 620-2020","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.79,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":2.0,"Manganese (Mn)":2.0,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.75},"reported_metals":{"Arsenic":"=0.0010","Cadmium":"=0.1090","Cobalt":"=14.6000","Mercury":"=0.0010","Molybdenum":"=10.7000","Nickel":"=12.2000","Lead":"=2.6800","Selenium":"=11.1000","Zinc":"=7200.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.79,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":2.0,"Manganese (Mn)":2.0,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.75},"heavy_metals":{"Arsenic":"=0.0010","Cadmium":"=0.1090","Cobalt":"=14.6000","Mercury":"=0.0010","Molybdenum":"=10.7000","Nickel":"=12.2000","Lead":"=2.6800","Selenium":"=11.1000","Zinc":"=7200.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIOPRO TECHNOLOGIES, LLC","label_name":"BIOPRO NUTRISOLVE 0-0-0","wsda_reg_no":"(#3922-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "29C62C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3922-0012)",
+    "product_name": "BIOPRO NUTRISOLVE 0-0-0",
+    "company_info": {
+      "company": "BIOPRO TECHNOLOGIES, LLC",
+      "Mailing Address": "c/o Delta Analytical Corporati",
+      "Post Office Box": "12510 Prosperity Dr Ste 160",
+      "City": "Silver Springs",
+      "State": "MD",
+      "Postal Code": "20904",
+      "Telephone Number": "352 620-2020",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.79,
+      "Boron (B)": 0.08,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.25,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 2.0,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.75
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0010",
+      "Cadmium": "=0.1090",
+      "Cobalt": "=14.6000",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=10.7000",
+      "Nickel": "=12.2000",
+      "Lead": "=2.6800",
+      "Selenium": "=11.1000",
+      "Zinc": "=7200.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.79,
+      "Boron (B)": 0.08,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.25,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 2.0,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.75
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.0010",
+      "Cadmium": "=0.1090",
+      "Cobalt": "=14.6000",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=10.7000",
+      "Nickel": "=12.2000",
+      "Lead": "=2.6800",
+      "Selenium": "=11.1000",
+      "Zinc": "=7200.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BIOPRO TECHNOLOGIES, LLC",
+    "label_name": "BIOPRO NUTRISOLVE 0-0-0",
+    "wsda_reg_no": "(#3922-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

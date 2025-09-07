@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"2216E7","source_wsda_record":{"wsda_product_number":"(#3391-0024)","product_name":"MOTHER EARTH J.A.W.S JUST ADD WATER SOIL 0.25-0.05-0.08","company_info":{"company":"HAWTHORNE HYDROPONICS LLC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.25,"Available Phosphoric Acid (P2O5)":0.05,"Soluble Potash (K2O)":0.08,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4930","Cadmium":"<0.2400","Cobalt":"=1.2400","Mercury":"<0.0099","Molybdenum":"=2.1500","Nickel":"=5.6500","Lead":"=0.6300","Selenium":"<0.7210","Zinc":"=37.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.25,"Available Phosphoric Acid (P2O5)":0.05,"Soluble Potash (K2O)":0.08,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4930","Cadmium":"<0.2400","Cobalt":"=1.2400","Mercury":"<0.0099","Molybdenum":"=2.1500","Nickel":"=5.6500","Lead":"=0.6300","Selenium":"<0.7210","Zinc":"=37.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE HYDROPONICS LLC","label_name":"MOTHER EARTH J.A.W.S JUST ADD WATER SOIL 0.25-0.05-0.08","wsda_reg_no":"(#3391-0024)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "2216E7",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3391-0024)",
+    "product_name": "MOTHER EARTH J.A.W.S JUST ADD WATER SOIL 0.25-0.05-0.08",
+    "company_info": {
+      "company": "HAWTHORNE HYDROPONICS LLC",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "707 284-4701",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.25,
+      "Available Phosphoric Acid (P2O5)": 0.05,
+      "Soluble Potash (K2O)": 0.08,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.4930",
+      "Cadmium": "<0.2400",
+      "Cobalt": "=1.2400",
+      "Mercury": "<0.0099",
+      "Molybdenum": "=2.1500",
+      "Nickel": "=5.6500",
+      "Lead": "=0.6300",
+      "Selenium": "<0.7210",
+      "Zinc": "=37.1000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.25,
+      "Available Phosphoric Acid (P2O5)": 0.05,
+      "Soluble Potash (K2O)": 0.08,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.4930",
+      "Cadmium": "<0.2400",
+      "Cobalt": "=1.2400",
+      "Mercury": "<0.0099",
+      "Molybdenum": "=2.1500",
+      "Nickel": "=5.6500",
+      "Lead": "=0.6300",
+      "Selenium": "<0.7210",
+      "Zinc": "=37.1000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HAWTHORNE HYDROPONICS LLC",
+    "label_name": "MOTHER EARTH J.A.W.S JUST ADD WATER SOIL 0.25-0.05-0.08",
+    "wsda_reg_no": "(#3391-0024)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
