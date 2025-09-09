@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5E68E9","source_wsda_record":{"wsda_product_number":"(#4104-0004)","product_name":"NILOCG THRIVE CAPS 2.57-1.69-10.1","company_info":{"company":"NILOCG AQUATICS INC.","Mailing Address":"40235 Turnidge Road Northeast","Post Office Box":null,"City":"Albany","State":"OR","Postal Code":"97321","Telephone Number":"000 000-0000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.57,"Available Phosphoric Acid (P2O5)":1.69,"Soluble Potash (K2O)":10.1,"Calcium (Ca)":null,"Magnesium (Mg)":0.4,"Sulfur (S)":0.31,"Boron (B)":0.014,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0001,"Iron (Fe)":2.47,"Manganese (Mn)":0.161,"Molybdenum (Mo)":0.0002,"Sodium (Na)":null,"Zinc (Zn)":0.0055},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=10.7000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=5.1000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=150.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.57,"Available Phosphoric Acid (P2O5)":1.69,"Soluble Potash (K2O)":10.1,"Calcium (Ca)":null,"Magnesium (Mg)":0.4,"Sulfur (S)":0.31,"Boron (B)":0.014,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0001,"Iron (Fe)":2.47,"Manganese (Mn)":0.161,"Molybdenum (Mo)":0.0002,"Sodium (Na)":null,"Zinc (Zn)":0.0055},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=10.7000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=5.1000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=150.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NILOCG AQUATICS INC.","label_name":"NILOCG THRIVE CAPS 2.57-1.69-10.1","wsda_reg_no":"(#4104-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5E68E9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4104-0004)",
+    "product_name": "NILOCG THRIVE CAPS 2.57-1.69-10.1",
+    "company_info": {
+      "company": "NILOCG AQUATICS INC.",
+      "Mailing Address": "40235 Turnidge Road Northeast",
+      "Post Office Box": null,
+      "City": "Albany",
+      "State": "OR",
+      "Postal Code": "97321",
+      "Telephone Number": "000 000-0000",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.57,
+      "Available Phosphoric Acid (P2O5)": 1.69,
+      "Soluble Potash (K2O)": 10.1,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.4,
+      "Sulfur (S)": 0.31,
+      "Boron (B)": 0.014,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0001,
+      "Iron (Fe)": 2.47,
+      "Manganese (Mn)": 0.161,
+      "Molybdenum (Mo)": 0.0002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.0055
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=10.7000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=5.1000",
+      "Lead": "=5.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=150.8000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.57,
+      "Available Phosphoric Acid (P2O5)": 1.69,
+      "Soluble Potash (K2O)": 10.1,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.4,
+      "Sulfur (S)": 0.31,
+      "Boron (B)": 0.014,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0001,
+      "Iron (Fe)": 2.47,
+      "Manganese (Mn)": 0.161,
+      "Molybdenum (Mo)": 0.0002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.0055
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=10.7000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=5.1000",
+      "Lead": "=5.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=150.8000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NILOCG AQUATICS INC.",
+    "label_name": "NILOCG THRIVE CAPS 2.57-1.69-10.1",
+    "wsda_reg_no": "(#4104-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

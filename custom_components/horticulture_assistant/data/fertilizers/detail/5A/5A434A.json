@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5A434A","source_wsda_record":{"wsda_product_number":"(#3409-0061)","product_name":"20-0-0 AMMONIUM SULFATE 20-0-0","company_info":{"company":"NUTRIEN AG SOLUTIONS","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 613-3191","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":24.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"=0.1200","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=0.6000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=38.6500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":24.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"=0.1200","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=0.6000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=38.6500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIEN AG SOLUTIONS","label_name":"20-0-0 AMMONIUM SULFATE 20-0-0","wsda_reg_no":"(#3409-0061)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5A434A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3409-0061)",
+    "product_name": "20-0-0 AMMONIUM SULFATE 20-0-0",
+    "company_info": {
+      "company": "NUTRIEN AG SOLUTIONS",
+      "Mailing Address": "PO Box 1286",
+      "Post Office Box": null,
+      "City": "Greeley",
+      "State": "CO",
+      "Postal Code": "80632",
+      "Telephone Number": "970 613-3191",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 24.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "=0.1200",
+      "Cobalt": "<0.1000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=0.2000",
+      "Nickel": "=0.6000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=38.6500"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 24.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "=0.1200",
+      "Cobalt": "<0.1000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=0.2000",
+      "Nickel": "=0.6000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=38.6500"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NUTRIEN AG SOLUTIONS",
+    "label_name": "20-0-0 AMMONIUM SULFATE 20-0-0",
+    "wsda_reg_no": "(#3409-0061)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"63B35A","source_wsda_record":{"wsda_product_number":"(#0169-0578)","product_name":"APEX 21-7-8 EVERGREEN WITH GAL-XE ONE 21-7-8","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":1.55,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=4.6000","Cadmium":"=0.8000","Cobalt":"=59.0000","Mercury":"=0.0300","Molybdenum":"=14.0000","Nickel":"=19.0000","Lead":"=1.9000","Selenium":"=7.2000","Zinc":"=900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":1.55,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=4.6000","Cadmium":"=0.8000","Cobalt":"=59.0000","Mercury":"=0.0300","Molybdenum":"=14.0000","Nickel":"=19.0000","Lead":"=1.9000","Selenium":"=7.2000","Zinc":"=900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"APEX 21-7-8 EVERGREEN WITH GAL-XE ONE 21-7-8","wsda_reg_no":"(#0169-0578)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "63B35A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0169-0578)",
+    "product_name": "APEX 21-7-8 EVERGREEN WITH GAL-XE ONE 21-7-8",
+    "company_info": {
+      "company": "J R SIMPLOT COMPANY",
+      "Mailing Address": "PO Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 2.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 1.55,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0006,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "reported_metals": {
+      "Arsenic": "=4.6000",
+      "Cadmium": "=0.8000",
+      "Cobalt": "=59.0000",
+      "Mercury": "=0.0300",
+      "Molybdenum": "=14.0000",
+      "Nickel": "=19.0000",
+      "Lead": "=1.9000",
+      "Selenium": "=7.2000",
+      "Zinc": "=900.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 2.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 1.55,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0006,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "heavy_metals": {
+      "Arsenic": "=4.6000",
+      "Cadmium": "=0.8000",
+      "Cobalt": "=59.0000",
+      "Mercury": "=0.0300",
+      "Molybdenum": "=14.0000",
+      "Nickel": "=19.0000",
+      "Lead": "=1.9000",
+      "Selenium": "=7.2000",
+      "Zinc": "=900.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "APEX 21-7-8 EVERGREEN WITH GAL-XE ONE 21-7-8",
+    "wsda_reg_no": "(#0169-0578)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

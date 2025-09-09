@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"61B84A","source_wsda_record":{"wsda_product_number":"(#4044-0001)","product_name":"INGRAINED 3-0-0","company_info":{"company":"TRACER MINERALS LLC","Mailing Address":"18825 24 Road","Post Office Box":null,"City":"Cimmarron","State":"KS","Postal Code":"67835","Telephone Number":"620 865-2041","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=2.0800","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=1.3000","Lead":"<5.0000","Selenium":"<0.5000","Zinc":"=5400.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.5},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=2.0800","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=1.3000","Lead":"<5.0000","Selenium":"<0.5000","Zinc":"=5400.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TRACER MINERALS LLC","label_name":"INGRAINED 3-0-0","wsda_reg_no":"(#4044-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "61B84A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4044-0001)",
+    "product_name": "INGRAINED 3-0-0",
+    "company_info": {
+      "company": "TRACER MINERALS LLC",
+      "Mailing Address": "18825 24 Road",
+      "Post Office Box": null,
+      "City": "Cimmarron",
+      "State": "KS",
+      "Postal Code": "67835",
+      "Telephone Number": "620 865-2041",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.5,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 1.0,
+      "Iron (Fe)": 0.5,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.0800",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=1.3000",
+      "Lead": "<5.0000",
+      "Selenium": "<0.5000",
+      "Zinc": "=5400.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.5,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 1.0,
+      "Iron (Fe)": 0.5,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.5
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=2.0800",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=1.3000",
+      "Lead": "<5.0000",
+      "Selenium": "<0.5000",
+      "Zinc": "=5400.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TRACER MINERALS LLC",
+    "label_name": "INGRAINED 3-0-0",
+    "wsda_reg_no": "(#4044-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"53A153","source_wsda_record":{"wsda_product_number":"(#2319-0055)","product_name":"PETERS PROFESSIONAL 20-10-20 GENERAL PURPOSE 20-10-20","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.15,"Sulfur (S)":null,"Boron (B)":0.0125,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0125,"Iron (Fe)":0.05,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.025},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=25.0000","Mercury":"=0.0010","Molybdenum":"=80.0000","Nickel":"=0.1690","Lead":"=0.1000","Selenium":"=0.5000","Zinc":"=428.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.15,"Sulfur (S)":null,"Boron (B)":0.0125,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0125,"Iron (Fe)":0.05,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.025},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=25.0000","Mercury":"=0.0010","Molybdenum":"=80.0000","Nickel":"=0.1690","Lead":"=0.1000","Selenium":"=0.5000","Zinc":"=428.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"PETERS PROFESSIONAL 20-10-20 GENERAL PURPOSE 20-10-20","wsda_reg_no":"(#2319-0055)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "53A153",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2319-0055)",
+    "product_name": "PETERS PROFESSIONAL 20-10-20 GENERAL PURPOSE 20-10-20",
+    "company_info": {
+      "company": "EVERRIS NA INC",
+      "Mailing Address": "PO Box 3310",
+      "Post Office Box": null,
+      "City": "Dublin",
+      "State": "OH",
+      "Postal Code": "43016",
+      "Telephone Number": "314 983-7500",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.15,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.0125,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0125,
+      "Iron (Fe)": 0.05,
+      "Manganese (Mn)": 0.025,
+      "Molybdenum (Mo)": 0.005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.025
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=25.0000",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=80.0000",
+      "Nickel": "=0.1690",
+      "Lead": "=0.1000",
+      "Selenium": "=0.5000",
+      "Zinc": "=428.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.15,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.0125,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0125,
+      "Iron (Fe)": 0.05,
+      "Manganese (Mn)": 0.025,
+      "Molybdenum (Mo)": 0.005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.025
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=25.0000",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=80.0000",
+      "Nickel": "=0.1690",
+      "Lead": "=0.1000",
+      "Selenium": "=0.5000",
+      "Zinc": "=428.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "PETERS PROFESSIONAL 20-10-20 GENERAL PURPOSE 20-10-20",
+    "wsda_reg_no": "(#2319-0055)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

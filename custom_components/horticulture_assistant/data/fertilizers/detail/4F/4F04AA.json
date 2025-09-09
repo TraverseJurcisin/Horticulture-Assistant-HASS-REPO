@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"4F04AA","source_wsda_record":{"wsda_product_number":"(#0030-0003)","product_name":"ACCESS GROUP INT'L LLC NUTRIPLANT SL 0-0-0","company_info":{"company":"ACCESS BUSINESS GROUP INT'L LLC","Mailing Address":"7575 Fulton St East 50-1A","Post Office Box":null,"City":"Ada","State":"MI","Postal Code":"49355","Telephone Number":"616 787-4331","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.002,"Copper (Cu)":0.15,"Iron (Fe)":2.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":2.0},"reported_metals":{"Arsenic":"=2.5000","Cadmium":"=1.0000","Cobalt":"=27.0000","Mercury":"=1.1250","Molybdenum":"=14.0000","Nickel":"=35.0000","Lead":"=2.0000","Selenium":"=5.0000","Zinc":"=22000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.002,"Copper (Cu)":0.15,"Iron (Fe)":2.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":2.0},"heavy_metals":{"Arsenic":"=2.5000","Cadmium":"=1.0000","Cobalt":"=27.0000","Mercury":"=1.1250","Molybdenum":"=14.0000","Nickel":"=35.0000","Lead":"=2.0000","Selenium":"=5.0000","Zinc":"=22000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ACCESS BUSINESS GROUP INT'L LLC","label_name":"ACCESS GROUP INT'L LLC NUTRIPLANT SL 0-0-0","wsda_reg_no":"(#0030-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "4F04AA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0030-0003)",
+    "product_name": "ACCESS GROUP INT'L LLC NUTRIPLANT SL 0-0-0",
+    "company_info": {
+      "company": "ACCESS BUSINESS GROUP INT'L LLC",
+      "Mailing Address": "7575 Fulton St East 50-1A",
+      "Post Office Box": null,
+      "City": "Ada",
+      "State": "MI",
+      "Postal Code": "49355",
+      "Telephone Number": "616 787-4331",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 3.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.002,
+      "Copper (Cu)": 0.15,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.0
+    },
+    "reported_metals": {
+      "Arsenic": "=2.5000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=27.0000",
+      "Mercury": "=1.1250",
+      "Molybdenum": "=14.0000",
+      "Nickel": "=35.0000",
+      "Lead": "=2.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=22000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 3.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.002,
+      "Copper (Cu)": 0.15,
+      "Iron (Fe)": 2.0,
+      "Manganese (Mn)": 0.5,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.0
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.5000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=27.0000",
+      "Mercury": "=1.1250",
+      "Molybdenum": "=14.0000",
+      "Nickel": "=35.0000",
+      "Lead": "=2.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=22000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ACCESS BUSINESS GROUP INT'L LLC",
+    "label_name": "ACCESS GROUP INT'L LLC NUTRIPLANT SL 0-0-0",
+    "wsda_reg_no": "(#0030-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

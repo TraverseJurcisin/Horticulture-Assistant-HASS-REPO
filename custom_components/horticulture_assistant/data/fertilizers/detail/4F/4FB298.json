@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"4FB298","source_wsda_record":{"wsda_product_number":"(#3948-0044)","product_name":"REDOX BIO-NUTRIENTS TURFRX MICRO + 0-0-0","company_info":{"company":"REDOX BIO-NUTRIENTS LLC","Mailing Address":"PO Box 129","Post Office Box":null,"City":"Burley","State":"ID","Postal Code":"83318","Telephone Number":"208 678-2610","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.66,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.66,"Iron (Fe)":2.1,"Manganese (Mn)":2.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":2.1},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"=1.0000","Mercury":"<1.0000","Molybdenum":"<1.0000","Nickel":"=3.0000","Lead":"<1.0000","Selenium":"<3.0000","Zinc":"=19500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.66,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.66,"Iron (Fe)":2.1,"Manganese (Mn)":2.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":2.1},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"=1.0000","Mercury":"<1.0000","Molybdenum":"<1.0000","Nickel":"=3.0000","Lead":"<1.0000","Selenium":"<3.0000","Zinc":"=19500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REDOX BIO-NUTRIENTS LLC","label_name":"REDOX BIO-NUTRIENTS TURFRX MICRO + 0-0-0","wsda_reg_no":"(#3948-0044)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "4FB298",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3948-0044)",
+    "product_name": "REDOX BIO-NUTRIENTS TURFRX MICRO + 0-0-0",
+    "company_info": {
+      "company": "REDOX BIO-NUTRIENTS LLC",
+      "Mailing Address": "PO Box 129",
+      "Post Office Box": null,
+      "City": "Burley",
+      "State": "ID",
+      "Postal Code": "83318",
+      "Telephone Number": "208 678-2610",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.66,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.66,
+      "Iron (Fe)": 2.1,
+      "Manganese (Mn)": 2.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.1
+    },
+    "reported_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<1.0000",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=3.0000",
+      "Lead": "<1.0000",
+      "Selenium": "<3.0000",
+      "Zinc": "=19500.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "Y"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.66,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.66,
+      "Iron (Fe)": 2.1,
+      "Manganese (Mn)": 2.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.1
+    },
+    "heavy_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<1.0000",
+      "Molybdenum": "<1.0000",
+      "Nickel": "=3.0000",
+      "Lead": "<1.0000",
+      "Selenium": "<3.0000",
+      "Zinc": "=19500.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "REDOX BIO-NUTRIENTS LLC",
+    "label_name": "REDOX BIO-NUTRIENTS TURFRX MICRO + 0-0-0",
+    "wsda_reg_no": "(#3948-0044)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5A4F0D","source_wsda_record":{"wsda_product_number":"(#2630-0004)","product_name":"GREEN HOUSE SEED CO POWDER FEEDING GROW 24-6-12","company_info":{"company":"GHSC TRADING BV","Mailing Address":"247 Prospect Ave Ste 4G","Post Office Box":null,"City":"Brooklyn","State":"NY","Postal Code":"11215","Telephone Number":"949 419-7000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":1.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0600","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=73.0000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=71.5800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":1.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0600","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=73.0000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=71.5800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GHSC TRADING BV","label_name":"GREEN HOUSE SEED CO POWDER FEEDING GROW 24-6-12","wsda_reg_no":"(#2630-0004)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5A4F0D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2630-0004)",
+    "product_name": "GREEN HOUSE SEED CO POWDER FEEDING GROW 24-6-12",
+    "company_info": {
+      "company": "GHSC TRADING BV",
+      "Mailing Address": "247 Prospect Ave Ste 4G",
+      "Post Office Box": null,
+      "City": "Brooklyn",
+      "State": "NY",
+      "Postal Code": "11215",
+      "Telephone Number": "949 419-7000",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 12.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.2,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0600",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=73.0000",
+      "Nickel": "=0.2000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=71.5800"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 24.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 12.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.2,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0600",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=73.0000",
+      "Nickel": "=0.2000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=71.5800"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "GHSC TRADING BV",
+    "label_name": "GREEN HOUSE SEED CO POWDER FEEDING GROW 24-6-12",
+    "wsda_reg_no": "(#2630-0004)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

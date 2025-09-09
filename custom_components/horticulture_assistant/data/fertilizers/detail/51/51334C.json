@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"51334C","source_wsda_record":{"wsda_product_number":"(#0189-0219)","product_name":"LESCO PROFESSIONAL TURF PRODUCTS 14-14-14","company_info":{"company":"LESCO INC","Mailing Address":"1385 East 36th Street","Post Office Box":null,"City":"Cleveland","State":"OH","Postal Code":"44114-4114","Telephone Number":"440 454-3672","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":3.15,"Magnesium (Mg)":null,"Sulfur (S)":5.65,"Boron (B)":0.04,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.22,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.46},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=0.2000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=6.6500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":3.15,"Magnesium (Mg)":null,"Sulfur (S)":5.65,"Boron (B)":0.04,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.22,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.46},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=0.2000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=6.6500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LESCO INC","label_name":"LESCO PROFESSIONAL TURF PRODUCTS 14-14-14","wsda_reg_no":"(#0189-0219)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "51334C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0189-0219)",
+    "product_name": "LESCO PROFESSIONAL TURF PRODUCTS 14-14-14",
+    "company_info": {
+      "company": "LESCO INC",
+      "Mailing Address": "1385 East 36th Street",
+      "Post Office Box": null,
+      "City": "Cleveland",
+      "State": "OH",
+      "Postal Code": "44114-4114",
+      "Telephone Number": "440 454-3672",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 14.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 3.15,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.65,
+      "Boron (B)": 0.04,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.22,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.46
+    },
+    "reported_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<0.0300",
+      "Cobalt": "<0.1000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=0.2000",
+      "Nickel": "=0.2000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=6.6500"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 14.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 3.15,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.65,
+      "Boron (B)": 0.04,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.22,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.46
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<0.0300",
+      "Cobalt": "<0.1000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=0.2000",
+      "Nickel": "=0.2000",
+      "Lead": "<0.5000",
+      "Selenium": "<0.5000",
+      "Zinc": "=6.6500"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LESCO INC",
+    "label_name": "LESCO PROFESSIONAL TURF PRODUCTS 14-14-14",
+    "wsda_reg_no": "(#0189-0219)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

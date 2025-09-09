@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"64073D","source_wsda_record":{"wsda_product_number":"(#1934-0019)","product_name":"BIOBIZZ COCO-MIX NA 0.4-0-0","company_info":{"company":"BIOBIZZ NA LLC","Mailing Address":"11661 San Vicente Blvd","Post Office Box":null,"City":"Los Angeles","State":"CA","Postal Code":"90049","Telephone Number":"949 616-1238","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.4,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0750","Cadmium":"=0.1490","Cobalt":"=0.3020","Mercury":"=0.0750","Molybdenum":"=0.1710","Nickel":"=2.9700","Lead":"=7.6700","Selenium":"=0.5000","Zinc":"=6.8100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.4,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0750","Cadmium":"=0.1490","Cobalt":"=0.3020","Mercury":"=0.0750","Molybdenum":"=0.1710","Nickel":"=2.9700","Lead":"=7.6700","Selenium":"=0.5000","Zinc":"=6.8100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIOBIZZ NA LLC","label_name":"BIOBIZZ COCO-MIX NA 0.4-0-0","wsda_reg_no":"(#1934-0019)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "64073D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1934-0019)",
+    "product_name": "BIOBIZZ COCO-MIX NA 0.4-0-0",
+    "company_info": {
+      "company": "BIOBIZZ NA LLC",
+      "Mailing Address": "11661 San Vicente Blvd",
+      "Post Office Box": null,
+      "City": "Los Angeles",
+      "State": "CA",
+      "Postal Code": "90049",
+      "Telephone Number": "949 616-1238",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.4,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0750",
+      "Cadmium": "=0.1490",
+      "Cobalt": "=0.3020",
+      "Mercury": "=0.0750",
+      "Molybdenum": "=0.1710",
+      "Nickel": "=2.9700",
+      "Lead": "=7.6700",
+      "Selenium": "=0.5000",
+      "Zinc": "=6.8100"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.4,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.0750",
+      "Cadmium": "=0.1490",
+      "Cobalt": "=0.3020",
+      "Mercury": "=0.0750",
+      "Molybdenum": "=0.1710",
+      "Nickel": "=2.9700",
+      "Lead": "=7.6700",
+      "Selenium": "=0.5000",
+      "Zinc": "=6.8100"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BIOBIZZ NA LLC",
+    "label_name": "BIOBIZZ COCO-MIX NA 0.4-0-0",
+    "wsda_reg_no": "(#1934-0019)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

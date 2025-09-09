@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5FC9AB","source_wsda_record":{"wsda_product_number":"(#2214-0025)","product_name":"RTI AG FRUIT & NUT TREE STARTER PAKS 19-7-11 PLUS MINORS 19-7-11","company_info":{"company":"REFORESTATION TECHNOLOGIES INTERNAT","Mailing Address":"5355 Monterey Frontage Rd","Post Office Box":null,"City":"Gilroy","State":"CA","Postal Code":"95020","Telephone Number":"408 848-9604","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":2.64,"Magnesium (Mg)":3.65,"Sulfur (S)":4.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.16,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.06},"reported_metals":{"Arsenic":"=2.4000","Cadmium":"=14.2400","Cobalt":"=0.9000","Mercury":"=0.0500","Molybdenum":"=2.7000","Nickel":"=30.6000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=694.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":2.64,"Magnesium (Mg)":3.65,"Sulfur (S)":4.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.16,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.06},"heavy_metals":{"Arsenic":"=2.4000","Cadmium":"=14.2400","Cobalt":"=0.9000","Mercury":"=0.0500","Molybdenum":"=2.7000","Nickel":"=30.6000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=694.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REFORESTATION TECHNOLOGIES INTERNAT","label_name":"RTI AG FRUIT & NUT TREE STARTER PAKS 19-7-11 PLUS MINORS 19-7-11","wsda_reg_no":"(#2214-0025)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5FC9AB",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2214-0025)",
+    "product_name": "RTI AG FRUIT & NUT TREE STARTER PAKS 19-7-11 PLUS MINORS 19-7-11",
+    "company_info": {
+      "company": "REFORESTATION TECHNOLOGIES INTERNAT",
+      "Mailing Address": "5355 Monterey Frontage Rd",
+      "Post Office Box": null,
+      "City": "Gilroy",
+      "State": "CA",
+      "Postal Code": "95020",
+      "Telephone Number": "408 848-9604",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": 2.64,
+      "Magnesium (Mg)": 3.65,
+      "Sulfur (S)": 4.7,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.16,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.06
+    },
+    "reported_metals": {
+      "Arsenic": "=2.4000",
+      "Cadmium": "=14.2400",
+      "Cobalt": "=0.9000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=2.7000",
+      "Nickel": "=30.6000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=694.6000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": 2.64,
+      "Magnesium (Mg)": 3.65,
+      "Sulfur (S)": 4.7,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.16,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.06
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.4000",
+      "Cadmium": "=14.2400",
+      "Cobalt": "=0.9000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=2.7000",
+      "Nickel": "=30.6000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=694.6000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "REFORESTATION TECHNOLOGIES INTERNAT",
+    "label_name": "RTI AG FRUIT & NUT TREE STARTER PAKS 19-7-11 PLUS MINORS 19-7-11",
+    "wsda_reg_no": "(#2214-0025)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

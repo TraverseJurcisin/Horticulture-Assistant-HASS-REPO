@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"6664B2","source_wsda_record":{"wsda_product_number":"(#0941-0010)","product_name":"ACE RAPID REPAIR POD 1-1-0.8","company_info":{"company":"BARENBRUG USA INC","Mailing Address":"PO Box 239","Post Office Box":null,"City":"Tangent","State":"OR","Postal Code":"97389","Telephone Number":"541 704-1216","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":0.8,"Calcium (Ca)":4.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=1.2000","Nickel":"=8.2000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=220.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":0.8,"Calcium (Ca)":4.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=1.2000","Nickel":"=8.2000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=220.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BARENBRUG USA INC","label_name":"ACE RAPID REPAIR POD 1-1-0.8","wsda_reg_no":"(#0941-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "6664B2",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0941-0010)",
+    "product_name": "ACE RAPID REPAIR POD 1-1-0.8",
+    "company_info": {
+      "company": "BARENBRUG USA INC",
+      "Mailing Address": "PO Box 239",
+      "Post Office Box": null,
+      "City": "Tangent",
+      "State": "OR",
+      "Postal Code": "97389",
+      "Telephone Number": "541 704-1216",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 0.8,
+      "Calcium (Ca)": 4.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.2000",
+      "Nickel": "=8.2000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=220.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 0.8,
+      "Calcium (Ca)": 4.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=1.2000",
+      "Nickel": "=8.2000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=220.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BARENBRUG USA INC",
+    "label_name": "ACE RAPID REPAIR POD 1-1-0.8",
+    "wsda_reg_no": "(#0941-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
