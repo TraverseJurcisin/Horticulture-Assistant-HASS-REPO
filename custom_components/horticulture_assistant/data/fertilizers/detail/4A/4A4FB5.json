@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"4A4FB5","source_wsda_record":{"wsda_product_number":"(#0169-0644)","product_name":"BEST BEST 23-3-6 WITH 4.2% IRON WITH UFLEXX 23-3-6","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":23.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":4.2,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7000","Cadmium":"=10.0000","Cobalt":"=7.0000","Mercury":"=0.0940","Molybdenum":"=7.4000","Nickel":"=52.0000","Lead":"=0.5800","Selenium":"=0.4900","Zinc":"=110.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":23.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":4.2,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7000","Cadmium":"=10.0000","Cobalt":"=7.0000","Mercury":"=0.0940","Molybdenum":"=7.4000","Nickel":"=52.0000","Lead":"=0.5800","Selenium":"=0.4900","Zinc":"=110.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"BEST BEST 23-3-6 WITH 4.2% IRON WITH UFLEXX 23-3-6","wsda_reg_no":"(#0169-0644)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "4A4FB5",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0169-0644)",
+    "product_name": "BEST BEST 23-3-6 WITH 4.2% IRON WITH UFLEXX 23-3-6",
+    "company_info": {
+      "company": "J R SIMPLOT COMPANY",
+      "Mailing Address": "PO Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 23.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 4.2,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.7000",
+      "Cadmium": "=10.0000",
+      "Cobalt": "=7.0000",
+      "Mercury": "=0.0940",
+      "Molybdenum": "=7.4000",
+      "Nickel": "=52.0000",
+      "Lead": "=0.5800",
+      "Selenium": "=0.4900",
+      "Zinc": "=110.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 23.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 9.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 4.2,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.7000",
+      "Cadmium": "=10.0000",
+      "Cobalt": "=7.0000",
+      "Mercury": "=0.0940",
+      "Molybdenum": "=7.4000",
+      "Nickel": "=52.0000",
+      "Lead": "=0.5800",
+      "Selenium": "=0.4900",
+      "Zinc": "=110.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "BEST BEST 23-3-6 WITH 4.2% IRON WITH UFLEXX 23-3-6",
+    "wsda_reg_no": "(#0169-0644)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

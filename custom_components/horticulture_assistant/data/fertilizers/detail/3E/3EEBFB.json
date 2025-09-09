@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3EEBFB","source_wsda_record":{"wsda_product_number":"(#0081-0010)","product_name":"DOWN TO EARTH KELP MEAL 1-0.1-2 ALL NATURAL 1-0.1-2","company_info":{"company":"DOWN TO EARTH DISTRIBUTORS INC","Mailing Address":"PO Box1419","Post Office Box":null,"City":"Eugene","State":"OR","Postal Code":"97440-1419","Telephone Number":"541 485-5932","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=25.8000","Cadmium":"=1.6000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.6000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=9.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=25.8000","Cadmium":"=1.6000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.6000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=9.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"DOWN TO EARTH DISTRIBUTORS INC","label_name":"DOWN TO EARTH KELP MEAL 1-0.1-2 ALL NATURAL 1-0.1-2","wsda_reg_no":"(#0081-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3EEBFB",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0081-0010)",
+    "product_name": "DOWN TO EARTH KELP MEAL 1-0.1-2 ALL NATURAL 1-0.1-2",
+    "company_info": {
+      "company": "DOWN TO EARTH DISTRIBUTORS INC",
+      "Mailing Address": "PO Box1419",
+      "Post Office Box": null,
+      "City": "Eugene",
+      "State": "OR",
+      "Postal Code": "97440-1419",
+      "Telephone Number": "541 485-5932",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 0.1,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=25.8000",
+      "Cadmium": "=1.6000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.6000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=9.8000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 0.1,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=25.8000",
+      "Cadmium": "=1.6000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.6000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=9.8000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "DOWN TO EARTH DISTRIBUTORS INC",
+    "label_name": "DOWN TO EARTH KELP MEAL 1-0.1-2 ALL NATURAL 1-0.1-2",
+    "wsda_reg_no": "(#0081-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

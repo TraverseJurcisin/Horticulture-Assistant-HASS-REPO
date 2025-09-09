@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3FB3A1","source_wsda_record":{"wsda_product_number":"(#1517-0087)","product_name":"JACK'S PROFESSIONAL 21-7-7 ACID 77130 21-7-7","company_info":{"company":"JR PETERS INC","Mailing Address":"6656 Grant Way","Post Office Box":null,"City":"Allentown","State":"PA","Postal Code":"18106","Telephone Number":"866 522-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":15.0,"Boron (B)":0.0068,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0036,"Iron (Fe)":0.15,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.0025},"reported_metals":{"Arsenic":"<0.5000","Cadmium":"<0.1000","Cobalt":"<0.5000","Mercury":"<0.0152","Molybdenum":"=11.8000","Nickel":"<0.2500","Lead":"<0.3000","Selenium":"<0.5000","Zinc":"=30.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":15.0,"Boron (B)":0.0068,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0036,"Iron (Fe)":0.15,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.0025},"heavy_metals":{"Arsenic":"<0.5000","Cadmium":"<0.1000","Cobalt":"<0.5000","Mercury":"<0.0152","Molybdenum":"=11.8000","Nickel":"<0.2500","Lead":"<0.3000","Selenium":"<0.5000","Zinc":"=30.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR PETERS INC","label_name":"JACK'S PROFESSIONAL 21-7-7 ACID 77130 21-7-7","wsda_reg_no":"(#1517-0087)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3FB3A1",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1517-0087)",
+    "product_name": "JACK'S PROFESSIONAL 21-7-7 ACID 77130 21-7-7",
+    "company_info": {
+      "company": "JR PETERS INC",
+      "Mailing Address": "6656 Grant Way",
+      "Post Office Box": null,
+      "City": "Allentown",
+      "State": "PA",
+      "Postal Code": "18106",
+      "Telephone Number": "866 522-5752",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.7,
+      "Sulfur (S)": 15.0,
+      "Boron (B)": 0.0068,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0036,
+      "Iron (Fe)": 0.15,
+      "Manganese (Mn)": 0.025,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.0025
+    },
+    "reported_metals": {
+      "Arsenic": "<0.5000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "<0.5000",
+      "Mercury": "<0.0152",
+      "Molybdenum": "=11.8000",
+      "Nickel": "<0.2500",
+      "Lead": "<0.3000",
+      "Selenium": "<0.5000",
+      "Zinc": "=30.2000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.7,
+      "Sulfur (S)": 15.0,
+      "Boron (B)": 0.0068,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0036,
+      "Iron (Fe)": 0.15,
+      "Manganese (Mn)": 0.025,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.0025
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.5000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "<0.5000",
+      "Mercury": "<0.0152",
+      "Molybdenum": "=11.8000",
+      "Nickel": "<0.2500",
+      "Lead": "<0.3000",
+      "Selenium": "<0.5000",
+      "Zinc": "=30.2000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "JR PETERS INC",
+    "label_name": "JACK'S PROFESSIONAL 21-7-7 ACID 77130 21-7-7",
+    "wsda_reg_no": "(#1517-0087)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

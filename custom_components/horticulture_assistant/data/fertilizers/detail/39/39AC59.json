@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"39AC59","source_wsda_record":{"wsda_product_number":"(#2736-0018)","product_name":"PLANT-PROD MJ CAL KICK 15-0-14","company_info":{"company":"MASTER PLANT-PROD INC","Mailing Address":"314 Orenda Rd","Post Office Box":null,"City":"Brampton","State":"ON","Postal Code":"L6T 1G1","Telephone Number":"905 793-8000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.25,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.015,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=2.2300","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=241.8000","Nickel":"=1.3900","Lead":"=20.1000","Selenium":"<1.0000","Zinc":"=896.6300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.25,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.015,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=2.2300","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=241.8000","Nickel":"=1.3900","Lead":"=20.1000","Selenium":"<1.0000","Zinc":"=896.6300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MASTER PLANT-PROD INC","label_name":"PLANT-PROD MJ CAL KICK 15-0-14","wsda_reg_no":"(#2736-0018)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "39AC59",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2736-0018)",
+    "product_name": "PLANT-PROD MJ CAL KICK 15-0-14",
+    "company_info": {
+      "company": "MASTER PLANT-PROD INC",
+      "Mailing Address": "314 Orenda Rd",
+      "Post Office Box": null,
+      "City": "Brampton",
+      "State": "ON",
+      "Postal Code": "L6T 1G1",
+      "Telephone Number": "905 793-8000",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 15.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 11.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.25,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.015,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "reported_metals": {
+      "Arsenic": "=2.2300",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=241.8000",
+      "Nickel": "=1.3900",
+      "Lead": "=20.1000",
+      "Selenium": "<1.0000",
+      "Zinc": "=896.6300"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 15.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 11.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.25,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.015,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.2300",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=241.8000",
+      "Nickel": "=1.3900",
+      "Lead": "=20.1000",
+      "Selenium": "<1.0000",
+      "Zinc": "=896.6300"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "MASTER PLANT-PROD INC",
+    "label_name": "PLANT-PROD MJ CAL KICK 15-0-14",
+    "wsda_reg_no": "(#2736-0018)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

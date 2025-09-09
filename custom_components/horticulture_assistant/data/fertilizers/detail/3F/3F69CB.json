@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3F69CB","source_wsda_record":{"wsda_product_number":"(#3649-0005)","product_name":"BIO NOVA COCO FORTE A 7-0-0","company_info":{"company":"BIO NOVA AMERICA BV","Mailing Address":"C/O Spring Regulatory Sciences","Post Office Box":"6620 Cypresswood Drive Suite 2","City":"Spring","State":"TX","Postal Code":"77379","Telephone Number":"877 227-2597","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":10.0,"Magnesium (Mg)":3.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"<0.0500","Cobalt":"=0.1900","Mercury":"=0.0500","Molybdenum":"=1.1000","Nickel":"=1.7000","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"=60.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":10.0,"Magnesium (Mg)":3.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"<0.0500","Cobalt":"=0.1900","Mercury":"=0.0500","Molybdenum":"=1.1000","Nickel":"=1.7000","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"=60.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIO NOVA AMERICA BV","label_name":"BIO NOVA COCO FORTE A 7-0-0","wsda_reg_no":"(#3649-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3F69CB",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3649-0005)",
+    "product_name": "BIO NOVA COCO FORTE A 7-0-0",
+    "company_info": {
+      "company": "BIO NOVA AMERICA BV",
+      "Mailing Address": "C/O Spring Regulatory Sciences",
+      "Post Office Box": "6620 Cypresswood Drive Suite 2",
+      "City": "Spring",
+      "State": "TX",
+      "Postal Code": "77379",
+      "Telephone Number": "877 227-2597",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "<0.0500",
+      "Cobalt": "=0.1900",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=1.7000",
+      "Lead": "<0.1000",
+      "Selenium": "<0.1000",
+      "Zinc": "=60.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 10.0,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "<0.0500",
+      "Cobalt": "=0.1900",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=1.7000",
+      "Lead": "<0.1000",
+      "Selenium": "<0.1000",
+      "Zinc": "=60.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BIO NOVA AMERICA BV",
+    "label_name": "BIO NOVA COCO FORTE A 7-0-0",
+    "wsda_reg_no": "(#3649-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3CDF54","source_wsda_record":{"wsda_product_number":"(#0133-0142)","product_name":"HELENA TEPROSYN CU/P 9-15-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":6.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2890","Cadmium":"=0.2730","Cobalt":"=0.2620","Mercury":"=0.0010","Molybdenum":"=0.8360","Nickel":"=0.0010","Lead":"=125.0000","Selenium":"=0.0950","Zinc":"=64.6200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":6.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2890","Cadmium":"=0.2730","Cobalt":"=0.2620","Mercury":"=0.0010","Molybdenum":"=0.8360","Nickel":"=0.0010","Lead":"=125.0000","Selenium":"=0.0950","Zinc":"=64.6200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"HELENA TEPROSYN CU/P 9-15-0","wsda_reg_no":"(#0133-0142)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3CDF54",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0133-0142)",
+    "product_name": "HELENA TEPROSYN CU/P 9-15-0",
+    "company_info": {
+      "company": "HELENA AGRI-ENTERPRISES LLC",
+      "Mailing Address": "225 Schilling Blvd Ste 300",
+      "Post Office Box": null,
+      "City": "Collierville",
+      "State": "TN",
+      "Postal Code": "38017",
+      "Telephone Number": "901 752-4429",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 6.0,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2890",
+      "Cadmium": "=0.2730",
+      "Cobalt": "=0.2620",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=0.8360",
+      "Nickel": "=0.0010",
+      "Lead": "=125.0000",
+      "Selenium": "=0.0950",
+      "Zinc": "=64.6200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 6.0,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2890",
+      "Cadmium": "=0.2730",
+      "Cobalt": "=0.2620",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=0.8360",
+      "Nickel": "=0.0010",
+      "Lead": "=125.0000",
+      "Selenium": "=0.0950",
+      "Zinc": "=64.6200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "HELENA TEPROSYN CU/P 9-15-0",
+    "wsda_reg_no": "(#0133-0142)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

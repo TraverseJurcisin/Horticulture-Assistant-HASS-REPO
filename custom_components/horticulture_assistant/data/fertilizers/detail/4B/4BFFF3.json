@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"4BFFF3","source_wsda_record":{"wsda_product_number":"(#3132-0088)","product_name":"VALLEY AGRONOMICS FERTILIZER 19-5-10 OPTIMUS HAZELNUT PLUS MSC 19-5-10","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.8,"Sulfur (S)":6.0,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.5,"Iron (Fe)":0.14,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.2},"reported_metals":{"Arsenic":"=3.3000","Cadmium":"=18.4000","Cobalt":"=0.5000","Mercury":"=0.0200","Molybdenum":"=3.0000","Nickel":"=28.2000","Lead":"=0.6000","Selenium":"=0.2000","Zinc":"=426.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.8,"Sulfur (S)":6.0,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.5,"Iron (Fe)":0.14,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.2},"heavy_metals":{"Arsenic":"=3.3000","Cadmium":"=18.4000","Cobalt":"=0.5000","Mercury":"=0.0200","Molybdenum":"=3.0000","Nickel":"=28.2000","Lead":"=0.6000","Selenium":"=0.2000","Zinc":"=426.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 19-5-10 OPTIMUS HAZELNUT PLUS MSC 19-5-10","wsda_reg_no":"(#3132-0088)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "4BFFF3",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3132-0088)",
+    "product_name": "VALLEY AGRONOMICS FERTILIZER 19-5-10 OPTIMUS HAZELNUT PLUS MSC 19-5-10",
+    "company_info": {
+      "company": "VALLEY AGRONOMICS LLC",
+      "Mailing Address": "PO Box 365",
+      "Post Office Box": null,
+      "City": "Rupert",
+      "State": "ID",
+      "Postal Code": "83350",
+      "Telephone Number": "503 845-8125",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.8,
+      "Sulfur (S)": 6.0,
+      "Boron (B)": 0.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.5,
+      "Iron (Fe)": 0.14,
+      "Manganese (Mn)": 0.2,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.2
+    },
+    "reported_metals": {
+      "Arsenic": "=3.3000",
+      "Cadmium": "=18.4000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.0200",
+      "Molybdenum": "=3.0000",
+      "Nickel": "=28.2000",
+      "Lead": "=0.6000",
+      "Selenium": "=0.2000",
+      "Zinc": "=426.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.8,
+      "Sulfur (S)": 6.0,
+      "Boron (B)": 0.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.5,
+      "Iron (Fe)": 0.14,
+      "Manganese (Mn)": 0.2,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.2
+    },
+    "heavy_metals": {
+      "Arsenic": "=3.3000",
+      "Cadmium": "=18.4000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.0200",
+      "Molybdenum": "=3.0000",
+      "Nickel": "=28.2000",
+      "Lead": "=0.6000",
+      "Selenium": "=0.2000",
+      "Zinc": "=426.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 19-5-10 OPTIMUS HAZELNUT PLUS MSC 19-5-10",
+    "wsda_reg_no": "(#3132-0088)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

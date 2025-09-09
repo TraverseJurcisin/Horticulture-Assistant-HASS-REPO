@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3386B9","source_wsda_record":{"wsda_product_number":"(#3075-0004)","product_name":"LOTUS CAL MAG 4-0-0","company_info":{"company":"LOTUS GARDENING SOLUTIONS","Mailing Address":"PO Box 7613","Post Office Box":null,"City":"Santa Rosa","State":"CA","Postal Code":"95407","Telephone Number":"866 566-8872","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":3.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4920","Cadmium":"<0.4810","Cobalt":"=0.4190","Mercury":"=0.0050","Molybdenum":"=0.5170","Nickel":"=3.0800","Lead":"=0.7750","Selenium":"<1.1200","Zinc":"=5.9100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":3.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4920","Cadmium":"<0.4810","Cobalt":"=0.4190","Mercury":"=0.0050","Molybdenum":"=0.5170","Nickel":"=3.0800","Lead":"=0.7750","Selenium":"<1.1200","Zinc":"=5.9100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOTUS GARDENING SOLUTIONS","label_name":"LOTUS CAL MAG 4-0-0","wsda_reg_no":"(#3075-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3386B9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3075-0004)",
+    "product_name": "LOTUS CAL MAG 4-0-0",
+    "company_info": {
+      "company": "LOTUS GARDENING SOLUTIONS",
+      "Mailing Address": "PO Box 7613",
+      "Post Office Box": null,
+      "City": "Santa Rosa",
+      "State": "CA",
+      "Postal Code": "95407",
+      "Telephone Number": "866 566-8872",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 11.0,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.4920",
+      "Cadmium": "<0.4810",
+      "Cobalt": "=0.4190",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.5170",
+      "Nickel": "=3.0800",
+      "Lead": "=0.7750",
+      "Selenium": "<1.1200",
+      "Zinc": "=5.9100"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 11.0,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.4920",
+      "Cadmium": "<0.4810",
+      "Cobalt": "=0.4190",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.5170",
+      "Nickel": "=3.0800",
+      "Lead": "=0.7750",
+      "Selenium": "<1.1200",
+      "Zinc": "=5.9100"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LOTUS GARDENING SOLUTIONS",
+    "label_name": "LOTUS CAL MAG 4-0-0",
+    "wsda_reg_no": "(#3075-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
