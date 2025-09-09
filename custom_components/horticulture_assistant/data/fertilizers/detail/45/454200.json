@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"454200","source_wsda_record":{"wsda_product_number":"(#3282-0010)","product_name":"WHITNEY FARMS ORGANIC & NATURAL RAISED BED PLANT FOOD 8-2-5","company_info":{"company":"TERRACE BRANDS","Mailing Address":"3993 Howard Hughes Pkwy Suite","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89169-6754","Telephone Number":"937 578-5924","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.0097","Molybdenum":"=1.4100","Nickel":"=4.4900","Lead":"=0.5000","Selenium":"=5.3700","Zinc":"=99.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.0097","Molybdenum":"=1.4100","Nickel":"=4.4900","Lead":"=0.5000","Selenium":"=5.3700","Zinc":"=99.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRACE BRANDS","label_name":"WHITNEY FARMS ORGANIC & NATURAL RAISED BED PLANT FOOD 8-2-5","wsda_reg_no":"(#3282-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "454200",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3282-0010)",
+    "product_name": "WHITNEY FARMS ORGANIC & NATURAL RAISED BED PLANT FOOD 8-2-5",
+    "company_info": {
+      "company": "TERRACE BRANDS",
+      "Mailing Address": "3993 Howard Hughes Pkwy Suite",
+      "Post Office Box": null,
+      "City": "Las Vegas",
+      "State": "NV",
+      "Postal Code": "89169-6754",
+      "Telephone Number": "937 578-5924",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.0097",
+      "Molybdenum": "=1.4100",
+      "Nickel": "=4.4900",
+      "Lead": "=0.5000",
+      "Selenium": "=5.3700",
+      "Zinc": "=99.8000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 2.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.0097",
+      "Molybdenum": "=1.4100",
+      "Nickel": "=4.4900",
+      "Lead": "=0.5000",
+      "Selenium": "=5.3700",
+      "Zinc": "=99.8000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TERRACE BRANDS",
+    "label_name": "WHITNEY FARMS ORGANIC & NATURAL RAISED BED PLANT FOOD 8-2-5",
+    "wsda_reg_no": "(#3282-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

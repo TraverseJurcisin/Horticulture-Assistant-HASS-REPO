@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"456ABF","source_wsda_record":{"wsda_product_number":"(#4237-0001)","product_name":"BONSAI JACK SUCCULENT FERTILIZER 14-14-14","company_info":{"company":"JACKSON POLLOCK FINANCIAL LLC","Mailing Address":"17940 Balfour Ter","Post Office Box":null,"City":"Ft. Meyers","State":"FL","Postal Code":"33913","Telephone Number":"239 440-9850","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.8400","Cadmium":"=0.1990","Cobalt":"=1196.0000","Mercury":"=0.0032","Molybdenum":"=0.4560","Nickel":"=2.7500","Lead":"=0.9810","Selenium":"=0.0010","Zinc":"=57.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.8400","Cadmium":"=0.1990","Cobalt":"=1196.0000","Mercury":"=0.0032","Molybdenum":"=0.4560","Nickel":"=2.7500","Lead":"=0.9810","Selenium":"=0.0010","Zinc":"=57.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JACKSON POLLOCK FINANCIAL LLC","label_name":"BONSAI JACK SUCCULENT FERTILIZER 14-14-14","wsda_reg_no":"(#4237-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "456ABF",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4237-0001)",
+    "product_name": "BONSAI JACK SUCCULENT FERTILIZER 14-14-14",
+    "company_info": {
+      "company": "JACKSON POLLOCK FINANCIAL LLC",
+      "Mailing Address": "17940 Balfour Ter",
+      "Post Office Box": null,
+      "City": "Ft. Meyers",
+      "State": "FL",
+      "Postal Code": "33913",
+      "Telephone Number": "239 440-9850",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 14.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.8400",
+      "Cadmium": "=0.1990",
+      "Cobalt": "=1196.0000",
+      "Mercury": "=0.0032",
+      "Molybdenum": "=0.4560",
+      "Nickel": "=2.7500",
+      "Lead": "=0.9810",
+      "Selenium": "=0.0010",
+      "Zinc": "=57.1000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 14.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.8400",
+      "Cadmium": "=0.1990",
+      "Cobalt": "=1196.0000",
+      "Mercury": "=0.0032",
+      "Molybdenum": "=0.4560",
+      "Nickel": "=2.7500",
+      "Lead": "=0.9810",
+      "Selenium": "=0.0010",
+      "Zinc": "=57.1000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "JACKSON POLLOCK FINANCIAL LLC",
+    "label_name": "BONSAI JACK SUCCULENT FERTILIZER 14-14-14",
+    "wsda_reg_no": "(#4237-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3B0C96","source_wsda_record":{"wsda_product_number":"(#2121-0099)","product_name":"ROOTS ORGANICS TERP TEA MICROBE CHARGE 2-1-3","company_info":{"company":"AURORA INNOVATIONS","Mailing Address":"2103 Harrison Ave NW Ste 2 - #","Post Office Box":null,"City":"Olympia","State":"WA","Postal Code":"98502","Telephone Number":"541 359-1580","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.5000","Cadmium":"=0.3000","Cobalt":"=1.5000","Mercury":"=0.0500","Molybdenum":"=3.5000","Nickel":"=5.0000","Lead":"=2.6000","Selenium":"=1.5000","Zinc":"=110.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.5000","Cadmium":"=0.3000","Cobalt":"=1.5000","Mercury":"=0.0500","Molybdenum":"=3.5000","Nickel":"=5.0000","Lead":"=2.6000","Selenium":"=1.5000","Zinc":"=110.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AURORA INNOVATIONS","label_name":"ROOTS ORGANICS TERP TEA MICROBE CHARGE 2-1-3","wsda_reg_no":"(#2121-0099)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3B0C96",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2121-0099)",
+    "product_name": "ROOTS ORGANICS TERP TEA MICROBE CHARGE 2-1-3",
+    "company_info": {
+      "company": "AURORA INNOVATIONS",
+      "Mailing Address": "2103 Harrison Ave NW Ste 2 - #",
+      "Post Office Box": null,
+      "City": "Olympia",
+      "State": "WA",
+      "Postal Code": "98502",
+      "Telephone Number": "541 359-1580",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 4.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=7.5000",
+      "Cadmium": "=0.3000",
+      "Cobalt": "=1.5000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=3.5000",
+      "Nickel": "=5.0000",
+      "Lead": "=2.6000",
+      "Selenium": "=1.5000",
+      "Zinc": "=110.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 4.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=7.5000",
+      "Cadmium": "=0.3000",
+      "Cobalt": "=1.5000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=3.5000",
+      "Nickel": "=5.0000",
+      "Lead": "=2.6000",
+      "Selenium": "=1.5000",
+      "Zinc": "=110.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AURORA INNOVATIONS",
+    "label_name": "ROOTS ORGANICS TERP TEA MICROBE CHARGE 2-1-3",
+    "wsda_reg_no": "(#2121-0099)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"4567DE","source_wsda_record":{"wsda_product_number":"(#1444-0009)","product_name":"BRANDT MANNI-PLEX FOR CORN 3-0-0 FOLIAR MICRONUTRIENT SUPPLEMENT 3-0-0","company_info":{"company":"BRANDT CONSOLIDATED INC","Mailing Address":"2935 South Koke Mill Road","Post Office Box":null,"City":"Springfield","State":"IL","Postal Code":"62711-9651","Telephone Number":"217 547-5867","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.9,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.7},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=9.0000","Mercury":"=0.1000","Molybdenum":"=0.8000","Nickel":"=16.0000","Lead":"=0.9000","Selenium":"=13.0000","Zinc":"=50000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.9,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.7},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=9.0000","Mercury":"=0.1000","Molybdenum":"=0.8000","Nickel":"=16.0000","Lead":"=0.9000","Selenium":"=13.0000","Zinc":"=50000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BRANDT CONSOLIDATED INC","label_name":"BRANDT MANNI-PLEX FOR CORN 3-0-0 FOLIAR MICRONUTRIENT SUPPLEMENT 3-0-0","wsda_reg_no":"(#1444-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "4567DE",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1444-0009)",
+    "product_name": "BRANDT MANNI-PLEX FOR CORN 3-0-0 FOLIAR MICRONUTRIENT SUPPLEMENT 3-0-0",
+    "company_info": {
+      "company": "BRANDT CONSOLIDATED INC",
+      "Mailing Address": "2935 South Koke Mill Road",
+      "Post Office Box": null,
+      "City": "Springfield",
+      "State": "IL",
+      "Postal Code": "62711-9651",
+      "Telephone Number": "217 547-5867",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.9,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 4.7
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=9.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=0.8000",
+      "Nickel": "=16.0000",
+      "Lead": "=0.9000",
+      "Selenium": "=13.0000",
+      "Zinc": "=50000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.9,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 4.7
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=9.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=0.8000",
+      "Nickel": "=16.0000",
+      "Lead": "=0.9000",
+      "Selenium": "=13.0000",
+      "Zinc": "=50000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BRANDT CONSOLIDATED INC",
+    "label_name": "BRANDT MANNI-PLEX FOR CORN 3-0-0 FOLIAR MICRONUTRIENT SUPPLEMENT 3-0-0",
+    "wsda_reg_no": "(#1444-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

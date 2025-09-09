@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3D7A5D","source_wsda_record":{"wsda_product_number":"(#1265-0141)","product_name":"PURE BLEND PRO BLOOM 2-3-5","company_info":{"company":"BOTANICARE","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2770","Cadmium":"=0.0098","Cobalt":"=0.1970","Mercury":"<0.0189","Molybdenum":"=1.5500","Nickel":"=0.3230","Lead":"<0.0245","Selenium":"=0.6590","Zinc":"=46.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2770","Cadmium":"=0.0098","Cobalt":"=0.1970","Mercury":"<0.0189","Molybdenum":"=1.5500","Nickel":"=0.3230","Lead":"<0.0245","Selenium":"=0.6590","Zinc":"=46.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BOTANICARE","label_name":"PURE BLEND PRO BLOOM 2-3-5","wsda_reg_no":"(#1265-0141)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3D7A5D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1265-0141)",
+    "product_name": "PURE BLEND PRO BLOOM 2-3-5",
+    "company_info": {
+      "company": "BOTANICARE",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "707 284-4701",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 1.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2770",
+      "Cadmium": "=0.0098",
+      "Cobalt": "=0.1970",
+      "Mercury": "<0.0189",
+      "Molybdenum": "=1.5500",
+      "Nickel": "=0.3230",
+      "Lead": "<0.0245",
+      "Selenium": "=0.6590",
+      "Zinc": "=46.1000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 1.0,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2770",
+      "Cadmium": "=0.0098",
+      "Cobalt": "=0.1970",
+      "Mercury": "<0.0189",
+      "Molybdenum": "=1.5500",
+      "Nickel": "=0.3230",
+      "Lead": "<0.0245",
+      "Selenium": "=0.6590",
+      "Zinc": "=46.1000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "BOTANICARE",
+    "label_name": "PURE BLEND PRO BLOOM 2-3-5",
+    "wsda_reg_no": "(#1265-0141)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

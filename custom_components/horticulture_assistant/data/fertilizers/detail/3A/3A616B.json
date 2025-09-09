@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3A616B","source_wsda_record":{"wsda_product_number":"(#2393-0020)","product_name":"AGSCITECH STS SPRING + MICROS 9-4-6","company_info":{"company":"AGSCITECH INC","Mailing Address":"365 North 600 West","Post Office Box":null,"City":"Logan","State":"UT","Postal Code":"84321","Telephone Number":"435 213-9850","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":0.12},"reported_metals":{"Arsenic":"=1.7900","Cadmium":"=0.6300","Cobalt":"=4.7800","Mercury":"=0.0036","Molybdenum":"=337.0000","Nickel":"=9.8700","Lead":"=2.6300","Selenium":"=0.1000","Zinc":"=1460.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":0.12},"heavy_metals":{"Arsenic":"=1.7900","Cadmium":"=0.6300","Cobalt":"=4.7800","Mercury":"=0.0036","Molybdenum":"=337.0000","Nickel":"=9.8700","Lead":"=2.6300","Selenium":"=0.1000","Zinc":"=1460.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGSCITECH INC","label_name":"AGSCITECH STS SPRING + MICROS 9-4-6","wsda_reg_no":"(#2393-0020)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3A616B",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2393-0020)",
+    "product_name": "AGSCITECH STS SPRING + MICROS 9-4-6",
+    "company_info": {
+      "company": "AGSCITECH INC",
+      "Mailing Address": "365 North 600 West",
+      "Post Office Box": null,
+      "City": "Logan",
+      "State": "UT",
+      "Postal Code": "84321",
+      "Telephone Number": "435 213-9850",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 0.25,
+      "Molybdenum (Mo)": 0.003,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.12
+    },
+    "reported_metals": {
+      "Arsenic": "=1.7900",
+      "Cadmium": "=0.6300",
+      "Cobalt": "=4.7800",
+      "Mercury": "=0.0036",
+      "Molybdenum": "=337.0000",
+      "Nickel": "=9.8700",
+      "Lead": "=2.6300",
+      "Selenium": "=0.1000",
+      "Zinc": "=1460.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 6.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 0.25,
+      "Molybdenum (Mo)": 0.003,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.12
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.7900",
+      "Cadmium": "=0.6300",
+      "Cobalt": "=4.7800",
+      "Mercury": "=0.0036",
+      "Molybdenum": "=337.0000",
+      "Nickel": "=9.8700",
+      "Lead": "=2.6300",
+      "Selenium": "=0.1000",
+      "Zinc": "=1460.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AGSCITECH INC",
+    "label_name": "AGSCITECH STS SPRING + MICROS 9-4-6",
+    "wsda_reg_no": "(#2393-0020)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"3495B4","source_wsda_record":{"wsda_product_number":"(#2172-0017)","product_name":"FERTICELL EXPLORER LIQUID 10-0-0","company_info":{"company":"AGROPLASMA INC","Mailing Address":"35640 Fremont Blvd #237","Post Office Box":null,"City":"Fremont","State":"CA","Postal Code":"94536-3420","Telephone Number":"661 210-3603","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.0300","Cadmium":"<0.0200","Cobalt":"<0.1400","Mercury":"<0.1000","Molybdenum":"=0.2600","Nickel":"=0.7000","Lead":"<0.3000","Selenium":"<0.0300","Zinc":"=20.9600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.0300","Cadmium":"<0.0200","Cobalt":"<0.1400","Mercury":"<0.1000","Molybdenum":"=0.2600","Nickel":"=0.7000","Lead":"<0.3000","Selenium":"<0.0300","Zinc":"=20.9600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGROPLASMA INC","label_name":"FERTICELL EXPLORER LIQUID 10-0-0","wsda_reg_no":"(#2172-0017)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "3495B4",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2172-0017)",
+    "product_name": "FERTICELL EXPLORER LIQUID 10-0-0",
+    "company_info": {
+      "company": "AGROPLASMA INC",
+      "Mailing Address": "35640 Fremont Blvd #237",
+      "Post Office Box": null,
+      "City": "Fremont",
+      "State": "CA",
+      "Postal Code": "94536-3420",
+      "Telephone Number": "661 210-3603",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.0300",
+      "Cadmium": "<0.0200",
+      "Cobalt": "<0.1400",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=0.2600",
+      "Nickel": "=0.7000",
+      "Lead": "<0.3000",
+      "Selenium": "<0.0300",
+      "Zinc": "=20.9600"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.0300",
+      "Cadmium": "<0.0200",
+      "Cobalt": "<0.1400",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=0.2600",
+      "Nickel": "=0.7000",
+      "Lead": "<0.3000",
+      "Selenium": "<0.0300",
+      "Zinc": "=20.9600"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AGROPLASMA INC",
+    "label_name": "FERTICELL EXPLORER LIQUID 10-0-0",
+    "wsda_reg_no": "(#2172-0017)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
