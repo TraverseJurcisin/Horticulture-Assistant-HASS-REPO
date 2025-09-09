@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"632258","source_wsda_record":{"wsda_product_number":"(#2905-0004)","product_name":"BLACK MAGIC BASE NUTRIENT PART B 1-2-5","company_info":{"company":"HAWTHORNE HYDROPONICS BRANDS","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-5924","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0528","Cadmium":"=0.0125","Cobalt":"=0.0125","Mercury":"=0.0188","Molybdenum":"=0.8820","Nickel":"=0.0250","Lead":"=0.0125","Selenium":"=0.0250","Zinc":"=0.4770"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0528","Cadmium":"=0.0125","Cobalt":"=0.0125","Mercury":"=0.0188","Molybdenum":"=0.8820","Nickel":"=0.0250","Lead":"=0.0125","Selenium":"=0.0250","Zinc":"=0.4770"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE HYDROPONICS BRANDS","label_name":"BLACK MAGIC BASE NUTRIENT PART B 1-2-5","wsda_reg_no":"(#2905-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "632258",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2905-0004)",
+    "product_name": "BLACK MAGIC BASE NUTRIENT PART B 1-2-5",
+    "company_info": {
+      "company": "HAWTHORNE HYDROPONICS BRANDS",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 578-5924",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0528",
+      "Cadmium": "=0.0125",
+      "Cobalt": "=0.0125",
+      "Mercury": "=0.0188",
+      "Molybdenum": "=0.8820",
+      "Nickel": "=0.0250",
+      "Lead": "=0.0125",
+      "Selenium": "=0.0250",
+      "Zinc": "=0.4770"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.0528",
+      "Cadmium": "=0.0125",
+      "Cobalt": "=0.0125",
+      "Mercury": "=0.0188",
+      "Molybdenum": "=0.8820",
+      "Nickel": "=0.0250",
+      "Lead": "=0.0125",
+      "Selenium": "=0.0250",
+      "Zinc": "=0.4770"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HAWTHORNE HYDROPONICS BRANDS",
+    "label_name": "BLACK MAGIC BASE NUTRIENT PART B 1-2-5",
+    "wsda_reg_no": "(#2905-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

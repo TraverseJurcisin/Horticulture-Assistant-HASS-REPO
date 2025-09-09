@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"576458","source_wsda_record":{"wsda_product_number":"(#0229-0077)","product_name":"NUTRIENT TECH MO-POWER 4-2-1","company_info":{"company":"NUTRIENT TECHNOLOGIES INC","Mailing Address":"1092 E Kamm Ave","Post Office Box":null,"City":"Dinuba","State":"CA","Postal Code":"93618","Telephone Number":"559 595-8090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":2.8,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=26800.0000","Nickel":"=3.0000","Lead":"=0.1000","Selenium":"=10.0000","Zinc":"=3.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":2.8,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=26800.0000","Nickel":"=3.0000","Lead":"=0.1000","Selenium":"=10.0000","Zinc":"=3.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIENT TECHNOLOGIES INC","label_name":"NUTRIENT TECH MO-POWER 4-2-1","wsda_reg_no":"(#0229-0077)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "576458",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0229-0077)",
+    "product_name": "NUTRIENT TECH MO-POWER 4-2-1",
+    "company_info": {
+      "company": "NUTRIENT TECHNOLOGIES INC",
+      "Mailing Address": "1092 E Kamm Ave",
+      "Post Office Box": null,
+      "City": "Dinuba",
+      "State": "CA",
+      "Postal Code": "93618",
+      "Telephone Number": "559 595-8090",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 2.8,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=26800.0000",
+      "Nickel": "=3.0000",
+      "Lead": "=0.1000",
+      "Selenium": "=10.0000",
+      "Zinc": "=3.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 2.8,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=26800.0000",
+      "Nickel": "=3.0000",
+      "Lead": "=0.1000",
+      "Selenium": "=10.0000",
+      "Zinc": "=3.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NUTRIENT TECHNOLOGIES INC",
+    "label_name": "NUTRIENT TECH MO-POWER 4-2-1",
+    "wsda_reg_no": "(#0229-0077)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

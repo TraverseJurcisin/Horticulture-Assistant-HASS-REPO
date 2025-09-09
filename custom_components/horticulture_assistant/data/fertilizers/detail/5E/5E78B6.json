@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5E78B6","source_wsda_record":{"wsda_product_number":"(#1733-0041)","product_name":"TURF FUEL PREMIUM GRANULAR NUTRIFENSE ILF 17-7-17","company_info":{"company":"TARGET SPECIALTY PRODUCTS","Mailing Address":"15415 Marquardt Ave","Post Office Box":null,"City":"Santa Fe Springs","State":"CA","Postal Code":"90670","Telephone Number":"502 802-2238","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":17.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":8.86,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.13,"Iron (Fe)":0.3,"Manganese (Mn)":0.16,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.18},"reported_metals":{"Arsenic":"=2.1000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0900","Molybdenum":"=1.0000","Nickel":"=5.0000","Lead":"=4.4000","Selenium":"=0.4000","Zinc":"=4850.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":17.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":8.86,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.13,"Iron (Fe)":0.3,"Manganese (Mn)":0.16,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.18},"heavy_metals":{"Arsenic":"=2.1000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0900","Molybdenum":"=1.0000","Nickel":"=5.0000","Lead":"=4.4000","Selenium":"=0.4000","Zinc":"=4850.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TARGET SPECIALTY PRODUCTS","label_name":"TURF FUEL PREMIUM GRANULAR NUTRIFENSE ILF 17-7-17","wsda_reg_no":"(#1733-0041)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5E78B6",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1733-0041)",
+    "product_name": "TURF FUEL PREMIUM GRANULAR NUTRIFENSE ILF 17-7-17",
+    "company_info": {
+      "company": "TARGET SPECIALTY PRODUCTS",
+      "Mailing Address": "15415 Marquardt Ave",
+      "Post Office Box": null,
+      "City": "Santa Fe Springs",
+      "State": "CA",
+      "Postal Code": "90670",
+      "Telephone Number": "502 802-2238",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 17.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 17.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": 8.86,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.13,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.16,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.18
+    },
+    "reported_metals": {
+      "Arsenic": "=2.1000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0900",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=4.4000",
+      "Selenium": "=0.4000",
+      "Zinc": "=4850.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 17.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 17.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": 8.86,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.13,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.16,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.18
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.1000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0900",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=4.4000",
+      "Selenium": "=0.4000",
+      "Zinc": "=4850.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "TARGET SPECIALTY PRODUCTS",
+    "label_name": "TURF FUEL PREMIUM GRANULAR NUTRIFENSE ILF 17-7-17",
+    "wsda_reg_no": "(#1733-0041)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

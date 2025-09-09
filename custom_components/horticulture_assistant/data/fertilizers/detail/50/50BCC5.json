@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"50BCC5","source_wsda_record":{"wsda_product_number":"(#0126-0152)","product_name":"STA-GREEN INDOOR & OUTDOOR ALL PURPOSE PLANT FOOD 19-6-12","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5060","Cadmium":"=0.6530","Cobalt":"<0.4300","Mercury":"=0.0050","Molybdenum":"<0.5320","Nickel":"=2.1900","Lead":"=0.8030","Selenium":"<1.1500","Zinc":"=41.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5060","Cadmium":"=0.6530","Cobalt":"<0.4300","Mercury":"=0.0050","Molybdenum":"<0.5320","Nickel":"=2.1900","Lead":"=0.8030","Selenium":"<1.1500","Zinc":"=41.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"STA-GREEN INDOOR & OUTDOOR ALL PURPOSE PLANT FOOD 19-6-12","wsda_reg_no":"(#0126-0152)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "50BCC5",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0126-0152)",
+    "product_name": "STA-GREEN INDOOR & OUTDOOR ALL PURPOSE PLANT FOOD 19-6-12",
+    "company_info": {
+      "company": "GRO TEC INC",
+      "Mailing Address": "14481 Lochridge Blvd",
+      "Post Office Box": null,
+      "City": "Covington",
+      "State": "GA",
+      "Postal Code": "30014",
+      "Telephone Number": "770 788-4519",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 12.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 4.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.5060",
+      "Cadmium": "=0.6530",
+      "Cobalt": "<0.4300",
+      "Mercury": "=0.0050",
+      "Molybdenum": "<0.5320",
+      "Nickel": "=2.1900",
+      "Lead": "=0.8030",
+      "Selenium": "<1.1500",
+      "Zinc": "=41.3000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 12.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 4.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.5060",
+      "Cadmium": "=0.6530",
+      "Cobalt": "<0.4300",
+      "Mercury": "=0.0050",
+      "Molybdenum": "<0.5320",
+      "Nickel": "=2.1900",
+      "Lead": "=0.8030",
+      "Selenium": "<1.1500",
+      "Zinc": "=41.3000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "STA-GREEN INDOOR & OUTDOOR ALL PURPOSE PLANT FOOD 19-6-12",
+    "wsda_reg_no": "(#0126-0152)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

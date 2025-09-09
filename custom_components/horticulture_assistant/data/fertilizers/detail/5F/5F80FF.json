@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5F80FF","source_wsda_record":{"wsda_product_number":"(#1517-0040)","product_name":"RICHARD JACKSON'S WOW FLOWER PREMIUM BLOSSOM BOOSTER 12-12-36","company_info":{"company":"JR PETERS INC","Mailing Address":"6656 Grant Way","Post Office Box":null,"City":"Allentown","State":"PA","Postal Code":"18106","Telephone Number":"866 522-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":36.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":0.025,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=1.9600","Cadmium":"=0.4900","Cobalt":"=0.4900","Mercury":"=0.9530","Molybdenum":"=59.6000","Nickel":"=0.9800","Lead":"=1.4700","Selenium":"=1.9600","Zinc":"=154.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":36.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":0.025,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=1.9600","Cadmium":"=0.4900","Cobalt":"=0.4900","Mercury":"=0.9530","Molybdenum":"=59.6000","Nickel":"=0.9800","Lead":"=1.4700","Selenium":"=1.9600","Zinc":"=154.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR PETERS INC","label_name":"RICHARD JACKSON'S WOW FLOWER PREMIUM BLOSSOM BOOSTER 12-12-36","wsda_reg_no":"(#1517-0040)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5F80FF",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1517-0040)",
+    "product_name": "RICHARD JACKSON'S WOW FLOWER PREMIUM BLOSSOM BOOSTER 12-12-36",
+    "company_info": {
+      "company": "JR PETERS INC",
+      "Mailing Address": "6656 Grant Way",
+      "Post Office Box": null,
+      "City": "Allentown",
+      "State": "PA",
+      "Postal Code": "18106",
+      "Telephone Number": "866 522-5752",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 12.0,
+      "Soluble Potash (K2O)": 36.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.025,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "reported_metals": {
+      "Arsenic": "=1.9600",
+      "Cadmium": "=0.4900",
+      "Cobalt": "=0.4900",
+      "Mercury": "=0.9530",
+      "Molybdenum": "=59.6000",
+      "Nickel": "=0.9800",
+      "Lead": "=1.4700",
+      "Selenium": "=1.9600",
+      "Zinc": "=154.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 12.0,
+      "Soluble Potash (K2O)": 36.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.025,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.9600",
+      "Cadmium": "=0.4900",
+      "Cobalt": "=0.4900",
+      "Mercury": "=0.9530",
+      "Molybdenum": "=59.6000",
+      "Nickel": "=0.9800",
+      "Lead": "=1.4700",
+      "Selenium": "=1.9600",
+      "Zinc": "=154.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "JR PETERS INC",
+    "label_name": "RICHARD JACKSON'S WOW FLOWER PREMIUM BLOSSOM BOOSTER 12-12-36",
+    "wsda_reg_no": "(#1517-0040)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

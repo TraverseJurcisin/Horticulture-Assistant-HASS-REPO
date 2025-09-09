@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"55B449","source_wsda_record":{"wsda_product_number":"(#2622-0004)","product_name":"CULTURED SOLUTIONS BLOOM A 3.7-0-3","company_info":{"company":"CURRENT CULTURE H2O","Mailing Address":"4067 W Shaw Ave Ste #112","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93722","Telephone Number":"559 266-4769","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.7,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0035,"Iron (Fe)":0.09,"Manganese (Mn)":0.017,"Molybdenum (Mo)":0.002,"Sodium (Na)":null,"Zinc (Zn)":0.007},"reported_metals":{"Arsenic":"=0.1300","Cadmium":"=0.0800","Cobalt":"=0.0300","Mercury":"=0.0400","Molybdenum":"=13.3400","Nickel":"=0.1300","Lead":"=0.9100","Selenium":"=0.1300","Zinc":"=71.5500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.7,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0035,"Iron (Fe)":0.09,"Manganese (Mn)":0.017,"Molybdenum (Mo)":0.002,"Sodium (Na)":null,"Zinc (Zn)":0.007},"heavy_metals":{"Arsenic":"=0.1300","Cadmium":"=0.0800","Cobalt":"=0.0300","Mercury":"=0.0400","Molybdenum":"=13.3400","Nickel":"=0.1300","Lead":"=0.9100","Selenium":"=0.1300","Zinc":"=71.5500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CURRENT CULTURE H2O","label_name":"CULTURED SOLUTIONS BLOOM A 3.7-0-3","wsda_reg_no":"(#2622-0004)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "55B449",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2622-0004)",
+    "product_name": "CULTURED SOLUTIONS BLOOM A 3.7-0-3",
+    "company_info": {
+      "company": "CURRENT CULTURE H2O",
+      "Mailing Address": "4067 W Shaw Ave Ste #112",
+      "Post Office Box": null,
+      "City": "Fresno",
+      "State": "CA",
+      "Postal Code": "93722",
+      "Telephone Number": "559 266-4769",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.7,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 3.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0035,
+      "Iron (Fe)": 0.09,
+      "Manganese (Mn)": 0.017,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.007
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1300",
+      "Cadmium": "=0.0800",
+      "Cobalt": "=0.0300",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=13.3400",
+      "Nickel": "=0.1300",
+      "Lead": "=0.9100",
+      "Selenium": "=0.1300",
+      "Zinc": "=71.5500"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.7,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": 3.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0035,
+      "Iron (Fe)": 0.09,
+      "Manganese (Mn)": 0.017,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.007
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1300",
+      "Cadmium": "=0.0800",
+      "Cobalt": "=0.0300",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=13.3400",
+      "Nickel": "=0.1300",
+      "Lead": "=0.9100",
+      "Selenium": "=0.1300",
+      "Zinc": "=71.5500"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "CURRENT CULTURE H2O",
+    "label_name": "CULTURED SOLUTIONS BLOOM A 3.7-0-3",
+    "wsda_reg_no": "(#2622-0004)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

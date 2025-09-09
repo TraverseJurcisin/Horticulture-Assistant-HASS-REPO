@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"512E06","source_wsda_record":{"wsda_product_number":"(#1786-0009)","product_name":"OCEAN PROTEIN SHRIMP MEAL 4-3-0","company_info":{"company":"OCEAN PROTEIN LLC","Mailing Address":"PO BOX 696","Post Office Box":null,"City":"Hoquiam","State":"WA","Postal Code":"98550","Telephone Number":"360 538-7400","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":13.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"<5.0000","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"<10.0000","Lead":"<40.0000","Selenium":"<1.0000","Zinc":"<150.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":13.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"<5.0000","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"<10.0000","Lead":"<40.0000","Selenium":"<1.0000","Zinc":"<150.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"OCEAN PROTEIN LLC","label_name":"OCEAN PROTEIN SHRIMP MEAL 4-3-0","wsda_reg_no":"(#1786-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "512E06",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1786-0009)",
+    "product_name": "OCEAN PROTEIN SHRIMP MEAL 4-3-0",
+    "company_info": {
+      "company": "OCEAN PROTEIN LLC",
+      "Mailing Address": "PO BOX 696",
+      "Post Office Box": null,
+      "City": "Hoquiam",
+      "State": "WA",
+      "Postal Code": "98550",
+      "Telephone Number": "360 538-7400",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 13.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<5.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<10.0000",
+      "Lead": "<40.0000",
+      "Selenium": "<1.0000",
+      "Zinc": "<150.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 4.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 13.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<5.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<10.0000",
+      "Lead": "<40.0000",
+      "Selenium": "<1.0000",
+      "Zinc": "<150.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "OCEAN PROTEIN LLC",
+    "label_name": "OCEAN PROTEIN SHRIMP MEAL 4-3-0",
+    "wsda_reg_no": "(#1786-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

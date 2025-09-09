@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"5CF1FA","source_wsda_record":{"wsda_product_number":"(#3309-0006)","product_name":"BLUE GOLD ALFALFA BLEND 2-7-2","company_info":{"company":"EDEN SOLUTIONS LLC","Mailing Address":"825 C Merrimon Ave Ste 225","Post Office Box":null,"City":"Asheville","State":"NC","Postal Code":"28804","Telephone Number":"877 752-5360","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":17.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.0,"Boron (B)":0.0623,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0816,"Iron (Fe)":0.5646,"Manganese (Mn)":0.2895,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=30.4000","Mercury":"=0.1100","Molybdenum":"=87.6000","Nickel":"=14.5000","Lead":"<5.0000","Selenium":"=143.0000","Zinc":"=69.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":17.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.0,"Boron (B)":0.0623,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0816,"Iron (Fe)":0.5646,"Manganese (Mn)":0.2895,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=30.4000","Mercury":"=0.1100","Molybdenum":"=87.6000","Nickel":"=14.5000","Lead":"<5.0000","Selenium":"=143.0000","Zinc":"=69.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EDEN SOLUTIONS LLC","label_name":"BLUE GOLD ALFALFA BLEND 2-7-2","wsda_reg_no":"(#3309-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "5CF1FA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3309-0006)",
+    "product_name": "BLUE GOLD ALFALFA BLEND 2-7-2",
+    "company_info": {
+      "company": "EDEN SOLUTIONS LLC",
+      "Mailing Address": "825 C Merrimon Ave Ste 225",
+      "Post Office Box": null,
+      "City": "Asheville",
+      "State": "NC",
+      "Postal Code": "28804",
+      "Telephone Number": "877 752-5360",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": 17.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.0623,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0816,
+      "Iron (Fe)": 0.5646,
+      "Manganese (Mn)": 0.2895,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=30.4000",
+      "Mercury": "=0.1100",
+      "Molybdenum": "=87.6000",
+      "Nickel": "=14.5000",
+      "Lead": "<5.0000",
+      "Selenium": "=143.0000",
+      "Zinc": "=69.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": 17.0,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.0623,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0816,
+      "Iron (Fe)": 0.5646,
+      "Manganese (Mn)": 0.2895,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=30.4000",
+      "Mercury": "=0.1100",
+      "Molybdenum": "=87.6000",
+      "Nickel": "=14.5000",
+      "Lead": "<5.0000",
+      "Selenium": "=143.0000",
+      "Zinc": "=69.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EDEN SOLUTIONS LLC",
+    "label_name": "BLUE GOLD ALFALFA BLEND 2-7-2",
+    "wsda_reg_no": "(#3309-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

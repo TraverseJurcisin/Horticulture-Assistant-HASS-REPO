@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"53F7C9","source_wsda_record":{"wsda_product_number":"(#3433-0036)","product_name":"SUNDAY SEED + FEED NORTHWEST 9-0-2","company_info":{"company":"THIS LAND INC","Mailing Address":"1434 Spruce St Ste 100","Post Office Box":null,"City":"Boulder","State":"CO","Postal Code":"80302","Telephone Number":"303 525-8468","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":17.1,"Magnesium (Mg)":1.0,"Sulfur (S)":6.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=5.5000","Mercury":"=0.0500","Molybdenum":"=0.4000","Nickel":"=75.6000","Lead":"=1.9000","Selenium":"=0.5000","Zinc":"=45.3200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":17.1,"Magnesium (Mg)":1.0,"Sulfur (S)":6.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=5.5000","Mercury":"=0.0500","Molybdenum":"=0.4000","Nickel":"=75.6000","Lead":"=1.9000","Selenium":"=0.5000","Zinc":"=45.3200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"THIS LAND INC","label_name":"SUNDAY SEED + FEED NORTHWEST 9-0-2","wsda_reg_no":"(#3433-0036)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "53F7C9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3433-0036)",
+    "product_name": "SUNDAY SEED + FEED NORTHWEST 9-0-2",
+    "company_info": {
+      "company": "THIS LAND INC",
+      "Mailing Address": "1434 Spruce St Ste 100",
+      "Post Office Box": null,
+      "City": "Boulder",
+      "State": "CO",
+      "Postal Code": "80302",
+      "Telephone Number": "303 525-8468",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": 17.1,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 6.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0300",
+      "Cobalt": "=5.5000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.4000",
+      "Nickel": "=75.6000",
+      "Lead": "=1.9000",
+      "Selenium": "=0.5000",
+      "Zinc": "=45.3200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 9.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 2.0,
+      "Calcium (Ca)": 17.1,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": 6.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 2.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=0.0300",
+      "Cobalt": "=5.5000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.4000",
+      "Nickel": "=75.6000",
+      "Lead": "=1.9000",
+      "Selenium": "=0.5000",
+      "Zinc": "=45.3200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "THIS LAND INC",
+    "label_name": "SUNDAY SEED + FEED NORTHWEST 9-0-2",
+    "wsda_reg_no": "(#3433-0036)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

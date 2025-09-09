@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"619828","source_wsda_record":{"wsda_product_number":"(#4045-0001)","product_name":"VITALITY AG VITAL 3-3-4","company_info":{"company":"VITALITY AG & FEED, LLC","Mailing Address":"PO Box 790","Post Office Box":null,"City":"Challis","State":"ID","Postal Code":"83226","Telephone Number":"509 412-2917","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7800","Cadmium":"=0.4200","Cobalt":"=0.0700","Mercury":"=0.0100","Molybdenum":"=0.7800","Nickel":"=1.2000","Lead":"=0.6000","Selenium":"=45.7000","Zinc":"=45.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7800","Cadmium":"=0.4200","Cobalt":"=0.0700","Mercury":"=0.0100","Molybdenum":"=0.7800","Nickel":"=1.2000","Lead":"=0.6000","Selenium":"=45.7000","Zinc":"=45.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VITALITY AG & FEED, LLC","label_name":"VITALITY AG VITAL 3-3-4","wsda_reg_no":"(#4045-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "619828",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4045-0001)",
+    "product_name": "VITALITY AG VITAL 3-3-4",
+    "company_info": {
+      "company": "VITALITY AG & FEED, LLC",
+      "Mailing Address": "PO Box 790",
+      "Post Office Box": null,
+      "City": "Challis",
+      "State": "ID",
+      "Postal Code": "83226",
+      "Telephone Number": "509 412-2917",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.7800",
+      "Cadmium": "=0.4200",
+      "Cobalt": "=0.0700",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.7800",
+      "Nickel": "=1.2000",
+      "Lead": "=0.6000",
+      "Selenium": "=45.7000",
+      "Zinc": "=45.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.7800",
+      "Cadmium": "=0.4200",
+      "Cobalt": "=0.0700",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.7800",
+      "Nickel": "=1.2000",
+      "Lead": "=0.6000",
+      "Selenium": "=45.7000",
+      "Zinc": "=45.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VITALITY AG & FEED, LLC",
+    "label_name": "VITALITY AG VITAL 3-3-4",
+    "wsda_reg_no": "(#4045-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

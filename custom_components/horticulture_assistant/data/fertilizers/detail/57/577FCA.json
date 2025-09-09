@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"577FCA","source_wsda_record":{"wsda_product_number":"(#3330-0010)","product_name":"PRO-MATE TURF & ORNAMENTAL FERTILIZER 19-3-5 W/HYDRA HUME 19-3-5","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7300","Cadmium":"=2.1600","Cobalt":"=2.8400","Mercury":"=0.0590","Molybdenum":"=1.1000","Nickel":"=5.5400","Lead":"=2.9000","Selenium":"=0.0940","Zinc":"=26.0700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7300","Cadmium":"=2.1600","Cobalt":"=2.8400","Mercury":"=0.0590","Molybdenum":"=1.1000","Nickel":"=5.5400","Lead":"=2.9000","Selenium":"=0.0940","Zinc":"=26.0700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"PRO-MATE TURF & ORNAMENTAL FERTILIZER 19-3-5 W/HYDRA HUME 19-3-5","wsda_reg_no":"(#3330-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "577FCA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3330-0010)",
+    "product_name": "PRO-MATE TURF & ORNAMENTAL FERTILIZER 19-3-5 W/HYDRA HUME 19-3-5",
+    "company_info": {
+      "company": "HELENA AGRI-ENTERPRISES LLC",
+      "Mailing Address": "225 Schilling Blvd Ste 300",
+      "Post Office Box": null,
+      "City": "Collierville",
+      "State": "TN",
+      "Postal Code": "38017",
+      "Telephone Number": "901 752-4429",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.7,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 5.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.7300",
+      "Cadmium": "=2.1600",
+      "Cobalt": "=2.8400",
+      "Mercury": "=0.0590",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=5.5400",
+      "Lead": "=2.9000",
+      "Selenium": "=0.0940",
+      "Zinc": "=26.0700"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 19.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.7,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 5.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.7300",
+      "Cadmium": "=2.1600",
+      "Cobalt": "=2.8400",
+      "Mercury": "=0.0590",
+      "Molybdenum": "=1.1000",
+      "Nickel": "=5.5400",
+      "Lead": "=2.9000",
+      "Selenium": "=0.0940",
+      "Zinc": "=26.0700"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "PRO-MATE TURF & ORNAMENTAL FERTILIZER 19-3-5 W/HYDRA HUME 19-3-5",
+    "wsda_reg_no": "(#3330-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
