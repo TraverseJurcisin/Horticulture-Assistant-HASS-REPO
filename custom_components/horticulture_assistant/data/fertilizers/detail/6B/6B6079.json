@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"6B6079","source_wsda_record":{"wsda_product_number":"(#0911-0017)","product_name":"WALT'S ORGANIC FERTILIZER CO ORGANIC GARDEN NATURAL VEGAN ALL-PURPOSE 6-2-5","company_info":{"company":"WALT'S ORGANIC LLC","Mailing Address":"PO Box 31580","Post Office Box":null,"City":"Seattle","State":"WA","Postal Code":"98103-1580","Telephone Number":"206 214-6323","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=8.2700","Cadmium":"=0.2840","Cobalt":"<0.0010","Mercury":"=0.2000","Molybdenum":"=3.3500","Nickel":"=4.2400","Lead":"=1.8300","Selenium":"<0.0050","Zinc":"=29.9300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=8.2700","Cadmium":"=0.2840","Cobalt":"<0.0010","Mercury":"=0.2000","Molybdenum":"=3.3500","Nickel":"=4.2400","Lead":"=1.8300","Selenium":"<0.0050","Zinc":"=29.9300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WALT'S ORGANIC LLC","label_name":"WALT'S ORGANIC FERTILIZER CO ORGANIC GARDEN NATURAL VEGAN ALL-PURPOSE 6-2-5","wsda_reg_no":"(#0911-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "6B6079",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0911-0017)",
+    "product_name": "WALT'S ORGANIC FERTILIZER CO ORGANIC GARDEN NATURAL VEGAN ALL-PURPOSE 6-2-5",
+    "company_info": {
+      "company": "WALT'S ORGANIC LLC",
+      "Mailing Address": "PO Box 31580",
+      "Post Office Box": null,
+      "City": "Seattle",
+      "State": "WA",
+      "Postal Code": "98103-1580",
+      "Telephone Number": "206 214-6323",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=8.2700",
+      "Cadmium": "=0.2840",
+      "Cobalt": "<0.0010",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=3.3500",
+      "Nickel": "=4.2400",
+      "Lead": "=1.8300",
+      "Selenium": "<0.0050",
+      "Zinc": "=29.9300"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 2.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=8.2700",
+      "Cadmium": "=0.2840",
+      "Cobalt": "<0.0010",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=3.3500",
+      "Nickel": "=4.2400",
+      "Lead": "=1.8300",
+      "Selenium": "<0.0050",
+      "Zinc": "=29.9300"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "WALT'S ORGANIC LLC",
+    "label_name": "WALT'S ORGANIC FERTILIZER CO ORGANIC GARDEN NATURAL VEGAN ALL-PURPOSE 6-2-5",
+    "wsda_reg_no": "(#0911-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

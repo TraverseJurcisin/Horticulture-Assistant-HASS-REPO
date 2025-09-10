@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"678BD9","source_wsda_record":{"wsda_product_number":"(#1895-0063)","product_name":"YARAVITA B-MOLY 3-2-0","company_info":{"company":"YARA UK LTD","Mailing Address":"100 N Tampa St Ste 300","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":7.7,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.8,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.1500","Cadmium":"=0.5000","Cobalt":"=1.7100","Mercury":"=1.5400","Molybdenum":"=8000.0000","Nickel":"=0.9000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=12.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":7.7,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.8,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.1500","Cadmium":"=0.5000","Cobalt":"=1.7100","Mercury":"=1.5400","Molybdenum":"=8000.0000","Nickel":"=0.9000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=12.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA UK LTD","label_name":"YARAVITA B-MOLY 3-2-0","wsda_reg_no":"(#1895-0063)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "678BD9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1895-0063)",
+    "product_name": "YARAVITA B-MOLY 3-2-0",
+    "company_info": {
+      "company": "YARA UK LTD",
+      "Mailing Address": "100 N Tampa St Ste 300",
+      "Post Office Box": null,
+      "City": "Tampa",
+      "State": "FL",
+      "Postal Code": "33602",
+      "Telephone Number": "813 970-5438",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 7.7,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.8,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.1500",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=1.7100",
+      "Mercury": "=1.5400",
+      "Molybdenum": "=8000.0000",
+      "Nickel": "=0.9000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=12.2000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 7.7,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.8,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.1500",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=1.7100",
+      "Mercury": "=1.5400",
+      "Molybdenum": "=8000.0000",
+      "Nickel": "=0.9000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=12.2000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "YARA UK LTD",
+    "label_name": "YARAVITA B-MOLY 3-2-0",
+    "wsda_reg_no": "(#1895-0063)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
