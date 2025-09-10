@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"70789A","source_wsda_record":{"wsda_product_number":"(#0193-0552)","product_name":"SIGNATURE 6-24-24 PLUS 1.5 FE & 0.25 ZN 6-24-24","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":24.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.25},"reported_metals":{"Arsenic":"=5.1300","Cadmium":"=37.1200","Cobalt":"=2.3500","Mercury":"=0.0100","Molybdenum":"=6.4600","Nickel":"=60.6100","Lead":"=10.9300","Selenium":"=0.7400","Zinc":"=5668.6900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":24.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.25},"heavy_metals":{"Arsenic":"=5.1300","Cadmium":"=37.1200","Cobalt":"=2.3500","Mercury":"=0.0100","Molybdenum":"=6.4600","Nickel":"=60.6100","Lead":"=10.9300","Selenium":"=0.7400","Zinc":"=5668.6900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"SIGNATURE 6-24-24 PLUS 1.5 FE & 0.25 ZN 6-24-24","wsda_reg_no":"(#0193-0552)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "70789A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0193-0552)",
+    "product_name": "SIGNATURE 6-24-24 PLUS 1.5 FE & 0.25 ZN 6-24-24",
+    "company_info": {
+      "company": "LOVELAND PRODUCTS INC",
+      "Mailing Address": "PO Box 1286",
+      "Post Office Box": null,
+      "City": "Greeley",
+      "State": "CO",
+      "Postal Code": "80632",
+      "Telephone Number": "970 685-3737",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 24.0,
+      "Soluble Potash (K2O)": 24.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.25
+    },
+    "reported_metals": {
+      "Arsenic": "=5.1300",
+      "Cadmium": "=37.1200",
+      "Cobalt": "=2.3500",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=6.4600",
+      "Nickel": "=60.6100",
+      "Lead": "=10.9300",
+      "Selenium": "=0.7400",
+      "Zinc": "=5668.6900"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 6.0,
+      "Available Phosphoric Acid (P2O5)": 24.0,
+      "Soluble Potash (K2O)": 24.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.25
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.1300",
+      "Cadmium": "=37.1200",
+      "Cobalt": "=2.3500",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=6.4600",
+      "Nickel": "=60.6100",
+      "Lead": "=10.9300",
+      "Selenium": "=0.7400",
+      "Zinc": "=5668.6900"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "SIGNATURE 6-24-24 PLUS 1.5 FE & 0.25 ZN 6-24-24",
+    "wsda_reg_no": "(#0193-0552)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

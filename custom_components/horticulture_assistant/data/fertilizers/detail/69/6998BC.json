@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"6998BC","source_wsda_record":{"wsda_product_number":"(#0335-0103)","product_name":"HI-YIELD IRON PLUS SOIL ACIDIFIER 11-0-0","company_info":{"company":"VOLUNTARY PURCHASING GROUPS INC","Mailing Address":"230 FM 87","Post Office Box":null,"City":"Bonham","State":"TX","Postal Code":"75418-8629","Telephone Number":"903 583-5501","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":13.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":16.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0100","Cadmium":"=32.5000","Cobalt":"=514.0000","Mercury":"=0.1400","Molybdenum":"=57.8000","Nickel":"=197.1000","Lead":"=158.4000","Selenium":"=0.2900","Zinc":"=0.8200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":13.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":16.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0100","Cadmium":"=32.5000","Cobalt":"=514.0000","Mercury":"=0.1400","Molybdenum":"=57.8000","Nickel":"=197.1000","Lead":"=158.4000","Selenium":"=0.2900","Zinc":"=0.8200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOLUNTARY PURCHASING GROUPS INC","label_name":"HI-YIELD IRON PLUS SOIL ACIDIFIER 11-0-0","wsda_reg_no":"(#0335-0103)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "6998BC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0335-0103)",
+    "product_name": "HI-YIELD IRON PLUS SOIL ACIDIFIER 11-0-0",
+    "company_info": {
+      "company": "VOLUNTARY PURCHASING GROUPS INC",
+      "Mailing Address": "230 FM 87",
+      "Post Office Box": null,
+      "City": "Bonham",
+      "State": "TX",
+      "Postal Code": "75418-8629",
+      "Telephone Number": "903 583-5501",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 11.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 13.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 16.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0100",
+      "Cadmium": "=32.5000",
+      "Cobalt": "=514.0000",
+      "Mercury": "=0.1400",
+      "Molybdenum": "=57.8000",
+      "Nickel": "=197.1000",
+      "Lead": "=158.4000",
+      "Selenium": "=0.2900",
+      "Zinc": "=0.8200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 11.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 13.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 16.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0100",
+      "Cadmium": "=32.5000",
+      "Cobalt": "=514.0000",
+      "Mercury": "=0.1400",
+      "Molybdenum": "=57.8000",
+      "Nickel": "=197.1000",
+      "Lead": "=158.4000",
+      "Selenium": "=0.2900",
+      "Zinc": "=0.8200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VOLUNTARY PURCHASING GROUPS INC",
+    "label_name": "HI-YIELD IRON PLUS SOIL ACIDIFIER 11-0-0",
+    "wsda_reg_no": "(#0335-0103)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

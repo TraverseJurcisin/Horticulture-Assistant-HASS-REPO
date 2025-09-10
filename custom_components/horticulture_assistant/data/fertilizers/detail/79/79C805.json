@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"79C805","source_wsda_record":{"wsda_product_number":"(#0103-0114)","product_name":"TECHNIGRO 20-18-20 ALL PURPOSE CONTAINS 1% SULFUR 20-18-20","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.01},"reported_metals":{"Arsenic":"=0.5900","Cadmium":"=0.1000","Cobalt":"=0.0500","Mercury":"=0.2000","Molybdenum":"=71.2200","Nickel":"=1.0800","Lead":"=0.1000","Selenium":"=0.0500","Zinc":"=103.2300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.01},"heavy_metals":{"Arsenic":"=0.5900","Cadmium":"=0.1000","Cobalt":"=0.0500","Mercury":"=0.2000","Molybdenum":"=71.2200","Nickel":"=1.0800","Lead":"=0.1000","Selenium":"=0.0500","Zinc":"=103.2300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"TECHNIGRO 20-18-20 ALL PURPOSE CONTAINS 1% SULFUR 20-18-20","wsda_reg_no":"(#0103-0114)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "79C805",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0103-0114)",
+    "product_name": "TECHNIGRO 20-18-20 ALL PURPOSE CONTAINS 1% SULFUR 20-18-20",
+    "company_info": {
+      "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+      "Mailing Address": "770 Silver Street",
+      "Post Office Box": null,
+      "City": "Agawam",
+      "State": "MA",
+      "Postal Code": "01001",
+      "Telephone Number": "256 592-0135",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": 18.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.01,
+      "Iron (Fe)": 0.05,
+      "Manganese (Mn)": 0.02,
+      "Molybdenum (Mo)": 0.005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.01
+    },
+    "reported_metals": {
+      "Arsenic": "=0.5900",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.0500",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=71.2200",
+      "Nickel": "=1.0800",
+      "Lead": "=0.1000",
+      "Selenium": "=0.0500",
+      "Zinc": "=103.2300"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 20.0,
+      "Available Phosphoric Acid (P2O5)": 18.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.01,
+      "Iron (Fe)": 0.05,
+      "Manganese (Mn)": 0.02,
+      "Molybdenum (Mo)": 0.005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.01
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.5900",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.0500",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=71.2200",
+      "Nickel": "=1.0800",
+      "Lead": "=0.1000",
+      "Selenium": "=0.0500",
+      "Zinc": "=103.2300"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "TECHNIGRO 20-18-20 ALL PURPOSE CONTAINS 1% SULFUR 20-18-20",
+    "wsda_reg_no": "(#0103-0114)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
