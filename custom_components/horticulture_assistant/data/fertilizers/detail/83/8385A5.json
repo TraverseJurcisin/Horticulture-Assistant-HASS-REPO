@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8385A5","source_wsda_record":{"wsda_product_number":"(#3581-0003)","product_name":"RECLAIMED AG GYPSUM 0-0-0","company_info":{"company":"SCHOONOVER FARMS","Mailing Address":"2194 Schoonover Rd","Post Office Box":null,"City":"Odessa","State":"WA","Postal Code":"99159","Telephone Number":"509 988-0523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":22.8,"Magnesium (Mg)":null,"Sulfur (S)":20.1,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7100","Cadmium":"=1.2100","Cobalt":"=3.5700","Mercury":"=0.1360","Molybdenum":"=1.8300","Nickel":"=3.8000","Lead":"=15.3000","Selenium":"<0.8680","Zinc":"=68.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"67.3000"},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":22.8,"Magnesium (Mg)":null,"Sulfur (S)":20.1,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7100","Cadmium":"=1.2100","Cobalt":"=3.5700","Mercury":"=0.1360","Molybdenum":"=1.8300","Nickel":"=3.8000","Lead":"=15.3000","Selenium":"<0.8680","Zinc":"=68.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCHOONOVER FARMS","label_name":"RECLAIMED AG GYPSUM 0-0-0","wsda_reg_no":"(#3581-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8385A5",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3581-0003)",
+    "product_name": "RECLAIMED AG GYPSUM 0-0-0",
+    "company_info": {
+      "company": "SCHOONOVER FARMS",
+      "Mailing Address": "2194 Schoonover Rd",
+      "Post Office Box": null,
+      "City": "Odessa",
+      "State": "WA",
+      "Postal Code": "99159",
+      "Telephone Number": "509 988-0523",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 22.8,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 20.1,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.7100",
+      "Cadmium": "=1.2100",
+      "Cobalt": "=3.5700",
+      "Mercury": "=0.1360",
+      "Molybdenum": "=1.8300",
+      "Nickel": "=3.8000",
+      "Lead": "=15.3000",
+      "Selenium": "<0.8680",
+      "Zinc": "=68.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": "67.3000"
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 22.8,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 20.1,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.7100",
+      "Cadmium": "=1.2100",
+      "Cobalt": "=3.5700",
+      "Mercury": "=0.1360",
+      "Molybdenum": "=1.8300",
+      "Nickel": "=3.8000",
+      "Lead": "=15.3000",
+      "Selenium": "<0.8680",
+      "Zinc": "=68.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SCHOONOVER FARMS",
+    "label_name": "RECLAIMED AG GYPSUM 0-0-0",
+    "wsda_reg_no": "(#3581-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
