@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"A27BAB","source_wsda_record":{"wsda_product_number":"(#0418-0056)","product_name":"MONTEREY NUTRA-GEL FERTILIZER & WATER RETAINER 12-13-9 PLUS IRON 12-13-9","company_info":{"company":"LAWN & GARDEN PRODUCTS INC","Mailing Address":"PO Box 1566","Post Office Box":null,"City":"Fallon","State":"NV","Postal Code":"89407-1566","Telephone Number":"775 423-9122","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=8.0000","Cadmium":"=0.0500","Cobalt":"=1.2000","Mercury":"=0.0500","Molybdenum":"=4.0000","Nickel":"=1.2000","Lead":"=0.9000","Selenium":"=1.8000","Zinc":"=310.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=8.0000","Cadmium":"=0.0500","Cobalt":"=1.2000","Mercury":"=0.0500","Molybdenum":"=4.0000","Nickel":"=1.2000","Lead":"=0.9000","Selenium":"=1.8000","Zinc":"=310.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LAWN & GARDEN PRODUCTS INC","label_name":"MONTEREY NUTRA-GEL FERTILIZER & WATER RETAINER 12-13-9 PLUS IRON 12-13-9","wsda_reg_no":"(#0418-0056)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "A27BAB",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0418-0056)",
+    "product_name": "MONTEREY NUTRA-GEL FERTILIZER & WATER RETAINER 12-13-9 PLUS IRON 12-13-9",
+    "company_info": {
+      "company": "LAWN & GARDEN PRODUCTS INC",
+      "Mailing Address": "PO Box 1566",
+      "Post Office Box": null,
+      "City": "Fallon",
+      "State": "NV",
+      "Postal Code": "89407-1566",
+      "Telephone Number": "775 423-9122",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 13.0,
+      "Soluble Potash (K2O)": 9.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=8.0000",
+      "Cadmium": "=0.0500",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=4.0000",
+      "Nickel": "=1.2000",
+      "Lead": "=0.9000",
+      "Selenium": "=1.8000",
+      "Zinc": "=310.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": 13.0,
+      "Soluble Potash (K2O)": 9.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0005,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=8.0000",
+      "Cadmium": "=0.0500",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=4.0000",
+      "Nickel": "=1.2000",
+      "Lead": "=0.9000",
+      "Selenium": "=1.8000",
+      "Zinc": "=310.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LAWN & GARDEN PRODUCTS INC",
+    "label_name": "MONTEREY NUTRA-GEL FERTILIZER & WATER RETAINER 12-13-9 PLUS IRON 12-13-9",
+    "wsda_reg_no": "(#0418-0056)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

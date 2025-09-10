@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"A46183","source_wsda_record":{"wsda_product_number":"(#2281-0004)","product_name":"SUSTANE 5-2-4 ALL NATURAL GRANULATED SLOW RELEASE NITROGEN FERTILIZER 5-2-4","company_info":{"company":"SUSTANE NATURAL FERTILIZER INC","Mailing Address":"310 Holiday Ave","Post Office Box":null,"City":"Cannon Falls","State":"MN","Postal Code":"55009","Telephone Number":"507 263-3003","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.0000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=4.6000","Nickel":"=12.2000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=333.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.0000","Cadmium":"=0.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=4.6000","Nickel":"=12.2000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=333.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUSTANE NATURAL FERTILIZER INC","label_name":"SUSTANE 5-2-4 ALL NATURAL GRANULATED SLOW RELEASE NITROGEN FERTILIZER 5-2-4","wsda_reg_no":"(#2281-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "A46183",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2281-0004)",
+    "product_name": "SUSTANE 5-2-4 ALL NATURAL GRANULATED SLOW RELEASE NITROGEN FERTILIZER 5-2-4",
+    "company_info": {
+      "company": "SUSTANE NATURAL FERTILIZER INC",
+      "Mailing Address": "310 Holiday Ave",
+      "Post Office Box": null,
+      "City": "Cannon Falls",
+      "State": "MN",
+      "Postal Code": "55009",
+      "Telephone Number": "507 263-3003",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 3.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=4.6000",
+      "Nickel": "=12.2000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=333.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": 3.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=4.6000",
+      "Nickel": "=12.2000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=333.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SUSTANE NATURAL FERTILIZER INC",
+    "label_name": "SUSTANE 5-2-4 ALL NATURAL GRANULATED SLOW RELEASE NITROGEN FERTILIZER 5-2-4",
+    "wsda_reg_no": "(#2281-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

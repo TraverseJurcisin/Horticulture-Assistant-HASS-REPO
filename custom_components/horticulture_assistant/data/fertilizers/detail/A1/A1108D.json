@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"A1108D","source_wsda_record":{"wsda_product_number":"(#0308-0021)","product_name":"MIRACLE-GRO MIRACLE-GRO LIQUID AFRICAN VIOLET PLANT FOOD 7-7-7","company_info":{"company":"SCOTTS MIRACLE-GRO PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.08,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<1.0000","Cobalt":"<2.5000","Mercury":"<0.0200","Molybdenum":"<2.5000","Nickel":"<2.5000","Lead":"=0.2300","Selenium":"<1.0000","Zinc":"=587.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.08,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<1.0000","Cobalt":"<2.5000","Mercury":"<0.0200","Molybdenum":"<2.5000","Nickel":"<2.5000","Lead":"=0.2300","Selenium":"<1.0000","Zinc":"=587.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS MIRACLE-GRO PRODUCTS INC","label_name":"MIRACLE-GRO MIRACLE-GRO LIQUID AFRICAN VIOLET PLANT FOOD 7-7-7","wsda_reg_no":"(#0308-0021)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "A1108D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0308-0021)",
+    "product_name": "MIRACLE-GRO MIRACLE-GRO LIQUID AFRICAN VIOLET PLANT FOOD 7-7-7",
+    "company_info": {
+      "company": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 578-1573",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.08,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "reported_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<2.5000",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<2.5000",
+      "Nickel": "<2.5000",
+      "Lead": "=0.2300",
+      "Selenium": "<1.0000",
+      "Zinc": "=587.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 7.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.08,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.2500",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<2.5000",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<2.5000",
+      "Nickel": "<2.5000",
+      "Lead": "=0.2300",
+      "Selenium": "<1.0000",
+      "Zinc": "=587.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+    "label_name": "MIRACLE-GRO MIRACLE-GRO LIQUID AFRICAN VIOLET PLANT FOOD 7-7-7",
+    "wsda_reg_no": "(#0308-0021)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

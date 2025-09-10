@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9FD004","source_wsda_record":{"wsda_product_number":"(#3330-0047)","product_name":"CORON 25-0-0 B 25-0-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0500","Cadmium":"=0.0100","Cobalt":"=0.0270","Mercury":"=0.0010","Molybdenum":"=0.0360","Nickel":"=0.0500","Lead":"=0.5500","Selenium":"=0.0200","Zinc":"=1.4100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0500","Cadmium":"=0.0100","Cobalt":"=0.0270","Mercury":"=0.0010","Molybdenum":"=0.0360","Nickel":"=0.0500","Lead":"=0.5500","Selenium":"=0.0200","Zinc":"=1.4100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"CORON 25-0-0 B 25-0-0","wsda_reg_no":"(#3330-0047)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9FD004",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3330-0047)",
+    "product_name": "CORON 25-0-0 B 25-0-0",
+    "company_info": {
+      "company": "HELENA AGRI-ENTERPRISES LLC",
+      "Mailing Address": "225 Schilling Blvd Ste 300",
+      "Post Office Box": null,
+      "City": "Collierville",
+      "State": "TN",
+      "Postal Code": "38017",
+      "Telephone Number": "901 752-4429",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 25.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.0500",
+      "Cadmium": "=0.0100",
+      "Cobalt": "=0.0270",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=0.0360",
+      "Nickel": "=0.0500",
+      "Lead": "=0.5500",
+      "Selenium": "=0.0200",
+      "Zinc": "=1.4100"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 25.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.0500",
+      "Cadmium": "=0.0100",
+      "Cobalt": "=0.0270",
+      "Mercury": "=0.0010",
+      "Molybdenum": "=0.0360",
+      "Nickel": "=0.0500",
+      "Lead": "=0.5500",
+      "Selenium": "=0.0200",
+      "Zinc": "=1.4100"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "CORON 25-0-0 B 25-0-0",
+    "wsda_reg_no": "(#3330-0047)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

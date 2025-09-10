@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"AE141A","source_wsda_record":{"wsda_product_number":"(#0253-0056)","product_name":"NUTRICULTURE HYDROPONIC SPECIAL 3-15-26 PLUS TRACE ELEMENTS 3-15-26","company_info":{"company":"PLANT MARVEL LABORATORIES INC","Mailing Address":"371 E 16th St","Post Office Box":null,"City":"Chicago Heights","State":"IL","Postal Code":"60411","Telephone Number":"708 757-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.0,"Sulfur (S)":6.0,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.3,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.04},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=1.0000","Mercury":"<0.0500","Molybdenum":"=159.0000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=411.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.0,"Sulfur (S)":6.0,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.3,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.04},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=1.0000","Mercury":"<0.0500","Molybdenum":"=159.0000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=411.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PLANT MARVEL LABORATORIES INC","label_name":"NUTRICULTURE HYDROPONIC SPECIAL 3-15-26 PLUS TRACE ELEMENTS 3-15-26","wsda_reg_no":"(#0253-0056)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "AE141A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0253-0056)",
+    "product_name": "NUTRICULTURE HYDROPONIC SPECIAL 3-15-26 PLUS TRACE ELEMENTS 3-15-26",
+    "company_info": {
+      "company": "PLANT MARVEL LABORATORIES INC",
+      "Mailing Address": "371 E 16th St",
+      "Post Office Box": null,
+      "City": "Chicago Heights",
+      "State": "IL",
+      "Postal Code": "60411",
+      "Telephone Number": "708 757-7500",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": 26.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": 6.0,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.07,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.04
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=159.0000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=411.9000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": 26.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 3.0,
+      "Sulfur (S)": 6.0,
+      "Boron (B)": 0.01,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.07,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.04
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=159.0000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=411.9000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "PLANT MARVEL LABORATORIES INC",
+    "label_name": "NUTRICULTURE HYDROPONIC SPECIAL 3-15-26 PLUS TRACE ELEMENTS 3-15-26",
+    "wsda_reg_no": "(#0253-0056)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
