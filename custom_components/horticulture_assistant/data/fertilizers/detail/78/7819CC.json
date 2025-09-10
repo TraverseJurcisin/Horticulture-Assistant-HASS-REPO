@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"7819CC","source_wsda_record":{"wsda_product_number":"(#4058-0001)","product_name":"AQUARIUM CO-OP EASY GREEN LIQUID FERTILIZER 2.66-0.46-9.2","company_info":{"company":"AQUARIUM CO-OP LLC","Mailing Address":"9661 Firdale Ave","Post Office Box":null,"City":"Edmonds","State":"WA","Postal Code":"98020","Telephone Number":"206 533-2281","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.66,"Available Phosphoric Acid (P2O5)":0.46,"Soluble Potash (K2O)":9.2,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.13,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=16.2000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=81.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.66,"Available Phosphoric Acid (P2O5)":0.46,"Soluble Potash (K2O)":9.2,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.13,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=16.2000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=81.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AQUARIUM CO-OP LLC","label_name":"AQUARIUM CO-OP EASY GREEN LIQUID FERTILIZER 2.66-0.46-9.2","wsda_reg_no":"(#4058-0001)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "7819CC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4058-0001)",
+    "product_name": "AQUARIUM CO-OP EASY GREEN LIQUID FERTILIZER 2.66-0.46-9.2",
+    "company_info": {
+      "company": "AQUARIUM CO-OP LLC",
+      "Mailing Address": "9661 Firdale Ave",
+      "Post Office Box": null,
+      "City": "Edmonds",
+      "State": "WA",
+      "Postal Code": "98020",
+      "Telephone Number": "206 533-2281",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.66,
+      "Available Phosphoric Acid (P2O5)": 0.46,
+      "Soluble Potash (K2O)": 9.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.7,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.13,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=16.2000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=81.9000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.66,
+      "Available Phosphoric Acid (P2O5)": 0.46,
+      "Soluble Potash (K2O)": 9.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.7,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.13,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.0009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=16.2000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=81.9000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AQUARIUM CO-OP LLC",
+    "label_name": "AQUARIUM CO-OP EASY GREEN LIQUID FERTILIZER 2.66-0.46-9.2",
+    "wsda_reg_no": "(#4058-0001)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

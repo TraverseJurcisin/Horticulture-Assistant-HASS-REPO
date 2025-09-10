@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"784222","source_wsda_record":{"wsda_product_number":"(#2067-0070)","product_name":"GREEN PLANET HORTI GROW 8-11-21","company_info":{"company":"HIT MANUFACTURING","Mailing Address":"15374 103 A Ave","Post Office Box":null,"City":"Surrey","State":"BC","Postal Code":"V3R 7A2","Telephone Number":"605 580-1287","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":11.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.5,"Sulfur (S)":5.5,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.3,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.009,"Sodium (Na)":null,"Zinc (Zn)":0.02},"reported_metals":{"Arsenic":"=2.1000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=330.9000","Nickel":"<1.0000","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=273.1700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":11.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.5,"Sulfur (S)":5.5,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.3,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.009,"Sodium (Na)":null,"Zinc (Zn)":0.02},"heavy_metals":{"Arsenic":"=2.1000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=330.9000","Nickel":"<1.0000","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=273.1700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HIT MANUFACTURING","label_name":"GREEN PLANET HORTI GROW 8-11-21","wsda_reg_no":"(#2067-0070)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "784222",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2067-0070)",
+    "product_name": "GREEN PLANET HORTI GROW 8-11-21",
+    "company_info": {
+      "company": "HIT MANUFACTURING",
+      "Mailing Address": "15374 103 A Ave",
+      "Post Office Box": null,
+      "City": "Surrey",
+      "State": "BC",
+      "Postal Code": "V3R 7A2",
+      "Telephone Number": "605 580-1287",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 11.0,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 5.5,
+      "Boron (B)": 0.06,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.02,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.09,
+      "Molybdenum (Mo)": 0.009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.02
+    },
+    "reported_metals": {
+      "Arsenic": "=2.1000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=330.9000",
+      "Nickel": "<1.0000",
+      "Lead": "<1.0000",
+      "Selenium": "<1.0000",
+      "Zinc": "=273.1700"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 11.0,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 5.5,
+      "Boron (B)": 0.06,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.02,
+      "Iron (Fe)": 0.3,
+      "Manganese (Mn)": 0.09,
+      "Molybdenum (Mo)": 0.009,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.02
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.1000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=330.9000",
+      "Nickel": "<1.0000",
+      "Lead": "<1.0000",
+      "Selenium": "<1.0000",
+      "Zinc": "=273.1700"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HIT MANUFACTURING",
+    "label_name": "GREEN PLANET HORTI GROW 8-11-21",
+    "wsda_reg_no": "(#2067-0070)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

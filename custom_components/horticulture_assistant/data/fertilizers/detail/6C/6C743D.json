@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"6C743D","source_wsda_record":{"wsda_product_number":"(#3588-0006)","product_name":"WAVE GROUP STRATEGIC NDUCE 21-0-3","company_info":{"company":"WAVE GROUP LLC","Mailing Address":"1634 E 3900 N","Post Office Box":null,"City":"Buhl","State":"ID","Postal Code":"83316","Telephone Number":"208 420-5401","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=0.1000","Lead":"=1.0000","Selenium":"=0.3000","Zinc":"=2.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=0.1000","Lead":"=1.0000","Selenium":"=0.3000","Zinc":"=2.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WAVE GROUP LLC","label_name":"WAVE GROUP STRATEGIC NDUCE 21-0-3","wsda_reg_no":"(#3588-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "6C743D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3588-0006)",
+    "product_name": "WAVE GROUP STRATEGIC NDUCE 21-0-3",
+    "company_info": {
+      "company": "WAVE GROUP LLC",
+      "Mailing Address": "1634 E 3900 N",
+      "Post Office Box": null,
+      "City": "Buhl",
+      "State": "ID",
+      "Postal Code": "83316",
+      "Telephone Number": "208 420-5401",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.5000",
+      "Nickel": "=0.1000",
+      "Lead": "=1.0000",
+      "Selenium": "=0.3000",
+      "Zinc": "=2.4000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 3.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=0.5000",
+      "Nickel": "=0.1000",
+      "Lead": "=1.0000",
+      "Selenium": "=0.3000",
+      "Zinc": "=2.4000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "WAVE GROUP LLC",
+    "label_name": "WAVE GROUP STRATEGIC NDUCE 21-0-3",
+    "wsda_reg_no": "(#3588-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"679959","source_wsda_record":{"wsda_product_number":"(#2687-0114)","product_name":"MICROSYNC FUSION 2-0-0","company_info":{"company":"VERDESIAN LIFE SCIENCES U.S. LLC","Mailing Address":"1001 Winstead Drive Ste 480","Post Office Box":null,"City":"Cary","State":"NC","Postal Code":"27513","Telephone Number":"919 825-1901","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":6.0,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":1.3,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":6.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.0},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=1.1400","Cobalt":"=89.2000","Mercury":"=0.2800","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"=29.1000","Selenium":"=11.1000","Zinc":"=28120.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":6.0,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":1.3,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":6.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.0},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=1.1400","Cobalt":"=89.2000","Mercury":"=0.2800","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"=29.1000","Selenium":"=11.1000","Zinc":"=28120.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDESIAN LIFE SCIENCES U.S. LLC","label_name":"MICROSYNC FUSION 2-0-0","wsda_reg_no":"(#2687-0114)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "679959",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2687-0114)",
+    "product_name": "MICROSYNC FUSION 2-0-0",
+    "company_info": {
+      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+      "Mailing Address": "1001 Winstead Drive Ste 480",
+      "Post Office Box": null,
+      "City": "Cary",
+      "State": "NC",
+      "Postal Code": "27513",
+      "Telephone Number": "919 825-1901",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 6.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": 1.3,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": 6.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.0
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "=1.1400",
+      "Cobalt": "=89.2000",
+      "Mercury": "=0.2800",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<1.0000",
+      "Lead": "=29.1000",
+      "Selenium": "=11.1000",
+      "Zinc": "=28120.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 2.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 6.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": 1.3,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": 6.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 2.0
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "=1.1400",
+      "Cobalt": "=89.2000",
+      "Mercury": "=0.2800",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<1.0000",
+      "Lead": "=29.1000",
+      "Selenium": "=11.1000",
+      "Zinc": "=28120.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "label_name": "MICROSYNC FUSION 2-0-0",
+    "wsda_reg_no": "(#2687-0114)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

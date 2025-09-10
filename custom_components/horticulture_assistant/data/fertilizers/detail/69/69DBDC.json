@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"69DBDC","source_wsda_record":{"wsda_product_number":"(#0689-0001)","product_name":"AGPRO SYSTEMS FOLIARPLEX 5-0-1","company_info":{"company":"AGPRO SYSTEMS INC","Mailing Address":"242 PR 3341","Post Office Box":null,"City":"Big Sandy","State":"TX","Postal Code":"75755","Telephone Number":"903 636-5545","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.09,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":0.24},"reported_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"=10.2000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=1742.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.09,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":0.24},"heavy_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"=10.2000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=1742.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGPRO SYSTEMS INC","label_name":"AGPRO SYSTEMS FOLIARPLEX 5-0-1","wsda_reg_no":"(#0689-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "69DBDC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0689-0001)",
+    "product_name": "AGPRO SYSTEMS FOLIARPLEX 5-0-1",
+    "company_info": {
+      "company": "AGPRO SYSTEMS INC",
+      "Mailing Address": "242 PR 3341",
+      "Post Office Box": null,
+      "City": "Big Sandy",
+      "State": "TX",
+      "Postal Code": "75755",
+      "Telephone Number": "903 636-5545",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.09,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.0005,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.003,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.24
+    },
+    "reported_metals": {
+      "Arsenic": "<10.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=10.2000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<10.0000",
+      "Zinc": "=1742.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.09,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": 0.0005,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.003,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.24
+    },
+    "heavy_metals": {
+      "Arsenic": "<10.0000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "=10.2000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "<1.0000",
+      "Nickel": "<1.0000",
+      "Lead": "<5.0000",
+      "Selenium": "<10.0000",
+      "Zinc": "=1742.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AGPRO SYSTEMS INC",
+    "label_name": "AGPRO SYSTEMS FOLIARPLEX 5-0-1",
+    "wsda_reg_no": "(#0689-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
