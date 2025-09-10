@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9487EE","source_wsda_record":{"wsda_product_number":"(#4203-0001)","product_name":"EARTH MEDICINE ORGANIC MICROBIAL FERTILIZER 1-1-4","company_info":{"company":"EARTH MEDICINE LLC","Mailing Address":"110 S 450 E","Post Office Box":null,"City":"Burley","State":"ID","Postal Code":"83318","Telephone Number":"208 431-8245","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.9000","Cadmium":"=0.8100","Cobalt":"=4.5400","Mercury":"=0.1800","Molybdenum":"=2.0000","Nickel":"=6.9110","Lead":"=4.1600","Selenium":"=1.4000","Zinc":"=267.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.9000","Cadmium":"=0.8100","Cobalt":"=4.5400","Mercury":"=0.1800","Molybdenum":"=2.0000","Nickel":"=6.9110","Lead":"=4.1600","Selenium":"=1.4000","Zinc":"=267.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EARTH MEDICINE LLC","label_name":"EARTH MEDICINE ORGANIC MICROBIAL FERTILIZER 1-1-4","wsda_reg_no":"(#4203-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9487EE",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4203-0001)",
+    "product_name": "EARTH MEDICINE ORGANIC MICROBIAL FERTILIZER 1-1-4",
+    "company_info": {
+      "company": "EARTH MEDICINE LLC",
+      "Mailing Address": "110 S 450 E",
+      "Post Office Box": null,
+      "City": "Burley",
+      "State": "ID",
+      "Postal Code": "83318",
+      "Telephone Number": "208 431-8245",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.9000",
+      "Cadmium": "=0.8100",
+      "Cobalt": "=4.5400",
+      "Mercury": "=0.1800",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=6.9110",
+      "Lead": "=4.1600",
+      "Selenium": "=1.4000",
+      "Zinc": "=267.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 1.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.9000",
+      "Cadmium": "=0.8100",
+      "Cobalt": "=4.5400",
+      "Mercury": "=0.1800",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=6.9110",
+      "Lead": "=4.1600",
+      "Selenium": "=1.4000",
+      "Zinc": "=267.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EARTH MEDICINE LLC",
+    "label_name": "EARTH MEDICINE ORGANIC MICROBIAL FERTILIZER 1-1-4",
+    "wsda_reg_no": "(#4203-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

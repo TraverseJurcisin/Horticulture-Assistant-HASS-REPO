@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8C535B","source_wsda_record":{"wsda_product_number":"(#0705-0032)","product_name":"NUTRIAG ALEXIN 0-0-8","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":2.4,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.1000","Molybdenum":"=2.0000","Nickel":"=1.1000","Lead":"=2.2100","Selenium":"=1.0000","Zinc":"=32.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":2.4,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.1000","Molybdenum":"=2.0000","Nickel":"=1.1000","Lead":"=2.2100","Selenium":"=1.0000","Zinc":"=32.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NUTRIAG ALEXIN 0-0-8","wsda_reg_no":"(#0705-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8C535B",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0705-0032)",
+    "product_name": "NUTRIAG ALEXIN 0-0-8",
+    "company_info": {
+      "company": "NUTRIAG LTD",
+      "Mailing Address": "172 Belfield Rd",
+      "Post Office Box": null,
+      "City": "Toronto",
+      "State": "ON",
+      "Postal Code": "M9W 1H1",
+      "Telephone Number": "416 572-1968",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": 2.4,
+      "Magnesium (Mg)": 0.8,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=1.1000",
+      "Lead": "=2.2100",
+      "Selenium": "=1.0000",
+      "Zinc": "=32.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 8.0,
+      "Calcium (Ca)": 2.4,
+      "Magnesium (Mg)": 0.8,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.2,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=1.1000",
+      "Lead": "=2.2100",
+      "Selenium": "=1.0000",
+      "Zinc": "=32.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NUTRIAG ALEXIN 0-0-8",
+    "wsda_reg_no": "(#0705-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

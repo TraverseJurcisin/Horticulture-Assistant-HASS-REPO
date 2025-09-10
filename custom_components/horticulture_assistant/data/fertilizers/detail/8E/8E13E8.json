@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8E13E8","source_wsda_record":{"wsda_product_number":"(#2295-0008)","product_name":"VALAGRO AXILO BMZ SOLUBLE MICROGRANULES 0-0-0","company_info":{"company":"VALAGRO USA INC","Mailing Address":"2020 Ponce de Leon Blvd Ste 12","Post Office Box":null,"City":"Coral Gables","State":"FL","Postal Code":"33134","Telephone Number":"786 719-5842","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.9,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":4.5,"Molybdenum (Mo)":0.5,"Sodium (Na)":null,"Zinc (Zn)":10.0},"reported_metals":{"Arsenic":"=30.0000","Cadmium":"=3.0000","Cobalt":"=3.0000","Mercury":"=0.2000","Molybdenum":"=75000.0000","Nickel":"=5.0000","Lead":"=50.0000","Selenium":"=30.0000","Zinc":"=300000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.9,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":4.5,"Molybdenum (Mo)":0.5,"Sodium (Na)":null,"Zinc (Zn)":10.0},"heavy_metals":{"Arsenic":"=30.0000","Cadmium":"=3.0000","Cobalt":"=3.0000","Mercury":"=0.2000","Molybdenum":"=75000.0000","Nickel":"=5.0000","Lead":"=50.0000","Selenium":"=30.0000","Zinc":"=300000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALAGRO USA INC","label_name":"VALAGRO AXILO BMZ SOLUBLE MICROGRANULES 0-0-0","wsda_reg_no":"(#2295-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8E13E8",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2295-0008)",
+    "product_name": "VALAGRO AXILO BMZ SOLUBLE MICROGRANULES 0-0-0",
+    "company_info": {
+      "company": "VALAGRO USA INC",
+      "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
+      "Post Office Box": null,
+      "City": "Coral Gables",
+      "State": "FL",
+      "Postal Code": "33134",
+      "Telephone Number": "786 719-5842",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.9,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 4.5,
+      "Molybdenum (Mo)": 0.5,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.0
+    },
+    "reported_metals": {
+      "Arsenic": "=30.0000",
+      "Cadmium": "=3.0000",
+      "Cobalt": "=3.0000",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=75000.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=50.0000",
+      "Selenium": "=30.0000",
+      "Zinc": "=300000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "Y"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.9,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 4.5,
+      "Molybdenum (Mo)": 0.5,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.0
+    },
+    "heavy_metals": {
+      "Arsenic": "=30.0000",
+      "Cadmium": "=3.0000",
+      "Cobalt": "=3.0000",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=75000.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=50.0000",
+      "Selenium": "=30.0000",
+      "Zinc": "=300000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VALAGRO USA INC",
+    "label_name": "VALAGRO AXILO BMZ SOLUBLE MICROGRANULES 0-0-0",
+    "wsda_reg_no": "(#2295-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

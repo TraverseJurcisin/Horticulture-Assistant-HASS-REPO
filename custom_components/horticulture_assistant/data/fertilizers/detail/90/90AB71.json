@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"90AB71","source_wsda_record":{"wsda_product_number":"(#1628-0002)","product_name":"COW PALACE COMPOST 0.8-1.35-2.25","company_info":{"company":"COW PALACE LLC","Mailing Address":"1631 N Liberty Rd","Post Office Box":null,"City":"Granger","State":"WA","Postal Code":"98932-9713","Telephone Number":"509 829-5777","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.8,"Available Phosphoric Acid (P2O5)":1.35,"Soluble Potash (K2O)":2.25,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.7000","Cadmium":"<1.0000","Cobalt":"=0.1000","Mercury":"<0.1000","Molybdenum":"=1.4000","Nickel":"=11.9000","Lead":"=5.1000","Selenium":"<1.0000","Zinc":"=14.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.8,"Available Phosphoric Acid (P2O5)":1.35,"Soluble Potash (K2O)":2.25,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.7000","Cadmium":"<1.0000","Cobalt":"=0.1000","Mercury":"<0.1000","Molybdenum":"=1.4000","Nickel":"=11.9000","Lead":"=5.1000","Selenium":"<1.0000","Zinc":"=14.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COW PALACE LLC","label_name":"COW PALACE COMPOST 0.8-1.35-2.25","wsda_reg_no":"(#1628-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "90AB71",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1628-0002)",
+    "product_name": "COW PALACE COMPOST 0.8-1.35-2.25",
+    "company_info": {
+      "company": "COW PALACE LLC",
+      "Mailing Address": "1631 N Liberty Rd",
+      "Post Office Box": null,
+      "City": "Granger",
+      "State": "WA",
+      "Postal Code": "98932-9713",
+      "Telephone Number": "509 829-5777",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.8,
+      "Available Phosphoric Acid (P2O5)": 1.35,
+      "Soluble Potash (K2O)": 2.25,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=3.7000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "=0.1000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=1.4000",
+      "Nickel": "=11.9000",
+      "Lead": "=5.1000",
+      "Selenium": "<1.0000",
+      "Zinc": "=14.8000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.8,
+      "Available Phosphoric Acid (P2O5)": 1.35,
+      "Soluble Potash (K2O)": 2.25,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=3.7000",
+      "Cadmium": "<1.0000",
+      "Cobalt": "=0.1000",
+      "Mercury": "<0.1000",
+      "Molybdenum": "=1.4000",
+      "Nickel": "=11.9000",
+      "Lead": "=5.1000",
+      "Selenium": "<1.0000",
+      "Zinc": "=14.8000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "COW PALACE LLC",
+    "label_name": "COW PALACE COMPOST 0.8-1.35-2.25",
+    "wsda_reg_no": "(#1628-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

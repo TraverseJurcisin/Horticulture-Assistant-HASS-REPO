@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"99E252","source_wsda_record":{"wsda_product_number":"(#0989-0039)","product_name":"SCHULTZ 10-15-10 LIQUID PLANT FOOD PLUS MICRONUTRIENTS 10-15-10","company_info":{"company":"KNOX FERTILIZER COMPANY INC","Mailing Address":"PO Box 248","Post Office Box":null,"City":"Knox","State":"IN","Postal Code":"46534","Telephone Number":"574 772-6278","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=0.4940","Cadmium":"=0.4820","Cobalt":"=0.4200","Mercury":"=0.0050","Molybdenum":"=0.5190","Nickel":"=3.2300","Lead":"=0.6050","Selenium":"=1.1200","Zinc":"=649.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=0.4940","Cadmium":"=0.4820","Cobalt":"=0.4200","Mercury":"=0.0050","Molybdenum":"=0.5190","Nickel":"=3.2300","Lead":"=0.6050","Selenium":"=1.1200","Zinc":"=649.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KNOX FERTILIZER COMPANY INC","label_name":"SCHULTZ 10-15-10 LIQUID PLANT FOOD PLUS MICRONUTRIENTS 10-15-10","wsda_reg_no":"(#0989-0039)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "99E252",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0989-0039)",
+    "product_name": "SCHULTZ 10-15-10 LIQUID PLANT FOOD PLUS MICRONUTRIENTS 10-15-10",
+    "company_info": {
+      "company": "KNOX FERTILIZER COMPANY INC",
+      "Mailing Address": "PO Box 248",
+      "Post Office Box": null,
+      "City": "Knox",
+      "State": "IN",
+      "Postal Code": "46534",
+      "Telephone Number": "574 772-6278",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "reported_metals": {
+      "Arsenic": "=0.4940",
+      "Cadmium": "=0.4820",
+      "Cobalt": "=0.4200",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.5190",
+      "Nickel": "=3.2300",
+      "Lead": "=0.6050",
+      "Selenium": "=1.1200",
+      "Zinc": "=649.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 15.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.05
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.4940",
+      "Cadmium": "=0.4820",
+      "Cobalt": "=0.4200",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=0.5190",
+      "Nickel": "=3.2300",
+      "Lead": "=0.6050",
+      "Selenium": "=1.1200",
+      "Zinc": "=649.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "KNOX FERTILIZER COMPANY INC",
+    "label_name": "SCHULTZ 10-15-10 LIQUID PLANT FOOD PLUS MICRONUTRIENTS 10-15-10",
+    "wsda_reg_no": "(#0989-0039)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

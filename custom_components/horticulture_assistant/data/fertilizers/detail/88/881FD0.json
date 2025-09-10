@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"881FD0","source_wsda_record":{"wsda_product_number":"(#0189-0280)","product_name":"LESCO PROFESSIONAL MINI TURF FERTILIZER 22-5-5 (#510780) 22-5-5","company_info":{"company":"LESCO INC","Mailing Address":"1385 East 36th Street","Post Office Box":null,"City":"Cleveland","State":"OH","Postal Code":"44114-4114","Telephone Number":"440 454-3672","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":8.42,"Magnesium (Mg)":1.91,"Sulfur (S)":1.75,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7500","Cadmium":"=0.0300","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.7000","Lead":"=0.9000","Selenium":"=0.5000","Zinc":"=4.1200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":8.42,"Magnesium (Mg)":1.91,"Sulfur (S)":1.75,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7500","Cadmium":"=0.0300","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.7000","Lead":"=0.9000","Selenium":"=0.5000","Zinc":"=4.1200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LESCO INC","label_name":"LESCO PROFESSIONAL MINI TURF FERTILIZER 22-5-5 (#510780) 22-5-5","wsda_reg_no":"(#0189-0280)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "881FD0",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0189-0280)",
+    "product_name": "LESCO PROFESSIONAL MINI TURF FERTILIZER 22-5-5 (#510780) 22-5-5",
+    "company_info": {
+      "company": "LESCO INC",
+      "Mailing Address": "1385 East 36th Street",
+      "Post Office Box": null,
+      "City": "Cleveland",
+      "State": "OH",
+      "Postal Code": "44114-4114",
+      "Telephone Number": "440 454-3672",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 22.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 8.42,
+      "Magnesium (Mg)": 1.91,
+      "Sulfur (S)": 1.75,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.7500",
+      "Cadmium": "=0.0300",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.1000",
+      "Nickel": "=0.7000",
+      "Lead": "=0.9000",
+      "Selenium": "=0.5000",
+      "Zinc": "=4.1200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 22.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": 8.42,
+      "Magnesium (Mg)": 1.91,
+      "Sulfur (S)": 1.75,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.7500",
+      "Cadmium": "=0.0300",
+      "Cobalt": "=0.1000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=0.1000",
+      "Nickel": "=0.7000",
+      "Lead": "=0.9000",
+      "Selenium": "=0.5000",
+      "Zinc": "=4.1200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LESCO INC",
+    "label_name": "LESCO PROFESSIONAL MINI TURF FERTILIZER 22-5-5 (#510780) 22-5-5",
+    "wsda_reg_no": "(#0189-0280)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

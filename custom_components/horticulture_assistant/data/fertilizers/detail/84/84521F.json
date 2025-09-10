@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"84521F","source_wsda_record":{"wsda_product_number":"(#1632-0052)","product_name":"SIMPLOT PARTNERS 12-0-4 IRON MAN 12-0-4","company_info":{"company":"SIMPLOT GROWER SOLUTIONS","Mailing Address":"P O Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":19.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=9.2600","Cadmium":"=0.7410","Cobalt":"=30.6000","Mercury":"=0.3970","Molybdenum":"=3.7000","Nickel":"=10.6000","Lead":"=5.5600","Selenium":"=9.2600","Zinc":"=98.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":19.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=9.2600","Cadmium":"=0.7410","Cobalt":"=30.6000","Mercury":"=0.3970","Molybdenum":"=3.7000","Nickel":"=10.6000","Lead":"=5.5600","Selenium":"=9.2600","Zinc":"=98.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT GROWER SOLUTIONS","label_name":"SIMPLOT PARTNERS 12-0-4 IRON MAN 12-0-4","wsda_reg_no":"(#1632-0052)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "84521F",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1632-0052)",
+    "product_name": "SIMPLOT PARTNERS 12-0-4 IRON MAN 12-0-4",
+    "company_info": {
+      "company": "SIMPLOT GROWER SOLUTIONS",
+      "Mailing Address": "P O Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 19.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 10.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=9.2600",
+      "Cadmium": "=0.7410",
+      "Cobalt": "=30.6000",
+      "Mercury": "=0.3970",
+      "Molybdenum": "=3.7000",
+      "Nickel": "=10.6000",
+      "Lead": "=5.5600",
+      "Selenium": "=9.2600",
+      "Zinc": "=98.9000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 12.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 19.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 10.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=9.2600",
+      "Cadmium": "=0.7410",
+      "Cobalt": "=30.6000",
+      "Mercury": "=0.3970",
+      "Molybdenum": "=3.7000",
+      "Nickel": "=10.6000",
+      "Lead": "=5.5600",
+      "Selenium": "=9.2600",
+      "Zinc": "=98.9000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SIMPLOT GROWER SOLUTIONS",
+    "label_name": "SIMPLOT PARTNERS 12-0-4 IRON MAN 12-0-4",
+    "wsda_reg_no": "(#1632-0052)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

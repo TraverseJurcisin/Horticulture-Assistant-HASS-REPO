@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"911B56","source_wsda_record":{"wsda_product_number":"(#0185-0167)","product_name":"LEBANON PROSCAPE FERTILIZER 25-0-5 MESA 25-0-5","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.0000","Cadmium":"=3.0000","Cobalt":"=25.0000","Mercury":"=0.1000","Molybdenum":"=20.0000","Nickel":"=70.0000","Lead":"=7.0000","Selenium":"=0.1000","Zinc":"=1000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.0000","Cadmium":"=3.0000","Cobalt":"=25.0000","Mercury":"=0.1000","Molybdenum":"=20.0000","Nickel":"=70.0000","Lead":"=7.0000","Selenium":"=0.1000","Zinc":"=1000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"LEBANON PROSCAPE FERTILIZER 25-0-5 MESA 25-0-5","wsda_reg_no":"(#0185-0167)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "911B56",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0185-0167)",
+    "product_name": "LEBANON PROSCAPE FERTILIZER 25-0-5 MESA 25-0-5",
+    "company_info": {
+      "company": "LEBANON SEABOARD CORPORATION",
+      "Mailing Address": "1600 E Cumberland St",
+      "Post Office Box": null,
+      "City": "Lebanon",
+      "State": "PA",
+      "Postal Code": "17042",
+      "Telephone Number": "800 532-0090",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 25.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 8.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=3.0000",
+      "Cadmium": "=3.0000",
+      "Cobalt": "=25.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=70.0000",
+      "Lead": "=7.0000",
+      "Selenium": "=0.1000",
+      "Zinc": "=1000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 25.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 8.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=3.0000",
+      "Cadmium": "=3.0000",
+      "Cobalt": "=25.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=70.0000",
+      "Lead": "=7.0000",
+      "Selenium": "=0.1000",
+      "Zinc": "=1000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "LEBANON PROSCAPE FERTILIZER 25-0-5 MESA 25-0-5",
+    "wsda_reg_no": "(#0185-0167)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
