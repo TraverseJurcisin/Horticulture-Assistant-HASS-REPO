@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8166B4","source_wsda_record":{"wsda_product_number":"(#0016-0043)","product_name":"METALOSATE CAK AMINO ACID COMPLEX SOLUBLE POWDER FOLIAR FERTILIZER 3.5-0-17","company_info":{"company":"ALBION LABORATORIES INC","Mailing Address":"67 S Main Street Ste 100","Post Office Box":null,"City":"Layton","State":"UT","Postal Code":"84041","Telephone Number":"845 421-0151","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.5,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":17.0,"Calcium (Ca)":8.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<10.0000","Cobalt":"<100.0000","Mercury":"<1.0000","Molybdenum":"=10.0000","Nickel":"<500.0000","Lead":"<10.0000","Selenium":"<10.0000","Zinc":"=30000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.5,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":17.0,"Calcium (Ca)":8.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<10.0000","Cobalt":"<100.0000","Mercury":"<1.0000","Molybdenum":"=10.0000","Nickel":"<500.0000","Lead":"<10.0000","Selenium":"<10.0000","Zinc":"=30000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ALBION LABORATORIES INC","label_name":"METALOSATE CAK AMINO ACID COMPLEX SOLUBLE POWDER FOLIAR FERTILIZER 3.5-0-17","wsda_reg_no":"(#0016-0043)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8166B4",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0016-0043)",
+    "product_name": "METALOSATE CAK AMINO ACID COMPLEX SOLUBLE POWDER FOLIAR FERTILIZER 3.5-0-17",
+    "company_info": {
+      "company": "ALBION LABORATORIES INC",
+      "Mailing Address": "67 S Main Street Ste 100",
+      "Post Office Box": null,
+      "City": "Layton",
+      "State": "UT",
+      "Postal Code": "84041",
+      "Telephone Number": "845 421-0151",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.5,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 17.0,
+      "Calcium (Ca)": 8.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<10.0000",
+      "Cobalt": "<100.0000",
+      "Mercury": "<1.0000",
+      "Molybdenum": "=10.0000",
+      "Nickel": "<500.0000",
+      "Lead": "<10.0000",
+      "Selenium": "<10.0000",
+      "Zinc": "=30000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 3.5,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 17.0,
+      "Calcium (Ca)": 8.5,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<5.0000",
+      "Cadmium": "<10.0000",
+      "Cobalt": "<100.0000",
+      "Mercury": "<1.0000",
+      "Molybdenum": "=10.0000",
+      "Nickel": "<500.0000",
+      "Lead": "<10.0000",
+      "Selenium": "<10.0000",
+      "Zinc": "=30000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ALBION LABORATORIES INC",
+    "label_name": "METALOSATE CAK AMINO ACID COMPLEX SOLUBLE POWDER FOLIAR FERTILIZER 3.5-0-17",
+    "wsda_reg_no": "(#0016-0043)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

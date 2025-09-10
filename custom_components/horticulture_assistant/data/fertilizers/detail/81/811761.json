@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"811761","source_wsda_record":{"wsda_product_number":"(#0108-0016)","product_name":"FB 46G 0-0-0","company_info":{"company":"FRIT INDUSTRIES","Mailing Address":"PO Box 1589","Post Office Box":null,"City":"Ozark","State":"AL","Postal Code":"36361-1589","Telephone Number":"334 774-2515","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":14.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=38.6000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=6.8000","Nickel":"=5.6000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=9.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":14.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=38.6000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=6.8000","Nickel":"=5.6000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=9.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FRIT INDUSTRIES","label_name":"FB 46G 0-0-0","wsda_reg_no":"(#0108-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "811761",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0108-0016)",
+    "product_name": "FB 46G 0-0-0",
+    "company_info": {
+      "company": "FRIT INDUSTRIES",
+      "Mailing Address": "PO Box 1589",
+      "Post Office Box": null,
+      "City": "Ozark",
+      "State": "AL",
+      "Postal Code": "36361-1589",
+      "Telephone Number": "334 774-2515",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 14.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=38.6000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=6.8000",
+      "Nickel": "=5.6000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=9.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "Y"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 14.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=38.6000",
+      "Cadmium": "<0.5000",
+      "Cobalt": "<1.0000",
+      "Mercury": "<0.0500",
+      "Molybdenum": "=6.8000",
+      "Nickel": "=5.6000",
+      "Lead": "<5.0000",
+      "Selenium": "<5.0000",
+      "Zinc": "=9.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "FRIT INDUSTRIES",
+    "label_name": "FB 46G 0-0-0",
+    "wsda_reg_no": "(#0108-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
