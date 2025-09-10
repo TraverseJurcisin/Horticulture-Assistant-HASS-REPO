@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"827DDC","source_wsda_record":{"wsda_product_number":"(#3240-0002)","product_name":"RX GREEN TECHNOLOGIES BLOOM PART B 1-8-5","company_info":{"company":"RX GREEN TECHNOLOGIES LLC","Mailing Address":"10 Iron Horse Dr Unit C","Post Office Box":null,"City":"Bedford","State":"NH","Postal Code":"03110","Telephone Number":"603 759-3450","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<2.1200","Cadmium":"<0.3390","Cobalt":"<0.8470","Mercury":"<0.0362","Molybdenum":"=7.6500","Nickel":"<2.1200","Lead":"<2.1200","Selenium":"<4.2400","Zinc":"<3.3900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<2.1200","Cadmium":"<0.3390","Cobalt":"<0.8470","Mercury":"<0.0362","Molybdenum":"=7.6500","Nickel":"<2.1200","Lead":"<2.1200","Selenium":"<4.2400","Zinc":"<3.3900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RX GREEN TECHNOLOGIES LLC","label_name":"RX GREEN TECHNOLOGIES BLOOM PART B 1-8-5","wsda_reg_no":"(#3240-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "827DDC",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3240-0002)",
+    "product_name": "RX GREEN TECHNOLOGIES BLOOM PART B 1-8-5",
+    "company_info": {
+      "company": "RX GREEN TECHNOLOGIES LLC",
+      "Mailing Address": "10 Iron Horse Dr Unit C",
+      "Post Office Box": null,
+      "City": "Bedford",
+      "State": "NH",
+      "Postal Code": "03110",
+      "Telephone Number": "603 759-3450",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<2.1200",
+      "Cadmium": "<0.3390",
+      "Cobalt": "<0.8470",
+      "Mercury": "<0.0362",
+      "Molybdenum": "=7.6500",
+      "Nickel": "<2.1200",
+      "Lead": "<2.1200",
+      "Selenium": "<4.2400",
+      "Zinc": "<3.3900"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 1.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.5,
+      "Sulfur (S)": 1.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<2.1200",
+      "Cadmium": "<0.3390",
+      "Cobalt": "<0.8470",
+      "Mercury": "<0.0362",
+      "Molybdenum": "=7.6500",
+      "Nickel": "<2.1200",
+      "Lead": "<2.1200",
+      "Selenium": "<4.2400",
+      "Zinc": "<3.3900"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "RX GREEN TECHNOLOGIES LLC",
+    "label_name": "RX GREEN TECHNOLOGIES BLOOM PART B 1-8-5",
+    "wsda_reg_no": "(#3240-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
