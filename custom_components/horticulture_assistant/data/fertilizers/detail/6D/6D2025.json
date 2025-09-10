@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"6D2025","source_wsda_record":{"wsda_product_number":"(#3481-0018)","product_name":"VAN IPEREN FOLIASTIM MIX TE LIQUID 0-0-0.7","company_info":{"company":"VAN IPEREN INTERNATIONAL B.V.","Mailing Address":"Smidsweg 24","Post Office Box":null,"City":"Westmaas","State":"NL","Postal Code":"3273LK","Telephone Number":"311 865-7888","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.4,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.4,"Iron (Fe)":null,"Manganese (Mn)":0.8,"Molybdenum (Mo)":0.04,"Sodium (Na)":null,"Zinc (Zn)":0.8},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=400.0000","Nickel":"=5.0000","Lead":"=15.0000","Selenium":"=5.0000","Zinc":"=8000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.4,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.4,"Iron (Fe)":null,"Manganese (Mn)":0.8,"Molybdenum (Mo)":0.04,"Sodium (Na)":null,"Zinc (Zn)":0.8},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=400.0000","Nickel":"=5.0000","Lead":"=15.0000","Selenium":"=5.0000","Zinc":"=8000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VAN IPEREN INTERNATIONAL B.V.","label_name":"VAN IPEREN FOLIASTIM MIX TE LIQUID 0-0-0.7","wsda_reg_no":"(#3481-0018)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "6D2025",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3481-0018)",
+    "product_name": "VAN IPEREN FOLIASTIM MIX TE LIQUID 0-0-0.7",
+    "company_info": {
+      "company": "VAN IPEREN INTERNATIONAL B.V.",
+      "Mailing Address": "Smidsweg 24",
+      "Post Office Box": null,
+      "City": "Westmaas",
+      "State": "NL",
+      "Postal Code": "3273LK",
+      "Telephone Number": "311 865-7888",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.7,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.4,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.4,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.8,
+      "Molybdenum (Mo)": 0.04,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.8
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=5.0000",
+      "Cobalt": "=5.0000",
+      "Mercury": "=1.0000",
+      "Molybdenum": "=400.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=15.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=8000.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.7,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.4,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.4,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.8,
+      "Molybdenum (Mo)": 0.04,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.8
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=5.0000",
+      "Cobalt": "=5.0000",
+      "Mercury": "=1.0000",
+      "Molybdenum": "=400.0000",
+      "Nickel": "=5.0000",
+      "Lead": "=15.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=8000.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VAN IPEREN INTERNATIONAL B.V.",
+    "label_name": "VAN IPEREN FOLIASTIM MIX TE LIQUID 0-0-0.7",
+    "wsda_reg_no": "(#3481-0018)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

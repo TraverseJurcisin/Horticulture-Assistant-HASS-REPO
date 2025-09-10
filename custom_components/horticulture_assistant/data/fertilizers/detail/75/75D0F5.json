@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"75D0F5","source_wsda_record":{"wsda_product_number":"(#2319-0177)","product_name":"OSMOCOTE BLEND 17-5-11 3-4M 17-5-11","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":2.3,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.139,"Iron (Fe)":2.3,"Manganese (Mn)":0.347,"Molybdenum (Mo)":0.0069,"Sodium (Na)":null,"Zinc (Zn)":0.139},"reported_metals":{"Arsenic":"=0.7900","Cadmium":"=0.4680","Cobalt":"=106.0000","Mercury":"=0.0194","Molybdenum":"=94.8000","Nickel":"=10.5000","Lead":"=1.4300","Selenium":"=10.5000","Zinc":"=1430.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":2.3,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.139,"Iron (Fe)":2.3,"Manganese (Mn)":0.347,"Molybdenum (Mo)":0.0069,"Sodium (Na)":null,"Zinc (Zn)":0.139},"heavy_metals":{"Arsenic":"=0.7900","Cadmium":"=0.4680","Cobalt":"=106.0000","Mercury":"=0.0194","Molybdenum":"=94.8000","Nickel":"=10.5000","Lead":"=1.4300","Selenium":"=10.5000","Zinc":"=1430.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"OSMOCOTE BLEND 17-5-11 3-4M 17-5-11","wsda_reg_no":"(#2319-0177)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "75D0F5",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2319-0177)",
+    "product_name": "OSMOCOTE BLEND 17-5-11 3-4M 17-5-11",
+    "company_info": {
+      "company": "EVERRIS NA INC",
+      "Mailing Address": "PO Box 3310",
+      "Post Office Box": null,
+      "City": "Dublin",
+      "State": "OH",
+      "Postal Code": "43016",
+      "Telephone Number": "314 983-7500",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 17.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": 2.3,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.139,
+      "Iron (Fe)": 2.3,
+      "Manganese (Mn)": 0.347,
+      "Molybdenum (Mo)": 0.0069,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.139
+    },
+    "reported_metals": {
+      "Arsenic": "=0.7900",
+      "Cadmium": "=0.4680",
+      "Cobalt": "=106.0000",
+      "Mercury": "=0.0194",
+      "Molybdenum": "=94.8000",
+      "Nickel": "=10.5000",
+      "Lead": "=1.4300",
+      "Selenium": "=10.5000",
+      "Zinc": "=1430.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 17.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": 2.3,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.139,
+      "Iron (Fe)": 2.3,
+      "Manganese (Mn)": 0.347,
+      "Molybdenum (Mo)": 0.0069,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.139
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.7900",
+      "Cadmium": "=0.4680",
+      "Cobalt": "=106.0000",
+      "Mercury": "=0.0194",
+      "Molybdenum": "=94.8000",
+      "Nickel": "=10.5000",
+      "Lead": "=1.4300",
+      "Selenium": "=10.5000",
+      "Zinc": "=1430.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "OSMOCOTE BLEND 17-5-11 3-4M 17-5-11",
+    "wsda_reg_no": "(#2319-0177)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

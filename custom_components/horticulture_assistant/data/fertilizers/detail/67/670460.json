@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"670460","source_wsda_record":{"wsda_product_number":"(#3119-0005)","product_name":"MACRO-SORB GRO-MINO 5-0-0","company_info":{"company":"WELDON'S CHEMICAL LLC","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153-1019","Telephone Number":"540 375-8826","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":1.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"<3.0000","Cadmium":"<3.0000","Cobalt":"<3.0000","Mercury":"<0.2000","Molybdenum":"<3.0000","Nickel":"<3.0000","Lead":"<3.0000","Selenium":"<3.0000","Zinc":"=1044.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":1.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"<3.0000","Cadmium":"<3.0000","Cobalt":"<3.0000","Mercury":"<0.2000","Molybdenum":"<3.0000","Nickel":"<3.0000","Lead":"<3.0000","Selenium":"<3.0000","Zinc":"=1044.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WELDON'S CHEMICAL LLC","label_name":"MACRO-SORB GRO-MINO 5-0-0","wsda_reg_no":"(#3119-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "670460",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3119-0005)",
+    "product_name": "MACRO-SORB GRO-MINO 5-0-0",
+    "company_info": {
+      "company": "WELDON'S CHEMICAL LLC",
+      "Mailing Address": "PO Box 1019",
+      "Post Office Box": null,
+      "City": "Salem",
+      "State": "VA",
+      "Postal Code": "24153-1019",
+      "Telephone Number": "540 375-8826",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.8,
+      "Sulfur (S)": null,
+      "Boron (B)": 1.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.1
+    },
+    "reported_metals": {
+      "Arsenic": "<3.0000",
+      "Cadmium": "<3.0000",
+      "Cobalt": "<3.0000",
+      "Mercury": "<0.2000",
+      "Molybdenum": "<3.0000",
+      "Nickel": "<3.0000",
+      "Lead": "<3.0000",
+      "Selenium": "<3.0000",
+      "Zinc": "=1044.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 0.8,
+      "Sulfur (S)": null,
+      "Boron (B)": 1.5,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.0,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.1
+    },
+    "heavy_metals": {
+      "Arsenic": "<3.0000",
+      "Cadmium": "<3.0000",
+      "Cobalt": "<3.0000",
+      "Mercury": "<0.2000",
+      "Molybdenum": "<3.0000",
+      "Nickel": "<3.0000",
+      "Lead": "<3.0000",
+      "Selenium": "<3.0000",
+      "Zinc": "=1044.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "WELDON'S CHEMICAL LLC",
+    "label_name": "MACRO-SORB GRO-MINO 5-0-0",
+    "wsda_reg_no": "(#3119-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

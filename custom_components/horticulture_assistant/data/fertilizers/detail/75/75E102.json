@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"75E102","source_wsda_record":{"wsda_product_number":"(#2319-0050)","product_name":"PETERS EXCEL 14-8-14 CAL-MAG PHLOW 14-8-14","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":0.0175,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0175,"Iron (Fe)":0.07,"Manganese (Mn)":0.035,"Molybdenum (Mo)":0.007,"Sodium (Na)":null,"Zinc (Zn)":0.035},"reported_metals":{"Arsenic":"=0.6080","Cadmium":"=0.2650","Cobalt":"=27.8000","Mercury":"=0.2170","Molybdenum":"=68.1000","Nickel":"=0.7480","Lead":"=1.2000","Selenium":"=0.9130","Zinc":"=618.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":0.0175,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0175,"Iron (Fe)":0.07,"Manganese (Mn)":0.035,"Molybdenum (Mo)":0.007,"Sodium (Na)":null,"Zinc (Zn)":0.035},"heavy_metals":{"Arsenic":"=0.6080","Cadmium":"=0.2650","Cobalt":"=27.8000","Mercury":"=0.2170","Molybdenum":"=68.1000","Nickel":"=0.7480","Lead":"=1.2000","Selenium":"=0.9130","Zinc":"=618.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"PETERS EXCEL 14-8-14 CAL-MAG PHLOW 14-8-14","wsda_reg_no":"(#2319-0050)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "75E102",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2319-0050)",
+    "product_name": "PETERS EXCEL 14-8-14 CAL-MAG PHLOW 14-8-14",
+    "company_info": {
+      "company": "EVERRIS NA INC",
+      "Mailing Address": "PO Box 3310",
+      "Post Office Box": null,
+      "City": "Dublin",
+      "State": "OH",
+      "Postal Code": "43016",
+      "Telephone Number": "314 983-7500",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 4.0,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.0175,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0175,
+      "Iron (Fe)": 0.07,
+      "Manganese (Mn)": 0.035,
+      "Molybdenum (Mo)": 0.007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.035
+    },
+    "reported_metals": {
+      "Arsenic": "=0.6080",
+      "Cadmium": "=0.2650",
+      "Cobalt": "=27.8000",
+      "Mercury": "=0.2170",
+      "Molybdenum": "=68.1000",
+      "Nickel": "=0.7480",
+      "Lead": "=1.2000",
+      "Selenium": "=0.9130",
+      "Zinc": "=618.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": 8.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": 4.0,
+      "Magnesium (Mg)": 2.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.0175,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.0175,
+      "Iron (Fe)": 0.07,
+      "Manganese (Mn)": 0.035,
+      "Molybdenum (Mo)": 0.007,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.035
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.6080",
+      "Cadmium": "=0.2650",
+      "Cobalt": "=27.8000",
+      "Mercury": "=0.2170",
+      "Molybdenum": "=68.1000",
+      "Nickel": "=0.7480",
+      "Lead": "=1.2000",
+      "Selenium": "=0.9130",
+      "Zinc": "=618.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "PETERS EXCEL 14-8-14 CAL-MAG PHLOW 14-8-14",
+    "wsda_reg_no": "(#2319-0050)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
