@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8F328F","source_wsda_record":{"wsda_product_number":"(#2629-0136)","product_name":"HARRELL'S GRANULAR 16-6-11","company_info":{"company":"HARRELL'S LLC","Mailing Address":"PO Box 807","Post Office Box":null,"City":"Lakeland","State":"FL","Postal Code":"33802","Telephone Number":"863 687-2774","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.3,"Sulfur (S)":6.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.32,"Manganese (Mn)":0.13,"Molybdenum (Mo)":0.011,"Sodium (Na)":null,"Zinc (Zn)":0.07},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=1.2000","Mercury":"=0.0800","Molybdenum":"=119.0000","Nickel":"=2.5000","Lead":"<1.0000","Selenium":"<0.3000","Zinc":"=791.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.3,"Sulfur (S)":6.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.32,"Manganese (Mn)":0.13,"Molybdenum (Mo)":0.011,"Sodium (Na)":null,"Zinc (Zn)":0.07},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=1.2000","Mercury":"=0.0800","Molybdenum":"=119.0000","Nickel":"=2.5000","Lead":"<1.0000","Selenium":"<0.3000","Zinc":"=791.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HARRELL'S LLC","label_name":"HARRELL'S GRANULAR 16-6-11","wsda_reg_no":"(#2629-0136)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8F328F",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2629-0136)",
+    "product_name": "HARRELL'S GRANULAR 16-6-11",
+    "company_info": {
+      "company": "HARRELL'S LLC",
+      "Mailing Address": "PO Box 807",
+      "Post Office Box": null,
+      "City": "Lakeland",
+      "State": "FL",
+      "Postal Code": "33802",
+      "Telephone Number": "863 687-2774",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.3,
+      "Sulfur (S)": 6.4,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.07,
+      "Iron (Fe)": 0.32,
+      "Manganese (Mn)": 0.13,
+      "Molybdenum (Mo)": 0.011,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.07
+    },
+    "reported_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0800",
+      "Molybdenum": "=119.0000",
+      "Nickel": "=2.5000",
+      "Lead": "<1.0000",
+      "Selenium": "<0.3000",
+      "Zinc": "=791.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 6.0,
+      "Soluble Potash (K2O)": 11.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 1.3,
+      "Sulfur (S)": 6.4,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.07,
+      "Iron (Fe)": 0.32,
+      "Manganese (Mn)": 0.13,
+      "Molybdenum (Mo)": 0.011,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.07
+    },
+    "heavy_metals": {
+      "Arsenic": "<1.0000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0800",
+      "Molybdenum": "=119.0000",
+      "Nickel": "=2.5000",
+      "Lead": "<1.0000",
+      "Selenium": "<0.3000",
+      "Zinc": "=791.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HARRELL'S LLC",
+    "label_name": "HARRELL'S GRANULAR 16-6-11",
+    "wsda_reg_no": "(#2629-0136)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

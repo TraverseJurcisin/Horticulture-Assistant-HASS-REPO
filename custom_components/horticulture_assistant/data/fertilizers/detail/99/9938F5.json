@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9938F5","source_wsda_record":{"wsda_product_number":"(#1217-0019)","product_name":"BRECK'S FOOD FOR BULBS 5-10-5","company_info":{"company":"GARDENS ALIVE INC","Mailing Address":"110 W Elm St","Post Office Box":null,"City":"Tipp City","State":"OH","Postal Code":"45371","Telephone Number":"937 667-2491","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9220","Cadmium":"<0.4700","Cobalt":"=0.4920","Mercury":"<0.0050","Molybdenum":"<0.5060","Nickel":"=4.0200","Lead":"=0.6910","Selenium":"<1.0900","Zinc":"=113.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9220","Cadmium":"<0.4700","Cobalt":"=0.4920","Mercury":"<0.0050","Molybdenum":"<0.5060","Nickel":"=4.0200","Lead":"=0.6910","Selenium":"<1.0900","Zinc":"=113.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GARDENS ALIVE INC","label_name":"BRECK'S FOOD FOR BULBS 5-10-5","wsda_reg_no":"(#1217-0019)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9938F5",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1217-0019)",
+    "product_name": "BRECK'S FOOD FOR BULBS 5-10-5",
+    "company_info": {
+      "company": "GARDENS ALIVE INC",
+      "Mailing Address": "110 W Elm St",
+      "Post Office Box": null,
+      "City": "Tipp City",
+      "State": "OH",
+      "Postal Code": "45371",
+      "Telephone Number": "937 667-2491",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.9220",
+      "Cadmium": "<0.4700",
+      "Cobalt": "=0.4920",
+      "Mercury": "<0.0050",
+      "Molybdenum": "<0.5060",
+      "Nickel": "=4.0200",
+      "Lead": "=0.6910",
+      "Selenium": "<1.0900",
+      "Zinc": "=113.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 5.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.9220",
+      "Cadmium": "<0.4700",
+      "Cobalt": "=0.4920",
+      "Mercury": "<0.0050",
+      "Molybdenum": "<0.5060",
+      "Nickel": "=4.0200",
+      "Lead": "=0.6910",
+      "Selenium": "<1.0900",
+      "Zinc": "=113.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "GARDENS ALIVE INC",
+    "label_name": "BRECK'S FOOD FOR BULBS 5-10-5",
+    "wsda_reg_no": "(#1217-0019)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

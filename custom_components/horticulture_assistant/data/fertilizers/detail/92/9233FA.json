@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9233FA","source_wsda_record":{"wsda_product_number":"(#2173-0001)","product_name":"HOUSE & GARDEN VAN DE ZWAAN AQUA FLAKES A 0.3-0-0.3 HYDROPONIC 0.3-0-0.3","company_info":{"company":"ALLIED IMPORTS AND LOGISTICS INC","Mailing Address":"2103 Harrison Ave NW Ste 2 - #","Post Office Box":null,"City":"Olympia","State":"WA","Postal Code":"98502","Telephone Number":"541 359-1580","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"=0.0200","Molybdenum":"=20.0000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=0.2500","Zinc":"=70.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"=0.0200","Molybdenum":"=20.0000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=0.2500","Zinc":"=70.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ALLIED IMPORTS AND LOGISTICS INC","label_name":"HOUSE & GARDEN VAN DE ZWAAN AQUA FLAKES A 0.3-0-0.3 HYDROPONIC 0.3-0-0.3","wsda_reg_no":"(#2173-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9233FA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2173-0001)",
+    "product_name": "HOUSE & GARDEN VAN DE ZWAAN AQUA FLAKES A 0.3-0-0.3 HYDROPONIC 0.3-0-0.3",
+    "company_info": {
+      "company": "ALLIED IMPORTS AND LOGISTICS INC",
+      "Mailing Address": "2103 Harrison Ave NW Ste 2 - #",
+      "Post Office Box": null,
+      "City": "Olympia",
+      "State": "WA",
+      "Postal Code": "98502",
+      "Telephone Number": "541 359-1580",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.3,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=5.0000",
+      "Mercury": "=0.0200",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=2.5000",
+      "Lead": "=5.0000",
+      "Selenium": "=0.2500",
+      "Zinc": "=70.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.3,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2500",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=5.0000",
+      "Mercury": "=0.0200",
+      "Molybdenum": "=20.0000",
+      "Nickel": "=2.5000",
+      "Lead": "=5.0000",
+      "Selenium": "=0.2500",
+      "Zinc": "=70.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ALLIED IMPORTS AND LOGISTICS INC",
+    "label_name": "HOUSE & GARDEN VAN DE ZWAAN AQUA FLAKES A 0.3-0-0.3 HYDROPONIC 0.3-0-0.3",
+    "wsda_reg_no": "(#2173-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

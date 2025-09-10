@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"84A5E9","source_wsda_record":{"wsda_product_number":"(#4123-0007)","product_name":"CRONK NUTRIENTS MICRO 5-0-1","company_info":{"company":"CRONK NUTRIENTS INC","Mailing Address":"560 Route 100","Post Office Box":null,"City":"Nauwigewauk","State":"NB","Postal Code":"E5N 678","Telephone Number":"506 645-7585","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.0008,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.1000","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=530.0200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.0008,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=0.1000","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=530.0200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CRONK NUTRIENTS INC","label_name":"CRONK NUTRIENTS MICRO 5-0-1","wsda_reg_no":"(#4123-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "84A5E9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4123-0007)",
+    "product_name": "CRONK NUTRIENTS MICRO 5-0-1",
+    "company_info": {
+      "company": "CRONK NUTRIENTS INC",
+      "Mailing Address": "560 Route 100",
+      "Post Office Box": null,
+      "City": "Nauwigewauk",
+      "State": "NB",
+      "Postal Code": "E5N 678",
+      "Telephone Number": "506 645-7585",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": 5.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.0008,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=530.0200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": 5.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.0008,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.0000",
+      "Cadmium": "=1.0000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.1000",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=1.0000",
+      "Selenium": "=1.0000",
+      "Zinc": "=530.0200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "CRONK NUTRIENTS INC",
+    "label_name": "CRONK NUTRIENTS MICRO 5-0-1",
+    "wsda_reg_no": "(#4123-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

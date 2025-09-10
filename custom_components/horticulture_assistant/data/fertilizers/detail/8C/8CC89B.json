@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8CC89B","source_wsda_record":{"wsda_product_number":"(#1895-0056)","product_name":"YARAVITA AGRIPOTASH 0-5-32","company_info":{"company":"YARA UK LTD","Mailing Address":"100 N Tampa St Ste 300","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":32.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.03,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.6000","Molybdenum":"=300.0000","Nickel":"=0.5000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=10.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":32.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.03,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.6000","Molybdenum":"=300.0000","Nickel":"=0.5000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=10.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA UK LTD","label_name":"YARAVITA AGRIPOTASH 0-5-32","wsda_reg_no":"(#1895-0056)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8CC89B",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1895-0056)",
+    "product_name": "YARAVITA AGRIPOTASH 0-5-32",
+    "company_info": {
+      "company": "YARA UK LTD",
+      "Mailing Address": "100 N Tampa St Ste 300",
+      "Post Office Box": null,
+      "City": "Tampa",
+      "State": "FL",
+      "Postal Code": "33602",
+      "Telephone Number": "813 970-5438",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 32.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.03,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.6000",
+      "Molybdenum": "=300.0000",
+      "Nickel": "=0.5000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=10.5000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 32.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.03,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.5000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=0.5000",
+      "Mercury": "=0.6000",
+      "Molybdenum": "=300.0000",
+      "Nickel": "=0.5000",
+      "Lead": "=0.5000",
+      "Selenium": "=0.5000",
+      "Zinc": "=10.5000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "YARA UK LTD",
+    "label_name": "YARAVITA AGRIPOTASH 0-5-32",
+    "wsda_reg_no": "(#1895-0056)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

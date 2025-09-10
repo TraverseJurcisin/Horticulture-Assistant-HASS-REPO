@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9A2F09","source_wsda_record":{"wsda_product_number":"(#3562-0008)","product_name":"ROYAL GOLD SPECIAL RESERVE 0.51-0.1-0.3","company_info":{"company":"ROYAL GOLD LLC","Mailing Address":"PO Box 2531","Post Office Box":null,"City":"Anderson","State":"SC","Postal Code":"29621","Telephone Number":"864 642-9222","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.51,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2900","Cadmium":"=0.2530","Cobalt":"=1.2000","Mercury":"=0.0400","Molybdenum":"=2.1900","Nickel":"=2.1500","Lead":"=0.4800","Selenium":"<0.1000","Zinc":"=47.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.51,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2900","Cadmium":"=0.2530","Cobalt":"=1.2000","Mercury":"=0.0400","Molybdenum":"=2.1900","Nickel":"=2.1500","Lead":"=0.4800","Selenium":"<0.1000","Zinc":"=47.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROYAL GOLD LLC","label_name":"ROYAL GOLD SPECIAL RESERVE 0.51-0.1-0.3","wsda_reg_no":"(#3562-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9A2F09",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3562-0008)",
+    "product_name": "ROYAL GOLD SPECIAL RESERVE 0.51-0.1-0.3",
+    "company_info": {
+      "company": "ROYAL GOLD LLC",
+      "Mailing Address": "PO Box 2531",
+      "Post Office Box": null,
+      "City": "Anderson",
+      "State": "SC",
+      "Postal Code": "29621",
+      "Telephone Number": "864 642-9222",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.51,
+      "Available Phosphoric Acid (P2O5)": 0.1,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": 1.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.2900",
+      "Cadmium": "=0.2530",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=2.1900",
+      "Nickel": "=2.1500",
+      "Lead": "=0.4800",
+      "Selenium": "<0.1000",
+      "Zinc": "=47.9000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.51,
+      "Available Phosphoric Acid (P2O5)": 0.1,
+      "Soluble Potash (K2O)": 0.3,
+      "Calcium (Ca)": 1.0,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.2900",
+      "Cadmium": "=0.2530",
+      "Cobalt": "=1.2000",
+      "Mercury": "=0.0400",
+      "Molybdenum": "=2.1900",
+      "Nickel": "=2.1500",
+      "Lead": "=0.4800",
+      "Selenium": "<0.1000",
+      "Zinc": "=47.9000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "ROYAL GOLD LLC",
+    "label_name": "ROYAL GOLD SPECIAL RESERVE 0.51-0.1-0.3",
+    "wsda_reg_no": "(#3562-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

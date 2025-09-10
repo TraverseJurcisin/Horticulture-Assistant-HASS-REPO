@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9986F9","source_wsda_record":{"wsda_product_number":"(#0997-0074)","product_name":"STA-GREEN FLOWER & VEGETABLE GARDEN SOIL PLUS FERTILIZER (SF) 0.05-0.04-0.03","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.05,"Available Phosphoric Acid (P2O5)":0.04,"Soluble Potash (K2O)":0.03,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.1800","Cadmium":"=0.4360","Cobalt":"=1.7000","Mercury":"=0.0371","Molybdenum":"=1.3100","Nickel":"=4.8500","Lead":"=7.9600","Selenium":"=1.3100","Zinc":"=38.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.05,"Available Phosphoric Acid (P2O5)":0.04,"Soluble Potash (K2O)":0.03,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.1800","Cadmium":"=0.4360","Cobalt":"=1.7000","Mercury":"=0.0371","Molybdenum":"=1.3100","Nickel":"=4.8500","Lead":"=7.9600","Selenium":"=1.3100","Zinc":"=38.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"STA-GREEN FLOWER & VEGETABLE GARDEN SOIL PLUS FERTILIZER (SF) 0.05-0.04-0.03","wsda_reg_no":"(#0997-0074)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9986F9",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0997-0074)",
+    "product_name": "STA-GREEN FLOWER & VEGETABLE GARDEN SOIL PLUS FERTILIZER (SF) 0.05-0.04-0.03",
+    "company_info": {
+      "company": "SWISS FARM PRODUCTS INC",
+      "Mailing Address": "14111 Scottslawn Rd",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 645-2523",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.05,
+      "Available Phosphoric Acid (P2O5)": 0.04,
+      "Soluble Potash (K2O)": 0.03,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=3.1800",
+      "Cadmium": "=0.4360",
+      "Cobalt": "=1.7000",
+      "Mercury": "=0.0371",
+      "Molybdenum": "=1.3100",
+      "Nickel": "=4.8500",
+      "Lead": "=7.9600",
+      "Selenium": "=1.3100",
+      "Zinc": "=38.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.05,
+      "Available Phosphoric Acid (P2O5)": 0.04,
+      "Soluble Potash (K2O)": 0.03,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=3.1800",
+      "Cadmium": "=0.4360",
+      "Cobalt": "=1.7000",
+      "Mercury": "=0.0371",
+      "Molybdenum": "=1.3100",
+      "Nickel": "=4.8500",
+      "Lead": "=7.9600",
+      "Selenium": "=1.3100",
+      "Zinc": "=38.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "STA-GREEN FLOWER & VEGETABLE GARDEN SOIL PLUS FERTILIZER (SF) 0.05-0.04-0.03",
+    "wsda_reg_no": "(#0997-0074)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

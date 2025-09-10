@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"97AFBB","source_wsda_record":{"wsda_product_number":"(#0240-0029)","product_name":"NATURE'S INTENT GRANULATED FEATHER MEAL 11-0-0","company_info":{"company":"PACIFIC CALCIUM INC - HOLMES RD. -","Mailing Address":"32117 Highway 97","Post Office Box":null,"City":"Tonasket","State":"WA","Postal Code":"98855","Telephone Number":"509 486-1201","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.9600","Cadmium":"=0.0500","Cobalt":"=0.1600","Mercury":"=0.0800","Molybdenum":"=0.3600","Nickel":"=0.3900","Lead":"=0.1500","Selenium":"=0.2500","Zinc":"=91.6500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.9600","Cadmium":"=0.0500","Cobalt":"=0.1600","Mercury":"=0.0800","Molybdenum":"=0.3600","Nickel":"=0.3900","Lead":"=0.1500","Selenium":"=0.2500","Zinc":"=91.6500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PACIFIC CALCIUM INC - HOLMES RD. -","label_name":"NATURE'S INTENT GRANULATED FEATHER MEAL 11-0-0","wsda_reg_no":"(#0240-0029)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "97AFBB",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0240-0029)",
+    "product_name": "NATURE'S INTENT GRANULATED FEATHER MEAL 11-0-0",
+    "company_info": {
+      "company": "PACIFIC CALCIUM INC - HOLMES RD. -",
+      "Mailing Address": "32117 Highway 97",
+      "Post Office Box": null,
+      "City": "Tonasket",
+      "State": "WA",
+      "Postal Code": "98855",
+      "Telephone Number": "509 486-1201",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 11.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=4.9600",
+      "Cadmium": "=0.0500",
+      "Cobalt": "=0.1600",
+      "Mercury": "=0.0800",
+      "Molybdenum": "=0.3600",
+      "Nickel": "=0.3900",
+      "Lead": "=0.1500",
+      "Selenium": "=0.2500",
+      "Zinc": "=91.6500"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 11.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=4.9600",
+      "Cadmium": "=0.0500",
+      "Cobalt": "=0.1600",
+      "Mercury": "=0.0800",
+      "Molybdenum": "=0.3600",
+      "Nickel": "=0.3900",
+      "Lead": "=0.1500",
+      "Selenium": "=0.2500",
+      "Zinc": "=91.6500"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "PACIFIC CALCIUM INC - HOLMES RD. -",
+    "label_name": "NATURE'S INTENT GRANULATED FEATHER MEAL 11-0-0",
+    "wsda_reg_no": "(#0240-0029)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

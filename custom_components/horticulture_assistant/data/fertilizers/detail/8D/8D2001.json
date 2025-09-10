@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"8D2001","source_wsda_record":{"wsda_product_number":"(#3516-0003)","product_name":"SOIL CONDITIONER 0-0-0","company_info":{"company":"LIVE EARTH PRODUCTS","Mailing Address":"PO Box 76","Post Office Box":null,"City":"Emery","State":"UT","Postal Code":"84522","Telephone Number":"435 286-2222","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=16.4000","Cadmium":"=0.5000","Cobalt":"=2.0400","Mercury":"=0.3200","Molybdenum":"=2.0000","Nickel":"=6.1000","Lead":"=6.1000","Selenium":"=0.5000","Zinc":"=8.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=16.4000","Cadmium":"=0.5000","Cobalt":"=2.0400","Mercury":"=0.3200","Molybdenum":"=2.0000","Nickel":"=6.1000","Lead":"=6.1000","Selenium":"=0.5000","Zinc":"=8.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LIVE EARTH PRODUCTS","label_name":"SOIL CONDITIONER 0-0-0","wsda_reg_no":"(#3516-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "8D2001",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3516-0003)",
+    "product_name": "SOIL CONDITIONER 0-0-0",
+    "company_info": {
+      "company": "LIVE EARTH PRODUCTS",
+      "Mailing Address": "PO Box 76",
+      "Post Office Box": null,
+      "City": "Emery",
+      "State": "UT",
+      "Postal Code": "84522",
+      "Telephone Number": "435 286-2222",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=16.4000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0400",
+      "Mercury": "=0.3200",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=6.1000",
+      "Lead": "=6.1000",
+      "Selenium": "=0.5000",
+      "Zinc": "=8.7000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 1.5,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 1.5,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=16.4000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=2.0400",
+      "Mercury": "=0.3200",
+      "Molybdenum": "=2.0000",
+      "Nickel": "=6.1000",
+      "Lead": "=6.1000",
+      "Selenium": "=0.5000",
+      "Zinc": "=8.7000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "LIVE EARTH PRODUCTS",
+    "label_name": "SOIL CONDITIONER 0-0-0",
+    "wsda_reg_no": "(#3516-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

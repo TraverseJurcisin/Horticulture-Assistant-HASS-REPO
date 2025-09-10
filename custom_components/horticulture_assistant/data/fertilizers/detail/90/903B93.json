@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"903B93","source_wsda_record":{"wsda_product_number":"(#0003-0001)","product_name":"AG ENTERPRISE SUPPLY CUSTOMER FORMULA MIXTURE (CFM) X-X-X","company_info":{"company":"AG ENTERPRISE SUPPLY INC - CHENEY,","Mailing Address":"17005 W SR 904","Post Office Box":null,"City":"CHENEY","State":"WA","Postal Code":"99004","Telephone Number":"509 235-2006","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":null,"micronutrient_fertilizer":null},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AG ENTERPRISE SUPPLY INC - CHENEY,","label_name":"AG ENTERPRISE SUPPLY CUSTOMER FORMULA MIXTURE (CFM) X-X-X","wsda_reg_no":"(#0003-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "903B93",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0003-0001)",
+    "product_name": "AG ENTERPRISE SUPPLY CUSTOMER FORMULA MIXTURE (CFM) X-X-X",
+    "company_info": {
+      "company": "AG ENTERPRISE SUPPLY INC - CHENEY,",
+      "Mailing Address": "17005 W SR 904",
+      "Post Office Box": null,
+      "City": "CHENEY",
+      "State": "WA",
+      "Postal Code": "99004",
+      "Telephone Number": "509 235-2006",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": null,
+      "Cadmium": null,
+      "Cobalt": null,
+      "Mercury": null,
+      "Molybdenum": null,
+      "Nickel": null,
+      "Lead": null,
+      "Selenium": null,
+      "Zinc": null
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": null,
+    "micronutrient_fertilizer": null
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": null,
+      "Cadmium": null,
+      "Cobalt": null,
+      "Mercury": null,
+      "Molybdenum": null,
+      "Nickel": null,
+      "Lead": null,
+      "Selenium": null,
+      "Zinc": null
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AG ENTERPRISE SUPPLY INC - CHENEY,",
+    "label_name": "AG ENTERPRISE SUPPLY CUSTOMER FORMULA MIXTURE (CFM) X-X-X",
+    "wsda_reg_no": "(#0003-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"951E9C","source_wsda_record":{"wsda_product_number":"(#3970-0002)","product_name":"ORVANA 5-0-0","company_info":{"company":"INNVICTIS ORGANIC ADVANCEMENTS","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"970 397-0856","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9900","Cadmium":"=0.4100","Cobalt":"=0.3600","Mercury":"=0.0050","Molybdenum":"=3.8000","Nickel":"=2.2000","Lead":"=0.5130","Selenium":"=0.9500","Zinc":"=6.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9900","Cadmium":"=0.4100","Cobalt":"=0.3600","Mercury":"=0.0050","Molybdenum":"=3.8000","Nickel":"=2.2000","Lead":"=0.5130","Selenium":"=0.9500","Zinc":"=6.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INNVICTIS ORGANIC ADVANCEMENTS","label_name":"ORVANA 5-0-0","wsda_reg_no":"(#3970-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "951E9C",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3970-0002)",
+    "product_name": "ORVANA 5-0-0",
+    "company_info": {
+      "company": "INNVICTIS ORGANIC ADVANCEMENTS",
+      "Mailing Address": "PO Box 9296",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "970 397-0856",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.9900",
+      "Cadmium": "=0.4100",
+      "Cobalt": "=0.3600",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=3.8000",
+      "Nickel": "=2.2000",
+      "Lead": "=0.5130",
+      "Selenium": "=0.9500",
+      "Zinc": "=6.6000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 5.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.9900",
+      "Cadmium": "=0.4100",
+      "Cobalt": "=0.3600",
+      "Mercury": "=0.0050",
+      "Molybdenum": "=3.8000",
+      "Nickel": "=2.2000",
+      "Lead": "=0.5130",
+      "Selenium": "=0.9500",
+      "Zinc": "=6.6000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "INNVICTIS ORGANIC ADVANCEMENTS",
+    "label_name": "ORVANA 5-0-0",
+    "wsda_reg_no": "(#3970-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

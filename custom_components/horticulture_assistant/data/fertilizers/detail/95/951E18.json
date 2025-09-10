@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"951E18","source_wsda_record":{"wsda_product_number":"(#2838-0001)","product_name":"WHITNEY FARMS ORGANIC PLANTING SOIL 0.11-0.07-0.11","company_info":{"company":"HAWTHORNE GARDENING COMPANY","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"837 594-8464","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.11,"Available Phosphoric Acid (P2O5)":0.07,"Soluble Potash (K2O)":0.11,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.3900","Cadmium":"=0.3490","Cobalt":"=1.5800","Mercury":"=0.0228","Molybdenum":"=4.5000","Nickel":"=5.3000","Lead":"=0.8390","Selenium":"=1.5100","Zinc":"=582.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.11,"Available Phosphoric Acid (P2O5)":0.07,"Soluble Potash (K2O)":0.11,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.3900","Cadmium":"=0.3490","Cobalt":"=1.5800","Mercury":"=0.0228","Molybdenum":"=4.5000","Nickel":"=5.3000","Lead":"=0.8390","Selenium":"=1.5100","Zinc":"=582.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE GARDENING COMPANY","label_name":"WHITNEY FARMS ORGANIC PLANTING SOIL 0.11-0.07-0.11","wsda_reg_no":"(#2838-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "951E18",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2838-0001)",
+    "product_name": "WHITNEY FARMS ORGANIC PLANTING SOIL 0.11-0.07-0.11",
+    "company_info": {
+      "company": "HAWTHORNE GARDENING COMPANY",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "837 594-8464",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.11,
+      "Available Phosphoric Acid (P2O5)": 0.07,
+      "Soluble Potash (K2O)": 0.11,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=1.3900",
+      "Cadmium": "=0.3490",
+      "Cobalt": "=1.5800",
+      "Mercury": "=0.0228",
+      "Molybdenum": "=4.5000",
+      "Nickel": "=5.3000",
+      "Lead": "=0.8390",
+      "Selenium": "=1.5100",
+      "Zinc": "=582.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.11,
+      "Available Phosphoric Acid (P2O5)": 0.07,
+      "Soluble Potash (K2O)": 0.11,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.3900",
+      "Cadmium": "=0.3490",
+      "Cobalt": "=1.5800",
+      "Mercury": "=0.0228",
+      "Molybdenum": "=4.5000",
+      "Nickel": "=5.3000",
+      "Lead": "=0.8390",
+      "Selenium": "=1.5100",
+      "Zinc": "=582.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HAWTHORNE GARDENING COMPANY",
+    "label_name": "WHITNEY FARMS ORGANIC PLANTING SOIL 0.11-0.07-0.11",
+    "wsda_reg_no": "(#2838-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

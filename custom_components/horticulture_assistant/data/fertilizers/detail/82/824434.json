@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"824434","source_wsda_record":{"wsda_product_number":"(#0236-0671)","product_name":"SCOTTS TURF BUILDER ANNUAL PROGRAM EARLY SPRING 30-0-4","company_info":{"company":"SCOTTS COMPANY (THE)","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":30.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4810","Cadmium":"<0.2410","Cobalt":"<0.2410","Mercury":"<0.0200","Molybdenum":"<0.2410","Nickel":"=0.4360","Lead":"=1.3400","Selenium":"<0.7230","Zinc":"=6.1600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":30.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4810","Cadmium":"<0.2410","Cobalt":"<0.2410","Mercury":"<0.0200","Molybdenum":"<0.2410","Nickel":"=0.4360","Lead":"=1.3400","Selenium":"<0.7230","Zinc":"=6.1600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS COMPANY (THE)","label_name":"SCOTTS TURF BUILDER ANNUAL PROGRAM EARLY SPRING 30-0-4","wsda_reg_no":"(#0236-0671)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "824434",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0236-0671)",
+    "product_name": "SCOTTS TURF BUILDER ANNUAL PROGRAM EARLY SPRING 30-0-4",
+    "company_info": {
+      "company": "SCOTTS COMPANY (THE)",
+      "Mailing Address": "14111 Scottslawn Rd",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 645-2523",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 30.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.4810",
+      "Cadmium": "<0.2410",
+      "Cobalt": "<0.2410",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<0.2410",
+      "Nickel": "=0.4360",
+      "Lead": "=1.3400",
+      "Selenium": "<0.7230",
+      "Zinc": "=6.1600"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 30.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 10.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.4810",
+      "Cadmium": "<0.2410",
+      "Cobalt": "<0.2410",
+      "Mercury": "<0.0200",
+      "Molybdenum": "<0.2410",
+      "Nickel": "=0.4360",
+      "Lead": "=1.3400",
+      "Selenium": "<0.7230",
+      "Zinc": "=6.1600"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SCOTTS COMPANY (THE)",
+    "label_name": "SCOTTS TURF BUILDER ANNUAL PROGRAM EARLY SPRING 30-0-4",
+    "wsda_reg_no": "(#0236-0671)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
