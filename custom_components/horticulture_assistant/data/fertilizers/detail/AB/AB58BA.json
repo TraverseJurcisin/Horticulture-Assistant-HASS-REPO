@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"AB58BA","source_wsda_record":{"wsda_product_number":"(#4277-0014)","product_name":"VALENT BIOSCIENCES ZICRON SOIL 0-0-0","company_info":{"company":"VALENT BIOSCIENCES LLC","Mailing Address":"1910 Innovation Way Ste 100","Post Office Box":null,"City":"Libertyville","State":"IL","Postal Code":"60048","Telephone Number":"847 968-4700","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":6.0},"reported_metals":{"Arsenic":"=10.0000","Cadmium":"=1.6400","Cobalt":"=16.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=19.5000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=62360.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":6.0},"heavy_metals":{"Arsenic":"=10.0000","Cadmium":"=1.6400","Cobalt":"=16.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=19.5000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=62360.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALENT BIOSCIENCES LLC","label_name":"VALENT BIOSCIENCES ZICRON SOIL 0-0-0","wsda_reg_no":"(#4277-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "AB58BA",
+  "source_wsda_record": {
+    "wsda_product_number": "(#4277-0014)",
+    "product_name": "VALENT BIOSCIENCES ZICRON SOIL 0-0-0",
+    "company_info": {
+      "company": "VALENT BIOSCIENCES LLC",
+      "Mailing Address": "1910 Innovation Way Ste 100",
+      "Post Office Box": null,
+      "City": "Libertyville",
+      "State": "IL",
+      "Postal Code": "60048",
+      "Telephone Number": "847 968-4700",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 3.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 1.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 6.0
+    },
+    "reported_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=1.6400",
+      "Cobalt": "=16.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=19.5000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=62360.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 3.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 1.0,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 6.0
+    },
+    "heavy_metals": {
+      "Arsenic": "=10.0000",
+      "Cadmium": "=1.6400",
+      "Cobalt": "=16.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=19.5000",
+      "Lead": "=5.0000",
+      "Selenium": "=10.0000",
+      "Zinc": "=62360.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VALENT BIOSCIENCES LLC",
+    "label_name": "VALENT BIOSCIENCES ZICRON SOIL 0-0-0",
+    "wsda_reg_no": "(#4277-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

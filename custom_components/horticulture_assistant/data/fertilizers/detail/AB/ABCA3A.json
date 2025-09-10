@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"ABCA3A","source_wsda_record":{"wsda_product_number":"(#3413-0010)","product_name":"QUODDY BLEND ORGANIC & NATURAL COMPOST BLEND WITH LOBSTER & CRAB 0.6-0.3-0.2","company_info":{"company":"COAST OF MAINE ORGANIC PRODUCTS INC","Mailing Address":"145 Newbury St","Post Office Box":null,"City":"Portland","State":"ME","Postal Code":"04101","Telephone Number":"717 786-2146","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.6,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6100","Cadmium":"=0.2000","Cobalt":"=2.1000","Mercury":"=0.0090","Molybdenum":"=3.9900","Nickel":"=6.6000","Lead":"=1.1200","Selenium":"=1.0100","Zinc":"=57.8700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.6,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6100","Cadmium":"=0.2000","Cobalt":"=2.1000","Mercury":"=0.0090","Molybdenum":"=3.9900","Nickel":"=6.6000","Lead":"=1.1200","Selenium":"=1.0100","Zinc":"=57.8700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COAST OF MAINE ORGANIC PRODUCTS INC","label_name":"QUODDY BLEND ORGANIC & NATURAL COMPOST BLEND WITH LOBSTER & CRAB 0.6-0.3-0.2","wsda_reg_no":"(#3413-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "ABCA3A",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3413-0010)",
+    "product_name": "QUODDY BLEND ORGANIC & NATURAL COMPOST BLEND WITH LOBSTER & CRAB 0.6-0.3-0.2",
+    "company_info": {
+      "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
+      "Mailing Address": "145 Newbury St",
+      "Post Office Box": null,
+      "City": "Portland",
+      "State": "ME",
+      "Postal Code": "04101",
+      "Telephone Number": "717 786-2146",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.6,
+      "Available Phosphoric Acid (P2O5)": 0.3,
+      "Soluble Potash (K2O)": 0.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.6100",
+      "Cadmium": "=0.2000",
+      "Cobalt": "=2.1000",
+      "Mercury": "=0.0090",
+      "Molybdenum": "=3.9900",
+      "Nickel": "=6.6000",
+      "Lead": "=1.1200",
+      "Selenium": "=1.0100",
+      "Zinc": "=57.8700"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 0.6,
+      "Available Phosphoric Acid (P2O5)": 0.3,
+      "Soluble Potash (K2O)": 0.2,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.6100",
+      "Cadmium": "=0.2000",
+      "Cobalt": "=2.1000",
+      "Mercury": "=0.0090",
+      "Molybdenum": "=3.9900",
+      "Nickel": "=6.6000",
+      "Lead": "=1.1200",
+      "Selenium": "=1.0100",
+      "Zinc": "=57.8700"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "label_name": "QUODDY BLEND ORGANIC & NATURAL COMPOST BLEND WITH LOBSTER & CRAB 0.6-0.3-0.2",
+    "wsda_reg_no": "(#3413-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

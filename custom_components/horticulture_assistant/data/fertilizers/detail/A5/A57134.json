@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"A57134","source_wsda_record":{"wsda_product_number":"(#2448-0036)","product_name":"FARMHAND FORM 14-0-0","company_info":{"company":"AGE OLD ORGANICS","Mailing Address":"PO Box 618","Post Office Box":null,"City":"Mendota","State":"IL","Postal Code":"61342","Telephone Number":"815 539-7471","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":14.0,"Magnesium (Mg)":3.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=2.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":14.0,"Magnesium (Mg)":3.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=2.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGE OLD ORGANICS","label_name":"FARMHAND FORM 14-0-0","wsda_reg_no":"(#2448-0036)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "A57134",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2448-0036)",
+    "product_name": "FARMHAND FORM 14-0-0",
+    "company_info": {
+      "company": "AGE OLD ORGANICS",
+      "Mailing Address": "PO Box 618",
+      "Post Office Box": null,
+      "City": "Mendota",
+      "State": "IL",
+      "Postal Code": "61342",
+      "Telephone Number": "815 539-7471",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 14.0,
+      "Magnesium (Mg)": 3.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=5.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=2.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 14.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": 14.0,
+      "Magnesium (Mg)": 3.5,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=5.0000",
+      "Cadmium": "=0.5000",
+      "Cobalt": "=1.0000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.0000",
+      "Lead": "=5.0000",
+      "Selenium": "=5.0000",
+      "Zinc": "=2.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "AGE OLD ORGANICS",
+    "label_name": "FARMHAND FORM 14-0-0",
+    "wsda_reg_no": "(#2448-0036)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"B21F78","source_wsda_record":{"wsda_product_number":"(#1892-0001)","product_name":"BLACK ASH LIMER 0-0-0","company_info":{"company":"SILVER SPRINGS ORGANICS LLC","Mailing Address":"13835 Military Rd SE","Post Office Box":null,"City":"Rainier","State":"WA","Postal Code":"98576-9705","Telephone Number":"360 446-7845","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=17.0000","Cadmium":"=4.0000","Cobalt":"=29.0000","Mercury":"=0.1900","Molybdenum":"=2.7000","Nickel":"=32.5000","Lead":"=94.2500","Selenium":"=5.2500","Zinc":"=305.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"0.2500","Calcium Carbonate Equivalent (CaCO3)":"0.2500","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=17.0000","Cadmium":"=4.0000","Cobalt":"=29.0000","Mercury":"=0.1900","Molybdenum":"=2.7000","Nickel":"=32.5000","Lead":"=94.2500","Selenium":"=5.2500","Zinc":"=305.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SILVER SPRINGS ORGANICS LLC","label_name":"BLACK ASH LIMER 0-0-0","wsda_reg_no":"(#1892-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "B21F78",
+  "source_wsda_record": {
+    "wsda_product_number": "(#1892-0001)",
+    "product_name": "BLACK ASH LIMER 0-0-0",
+    "company_info": {
+      "company": "SILVER SPRINGS ORGANICS LLC",
+      "Mailing Address": "13835 Military Rd SE",
+      "Post Office Box": null,
+      "City": "Rainier",
+      "State": "WA",
+      "Postal Code": "98576-9705",
+      "Telephone Number": "360 446-7845",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=17.0000",
+      "Cadmium": "=4.0000",
+      "Cobalt": "=29.0000",
+      "Mercury": "=0.1900",
+      "Molybdenum": "=2.7000",
+      "Nickel": "=32.5000",
+      "Lead": "=94.2500",
+      "Selenium": "=5.2500",
+      "Zinc": "=305.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": "0.2500",
+      "Calcium Carbonate Equivalent (CaCO3)": "0.2500",
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "Y",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": null,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=17.0000",
+      "Cadmium": "=4.0000",
+      "Cobalt": "=29.0000",
+      "Mercury": "=0.1900",
+      "Molybdenum": "=2.7000",
+      "Nickel": "=32.5000",
+      "Lead": "=94.2500",
+      "Selenium": "=5.2500",
+      "Zinc": "=305.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SILVER SPRINGS ORGANICS LLC",
+    "label_name": "BLACK ASH LIMER 0-0-0",
+    "wsda_reg_no": "(#1892-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

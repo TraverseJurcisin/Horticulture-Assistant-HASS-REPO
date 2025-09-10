@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"9F1130","source_wsda_record":{"wsda_product_number":"(#0169-0698)","product_name":"SIMPLOT DIVERSIFIED PRODUCTS ROOTPHOS LSR 7-18-4","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.2},"reported_metals":{"Arsenic":"=1.1000","Cadmium":"=4.4000","Cobalt":"=1.7000","Mercury":"=0.0190","Molybdenum":"=3.0000","Nickel":"=1.2000","Lead":"=0.3400","Selenium":"=1.0000","Zinc":"=1700.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.2},"heavy_metals":{"Arsenic":"=1.1000","Cadmium":"=4.4000","Cobalt":"=1.7000","Mercury":"=0.0190","Molybdenum":"=3.0000","Nickel":"=1.2000","Lead":"=0.3400","Selenium":"=1.0000","Zinc":"=1700.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"SIMPLOT DIVERSIFIED PRODUCTS ROOTPHOS LSR 7-18-4","wsda_reg_no":"(#0169-0698)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "9F1130",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0169-0698)",
+    "product_name": "SIMPLOT DIVERSIFIED PRODUCTS ROOTPHOS LSR 7-18-4",
+    "company_info": {
+      "company": "J R SIMPLOT COMPANY",
+      "Mailing Address": "PO Box 70013",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": 18.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.2
+    },
+    "reported_metals": {
+      "Arsenic": "=1.1000",
+      "Cadmium": "=4.4000",
+      "Cobalt": "=1.7000",
+      "Mercury": "=0.0190",
+      "Molybdenum": "=3.0000",
+      "Nickel": "=1.2000",
+      "Lead": "=0.3400",
+      "Selenium": "=1.0000",
+      "Zinc": "=1700.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 7.0,
+      "Available Phosphoric Acid (P2O5)": 18.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.2
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.1000",
+      "Cadmium": "=4.4000",
+      "Cobalt": "=1.7000",
+      "Mercury": "=0.0190",
+      "Molybdenum": "=3.0000",
+      "Nickel": "=1.2000",
+      "Lead": "=0.3400",
+      "Selenium": "=1.0000",
+      "Zinc": "=1700.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "SIMPLOT DIVERSIFIED PRODUCTS ROOTPHOS LSR 7-18-4",
+    "wsda_reg_no": "(#0169-0698)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"A20480","source_wsda_record":{"wsda_product_number":"(#2317-0016)","product_name":"VEG+BLOOM RO/SOFT 8-5-13","company_info":{"company":"HYDROPONIC RESEARCH","Mailing Address":"4570 Alvarado Canyon Rd Ste E","Post Office Box":null,"City":"San Diego","State":"CA","Postal Code":"92120","Telephone Number":"800 701-9298","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=4.2600","Mercury":"<0.2000","Molybdenum":"=11.7600","Nickel":"=13.1500","Lead":"=13.1500","Selenium":"<0.0500","Zinc":"=91.0200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=4.2600","Mercury":"<0.2000","Molybdenum":"=11.7600","Nickel":"=13.1500","Lead":"=13.1500","Selenium":"<0.0500","Zinc":"=91.0200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROPONIC RESEARCH","label_name":"VEG+BLOOM RO/SOFT 8-5-13","wsda_reg_no":"(#2317-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "A20480",
+  "source_wsda_record": {
+    "wsda_product_number": "(#2317-0016)",
+    "product_name": "VEG+BLOOM RO/SOFT 8-5-13",
+    "company_info": {
+      "company": "HYDROPONIC RESEARCH",
+      "Mailing Address": "4570 Alvarado Canyon Rd Ste E",
+      "Post Office Box": null,
+      "City": "San Diego",
+      "State": "CA",
+      "Postal Code": "92120",
+      "Telephone Number": "800 701-9298",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 13.0,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 4.5,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.03,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.1000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=4.2600",
+      "Mercury": "<0.2000",
+      "Molybdenum": "=11.7600",
+      "Nickel": "=13.1500",
+      "Lead": "=13.1500",
+      "Selenium": "<0.0500",
+      "Zinc": "=91.0200"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 8.0,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 13.0,
+      "Calcium (Ca)": 7.0,
+      "Magnesium (Mg)": 2.5,
+      "Sulfur (S)": 4.5,
+      "Boron (B)": 0.02,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 0.1,
+      "Manganese (Mn)": 0.03,
+      "Molybdenum (Mo)": 0.001,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.1000",
+      "Cadmium": "<0.1000",
+      "Cobalt": "=4.2600",
+      "Mercury": "<0.2000",
+      "Molybdenum": "=11.7600",
+      "Nickel": "=13.1500",
+      "Lead": "=13.1500",
+      "Selenium": "<0.0500",
+      "Zinc": "=91.0200"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HYDROPONIC RESEARCH",
+    "label_name": "VEG+BLOOM RO/SOFT 8-5-13",
+    "wsda_reg_no": "(#2317-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

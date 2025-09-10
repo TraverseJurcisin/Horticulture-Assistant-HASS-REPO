@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"AB92D4","source_wsda_record":{"wsda_product_number":"(#0103-0139)","product_name":"TECHNIGRO 16-4-20 PLUS 16-4-20","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.2,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.2,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.065},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=2.0500","Mercury":"=0.2000","Molybdenum":"=74.0000","Nickel":"=3.2400","Lead":"=4.2200","Selenium":"=0.0500","Zinc":"=426.3300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.2,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.2,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.065},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=2.0500","Mercury":"=0.2000","Molybdenum":"=74.0000","Nickel":"=3.2400","Lead":"=4.2200","Selenium":"=0.0500","Zinc":"=426.3300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"TECHNIGRO 16-4-20 PLUS 16-4-20","wsda_reg_no":"(#0103-0139)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "AB92D4",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0103-0139)",
+    "product_name": "TECHNIGRO 16-4-20 PLUS 16-4-20",
+    "company_info": {
+      "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+      "Mailing Address": "770 Silver Street",
+      "Post Office Box": null,
+      "City": "Agawam",
+      "State": "MA",
+      "Postal Code": "01001",
+      "Telephone Number": "256 592-0135",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": 3.2,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.015,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.2,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.065
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=2.0500",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=74.0000",
+      "Nickel": "=3.2400",
+      "Lead": "=4.2200",
+      "Selenium": "=0.0500",
+      "Zinc": "=426.3300"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 16.0,
+      "Available Phosphoric Acid (P2O5)": 4.0,
+      "Soluble Potash (K2O)": 20.0,
+      "Calcium (Ca)": 3.2,
+      "Magnesium (Mg)": 1.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 0.015,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.05,
+      "Iron (Fe)": 0.2,
+      "Manganese (Mn)": 0.1,
+      "Molybdenum (Mo)": 0.01,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.065
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1000",
+      "Cadmium": "=0.1000",
+      "Cobalt": "=2.0500",
+      "Mercury": "=0.2000",
+      "Molybdenum": "=74.0000",
+      "Nickel": "=3.2400",
+      "Lead": "=4.2200",
+      "Selenium": "=0.0500",
+      "Zinc": "=426.3300"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "TECHNIGRO 16-4-20 PLUS 16-4-20",
+    "wsda_reg_no": "(#0103-0139)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
