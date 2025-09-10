@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"7CE175","source_wsda_record":{"wsda_product_number":"(#3855-0012)","product_name":"NWBLENDS TOTAL 21-3-21","company_info":{"company":"SIMPLOT AB RETAIL INC","Mailing Address":"P.O. Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.2,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.06,"Iron (Fe)":0.36,"Manganese (Mn)":0.15,"Molybdenum (Mo)":0.002,"Sodium (Na)":null,"Zinc (Zn)":0.14},"reported_metals":{"Arsenic":"=1.9000","Cadmium":"=12.0000","Cobalt":"<0.6300","Mercury":"<0.0210","Molybdenum":"=1.6000","Nickel":"=14.0000","Lead":"<0.9400","Selenium":"<3.1000","Zinc":"=150.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.2,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.06,"Iron (Fe)":0.36,"Manganese (Mn)":0.15,"Molybdenum (Mo)":0.002,"Sodium (Na)":null,"Zinc (Zn)":0.14},"heavy_metals":{"Arsenic":"=1.9000","Cadmium":"=12.0000","Cobalt":"<0.6300","Mercury":"<0.0210","Molybdenum":"=1.6000","Nickel":"=14.0000","Lead":"<0.9400","Selenium":"<3.1000","Zinc":"=150.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT AB RETAIL INC","label_name":"NWBLENDS TOTAL 21-3-21","wsda_reg_no":"(#3855-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "7CE175",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3855-0012)",
+    "product_name": "NWBLENDS TOTAL 21-3-21",
+    "company_info": {
+      "company": "SIMPLOT AB RETAIL INC",
+      "Mailing Address": "P.O. Box 9296",
+      "Post Office Box": null,
+      "City": "Boise",
+      "State": "ID",
+      "Postal Code": "83707",
+      "Telephone Number": "208 780-0838",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.2,
+      "Boron (B)": 0.06,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.06,
+      "Iron (Fe)": 0.36,
+      "Manganese (Mn)": 0.15,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.14
+    },
+    "reported_metals": {
+      "Arsenic": "=1.9000",
+      "Cadmium": "=12.0000",
+      "Cobalt": "<0.6300",
+      "Mercury": "<0.0210",
+      "Molybdenum": "=1.6000",
+      "Nickel": "=14.0000",
+      "Lead": "<0.9400",
+      "Selenium": "<3.1000",
+      "Zinc": "=150.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 3.0,
+      "Soluble Potash (K2O)": 21.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.2,
+      "Boron (B)": 0.06,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": 0.06,
+      "Iron (Fe)": 0.36,
+      "Manganese (Mn)": 0.15,
+      "Molybdenum (Mo)": 0.002,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 0.14
+    },
+    "heavy_metals": {
+      "Arsenic": "=1.9000",
+      "Cadmium": "=12.0000",
+      "Cobalt": "<0.6300",
+      "Mercury": "<0.0210",
+      "Molybdenum": "=1.6000",
+      "Nickel": "=14.0000",
+      "Lead": "<0.9400",
+      "Selenium": "<3.1000",
+      "Zinc": "=150.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "SIMPLOT AB RETAIL INC",
+    "label_name": "NWBLENDS TOTAL 21-3-21",
+    "wsda_reg_no": "(#3855-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

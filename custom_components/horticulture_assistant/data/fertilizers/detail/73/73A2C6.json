@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"73A2C6","source_wsda_record":{"wsda_product_number":"(#3132-0071)","product_name":"VALLEY AGRONOMICS FERTILIZER 21-7-14 SLOW RELEASE WITH DURATION AND IRON SUCRATE 21-7-14","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":4.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<3.8400","Cadmium":"<0.4000","Cobalt":"=4.0000","Mercury":"=0.0150","Molybdenum":"=8.5000","Nickel":"=21.8000","Lead":"=8.0000","Selenium":"=4.0000","Zinc":"=1580.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":4.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<3.8400","Cadmium":"<0.4000","Cobalt":"=4.0000","Mercury":"=0.0150","Molybdenum":"=8.5000","Nickel":"=21.8000","Lead":"=8.0000","Selenium":"=4.0000","Zinc":"=1580.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 21-7-14 SLOW RELEASE WITH DURATION AND IRON SUCRATE 21-7-14","wsda_reg_no":"(#3132-0071)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "73A2C6",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3132-0071)",
+    "product_name": "VALLEY AGRONOMICS FERTILIZER 21-7-14 SLOW RELEASE WITH DURATION AND IRON SUCRATE 21-7-14",
+    "company_info": {
+      "company": "VALLEY AGRONOMICS LLC",
+      "Mailing Address": "PO Box 365",
+      "Post Office Box": null,
+      "City": "Rupert",
+      "State": "ID",
+      "Postal Code": "83350",
+      "Telephone Number": "503 845-8125",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 4.8,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 4.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<3.8400",
+      "Cadmium": "<0.4000",
+      "Cobalt": "=4.0000",
+      "Mercury": "=0.0150",
+      "Molybdenum": "=8.5000",
+      "Nickel": "=21.8000",
+      "Lead": "=8.0000",
+      "Selenium": "=4.0000",
+      "Zinc": "=1580.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": 7.0,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 4.8,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 4.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<3.8400",
+      "Cadmium": "<0.4000",
+      "Cobalt": "=4.0000",
+      "Mercury": "=0.0150",
+      "Molybdenum": "=8.5000",
+      "Nickel": "=21.8000",
+      "Lead": "=8.0000",
+      "Selenium": "=4.0000",
+      "Zinc": "=1580.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 21-7-14 SLOW RELEASE WITH DURATION AND IRON SUCRATE 21-7-14",
+    "wsda_reg_no": "(#3132-0071)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

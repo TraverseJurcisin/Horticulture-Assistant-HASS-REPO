@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"673752","source_wsda_record":{"wsda_product_number":"(#3330-0110)","product_name":"PRO-MATE TURF AND ORNAMENTAL FERTILIZER W/ 8% SULFUR 21-0-14","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1910","Cadmium":"=0.0530","Cobalt":"=0.1780","Mercury":"=0.0720","Molybdenum":"<0.0150","Nickel":"=0.4180","Lead":"<0.0150","Selenium":"=0.2140","Zinc":"=3279.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1910","Cadmium":"=0.0530","Cobalt":"=0.1780","Mercury":"=0.0720","Molybdenum":"<0.0150","Nickel":"=0.4180","Lead":"<0.0150","Selenium":"=0.2140","Zinc":"=3279.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"PRO-MATE TURF AND ORNAMENTAL FERTILIZER W/ 8% SULFUR 21-0-14","wsda_reg_no":"(#3330-0110)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "673752",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3330-0110)",
+    "product_name": "PRO-MATE TURF AND ORNAMENTAL FERTILIZER W/ 8% SULFUR 21-0-14",
+    "company_info": {
+      "company": "HELENA AGRI-ENTERPRISES LLC",
+      "Mailing Address": "225 Schilling Blvd Ste 300",
+      "Post Office Box": null,
+      "City": "Collierville",
+      "State": "TN",
+      "Postal Code": "38017",
+      "Telephone Number": "901 752-4429",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 8.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=0.1910",
+      "Cadmium": "=0.0530",
+      "Cobalt": "=0.1780",
+      "Mercury": "=0.0720",
+      "Molybdenum": "<0.0150",
+      "Nickel": "=0.4180",
+      "Lead": "<0.0150",
+      "Selenium": "=0.2140",
+      "Zinc": "=3279.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 21.0,
+      "Available Phosphoric Acid (P2O5)": null,
+      "Soluble Potash (K2O)": 14.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 8.0,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=0.1910",
+      "Cadmium": "=0.0530",
+      "Cobalt": "=0.1780",
+      "Mercury": "=0.0720",
+      "Molybdenum": "<0.0150",
+      "Nickel": "=0.4180",
+      "Lead": "<0.0150",
+      "Selenium": "=0.2140",
+      "Zinc": "=3279.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "PRO-MATE TURF AND ORNAMENTAL FERTILIZER W/ 8% SULFUR 21-0-14",
+    "wsda_reg_no": "(#3330-0110)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

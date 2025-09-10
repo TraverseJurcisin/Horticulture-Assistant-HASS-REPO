@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"7B3947","source_wsda_record":{"wsda_product_number":"(#0347-0017)","product_name":"FOOD FOR LAWNS & GARDENS 10-2-4","company_info":{"company":"CHS NORTHWEST","Mailing Address":"2014 Agronomy Way","Post Office Box":null,"City":"Lynden","State":"WA","Postal Code":"98264","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.5000","Cadmium":"=7.3900","Cobalt":"=13.4000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.5000","Lead":"=1.5000","Selenium":"=2.5000","Zinc":"=89.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.5000","Cadmium":"=7.3900","Cobalt":"=13.4000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.5000","Lead":"=1.5000","Selenium":"=2.5000","Zinc":"=89.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CHS NORTHWEST","label_name":"FOOD FOR LAWNS & GARDENS 10-2-4","wsda_reg_no":"(#0347-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "7B3947",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0347-0017)",
+    "product_name": "FOOD FOR LAWNS & GARDENS 10-2-4",
+    "company_info": {
+      "company": "CHS NORTHWEST",
+      "Mailing Address": "2014 Agronomy Way",
+      "Post Office Box": null,
+      "City": "Lynden",
+      "State": "WA",
+      "Postal Code": "98264",
+      "Telephone Number": "503 633-4562",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 10.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "=2.5000",
+      "Cadmium": "=7.3900",
+      "Cobalt": "=13.4000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.5000",
+      "Lead": "=1.5000",
+      "Selenium": "=2.5000",
+      "Zinc": "=89.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 2.0,
+      "Soluble Potash (K2O)": 4.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": 5.6,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": 10.0,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": null,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "=2.5000",
+      "Cadmium": "=7.3900",
+      "Cobalt": "=13.4000",
+      "Mercury": "=0.0500",
+      "Molybdenum": "=1.0000",
+      "Nickel": "=1.5000",
+      "Lead": "=1.5000",
+      "Selenium": "=2.5000",
+      "Zinc": "=89.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "CHS NORTHWEST",
+    "label_name": "FOOD FOR LAWNS & GARDENS 10-2-4",
+    "wsda_reg_no": "(#0347-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

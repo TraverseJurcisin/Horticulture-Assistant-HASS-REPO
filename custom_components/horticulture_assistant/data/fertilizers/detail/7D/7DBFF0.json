@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"7DBFF0","source_wsda_record":{"wsda_product_number":"(#0698-0085)","product_name":"MIRACLE-GRO ORCHID PLANT FOOD SPIKES 10-10-10","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.008,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4840","Cadmium":"<0.2420","Cobalt":"<0.2420","Mercury":"<0.0092","Molybdenum":"=92.2000","Nickel":"=0.9830","Lead":"<0.2420","Selenium":"<0.4840","Zinc":"=235.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.008,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4840","Cadmium":"<0.2420","Cobalt":"<0.2420","Mercury":"<0.0092","Molybdenum":"=92.2000","Nickel":"=0.9830","Lead":"<0.2420","Selenium":"<0.4840","Zinc":"=235.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO ORCHID PLANT FOOD SPIKES 10-10-10","wsda_reg_no":"(#0698-0085)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "7DBFF0",
+  "source_wsda_record": {
+    "wsda_product_number": "(#0698-0085)",
+    "product_name": "MIRACLE-GRO ORCHID PLANT FOOD SPIKES 10-10-10",
+    "company_info": {
+      "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+      "Mailing Address": "14111 Scottslawn Road",
+      "Post Office Box": null,
+      "City": "Marysville",
+      "State": "OH",
+      "Postal Code": "43041",
+      "Telephone Number": "937 578-1573",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.008,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "reported_metals": {
+      "Arsenic": "<0.4840",
+      "Cadmium": "<0.2420",
+      "Cobalt": "<0.2420",
+      "Mercury": "<0.0092",
+      "Molybdenum": "=92.2000",
+      "Nickel": "=0.9830",
+      "Lead": "<0.2420",
+      "Selenium": "<0.4840",
+      "Zinc": "=235.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": 10.0,
+      "Available Phosphoric Acid (P2O5)": 10.0,
+      "Soluble Potash (K2O)": 10.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": null,
+      "Sulfur (S)": null,
+      "Boron (B)": null,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": 0.05,
+      "Molybdenum (Mo)": 0.008,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": null
+    },
+    "heavy_metals": {
+      "Arsenic": "<0.4840",
+      "Cadmium": "<0.2420",
+      "Cobalt": "<0.2420",
+      "Mercury": "<0.0092",
+      "Molybdenum": "=92.2000",
+      "Nickel": "=0.9830",
+      "Lead": "<0.2420",
+      "Selenium": "<0.4840",
+      "Zinc": "=235.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO ORCHID PLANT FOOD SPIKES 10-10-10",
+    "wsda_reg_no": "(#0698-0085)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}

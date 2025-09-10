@@ -1,1 +1,106 @@
-{"schema_version":"2025-07-v1","product_id":"68494D","source_wsda_record":{"wsda_product_number":"(#3330-0085)","product_name":"HELENA AGRI-ENTERPRISES ELE-MAX PHOZ B MAG WP (HAE) 0-5-1","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":24.0,"Sulfur (S)":null,"Boron (B)":3.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0013,"Sodium (Na)":null,"Zinc (Zn)":10.0},"reported_metals":{"Arsenic":"=9.9600","Cadmium":"=42.0000","Cobalt":"<0.0150","Mercury":"=0.0100","Molybdenum":"=156.4000","Nickel":"=1.3400","Lead":"=2.3600","Selenium":"=0.3600","Zinc":"=98900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":24.0,"Sulfur (S)":null,"Boron (B)":3.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0013,"Sodium (Na)":null,"Zinc (Zn)":10.0},"heavy_metals":{"Arsenic":"=9.9600","Cadmium":"=42.0000","Cobalt":"<0.0150","Mercury":"=0.0100","Molybdenum":"=156.4000","Nickel":"=1.3400","Lead":"=2.3600","Selenium":"=0.3600","Zinc":"=98900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"HELENA AGRI-ENTERPRISES ELE-MAX PHOZ B MAG WP (HAE) 0-5-1","wsda_reg_no":"(#3330-0085)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema_version": "2025-07-v1",
+  "product_id": "68494D",
+  "source_wsda_record": {
+    "wsda_product_number": "(#3330-0085)",
+    "product_name": "HELENA AGRI-ENTERPRISES ELE-MAX PHOZ B MAG WP (HAE) 0-5-1",
+    "company_info": {
+      "company": "HELENA AGRI-ENTERPRISES LLC",
+      "Mailing Address": "225 Schilling Blvd Ste 300",
+      "Post Office Box": null,
+      "City": "Collierville",
+      "State": "TN",
+      "Postal Code": "38017",
+      "Telephone Number": "901 752-4429",
+      "Fax Number": null
+    },
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 24.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 3.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0013,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.0
+    },
+    "reported_metals": {
+      "Arsenic": "=9.9600",
+      "Cadmium": "=42.0000",
+      "Cobalt": "<0.0150",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=156.4000",
+      "Nickel": "=1.3400",
+      "Lead": "=2.3600",
+      "Selenium": "=0.3600",
+      "Zinc": "=98900.0000"
+    },
+    "GYPSUM & LIMING MATERIALS": {
+      "Calcium Carbonate (CaCO3)": null,
+      "Calcium Carbonate Equivalent (CaCO3)": null,
+      "Magnesium Carbonate (MgCO3)": null,
+      "Calcium Sulfate (CaSO42H2O)": null
+    },
+    "waste_derived_fertilizer": "N",
+    "micronutrient_fertilizer": "N"
+  },
+  "composition": {
+    "guaranteed_analysis": {
+      "Total Nitrogen (N)": null,
+      "Available Phosphoric Acid (P2O5)": 5.0,
+      "Soluble Potash (K2O)": 1.0,
+      "Calcium (Ca)": null,
+      "Magnesium (Mg)": 24.0,
+      "Sulfur (S)": null,
+      "Boron (B)": 3.0,
+      "Chlorine (Cl)": null,
+      "Cobalt (Co)": null,
+      "Copper (Cu)": null,
+      "Iron (Fe)": null,
+      "Manganese (Mn)": null,
+      "Molybdenum (Mo)": 0.0013,
+      "Sodium (Na)": null,
+      "Zinc (Zn)": 10.0
+    },
+    "heavy_metals": {
+      "Arsenic": "=9.9600",
+      "Cadmium": "=42.0000",
+      "Cobalt": "<0.0150",
+      "Mercury": "=0.0100",
+      "Molybdenum": "=156.4000",
+      "Nickel": "=1.3400",
+      "Lead": "=2.3600",
+      "Selenium": "=0.3600",
+      "Zinc": "=98900.0000"
+    },
+    "derived_from_raw": null,
+    "derived_from_tokens": null
+  },
+  "physicochemical": {
+    "density_kg_per_l": null,
+    "ph": {
+      "min": null,
+      "max": null
+    },
+    "ec_ms_cm": null
+  },
+  "commerce": {
+    "sku_list": [],
+    "price_history": []
+  },
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "HELENA AGRI-ENTERPRISES ELE-MAX PHOZ B MAG WP (HAE) 0-5-1",
+    "wsda_reg_no": "(#3330-0085)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z"
+  }
+}
