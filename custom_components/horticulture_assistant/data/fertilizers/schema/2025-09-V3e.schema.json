@@ -1,0 +1,1845 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/horticulture-assistant/fertilizer/2025-09-V3e.schema.json",
+  "title": "Horticulture Assistant Fertilizer (2025-09-V3e)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "product",
+    "composition"
+  ],
+  "properties": {
+    "schema": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "const": "fertilizer"
+        },
+        "version": {
+          "const": "2025-09-V3e"
+        }
+      },
+      "additionalProperties": false
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_utc": {
+          "type": "string"
+        },
+        "updated_utc": {
+          "type": "string"
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "license": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "product": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "brand": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "identifiers": {
+          "type": "object",
+          "properties": {
+            "mpn": {
+              "type": "string"
+            },
+            "gtin": {
+              "type": "string"
+            },
+            "upc": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "certifications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "variant_id",
+              "size"
+            ],
+            "properties": {
+              "variant_id": {
+                "type": "string"
+              },
+              "size": {
+                "type": "object",
+                "required": [
+                  "amount",
+                  "unit"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "unit": {
+                    "enum": [
+                      "kg",
+                      "g",
+                      "L",
+                      "mL"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "packaging": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "label_rev": {
+                "type": "string"
+              },
+              "equivalence_class": {
+                "type": "string"
+              },
+              "manufacturer_sku": {
+                "type": "string"
+              },
+              "gtin": {
+                "type": "string"
+              },
+              "upc": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "composition": {
+      "type": "object",
+      "required": [
+        "npk"
+      ],
+      "properties": {
+        "npk": {
+          "type": "object",
+          "required": [
+            "basis"
+          ],
+          "properties": {
+            "basis": {
+              "enum": [
+                "oxide",
+                "elemental"
+              ]
+            },
+            "N_pct": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "P_pct": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "P2O5_pct": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "K_pct": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "K2O_pct": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "nitrogen_forms": {
+              "type": "object",
+              "properties": {
+                "nitrate_pct": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "ammonium_pct": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "urea_pct": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "macros_pct": {
+          "type": "object",
+          "properties": {
+            "Ca": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Mg": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "S": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "micros_pct": {
+          "type": "object",
+          "properties": {
+            "Fe": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Mn": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Zn": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Cu": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "B": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Mo": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Cl": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            },
+            "Ni": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
+        },
+        "chelation": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "o_o_pct": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "pH_stability_min": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "pH_stability_max": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "contaminants_ppm_max": {
+          "description": "Deprecated in favor of composition.heavy_metals.limits_ppm",
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "ingredient_id",
+              "name",
+              "role"
+            ],
+            "properties": {
+              "ingredient_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "common_names": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cas": {
+                "type": "string"
+              },
+              "ec": {
+                "type": "string"
+              },
+              "grade": {
+                "type": "string"
+              },
+              "hydrate": {
+                "type": "string"
+              },
+              "form": {
+                "type": "string"
+              },
+              "purity_pct": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "role": {
+                "enum": [
+                  "primary_nutrient",
+                  "secondary_nutrient",
+                  "micronutrient",
+                  "carrier",
+                  "stabilizer",
+                  "chelate_agent",
+                  "acidifier",
+                  "anti_caking",
+                  "other"
+                ]
+              },
+              "quantities": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/$defs/quantityMassFraction"
+                    },
+                    {
+                      "$ref": "#/$defs/quantityVolumeFraction"
+                    },
+                    {
+                      "$ref": "#/$defs/quantityConcentration"
+                    },
+                    {
+                      "$ref": "#/$defs/quantityMoleFraction"
+                    }
+                  ]
+                }
+              },
+              "elemental_contributions": {
+                "type": "object",
+                "properties": {
+                  "basis": {
+                    "enum": [
+                      "oxide",
+                      "elemental"
+                    ]
+                  },
+                  "per_100g_product": {
+                    "type": "object",
+                    "patternProperties": {
+                      "^[A-Za-z0-9]+_pct$": {
+                        "type": [
+                          "number",
+                          "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 100
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "origin": {
+                    "enum": [
+                      "reported",
+                      "extrapolated",
+                      "computed"
+                    ]
+                  },
+                  "method": {
+                    "type": "string"
+                  },
+                  "confidence": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "notes": {
+                "type": "string"
+              },
+              "current_source_id": {
+                "type": "string"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "source_id",
+                    "type"
+                  ],
+                  "properties": {
+                    "source_id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "enum": [
+                        "manufacturer",
+                        "distributor",
+                        "mined",
+                        "synthesized"
+                      ]
+                    },
+                    "organization": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "website": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "facility": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "geo": {
+                          "type": "object",
+                          "properties": {
+                            "lat": {
+                              "type": "number",
+                              "minimum": -90,
+                              "maximum": 90
+                            },
+                            "lon": {
+                              "type": "number",
+                              "minimum": -180,
+                              "maximum": 180
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "material_codes": {
+                      "type": "object",
+                      "properties": {
+                        "manufacturer_sku": {
+                          "type": "string"
+                        },
+                        "grade": {
+                          "type": "string"
+                        },
+                        "label_rev": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "compliance": {
+                      "type": "object",
+                      "properties": {
+                        "iso_9001": {
+                          "type": "boolean"
+                        },
+                        "omri_allowed": {
+                          "type": "boolean"
+                        },
+                        "certificates": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "quality_spec": {
+                      "type": "object",
+                      "properties": {
+                        "purity_pct_min": {
+                          "type": [
+                            "number",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "moisture_pct_max": {
+                          "type": [
+                            "number",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "insolubles_pct_max": {
+                          "type": [
+                            "number",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "particle_size": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "enum": [
+                                "psd",
+                                "mesh"
+                              ]
+                            },
+                            "d50_microns": {
+                              "type": [
+                                "number",
+                                "null"
+                              ],
+                              "minimum": 0
+                            },
+                            "d90_microns": {
+                              "type": [
+                                "number",
+                                "null"
+                              ],
+                              "minimum": 0
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "additives": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "heavy_metals_ppm_max": {
+                          "$ref": "#/$defs/heavyMetalMap"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "usage_timeline": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "valid_from"
+                        ],
+                        "properties": {
+                          "valid_from": {
+                            "type": "string"
+                          },
+                          "valid_to": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "used_in_variants": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "blend_fraction_pct": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0,
+                            "maximum": 100
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "audit": {
+                            "$ref": "#/$defs/auditEntry"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "coa_records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "lot_no": {
+                            "type": "string"
+                          },
+                          "production_date": {
+                            "type": "string"
+                          },
+                          "doc": {
+                            "$ref": "#/$defs/docRef"
+                          },
+                          "basis": {
+                            "enum": [
+                              "as_sold",
+                              "dry_basis",
+                              null
+                            ]
+                          },
+                          "heavy_metals_ppm_measured": {
+                            "$ref": "#/$defs/heavyMetalMap"
+                          },
+                          "detection_limits_ppm": {
+                            "$ref": "#/$defs/heavyMetalMap"
+                          },
+                          "limits_kind": {
+                            "$ref": "#/$defs/limitsKindEnum"
+                          },
+                          "upper_limits_ppm": {
+                            "$ref": "#/$defs/heavyMetalMap"
+                          },
+                          "upper_limits_kind": {
+                            "$ref": "#/$defs/upperLimitsKindEnum"
+                          },
+                          "uncertainty_ppm": {
+                            "$ref": "#/$defs/heavyMetalMap"
+                          },
+                          "qualifiers": {
+                            "$ref": "#/$defs/heavyMetalQualifierMap"
+                          },
+                          "parameters": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": [
+                                "number",
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "audit": {
+                            "$ref": "#/$defs/auditEntry"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "performance_observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "date_utc",
+                          "classification",
+                          "severity",
+                          "reports_count"
+                        ],
+                        "properties": {
+                          "date_utc": {
+                            "type": "string"
+                          },
+                          "classification": {
+                            "enum": [
+                              "clogging_gumming",
+                              "settling",
+                              "discoloration",
+                              "odor",
+                              "normal_operation",
+                              "other"
+                            ]
+                          },
+                          "severity": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 5
+                          },
+                          "reports_count": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "context": {
+                            "type": "object",
+                            "properties": {
+                              "system": {
+                                "type": "string"
+                              },
+                              "filter_size_microns": {
+                                "type": "integer",
+                                "minimum": 0
+                              },
+                              "water_hardness_ppm": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "evidence": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/$defs/evidenceItem"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "status": {
+                      "enum": [
+                        "preferred",
+                        "acceptable",
+                        "disfavored",
+                        "blocked"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "heavy_metals": {
+          "description": "Product-level heavy metal concentrations and limits.",
+          "type": "object",
+          "properties": {
+            "basis": {
+              "enum": [
+                "as_sold",
+                "dry_basis"
+              ]
+            },
+            "limits_ppm": {
+              "$ref": "#/$defs/heavyMetalMap"
+            },
+            "typical_ppm": {
+              "$ref": "#/$defs/heavyMetalMap"
+            },
+            "samples": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/heavyMetalSample"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "chemistry": {
+      "type": "object",
+      "properties": {
+        "physical_form": {
+          "enum": [
+            "dry_powder",
+            "granular",
+            "liquid",
+            "paste"
+          ]
+        },
+        "density_g_ml": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "bulk_density_kg_m3": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "solubility": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "const": "g_L"
+            },
+            "reference_temp_C": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "curve": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "temp_C",
+                  "g_L"
+                ],
+                "properties": {
+                  "temp_C": {
+                    "type": "number"
+                  },
+                  "g_L": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "ec_curve": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "const": "mS_cm"
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "g_L",
+                  "ec"
+                ],
+                "properties": {
+                  "g_L": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "ec": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "ph_effect": {
+          "type": "object",
+          "properties": {
+            "reference_alkalinity_ppm_as_CaCO3": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "g_L",
+                  "delta_pH"
+                ],
+                "properties": {
+                  "g_L": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "delta_pH": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "compatibility": {
+          "type": "object",
+          "properties": {
+            "avoid_with": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "application_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dosing": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "enum": [
+                "g_L",
+                "ml_L",
+                "ppm"
+              ]
+            },
+            "stages": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "max": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "frequency": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "properties": {
+        "hazard": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sds_url": {
+          "type": "string"
+        },
+        "storage": {
+          "type": "object",
+          "properties": {
+            "cool_dry": {
+              "type": "boolean"
+            },
+            "min_temp_C": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "max_temp_C": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "hygroscopic": {
+              "type": "boolean"
+            },
+            "shelf_life_months": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "logistics": {
+      "type": "object",
+      "properties": {
+        "package_sizes": {
+          "description": "Deprecated: retained for backward compatibility.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "size"
+            ],
+            "properties": {
+              "size": {
+                "type": "string"
+              },
+              "sku": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "cost": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3,4}$"
+            },
+            "price_per_kg": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "availability": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "suppliers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "supplier_id",
+              "offers"
+            ],
+            "properties": {
+              "supplier_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "offers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "offer_id",
+                    "variant_ref",
+                    "supplier_sku"
+                  ],
+                  "properties": {
+                    "offer_id": {
+                      "type": "string"
+                    },
+                    "variant_ref": {
+                      "type": "string"
+                    },
+                    "supplier_sku": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "listing_label_rev": {
+                      "type": "string"
+                    },
+                    "availability_timeline": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "valid_from",
+                          "status"
+                        ],
+                        "properties": {
+                          "valid_from": {
+                            "type": "string"
+                          },
+                          "valid_to": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "status": {
+                            "enum": [
+                              "in_stock",
+                              "out_of_stock",
+                              "discontinued"
+                            ]
+                          },
+                          "audit": {
+                            "$ref": "#/$defs/auditEntry"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "price_timeline": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "valid_from",
+                          "price",
+                          "currency"
+                        ],
+                        "properties": {
+                          "valid_from": {
+                            "type": "string"
+                          },
+                          "valid_to": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "price": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "currency": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{3,4}$"
+                          },
+                          "kind": {
+                            "enum": [
+                              "regular",
+                              "sale",
+                              "clearance"
+                            ]
+                          },
+                          "unit_price_per_kg": {
+                            "type": [
+                              "number",
+                              "null"
+                            ],
+                            "minimum": 0
+                          },
+                          "unit_price_basis": {
+                            "enum": [
+                              "size_mass",
+                              "size_volume_density",
+                              "unknown"
+                            ]
+                          },
+                          "computed_using": {
+                            "type": "object",
+                            "properties": {
+                              "variant_ref": {
+                                "type": "string"
+                              },
+                              "size_amount": {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ],
+                                "minimum": 0
+                              },
+                              "size_unit": {
+                                "enum": [
+                                  "kg",
+                                  "g",
+                                  "L",
+                                  "mL",
+                                  null
+                                ]
+                              },
+                              "density_g_ml": {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ],
+                                "minimum": 0
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "audit": {
+                            "$ref": "#/$defs/auditEntry"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "auditEntry": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": [
+            "manual",
+            "backfill",
+            "scrape",
+            "import"
+          ]
+        },
+        "entered_by": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "entered_at_utc": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidenceItem"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceItem": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "receipt",
+            "screenshot",
+            "coa",
+            "lab_report",
+            "note",
+            "other"
+          ]
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mime": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "uploaded_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "caption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "path"
+          ]
+        },
+        {
+          "required": [
+            "url"
+          ]
+        }
+      ]
+    },
+    "quantityBase": {
+      "type": "object",
+      "properties": {
+        "basis": {
+          "const": "in_product"
+        },
+        "origin": {
+          "enum": [
+            "reported",
+            "extrapolated",
+            "computed"
+          ]
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "audit": {
+          "$ref": "#/$defs/auditEntry"
+        }
+      },
+      "additionalProperties": false
+    },
+    "quantityMassFraction": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/quantityBase"
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "unit",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "mass_fraction"
+            },
+            "unit": {
+              "const": "wt_pct"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      ]
+    },
+    "quantityVolumeFraction": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/quantityBase"
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "unit",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "volume_fraction"
+            },
+            "unit": {
+              "const": "vol_pct"
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      ]
+    },
+    "quantityConcentration": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/quantityBase"
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "unit",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "concentration"
+            },
+            "unit": {
+              "enum": [
+                "g_L",
+                "mg_L"
+              ]
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "quantityMoleFraction": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/quantityBase"
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "unit",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "mole_fraction"
+            },
+            "unit": {
+              "enum": [
+                "mol_pct",
+                "mol_L"
+              ]
+            },
+            "value": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "docRef": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "path"
+          ]
+        },
+        {
+          "required": [
+            "url"
+          ]
+        }
+      ]
+    },
+    "heavyMetalMap": {
+      "description": "Map of element symbol → concentration in ppm (mg/kg) on the specified basis.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9]{0,2}$": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "heavyMetalQualifierMap": {
+      "description": "Element symbol → qualifier for reported value or censoring.",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z][A-Za-z0-9]{0,2}$": {
+          "enum": [
+            "eq",
+            "lt_dl",
+            "lt_loq",
+            "approx",
+            "trace",
+            "nd",
+            "gt_ul"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "limitsKindEnum": {
+      "enum": [
+        "LOD",
+        "LOQ",
+        "MDL",
+        "PQL",
+        null
+      ]
+    },
+    "upperLimitsKindEnum": {
+      "enum": [
+        "ULOQ",
+        "UCR",
+        "UpperCalRange",
+        null
+      ]
+    },
+    "heavyMetalSample": {
+      "type": "object",
+      "required": [
+        "sample_id",
+        "date_utc",
+        "basis",
+        "results_ppm"
+      ],
+      "properties": {
+        "sample_id": {
+          "type": "string"
+        },
+        "date_utc": {
+          "type": "string"
+        },
+        "lot_no": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "basis": {
+          "enum": [
+            "as_sold",
+            "dry_basis"
+          ]
+        },
+        "lab": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "accreditation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "method": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "reference": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "moisture_pct_at_test": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "results_ppm": {
+          "$ref": "#/$defs/heavyMetalMap"
+        },
+        "detection_limits_ppm": {
+          "$ref": "#/$defs/heavyMetalMap"
+        },
+        "limits_kind": {
+          "$ref": "#/$defs/limitsKindEnum"
+        },
+        "upper_limits_ppm": {
+          "$ref": "#/$defs/heavyMetalMap"
+        },
+        "upper_limits_kind": {
+          "$ref": "#/$defs/upperLimitsKindEnum"
+        },
+        "uncertainty_ppm": {
+          "$ref": "#/$defs/heavyMetalMap"
+        },
+        "qualifiers": {
+          "$ref": "#/$defs/heavyMetalQualifierMap"
+        },
+        "audit": {
+          "$ref": "#/$defs/auditEntry"
+        },
+        "doc": {
+          "$ref": "#/$defs/docRef"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
