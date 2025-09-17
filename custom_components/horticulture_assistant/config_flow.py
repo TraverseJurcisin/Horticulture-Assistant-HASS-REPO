@@ -564,7 +564,29 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         if user_input is not None:
-            pid = await registry.async_add_profile(user_input["name"], user_input.get("copy_from"))
+            copy_from = user_input.get("copy_from")
+            pid = await registry.async_add_profile(user_input["name"], copy_from)
+
+            entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
+            store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
+            if store is not None:
+                new_profile = registry.get_profile(pid)
+                if new_profile is not None:
+                    profile_json = new_profile.to_json()
+                    sensors = profile_json.get("general", {}).get("sensors", {})
+                    thresholds = {
+                        key: (value.get("value") if isinstance(value, dict) else value)
+                        for key, value in profile_json.get("variables", {}).items()
+                    }
+                    clone_payload = {
+                        "thresholds": thresholds,
+                        "template": profile_json.get("species"),
+                    }
+                    await store.async_create_profile(
+                        name=profile_json.get("display_name", user_input["name"]),
+                        sensors=sensors,
+                        clone_from=clone_payload,
+                    )
             self._new_profile_id = pid
             return await self.async_step_attach_sensors()
         profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}

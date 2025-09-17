@@ -3,8 +3,8 @@
   "config": {
     "step": {
       "user": {
-        "title": "Add Horticulture Assistant",
-        "description": "Create and manage plant profiles.",
+        "title": "Set up Horticulture Assistant",
+        "description": "Create the integration entry. Use Options to add plant profiles.",
         "data": {
           "create_initial_profile": "Create an initial plant profile"
         }
@@ -15,7 +15,30 @@
     "step": {
       "init": {
         "title": "Horticulture Assistant options",
-        "description": "Manage plant profiles and defaults."
+        "menu_options": {
+          "basic": "General settings",
+          "add_profile": "Add profile",
+          "manage_profiles": "Manage profiles",
+          "export_profiles": "Export profiles",
+          "import_profiles": "Import profiles"
+        }
+      },
+      "add_profile": {
+        "title": "Add profile",
+        "data": {
+          "name": "Profile name",
+          "copy_from": "Clone thresholds from (optional)"
+        }
+      },
+      "attach_sensors": {
+        "title": "Attach sensors",
+        "description": "Optionally link sensors for the new profile.",
+        "data": {
+          "temperature": "Temperature sensor",
+          "humidity": "Humidity sensor",
+          "illuminance": "Light sensor",
+          "moisture": "Moisture sensor"
+        }
       }
     }
   }

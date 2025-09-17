@@ -2,60 +2,49 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
   schedule:
-    - cron: '0 8 * * 1'
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+    - cron: "0 8 * * 1"
 
 jobs:
-  hassfest:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: home-assistant/actions/hassfest@master
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  lint-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Upgrade pip, setuptools, and wheel
+          python-version: "3.12"
+
+      - name: Upgrade pip/setuptools/wheel
         run: python -m pip install --upgrade pip setuptools wheel
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
-      - name: Install dependencies
+
+      - name: Install dev tools
         run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          if [ -f requirements_test.txt ]; then pip install -r requirements_test.txt; fi
-          pip install jsonschema ruff mypy pytest pytest-asyncio pytest-homeassistant-custom-component pre-commit
-      - name: Validate plant profiles
-        run: python scripts/validate_profiles.py
-      - name: HACS validation (non-blocking)
-        if: always()
-        uses: hacs/action@main
-        with:
-          category: integration
-        continue-on-error: true
-      - name: Run pre-commit on entire repo
-        run: pre-commit run --all-files
-      - name: Static type checks (non-blocking)
+          python -m pip install -r requirements.txt
+          python -m pip install -r requirements_test.txt
+          python -m pip install hassfest==0.7.6 ruff==0.6.8 mypy==1.11.2
+
+      - name: Pre-commit (format & JSON checks)
         run: |
-          mypy --explicit-package-bases \
-            custom_components/horticulture_assistant/__init__.py \
-            custom_components/horticulture_assistant/api.py \
-            custom_components/horticulture_assistant/fertilizer_formulator.py || true
-      - name: Run tests
+          python -m pip install pre-commit==3.7.1
+          pre-commit run --all-files
+
+      - name: Hassfest
+        run: hassfest
+
+      - name: Ruff (lint)
+        run: ruff check .
+
+      - name: Pytest
         run: pytest -q
+
+      - name: Validate fertilizer data (if present)
+        run: |
+          if [ -f scripts/validate_profiles.py ]; then
+            python scripts/validate_profiles.py
+          fi

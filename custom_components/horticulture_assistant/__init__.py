@@ -56,6 +56,7 @@ from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .profile_registry import ProfileRegistry
+from .profile_store import ProfileStore
 from .storage import LocalStore
 from .utils.paths import ensure_local_data_paths
 
@@ -85,6 +86,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     profile_registry = ProfileRegistry(hass, LocalStore(hass, entry))
     await profile_registry.async_initialize()
 
+    profile_store = ProfileStore(hass)
+    await profile_store.async_init()
+
     coordinator = HorticultureCoordinator(
         hass,
         api,
@@ -108,6 +112,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "api": api,
         "profiles": profile_registry,
+        "registry": profile_registry,
+        "profile_store": profile_store,
         "coordinator": coordinator,
         "ai": ai_coordinator,
         "local": local_coordinator,

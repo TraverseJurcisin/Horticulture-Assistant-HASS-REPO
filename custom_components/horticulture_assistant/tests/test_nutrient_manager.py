@@ -151,7 +151,7 @@ def test_calculate_deficiency_index_series():
     )
 
     guidelines = get_all_recommended_levels("tomato", "fruiting")
-    zero = {n: 0 for n in guidelines}
+    zero = dict.fromkeys(guidelines, 0)
     idx_single = calculate_deficiency_index(zero, "tomato", "fruiting")
     avg = calculate_deficiency_index_series([zero, guidelines], "tomato", "fruiting")
     assert avg == round((idx_single + 0.0) / 2, 1)
@@ -214,7 +214,7 @@ def test_calculate_all_deficiencies_with_ph():
 
 def test_calculate_deficiency_index():
     guidelines = get_all_recommended_levels("tomato", "fruiting")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     index = calculate_deficiency_index(current, "tomato", "fruiting")
     assert 99 <= index <= 100
 
@@ -313,7 +313,7 @@ def test_calculate_deficiency_index_with_synergy():
     )
 
     guidelines = get_synergy_adjusted_levels("tomato", "fruiting")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_with_synergy(current, "tomato", "fruiting")
     assert 99 <= idx <= 100
 
@@ -328,7 +328,7 @@ def test_calculate_deficiency_index_with_ph():
     )
 
     guidelines = get_all_ph_adjusted_levels("tomato", "fruiting", 6.0)
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_with_ph(current, "tomato", "fruiting", 6.0)
     assert 99 <= idx <= 100
 
@@ -343,7 +343,7 @@ def test_calculate_deficiency_index_with_ph_and_synergy():
     )
 
     guidelines = get_ph_synergy_adjusted_levels("tomato", "fruiting", 6.5)
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_with_ph_and_synergy(current, "tomato", "fruiting", 6.5)
     assert 99 <= idx <= 100
 
@@ -360,7 +360,7 @@ def test_calculate_deficiency_index_environment_adjusted():
     guidelines = get_environment_adjusted_levels(
         "tomato", "fruiting", ph=6.2, root_temp_c=18, synergy=True
     )
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_environment_adjusted(
         current,
         "tomato",
@@ -389,7 +389,7 @@ def test_calculate_deficiency_index_with_temperature():
     )
 
     guidelines = get_temperature_adjusted_levels("tomato", "fruiting", 15)
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_with_temperature(current, "tomato", "fruiting", 15)
     assert 99 <= idx <= 100
 

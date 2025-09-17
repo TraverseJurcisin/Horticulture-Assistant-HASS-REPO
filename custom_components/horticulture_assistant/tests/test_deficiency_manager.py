@@ -47,7 +47,7 @@ def test_diagnose_deficiencies():
     # choose spinach harvest stage as dataset exists
     guidelines = get_recommended_levels("spinach", "harvest")
     # current levels missing N and Mg
-    current = {key: 0 for key in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     symptoms = diagnose_deficiencies(current, "spinach", "harvest")
     assert "N" in symptoms
     assert "Mg" in symptoms
@@ -61,7 +61,7 @@ def test_get_deficiency_treatment():
 
 def test_recommend_deficiency_treatments():
     guidelines = get_recommended_levels("spinach", "harvest")
-    current = {key: 0 for key in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     actions = recommend_deficiency_treatments(current, "spinach", "harvest")
     assert "N" in actions and actions["N"]
 
@@ -80,7 +80,7 @@ def test_new_nutrient_entries():
 
 def test_diagnose_deficiencies_detailed():
     guidelines = get_recommended_levels("spinach", "harvest")
-    current = {key: 0 for key in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     details = diagnose_deficiencies_detailed(current, "spinach", "harvest")
     assert details["N"]["mobility"] == "mobile"
     assert "symptom" in details["N"]
@@ -88,7 +88,7 @@ def test_diagnose_deficiencies_detailed():
 
 def test_assess_deficiency_severity():
     guidelines = get_recommended_levels("lettuce", "seedling")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     severity = assess_deficiency_severity(current, "lettuce", "seedling")
     assert severity.get("N") == "severe"
     assert severity.get("P") == "severe"
@@ -96,7 +96,7 @@ def test_assess_deficiency_severity():
 
 def test_diagnose_deficiency_actions():
     guidelines = get_recommended_levels("lettuce", "seedling")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     actions = diagnose_deficiency_actions(current, "lettuce", "seedling")
     assert actions["N"]["severity"] == "severe"
     assert "nitrogen" in actions["N"]["treatment"].lower()
@@ -104,7 +104,7 @@ def test_diagnose_deficiency_actions():
 
 def test_calculate_deficiency_index():
     guidelines = get_recommended_levels("lettuce", "seedling")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     severity = assess_deficiency_severity(current, "lettuce", "seedling")
     index = calculate_deficiency_index(severity)
     expected = dm._scores().get("severe", 3)
@@ -113,7 +113,7 @@ def test_calculate_deficiency_index():
 
 def test_summarize_deficiencies():
     guidelines = get_recommended_levels("lettuce", "seedling")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     summary = summarize_deficiencies(current, "lettuce", "seedling")
     expected = dm._scores().get("severe", 3)
     assert summary["severity_index"] >= float(expected) - 0.5
@@ -122,7 +122,7 @@ def test_summarize_deficiencies():
 
 def test_summarize_deficiencies_with_synergy():
     guidelines = get_recommended_levels("tomato", "fruiting")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     summary = summarize_deficiencies_with_synergy(current, "tomato", "fruiting")
     assert summary["severity_index"] > 0
     assert summary["severity"].get("P") == "severe"
@@ -130,7 +130,7 @@ def test_summarize_deficiencies_with_synergy():
 
 def test_summarize_deficiencies_with_ph():
     guidelines = get_recommended_levels("tomato", "fruiting")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     summary = summarize_deficiencies_with_ph(current, "tomato", "fruiting", 6.5)
     assert summary["severity_index"] > 0
     assert "N" in summary["severity"]
@@ -138,7 +138,7 @@ def test_summarize_deficiencies_with_ph():
 
 def test_summarize_deficiencies_with_ph_and_synergy():
     guidelines = get_recommended_levels("tomato", "fruiting")
-    current = {n: 0 for n in guidelines}
+    current = dict.fromkeys(guidelines, 0)
     summary = summarize_deficiencies_with_ph_and_synergy(current, "tomato", "fruiting", 6.5)
     assert summary["severity_index"] > 0
     assert "K" in summary["severity"]
