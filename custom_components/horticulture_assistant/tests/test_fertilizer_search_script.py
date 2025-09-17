@@ -1,4 +1,4 @@
-﻿import pytest
+import pytest
 
 pytest.importorskip("aiohttp", reason="requires Home Assistant runtime")
 pytest.importorskip("homeassistant.helpers", reason="requires Home Assistant runtime")
