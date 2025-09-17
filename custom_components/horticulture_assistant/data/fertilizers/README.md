@@ -49,4 +49,4 @@ Refer to the schema file for the complete nested structure, data types, and opti
 - Newer entries add greenhouse/media performance data contributed by growers and agronomists.
 - Heavy metal screens follow state banding rules; see `heavy_metals` within each record for thresholds.
 
-Keep contributions well-sourced so the audit trail remains trustworthy.
+Keep contributions well-sourced so the audit trail remains trustworthy.

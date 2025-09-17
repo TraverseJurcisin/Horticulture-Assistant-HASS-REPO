@@ -1,6 +1,6 @@
 # Horticulture Assistant for Home Assistant
 
-> Build data-driven digital twins of every plant you care for and let Home Assistant keep an eye on light, climate, irrigation, and nutrition – with optional AI helpers when you need a second opinion.
+> Build data-driven digital twins of every plant you care for and let Home Assistant keep an eye on light, climate, irrigation, and nutrition â€“ with optional AI helpers when you need a second opinion.
 
 ## Highlights
 - **Per-plant profiles** with stage-aware thresholds, derived metrics, and historical context stored locally as JSON.
@@ -44,7 +44,7 @@ Each profile exposes a consistent set of helpers so dashboards, blueprints, and 
 | Type | Example entity | Purpose |
 |------|----------------|---------|
 | Sensor | `sensor.tomato_vpd` | Stage-aware vapor pressure deficit in kPa. |
-| Sensor | `sensor.tomato_dli` | Daily light integral in mol·m?²·day?¹. |
+| Sensor | `sensor.tomato_dli` | Daily light integral in molÂ·m?Â²Â·day?Â¹. |
 | Sensor | `sensor.tomato_dew_point` | Dew point temperature for mold risk checks. |
 | Binary sensor | `binary_sensor.tomato_environment_ok` | Aggregated state covering light, temperature, humidity, and airflow thresholds. |
 | Binary sensor | `binary_sensor.tomato_moisture_ok` | Indicates whether measured soil/EC stays within the target band. |
@@ -89,9 +89,9 @@ Everything is local-first and human-readable:
 config/
 +-- custom_components/horticulture_assistant/
     +-- data/
-    ¦   +-- local/               # Your profiles, analytics snapshots, cached datasets
-    ¦   +-- fertilizers/         # Fertilizer product index & heavy metal compliance data
-    ¦   +-- light/               # Spectrum and crop-stage targets
+    Â¦   +-- local/               # Your profiles, analytics snapshots, cached datasets
+    Â¦   +-- fertilizers/         # Fertilizer product index & heavy metal compliance data
+    Â¦   +-- light/               # Spectrum and crop-stage targets
     +-- analytics/               # Export scripts and utilities
 ```
 
@@ -122,7 +122,7 @@ Version these files with Git or copy them between Home Assistant instances to re
 - Typed checks rely on Python 3.11+ features; keep files UTF-8 encoded for CI.
 
 ## Contributing & support
-Issues and feature requests are tracked at the [GitHub issue tracker](https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues). Pull requests are welcome—please include tests or sample data when adding features.
+Issues and feature requests are tracked at the [GitHub issue tracker](https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues). Pull requests are welcomeâ€”please include tests or sample data when adding features.
 
 ## License
-Released under the MIT License. See [`LICENSE`](LICENSE) for details.
+Released under the MIT License. See [`LICENSE`](LICENSE) for details.

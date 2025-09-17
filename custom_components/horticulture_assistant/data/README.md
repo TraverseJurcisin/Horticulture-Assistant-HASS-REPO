@@ -4,19 +4,19 @@ This directory packages the horticulture knowledge base that powers the integrat
 
 Most datasets follow three principles:
 
-1. **Human readable** – JSON/JSONL files that can be inspected and versioned in Git.
-2. **Schema backed** – companion files inside `schema/` document the structure for automated validation.
-3. **Stable identifiers** – every record gets a deterministic ID so profiles can reference data safely across releases.
+1. **Human readable** â€“ JSON/JSONL files that can be inspected and versioned in Git.
+2. **Schema backed** â€“ companion files inside `schema/` document the structure for automated validation.
+3. **Stable identifiers** â€“ every record gets a deterministic ID so profiles can reference data safely across releases.
 
 ## Key folders
-- `fertilizers/` – indexed catalogue of nutrient products, carriers, analysis data, and compliance flags.
-- `light/` – spectral targets, crop-specific PPFD/DLI bands, and lighting technology lookup tables.
-- `temperature/`, `humidity/`, `co2/` – environment setpoints arranged by growth stage.
-- `nutrients/`, `solution/`, `soil/` – macro/micronutrient ranges, stock solution recipes, and substrate properties.
-- `pests/`, `diseases/`, `fungicides/`, `pesticides/` – risk profiles, scouting notes, and mitigation playbooks.
-- `local/` – site-specific data created on the fly (profiles, zone registry, cache files). See the README within for details.
+- `fertilizers/` â€“ indexed catalogue of nutrient products, carriers, analysis data, and compliance flags.
+- `light/` â€“ spectral targets, crop-specific PPFD/DLI bands, and lighting technology lookup tables.
+- `temperature/`, `humidity/`, `co2/` â€“ environment setpoints arranged by growth stage.
+- `nutrients/`, `solution/`, `soil/` â€“ macro/micronutrient ranges, stock solution recipes, and substrate properties.
+- `pests/`, `diseases/`, `fungicides/`, `pesticides/` â€“ risk profiles, scouting notes, and mitigation playbooks.
+- `local/` â€“ site-specific data created on the fly (profiles, zone registry, cache files). See the README within for details.
 
-The remaining folders follow the same pattern—stage-specific agronomy, operational checklists, and supporting coefficients.
+The remaining folders follow the same patternâ€”stage-specific agronomy, operational checklists, and supporting coefficients.
 
 ## Adding or updating data
 1. Create or edit the JSON/JSONL file in the relevant folder.
@@ -28,4 +28,4 @@ The remaining folders follow the same pattern—stage-specific agronomy, operation
 4. Describe the source in the PR so changes remain auditable.
 
 ## Versioning
-Dataset versions are encoded in filenames (e.g. `2025-09-V3e.schema.json`). When bumping versions, include a changelog line in the PR body and keep earlier revisions for reproducibility unless data privacy requires removal.
+Dataset versions are encoded in filenames (e.g. `2025-09-V3e.schema.json`). When bumping versions, include a changelog line in the PR body and keep earlier revisions for reproducibility unless data privacy requires removal.
