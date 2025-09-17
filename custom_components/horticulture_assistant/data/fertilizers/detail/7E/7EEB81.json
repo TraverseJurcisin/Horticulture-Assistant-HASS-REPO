@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7EEB81",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0236-0733)",
-    "product_name": "SCOTTS TURF BUILDER GRASS SEED HIGH TRAFFIC MIX 4-0-0",
-    "company_info": {
-      "company": "SCOTTS COMPANY (THE)",
-      "Mailing Address": "14111 Scottslawn Rd",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 645-2523",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=8.1300",
-      "Cadmium": "=0.2230",
-      "Cobalt": "=1.7600",
-      "Mercury": "=0.0099",
-      "Molybdenum": "=2.1300",
-      "Nickel": "=5.9800",
-      "Lead": "=2.5700",
-      "Selenium": "=0.7640",
-      "Zinc": "=36.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=8.1300",
-      "Cadmium": "=0.2230",
-      "Cobalt": "=1.7600",
-      "Mercury": "=0.0099",
-      "Molybdenum": "=2.1300",
-      "Nickel": "=5.9800",
-      "Lead": "=2.5700",
-      "Selenium": "=0.7640",
-      "Zinc": "=36.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7EEB81",
   "metadata": {
     "registrant": "SCOTTS COMPANY (THE)",
     "label_name": "SCOTTS TURF BUILDER GRASS SEED HIGH TRAFFIC MIX 4-0-0",
     "wsda_reg_no": "(#0236-0733)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0733)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0733)",
+        "product_name": "SCOTTS TURF BUILDER GRASS SEED HIGH TRAFFIC MIX 4-0-0",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=8.1300",
+          "Cadmium": "=0.2230",
+          "Cobalt": "=1.7600",
+          "Mercury": "=0.0099",
+          "Molybdenum": "=2.1300",
+          "Nickel": "=5.9800",
+          "Lead": "=2.5700",
+          "Selenium": "=0.7640",
+          "Zinc": "=36.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS TURF BUILDER GRASS SEED HIGH TRAFFIC MIX 4-0-0",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7EEB81-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.13,
+            "Cd": 0.223,
+            "Co": 1.76,
+            "Hg": 0.0099,
+            "Mo": 2.13,
+            "Ni": 5.98,
+            "Pb": 2.57,
+            "Se": 0.764,
+            "Zn": 36.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 8.13,
+        "Cd": 0.223,
+        "Co": 1.76,
+        "Hg": 0.0099,
+        "Mo": 2.13,
+        "Ni": 5.98,
+        "Pb": 2.57,
+        "Se": 0.764,
+        "Zn": 36.9
+      }
+    }
   }
 }

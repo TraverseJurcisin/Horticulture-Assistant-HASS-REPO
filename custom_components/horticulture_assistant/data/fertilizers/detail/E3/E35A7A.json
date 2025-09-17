@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E35A7A","source_wsda_record":{"wsda_product_number":"(#3843-0057)","product_name":"ECHNOLOGIES CAL-XPRESS 3-0-0","company_info":{"company":"INNVICTIS BIOSCIENCE PLANT HEALTH T","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"970 397-0856","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":0.05,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.7550","Mercury":"=0.0141","Molybdenum":"=2.0900","Nickel":"=0.2500","Lead":"=0.4580","Selenium":"=0.5000","Zinc":"=65.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":0.05,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.7550","Mercury":"=0.0141","Molybdenum":"=2.0900","Nickel":"=0.2500","Lead":"=0.4580","Selenium":"=0.5000","Zinc":"=65.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INNVICTIS BIOSCIENCE PLANT HEALTH T","label_name":"ECHNOLOGIES CAL-XPRESS 3-0-0","wsda_reg_no":"(#3843-0057)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E35A7A",
+  "metadata": {
+    "registrant": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "label_name": "ECHNOLOGIES CAL-XPRESS 3-0-0",
+    "wsda_reg_no": "(#3843-0057)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3843-0057)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3843-0057)",
+        "product_name": "ECHNOLOGIES CAL-XPRESS 3-0-0",
+        "company_info": {
+          "company": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "970 397-0856",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.05,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.7550",
+          "Mercury": "=0.0141",
+          "Molybdenum": "=2.0900",
+          "Nickel": "=0.2500",
+          "Lead": "=0.4580",
+          "Selenium": "=0.5000",
+          "Zinc": "=65.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECHNOLOGIES CAL-XPRESS 3-0-0",
+    "brand": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "manufacturer": {
+      "name": "INNVICTIS BIOSCIENCE PLANT HEALTH T"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 0.5
+    },
+    "micros_pct": {
+      "B": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E35A7A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.755,
+            "Hg": 0.0141,
+            "Mo": 2.09,
+            "Ni": 0.25,
+            "Pb": 0.458,
+            "Se": 0.5,
+            "Zn": 65.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.1,
+        "Co": 0.755,
+        "Hg": 0.0141,
+        "Mo": 2.09,
+        "Ni": 0.25,
+        "Pb": 0.458,
+        "Se": 0.5,
+        "Zn": 65.8
+      }
+    }
+  }
+}

@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "49C85E",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1632-0075)",
-    "product_name": "SIMPLOT PARTNERS 32-0-10-MINI 32-0-10",
-    "company_info": {
-      "company": "SIMPLOT GROWER SOLUTIONS",
-      "Mailing Address": "P O Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 32.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.4,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.1600",
-      "Cadmium": "<0.3450",
-      "Cobalt": "<0.8620",
-      "Mercury": "=0.0532",
-      "Molybdenum": "<1.7500",
-      "Nickel": "<2.1600",
-      "Lead": "<2.1600",
-      "Selenium": "<4.3100",
-      "Zinc": "<3.4500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 32.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.4,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.1600",
-      "Cadmium": "<0.3450",
-      "Cobalt": "<0.8620",
-      "Mercury": "=0.0532",
-      "Molybdenum": "<1.7500",
-      "Nickel": "<2.1600",
-      "Lead": "<2.1600",
-      "Selenium": "<4.3100",
-      "Zinc": "<3.4500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "49C85E",
   "metadata": {
     "registrant": "SIMPLOT GROWER SOLUTIONS",
     "label_name": "SIMPLOT PARTNERS 32-0-10-MINI 32-0-10",
     "wsda_reg_no": "(#1632-0075)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1632-0075)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1632-0075)",
+        "product_name": "SIMPLOT PARTNERS 32-0-10-MINI 32-0-10",
+        "company_info": {
+          "company": "SIMPLOT GROWER SOLUTIONS",
+          "Mailing Address": "P O Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 32.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.4,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.1600",
+          "Cadmium": "<0.3450",
+          "Cobalt": "<0.8620",
+          "Mercury": "=0.0532",
+          "Molybdenum": "<1.7500",
+          "Nickel": "<2.1600",
+          "Lead": "<2.1600",
+          "Selenium": "<4.3100",
+          "Zinc": "<3.4500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT PARTNERS 32-0-10-MINI 32-0-10",
+    "brand": "SIMPLOT GROWER SOLUTIONS",
+    "manufacturer": {
+      "name": "SIMPLOT GROWER SOLUTIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 32.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 3.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "49C85E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.16,
+            "Cd": 0.345,
+            "Co": 0.862,
+            "Hg": 0.0532,
+            "Mo": 1.75,
+            "Ni": 2.16,
+            "Pb": 2.16,
+            "Se": 4.31,
+            "Zn": 3.45
+          },
+          "detection_limits_ppm": {
+            "As": 2.16,
+            "Cd": 0.345,
+            "Co": 0.862,
+            "Mo": 1.75,
+            "Ni": 2.16,
+            "Pb": 2.16,
+            "Se": 4.31,
+            "Zn": 3.45
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.0532
+      }
+    }
   }
 }

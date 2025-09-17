@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"9D764C","source_wsda_record":{"wsda_product_number":"(#0126-0164)","product_name":"GROUNDWORK WEED & FEED LAWN FERTILIZER II 28-0-4","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":28.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.4100","Cadmium":"=0.1080","Cobalt":"=0.9600","Mercury":"<0.0010","Molybdenum":"=0.9020","Nickel":"=28.2200","Lead":"=3.1700","Selenium":"=0.0490","Zinc":"=1378.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":28.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.4100","Cadmium":"=0.1080","Cobalt":"=0.9600","Mercury":"<0.0010","Molybdenum":"=0.9020","Nickel":"=28.2200","Lead":"=3.1700","Selenium":"=0.0490","Zinc":"=1378.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"GROUNDWORK WEED & FEED LAWN FERTILIZER II 28-0-4","wsda_reg_no":"(#0126-0164)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9D764C",
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "GROUNDWORK WEED & FEED LAWN FERTILIZER II 28-0-4",
+    "wsda_reg_no": "(#0126-0164)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0164)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0164)",
+        "product_name": "GROUNDWORK WEED & FEED LAWN FERTILIZER II 28-0-4",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 28.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.4100",
+          "Cadmium": "=0.1080",
+          "Cobalt": "=0.9600",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.9020",
+          "Nickel": "=28.2200",
+          "Lead": "=3.1700",
+          "Selenium": "=0.0490",
+          "Zinc": "=1378.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROUNDWORK WEED & FEED LAWN FERTILIZER II 28-0-4",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 28.0,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9D764C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.41,
+            "Cd": 0.108,
+            "Co": 0.96,
+            "Hg": 0.001,
+            "Mo": 0.902,
+            "Ni": 28.22,
+            "Pb": 3.17,
+            "Se": 0.049,
+            "Zn": 1378.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.41,
+        "Cd": 0.108,
+        "Co": 0.96,
+        "Mo": 0.902,
+        "Ni": 28.22,
+        "Pb": 3.17,
+        "Se": 0.049,
+        "Zn": 1378.0
+      }
+    }
+  }
+}

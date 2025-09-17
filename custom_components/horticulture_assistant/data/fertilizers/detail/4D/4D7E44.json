@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4D7E44",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3818-0004)",
-    "product_name": "GROPRO SHIELD 0-0-12",
-    "company_info": {
-      "company": "GROPRO INC",
-      "Mailing Address": "c/o KRK Consulting LLC",
-      "Post Office Box": "1152 Perry Hwy",
-      "City": "Mercer",
-      "State": "PA",
-      "Postal Code": "16137",
-      "Telephone Number": "833 476-7761",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4700",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.0300",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.5800",
-      "Nickel": "=1.7600",
-      "Lead": "=0.6500",
-      "Selenium": "=0.2600",
-      "Zinc": "=76.9500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4700",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.0300",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.5800",
-      "Nickel": "=1.7600",
-      "Lead": "=0.6500",
-      "Selenium": "=0.2600",
-      "Zinc": "=76.9500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4D7E44",
   "metadata": {
     "registrant": "GROPRO INC",
     "label_name": "GROPRO SHIELD 0-0-12",
     "wsda_reg_no": "(#3818-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3818-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3818-0004)",
+        "product_name": "GROPRO SHIELD 0-0-12",
+        "company_info": {
+          "company": "GROPRO INC",
+          "Mailing Address": "c/o KRK Consulting LLC",
+          "Post Office Box": "1152 Perry Hwy",
+          "City": "Mercer",
+          "State": "PA",
+          "Postal Code": "16137",
+          "Telephone Number": "833 476-7761",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4700",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.0300",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.5800",
+          "Nickel": "=1.7600",
+          "Lead": "=0.6500",
+          "Selenium": "=0.2600",
+          "Zinc": "=76.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROPRO SHIELD 0-0-12",
+    "brand": "GROPRO INC",
+    "manufacturer": {
+      "name": "GROPRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4D7E44-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.47,
+            "Cd": 0.03,
+            "Co": 0.03,
+            "Hg": 0.001,
+            "Mo": 0.58,
+            "Ni": 1.76,
+            "Pb": 0.65,
+            "Se": 0.26,
+            "Zn": 76.95
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.47,
+        "Cd": 0.03,
+        "Co": 0.03,
+        "Hg": 0.001,
+        "Mo": 0.58,
+        "Ni": 1.76,
+        "Pb": 0.65,
+        "Se": 0.26,
+        "Zn": 76.95
+      }
+    }
   }
 }

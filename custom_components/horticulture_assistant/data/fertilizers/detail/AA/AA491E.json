@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"AA491E","source_wsda_record":{"wsda_product_number":"(#3259-0014)","product_name":"ENCOURAGE CATALYST P 4-25-0","company_info":{"company":"ORO AGRI INC","Mailing Address":"2788 S Maple Ave","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93725","Telephone Number":"559 442-4996","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":25.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":8.0,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":2.5,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":4.5},"reported_metals":{"Arsenic":"=20.0000","Cadmium":"=20.0000","Cobalt":"=20.0000","Mercury":"=20.0000","Molybdenum":"=1420.0000","Nickel":"=20.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=56080.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":25.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":8.0,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":2.5,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":4.5},"heavy_metals":{"Arsenic":"=20.0000","Cadmium":"=20.0000","Cobalt":"=20.0000","Mercury":"=20.0000","Molybdenum":"=1420.0000","Nickel":"=20.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=56080.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ORO AGRI INC","label_name":"ENCOURAGE CATALYST P 4-25-0","wsda_reg_no":"(#3259-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AA491E",
+  "metadata": {
+    "registrant": "ORO AGRI INC",
+    "label_name": "ENCOURAGE CATALYST P 4-25-0",
+    "wsda_reg_no": "(#3259-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3259-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3259-0014)",
+        "product_name": "ENCOURAGE CATALYST P 4-25-0",
+        "company_info": {
+          "company": "ORO AGRI INC",
+          "Mailing Address": "2788 S Maple Ave",
+          "Post Office Box": null,
+          "City": "Fresno",
+          "State": "CA",
+          "Postal Code": "93725",
+          "Telephone Number": "559 442-4996",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 25.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 2.5,
+          "Molybdenum (Mo)": 0.1,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.5
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "=20.0000",
+          "Cobalt": "=20.0000",
+          "Mercury": "=20.0000",
+          "Molybdenum": "=1420.0000",
+          "Nickel": "=20.0000",
+          "Lead": "=20.0000",
+          "Selenium": "=20.0000",
+          "Zinc": "=56080.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ENCOURAGE CATALYST P 4-25-0",
+    "brand": "ORO AGRI INC",
+    "manufacturer": {
+      "name": "ORO AGRI INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 25.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 8.0
+    },
+    "micros_pct": {
+      "Mn": 2.5,
+      "Zn": 4.5,
+      "B": 0.5,
+      "Mo": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AA491E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 20.0,
+            "Co": 20.0,
+            "Hg": 20.0,
+            "Mo": 1420.0,
+            "Ni": 20.0,
+            "Pb": 20.0,
+            "Se": 20.0,
+            "Zn": 56080.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Cd": 20.0,
+        "Co": 20.0,
+        "Hg": 20.0,
+        "Mo": 1420.0,
+        "Ni": 20.0,
+        "Pb": 20.0,
+        "Se": 20.0,
+        "Zn": 56080.0
+      }
+    }
+  }
+}

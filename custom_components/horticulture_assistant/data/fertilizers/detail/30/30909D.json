@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "30909D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0915-0131)",
-    "product_name": "BIOGRO PLANT-X RHIZO-PRO 2-0-0",
-    "company_info": {
-      "company": "BIO-GRO INC",
-      "Mailing Address": "PO Box 326",
-      "Post Office Box": null,
-      "City": "Mabton",
-      "State": "WA",
-      "Postal Code": "98935",
-      "Telephone Number": "509 894-4110",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.4300",
-      "Cadmium": "<0.3500",
-      "Cobalt": "=0.4800",
-      "Mercury": "<0.0280",
-      "Molybdenum": "=3.3000",
-      "Nickel": "<0.4300",
-      "Lead": "<0.4300",
-      "Selenium": "<0.8600",
-      "Zinc": "=15.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.4300",
-      "Cadmium": "<0.3500",
-      "Cobalt": "=0.4800",
-      "Mercury": "<0.0280",
-      "Molybdenum": "=3.3000",
-      "Nickel": "<0.4300",
-      "Lead": "<0.4300",
-      "Selenium": "<0.8600",
-      "Zinc": "=15.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "30909D",
   "metadata": {
     "registrant": "BIO-GRO INC",
     "label_name": "BIOGRO PLANT-X RHIZO-PRO 2-0-0",
     "wsda_reg_no": "(#0915-0131)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0131)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0131)",
+        "product_name": "BIOGRO PLANT-X RHIZO-PRO 2-0-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4300",
+          "Cadmium": "<0.3500",
+          "Cobalt": "=0.4800",
+          "Mercury": "<0.0280",
+          "Molybdenum": "=3.3000",
+          "Nickel": "<0.4300",
+          "Lead": "<0.4300",
+          "Selenium": "<0.8600",
+          "Zinc": "=15.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGRO PLANT-X RHIZO-PRO 2-0-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "30909D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.43,
+            "Cd": 0.35,
+            "Co": 0.48,
+            "Hg": 0.028,
+            "Mo": 3.3,
+            "Ni": 0.43,
+            "Pb": 0.43,
+            "Se": 0.86,
+            "Zn": 15.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.43,
+            "Cd": 0.35,
+            "Hg": 0.028,
+            "Ni": 0.43,
+            "Pb": 0.43,
+            "Se": 0.86
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.48,
+        "Mo": 3.3,
+        "Zn": 15.0
+      }
+    }
   }
 }

@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"AD9906","source_wsda_record":{"wsda_product_number":"(#0193-0219)","product_name":"COASTAL FARM & RANCH 29-5-5 PASTURE BLEND 29-5-5","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":29.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.8000","Cadmium":"=9.5000","Cobalt":"=0.5000","Mercury":"<0.0500","Molybdenum":"=1.6000","Nickel":"=17.1000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=199.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":29.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.8000","Cadmium":"=9.5000","Cobalt":"=0.5000","Mercury":"<0.0500","Molybdenum":"=1.6000","Nickel":"=17.1000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=199.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"COASTAL FARM & RANCH 29-5-5 PASTURE BLEND 29-5-5","wsda_reg_no":"(#0193-0219)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD9906",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "COASTAL FARM & RANCH 29-5-5 PASTURE BLEND 29-5-5",
+    "wsda_reg_no": "(#0193-0219)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0219)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0219)",
+        "product_name": "COASTAL FARM & RANCH 29-5-5 PASTURE BLEND 29-5-5",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 29.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 9.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8000",
+          "Cadmium": "=9.5000",
+          "Cobalt": "=0.5000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.6000",
+          "Nickel": "=17.1000",
+          "Lead": "<1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=199.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "COASTAL FARM & RANCH 29-5-5 PASTURE BLEND 29-5-5",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 29.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 9.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD9906-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.8,
+            "Cd": 9.5,
+            "Co": 0.5,
+            "Hg": 0.05,
+            "Mo": 1.6,
+            "Ni": 17.1,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 199.1
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 1.2,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.8,
+        "Cd": 9.5,
+        "Co": 0.5,
+        "Mo": 1.6,
+        "Ni": 17.1,
+        "Zn": 199.1
+      }
+    }
+  }
+}

@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7BA895",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3855-0004)",
-    "product_name": "SIMPLOT TURF & HORTICULTURE GREEN-PRO 23-0-5",
-    "company_info": {
-      "company": "SIMPLOT AB RETAIL INC",
-      "Mailing Address": "P.O. Box 9296",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 23.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.4000",
-      "Cadmium": "<0.7900",
-      "Cobalt": "<0.7900",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=2.2000",
-      "Nickel": "=1.2000",
-      "Lead": "=1.2000",
-      "Selenium": "<4.0000",
-      "Zinc": "=89.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 23.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.4000",
-      "Cadmium": "<0.7900",
-      "Cobalt": "<0.7900",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=2.2000",
-      "Nickel": "=1.2000",
-      "Lead": "=1.2000",
-      "Selenium": "<4.0000",
-      "Zinc": "=89.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7BA895",
   "metadata": {
     "registrant": "SIMPLOT AB RETAIL INC",
     "label_name": "SIMPLOT TURF & HORTICULTURE GREEN-PRO 23-0-5",
     "wsda_reg_no": "(#3855-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3855-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3855-0004)",
+        "product_name": "SIMPLOT TURF & HORTICULTURE GREEN-PRO 23-0-5",
+        "company_info": {
+          "company": "SIMPLOT AB RETAIL INC",
+          "Mailing Address": "P.O. Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 23.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.4000",
+          "Cadmium": "<0.7900",
+          "Cobalt": "<0.7900",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=2.2000",
+          "Nickel": "=1.2000",
+          "Lead": "=1.2000",
+          "Selenium": "<4.0000",
+          "Zinc": "=89.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT TURF & HORTICULTURE GREEN-PRO 23-0-5",
+    "brand": "SIMPLOT AB RETAIL INC",
+    "manufacturer": {
+      "name": "SIMPLOT AB RETAIL INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 23.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 11.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7BA895-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.4,
+            "Cd": 0.79,
+            "Co": 0.79,
+            "Hg": 0.2,
+            "Mo": 2.2,
+            "Ni": 1.2,
+            "Pb": 1.2,
+            "Se": 4.0,
+            "Zn": 89.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.4,
+            "Cd": 0.79,
+            "Co": 0.79,
+            "Se": 4.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.2,
+        "Mo": 2.2,
+        "Ni": 1.2,
+        "Pb": 1.2,
+        "Zn": 89.0
+      }
+    }
   }
 }

@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"E8E55F","source_wsda_record":{"wsda_product_number":"(#3410-0003)","product_name":"FRONT ROW AG BLOOM WATER SOLUBLE FERTILIZER 0-35-29","company_info":{"company":"FRONT ROW AG LLC","Mailing Address":"2935 S Koke Mill Rd","Post Office Box":null,"City":"Springfield","State":"IL","Postal Code":"62711","Telephone Number":"217 547-5867","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":35.0,"Soluble Potash (K2O)":29.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=5.0000","Lead":"=45.0000","Selenium":"=5.0000","Zinc":"=40.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":35.0,"Soluble Potash (K2O)":29.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=5.0000","Lead":"=45.0000","Selenium":"=5.0000","Zinc":"=40.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FRONT ROW AG LLC","label_name":"FRONT ROW AG BLOOM WATER SOLUBLE FERTILIZER 0-35-29","wsda_reg_no":"(#3410-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E8E55F",
+  "metadata": {
+    "registrant": "FRONT ROW AG LLC",
+    "label_name": "FRONT ROW AG BLOOM WATER SOLUBLE FERTILIZER 0-35-29",
+    "wsda_reg_no": "(#3410-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3410-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3410-0003)",
+        "product_name": "FRONT ROW AG BLOOM WATER SOLUBLE FERTILIZER 0-35-29",
+        "company_info": {
+          "company": "FRONT ROW AG LLC",
+          "Mailing Address": "2935 S Koke Mill Rd",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 35.0,
+          "Soluble Potash (K2O)": 29.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=5.0000",
+          "Lead": "=45.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=40.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FRONT ROW AG BLOOM WATER SOLUBLE FERTILIZER 0-35-29",
+    "brand": "FRONT ROW AG LLC",
+    "manufacturer": {
+      "name": "FRONT ROW AG LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 35.0,
+      "K2O_pct": 29.0
+    },
+    "macros_pct": {
+      "Mg": 1.5,
+      "S": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E8E55F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 5.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 5.0,
+            "Ni": 5.0,
+            "Pb": 45.0,
+            "Se": 5.0,
+            "Zn": 40.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 5.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 5.0,
+        "Ni": 5.0,
+        "Pb": 45.0,
+        "Se": 5.0,
+        "Zn": 40.0
+      }
+    }
+  }
+}

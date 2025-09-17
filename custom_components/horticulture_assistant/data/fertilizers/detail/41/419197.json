@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "419197",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0169-0586)",
-    "product_name": "APEX 15-5-10 NPK MAX WITH GAL-XE ONE 15-5-10",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.1,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.55,
-      "Manganese (Mn)": 0.08,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=2.6000",
-      "Cadmium": "=0.4500",
-      "Cobalt": "=2.4000",
-      "Mercury": "=0.0310",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=7.7000",
-      "Lead": "=1.2000",
-      "Selenium": "=4.5000",
-      "Zinc": "=720.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.1,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.55,
-      "Manganese (Mn)": 0.08,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.6000",
-      "Cadmium": "=0.4500",
-      "Cobalt": "=2.4000",
-      "Mercury": "=0.0310",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=7.7000",
-      "Lead": "=1.2000",
-      "Selenium": "=4.5000",
-      "Zinc": "=720.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "419197",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY",
     "label_name": "APEX 15-5-10 NPK MAX WITH GAL-XE ONE 15-5-10",
     "wsda_reg_no": "(#0169-0586)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0586)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0586)",
+        "product_name": "APEX 15-5-10 NPK MAX WITH GAL-XE ONE 15-5-10",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.1,
+          "Sulfur (S)": 6.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.55,
+          "Manganese (Mn)": 0.08,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=2.6000",
+          "Cadmium": "=0.4500",
+          "Cobalt": "=2.4000",
+          "Mercury": "=0.0310",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=7.7000",
+          "Lead": "=1.2000",
+          "Selenium": "=4.5000",
+          "Zinc": "=720.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "APEX 15-5-10 NPK MAX WITH GAL-XE ONE 15-5-10",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Mg": 1.1,
+      "S": 6.0
+    },
+    "micros_pct": {
+      "Fe": 0.55,
+      "Mn": 0.08,
+      "Zn": 0.05,
+      "Cu": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "419197-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.6,
+            "Cd": 0.45,
+            "Co": 2.4,
+            "Hg": 0.031,
+            "Mo": 1.5,
+            "Ni": 7.7,
+            "Pb": 1.2,
+            "Se": 4.5,
+            "Zn": 720.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.6,
+        "Cd": 0.45,
+        "Co": 2.4,
+        "Hg": 0.031,
+        "Mo": 1.5,
+        "Ni": 7.7,
+        "Pb": 1.2,
+        "Se": 4.5,
+        "Zn": 720.0
+      }
+    }
   }
 }

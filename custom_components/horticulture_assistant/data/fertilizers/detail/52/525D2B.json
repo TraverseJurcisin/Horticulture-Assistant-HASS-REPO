@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "525D2B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2019-0024)",
-    "product_name": "PROTEIN PLUS 14-0-5",
-    "company_info": {
-      "company": "EARTHWORKS",
-      "Mailing Address": "6620 Cypresswood Drive Suite 2",
-      "Post Office Box": null,
-      "City": "Spring",
-      "State": "TX",
-      "Postal Code": "77379",
-      "Telephone Number": "877 227-2597",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.17
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=6.7000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=8.5000",
-      "Nickel": "=15.0000",
-      "Lead": "<40.0000",
-      "Selenium": "<1.0000",
-      "Zinc": "<150.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.17
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=6.7000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=8.5000",
-      "Nickel": "=15.0000",
-      "Lead": "<40.0000",
-      "Selenium": "<1.0000",
-      "Zinc": "<150.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "525D2B",
   "metadata": {
     "registrant": "EARTHWORKS",
     "label_name": "PROTEIN PLUS 14-0-5",
     "wsda_reg_no": "(#2019-0024)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2019-0024)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2019-0024)",
+        "product_name": "PROTEIN PLUS 14-0-5",
+        "company_info": {
+          "company": "EARTHWORKS",
+          "Mailing Address": "6620 Cypresswood Drive Suite 2",
+          "Post Office Box": null,
+          "City": "Spring",
+          "State": "TX",
+          "Postal Code": "77379",
+          "Telephone Number": "877 227-2597",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.16,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.17
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=6.7000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=8.5000",
+          "Nickel": "=15.0000",
+          "Lead": "<40.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "<150.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PROTEIN PLUS 14-0-5",
+    "brand": "EARTHWORKS",
+    "manufacturer": {
+      "name": "EARTHWORKS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "K2O_pct": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.16,
+      "Zn": 0.17,
+      "B": 0.02,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "525D2B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 6.7,
+            "Hg": 0.1,
+            "Mo": 8.5,
+            "Ni": 15.0,
+            "Pb": 40.0,
+            "Se": 1.0,
+            "Zn": 150.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Hg": 0.1,
+            "Pb": 40.0,
+            "Se": 1.0,
+            "Zn": 150.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 6.7,
+        "Mo": 8.5,
+        "Ni": 15.0
+      }
+    }
   }
 }

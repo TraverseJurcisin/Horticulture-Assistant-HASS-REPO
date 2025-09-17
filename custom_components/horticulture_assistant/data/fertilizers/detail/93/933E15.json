@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"933E15","source_wsda_record":{"wsda_product_number":"(#0185-0205)","product_name":"ROOTS FERTILIZER FOR TREES 27-9-9","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.6000","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=20.0000","Nickel":"=3.0000","Lead":"=3.0000","Selenium":"=3.0000","Zinc":"=1000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.6000","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=20.0000","Nickel":"=3.0000","Lead":"=3.0000","Selenium":"=3.0000","Zinc":"=1000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"ROOTS FERTILIZER FOR TREES 27-9-9","wsda_reg_no":"(#0185-0205)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "933E15",
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "ROOTS FERTILIZER FOR TREES 27-9-9",
+    "wsda_reg_no": "(#0185-0205)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0205)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0205)",
+        "product_name": "ROOTS FERTILIZER FOR TREES 27-9-9",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 27.0,
+          "Available Phosphoric Acid (P2O5)": 9.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0009,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.6000",
+          "Cobalt": "=0.6000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=20.0000",
+          "Nickel": "=3.0000",
+          "Lead": "=3.0000",
+          "Selenium": "=3.0000",
+          "Zinc": "=1000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROOTS FERTILIZER FOR TREES 27-9-9",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 27.0,
+      "P2O5_pct": 9.0,
+      "K2O_pct": 9.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0009
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "933E15-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.6,
+            "Co": 0.6,
+            "Hg": 0.05,
+            "Mo": 20.0,
+            "Ni": 3.0,
+            "Pb": 3.0,
+            "Se": 3.0,
+            "Zn": 1000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.6,
+        "Co": 0.6,
+        "Hg": 0.05,
+        "Mo": 20.0,
+        "Ni": 3.0,
+        "Pb": 3.0,
+        "Se": 3.0,
+        "Zn": 1000.0
+      }
+    }
+  }
+}

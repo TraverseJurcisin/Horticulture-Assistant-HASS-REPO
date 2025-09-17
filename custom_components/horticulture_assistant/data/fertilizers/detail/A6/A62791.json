@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A62791","source_wsda_record":{"wsda_product_number":"(#2849-0149)","product_name":"EMPRO #42474 12-0-2","company_info":{"company":"MAS","Mailing Address":"PO Box 732","Post Office Box":null,"City":"Newberg","State":"OR","Postal Code":"97132","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":13.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":14.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0400","Cadmium":"=3.8200","Cobalt":"=26.0700","Mercury":"=0.0100","Molybdenum":"=0.1900","Nickel":"=12.0800","Lead":"=7.8100","Selenium":"=0.0400","Zinc":"=34.1800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":13.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":14.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0400","Cadmium":"=3.8200","Cobalt":"=26.0700","Mercury":"=0.0100","Molybdenum":"=0.1900","Nickel":"=12.0800","Lead":"=7.8100","Selenium":"=0.0400","Zinc":"=34.1800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MAS","label_name":"EMPRO #42474 12-0-2","wsda_reg_no":"(#2849-0149)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A62791",
+  "metadata": {
+    "registrant": "MAS",
+    "label_name": "EMPRO #42474 12-0-2",
+    "wsda_reg_no": "(#2849-0149)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2849-0149)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2849-0149)",
+        "product_name": "EMPRO #42474 12-0-2",
+        "company_info": {
+          "company": "MAS",
+          "Mailing Address": "PO Box 732",
+          "Post Office Box": null,
+          "City": "Newberg",
+          "State": "OR",
+          "Postal Code": "97132",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 13.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 14.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0400",
+          "Cadmium": "=3.8200",
+          "Cobalt": "=26.0700",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.1900",
+          "Nickel": "=12.0800",
+          "Lead": "=7.8100",
+          "Selenium": "=0.0400",
+          "Zinc": "=34.1800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMPRO #42474 12-0-2",
+    "brand": "MAS",
+    "manufacturer": {
+      "name": "MAS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 13.5
+    },
+    "micros_pct": {
+      "Fe": 14.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A62791-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.04,
+            "Cd": 3.82,
+            "Co": 26.07,
+            "Hg": 0.01,
+            "Mo": 0.19,
+            "Ni": 12.08,
+            "Pb": 7.81,
+            "Se": 0.04,
+            "Zn": 34.18
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.04,
+        "Cd": 3.82,
+        "Co": 26.07,
+        "Hg": 0.01,
+        "Mo": 0.19,
+        "Ni": 12.08,
+        "Pb": 7.81,
+        "Se": 0.04,
+        "Zn": 34.18
+      }
+    }
+  }
+}

@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"8F8346","source_wsda_record":{"wsda_product_number":"(#3990-0016)","product_name":"CHAMBERLIN AGRICULTURE SEA BIOLIFE O 1-0-0","company_info":{"company":"MADAM BIO-GENETIX LLC","Mailing Address":"5138 Montiano Lane","Post Office Box":null,"City":"Dublin","State":"CA","Postal Code":"94568","Telephone Number":"415 654-3128","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.2400","Cadmium":"=0.0900","Cobalt":"=0.1400","Mercury":"=0.0010","Molybdenum":"=0.0300","Nickel":"=1.0600","Lead":"=0.4000","Selenium":"=0.3100","Zinc":"=10.9500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.2400","Cadmium":"=0.0900","Cobalt":"=0.1400","Mercury":"=0.0010","Molybdenum":"=0.0300","Nickel":"=1.0600","Lead":"=0.4000","Selenium":"=0.3100","Zinc":"=10.9500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MADAM BIO-GENETIX LLC","label_name":"CHAMBERLIN AGRICULTURE SEA BIOLIFE O 1-0-0","wsda_reg_no":"(#3990-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8F8346",
+  "metadata": {
+    "registrant": "MADAM BIO-GENETIX LLC",
+    "label_name": "CHAMBERLIN AGRICULTURE SEA BIOLIFE O 1-0-0",
+    "wsda_reg_no": "(#3990-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3990-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3990-0016)",
+        "product_name": "CHAMBERLIN AGRICULTURE SEA BIOLIFE O 1-0-0",
+        "company_info": {
+          "company": "MADAM BIO-GENETIX LLC",
+          "Mailing Address": "5138 Montiano Lane",
+          "Post Office Box": null,
+          "City": "Dublin",
+          "State": "CA",
+          "Postal Code": "94568",
+          "Telephone Number": "415 654-3128",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.2400",
+          "Cadmium": "=0.0900",
+          "Cobalt": "=0.1400",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.0300",
+          "Nickel": "=1.0600",
+          "Lead": "=0.4000",
+          "Selenium": "=0.3100",
+          "Zinc": "=10.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CHAMBERLIN AGRICULTURE SEA BIOLIFE O 1-0-0",
+    "brand": "MADAM BIO-GENETIX LLC",
+    "manufacturer": {
+      "name": "MADAM BIO-GENETIX LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8F8346-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.24,
+            "Cd": 0.09,
+            "Co": 0.14,
+            "Hg": 0.001,
+            "Mo": 0.03,
+            "Ni": 1.06,
+            "Pb": 0.4,
+            "Se": 0.31,
+            "Zn": 10.95
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.24,
+        "Cd": 0.09,
+        "Co": 0.14,
+        "Hg": 0.001,
+        "Mo": 0.03,
+        "Ni": 1.06,
+        "Pb": 0.4,
+        "Se": 0.31,
+        "Zn": 10.95
+      }
+    }
+  }
+}

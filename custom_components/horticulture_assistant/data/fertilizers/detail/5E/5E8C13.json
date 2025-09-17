@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5E8C13",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2123-0012)",
-    "product_name": "NOVA NOURISH ZN 0-0-0",
-    "company_info": {
-      "company": "ICL PREMIUM FERTILIZERS NA",
-      "Mailing Address": "622 Emerson Rd #500",
-      "Post Office Box": null,
-      "City": "St Louis",
-      "State": "MO",
-      "Postal Code": "63141",
-      "Telephone Number": "314 983-7500",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 5.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 8.0
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=2.2000",
-      "Cobalt": "=104.0000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=6.9000",
-      "Nickel": "=5.6000",
-      "Lead": "=21.0000",
-      "Selenium": "=16.0000",
-      "Zinc": "=7950.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 5.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 8.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=2.2000",
-      "Cobalt": "=104.0000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=6.9000",
-      "Nickel": "=5.6000",
-      "Lead": "=21.0000",
-      "Selenium": "=16.0000",
-      "Zinc": "=7950.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5E8C13",
   "metadata": {
     "registrant": "ICL PREMIUM FERTILIZERS NA",
     "label_name": "NOVA NOURISH ZN 0-0-0",
     "wsda_reg_no": "(#2123-0012)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2123-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2123-0012)",
+        "product_name": "NOVA NOURISH ZN 0-0-0",
+        "company_info": {
+          "company": "ICL PREMIUM FERTILIZERS NA",
+          "Mailing Address": "622 Emerson Rd #500",
+          "Post Office Box": null,
+          "City": "St Louis",
+          "State": "MO",
+          "Postal Code": "63141",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.5,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 5.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 8.0
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=2.2000",
+          "Cobalt": "=104.0000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=6.9000",
+          "Nickel": "=5.6000",
+          "Lead": "=21.0000",
+          "Selenium": "=16.0000",
+          "Zinc": "=7950.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NOVA NOURISH ZN 0-0-0",
+    "brand": "ICL PREMIUM FERTILIZERS NA",
+    "manufacturer": {
+      "name": "ICL PREMIUM FERTILIZERS NA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 5.0,
+      "Zn": 8.0,
+      "Cu": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5E8C13-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 2.2,
+            "Co": 104.0,
+            "Hg": 0.01,
+            "Mo": 6.9,
+            "Ni": 5.6,
+            "Pb": 21.0,
+            "Se": 16.0,
+            "Zn": 7950.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.01
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 2.2,
+        "Co": 104.0,
+        "Mo": 6.9,
+        "Ni": 5.6,
+        "Pb": 21.0,
+        "Se": 16.0,
+        "Zn": 7950.0
+      }
+    }
   }
 }

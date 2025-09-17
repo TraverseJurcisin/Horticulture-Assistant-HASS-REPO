@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"C4B7C2","source_wsda_record":{"wsda_product_number":"(#0915-0150)","product_name":"BIOGRO NUE COBALT 3% 0-0-0","company_info":{"company":"BIO-GRO INC","Mailing Address":"PO Box 326","Post Office Box":null,"City":"Mabton","State":"WA","Postal Code":"98935","Telephone Number":"509 894-4110","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":3.0,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6000","Cadmium":"=0.1300","Cobalt":"=602.0000","Mercury":"<0.0050","Molybdenum":"<0.0100","Nickel":"=27.8000","Lead":"<0.1200","Selenium":"<1.0000","Zinc":"=6.3400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":3.0,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6000","Cadmium":"=0.1300","Cobalt":"=602.0000","Mercury":"<0.0050","Molybdenum":"<0.0100","Nickel":"=27.8000","Lead":"<0.1200","Selenium":"<1.0000","Zinc":"=6.3400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIO-GRO INC","label_name":"BIOGRO NUE COBALT 3% 0-0-0","wsda_reg_no":"(#0915-0150)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C4B7C2",
+  "metadata": {
+    "registrant": "BIO-GRO INC",
+    "label_name": "BIOGRO NUE COBALT 3% 0-0-0",
+    "wsda_reg_no": "(#0915-0150)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0150)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0150)",
+        "product_name": "BIOGRO NUE COBALT 3% 0-0-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 3.0,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6000",
+          "Cadmium": "=0.1300",
+          "Cobalt": "=602.0000",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.0100",
+          "Nickel": "=27.8000",
+          "Lead": "<0.1200",
+          "Selenium": "<1.0000",
+          "Zinc": "=6.3400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGRO NUE COBALT 3% 0-0-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C4B7C2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.6,
+            "Cd": 0.13,
+            "Co": 602.0,
+            "Hg": 0.005,
+            "Mo": 0.01,
+            "Ni": 27.8,
+            "Pb": 0.12,
+            "Se": 1.0,
+            "Zn": 6.34
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.005,
+            "Mo": 0.01,
+            "Pb": 0.12,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.6,
+        "Cd": 0.13,
+        "Co": 602.0,
+        "Ni": 27.8,
+        "Zn": 6.34
+      }
+    }
+  }
+}

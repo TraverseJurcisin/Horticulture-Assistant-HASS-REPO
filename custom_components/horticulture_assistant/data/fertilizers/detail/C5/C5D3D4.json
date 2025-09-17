@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"C5D3D4","source_wsda_record":{"wsda_product_number":"(#1517-0105)","product_name":"BARBARA KING EASY FEED 13-11-22","company_info":{"company":"JR PETERS INC","Mailing Address":"6656 Grant Way","Post Office Box":null,"City":"Allentown","State":"PA","Postal Code":"18106","Telephone Number":"866 522-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":11.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.7,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6380","Cadmium":"=0.2390","Cobalt":"=26.1000","Mercury":"=0.0050","Molybdenum":"=11.4000","Nickel":"=1.5100","Lead":"=0.3000","Selenium":"=1.4400","Zinc":"=292.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":11.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.7,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6380","Cadmium":"=0.2390","Cobalt":"=26.1000","Mercury":"=0.0050","Molybdenum":"=11.4000","Nickel":"=1.5100","Lead":"=0.3000","Selenium":"=1.4400","Zinc":"=292.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR PETERS INC","label_name":"BARBARA KING EASY FEED 13-11-22","wsda_reg_no":"(#1517-0105)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C5D3D4",
+  "metadata": {
+    "registrant": "JR PETERS INC",
+    "label_name": "BARBARA KING EASY FEED 13-11-22",
+    "wsda_reg_no": "(#1517-0105)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1517-0105)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1517-0105)",
+        "product_name": "BARBARA KING EASY FEED 13-11-22",
+        "company_info": {
+          "company": "JR PETERS INC",
+          "Mailing Address": "6656 Grant Way",
+          "Post Office Box": null,
+          "City": "Allentown",
+          "State": "PA",
+          "Postal Code": "18106",
+          "Telephone Number": "866 522-5752",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": 11.0,
+          "Soluble Potash (K2O)": 22.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.7,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 0.09,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6380",
+          "Cadmium": "=0.2390",
+          "Cobalt": "=26.1000",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=11.4000",
+          "Nickel": "=1.5100",
+          "Lead": "=0.3000",
+          "Selenium": "=1.4400",
+          "Zinc": "=292.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BARBARA KING EASY FEED 13-11-22",
+    "brand": "JR PETERS INC",
+    "manufacturer": {
+      "name": "JR PETERS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "P2O5_pct": 11.0,
+      "K2O_pct": 22.0
+    },
+    "macros_pct": {
+      "Mg": 1.7,
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 0.09,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C5D3D4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.638,
+            "Cd": 0.239,
+            "Co": 26.1,
+            "Hg": 0.005,
+            "Mo": 11.4,
+            "Ni": 1.51,
+            "Pb": 0.3,
+            "Se": 1.44,
+            "Zn": 292.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.638,
+        "Cd": 0.239,
+        "Co": 26.1,
+        "Hg": 0.005,
+        "Mo": 11.4,
+        "Ni": 1.51,
+        "Pb": 0.3,
+        "Se": 1.44,
+        "Zn": 292.0
+      }
+    }
+  }
+}

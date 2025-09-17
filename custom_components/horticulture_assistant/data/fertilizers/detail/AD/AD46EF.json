@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"AD46EF","source_wsda_record":{"wsda_product_number":"(#3805-0012)","product_name":"GCS NOURISH FE 3-0-0","company_info":{"company":"GENERIC CROP SCIENCE LLP","Mailing Address":"1887 Whitney Mesa Drive #9740","Post Office Box":null,"City":"Henderson","State":"NV","Postal Code":"89014-2069","Telephone Number":"970 381-8917","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":6.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.1000","Cadmium":"<0.9000","Cobalt":"=5.1000","Mercury":"<0.0100","Molybdenum":"=3.0000","Nickel":"=28.0000","Lead":"<0.6000","Selenium":"<1.1000","Zinc":"=17.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":6.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.1000","Cadmium":"<0.9000","Cobalt":"=5.1000","Mercury":"<0.0100","Molybdenum":"=3.0000","Nickel":"=28.0000","Lead":"<0.6000","Selenium":"<1.1000","Zinc":"=17.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENERIC CROP SCIENCE LLP","label_name":"GCS NOURISH FE 3-0-0","wsda_reg_no":"(#3805-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD46EF",
+  "metadata": {
+    "registrant": "GENERIC CROP SCIENCE LLP",
+    "label_name": "GCS NOURISH FE 3-0-0",
+    "wsda_reg_no": "(#3805-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3805-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3805-0012)",
+        "product_name": "GCS NOURISH FE 3-0-0",
+        "company_info": {
+          "company": "GENERIC CROP SCIENCE LLP",
+          "Mailing Address": "1887 Whitney Mesa Drive #9740",
+          "Post Office Box": null,
+          "City": "Henderson",
+          "State": "NV",
+          "Postal Code": "89014-2069",
+          "Telephone Number": "970 381-8917",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 6.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.1000",
+          "Cadmium": "<0.9000",
+          "Cobalt": "=5.1000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=3.0000",
+          "Nickel": "=28.0000",
+          "Lead": "<0.6000",
+          "Selenium": "<1.1000",
+          "Zinc": "=17.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GCS NOURISH FE 3-0-0",
+    "brand": "GENERIC CROP SCIENCE LLP",
+    "manufacturer": {
+      "name": "GENERIC CROP SCIENCE LLP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "micros_pct": {
+      "Fe": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD46EF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.1,
+            "Cd": 0.9,
+            "Co": 5.1,
+            "Hg": 0.01,
+            "Mo": 3.0,
+            "Ni": 28.0,
+            "Pb": 0.6,
+            "Se": 1.1,
+            "Zn": 17.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.1,
+            "Cd": 0.9,
+            "Hg": 0.01,
+            "Pb": 0.6,
+            "Se": 1.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 5.1,
+        "Mo": 3.0,
+        "Ni": 28.0,
+        "Zn": 17.0
+      }
+    }
+  }
+}

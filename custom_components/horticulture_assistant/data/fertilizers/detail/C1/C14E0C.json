@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"C14E0C","source_wsda_record":{"wsda_product_number":"(#3168-0005)","product_name":"BASACOTE NATIVE 6M 14-3-19 PLUS 1.2% MG PLUS TRACE ELEMENTS 14-3-19","company_info":{"company":"COMPO EXPERT USA & CANADA INC","Mailing Address":"1575 Indian River Blvd Suite C","Post Office Box":null,"City":"Vero Beach","State":"FL","Postal Code":"32960","Telephone Number":"775 423-9122","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":9.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.21,"Manganese (Mn)":0.06,"Molybdenum (Mo)":0.015,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.5000","Cadmium":"=1.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=165.0000","Nickel":"=5.0000","Lead":"=3.0000","Selenium":"=3.7000","Zinc":"=3.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":9.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.21,"Manganese (Mn)":0.06,"Molybdenum (Mo)":0.015,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.5000","Cadmium":"=1.5000","Cobalt":"=2.0000","Mercury":"=0.0500","Molybdenum":"=165.0000","Nickel":"=5.0000","Lead":"=3.0000","Selenium":"=3.7000","Zinc":"=3.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COMPO EXPERT USA & CANADA INC","label_name":"BASACOTE NATIVE 6M 14-3-19 PLUS 1.2% MG PLUS TRACE ELEMENTS 14-3-19","wsda_reg_no":"(#3168-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C14E0C",
+  "metadata": {
+    "registrant": "COMPO EXPERT USA & CANADA INC",
+    "label_name": "BASACOTE NATIVE 6M 14-3-19 PLUS 1.2% MG PLUS TRACE ELEMENTS 14-3-19",
+    "wsda_reg_no": "(#3168-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3168-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3168-0005)",
+        "product_name": "BASACOTE NATIVE 6M 14-3-19 PLUS 1.2% MG PLUS TRACE ELEMENTS 14-3-19",
+        "company_info": {
+          "company": "COMPO EXPERT USA & CANADA INC",
+          "Mailing Address": "1575 Indian River Blvd Suite C",
+          "Post Office Box": null,
+          "City": "Vero Beach",
+          "State": "FL",
+          "Postal Code": "32960",
+          "Telephone Number": "775 423-9122",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 19.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.2,
+          "Sulfur (S)": 9.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.21,
+          "Manganese (Mn)": 0.06,
+          "Molybdenum (Mo)": 0.015,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.5000",
+          "Cadmium": "=1.5000",
+          "Cobalt": "=2.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=165.0000",
+          "Nickel": "=5.0000",
+          "Lead": "=3.0000",
+          "Selenium": "=3.7000",
+          "Zinc": "=3.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BASACOTE NATIVE 6M 14-3-19 PLUS 1.2% MG PLUS TRACE ELEMENTS 14-3-19",
+    "brand": "COMPO EXPERT USA & CANADA INC",
+    "manufacturer": {
+      "name": "COMPO EXPERT USA & CANADA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 19.0
+    },
+    "macros_pct": {
+      "Mg": 1.2,
+      "S": 9.0
+    },
+    "micros_pct": {
+      "Fe": 0.21,
+      "Mn": 0.06,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.015
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C14E0C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.5,
+            "Cd": 1.5,
+            "Co": 2.0,
+            "Hg": 0.05,
+            "Mo": 165.0,
+            "Ni": 5.0,
+            "Pb": 3.0,
+            "Se": 3.7,
+            "Zn": 3.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.5,
+        "Cd": 1.5,
+        "Co": 2.0,
+        "Hg": 0.05,
+        "Mo": 165.0,
+        "Ni": 5.0,
+        "Pb": 3.0,
+        "Se": 3.7,
+        "Zn": 3.0
+      }
+    }
+  }
+}

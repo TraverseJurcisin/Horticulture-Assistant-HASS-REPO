@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"D4CAE5","source_wsda_record":{"wsda_product_number":"(#0193-0519)","product_name":"PRO MANGANESE5 6-0-0","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":5.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"=0.2100","Cobalt":"=96.5000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=103.1000","Lead":"=5.1000","Selenium":"=30.3000","Zinc":"=430.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":5.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"=0.2100","Cobalt":"=96.5000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=103.1000","Lead":"=5.1000","Selenium":"=30.3000","Zinc":"=430.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"PRO MANGANESE5 6-0-0","wsda_reg_no":"(#0193-0519)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D4CAE5",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "PRO MANGANESE5 6-0-0",
+    "wsda_reg_no": "(#0193-0519)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0519)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0519)",
+        "product_name": "PRO MANGANESE5 6-0-0",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 5.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "=0.2100",
+          "Cobalt": "=96.5000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=103.1000",
+          "Lead": "=5.1000",
+          "Selenium": "=30.3000",
+          "Zinc": "=430.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO MANGANESE5 6-0-0",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Mn": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D4CAE5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.21,
+            "Co": 96.5,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 103.1,
+            "Pb": 5.1,
+            "Se": 30.3,
+            "Zn": 430.5
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Hg": 0.05,
+            "Mo": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.21,
+        "Co": 96.5,
+        "Ni": 103.1,
+        "Pb": 5.1,
+        "Se": 30.3,
+        "Zn": 430.5
+      }
+    }
+  }
+}

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"F7DECF","source_wsda_record":{"wsda_product_number":"(#0705-0105)","product_name":"NUTRIAG FERTICARE BORONCOAT 0-0-0","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":8.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<3.3400","Cadmium":"<0.3339","Cobalt":"<3.3400","Mercury":"<0.0100","Molybdenum":"<3.3400","Nickel":"<3.3400","Lead":"<6.6800","Selenium":"<3.3400","Zinc":"=5.6200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":8.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<3.3400","Cadmium":"<0.3339","Cobalt":"<3.3400","Mercury":"<0.0100","Molybdenum":"<3.3400","Nickel":"<3.3400","Lead":"<6.6800","Selenium":"<3.3400","Zinc":"=5.6200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NUTRIAG FERTICARE BORONCOAT 0-0-0","wsda_reg_no":"(#0705-0105)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F7DECF",
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NUTRIAG FERTICARE BORONCOAT 0-0-0",
+    "wsda_reg_no": "(#0705-0105)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0105)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0105)",
+        "product_name": "NUTRIAG FERTICARE BORONCOAT 0-0-0",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 8.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<3.3400",
+          "Cadmium": "<0.3339",
+          "Cobalt": "<3.3400",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<3.3400",
+          "Nickel": "<3.3400",
+          "Lead": "<6.6800",
+          "Selenium": "<3.3400",
+          "Zinc": "=5.6200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIAG FERTICARE BORONCOAT 0-0-0",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "B": 8.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F7DECF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.34,
+            "Cd": 0.3339,
+            "Co": 3.34,
+            "Hg": 0.01,
+            "Mo": 3.34,
+            "Ni": 3.34,
+            "Pb": 6.68,
+            "Se": 3.34,
+            "Zn": 5.62
+          },
+          "detection_limits_ppm": {
+            "As": 3.34,
+            "Cd": 0.3339,
+            "Co": 3.34,
+            "Hg": 0.01,
+            "Mo": 3.34,
+            "Ni": 3.34,
+            "Pb": 6.68,
+            "Se": 3.34
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 5.62
+      }
+    }
+  }
+}

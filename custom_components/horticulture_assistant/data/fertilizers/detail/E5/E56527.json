@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"E56527","source_wsda_record":{"wsda_product_number":"(#3433-0046)","product_name":"SUNDAY DROUGHT DEFENSE 0-0-1","company_info":{"company":"THIS LAND INC","Mailing Address":"1434 Spruce St Ste 100","Post Office Box":null,"City":"Boulder","State":"CO","Postal Code":"80302","Telephone Number":"303 525-8468","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"=0.4000","Cobalt":"=1.0000","Mercury":"<0.0100","Molybdenum":"=1.7000","Nickel":"=1.4000","Lead":"<1.0000","Selenium":"=1.3000","Zinc":"=27.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"=0.4000","Cobalt":"=1.0000","Mercury":"<0.0100","Molybdenum":"=1.7000","Nickel":"=1.4000","Lead":"<1.0000","Selenium":"=1.3000","Zinc":"=27.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"THIS LAND INC","label_name":"SUNDAY DROUGHT DEFENSE 0-0-1","wsda_reg_no":"(#3433-0046)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E56527",
+  "metadata": {
+    "registrant": "THIS LAND INC",
+    "label_name": "SUNDAY DROUGHT DEFENSE 0-0-1",
+    "wsda_reg_no": "(#3433-0046)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3433-0046)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3433-0046)",
+        "product_name": "SUNDAY DROUGHT DEFENSE 0-0-1",
+        "company_info": {
+          "company": "THIS LAND INC",
+          "Mailing Address": "1434 Spruce St Ste 100",
+          "Post Office Box": null,
+          "City": "Boulder",
+          "State": "CO",
+          "Postal Code": "80302",
+          "Telephone Number": "303 525-8468",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=1.0000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=1.7000",
+          "Nickel": "=1.4000",
+          "Lead": "<1.0000",
+          "Selenium": "=1.3000",
+          "Zinc": "=27.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUNDAY DROUGHT DEFENSE 0-0-1",
+    "brand": "THIS LAND INC",
+    "manufacturer": {
+      "name": "THIS LAND INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E56527-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.4,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 1.7,
+            "Ni": 1.4,
+            "Pb": 1.0,
+            "Se": 1.3,
+            "Zn": 27.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.01,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.4,
+        "Co": 1.0,
+        "Mo": 1.7,
+        "Ni": 1.4,
+        "Se": 1.3,
+        "Zn": 27.0
+      }
+    }
+  }
+}

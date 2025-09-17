@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"A4595A","source_wsda_record":{"wsda_product_number":"(#2702-0014)","product_name":"NEW MILLENIUM EQUINOX 4.8-0-0","company_info":{"company":"NEW MILLENIUM GARDEN INC","Mailing Address":"16359 County Rd S","Post Office Box":null,"City":"Fort Morgan","State":"CO","Postal Code":"80701","Telephone Number":"720 369-9857","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.8,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0039,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5040","Cadmium":"<0.4920","Cobalt":"<0.4290","Mercury":"<0.0025","Molybdenum":"=39.0000","Nickel":"=0.7540","Lead":"<0.6170","Selenium":"<1.1400","Zinc":"=68.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.8,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0039,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5040","Cadmium":"<0.4920","Cobalt":"<0.4290","Mercury":"<0.0025","Molybdenum":"=39.0000","Nickel":"=0.7540","Lead":"<0.6170","Selenium":"<1.1400","Zinc":"=68.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NEW MILLENIUM GARDEN INC","label_name":"NEW MILLENIUM EQUINOX 4.8-0-0","wsda_reg_no":"(#2702-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A4595A",
+  "metadata": {
+    "registrant": "NEW MILLENIUM GARDEN INC",
+    "label_name": "NEW MILLENIUM EQUINOX 4.8-0-0",
+    "wsda_reg_no": "(#2702-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2702-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2702-0014)",
+        "product_name": "NEW MILLENIUM EQUINOX 4.8-0-0",
+        "company_info": {
+          "company": "NEW MILLENIUM GARDEN INC",
+          "Mailing Address": "16359 County Rd S",
+          "Post Office Box": null,
+          "City": "Fort Morgan",
+          "State": "CO",
+          "Postal Code": "80701",
+          "Telephone Number": "720 369-9857",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.8,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.0039,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5040",
+          "Cadmium": "<0.4920",
+          "Cobalt": "<0.4290",
+          "Mercury": "<0.0025",
+          "Molybdenum": "=39.0000",
+          "Nickel": "=0.7540",
+          "Lead": "<0.6170",
+          "Selenium": "<1.1400",
+          "Zinc": "=68.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NEW MILLENIUM EQUINOX 4.8-0-0",
+    "brand": "NEW MILLENIUM GARDEN INC",
+    "manufacturer": {
+      "name": "NEW MILLENIUM GARDEN INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.8
+    },
+    "macros_pct": {
+      "Ca": 4.0
+    },
+    "micros_pct": {
+      "Mo": 0.0039
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A4595A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.0025,
+            "Mo": 39.0,
+            "Ni": 0.754,
+            "Pb": 0.617,
+            "Se": 1.14,
+            "Zn": 68.7
+          },
+          "detection_limits_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.0025,
+            "Pb": 0.617,
+            "Se": 1.14
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 39.0,
+        "Ni": 0.754,
+        "Zn": 68.7
+      }
+    }
+  }
+}

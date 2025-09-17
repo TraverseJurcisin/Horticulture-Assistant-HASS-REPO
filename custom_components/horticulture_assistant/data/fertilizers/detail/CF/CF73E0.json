@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"CF73E0","source_wsda_record":{"wsda_product_number":"(#0354-0047)","product_name":"CASCADE GREEN 15-16-16","company_info":{"company":"WOLFKILL FEED & FERTILIZER CORP","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":0.4,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=10.4000","Cadmium":"=30.1000","Cobalt":"=5.7600","Mercury":"<1.0000","Molybdenum":"=29.1000","Nickel":"=44.7000","Lead":"=2.2600","Selenium":"<1.0000","Zinc":"=2470.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":0.4,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=10.4000","Cadmium":"=30.1000","Cobalt":"=5.7600","Mercury":"<1.0000","Molybdenum":"=29.1000","Nickel":"=44.7000","Lead":"=2.2600","Selenium":"<1.0000","Zinc":"=2470.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WOLFKILL FEED & FERTILIZER CORP","label_name":"CASCADE GREEN 15-16-16","wsda_reg_no":"(#0354-0047)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CF73E0",
+  "metadata": {
+    "registrant": "WOLFKILL FEED & FERTILIZER CORP",
+    "label_name": "CASCADE GREEN 15-16-16",
+    "wsda_reg_no": "(#0354-0047)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0354-0047)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0354-0047)",
+        "product_name": "CASCADE GREEN 15-16-16",
+        "company_info": {
+          "company": "WOLFKILL FEED & FERTILIZER CORP",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=10.4000",
+          "Cadmium": "=30.1000",
+          "Cobalt": "=5.7600",
+          "Mercury": "<1.0000",
+          "Molybdenum": "=29.1000",
+          "Nickel": "=44.7000",
+          "Lead": "=2.2600",
+          "Selenium": "<1.0000",
+          "Zinc": "=2470.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CASCADE GREEN 15-16-16",
+    "brand": "WOLFKILL FEED & FERTILIZER CORP",
+    "manufacturer": {
+      "name": "WOLFKILL FEED & FERTILIZER CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 16.0,
+      "K2O_pct": 16.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 0.2,
+      "Zn": 0.1,
+      "Cu": 0.1,
+      "B": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CF73E0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.4,
+            "Cd": 30.1,
+            "Co": 5.76,
+            "Hg": 1.0,
+            "Mo": 29.1,
+            "Ni": 44.7,
+            "Pb": 2.26,
+            "Se": 1.0,
+            "Zn": 2470.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 1.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.4,
+        "Cd": 30.1,
+        "Co": 5.76,
+        "Mo": 29.1,
+        "Ni": 44.7,
+        "Pb": 2.26,
+        "Zn": 2470.0
+      }
+    }
+  }
+}

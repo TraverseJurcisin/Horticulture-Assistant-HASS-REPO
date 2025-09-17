@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4424BC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1442-0005)",
-    "product_name": "UP & UP EPSOM SALT 0-0-0",
-    "company_info": {
-      "company": "GILES CHEMICAL - PREMIER MAGNESIA",
-      "Mailing Address": "75 Giles Place",
-      "Post Office Box": null,
-      "City": "Waynesville",
-      "State": "NC",
-      "Postal Code": "28786",
-      "Telephone Number": "707 616-9707",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 9.8,
-      "Sulfur (S)": 12.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "<1.0000",
-      "Lead": "<4.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "<0.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 9.8,
-      "Sulfur (S)": 12.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "<1.0000",
-      "Lead": "<4.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "<0.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4424BC",
   "metadata": {
     "registrant": "GILES CHEMICAL - PREMIER MAGNESIA",
     "label_name": "UP & UP EPSOM SALT 0-0-0",
     "wsda_reg_no": "(#1442-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1442-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1442-0005)",
+        "product_name": "UP & UP EPSOM SALT 0-0-0",
+        "company_info": {
+          "company": "GILES CHEMICAL - PREMIER MAGNESIA",
+          "Mailing Address": "75 Giles Place",
+          "Post Office Box": null,
+          "City": "Waynesville",
+          "State": "NC",
+          "Postal Code": "28786",
+          "Telephone Number": "707 616-9707",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 9.8,
+          "Sulfur (S)": 12.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.0300",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "<1.0000",
+          "Lead": "<4.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "<0.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "UP & UP EPSOM SALT 0-0-0",
+    "brand": "GILES CHEMICAL - PREMIER MAGNESIA",
+    "manufacturer": {
+      "name": "GILES CHEMICAL - PREMIER MAGNESIA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 9.8,
+      "S": 12.9
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4424BC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.03,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 4.0,
+            "Se": 5.0,
+            "Zn": 0.6
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.03,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 4.0,
+            "Se": 5.0,
+            "Zn": 0.6
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

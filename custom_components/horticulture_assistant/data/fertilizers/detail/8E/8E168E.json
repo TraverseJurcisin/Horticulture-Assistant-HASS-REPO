@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"8E168E","source_wsda_record":{"wsda_product_number":"(#3843-0087)","product_name":"ECHNOLOGIES VIADUCT ZN 1-0-0","company_info":{"company":"INNVICTIS BIOSCIENCE PLANT HEALTH T","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"970 397-0856","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":9.0},"reported_metals":{"Arsenic":"<0.0010","Cadmium":"=0.4560","Cobalt":"=30.4000","Mercury":"<0.0010","Molybdenum":"<0.0150","Nickel":"=96.0000","Lead":"=0.1970","Selenium":"=0.4170","Zinc":"=8.4300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":9.0},"heavy_metals":{"Arsenic":"<0.0010","Cadmium":"=0.4560","Cobalt":"=30.4000","Mercury":"<0.0010","Molybdenum":"<0.0150","Nickel":"=96.0000","Lead":"=0.1970","Selenium":"=0.4170","Zinc":"=8.4300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INNVICTIS BIOSCIENCE PLANT HEALTH T","label_name":"ECHNOLOGIES VIADUCT ZN 1-0-0","wsda_reg_no":"(#3843-0087)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8E168E",
+  "metadata": {
+    "registrant": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "label_name": "ECHNOLOGIES VIADUCT ZN 1-0-0",
+    "wsda_reg_no": "(#3843-0087)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3843-0087)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3843-0087)",
+        "product_name": "ECHNOLOGIES VIADUCT ZN 1-0-0",
+        "company_info": {
+          "company": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "970 397-0856",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.8,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 9.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0010",
+          "Cadmium": "=0.4560",
+          "Cobalt": "=30.4000",
+          "Mercury": "<0.0010",
+          "Molybdenum": "<0.0150",
+          "Nickel": "=96.0000",
+          "Lead": "=0.1970",
+          "Selenium": "=0.4170",
+          "Zinc": "=8.4300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECHNOLOGIES VIADUCT ZN 1-0-0",
+    "brand": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "manufacturer": {
+      "name": "INNVICTIS BIOSCIENCE PLANT HEALTH T"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "macros_pct": {
+      "S": 4.8
+    },
+    "micros_pct": {
+      "Zn": 9.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8E168E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.456,
+            "Co": 30.4,
+            "Hg": 0.001,
+            "Mo": 0.015,
+            "Ni": 96.0,
+            "Pb": 0.197,
+            "Se": 0.417,
+            "Zn": 8.43
+          },
+          "detection_limits_ppm": {
+            "As": 0.001,
+            "Hg": 0.001,
+            "Mo": 0.015
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.456,
+        "Co": 30.4,
+        "Ni": 96.0,
+        "Pb": 0.197,
+        "Se": 0.417,
+        "Zn": 8.43
+      }
+    }
+  }
+}

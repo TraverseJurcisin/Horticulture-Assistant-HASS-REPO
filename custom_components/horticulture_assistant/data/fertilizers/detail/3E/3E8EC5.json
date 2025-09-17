@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3E8EC5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4105-0001)",
-    "product_name": "PERSIST GREENBULL LAWN & GARDEN FERTILIZER 6-0-0",
-    "company_info": {
-      "company": "V-GRID ENERGY SYSTEMS, INC",
-      "Mailing Address": "513 Calle San Pablo",
-      "Post Office Box": null,
-      "City": "Camarillo",
-      "State": "CA",
-      "Postal Code": "93012",
-      "Telephone Number": "805 482-9040",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.2500",
-      "Cobalt": "=1.8000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.1000",
-      "Nickel": "=16.0000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=10.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.2500",
-      "Cobalt": "=1.8000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.1000",
-      "Nickel": "=16.0000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=10.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3E8EC5",
   "metadata": {
     "registrant": "V-GRID ENERGY SYSTEMS, INC",
     "label_name": "PERSIST GREENBULL LAWN & GARDEN FERTILIZER 6-0-0",
     "wsda_reg_no": "(#4105-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4105-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4105-0001)",
+        "product_name": "PERSIST GREENBULL LAWN & GARDEN FERTILIZER 6-0-0",
+        "company_info": {
+          "company": "V-GRID ENERGY SYSTEMS, INC",
+          "Mailing Address": "513 Calle San Pablo",
+          "Post Office Box": null,
+          "City": "Camarillo",
+          "State": "CA",
+          "Postal Code": "93012",
+          "Telephone Number": "805 482-9040",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.2500",
+          "Cobalt": "=1.8000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.1000",
+          "Nickel": "=16.0000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=10.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERSIST GREENBULL LAWN & GARDEN FERTILIZER 6-0-0",
+    "brand": "V-GRID ENERGY SYSTEMS, INC",
+    "manufacturer": {
+      "name": "V-GRID ENERGY SYSTEMS, INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "micros_pct": {
+      "Fe": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3E8EC5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.25,
+            "Co": 1.8,
+            "Hg": 0.05,
+            "Mo": 1.1,
+            "Ni": 16.0,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 10.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.25,
+        "Co": 1.8,
+        "Hg": 0.05,
+        "Mo": 1.1,
+        "Ni": 16.0,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 10.0
+      }
+    }
   }
 }

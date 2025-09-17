@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"84C7D6","source_wsda_record":{"wsda_product_number":"(#3885-0009)","product_name":"PENDELTON TURF SUPPLY PUMPKIN JUICE 11-8-5","company_info":{"company":"PENDELTON TURF SUPPLY INC","Mailing Address":"805 Ela Avenue","Post Office Box":null,"City":"Waterford","State":"WI","Postal Code":"53185","Telephone Number":"262 534-3334","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=0.6670","Cadmium":"=0.2280","Cobalt":"=65.6000","Mercury":"=0.0050","Molybdenum":"=0.3430","Nickel":"=0.8510","Lead":"=0.2860","Selenium":"=0.5300","Zinc":"=328.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=0.6670","Cadmium":"=0.2280","Cobalt":"=65.6000","Mercury":"=0.0050","Molybdenum":"=0.3430","Nickel":"=0.8510","Lead":"=0.2860","Selenium":"=0.5300","Zinc":"=328.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PENDELTON TURF SUPPLY INC","label_name":"PENDELTON TURF SUPPLY PUMPKIN JUICE 11-8-5","wsda_reg_no":"(#3885-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "84C7D6",
+  "metadata": {
+    "registrant": "PENDELTON TURF SUPPLY INC",
+    "label_name": "PENDELTON TURF SUPPLY PUMPKIN JUICE 11-8-5",
+    "wsda_reg_no": "(#3885-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3885-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3885-0009)",
+        "product_name": "PENDELTON TURF SUPPLY PUMPKIN JUICE 11-8-5",
+        "company_info": {
+          "company": "PENDELTON TURF SUPPLY INC",
+          "Mailing Address": "805 Ela Avenue",
+          "Post Office Box": null,
+          "City": "Waterford",
+          "State": "WI",
+          "Postal Code": "53185",
+          "Telephone Number": "262 534-3334",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6670",
+          "Cadmium": "=0.2280",
+          "Cobalt": "=65.6000",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.3430",
+          "Nickel": "=0.8510",
+          "Lead": "=0.2860",
+          "Selenium": "=0.5300",
+          "Zinc": "=328.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENDELTON TURF SUPPLY PUMPKIN JUICE 11-8-5",
+    "brand": "PENDELTON TURF SUPPLY INC",
+    "manufacturer": {
+      "name": "PENDELTON TURF SUPPLY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 5.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "84C7D6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.667,
+            "Cd": 0.228,
+            "Co": 65.6,
+            "Hg": 0.005,
+            "Mo": 0.343,
+            "Ni": 0.851,
+            "Pb": 0.286,
+            "Se": 0.53,
+            "Zn": 328.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.667,
+        "Cd": 0.228,
+        "Co": 65.6,
+        "Hg": 0.005,
+        "Mo": 0.343,
+        "Ni": 0.851,
+        "Pb": 0.286,
+        "Se": 0.53,
+        "Zn": 328.0
+      }
+    }
+  }
+}

@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2F062A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3240-0005)",
-    "product_name": "RX GREEN TECHNOLOGIES GROW PART A 3-0-2",
-    "company_info": {
-      "company": "RX GREEN TECHNOLOGIES LLC",
-      "Mailing Address": "10 Iron Horse Dr Unit C",
-      "Post Office Box": null,
-      "City": "Bedford",
-      "State": "NH",
-      "Postal Code": "03110",
-      "Telephone Number": "603 759-3450",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.3100",
-      "Cadmium": "<0.3700",
-      "Cobalt": "<0.9060",
-      "Mercury": "<0.0417",
-      "Molybdenum": "<1.8500",
-      "Nickel": "<2.3100",
-      "Lead": "<2.3100",
-      "Selenium": "<4.6300",
-      "Zinc": "<3.7000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.3100",
-      "Cadmium": "<0.3700",
-      "Cobalt": "<0.9060",
-      "Mercury": "<0.0417",
-      "Molybdenum": "<1.8500",
-      "Nickel": "<2.3100",
-      "Lead": "<2.3100",
-      "Selenium": "<4.6300",
-      "Zinc": "<3.7000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2F062A",
   "metadata": {
     "registrant": "RX GREEN TECHNOLOGIES LLC",
     "label_name": "RX GREEN TECHNOLOGIES GROW PART A 3-0-2",
     "wsda_reg_no": "(#3240-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3240-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3240-0005)",
+        "product_name": "RX GREEN TECHNOLOGIES GROW PART A 3-0-2",
+        "company_info": {
+          "company": "RX GREEN TECHNOLOGIES LLC",
+          "Mailing Address": "10 Iron Horse Dr Unit C",
+          "Post Office Box": null,
+          "City": "Bedford",
+          "State": "NH",
+          "Postal Code": "03110",
+          "Telephone Number": "603 759-3450",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.3100",
+          "Cadmium": "<0.3700",
+          "Cobalt": "<0.9060",
+          "Mercury": "<0.0417",
+          "Molybdenum": "<1.8500",
+          "Nickel": "<2.3100",
+          "Lead": "<2.3100",
+          "Selenium": "<4.6300",
+          "Zinc": "<3.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RX GREEN TECHNOLOGIES GROW PART A 3-0-2",
+    "brand": "RX GREEN TECHNOLOGIES LLC",
+    "manufacturer": {
+      "name": "RX GREEN TECHNOLOGIES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2F062A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.31,
+            "Cd": 0.37,
+            "Co": 0.906,
+            "Hg": 0.0417,
+            "Mo": 1.85,
+            "Ni": 2.31,
+            "Pb": 2.31,
+            "Se": 4.63,
+            "Zn": 3.7
+          },
+          "detection_limits_ppm": {
+            "As": 2.31,
+            "Cd": 0.37,
+            "Co": 0.906,
+            "Hg": 0.0417,
+            "Mo": 1.85,
+            "Ni": 2.31,
+            "Pb": 2.31,
+            "Se": 4.63,
+            "Zn": 3.7
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

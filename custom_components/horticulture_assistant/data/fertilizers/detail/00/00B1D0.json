@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "00B1D0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3284-0002)",
-    "product_name": "GROW MAX SOLUBLE HUMIC POWDER 0-0-12",
-    "company_info": {
-      "company": "STABLE SOIL MATRIX",
-      "Mailing Address": "1906 W Crenshaw St",
-      "Post Office Box": null,
-      "City": "Kuna",
-      "State": "ID",
-      "Postal Code": "83634",
-      "Telephone Number": "208 571-1219",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.5600",
-      "Cadmium": "=0.2400",
-      "Cobalt": "=2.1500",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.1000",
-      "Nickel": "=4.7000",
-      "Lead": "=3.4000",
-      "Selenium": "<0.5000",
-      "Zinc": "=12.7700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.5600",
-      "Cadmium": "=0.2400",
-      "Cobalt": "=2.1500",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.1000",
-      "Nickel": "=4.7000",
-      "Lead": "=3.4000",
-      "Selenium": "<0.5000",
-      "Zinc": "=12.7700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "00B1D0",
   "metadata": {
     "registrant": "STABLE SOIL MATRIX",
     "label_name": "GROW MAX SOLUBLE HUMIC POWDER 0-0-12",
     "wsda_reg_no": "(#3284-0002)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3284-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3284-0002)",
+        "product_name": "GROW MAX SOLUBLE HUMIC POWDER 0-0-12",
+        "company_info": {
+          "company": "STABLE SOIL MATRIX",
+          "Mailing Address": "1906 W Crenshaw St",
+          "Post Office Box": null,
+          "City": "Kuna",
+          "State": "ID",
+          "Postal Code": "83634",
+          "Telephone Number": "208 571-1219",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.5600",
+          "Cadmium": "=0.2400",
+          "Cobalt": "=2.1500",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.1000",
+          "Nickel": "=4.7000",
+          "Lead": "=3.4000",
+          "Selenium": "<0.5000",
+          "Zinc": "=12.7700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROW MAX SOLUBLE HUMIC POWDER 0-0-12",
+    "brand": "STABLE SOIL MATRIX",
+    "manufacturer": {
+      "name": "STABLE SOIL MATRIX"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "00B1D0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.56,
+            "Cd": 0.24,
+            "Co": 2.15,
+            "Hg": 0.05,
+            "Mo": 1.1,
+            "Ni": 4.7,
+            "Pb": 3.4,
+            "Se": 0.5,
+            "Zn": 12.77
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.56,
+        "Cd": 0.24,
+        "Co": 2.15,
+        "Mo": 1.1,
+        "Ni": 4.7,
+        "Pb": 3.4,
+        "Zn": 12.77
+      }
+    }
   }
 }

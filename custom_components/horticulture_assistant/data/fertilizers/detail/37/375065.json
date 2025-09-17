@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "375065",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1838-0010)",
-    "product_name": "CORALIFE PURPLE TECH 0-0-1",
-    "company_info": {
-      "company": "CENTRAL AQUATICS",
-      "Mailing Address": "521 Clay St",
-      "Post Office Box": null,
-      "City": "Chilton",
-      "State": "WI",
-      "Postal Code": "53014",
-      "Telephone Number": "920 849-1864",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": 2.6,
-      "Magnesium (Mg)": 8.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0500",
-      "Cadmium": "<0.5236",
-      "Cobalt": "<2.6200",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<1.5700",
-      "Nickel": "<2.8800",
-      "Lead": "<3.1400",
-      "Selenium": "<1.5700",
-      "Zinc": "<10.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": 2.6,
-      "Magnesium (Mg)": 8.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0500",
-      "Cadmium": "<0.5236",
-      "Cobalt": "<2.6200",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<1.5700",
-      "Nickel": "<2.8800",
-      "Lead": "<3.1400",
-      "Selenium": "<1.5700",
-      "Zinc": "<10.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "375065",
   "metadata": {
     "registrant": "CENTRAL AQUATICS",
     "label_name": "CORALIFE PURPLE TECH 0-0-1",
     "wsda_reg_no": "(#1838-0010)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1838-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1838-0010)",
+        "product_name": "CORALIFE PURPLE TECH 0-0-1",
+        "company_info": {
+          "company": "CENTRAL AQUATICS",
+          "Mailing Address": "521 Clay St",
+          "Post Office Box": null,
+          "City": "Chilton",
+          "State": "WI",
+          "Postal Code": "53014",
+          "Telephone Number": "920 849-1864",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 2.6,
+          "Magnesium (Mg)": 8.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0500",
+          "Cadmium": "<0.5236",
+          "Cobalt": "<2.6200",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<1.5700",
+          "Nickel": "<2.8800",
+          "Lead": "<3.1400",
+          "Selenium": "<1.5700",
+          "Zinc": "<10.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CORALIFE PURPLE TECH 0-0-1",
+    "brand": "CENTRAL AQUATICS",
+    "manufacturer": {
+      "name": "CENTRAL AQUATICS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 2.6,
+      "Mg": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "375065-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.05,
+            "Cd": 0.5236,
+            "Co": 2.62,
+            "Hg": 0.01,
+            "Mo": 1.57,
+            "Ni": 2.88,
+            "Pb": 3.14,
+            "Se": 1.57,
+            "Zn": 10.5
+          },
+          "detection_limits_ppm": {
+            "As": 1.05,
+            "Cd": 0.5236,
+            "Co": 2.62,
+            "Hg": 0.01,
+            "Mo": 1.57,
+            "Ni": 2.88,
+            "Pb": 3.14,
+            "Se": 1.57,
+            "Zn": 10.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

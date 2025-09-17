@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"8D9870","source_wsda_record":{"wsda_product_number":"(#4215-0001)","product_name":"WOOL PELLETS 9-0-2","company_info":{"company":"WILD VALLEY FARMS","Mailing Address":"6000 E Croydon Rd","Post Office Box":null,"City":"Croydon","State":"UT","Postal Code":"84018","Telephone Number":"435 400-4373","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.4600","Cadmium":"<0.1060","Cobalt":"=0.8500","Mercury":"<0.1828","Molybdenum":"=1.0200","Nickel":"=2.0500","Lead":"=2.3400","Selenium":"=0.5400","Zinc":"=80.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.4600","Cadmium":"<0.1060","Cobalt":"=0.8500","Mercury":"<0.1828","Molybdenum":"=1.0200","Nickel":"=2.0500","Lead":"=2.3400","Selenium":"=0.5400","Zinc":"=80.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILD VALLEY FARMS","label_name":"WOOL PELLETS 9-0-2","wsda_reg_no":"(#4215-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8D9870",
+  "metadata": {
+    "registrant": "WILD VALLEY FARMS",
+    "label_name": "WOOL PELLETS 9-0-2",
+    "wsda_reg_no": "(#4215-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4215-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4215-0001)",
+        "product_name": "WOOL PELLETS 9-0-2",
+        "company_info": {
+          "company": "WILD VALLEY FARMS",
+          "Mailing Address": "6000 E Croydon Rd",
+          "Post Office Box": null,
+          "City": "Croydon",
+          "State": "UT",
+          "Postal Code": "84018",
+          "Telephone Number": "435 400-4373",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.4600",
+          "Cadmium": "<0.1060",
+          "Cobalt": "=0.8500",
+          "Mercury": "<0.1828",
+          "Molybdenum": "=1.0200",
+          "Nickel": "=2.0500",
+          "Lead": "=2.3400",
+          "Selenium": "=0.5400",
+          "Zinc": "=80.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WOOL PELLETS 9-0-2",
+    "brand": "WILD VALLEY FARMS",
+    "manufacturer": {
+      "name": "WILD VALLEY FARMS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8D9870-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.46,
+            "Cd": 0.106,
+            "Co": 0.85,
+            "Hg": 0.1828,
+            "Mo": 1.02,
+            "Ni": 2.05,
+            "Pb": 2.34,
+            "Se": 0.54,
+            "Zn": 80.8
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.106,
+            "Hg": 0.1828
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.46,
+        "Co": 0.85,
+        "Mo": 1.02,
+        "Ni": 2.05,
+        "Pb": 2.34,
+        "Se": 0.54,
+        "Zn": 80.8
+      }
+    }
+  }
+}

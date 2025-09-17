@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4051CF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0884-0167)",
-    "product_name": "JOBE'S ORGANICS COMPOST STARTER 4-4-2",
-    "company_info": {
-      "company": "EASY GARDENER INC",
-      "Mailing Address": "1750 17th St",
-      "Post Office Box": null,
-      "City": "Paris",
-      "State": "KY",
-      "Postal Code": "40361",
-      "Telephone Number": "859 984-5389",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 8.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=118.0000",
-      "Cadmium": "=31.0000",
-      "Cobalt": "=237.0000",
-      "Mercury": "=7.0000",
-      "Molybdenum": "=31.0000",
-      "Nickel": "=285.0000",
-      "Lead": "=792.0000",
-      "Selenium": "=22.0000",
-      "Zinc": "=2931.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 8.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=118.0000",
-      "Cadmium": "=31.0000",
-      "Cobalt": "=237.0000",
-      "Mercury": "=7.0000",
-      "Molybdenum": "=31.0000",
-      "Nickel": "=285.0000",
-      "Lead": "=792.0000",
-      "Selenium": "=22.0000",
-      "Zinc": "=2931.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4051CF",
   "metadata": {
     "registrant": "EASY GARDENER INC",
     "label_name": "JOBE'S ORGANICS COMPOST STARTER 4-4-2",
     "wsda_reg_no": "(#0884-0167)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0884-0167)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0884-0167)",
+        "product_name": "JOBE'S ORGANICS COMPOST STARTER 4-4-2",
+        "company_info": {
+          "company": "EASY GARDENER INC",
+          "Mailing Address": "1750 17th St",
+          "Post Office Box": null,
+          "City": "Paris",
+          "State": "KY",
+          "Postal Code": "40361",
+          "Telephone Number": "859 984-5389",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 8.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=118.0000",
+          "Cadmium": "=31.0000",
+          "Cobalt": "=237.0000",
+          "Mercury": "=7.0000",
+          "Molybdenum": "=31.0000",
+          "Nickel": "=285.0000",
+          "Lead": "=792.0000",
+          "Selenium": "=22.0000",
+          "Zinc": "=2931.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JOBE'S ORGANICS COMPOST STARTER 4-4-2",
+    "brand": "EASY GARDENER INC",
+    "manufacturer": {
+      "name": "EASY GARDENER INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 8.0,
+      "Mg": 0.5,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4051CF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 118.0,
+            "Cd": 31.0,
+            "Co": 237.0,
+            "Hg": 7.0,
+            "Mo": 31.0,
+            "Ni": 285.0,
+            "Pb": 792.0,
+            "Se": 22.0,
+            "Zn": 2931.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 118.0,
+        "Cd": 31.0,
+        "Co": 237.0,
+        "Hg": 7.0,
+        "Mo": 31.0,
+        "Ni": 285.0,
+        "Pb": 792.0,
+        "Se": 22.0,
+        "Zn": 2931.0
+      }
+    }
   }
 }

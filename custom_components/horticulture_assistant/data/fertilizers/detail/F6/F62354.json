@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"F62354","source_wsda_record":{"wsda_product_number":"(#3398-0003)","product_name":"ENVIROTECH SERVICES CAL4AG 0-0-0","company_info":{"company":"ENVIROTECH SERVICES INC","Mailing Address":"c/o Brand Maven Consulting","Post Office Box":"14737 Pams Way","City":"Bakersfield","State":"CA","Postal Code":"93314","Telephone Number":"970 346-3951","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":22.0,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0550","Cadmium":"=0.0800","Cobalt":"=0.2000","Mercury":"=0.0200","Molybdenum":"=1.0000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=1.0000","Zinc":"=55.9900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":22.0,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0550","Cadmium":"=0.0800","Cobalt":"=0.2000","Mercury":"=0.0200","Molybdenum":"=1.0000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=1.0000","Zinc":"=55.9900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ENVIROTECH SERVICES INC","label_name":"ENVIROTECH SERVICES CAL4AG 0-0-0","wsda_reg_no":"(#3398-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F62354",
+  "metadata": {
+    "registrant": "ENVIROTECH SERVICES INC",
+    "label_name": "ENVIROTECH SERVICES CAL4AG 0-0-0",
+    "wsda_reg_no": "(#3398-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3398-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3398-0003)",
+        "product_name": "ENVIROTECH SERVICES CAL4AG 0-0-0",
+        "company_info": {
+          "company": "ENVIROTECH SERVICES INC",
+          "Mailing Address": "c/o Brand Maven Consulting",
+          "Post Office Box": "14737 Pams Way",
+          "City": "Bakersfield",
+          "State": "CA",
+          "Postal Code": "93314",
+          "Telephone Number": "970 346-3951",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 11.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": 22.0,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0550",
+          "Cadmium": "=0.0800",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=0.2000",
+          "Lead": "=0.5000",
+          "Selenium": "=1.0000",
+          "Zinc": "=55.9900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ENVIROTECH SERVICES CAL4AG 0-0-0",
+    "brand": "ENVIROTECH SERVICES INC",
+    "manufacturer": {
+      "name": "ENVIROTECH SERVICES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 11.0,
+      "Mg": 1.0
+    },
+    "micros_pct": {
+      "Cl": 22.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F62354-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.055,
+            "Cd": 0.08,
+            "Co": 0.2,
+            "Hg": 0.02,
+            "Mo": 1.0,
+            "Ni": 0.2,
+            "Pb": 0.5,
+            "Se": 1.0,
+            "Zn": 55.99
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.055,
+        "Cd": 0.08,
+        "Co": 0.2,
+        "Hg": 0.02,
+        "Mo": 1.0,
+        "Ni": 0.2,
+        "Pb": 0.5,
+        "Se": 1.0,
+        "Zn": 55.99
+      }
+    }
+  }
+}

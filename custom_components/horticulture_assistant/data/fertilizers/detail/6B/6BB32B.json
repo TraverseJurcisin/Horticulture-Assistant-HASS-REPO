@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6BB32B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0081-0011)",
-    "product_name": "DOWN TO EARTH OYSTER SHELL ALL NATURAL 0-0-0",
-    "company_info": {
-      "company": "DOWN TO EARTH DISTRIBUTORS INC",
-      "Mailing Address": "PO Box1419",
-      "Post Office Box": null,
-      "City": "Eugene",
-      "State": "OR",
-      "Postal Code": "97440-1419",
-      "Telephone Number": "541 485-5932",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 36.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0400",
-      "Cadmium": "=0.2780",
-      "Cobalt": "=0.3890",
-      "Mercury": "=0.0177",
-      "Molybdenum": "=1.1100",
-      "Nickel": "=1.6700",
-      "Lead": "=2.7800",
-      "Selenium": "=0.6940",
-      "Zinc": "=2.7500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 36.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0400",
-      "Cadmium": "=0.2780",
-      "Cobalt": "=0.3890",
-      "Mercury": "=0.0177",
-      "Molybdenum": "=1.1100",
-      "Nickel": "=1.6700",
-      "Lead": "=2.7800",
-      "Selenium": "=0.6940",
-      "Zinc": "=2.7500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6BB32B",
   "metadata": {
     "registrant": "DOWN TO EARTH DISTRIBUTORS INC",
     "label_name": "DOWN TO EARTH OYSTER SHELL ALL NATURAL 0-0-0",
     "wsda_reg_no": "(#0081-0011)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0081-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0081-0011)",
+        "product_name": "DOWN TO EARTH OYSTER SHELL ALL NATURAL 0-0-0",
+        "company_info": {
+          "company": "DOWN TO EARTH DISTRIBUTORS INC",
+          "Mailing Address": "PO Box1419",
+          "Post Office Box": null,
+          "City": "Eugene",
+          "State": "OR",
+          "Postal Code": "97440-1419",
+          "Telephone Number": "541 485-5932",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 36.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0400",
+          "Cadmium": "=0.2780",
+          "Cobalt": "=0.3890",
+          "Mercury": "=0.0177",
+          "Molybdenum": "=1.1100",
+          "Nickel": "=1.6700",
+          "Lead": "=2.7800",
+          "Selenium": "=0.6940",
+          "Zinc": "=2.7500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DOWN TO EARTH OYSTER SHELL ALL NATURAL 0-0-0",
+    "brand": "DOWN TO EARTH DISTRIBUTORS INC",
+    "manufacturer": {
+      "name": "DOWN TO EARTH DISTRIBUTORS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 36.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6BB32B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.04,
+            "Cd": 0.278,
+            "Co": 0.389,
+            "Hg": 0.0177,
+            "Mo": 1.11,
+            "Ni": 1.67,
+            "Pb": 2.78,
+            "Se": 0.694,
+            "Zn": 2.75
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.04,
+        "Cd": 0.278,
+        "Co": 0.389,
+        "Hg": 0.0177,
+        "Mo": 1.11,
+        "Ni": 1.67,
+        "Pb": 2.78,
+        "Se": 0.694,
+        "Zn": 2.75
+      }
+    }
   }
 }

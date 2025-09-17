@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "76AF25",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3394-0001)",
-    "product_name": "DANHUB-ECO 0.5-0.2-0.5",
-    "company_info": {
-      "company": "IPDOF",
-      "Mailing Address": "2019 South Merton St",
-      "Post Office Box": null,
-      "City": "Aberdeen",
-      "State": "SD",
-      "Postal Code": "57401",
-      "Telephone Number": "240 636-4002",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.5,
-      "Available Phosphoric Acid (P2O5)": 0.2,
-      "Soluble Potash (K2O)": 0.5,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.4000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.5000",
-      "Nickel": "=0.4000",
-      "Lead": "=2.0000",
-      "Selenium": "=0.2200",
-      "Zinc": "=21.7600"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.5,
-      "Available Phosphoric Acid (P2O5)": 0.2,
-      "Soluble Potash (K2O)": 0.5,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.4000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.5000",
-      "Nickel": "=0.4000",
-      "Lead": "=2.0000",
-      "Selenium": "=0.2200",
-      "Zinc": "=21.7600"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "76AF25",
   "metadata": {
     "registrant": "IPDOF",
     "label_name": "DANHUB-ECO 0.5-0.2-0.5",
     "wsda_reg_no": "(#3394-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3394-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3394-0001)",
+        "product_name": "DANHUB-ECO 0.5-0.2-0.5",
+        "company_info": {
+          "company": "IPDOF",
+          "Mailing Address": "2019 South Merton St",
+          "Post Office Box": null,
+          "City": "Aberdeen",
+          "State": "SD",
+          "Postal Code": "57401",
+          "Telephone Number": "240 636-4002",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.5,
+          "Available Phosphoric Acid (P2O5)": 0.2,
+          "Soluble Potash (K2O)": 0.5,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.4000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=0.4000",
+          "Lead": "=2.0000",
+          "Selenium": "=0.2200",
+          "Zinc": "=21.7600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DANHUB-ECO 0.5-0.2-0.5",
+    "brand": "IPDOF",
+    "manufacturer": {
+      "name": "IPDOF"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.5,
+      "P2O5_pct": 0.2,
+      "K2O_pct": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "76AF25-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.4,
+            "Hg": 0.1,
+            "Mo": 0.5,
+            "Ni": 0.4,
+            "Pb": 2.0,
+            "Se": 0.22,
+            "Zn": 21.76
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 0.4,
+        "Hg": 0.1,
+        "Mo": 0.5,
+        "Ni": 0.4,
+        "Pb": 2.0,
+        "Se": 0.22,
+        "Zn": 21.76
+      }
+    }
   }
 }

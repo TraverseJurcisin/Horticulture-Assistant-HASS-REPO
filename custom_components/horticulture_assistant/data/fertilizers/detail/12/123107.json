@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "123107",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0198-0046)",
-    "product_name": "MCGREGOR M-POWER MICRO PAK 0-0-0",
-    "company_info": {
-      "company": "MCGREGOR COMPANY, (THE)",
-      "Mailing Address": "PO Box 740",
-      "Post Office Box": null,
-      "City": "Colfax",
-      "State": "WA",
-      "Postal Code": "99111-0740",
-      "Telephone Number": "509 397-4355",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 4.0
-    },
-    "reported_metals": {
-      "Arsenic": "=14.2000",
-      "Cadmium": "=3.8300",
-      "Cobalt": "=28.4000",
-      "Mercury": "=0.9000",
-      "Molybdenum": "=3.7830",
-      "Nickel": "=34.1000",
-      "Lead": "=94.8700",
-      "Selenium": "=2.6340",
-      "Zinc": "=399.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 4.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=14.2000",
-      "Cadmium": "=3.8300",
-      "Cobalt": "=28.4000",
-      "Mercury": "=0.9000",
-      "Molybdenum": "=3.7830",
-      "Nickel": "=34.1000",
-      "Lead": "=94.8700",
-      "Selenium": "=2.6340",
-      "Zinc": "=399.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "123107",
   "metadata": {
     "registrant": "MCGREGOR COMPANY, (THE)",
     "label_name": "MCGREGOR M-POWER MICRO PAK 0-0-0",
     "wsda_reg_no": "(#0198-0046)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0198-0046)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0198-0046)",
+        "product_name": "MCGREGOR M-POWER MICRO PAK 0-0-0",
+        "company_info": {
+          "company": "MCGREGOR COMPANY, (THE)",
+          "Mailing Address": "PO Box 740",
+          "Post Office Box": null,
+          "City": "Colfax",
+          "State": "WA",
+          "Postal Code": "99111-0740",
+          "Telephone Number": "509 397-4355",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.5,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.08,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "=14.2000",
+          "Cadmium": "=3.8300",
+          "Cobalt": "=28.4000",
+          "Mercury": "=0.9000",
+          "Molybdenum": "=3.7830",
+          "Nickel": "=34.1000",
+          "Lead": "=94.8700",
+          "Selenium": "=2.6340",
+          "Zinc": "=399.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MCGREGOR M-POWER MICRO PAK 0-0-0",
+    "brand": "MCGREGOR COMPANY, (THE)",
+    "manufacturer": {
+      "name": "MCGREGOR COMPANY, (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 1.0,
+      "Zn": 4.0,
+      "Cu": 0.5,
+      "B": 0.5,
+      "Mo": 0.08
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "123107-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.2,
+            "Cd": 3.83,
+            "Co": 28.4,
+            "Hg": 0.9,
+            "Mo": 3.783,
+            "Ni": 34.1,
+            "Pb": 94.87,
+            "Se": 2.634,
+            "Zn": 399.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.2,
+        "Cd": 3.83,
+        "Co": 28.4,
+        "Hg": 0.9,
+        "Mo": 3.783,
+        "Ni": 34.1,
+        "Pb": 94.87,
+        "Se": 2.634,
+        "Zn": 399.0
+      }
+    }
   }
 }

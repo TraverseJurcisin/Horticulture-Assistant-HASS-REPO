@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "50D377",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2702-0011)",
-    "product_name": "NEW MILLENIUM SUMMER SHIFT 0.8-1.6-2.8",
-    "company_info": {
-      "company": "NEW MILLENIUM GARDEN INC",
-      "Mailing Address": "16359 County Rd S",
-      "Post Office Box": null,
-      "City": "Fort Morgan",
-      "State": "CO",
-      "Postal Code": "80701",
-      "Telephone Number": "720 369-9857",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.8,
-      "Available Phosphoric Acid (P2O5)": 1.6,
-      "Soluble Potash (K2O)": 2.8,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7150",
-      "Cadmium": "=0.4880",
-      "Cobalt": "=0.5710",
-      "Mercury": "=0.0025",
-      "Molybdenum": "=4.5400",
-      "Nickel": "=0.5060",
-      "Lead": "=0.6120",
-      "Selenium": "=1.1400",
-      "Zinc": "=30.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.8,
-      "Available Phosphoric Acid (P2O5)": 1.6,
-      "Soluble Potash (K2O)": 2.8,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7150",
-      "Cadmium": "=0.4880",
-      "Cobalt": "=0.5710",
-      "Mercury": "=0.0025",
-      "Molybdenum": "=4.5400",
-      "Nickel": "=0.5060",
-      "Lead": "=0.6120",
-      "Selenium": "=1.1400",
-      "Zinc": "=30.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "50D377",
   "metadata": {
     "registrant": "NEW MILLENIUM GARDEN INC",
     "label_name": "NEW MILLENIUM SUMMER SHIFT 0.8-1.6-2.8",
     "wsda_reg_no": "(#2702-0011)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2702-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2702-0011)",
+        "product_name": "NEW MILLENIUM SUMMER SHIFT 0.8-1.6-2.8",
+        "company_info": {
+          "company": "NEW MILLENIUM GARDEN INC",
+          "Mailing Address": "16359 County Rd S",
+          "Post Office Box": null,
+          "City": "Fort Morgan",
+          "State": "CO",
+          "Postal Code": "80701",
+          "Telephone Number": "720 369-9857",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.8,
+          "Available Phosphoric Acid (P2O5)": 1.6,
+          "Soluble Potash (K2O)": 2.8,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7150",
+          "Cadmium": "=0.4880",
+          "Cobalt": "=0.5710",
+          "Mercury": "=0.0025",
+          "Molybdenum": "=4.5400",
+          "Nickel": "=0.5060",
+          "Lead": "=0.6120",
+          "Selenium": "=1.1400",
+          "Zinc": "=30.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NEW MILLENIUM SUMMER SHIFT 0.8-1.6-2.8",
+    "brand": "NEW MILLENIUM GARDEN INC",
+    "manufacturer": {
+      "name": "NEW MILLENIUM GARDEN INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.8,
+      "P2O5_pct": 1.6,
+      "K2O_pct": 2.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "50D377-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.715,
+            "Cd": 0.488,
+            "Co": 0.571,
+            "Hg": 0.0025,
+            "Mo": 4.54,
+            "Ni": 0.506,
+            "Pb": 0.612,
+            "Se": 1.14,
+            "Zn": 30.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.715,
+        "Cd": 0.488,
+        "Co": 0.571,
+        "Hg": 0.0025,
+        "Mo": 4.54,
+        "Ni": 0.506,
+        "Pb": 0.612,
+        "Se": 1.14,
+        "Zn": 30.9
+      }
+    }
   }
 }

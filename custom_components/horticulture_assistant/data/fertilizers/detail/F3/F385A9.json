@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"F385A9","source_wsda_record":{"wsda_product_number":"(#3842-0015)","product_name":"ECOFUSION POTASSIUM SULFATE 0-0-50 GRANULAR 0-0-50","company_info":{"company":"ECOFUSION INC","Mailing Address":"PO Box 251408","Post Office Box":null,"City":"Plano","State":"TX","Postal Code":"75025","Telephone Number":"972 403-7449","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":50.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0100","Cadmium":"=0.0100","Cobalt":"=0.1100","Mercury":"=0.0100","Molybdenum":"=0.4140","Nickel":"=0.5970","Lead":"=0.5240","Selenium":"=0.0111","Zinc":"=3.6900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":50.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0100","Cadmium":"=0.0100","Cobalt":"=0.1100","Mercury":"=0.0100","Molybdenum":"=0.4140","Nickel":"=0.5970","Lead":"=0.5240","Selenium":"=0.0111","Zinc":"=3.6900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ECOFUSION INC","label_name":"ECOFUSION POTASSIUM SULFATE 0-0-50 GRANULAR 0-0-50","wsda_reg_no":"(#3842-0015)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F385A9",
+  "metadata": {
+    "registrant": "ECOFUSION INC",
+    "label_name": "ECOFUSION POTASSIUM SULFATE 0-0-50 GRANULAR 0-0-50",
+    "wsda_reg_no": "(#3842-0015)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3842-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3842-0015)",
+        "product_name": "ECOFUSION POTASSIUM SULFATE 0-0-50 GRANULAR 0-0-50",
+        "company_info": {
+          "company": "ECOFUSION INC",
+          "Mailing Address": "PO Box 251408",
+          "Post Office Box": null,
+          "City": "Plano",
+          "State": "TX",
+          "Postal Code": "75025",
+          "Telephone Number": "972 403-7449",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 50.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 18.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0100",
+          "Cadmium": "=0.0100",
+          "Cobalt": "=0.1100",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.4140",
+          "Nickel": "=0.5970",
+          "Lead": "=0.5240",
+          "Selenium": "=0.0111",
+          "Zinc": "=3.6900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECOFUSION POTASSIUM SULFATE 0-0-50 GRANULAR 0-0-50",
+    "brand": "ECOFUSION INC",
+    "manufacturer": {
+      "name": "ECOFUSION INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 50.0
+    },
+    "macros_pct": {
+      "S": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F385A9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.01,
+            "Cd": 0.01,
+            "Co": 0.11,
+            "Hg": 0.01,
+            "Mo": 0.414,
+            "Ni": 0.597,
+            "Pb": 0.524,
+            "Se": 0.0111,
+            "Zn": 3.69
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.01,
+        "Cd": 0.01,
+        "Co": 0.11,
+        "Hg": 0.01,
+        "Mo": 0.414,
+        "Ni": 0.597,
+        "Pb": 0.524,
+        "Se": 0.0111,
+        "Zn": 3.69
+      }
+    }
+  }
+}

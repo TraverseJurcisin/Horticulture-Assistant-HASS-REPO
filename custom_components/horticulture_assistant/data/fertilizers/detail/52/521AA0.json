@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "521AA0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0997-0132)",
-    "product_name": "EXPERT GARDENER POTTING MIX FOR POTTED PLANTS 0.05-0.03-0.04",
-    "company_info": {
-      "company": "SWISS FARM PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Rd",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 645-2523",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.05,
-      "Available Phosphoric Acid (P2O5)": 0.03,
-      "Soluble Potash (K2O)": 0.04,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4760",
-      "Cadmium": "=0.2380",
-      "Cobalt": "=0.3630",
-      "Mercury": "=0.0099",
-      "Molybdenum": "=1.1200",
-      "Nickel": "=0.6220",
-      "Lead": "=0.8510",
-      "Selenium": "=0.7140",
-      "Zinc": "=12.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.05,
-      "Available Phosphoric Acid (P2O5)": 0.03,
-      "Soluble Potash (K2O)": 0.04,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4760",
-      "Cadmium": "=0.2380",
-      "Cobalt": "=0.3630",
-      "Mercury": "=0.0099",
-      "Molybdenum": "=1.1200",
-      "Nickel": "=0.6220",
-      "Lead": "=0.8510",
-      "Selenium": "=0.7140",
-      "Zinc": "=12.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "521AA0",
   "metadata": {
     "registrant": "SWISS FARM PRODUCTS INC",
     "label_name": "EXPERT GARDENER POTTING MIX FOR POTTED PLANTS 0.05-0.03-0.04",
     "wsda_reg_no": "(#0997-0132)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0132)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0132)",
+        "product_name": "EXPERT GARDENER POTTING MIX FOR POTTED PLANTS 0.05-0.03-0.04",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.05,
+          "Available Phosphoric Acid (P2O5)": 0.03,
+          "Soluble Potash (K2O)": 0.04,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4760",
+          "Cadmium": "=0.2380",
+          "Cobalt": "=0.3630",
+          "Mercury": "=0.0099",
+          "Molybdenum": "=1.1200",
+          "Nickel": "=0.6220",
+          "Lead": "=0.8510",
+          "Selenium": "=0.7140",
+          "Zinc": "=12.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EXPERT GARDENER POTTING MIX FOR POTTED PLANTS 0.05-0.03-0.04",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.05,
+      "P2O5_pct": 0.03,
+      "K2O_pct": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "521AA0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.476,
+            "Cd": 0.238,
+            "Co": 0.363,
+            "Hg": 0.0099,
+            "Mo": 1.12,
+            "Ni": 0.622,
+            "Pb": 0.851,
+            "Se": 0.714,
+            "Zn": 12.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.476,
+        "Cd": 0.238,
+        "Co": 0.363,
+        "Hg": 0.0099,
+        "Mo": 1.12,
+        "Ni": 0.622,
+        "Pb": 0.851,
+        "Se": 0.714,
+        "Zn": 12.5
+      }
+    }
   }
 }

@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"C517FC","source_wsda_record":{"wsda_product_number":"(#2317-0014)","product_name":"HYDROPNIC RESEARCH VBX 7-4-11","company_info":{"company":"HYDROPONIC RESEARCH","Mailing Address":"4570 Alvarado Canyon Rd Ste E","Post Office Box":null,"City":"San Diego","State":"CA","Postal Code":"92120","Telephone Number":"800 701-9298","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.8600","Cadmium":"=0.1000","Cobalt":"=12.8500","Mercury":"=0.2000","Molybdenum":"=0.1000","Nickel":"=37.7500","Lead":"=16.7500","Selenium":"=0.0500","Zinc":"=58.3800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.8600","Cadmium":"=0.1000","Cobalt":"=12.8500","Mercury":"=0.2000","Molybdenum":"=0.1000","Nickel":"=37.7500","Lead":"=16.7500","Selenium":"=0.0500","Zinc":"=58.3800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROPONIC RESEARCH","label_name":"HYDROPNIC RESEARCH VBX 7-4-11","wsda_reg_no":"(#2317-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C517FC",
+  "metadata": {
+    "registrant": "HYDROPONIC RESEARCH",
+    "label_name": "HYDROPNIC RESEARCH VBX 7-4-11",
+    "wsda_reg_no": "(#2317-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2317-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2317-0014)",
+        "product_name": "HYDROPNIC RESEARCH VBX 7-4-11",
+        "company_info": {
+          "company": "HYDROPONIC RESEARCH",
+          "Mailing Address": "4570 Alvarado Canyon Rd Ste E",
+          "Post Office Box": null,
+          "City": "San Diego",
+          "State": "CA",
+          "Postal Code": "92120",
+          "Telephone Number": "800 701-9298",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": 4.5,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8600",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=12.8500",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=37.7500",
+          "Lead": "=16.7500",
+          "Selenium": "=0.0500",
+          "Zinc": "=58.3800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYDROPNIC RESEARCH VBX 7-4-11",
+    "brand": "HYDROPONIC RESEARCH",
+    "manufacturer": {
+      "name": "HYDROPONIC RESEARCH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 11.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 2.5,
+      "S": 4.5
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C517FC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.86,
+            "Cd": 0.1,
+            "Co": 12.85,
+            "Hg": 0.2,
+            "Mo": 0.1,
+            "Ni": 37.75,
+            "Pb": 16.75,
+            "Se": 0.05,
+            "Zn": 58.38
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.86,
+        "Cd": 0.1,
+        "Co": 12.85,
+        "Hg": 0.2,
+        "Mo": 0.1,
+        "Ni": 37.75,
+        "Pb": 16.75,
+        "Se": 0.05,
+        "Zn": 58.38
+      }
+    }
+  }
+}

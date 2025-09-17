@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F4082B","source_wsda_record":{"wsda_product_number":"(#3330-0039)","product_name":"KICKSTAND MICRO MIX 0-0-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":null,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.2,"Sodium (Na)":null,"Zinc (Zn)":3.0},"reported_metals":{"Arsenic":"=0.2800","Cadmium":"=0.1600","Cobalt":"<0.0150","Mercury":"=0.0030","Molybdenum":"=2388.0000","Nickel":"=0.1250","Lead":"=1.4700","Selenium":"=0.2600","Zinc":"=34520.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":null,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.2,"Sodium (Na)":null,"Zinc (Zn)":3.0},"heavy_metals":{"Arsenic":"=0.2800","Cadmium":"=0.1600","Cobalt":"<0.0150","Mercury":"=0.0030","Molybdenum":"=2388.0000","Nickel":"=0.1250","Lead":"=1.4700","Selenium":"=0.2600","Zinc":"=34520.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"KICKSTAND MICRO MIX 0-0-0","wsda_reg_no":"(#3330-0039)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F4082B",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "KICKSTAND MICRO MIX 0-0-0",
+    "wsda_reg_no": "(#3330-0039)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0039)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0039)",
+        "product_name": "KICKSTAND MICRO MIX 0-0-0",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.2,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2800",
+          "Cadmium": "=0.1600",
+          "Cobalt": "<0.0150",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=2388.0000",
+          "Nickel": "=0.1250",
+          "Lead": "=1.4700",
+          "Selenium": "=0.2600",
+          "Zinc": "=34520.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KICKSTAND MICRO MIX 0-0-0",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 1.0,
+      "Zn": 3.0,
+      "Cu": 1.0,
+      "Mo": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F4082B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.28,
+            "Cd": 0.16,
+            "Co": 0.015,
+            "Hg": 0.003,
+            "Mo": 2388.0,
+            "Ni": 0.125,
+            "Pb": 1.47,
+            "Se": 0.26,
+            "Zn": 34520.0
+          },
+          "detection_limits_ppm": {
+            "Co": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.28,
+        "Cd": 0.16,
+        "Hg": 0.003,
+        "Mo": 2388.0,
+        "Ni": 0.125,
+        "Pb": 1.47,
+        "Se": 0.26,
+        "Zn": 34520.0
+      }
+    }
+  }
+}

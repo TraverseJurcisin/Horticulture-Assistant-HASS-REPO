@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7BA368",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0308-0053)",
-    "product_name": "MIRACLE-GRO MIRACLE-GRO WATER SOLUBLE ALL PURPOSE PLANT FOOD 24-8-16",
-    "company_info": {
-      "company": "SCOTTS MIRACLE-GRO PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-1573",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.07,
-      "Iron (Fe)": 0.15,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.06
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8750",
-      "Cadmium": "=0.0583",
-      "Cobalt": "=0.1500",
-      "Mercury": "=0.0058",
-      "Molybdenum": "=0.2900",
-      "Nickel": "=0.5110",
-      "Lead": "=0.1500",
-      "Selenium": "=0.8750",
-      "Zinc": "=782.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.07,
-      "Iron (Fe)": 0.15,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.06
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8750",
-      "Cadmium": "=0.0583",
-      "Cobalt": "=0.1500",
-      "Mercury": "=0.0058",
-      "Molybdenum": "=0.2900",
-      "Nickel": "=0.5110",
-      "Lead": "=0.1500",
-      "Selenium": "=0.8750",
-      "Zinc": "=782.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7BA368",
   "metadata": {
     "registrant": "SCOTTS MIRACLE-GRO PRODUCTS INC",
     "label_name": "MIRACLE-GRO MIRACLE-GRO WATER SOLUBLE ALL PURPOSE PLANT FOOD 24-8-16",
     "wsda_reg_no": "(#0308-0053)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0308-0053)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0308-0053)",
+        "product_name": "MIRACLE-GRO MIRACLE-GRO WATER SOLUBLE ALL PURPOSE PLANT FOOD 24-8-16",
+        "company_info": {
+          "company": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 24.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.07,
+          "Iron (Fe)": 0.15,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.06
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8750",
+          "Cadmium": "=0.0583",
+          "Cobalt": "=0.1500",
+          "Mercury": "=0.0058",
+          "Molybdenum": "=0.2900",
+          "Nickel": "=0.5110",
+          "Lead": "=0.1500",
+          "Selenium": "=0.8750",
+          "Zinc": "=782.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO MIRACLE-GRO WATER SOLUBLE ALL PURPOSE PLANT FOOD 24-8-16",
+    "brand": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+    "manufacturer": {
+      "name": "SCOTTS MIRACLE-GRO PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 24.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 16.0
+    },
+    "micros_pct": {
+      "Fe": 0.15,
+      "Mn": 0.05,
+      "Zn": 0.06,
+      "Cu": 0.07,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7BA368-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.875,
+            "Cd": 0.0583,
+            "Co": 0.15,
+            "Hg": 0.0058,
+            "Mo": 0.29,
+            "Ni": 0.511,
+            "Pb": 0.15,
+            "Se": 0.875,
+            "Zn": 782.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.875,
+        "Cd": 0.0583,
+        "Co": 0.15,
+        "Hg": 0.0058,
+        "Mo": 0.29,
+        "Ni": 0.511,
+        "Pb": 0.15,
+        "Se": 0.875,
+        "Zn": 782.0
+      }
+    }
   }
 }

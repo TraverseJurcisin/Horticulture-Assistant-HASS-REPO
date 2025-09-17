@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"DB828F","source_wsda_record":{"wsda_product_number":"(#3265-0004)","product_name":"GANTECPRO 1-0-0","company_info":{"company":"GANTEC INC","Mailing Address":"777 E Isabella Rd","Post Office Box":null,"City":"Midland","State":"MI","Postal Code":"48640","Telephone Number":"989 631-9300","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=1.5000","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=1.5000","Selenium":"=2.0000","Zinc":"=20.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=1.5000","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=1.5000","Selenium":"=2.0000","Zinc":"=20.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GANTEC INC","label_name":"GANTECPRO 1-0-0","wsda_reg_no":"(#3265-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DB828F",
+  "metadata": {
+    "registrant": "GANTEC INC",
+    "label_name": "GANTECPRO 1-0-0",
+    "wsda_reg_no": "(#3265-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3265-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3265-0004)",
+        "product_name": "GANTECPRO 1-0-0",
+        "company_info": {
+          "company": "GANTEC INC",
+          "Mailing Address": "777 E Isabella Rd",
+          "Post Office Box": null,
+          "City": "Midland",
+          "State": "MI",
+          "Postal Code": "48640",
+          "Telephone Number": "989 631-9300",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=1.5000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=1.5000",
+          "Selenium": "=2.0000",
+          "Zinc": "=20.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GANTECPRO 1-0-0",
+    "brand": "GANTEC INC",
+    "manufacturer": {
+      "name": "GANTEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DB828F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 1.5,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.5,
+            "Se": 2.0,
+            "Zn": 20.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 1.0,
+        "Co": 1.0,
+        "Hg": 1.5,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 1.5,
+        "Se": 2.0,
+        "Zn": 20.0
+      }
+    }
+  }
+}

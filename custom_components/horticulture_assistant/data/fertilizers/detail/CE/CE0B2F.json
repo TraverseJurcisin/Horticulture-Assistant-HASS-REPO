@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"CE0B2F","source_wsda_record":{"wsda_product_number":"(#3488-0004)","product_name":"HIGH STAKES 0-6-0","company_info":{"company":"ORGANIC RESEARCH","Mailing Address":"4570 Alvarado Canyon Rd Ste E","Post Office Box":null,"City":"San Diego","State":"CA","Postal Code":"92120","Telephone Number":"800 701-9298","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":4.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.2100","Cadmium":"=35.5000","Cobalt":"=3.1100","Mercury":"=0.0200","Molybdenum":"=7.8200","Nickel":"=113.4400","Lead":"=6.9700","Selenium":"<0.0500","Zinc":"=845.7800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":4.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.2100","Cadmium":"=35.5000","Cobalt":"=3.1100","Mercury":"=0.0200","Molybdenum":"=7.8200","Nickel":"=113.4400","Lead":"=6.9700","Selenium":"<0.0500","Zinc":"=845.7800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ORGANIC RESEARCH","label_name":"HIGH STAKES 0-6-0","wsda_reg_no":"(#3488-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CE0B2F",
+  "metadata": {
+    "registrant": "ORGANIC RESEARCH",
+    "label_name": "HIGH STAKES 0-6-0",
+    "wsda_reg_no": "(#3488-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3488-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3488-0004)",
+        "product_name": "HIGH STAKES 0-6-0",
+        "company_info": {
+          "company": "ORGANIC RESEARCH",
+          "Mailing Address": "4570 Alvarado Canyon Rd Ste E",
+          "Post Office Box": null,
+          "City": "San Diego",
+          "State": "CA",
+          "Postal Code": "92120",
+          "Telephone Number": "800 701-9298",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.2100",
+          "Cadmium": "=35.5000",
+          "Cobalt": "=3.1100",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=7.8200",
+          "Nickel": "=113.4400",
+          "Lead": "=6.9700",
+          "Selenium": "<0.0500",
+          "Zinc": "=845.7800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HIGH STAKES 0-6-0",
+    "brand": "ORGANIC RESEARCH",
+    "manufacturer": {
+      "name": "ORGANIC RESEARCH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 20.0,
+      "Mg": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CE0B2F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.21,
+            "Cd": 35.5,
+            "Co": 3.11,
+            "Hg": 0.02,
+            "Mo": 7.82,
+            "Ni": 113.44,
+            "Pb": 6.97,
+            "Se": 0.05,
+            "Zn": 845.78
+          },
+          "detection_limits_ppm": {
+            "Se": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.21,
+        "Cd": 35.5,
+        "Co": 3.11,
+        "Hg": 0.02,
+        "Mo": 7.82,
+        "Ni": 113.44,
+        "Pb": 6.97,
+        "Zn": 845.78
+      }
+    }
+  }
+}

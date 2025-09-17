@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"EB6AA0","source_wsda_record":{"wsda_product_number":"(#1782-0005)","product_name":"PRO-PELL-IT! PELLETIZED GYPSUM 0-0-0","company_info":{"company":"MARION AG SERVICE","Mailing Address":"7746 St Paul Hwy NE","Post Office Box":null,"City":"St Paul","State":"OR","Postal Code":"97137","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5000","Cadmium":"=0.2100","Cobalt":"=2.6400","Mercury":"<0.1500","Molybdenum":"=3.9800","Nickel":"=3.1300","Lead":"=16.4700","Selenium":"<0.5000","Zinc":"=29.3200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"89.0000"},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5000","Cadmium":"=0.2100","Cobalt":"=2.6400","Mercury":"<0.1500","Molybdenum":"=3.9800","Nickel":"=3.1300","Lead":"=16.4700","Selenium":"<0.5000","Zinc":"=29.3200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MARION AG SERVICE","label_name":"PRO-PELL-IT! PELLETIZED GYPSUM 0-0-0","wsda_reg_no":"(#1782-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EB6AA0",
+  "metadata": {
+    "registrant": "MARION AG SERVICE",
+    "label_name": "PRO-PELL-IT! PELLETIZED GYPSUM 0-0-0",
+    "wsda_reg_no": "(#1782-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1782-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1782-0005)",
+        "product_name": "PRO-PELL-IT! PELLETIZED GYPSUM 0-0-0",
+        "company_info": {
+          "company": "MARION AG SERVICE",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "=0.2100",
+          "Cobalt": "=2.6400",
+          "Mercury": "<0.1500",
+          "Molybdenum": "=3.9800",
+          "Nickel": "=3.1300",
+          "Lead": "=16.4700",
+          "Selenium": "<0.5000",
+          "Zinc": "=29.3200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "89.0000"
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO-PELL-IT! PELLETIZED GYPSUM 0-0-0",
+    "brand": "MARION AG SERVICE",
+    "manufacturer": {
+      "name": "MARION AG SERVICE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EB6AA0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.21,
+            "Co": 2.64,
+            "Hg": 0.15,
+            "Mo": 3.98,
+            "Ni": 3.13,
+            "Pb": 16.47,
+            "Se": 0.5,
+            "Zn": 29.32
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Hg": 0.15,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.21,
+        "Co": 2.64,
+        "Mo": 3.98,
+        "Ni": 3.13,
+        "Pb": 16.47,
+        "Zn": 29.32
+      }
+    }
+  }
+}

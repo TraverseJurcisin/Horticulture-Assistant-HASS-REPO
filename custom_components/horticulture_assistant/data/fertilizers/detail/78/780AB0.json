@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "780AB0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2319-0027)",
-    "product_name": "PETERS PROFESSIONAL 18-8-17 PEAT-LITE HIGH MAG SPECIAL 18-8-17",
-    "company_info": {
-      "company": "EVERRIS NA INC",
-      "Mailing Address": "PO Box 3310",
-      "Post Office Box": null,
-      "City": "Dublin",
-      "State": "OH",
-      "Postal Code": "43016",
-      "Telephone Number": "314 983-7500",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": 0.0225,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0225,
-      "Iron (Fe)": 0.09,
-      "Manganese (Mn)": 0.045,
-      "Molybdenum (Mo)": 0.009,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.045
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2520",
-      "Cadmium": "=0.1260",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.0054",
-      "Molybdenum": "=240.0000",
-      "Nickel": "=0.1730",
-      "Lead": "=0.1300",
-      "Selenium": "=0.6290",
-      "Zinc": "=926.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": 0.0225,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0225,
-      "Iron (Fe)": 0.09,
-      "Manganese (Mn)": 0.045,
-      "Molybdenum (Mo)": 0.009,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.045
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2520",
-      "Cadmium": "=0.1260",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.0054",
-      "Molybdenum": "=240.0000",
-      "Nickel": "=0.1730",
-      "Lead": "=0.1300",
-      "Selenium": "=0.6290",
-      "Zinc": "=926.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "780AB0",
   "metadata": {
     "registrant": "EVERRIS NA INC",
     "label_name": "PETERS PROFESSIONAL 18-8-17 PEAT-LITE HIGH MAG SPECIAL 18-8-17",
     "wsda_reg_no": "(#2319-0027)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2319-0027)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2319-0027)",
+        "product_name": "PETERS PROFESSIONAL 18-8-17 PEAT-LITE HIGH MAG SPECIAL 18-8-17",
+        "company_info": {
+          "company": "EVERRIS NA INC",
+          "Mailing Address": "PO Box 3310",
+          "Post Office Box": null,
+          "City": "Dublin",
+          "State": "OH",
+          "Postal Code": "43016",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 17.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": 0.0225,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0225,
+          "Iron (Fe)": 0.09,
+          "Manganese (Mn)": 0.045,
+          "Molybdenum (Mo)": 0.009,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.045
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2520",
+          "Cadmium": "=0.1260",
+          "Cobalt": "=20.0000",
+          "Mercury": "=0.0054",
+          "Molybdenum": "=240.0000",
+          "Nickel": "=0.1730",
+          "Lead": "=0.1300",
+          "Selenium": "=0.6290",
+          "Zinc": "=926.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PETERS PROFESSIONAL 18-8-17 PEAT-LITE HIGH MAG SPECIAL 18-8-17",
+    "brand": "EVERRIS NA INC",
+    "manufacturer": {
+      "name": "EVERRIS NA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 17.0
+    },
+    "macros_pct": {
+      "Mg": 2.5,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.09,
+      "Mn": 0.045,
+      "Zn": 0.045,
+      "Cu": 0.0225,
+      "B": 0.0225,
+      "Mo": 0.009
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "780AB0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.252,
+            "Cd": 0.126,
+            "Co": 20.0,
+            "Hg": 0.0054,
+            "Mo": 240.0,
+            "Ni": 0.173,
+            "Pb": 0.13,
+            "Se": 0.629,
+            "Zn": 926.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.252,
+        "Cd": 0.126,
+        "Co": 20.0,
+        "Hg": 0.0054,
+        "Mo": 240.0,
+        "Ni": 0.173,
+        "Pb": 0.13,
+        "Se": 0.629,
+        "Zn": 926.0
+      }
+    }
   }
 }

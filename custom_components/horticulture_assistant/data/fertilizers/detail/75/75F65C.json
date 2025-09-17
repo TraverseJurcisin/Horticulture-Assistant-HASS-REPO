@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "75F65C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4063-0018)",
-    "product_name": "AGVENT RHIZO LIFE HARDY PRIME 0-0-6",
-    "company_info": {
-      "company": "AGVENT LLC",
-      "Mailing Address": "1231 E 1420 N",
-      "Post Office Box": null,
-      "City": "Richfield",
-      "State": "ID",
-      "Postal Code": "83349",
-      "Telephone Number": "208 401-6631",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.65,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.03,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.35
-    },
-    "reported_metals": {
-      "Arsenic": "=2.2000",
-      "Cadmium": "=0.0200",
-      "Cobalt": "=421.0000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=901.8000",
-      "Nickel": "=4.9000",
-      "Lead": "=0.0100",
-      "Selenium": "=8.9000",
-      "Zinc": "=6289.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.65,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.03,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.35
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.2000",
-      "Cadmium": "=0.0200",
-      "Cobalt": "=421.0000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=901.8000",
-      "Nickel": "=4.9000",
-      "Lead": "=0.0100",
-      "Selenium": "=8.9000",
-      "Zinc": "=6289.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "75F65C",
   "metadata": {
     "registrant": "AGVENT LLC",
     "label_name": "AGVENT RHIZO LIFE HARDY PRIME 0-0-6",
     "wsda_reg_no": "(#4063-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4063-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4063-0018)",
+        "product_name": "AGVENT RHIZO LIFE HARDY PRIME 0-0-6",
+        "company_info": {
+          "company": "AGVENT LLC",
+          "Mailing Address": "1231 E 1420 N",
+          "Post Office Box": null,
+          "City": "Richfield",
+          "State": "ID",
+          "Postal Code": "83349",
+          "Telephone Number": "208 401-6631",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.65,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.03,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.08,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.35
+        },
+        "reported_metals": {
+          "Arsenic": "=2.2000",
+          "Cadmium": "=0.0200",
+          "Cobalt": "=421.0000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=901.8000",
+          "Nickel": "=4.9000",
+          "Lead": "=0.0100",
+          "Selenium": "=8.9000",
+          "Zinc": "=6289.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGVENT RHIZO LIFE HARDY PRIME 0-0-6",
+    "brand": "AGVENT LLC",
+    "manufacturer": {
+      "name": "AGVENT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 6.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 0.1,
+      "Zn": 0.35,
+      "Cu": 0.1,
+      "B": 0.65,
+      "Mo": 0.08
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "75F65C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.2,
+            "Cd": 0.02,
+            "Co": 421.0,
+            "Hg": 0.01,
+            "Mo": 901.8,
+            "Ni": 4.9,
+            "Pb": 0.01,
+            "Se": 8.9,
+            "Zn": 6289.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.2,
+        "Cd": 0.02,
+        "Co": 421.0,
+        "Hg": 0.01,
+        "Mo": 901.8,
+        "Ni": 4.9,
+        "Pb": 0.01,
+        "Se": 8.9,
+        "Zn": 6289.1
+      }
+    }
   }
 }

@@ -13,8 +13,8 @@ from collections.abc import Mapping
 
 from .catalog import CATALOG, Fertilizer
 from .engine.plant_engine import fertilizer_limits, nutrient_manager
-from .engine.plant_engine.wsda_lookup import (
-    recommend_products_for_nutrient as _wsda_recommend,
+from .engine.plant_engine.fertilizer_dataset_lookup import (
+    recommend_products_for_nutrient as _recommend_products,
 )
 
 MOLAR_MASS_CONVERSIONS = {
@@ -550,10 +550,10 @@ def estimate_recommended_application_cost(fertilizer_id: str, volume_l: float) -
     return calculate_fertilizer_cost_from_mass(fertilizer_id, grams)
 
 
-def recommend_wsda_products(nutrient: str, limit: int = 5) -> list[str]:
-    """Return WSDA product names with high concentrations of ``nutrient``."""
+def recommend_fertilizer_products(nutrient: str, limit: int = 5) -> list[str]:
+    """Return fertilizer dataset product names with high concentrations of ``nutrient``."""
 
-    return _wsda_recommend(nutrient, limit=limit)
+    return _recommend_products(nutrient, limit=limit)
 
 
 def estimate_deficiency_correction_cost(
@@ -815,7 +815,7 @@ __all__ = [
     "get_application_rate",
     "calculate_recommended_application",
     "estimate_recommended_application_cost",
-    "recommend_wsda_products",
+    "recommend_fertilizer_products",
     "check_schedule_compatibility",
     "CATALOG",
     "Fertilizer",

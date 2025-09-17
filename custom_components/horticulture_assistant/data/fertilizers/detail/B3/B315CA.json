@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"B315CA","source_wsda_record":{"wsda_product_number":"(#0989-0072)","product_name":"TWIN PINE TWIN PINE 10-10-10","company_info":{"company":"KNOX FERTILIZER COMPANY INC","Mailing Address":"PO Box 248","Post Office Box":null,"City":"Knox","State":"IN","Postal Code":"46534","Telephone Number":"574 772-6278","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.6300","Cadmium":"=1.4600","Cobalt":"=0.5550","Mercury":"<0.0021","Molybdenum":"=1.6400","Nickel":"=2.6900","Lead":"=0.9680","Selenium":"=1.6500","Zinc":"=13.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.6300","Cadmium":"=1.4600","Cobalt":"=0.5550","Mercury":"<0.0021","Molybdenum":"=1.6400","Nickel":"=2.6900","Lead":"=0.9680","Selenium":"=1.6500","Zinc":"=13.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KNOX FERTILIZER COMPANY INC","label_name":"TWIN PINE TWIN PINE 10-10-10","wsda_reg_no":"(#0989-0072)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B315CA",
+  "metadata": {
+    "registrant": "KNOX FERTILIZER COMPANY INC",
+    "label_name": "TWIN PINE TWIN PINE 10-10-10",
+    "wsda_reg_no": "(#0989-0072)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0989-0072)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0989-0072)",
+        "product_name": "TWIN PINE TWIN PINE 10-10-10",
+        "company_info": {
+          "company": "KNOX FERTILIZER COMPANY INC",
+          "Mailing Address": "PO Box 248",
+          "Post Office Box": null,
+          "City": "Knox",
+          "State": "IN",
+          "Postal Code": "46534",
+          "Telephone Number": "574 772-6278",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.6300",
+          "Cadmium": "=1.4600",
+          "Cobalt": "=0.5550",
+          "Mercury": "<0.0021",
+          "Molybdenum": "=1.6400",
+          "Nickel": "=2.6900",
+          "Lead": "=0.9680",
+          "Selenium": "=1.6500",
+          "Zinc": "=13.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TWIN PINE TWIN PINE 10-10-10",
+    "brand": "KNOX FERTILIZER COMPANY INC",
+    "manufacturer": {
+      "name": "KNOX FERTILIZER COMPANY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B315CA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.63,
+            "Cd": 1.46,
+            "Co": 0.555,
+            "Hg": 0.0021,
+            "Mo": 1.64,
+            "Ni": 2.69,
+            "Pb": 0.968,
+            "Se": 1.65,
+            "Zn": 13.3
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0021
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.63,
+        "Cd": 1.46,
+        "Co": 0.555,
+        "Mo": 1.64,
+        "Ni": 2.69,
+        "Pb": 0.968,
+        "Se": 1.65,
+        "Zn": 13.3
+      }
+    }
+  }
+}

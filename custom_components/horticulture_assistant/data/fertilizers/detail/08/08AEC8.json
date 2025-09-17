@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "08AEC8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3972-0004)",
-    "product_name": "FERTINAGRO NOVOFERT DURA 0-0-0",
-    "company_info": {
-      "company": "FERTINAGRO USA CORP",
-      "Mailing Address": "C/O Brand Maven Consulting",
-      "Post Office Box": "14737 Pams Way",
-      "City": "Bakersfield",
-      "State": "CA",
-      "Postal Code": "93314",
-      "Telephone Number": "269 419-8492",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.4,
-      "Magnesium (Mg)": 6.2,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.1,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "reported_metals": {
-      "Arsenic": "=9.7000",
-      "Cadmium": "=1.1000",
-      "Cobalt": "=9.4000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=38.5000",
-      "Lead": "=8.5000",
-      "Selenium": "=10.1000",
-      "Zinc": "=955.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.4,
-      "Magnesium (Mg)": 6.2,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.1,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "heavy_metals": {
-      "Arsenic": "=9.7000",
-      "Cadmium": "=1.1000",
-      "Cobalt": "=9.4000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=38.5000",
-      "Lead": "=8.5000",
-      "Selenium": "=10.1000",
-      "Zinc": "=955.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "08AEC8",
   "metadata": {
     "registrant": "FERTINAGRO USA CORP",
     "label_name": "FERTINAGRO NOVOFERT DURA 0-0-0",
     "wsda_reg_no": "(#3972-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3972-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3972-0004)",
+        "product_name": "FERTINAGRO NOVOFERT DURA 0-0-0",
+        "company_info": {
+          "company": "FERTINAGRO USA CORP",
+          "Mailing Address": "C/O Brand Maven Consulting",
+          "Post Office Box": "14737 Pams Way",
+          "City": "Bakersfield",
+          "State": "CA",
+          "Postal Code": "93314",
+          "Telephone Number": "269 419-8492",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 1.4,
+          "Magnesium (Mg)": 6.2,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": 0.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=9.7000",
+          "Cadmium": "=1.1000",
+          "Cobalt": "=9.4000",
+          "Mercury": "=0.1600",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=38.5000",
+          "Lead": "=8.5000",
+          "Selenium": "=10.1000",
+          "Zinc": "=955.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTINAGRO NOVOFERT DURA 0-0-0",
+    "brand": "FERTINAGRO USA CORP",
+    "manufacturer": {
+      "name": "FERTINAGRO USA CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 1.4,
+      "Mg": 6.2,
+      "S": 10.0
+    },
+    "micros_pct": {
+      "Zn": 0.1,
+      "B": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "08AEC8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.7,
+            "Cd": 1.1,
+            "Co": 9.4,
+            "Hg": 0.16,
+            "Mo": 2.0,
+            "Ni": 38.5,
+            "Pb": 8.5,
+            "Se": 10.1,
+            "Zn": 955.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.7,
+        "Cd": 1.1,
+        "Co": 9.4,
+        "Hg": 0.16,
+        "Mo": 2.0,
+        "Ni": 38.5,
+        "Pb": 8.5,
+        "Se": 10.1,
+        "Zn": 955.0
+      }
+    }
   }
 }

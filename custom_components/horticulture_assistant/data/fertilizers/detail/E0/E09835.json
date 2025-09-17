@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"E09835","source_wsda_record":{"wsda_product_number":"(#0170-0034)","product_name":"SIMPLOT 40 ROCK WITH 6.5% SULFUR AND 1% ZINC 12-40-0","company_info":{"company":"J R SIMPLOT COMPANY - POCATELLO","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-7083","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":40.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.0},"reported_metals":{"Arsenic":"<5.2100","Cadmium":"<0.4170","Cobalt":"=3.0400","Mercury":"<0.0472","Molybdenum":"=3.7800","Nickel":"=36.6000","Lead":"<3.1200","Selenium":"<5.2100","Zinc":"=14700.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":40.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.0},"heavy_metals":{"Arsenic":"<5.2100","Cadmium":"<0.4170","Cobalt":"=3.0400","Mercury":"<0.0472","Molybdenum":"=3.7800","Nickel":"=36.6000","Lead":"<3.1200","Selenium":"<5.2100","Zinc":"=14700.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY - POCATELLO","label_name":"SIMPLOT 40 ROCK WITH 6.5% SULFUR AND 1% ZINC 12-40-0","wsda_reg_no":"(#0170-0034)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E09835",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY - POCATELLO",
+    "label_name": "SIMPLOT 40 ROCK WITH 6.5% SULFUR AND 1% ZINC 12-40-0",
+    "wsda_reg_no": "(#0170-0034)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0170-0034)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0170-0034)",
+        "product_name": "SIMPLOT 40 ROCK WITH 6.5% SULFUR AND 1% ZINC 12-40-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY - POCATELLO",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-7083",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 40.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "<5.2100",
+          "Cadmium": "<0.4170",
+          "Cobalt": "=3.0400",
+          "Mercury": "<0.0472",
+          "Molybdenum": "=3.7800",
+          "Nickel": "=36.6000",
+          "Lead": "<3.1200",
+          "Selenium": "<5.2100",
+          "Zinc": "=14700.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT 40 ROCK WITH 6.5% SULFUR AND 1% ZINC 12-40-0",
+    "brand": "J R SIMPLOT COMPANY - POCATELLO",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY - POCATELLO"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 40.0
+    },
+    "macros_pct": {
+      "S": 6.5
+    },
+    "micros_pct": {
+      "Zn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E09835-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.21,
+            "Cd": 0.417,
+            "Co": 3.04,
+            "Hg": 0.0472,
+            "Mo": 3.78,
+            "Ni": 36.6,
+            "Pb": 3.12,
+            "Se": 5.21,
+            "Zn": 14700.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.21,
+            "Cd": 0.417,
+            "Hg": 0.0472,
+            "Pb": 3.12,
+            "Se": 5.21
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 3.04,
+        "Mo": 3.78,
+        "Ni": 36.6,
+        "Zn": 14700.0
+      }
+    }
+  }
+}

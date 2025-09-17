@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"C36E27","source_wsda_record":{"wsda_product_number":"(#0236-0756)","product_name":"SCOTTS MAX WEED & FEEDI 26-0-2","company_info":{"company":"SCOTTS COMPANY (THE)","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":26.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0500","Cadmium":"=0.0500","Cobalt":"=8.8600","Mercury":"=0.0100","Molybdenum":"=1.5000","Nickel":"=13.2000","Lead":"=1.0200","Selenium":"=0.1500","Zinc":"=68.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":26.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0500","Cadmium":"=0.0500","Cobalt":"=8.8600","Mercury":"=0.0100","Molybdenum":"=1.5000","Nickel":"=13.2000","Lead":"=1.0200","Selenium":"=0.1500","Zinc":"=68.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS COMPANY (THE)","label_name":"SCOTTS MAX WEED & FEEDI 26-0-2","wsda_reg_no":"(#0236-0756)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C36E27",
+  "metadata": {
+    "registrant": "SCOTTS COMPANY (THE)",
+    "label_name": "SCOTTS MAX WEED & FEEDI 26-0-2",
+    "wsda_reg_no": "(#0236-0756)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0756)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0756)",
+        "product_name": "SCOTTS MAX WEED & FEEDI 26-0-2",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 26.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0500",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=8.8600",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=13.2000",
+          "Lead": "=1.0200",
+          "Selenium": "=0.1500",
+          "Zinc": "=68.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS MAX WEED & FEEDI 26-0-2",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 26.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C36E27-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.05,
+            "Cd": 0.05,
+            "Co": 8.86,
+            "Hg": 0.01,
+            "Mo": 1.5,
+            "Ni": 13.2,
+            "Pb": 1.02,
+            "Se": 0.15,
+            "Zn": 68.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.05,
+        "Cd": 0.05,
+        "Co": 8.86,
+        "Hg": 0.01,
+        "Mo": 1.5,
+        "Ni": 13.2,
+        "Pb": 1.02,
+        "Se": 0.15,
+        "Zn": 68.5
+      }
+    }
+  }
+}

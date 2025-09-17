@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "696065",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2200-0003)",
-    "product_name": "YARD CARE POTTING MIX 0.3-0.1-0.1",
-    "company_info": {
-      "company": "MOUNTAIN WEST LLC",
-      "Mailing Address": "4212 S Hwy 191",
-      "Post Office Box": null,
-      "City": "Rexburg",
-      "State": "ID",
-      "Postal Code": "83440",
-      "Telephone Number": "208 359-5664",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": 0.1,
-      "Soluble Potash (K2O)": 0.1,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.8900",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=2.8000",
-      "Mercury": "=0.0120",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=4.6000",
-      "Lead": "=3.2300",
-      "Selenium": "=1.9000",
-      "Zinc": "=41.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": 0.1,
-      "Soluble Potash (K2O)": 0.1,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.8900",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=2.8000",
-      "Mercury": "=0.0120",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=4.6000",
-      "Lead": "=3.2300",
-      "Selenium": "=1.9000",
-      "Zinc": "=41.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "696065",
   "metadata": {
     "registrant": "MOUNTAIN WEST LLC",
     "label_name": "YARD CARE POTTING MIX 0.3-0.1-0.1",
     "wsda_reg_no": "(#2200-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2200-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2200-0003)",
+        "product_name": "YARD CARE POTTING MIX 0.3-0.1-0.1",
+        "company_info": {
+          "company": "MOUNTAIN WEST LLC",
+          "Mailing Address": "4212 S Hwy 191",
+          "Post Office Box": null,
+          "City": "Rexburg",
+          "State": "ID",
+          "Postal Code": "83440",
+          "Telephone Number": "208 359-5664",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.3,
+          "Available Phosphoric Acid (P2O5)": 0.1,
+          "Soluble Potash (K2O)": 0.1,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8900",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=2.8000",
+          "Mercury": "=0.0120",
+          "Molybdenum": "=1.4000",
+          "Nickel": "=4.6000",
+          "Lead": "=3.2300",
+          "Selenium": "=1.9000",
+          "Zinc": "=41.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "YARD CARE POTTING MIX 0.3-0.1-0.1",
+    "brand": "MOUNTAIN WEST LLC",
+    "manufacturer": {
+      "name": "MOUNTAIN WEST LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.3,
+      "P2O5_pct": 0.1,
+      "K2O_pct": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "696065-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.89,
+            "Cd": 0.2,
+            "Co": 2.8,
+            "Hg": 0.012,
+            "Mo": 1.4,
+            "Ni": 4.6,
+            "Pb": 3.23,
+            "Se": 1.9,
+            "Zn": 41.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.89,
+        "Cd": 0.2,
+        "Co": 2.8,
+        "Hg": 0.012,
+        "Mo": 1.4,
+        "Ni": 4.6,
+        "Pb": 3.23,
+        "Se": 1.9,
+        "Zn": 41.0
+      }
+    }
   }
 }

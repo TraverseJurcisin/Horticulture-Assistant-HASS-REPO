@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"E91022","source_wsda_record":{"wsda_product_number":"(#0169-0432)","product_name":"SIMPLOT TRULIME STANDARD GRANULE SIZE 0-0-0","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":36.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=37.9000","Cadmium":"=3.0300","Cobalt":"=7.5800","Mercury":"=0.0049","Molybdenum":"=15.2000","Nickel":"=32.9000","Lead":"=39.8000","Selenium":"=37.9000","Zinc":"=36.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"94.0000","Calcium Carbonate Equivalent (CaCO3)":"98.0000","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":36.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=37.9000","Cadmium":"=3.0300","Cobalt":"=7.5800","Mercury":"=0.0049","Molybdenum":"=15.2000","Nickel":"=32.9000","Lead":"=39.8000","Selenium":"=37.9000","Zinc":"=36.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"SIMPLOT TRULIME STANDARD GRANULE SIZE 0-0-0","wsda_reg_no":"(#0169-0432)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E91022",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "SIMPLOT TRULIME STANDARD GRANULE SIZE 0-0-0",
+    "wsda_reg_no": "(#0169-0432)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0432)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0432)",
+        "product_name": "SIMPLOT TRULIME STANDARD GRANULE SIZE 0-0-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 36.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=37.9000",
+          "Cadmium": "=3.0300",
+          "Cobalt": "=7.5800",
+          "Mercury": "=0.0049",
+          "Molybdenum": "=15.2000",
+          "Nickel": "=32.9000",
+          "Lead": "=39.8000",
+          "Selenium": "=37.9000",
+          "Zinc": "=36.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "94.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "98.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT TRULIME STANDARD GRANULE SIZE 0-0-0",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 36.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E91022-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 37.9,
+            "Cd": 3.03,
+            "Co": 7.58,
+            "Hg": 0.0049,
+            "Mo": 15.2,
+            "Ni": 32.9,
+            "Pb": 39.8,
+            "Se": 37.9,
+            "Zn": 36.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 37.9,
+        "Cd": 3.03,
+        "Co": 7.58,
+        "Hg": 0.0049,
+        "Mo": 15.2,
+        "Ni": 32.9,
+        "Pb": 39.8,
+        "Se": 37.9,
+        "Zn": 36.3
+      }
+    }
+  }
+}

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F8B19F","source_wsda_record":{"wsda_product_number":"(#2943-0007)","product_name":"4% ZINC 0-0-0","company_info":{"company":"AGROLIQUID","Mailing Address":"3055 W M-21","Post Office Box":null,"City":"St Johns","State":"MI","Postal Code":"48879","Telephone Number":"989 227-3855","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"reported_metals":{"Arsenic":"=2.9000","Cadmium":"=1.2000","Cobalt":"=0.9500","Mercury":"=0.0020","Molybdenum":"=0.9500","Nickel":"=0.9500","Lead":"=1.4000","Selenium":"=4.8000","Zinc":"=44000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"heavy_metals":{"Arsenic":"=2.9000","Cadmium":"=1.2000","Cobalt":"=0.9500","Mercury":"=0.0020","Molybdenum":"=0.9500","Nickel":"=0.9500","Lead":"=1.4000","Selenium":"=4.8000","Zinc":"=44000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGROLIQUID","label_name":"4% ZINC 0-0-0","wsda_reg_no":"(#2943-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F8B19F",
+  "metadata": {
+    "registrant": "AGROLIQUID",
+    "label_name": "4% ZINC 0-0-0",
+    "wsda_reg_no": "(#2943-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2943-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2943-0007)",
+        "product_name": "4% ZINC 0-0-0",
+        "company_info": {
+          "company": "AGROLIQUID",
+          "Mailing Address": "3055 W M-21",
+          "Post Office Box": null,
+          "City": "St Johns",
+          "State": "MI",
+          "Postal Code": "48879",
+          "Telephone Number": "989 227-3855",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.9000",
+          "Cadmium": "=1.2000",
+          "Cobalt": "=0.9500",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=0.9500",
+          "Nickel": "=0.9500",
+          "Lead": "=1.4000",
+          "Selenium": "=4.8000",
+          "Zinc": "=44000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "4% ZINC 0-0-0",
+    "brand": "AGROLIQUID",
+    "manufacturer": {
+      "name": "AGROLIQUID"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Zn": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F8B19F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.9,
+            "Cd": 1.2,
+            "Co": 0.95,
+            "Hg": 0.002,
+            "Mo": 0.95,
+            "Ni": 0.95,
+            "Pb": 1.4,
+            "Se": 4.8,
+            "Zn": 44000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.9,
+        "Cd": 1.2,
+        "Co": 0.95,
+        "Hg": 0.002,
+        "Mo": 0.95,
+        "Ni": 0.95,
+        "Pb": 1.4,
+        "Se": 4.8,
+        "Zn": 44000.0
+      }
+    }
+  }
+}

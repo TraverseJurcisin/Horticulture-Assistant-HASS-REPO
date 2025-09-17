@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"935712","source_wsda_record":{"wsda_product_number":"(#0349-0414)","product_name":"WIL-GRO PROFESSIONAL FERTILIZER INTERMOUNTAIN TOP DRESS 18-5-10","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":5.69,"Magnesium (Mg)":1.75,"Sulfur (S)":6.95,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.36,"Manganese (Mn)":0.25,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=14.7000","Cadmium":"=14.7000","Cobalt":"=4.2800","Mercury":"=49.0000","Molybdenum":"=6.7700","Nickel":"=49.6000","Lead":"=8.8200","Selenium":"=14.7000","Zinc":"=1850.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":5.69,"Magnesium (Mg)":1.75,"Sulfur (S)":6.95,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.36,"Manganese (Mn)":0.25,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=14.7000","Cadmium":"=14.7000","Cobalt":"=4.2800","Mercury":"=49.0000","Molybdenum":"=6.7700","Nickel":"=49.6000","Lead":"=8.8200","Selenium":"=14.7000","Zinc":"=1850.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"WIL-GRO PROFESSIONAL FERTILIZER INTERMOUNTAIN TOP DRESS 18-5-10","wsda_reg_no":"(#0349-0414)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "935712",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "WIL-GRO PROFESSIONAL FERTILIZER INTERMOUNTAIN TOP DRESS 18-5-10",
+    "wsda_reg_no": "(#0349-0414)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0414)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0414)",
+        "product_name": "WIL-GRO PROFESSIONAL FERTILIZER INTERMOUNTAIN TOP DRESS 18-5-10",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 5.69,
+          "Magnesium (Mg)": 1.75,
+          "Sulfur (S)": 6.95,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.36,
+          "Manganese (Mn)": 0.25,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=14.7000",
+          "Cadmium": "=14.7000",
+          "Cobalt": "=4.2800",
+          "Mercury": "=49.0000",
+          "Molybdenum": "=6.7700",
+          "Nickel": "=49.6000",
+          "Lead": "=8.8200",
+          "Selenium": "=14.7000",
+          "Zinc": "=1850.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WIL-GRO PROFESSIONAL FERTILIZER INTERMOUNTAIN TOP DRESS 18-5-10",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 5.69,
+      "Mg": 1.75,
+      "S": 6.95
+    },
+    "micros_pct": {
+      "Fe": 1.36,
+      "Mn": 0.25,
+      "Zn": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "935712-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.7,
+            "Cd": 14.7,
+            "Co": 4.28,
+            "Hg": 49.0,
+            "Mo": 6.77,
+            "Ni": 49.6,
+            "Pb": 8.82,
+            "Se": 14.7,
+            "Zn": 1850.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.7,
+        "Cd": 14.7,
+        "Co": 4.28,
+        "Hg": 49.0,
+        "Mo": 6.77,
+        "Ni": 49.6,
+        "Pb": 8.82,
+        "Se": 14.7,
+        "Zn": 1850.0
+      }
+    }
+  }
+}

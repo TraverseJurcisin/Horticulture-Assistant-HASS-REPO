@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"B2A783","source_wsda_record":{"wsda_product_number":"(#1168-0071)","product_name":"EARTH JUICE RAINBOW MIX PRO GROW 8-6-3","company_info":{"company":"OGM","Mailing Address":"PO Box 3442","Post Office Box":null,"City":"Chico","State":"CA","Postal Code":"95973","Telephone Number":"530 961-4659","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.0400","Cadmium":"=0.2200","Cobalt":"=0.6000","Mercury":"<0.0500","Molybdenum":"=2.9000","Nickel":"=1.8000","Lead":"=2.5000","Selenium":"=0.8000","Zinc":"=303.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.0400","Cadmium":"=0.2200","Cobalt":"=0.6000","Mercury":"<0.0500","Molybdenum":"=2.9000","Nickel":"=1.8000","Lead":"=2.5000","Selenium":"=0.8000","Zinc":"=303.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"OGM","label_name":"EARTH JUICE RAINBOW MIX PRO GROW 8-6-3","wsda_reg_no":"(#1168-0071)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B2A783",
+  "metadata": {
+    "registrant": "OGM",
+    "label_name": "EARTH JUICE RAINBOW MIX PRO GROW 8-6-3",
+    "wsda_reg_no": "(#1168-0071)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1168-0071)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1168-0071)",
+        "product_name": "EARTH JUICE RAINBOW MIX PRO GROW 8-6-3",
+        "company_info": {
+          "company": "OGM",
+          "Mailing Address": "PO Box 3442",
+          "Post Office Box": null,
+          "City": "Chico",
+          "State": "CA",
+          "Postal Code": "95973",
+          "Telephone Number": "530 961-4659",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.0400",
+          "Cadmium": "=0.2200",
+          "Cobalt": "=0.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=2.9000",
+          "Nickel": "=1.8000",
+          "Lead": "=2.5000",
+          "Selenium": "=0.8000",
+          "Zinc": "=303.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTH JUICE RAINBOW MIX PRO GROW 8-6-3",
+    "brand": "OGM",
+    "manufacturer": {
+      "name": "OGM"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B2A783-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.04,
+            "Cd": 0.22,
+            "Co": 0.6,
+            "Hg": 0.05,
+            "Mo": 2.9,
+            "Ni": 1.8,
+            "Pb": 2.5,
+            "Se": 0.8,
+            "Zn": 303.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.04,
+        "Cd": 0.22,
+        "Co": 0.6,
+        "Mo": 2.9,
+        "Ni": 1.8,
+        "Pb": 2.5,
+        "Se": 0.8,
+        "Zn": 303.6
+      }
+    }
+  }
+}

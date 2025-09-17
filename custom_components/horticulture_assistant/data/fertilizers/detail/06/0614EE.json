@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0614EE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1733-0058)",
-    "product_name": "TURF FUEL MITIGATE 5-0-0",
-    "company_info": {
-      "company": "TARGET SPECIALTY PRODUCTS",
-      "Mailing Address": "15415 Marquardt Ave",
-      "Post Office Box": null,
-      "City": "Santa Fe Springs",
-      "State": "CA",
-      "Postal Code": "90670",
-      "Telephone Number": "502 802-2238",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2300",
-      "Cadmium": "=1.3300",
-      "Cobalt": "=2.8700",
-      "Mercury": "<0.0031",
-      "Molybdenum": "=0.0964",
-      "Nickel": "=1.0900",
-      "Lead": "=0.0270",
-      "Selenium": "=0.2190",
-      "Zinc": "=29300.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2300",
-      "Cadmium": "=1.3300",
-      "Cobalt": "=2.8700",
-      "Mercury": "<0.0031",
-      "Molybdenum": "=0.0964",
-      "Nickel": "=1.0900",
-      "Lead": "=0.0270",
-      "Selenium": "=0.2190",
-      "Zinc": "=29300.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0614EE",
   "metadata": {
     "registrant": "TARGET SPECIALTY PRODUCTS",
     "label_name": "TURF FUEL MITIGATE 5-0-0",
     "wsda_reg_no": "(#1733-0058)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1733-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1733-0058)",
+        "product_name": "TURF FUEL MITIGATE 5-0-0",
+        "company_info": {
+          "company": "TARGET SPECIALTY PRODUCTS",
+          "Mailing Address": "15415 Marquardt Ave",
+          "Post Office Box": null,
+          "City": "Santa Fe Springs",
+          "State": "CA",
+          "Postal Code": "90670",
+          "Telephone Number": "502 802-2238",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2300",
+          "Cadmium": "=1.3300",
+          "Cobalt": "=2.8700",
+          "Mercury": "<0.0031",
+          "Molybdenum": "=0.0964",
+          "Nickel": "=1.0900",
+          "Lead": "=0.0270",
+          "Selenium": "=0.2190",
+          "Zinc": "=29300.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TURF FUEL MITIGATE 5-0-0",
+    "brand": "TARGET SPECIALTY PRODUCTS",
+    "manufacturer": {
+      "name": "TARGET SPECIALTY PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "micros_pct": {
+      "Mn": 3.0,
+      "Zn": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0614EE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.23,
+            "Cd": 1.33,
+            "Co": 2.87,
+            "Hg": 0.0031,
+            "Mo": 0.0964,
+            "Ni": 1.09,
+            "Pb": 0.027,
+            "Se": 0.219,
+            "Zn": 29300.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0031
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.23,
+        "Cd": 1.33,
+        "Co": 2.87,
+        "Mo": 0.0964,
+        "Ni": 1.09,
+        "Pb": 0.027,
+        "Se": 0.219,
+        "Zn": 29300.0
+      }
+    }
   }
 }

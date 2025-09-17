@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F361CE","source_wsda_record":{"wsda_product_number":"(#3282-0021)","product_name":"BONNIE PLANTS HARVEST SELECT RAISED BED PLANT FOOD 8-2-5","company_info":{"company":"TERRACE BRANDS","Mailing Address":"3993 Howard Hughes Pkwy Suite","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89169-6754","Telephone Number":"937 578-5924","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4750","Cadmium":"=0.2380","Cobalt":"=0.2380","Mercury":"=0.0063","Molybdenum":"=0.6680","Nickel":"=2.2800","Lead":"=0.2380","Selenium":"=0.7990","Zinc":"=47.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":2.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4750","Cadmium":"=0.2380","Cobalt":"=0.2380","Mercury":"=0.0063","Molybdenum":"=0.6680","Nickel":"=2.2800","Lead":"=0.2380","Selenium":"=0.7990","Zinc":"=47.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRACE BRANDS","label_name":"BONNIE PLANTS HARVEST SELECT RAISED BED PLANT FOOD 8-2-5","wsda_reg_no":"(#3282-0021)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F361CE",
+  "metadata": {
+    "registrant": "TERRACE BRANDS",
+    "label_name": "BONNIE PLANTS HARVEST SELECT RAISED BED PLANT FOOD 8-2-5",
+    "wsda_reg_no": "(#3282-0021)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3282-0021)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3282-0021)",
+        "product_name": "BONNIE PLANTS HARVEST SELECT RAISED BED PLANT FOOD 8-2-5",
+        "company_info": {
+          "company": "TERRACE BRANDS",
+          "Mailing Address": "3993 Howard Hughes Pkwy Suite",
+          "Post Office Box": null,
+          "City": "Las Vegas",
+          "State": "NV",
+          "Postal Code": "89169-6754",
+          "Telephone Number": "937 578-5924",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 2.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4750",
+          "Cadmium": "=0.2380",
+          "Cobalt": "=0.2380",
+          "Mercury": "=0.0063",
+          "Molybdenum": "=0.6680",
+          "Nickel": "=2.2800",
+          "Lead": "=0.2380",
+          "Selenium": "=0.7990",
+          "Zinc": "=47.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BONNIE PLANTS HARVEST SELECT RAISED BED PLANT FOOD 8-2-5",
+    "brand": "TERRACE BRANDS",
+    "manufacturer": {
+      "name": "TERRACE BRANDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 2.0,
+      "Mg": 0.5,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F361CE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.475,
+            "Cd": 0.238,
+            "Co": 0.238,
+            "Hg": 0.0063,
+            "Mo": 0.668,
+            "Ni": 2.28,
+            "Pb": 0.238,
+            "Se": 0.799,
+            "Zn": 47.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.475,
+        "Cd": 0.238,
+        "Co": 0.238,
+        "Hg": 0.0063,
+        "Mo": 0.668,
+        "Ni": 2.28,
+        "Pb": 0.238,
+        "Se": 0.799,
+        "Zn": 47.6
+      }
+    }
+  }
+}

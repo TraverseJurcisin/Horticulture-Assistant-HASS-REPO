@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1FD537",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3284-0006)",
-    "product_name": "GROW MAX SOLUBLE HUMIC FLAKE 0-0-10",
-    "company_info": {
-      "company": "STABLE SOIL MATRIX",
-      "Mailing Address": "1906 W Crenshaw St",
-      "Post Office Box": null,
-      "City": "Kuna",
-      "State": "ID",
-      "Postal Code": "83634",
-      "Telephone Number": "208 571-1219",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "=0.1100",
-      "Cobalt": "=3.5000",
-      "Mercury": "=0.3900",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=8.9000",
-      "Lead": "=11.0000",
-      "Selenium": "=4.3000",
-      "Zinc": "=11.8500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "=0.1100",
-      "Cobalt": "=3.5000",
-      "Mercury": "=0.3900",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=8.9000",
-      "Lead": "=11.0000",
-      "Selenium": "=4.3000",
-      "Zinc": "=11.8500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1FD537",
   "metadata": {
     "registrant": "STABLE SOIL MATRIX",
     "label_name": "GROW MAX SOLUBLE HUMIC FLAKE 0-0-10",
     "wsda_reg_no": "(#3284-0006)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3284-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3284-0006)",
+        "product_name": "GROW MAX SOLUBLE HUMIC FLAKE 0-0-10",
+        "company_info": {
+          "company": "STABLE SOIL MATRIX",
+          "Mailing Address": "1906 W Crenshaw St",
+          "Post Office Box": null,
+          "City": "Kuna",
+          "State": "ID",
+          "Postal Code": "83634",
+          "Telephone Number": "208 571-1219",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "=0.1100",
+          "Cobalt": "=3.5000",
+          "Mercury": "=0.3900",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=8.9000",
+          "Lead": "=11.0000",
+          "Selenium": "=4.3000",
+          "Zinc": "=11.8500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROW MAX SOLUBLE HUMIC FLAKE 0-0-10",
+    "brand": "STABLE SOIL MATRIX",
+    "manufacturer": {
+      "name": "STABLE SOIL MATRIX"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1FD537-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.11,
+            "Co": 3.5,
+            "Hg": 0.39,
+            "Mo": 1.0,
+            "Ni": 8.9,
+            "Pb": 11.0,
+            "Se": 4.3,
+            "Zn": 11.85
+          },
+          "detection_limits_ppm": {
+            "As": 0.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.11,
+        "Co": 3.5,
+        "Hg": 0.39,
+        "Mo": 1.0,
+        "Ni": 8.9,
+        "Pb": 11.0,
+        "Se": 4.3,
+        "Zn": 11.85
+      }
+    }
   }
 }

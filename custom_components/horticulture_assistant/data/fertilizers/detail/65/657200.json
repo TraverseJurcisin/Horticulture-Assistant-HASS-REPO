@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "657200",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0075-0063)",
-    "product_name": "PLENTIGRO SURGE FOR ORGANIC AGRICULTURE 0-0-0",
-    "company_info": {
-      "company": "CYTOZYME LABORATORIES INC",
-      "Mailing Address": "2700 South 600 West",
-      "Post Office Box": null,
-      "City": "Salt Lake City",
-      "State": "UT",
-      "Postal Code": "84115",
-      "Telephone Number": "801 533-9208",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.09,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2000",
-      "Cadmium": "<0.0330",
-      "Cobalt": "=72.0000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "<0.0330",
-      "Nickel": "=62.0000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.1300",
-      "Zinc": "=33400.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.09,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2000",
-      "Cadmium": "<0.0330",
-      "Cobalt": "=72.0000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "<0.0330",
-      "Nickel": "=62.0000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.1300",
-      "Zinc": "=33400.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "657200",
   "metadata": {
     "registrant": "CYTOZYME LABORATORIES INC",
     "label_name": "PLENTIGRO SURGE FOR ORGANIC AGRICULTURE 0-0-0",
     "wsda_reg_no": "(#0075-0063)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0075-0063)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0075-0063)",
+        "product_name": "PLENTIGRO SURGE FOR ORGANIC AGRICULTURE 0-0-0",
+        "company_info": {
+          "company": "CYTOZYME LABORATORIES INC",
+          "Mailing Address": "2700 South 600 West",
+          "Post Office Box": null,
+          "City": "Salt Lake City",
+          "State": "UT",
+          "Postal Code": "84115",
+          "Telephone Number": "801 533-9208",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 0.09,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.06,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": 0.04,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2000",
+          "Cadmium": "<0.0330",
+          "Cobalt": "=72.0000",
+          "Mercury": "<0.0020",
+          "Molybdenum": "<0.0330",
+          "Nickel": "=62.0000",
+          "Lead": "=0.9000",
+          "Selenium": "<0.1300",
+          "Zinc": "=33400.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLENTIGRO SURGE FOR ORGANIC AGRICULTURE 0-0-0",
+    "brand": "CYTOZYME LABORATORIES INC",
+    "manufacturer": {
+      "name": "CYTOZYME LABORATORIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 3.0,
+      "Zn": 3.0,
+      "Cu": 1.0,
+      "B": 0.09,
+      "Mo": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "657200-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.2,
+            "Cd": 0.033,
+            "Co": 72.0,
+            "Hg": 0.002,
+            "Mo": 0.033,
+            "Ni": 62.0,
+            "Pb": 0.9,
+            "Se": 0.13,
+            "Zn": 33400.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.2,
+            "Cd": 0.033,
+            "Hg": 0.002,
+            "Mo": 0.033,
+            "Se": 0.13
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 72.0,
+        "Ni": 62.0,
+        "Pb": 0.9,
+        "Zn": 33400.0
+      }
+    }
   }
 }

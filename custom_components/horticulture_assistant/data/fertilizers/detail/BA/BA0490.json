@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"BA0490","source_wsda_record":{"wsda_product_number":"(#3132-0034)","product_name":"VALLEY AGRONOMICS FERTILIZER 0-0-50 SULFATE OF POTASH 0-0-50","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":50.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7280","Cadmium":"<0.0846","Cobalt":"<0.0840","Mercury":"<0.0050","Molybdenum":"<0.4230","Nickel":"=0.9500","Lead":"<0.8400","Selenium":"=0.4550","Zinc":"=0.7280"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":50.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7280","Cadmium":"<0.0846","Cobalt":"<0.0840","Mercury":"<0.0050","Molybdenum":"<0.4230","Nickel":"=0.9500","Lead":"<0.8400","Selenium":"=0.4550","Zinc":"=0.7280"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 0-0-50 SULFATE OF POTASH 0-0-50","wsda_reg_no":"(#3132-0034)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BA0490",
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 0-0-50 SULFATE OF POTASH 0-0-50",
+    "wsda_reg_no": "(#3132-0034)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0034)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0034)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 0-0-50 SULFATE OF POTASH 0-0-50",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 50.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7280",
+          "Cadmium": "<0.0846",
+          "Cobalt": "<0.0840",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.4230",
+          "Nickel": "=0.9500",
+          "Lead": "<0.8400",
+          "Selenium": "=0.4550",
+          "Zinc": "=0.7280"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 0-0-50 SULFATE OF POTASH 0-0-50",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 50.0
+    },
+    "macros_pct": {
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BA0490-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.728,
+            "Cd": 0.0846,
+            "Co": 0.084,
+            "Hg": 0.005,
+            "Mo": 0.423,
+            "Ni": 0.95,
+            "Pb": 0.84,
+            "Se": 0.455,
+            "Zn": 0.728
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.0846,
+            "Co": 0.084,
+            "Hg": 0.005,
+            "Mo": 0.423,
+            "Pb": 0.84
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.728,
+        "Ni": 0.95,
+        "Se": 0.455,
+        "Zn": 0.728
+      }
+    }
+  }
+}

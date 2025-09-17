@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"851C26","source_wsda_record":{"wsda_product_number":"(#2561-0001)","product_name":"QUIMAG QUIMICOS AGUILA COPPER SULFATE CRYSTAL FERTILIZER 0-0-0","company_info":{"company":"FABRICA DE SULFATO EL AQUILA SA DE","Mailing Address":"PO Box 5126","Post Office Box":null,"City":"Valdosta","State":"GA","Postal Code":"31603","Telephone Number":"229 247-6742","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":25.2,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1180","Cadmium":"=0.1200","Cobalt":"=0.1620","Mercury":"=0.0020","Molybdenum":"<0.0150","Nickel":"=5.0000","Lead":"=5.7200","Selenium":"<0.0010","Zinc":"=1874.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":25.2,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1180","Cadmium":"=0.1200","Cobalt":"=0.1620","Mercury":"=0.0020","Molybdenum":"<0.0150","Nickel":"=5.0000","Lead":"=5.7200","Selenium":"<0.0010","Zinc":"=1874.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FABRICA DE SULFATO EL AQUILA SA DE","label_name":"QUIMAG QUIMICOS AGUILA COPPER SULFATE CRYSTAL FERTILIZER 0-0-0","wsda_reg_no":"(#2561-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "851C26",
+  "metadata": {
+    "registrant": "FABRICA DE SULFATO EL AQUILA SA DE",
+    "label_name": "QUIMAG QUIMICOS AGUILA COPPER SULFATE CRYSTAL FERTILIZER 0-0-0",
+    "wsda_reg_no": "(#2561-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2561-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2561-0001)",
+        "product_name": "QUIMAG QUIMICOS AGUILA COPPER SULFATE CRYSTAL FERTILIZER 0-0-0",
+        "company_info": {
+          "company": "FABRICA DE SULFATO EL AQUILA SA DE",
+          "Mailing Address": "PO Box 5126",
+          "Post Office Box": null,
+          "City": "Valdosta",
+          "State": "GA",
+          "Postal Code": "31603",
+          "Telephone Number": "229 247-6742",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 25.2,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1180",
+          "Cadmium": "=0.1200",
+          "Cobalt": "=0.1620",
+          "Mercury": "=0.0020",
+          "Molybdenum": "<0.0150",
+          "Nickel": "=5.0000",
+          "Lead": "=5.7200",
+          "Selenium": "<0.0010",
+          "Zinc": "=1874.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "QUIMAG QUIMICOS AGUILA COPPER SULFATE CRYSTAL FERTILIZER 0-0-0",
+    "brand": "FABRICA DE SULFATO EL AQUILA SA DE",
+    "manufacturer": {
+      "name": "FABRICA DE SULFATO EL AQUILA SA DE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Cu": 25.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "851C26-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.118,
+            "Cd": 0.12,
+            "Co": 0.162,
+            "Hg": 0.002,
+            "Mo": 0.015,
+            "Ni": 5.0,
+            "Pb": 5.72,
+            "Se": 0.001,
+            "Zn": 1874.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.015,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.118,
+        "Cd": 0.12,
+        "Co": 0.162,
+        "Hg": 0.002,
+        "Ni": 5.0,
+        "Pb": 5.72,
+        "Zn": 1874.0
+      }
+    }
+  }
+}

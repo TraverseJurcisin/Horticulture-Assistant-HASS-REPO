@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "08CE7B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0189-0011)",
-    "product_name": "LESCO CHELATED MICROMIX (084047) 0-0-0",
-    "company_info": {
-      "company": "LESCO INC",
-      "Mailing Address": "1385 East 36th Street",
-      "Post Office Box": null,
-      "City": "Cleveland",
-      "State": "OH",
-      "Postal Code": "44114-4114",
-      "Telephone Number": "440 454-3672",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.4
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=17.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=7.8000",
-      "Nickel": "=63.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.2500",
-      "Zinc": "=8850.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.4
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=17.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=7.8000",
-      "Nickel": "=63.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.2500",
-      "Zinc": "=8850.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "08CE7B",
   "metadata": {
     "registrant": "LESCO INC",
     "label_name": "LESCO CHELATED MICROMIX (084047) 0-0-0",
     "wsda_reg_no": "(#0189-0011)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0011)",
+        "product_name": "LESCO CHELATED MICROMIX (084047) 0-0-0",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.4
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=17.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=7.8000",
+          "Nickel": "=63.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<0.2500",
+          "Zinc": "=8850.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO CHELATED MICROMIX (084047) 0-0-0",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 2.0,
+      "Mn": 1.0,
+      "Zn": 0.4,
+      "Cu": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "08CE7B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 1.0,
+            "Co": 17.0,
+            "Hg": 0.02,
+            "Mo": 7.8,
+            "Ni": 63.0,
+            "Pb": 5.0,
+            "Se": 0.25,
+            "Zn": 8850.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 1.0,
+            "Hg": 0.02,
+            "Pb": 5.0,
+            "Se": 0.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 17.0,
+        "Mo": 7.8,
+        "Ni": 63.0,
+        "Zn": 8850.0
+      }
+    }
   }
 }

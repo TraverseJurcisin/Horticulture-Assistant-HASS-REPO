@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"DB2F00","source_wsda_record":{"wsda_product_number":"(#0349-0660)","product_name":"PERFECTION SOLITAIRE 42-0-0","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":42.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2000","Cadmium":"=0.2000","Cobalt":"=2.4000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=2.4000","Lead":"=1.6000","Selenium":"=0.3000","Zinc":"=6.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":42.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2000","Cadmium":"=0.2000","Cobalt":"=2.4000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=2.4000","Lead":"=1.6000","Selenium":"=0.3000","Zinc":"=6.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"PERFECTION SOLITAIRE 42-0-0","wsda_reg_no":"(#0349-0660)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DB2F00",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "PERFECTION SOLITAIRE 42-0-0",
+    "wsda_reg_no": "(#0349-0660)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0660)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0660)",
+        "product_name": "PERFECTION SOLITAIRE 42-0-0",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 42.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=2.4000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=2.4000",
+          "Lead": "=1.6000",
+          "Selenium": "=0.3000",
+          "Zinc": "=6.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERFECTION SOLITAIRE 42-0-0",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 42.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DB2F00-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.2,
+            "Cd": 0.2,
+            "Co": 2.4,
+            "Hg": 0.01,
+            "Mo": 0.5,
+            "Ni": 2.4,
+            "Pb": 1.6,
+            "Se": 0.3,
+            "Zn": 6.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.2,
+        "Cd": 0.2,
+        "Co": 2.4,
+        "Hg": 0.01,
+        "Mo": 0.5,
+        "Ni": 2.4,
+        "Pb": 1.6,
+        "Se": 0.3,
+        "Zn": 6.8
+      }
+    }
+  }
+}

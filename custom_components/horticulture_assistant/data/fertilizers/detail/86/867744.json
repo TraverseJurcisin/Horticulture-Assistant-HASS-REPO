@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"867744","source_wsda_record":{"wsda_product_number":"(#1075-0158)","product_name":"REDOX RX-780 9-7-9","company_info":{"company":"REDOX CHEMICALS LLC","Mailing Address":"PO Box 129","Post Office Box":null,"City":"Burley","State":"ID","Postal Code":"83318","Telephone Number":"208 678-2610","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.0000","Cadmium":"=1.0000","Cobalt":"<1.0000","Mercury":"<1.0000","Molybdenum":"=61.0000","Nickel":"=5.0000","Lead":"<1.0000","Selenium":"<3.0000","Zinc":"=393.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.0000","Cadmium":"=1.0000","Cobalt":"<1.0000","Mercury":"<1.0000","Molybdenum":"=61.0000","Nickel":"=5.0000","Lead":"<1.0000","Selenium":"<3.0000","Zinc":"=393.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REDOX CHEMICALS LLC","label_name":"REDOX RX-780 9-7-9","wsda_reg_no":"(#1075-0158)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "867744",
+  "metadata": {
+    "registrant": "REDOX CHEMICALS LLC",
+    "label_name": "REDOX RX-780 9-7-9",
+    "wsda_reg_no": "(#1075-0158)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1075-0158)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1075-0158)",
+        "product_name": "REDOX RX-780 9-7-9",
+        "company_info": {
+          "company": "REDOX CHEMICALS LLC",
+          "Mailing Address": "PO Box 129",
+          "Post Office Box": null,
+          "City": "Burley",
+          "State": "ID",
+          "Postal Code": "83318",
+          "Telephone Number": "208 678-2610",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<1.0000",
+          "Molybdenum": "=61.0000",
+          "Nickel": "=5.0000",
+          "Lead": "<1.0000",
+          "Selenium": "<3.0000",
+          "Zinc": "=393.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "REDOX RX-780 9-7-9",
+    "brand": "REDOX CHEMICALS LLC",
+    "manufacturer": {
+      "name": "REDOX CHEMICALS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 9.0
+    },
+    "micros_pct": {
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "867744-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 1.0,
+            "Mo": 61.0,
+            "Ni": 5.0,
+            "Pb": 1.0,
+            "Se": 3.0,
+            "Zn": 393.0
+          },
+          "detection_limits_ppm": {
+            "Co": 1.0,
+            "Hg": 1.0,
+            "Pb": 1.0,
+            "Se": 3.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.0,
+        "Cd": 1.0,
+        "Mo": 61.0,
+        "Ni": 5.0,
+        "Zn": 393.0
+      }
+    }
+  }
+}

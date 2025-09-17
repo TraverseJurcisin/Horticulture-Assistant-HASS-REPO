@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"9672D2","source_wsda_record":{"wsda_product_number":"(#0229-0064)","product_name":"NUTRIENT TECH COPOCAL 0-14-0","company_info":{"company":"NUTRIENT TECHNOLOGIES INC","Mailing Address":"1092 E Kamm Ave","Post Office Box":null,"City":"Dinuba","State":"CA","Postal Code":"93618","Telephone Number":"559 595-8090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.8000","Cadmium":"=0.5900","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=16.9000","Lead":"=6.6200","Selenium":"=10.0000","Zinc":"=145.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.8000","Cadmium":"=0.5900","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=16.9000","Lead":"=6.6200","Selenium":"=10.0000","Zinc":"=145.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIENT TECHNOLOGIES INC","label_name":"NUTRIENT TECH COPOCAL 0-14-0","wsda_reg_no":"(#0229-0064)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9672D2",
+  "metadata": {
+    "registrant": "NUTRIENT TECHNOLOGIES INC",
+    "label_name": "NUTRIENT TECH COPOCAL 0-14-0",
+    "wsda_reg_no": "(#0229-0064)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0229-0064)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0229-0064)",
+        "product_name": "NUTRIENT TECH COPOCAL 0-14-0",
+        "company_info": {
+          "company": "NUTRIENT TECHNOLOGIES INC",
+          "Mailing Address": "1092 E Kamm Ave",
+          "Post Office Box": null,
+          "City": "Dinuba",
+          "State": "CA",
+          "Postal Code": "93618",
+          "Telephone Number": "559 595-8090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 7.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 5.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.8000",
+          "Cadmium": "=0.5900",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=16.9000",
+          "Lead": "=6.6200",
+          "Selenium": "=10.0000",
+          "Zinc": "=145.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIENT TECH COPOCAL 0-14-0",
+    "brand": "NUTRIENT TECHNOLOGIES INC",
+    "manufacturer": {
+      "name": "NUTRIENT TECHNOLOGIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 14.0
+    },
+    "macros_pct": {
+      "Ca": 7.5
+    },
+    "micros_pct": {
+      "Cu": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9672D2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.8,
+            "Cd": 0.59,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 16.9,
+            "Pb": 6.62,
+            "Se": 10.0,
+            "Zn": 145.7
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.8,
+        "Cd": 0.59,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 16.9,
+        "Pb": 6.62,
+        "Se": 10.0,
+        "Zn": 145.7
+      }
+    }
+  }
+}

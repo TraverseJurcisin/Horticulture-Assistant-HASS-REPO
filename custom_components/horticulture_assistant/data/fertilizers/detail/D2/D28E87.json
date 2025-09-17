@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"D28E87","source_wsda_record":{"wsda_product_number":"(#2687-0058)","product_name":"VERDESIAN COMPAC 300 4-2-0","company_info":{"company":"VERDESIAN LIFE SCIENCES U.S. LLC","Mailing Address":"1001 Winstead Drive Ste 480","Post Office Box":null,"City":"Cary","State":"NC","Postal Code":"27513","Telephone Number":"919 825-1901","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":5.0},"reported_metals":{"Arsenic":"=1.6600","Cadmium":"=7.7300","Cobalt":"=34.8000","Mercury":"<0.0500","Molybdenum":"=1.5500","Nickel":"=35.0000","Lead":"<1.0000","Selenium":"=1.0300","Zinc":"=67600.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":5.0},"heavy_metals":{"Arsenic":"=1.6600","Cadmium":"=7.7300","Cobalt":"=34.8000","Mercury":"<0.0500","Molybdenum":"=1.5500","Nickel":"=35.0000","Lead":"<1.0000","Selenium":"=1.0300","Zinc":"=67600.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDESIAN LIFE SCIENCES U.S. LLC","label_name":"VERDESIAN COMPAC 300 4-2-0","wsda_reg_no":"(#2687-0058)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D28E87",
+  "metadata": {
+    "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "label_name": "VERDESIAN COMPAC 300 4-2-0",
+    "wsda_reg_no": "(#2687-0058)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0058)",
+        "product_name": "VERDESIAN COMPAC 300 4-2-0",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 5.0
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6600",
+          "Cadmium": "=7.7300",
+          "Cobalt": "=34.8000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.5500",
+          "Nickel": "=35.0000",
+          "Lead": "<1.0000",
+          "Selenium": "=1.0300",
+          "Zinc": "=67600.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VERDESIAN COMPAC 300 4-2-0",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 3.6
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 1.0,
+      "Zn": 5.0,
+      "Cu": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D28E87-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.66,
+            "Cd": 7.73,
+            "Co": 34.8,
+            "Hg": 0.05,
+            "Mo": 1.55,
+            "Ni": 35.0,
+            "Pb": 1.0,
+            "Se": 1.03,
+            "Zn": 67600.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.66,
+        "Cd": 7.73,
+        "Co": 34.8,
+        "Mo": 1.55,
+        "Ni": 35.0,
+        "Se": 1.03,
+        "Zn": 67600.0
+      }
+    }
+  }
+}

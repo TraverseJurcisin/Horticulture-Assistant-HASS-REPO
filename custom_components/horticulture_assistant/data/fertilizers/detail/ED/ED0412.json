@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"ED0412","source_wsda_record":{"wsda_product_number":"(#0189-0270)","product_name":"BASIC CONTROL PRODIAMINE 0.29% PLUS FERTILIZER 0-0-4 #702410 0-0-4","company_info":{"company":"LESCO INC","Mailing Address":"1385 East 36th Street","Post Office Box":null,"City":"Cleveland","State":"OH","Postal Code":"44114-4114","Telephone Number":"440 454-3672","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.3200","Cadmium":"=0.1800","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.3000","Nickel":"=1.0000","Lead":"=1.2000","Selenium":"<0.5000","Zinc":"=13.3800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.3200","Cadmium":"=0.1800","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.3000","Nickel":"=1.0000","Lead":"=1.2000","Selenium":"<0.5000","Zinc":"=13.3800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LESCO INC","label_name":"BASIC CONTROL PRODIAMINE 0.29% PLUS FERTILIZER 0-0-4 #702410 0-0-4","wsda_reg_no":"(#0189-0270)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "ED0412",
+  "metadata": {
+    "registrant": "LESCO INC",
+    "label_name": "BASIC CONTROL PRODIAMINE 0.29% PLUS FERTILIZER 0-0-4 #702410 0-0-4",
+    "wsda_reg_no": "(#0189-0270)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0270)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0270)",
+        "product_name": "BASIC CONTROL PRODIAMINE 0.29% PLUS FERTILIZER 0-0-4 #702410 0-0-4",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.3200",
+          "Cadmium": "=0.1800",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=1.0000",
+          "Lead": "=1.2000",
+          "Selenium": "<0.5000",
+          "Zinc": "=13.3800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BASIC CONTROL PRODIAMINE 0.29% PLUS FERTILIZER 0-0-4 #702410 0-0-4",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "ED0412-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.32,
+            "Cd": 0.18,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.3,
+            "Ni": 1.0,
+            "Pb": 1.2,
+            "Se": 0.5,
+            "Zn": 13.38
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.32,
+        "Cd": 0.18,
+        "Co": 0.2,
+        "Mo": 0.3,
+        "Ni": 1.0,
+        "Pb": 1.2,
+        "Zn": 13.38
+      }
+    }
+  }
+}

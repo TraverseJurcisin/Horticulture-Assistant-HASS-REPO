@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"D71934","source_wsda_record":{"wsda_product_number":"(#0884-0220)","product_name":"JOBE'S ORGANICS FISH MEAL 9-4-0","company_info":{"company":"EASY GARDENER INC","Mailing Address":"1750 17th St","Post Office Box":null,"City":"Paris","State":"KY","Postal Code":"40361","Telephone Number":"859 984-5389","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"<0.1000","Mercury":"<0.0250","Molybdenum":"=0.7000","Nickel":"=0.6000","Lead":"<1.0000","Selenium":"=0.4000","Zinc":"=114.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"<0.1000","Mercury":"<0.0250","Molybdenum":"=0.7000","Nickel":"=0.6000","Lead":"<1.0000","Selenium":"=0.4000","Zinc":"=114.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EASY GARDENER INC","label_name":"JOBE'S ORGANICS FISH MEAL 9-4-0","wsda_reg_no":"(#0884-0220)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D71934",
+  "metadata": {
+    "registrant": "EASY GARDENER INC",
+    "label_name": "JOBE'S ORGANICS FISH MEAL 9-4-0",
+    "wsda_reg_no": "(#0884-0220)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0884-0220)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0884-0220)",
+        "product_name": "JOBE'S ORGANICS FISH MEAL 9-4-0",
+        "company_info": {
+          "company": "EASY GARDENER INC",
+          "Mailing Address": "1750 17th St",
+          "Post Office Box": null,
+          "City": "Paris",
+          "State": "KY",
+          "Postal Code": "40361",
+          "Telephone Number": "859 984-5389",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0250",
+          "Molybdenum": "=0.7000",
+          "Nickel": "=0.6000",
+          "Lead": "<1.0000",
+          "Selenium": "=0.4000",
+          "Zinc": "=114.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JOBE'S ORGANICS FISH MEAL 9-4-0",
+    "brand": "EASY GARDENER INC",
+    "manufacturer": {
+      "name": "EASY GARDENER INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D71934-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.025,
+            "Mo": 0.7,
+            "Ni": 0.6,
+            "Pb": 1.0,
+            "Se": 0.4,
+            "Zn": 114.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.025,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 0.7,
+        "Ni": 0.6,
+        "Se": 0.4,
+        "Zn": 114.0
+      }
+    }
+  }
+}

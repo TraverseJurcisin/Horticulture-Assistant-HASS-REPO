@@ -117,7 +117,7 @@ def deep_update(base: dict[str, Any], other: Mapping[str, Any]) -> dict[str, Any
 # default data directory but before the overlay directory. This allows
 # extending or overriding individual datasets without copying the entire
 # directory hierarchy.
-DEFAULT_DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+DEFAULT_DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 OVERLAY_ENV = "HORTICULTURE_OVERLAY_DIR"
 EXTRA_ENV = "HORTICULTURE_EXTRA_DATA_DIRS"
 

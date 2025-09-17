@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"D10843","source_wsda_record":{"wsda_product_number":"(#3392-0008)","product_name":"NATURE'S WAY ORGANIC CONTAINER & POTTING MIX 0.2-0.2-0.2","company_info":{"company":"GRO-WELL BRANDS INC","Mailing Address":"P.O. Box 25406","Post Office Box":null,"City":"Tempe","State":"AZ","Postal Code":"85285","Telephone Number":"602 390-1164","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.2,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3300","Cadmium":"=0.2000","Cobalt":"=2.7800","Mercury":"=0.1800","Molybdenum":"=2.4100","Nickel":"=9.4400","Lead":"=6.4800","Selenium":"=2.3900","Zinc":"=85.0900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.2,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3300","Cadmium":"=0.2000","Cobalt":"=2.7800","Mercury":"=0.1800","Molybdenum":"=2.4100","Nickel":"=9.4400","Lead":"=6.4800","Selenium":"=2.3900","Zinc":"=85.0900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO-WELL BRANDS INC","label_name":"NATURE'S WAY ORGANIC CONTAINER & POTTING MIX 0.2-0.2-0.2","wsda_reg_no":"(#3392-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D10843",
+  "metadata": {
+    "registrant": "GRO-WELL BRANDS INC",
+    "label_name": "NATURE'S WAY ORGANIC CONTAINER & POTTING MIX 0.2-0.2-0.2",
+    "wsda_reg_no": "(#3392-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3392-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3392-0008)",
+        "product_name": "NATURE'S WAY ORGANIC CONTAINER & POTTING MIX 0.2-0.2-0.2",
+        "company_info": {
+          "company": "GRO-WELL BRANDS INC",
+          "Mailing Address": "P.O. Box 25406",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85285",
+          "Telephone Number": "602 390-1164",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.2,
+          "Available Phosphoric Acid (P2O5)": 0.2,
+          "Soluble Potash (K2O)": 0.2,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3300",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=2.7800",
+          "Mercury": "=0.1800",
+          "Molybdenum": "=2.4100",
+          "Nickel": "=9.4400",
+          "Lead": "=6.4800",
+          "Selenium": "=2.3900",
+          "Zinc": "=85.0900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE'S WAY ORGANIC CONTAINER & POTTING MIX 0.2-0.2-0.2",
+    "brand": "GRO-WELL BRANDS INC",
+    "manufacturer": {
+      "name": "GRO-WELL BRANDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.2,
+      "P2O5_pct": 0.2,
+      "K2O_pct": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D10843-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.33,
+            "Cd": 0.2,
+            "Co": 2.78,
+            "Hg": 0.18,
+            "Mo": 2.41,
+            "Ni": 9.44,
+            "Pb": 6.48,
+            "Se": 2.39,
+            "Zn": 85.09
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.33,
+        "Cd": 0.2,
+        "Co": 2.78,
+        "Hg": 0.18,
+        "Mo": 2.41,
+        "Ni": 9.44,
+        "Pb": 6.48,
+        "Se": 2.39,
+        "Zn": 85.09
+      }
+    }
+  }
+}

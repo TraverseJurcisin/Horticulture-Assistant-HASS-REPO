@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "45D840",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4198-0005)",
-    "product_name": "CROP4LIFE 0-0-7",
-    "company_info": {
-      "company": "OMNIA SPECIALTIES USA",
-      "Mailing Address": "1823 Shaw #103",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93722",
-      "Telephone Number": "559 931-3332",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1300",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<0.0300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "<0.0300",
-      "Nickel": "=0.1300",
-      "Lead": "<0.0800",
-      "Selenium": "=0.5100",
-      "Zinc": "=0.7500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1300",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<0.0300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "<0.0300",
-      "Nickel": "=0.1300",
-      "Lead": "<0.0800",
-      "Selenium": "=0.5100",
-      "Zinc": "=0.7500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "45D840",
   "metadata": {
     "registrant": "OMNIA SPECIALTIES USA",
     "label_name": "CROP4LIFE 0-0-7",
     "wsda_reg_no": "(#4198-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4198-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4198-0005)",
+        "product_name": "CROP4LIFE 0-0-7",
+        "company_info": {
+          "company": "OMNIA SPECIALTIES USA",
+          "Mailing Address": "1823 Shaw #103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93722",
+          "Telephone Number": "559 931-3332",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1300",
+          "Cadmium": "<0.0300",
+          "Cobalt": "<0.0300",
+          "Mercury": "<0.0400",
+          "Molybdenum": "<0.0300",
+          "Nickel": "=0.1300",
+          "Lead": "<0.0800",
+          "Selenium": "=0.5100",
+          "Zinc": "=0.7500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CROP4LIFE 0-0-7",
+    "brand": "OMNIA SPECIALTIES USA",
+    "manufacturer": {
+      "name": "OMNIA SPECIALTIES USA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 7.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "45D840-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.13,
+            "Cd": 0.03,
+            "Co": 0.03,
+            "Hg": 0.04,
+            "Mo": 0.03,
+            "Ni": 0.13,
+            "Pb": 0.08,
+            "Se": 0.51,
+            "Zn": 0.75
+          },
+          "detection_limits_ppm": {
+            "As": 0.13,
+            "Cd": 0.03,
+            "Co": 0.03,
+            "Hg": 0.04,
+            "Mo": 0.03,
+            "Pb": 0.08
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 0.13,
+        "Se": 0.51,
+        "Zn": 0.75
+      }
+    }
   }
 }

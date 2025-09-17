@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "58832F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0732-0069)",
-    "product_name": "JH BIOTECH SWEETER 2-0-3",
-    "company_info": {
-      "company": "JH BIOTECH INC",
-      "Mailing Address": "4951 Olivas Park Drive",
-      "Post Office Box": null,
-      "City": "Ventura",
-      "State": "CA",
-      "Postal Code": "93003-7667",
-      "Telephone Number": "805 650-8933",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "=4.1000",
-      "Cobalt": "<5.0000",
-      "Mercury": "<0.2000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<10.0000",
-      "Lead": "<10.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=910.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "=4.1000",
-      "Cobalt": "<5.0000",
-      "Mercury": "<0.2000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<10.0000",
-      "Lead": "<10.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=910.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "58832F",
   "metadata": {
     "registrant": "JH BIOTECH INC",
     "label_name": "JH BIOTECH SWEETER 2-0-3",
     "wsda_reg_no": "(#0732-0069)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0732-0069)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0732-0069)",
+        "product_name": "JH BIOTECH SWEETER 2-0-3",
+        "company_info": {
+          "company": "JH BIOTECH INC",
+          "Mailing Address": "4951 Olivas Park Drive",
+          "Post Office Box": null,
+          "City": "Ventura",
+          "State": "CA",
+          "Postal Code": "93003-7667",
+          "Telephone Number": "805 650-8933",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "=4.1000",
+          "Cobalt": "<5.0000",
+          "Mercury": "<0.2000",
+          "Molybdenum": "<5.0000",
+          "Nickel": "<10.0000",
+          "Lead": "<10.0000",
+          "Selenium": "<0.5000",
+          "Zinc": "=910.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JH BIOTECH SWEETER 2-0-3",
+    "brand": "JH BIOTECH INC",
+    "manufacturer": {
+      "name": "JH BIOTECH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Mg": 0.5
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "58832F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 4.1,
+            "Co": 5.0,
+            "Hg": 0.2,
+            "Mo": 5.0,
+            "Ni": 10.0,
+            "Pb": 10.0,
+            "Se": 0.5,
+            "Zn": 910.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Co": 5.0,
+            "Hg": 0.2,
+            "Mo": 5.0,
+            "Ni": 10.0,
+            "Pb": 10.0,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 4.1,
+        "Zn": 910.0
+      }
+    }
   }
 }

@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"C4B5D6","source_wsda_record":{"wsda_product_number":"(#4058-0002)","product_name":"AQUARIUM CO-OP EASY ROOT TABS 2.49-1.59-9.98","company_info":{"company":"AQUARIUM CO-OP LLC","Mailing Address":"9661 Firdale Ave","Post Office Box":null,"City":"Edmonds","State":"WA","Postal Code":"98020","Telephone Number":"206 533-2281","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.49,"Available Phosphoric Acid (P2O5)":1.59,"Soluble Potash (K2O)":9.98,"Calcium (Ca)":null,"Magnesium (Mg)":0.6,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.6,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.8000","Cadmium":"=0.5700","Cobalt":"=8.3800","Mercury":"<0.0500","Molybdenum":"=5.3000","Nickel":"=46.8000","Lead":"=11.3000","Selenium":"<5.0000","Zinc":"=2163.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.49,"Available Phosphoric Acid (P2O5)":1.59,"Soluble Potash (K2O)":9.98,"Calcium (Ca)":null,"Magnesium (Mg)":0.6,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.6,"Manganese (Mn)":0.25,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.8000","Cadmium":"=0.5700","Cobalt":"=8.3800","Mercury":"<0.0500","Molybdenum":"=5.3000","Nickel":"=46.8000","Lead":"=11.3000","Selenium":"<5.0000","Zinc":"=2163.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AQUARIUM CO-OP LLC","label_name":"AQUARIUM CO-OP EASY ROOT TABS 2.49-1.59-9.98","wsda_reg_no":"(#4058-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C4B5D6",
+  "metadata": {
+    "registrant": "AQUARIUM CO-OP LLC",
+    "label_name": "AQUARIUM CO-OP EASY ROOT TABS 2.49-1.59-9.98",
+    "wsda_reg_no": "(#4058-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4058-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4058-0002)",
+        "product_name": "AQUARIUM CO-OP EASY ROOT TABS 2.49-1.59-9.98",
+        "company_info": {
+          "company": "AQUARIUM CO-OP LLC",
+          "Mailing Address": "9661 Firdale Ave",
+          "Post Office Box": null,
+          "City": "Edmonds",
+          "State": "WA",
+          "Postal Code": "98020",
+          "Telephone Number": "206 533-2281",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.49,
+          "Available Phosphoric Acid (P2O5)": 1.59,
+          "Soluble Potash (K2O)": 9.98,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.6,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.6,
+          "Manganese (Mn)": 0.25,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=10.8000",
+          "Cadmium": "=0.5700",
+          "Cobalt": "=8.3800",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=5.3000",
+          "Nickel": "=46.8000",
+          "Lead": "=11.3000",
+          "Selenium": "<5.0000",
+          "Zinc": "=2163.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AQUARIUM CO-OP EASY ROOT TABS 2.49-1.59-9.98",
+    "brand": "AQUARIUM CO-OP LLC",
+    "manufacturer": {
+      "name": "AQUARIUM CO-OP LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.49,
+      "P2O5_pct": 1.59,
+      "K2O_pct": 9.98
+    },
+    "macros_pct": {
+      "Mg": 0.6
+    },
+    "micros_pct": {
+      "Fe": 1.6,
+      "Mn": 0.25,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C4B5D6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.8,
+            "Cd": 0.57,
+            "Co": 8.38,
+            "Hg": 0.05,
+            "Mo": 5.3,
+            "Ni": 46.8,
+            "Pb": 11.3,
+            "Se": 5.0,
+            "Zn": 2163.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.8,
+        "Cd": 0.57,
+        "Co": 8.38,
+        "Mo": 5.3,
+        "Ni": 46.8,
+        "Pb": 11.3,
+        "Zn": 2163.0
+      }
+    }
+  }
+}

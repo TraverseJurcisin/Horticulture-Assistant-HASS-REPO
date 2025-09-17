@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"B7C56A","source_wsda_record":{"wsda_product_number":"(#1444-0138)","product_name":"BRANDT HI-PHOS 32 8-32-7","company_info":{"company":"BRANDT CONSOLIDATED INC","Mailing Address":"2935 South Koke Mill Road","Post Office Box":null,"City":"Springfield","State":"IL","Postal Code":"62711-9651","Telephone Number":"217 547-5867","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":32.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.2},"reported_metals":{"Arsenic":"=15.0000","Cadmium":"=75.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=20.0000","Nickel":"=5.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=3390.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":32.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.2},"heavy_metals":{"Arsenic":"=15.0000","Cadmium":"=75.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=20.0000","Nickel":"=5.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=3390.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BRANDT CONSOLIDATED INC","label_name":"BRANDT HI-PHOS 32 8-32-7","wsda_reg_no":"(#1444-0138)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B7C56A",
+  "metadata": {
+    "registrant": "BRANDT CONSOLIDATED INC",
+    "label_name": "BRANDT HI-PHOS 32 8-32-7",
+    "wsda_reg_no": "(#1444-0138)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1444-0138)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1444-0138)",
+        "product_name": "BRANDT HI-PHOS 32 8-32-7",
+        "company_info": {
+          "company": "BRANDT CONSOLIDATED INC",
+          "Mailing Address": "2935 South Koke Mill Road",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711-9651",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 32.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.2
+        },
+        "reported_metals": {
+          "Arsenic": "=15.0000",
+          "Cadmium": "=75.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=20.0000",
+          "Nickel": "=5.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=3390.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRANDT HI-PHOS 32 8-32-7",
+    "brand": "BRANDT CONSOLIDATED INC",
+    "manufacturer": {
+      "name": "BRANDT CONSOLIDATED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 32.0,
+      "K2O_pct": 7.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Zn": 0.2,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B7C56A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 15.0,
+            "Cd": 75.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 20.0,
+            "Ni": 5.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 3390.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 15.0,
+        "Cd": 75.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 20.0,
+        "Ni": 5.0,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 3390.0
+      }
+    }
+  }
+}

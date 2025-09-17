@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "30B6BA",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3053-0004)",
-    "product_name": "PROPEAT ALL PURPOSE FERTILIZER CARBON 90 PLUS 11-11-11",
-    "company_info": {
-      "company": "FERTILE PEAT PRODUCTS LLC",
-      "Mailing Address": "PO Box 29042",
-      "Post Office Box": null,
-      "City": "Santa Fe",
-      "State": "NM",
-      "Postal Code": "87592",
-      "Telephone Number": "559 313-9456",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 11.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=4.0000",
-      "Cadmium": "=36.0000",
-      "Cobalt": "=2.9000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=70.0000",
-      "Lead": "=2.0000",
-      "Selenium": "=2.0000",
-      "Zinc": "=1850.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 11.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.0000",
-      "Cadmium": "=36.0000",
-      "Cobalt": "=2.9000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=70.0000",
-      "Lead": "=2.0000",
-      "Selenium": "=2.0000",
-      "Zinc": "=1850.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "30B6BA",
   "metadata": {
     "registrant": "FERTILE PEAT PRODUCTS LLC",
     "label_name": "PROPEAT ALL PURPOSE FERTILIZER CARBON 90 PLUS 11-11-11",
     "wsda_reg_no": "(#3053-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3053-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3053-0004)",
+        "product_name": "PROPEAT ALL PURPOSE FERTILIZER CARBON 90 PLUS 11-11-11",
+        "company_info": {
+          "company": "FERTILE PEAT PRODUCTS LLC",
+          "Mailing Address": "PO Box 29042",
+          "Post Office Box": null,
+          "City": "Santa Fe",
+          "State": "NM",
+          "Postal Code": "87592",
+          "Telephone Number": "559 313-9456",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 11.0,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=4.0000",
+          "Cadmium": "=36.0000",
+          "Cobalt": "=2.9000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=70.0000",
+          "Lead": "=2.0000",
+          "Selenium": "=2.0000",
+          "Zinc": "=1850.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PROPEAT ALL PURPOSE FERTILIZER CARBON 90 PLUS 11-11-11",
+    "brand": "FERTILE PEAT PRODUCTS LLC",
+    "manufacturer": {
+      "name": "FERTILE PEAT PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 11.0,
+      "K2O_pct": 11.0
+    },
+    "macros_pct": {
+      "S": 10.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "30B6BA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.0,
+            "Cd": 36.0,
+            "Co": 2.9,
+            "Hg": 1.0,
+            "Mo": 5.0,
+            "Ni": 70.0,
+            "Pb": 2.0,
+            "Se": 2.0,
+            "Zn": 1850.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.0,
+        "Cd": 36.0,
+        "Co": 2.9,
+        "Hg": 1.0,
+        "Mo": 5.0,
+        "Ni": 70.0,
+        "Pb": 2.0,
+        "Se": 2.0,
+        "Zn": 1850.0
+      }
+    }
   }
 }

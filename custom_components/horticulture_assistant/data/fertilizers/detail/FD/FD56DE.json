@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"FD56DE","source_wsda_record":{"wsda_product_number":"(#0164-0004)","product_name":"MAUGET STEMIX PLUS 1-1-1","company_info":{"company":"J J MAUGET CO","Mailing Address":"PO Box 61","Post Office Box":null,"City":"Floyd","State":"VA","Postal Code":"24091","Telephone Number":"626 444-1057","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.08,"Iron (Fe)":0.27,"Manganese (Mn)":0.08,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.29},"reported_metals":{"Arsenic":"<0.0100","Cadmium":"=0.8100","Cobalt":"=0.1100","Mercury":"<0.0050","Molybdenum":"=7.7000","Nickel":"=0.1100","Lead":"=1.5000","Selenium":"<0.0100","Zinc":"=2780.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.08,"Iron (Fe)":0.27,"Manganese (Mn)":0.08,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.29},"heavy_metals":{"Arsenic":"<0.0100","Cadmium":"=0.8100","Cobalt":"=0.1100","Mercury":"<0.0050","Molybdenum":"=7.7000","Nickel":"=0.1100","Lead":"=1.5000","Selenium":"<0.0100","Zinc":"=2780.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J J MAUGET CO","label_name":"MAUGET STEMIX PLUS 1-1-1","wsda_reg_no":"(#0164-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FD56DE",
+  "metadata": {
+    "registrant": "J J MAUGET CO",
+    "label_name": "MAUGET STEMIX PLUS 1-1-1",
+    "wsda_reg_no": "(#0164-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0164-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0164-0004)",
+        "product_name": "MAUGET STEMIX PLUS 1-1-1",
+        "company_info": {
+          "company": "J J MAUGET CO",
+          "Mailing Address": "PO Box 61",
+          "Post Office Box": null,
+          "City": "Floyd",
+          "State": "VA",
+          "Postal Code": "24091",
+          "Telephone Number": "626 444-1057",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.08,
+          "Iron (Fe)": 0.27,
+          "Manganese (Mn)": 0.08,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.29
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0100",
+          "Cadmium": "=0.8100",
+          "Cobalt": "=0.1100",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=7.7000",
+          "Nickel": "=0.1100",
+          "Lead": "=1.5000",
+          "Selenium": "<0.0100",
+          "Zinc": "=2780.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MAUGET STEMIX PLUS 1-1-1",
+    "brand": "J J MAUGET CO",
+    "manufacturer": {
+      "name": "J J MAUGET CO"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.27,
+      "Mn": 0.08,
+      "Zn": 0.29,
+      "Cu": 0.08
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FD56DE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.01,
+            "Cd": 0.81,
+            "Co": 0.11,
+            "Hg": 0.005,
+            "Mo": 7.7,
+            "Ni": 0.11,
+            "Pb": 1.5,
+            "Se": 0.01,
+            "Zn": 2780.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.01,
+            "Hg": 0.005,
+            "Se": 0.01
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.81,
+        "Co": 0.11,
+        "Mo": 7.7,
+        "Ni": 0.11,
+        "Pb": 1.5,
+        "Zn": 2780.0
+      }
+    }
+  }
+}

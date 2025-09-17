@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1CD2C1",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2816-0003)",
-    "product_name": "CH BIOTECH CHERISH 0.3-0-0",
-    "company_info": {
-      "company": "CH BIOTECH R&D CO LTD",
-      "Mailing Address": "601 Kettering Drive",
-      "Post Office Box": null,
-      "City": "Ontario",
-      "State": "CA",
-      "Postal Code": "91761",
-      "Telephone Number": "909 472-3033",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.06,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.6
-    },
-    "reported_metals": {
-      "Arsenic": "<0.0400",
-      "Cadmium": "<0.0200",
-      "Cobalt": "<0.0200",
-      "Mercury": "<0.0400",
-      "Molybdenum": "<0.0200",
-      "Nickel": "<0.0200",
-      "Lead": "<0.0200",
-      "Selenium": "<0.0200",
-      "Zinc": "=6432.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.06,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.6
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.0400",
-      "Cadmium": "<0.0200",
-      "Cobalt": "<0.0200",
-      "Mercury": "<0.0400",
-      "Molybdenum": "<0.0200",
-      "Nickel": "<0.0200",
-      "Lead": "<0.0200",
-      "Selenium": "<0.0200",
-      "Zinc": "=6432.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1CD2C1",
   "metadata": {
     "registrant": "CH BIOTECH R&D CO LTD",
     "label_name": "CH BIOTECH CHERISH 0.3-0-0",
     "wsda_reg_no": "(#2816-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2816-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2816-0003)",
+        "product_name": "CH BIOTECH CHERISH 0.3-0-0",
+        "company_info": {
+          "company": "CH BIOTECH R&D CO LTD",
+          "Mailing Address": "601 Kettering Drive",
+          "Post Office Box": null,
+          "City": "Ontario",
+          "State": "CA",
+          "Postal Code": "91761",
+          "Telephone Number": "909 472-3033",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.3,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.06,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.6
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0400",
+          "Cadmium": "<0.0200",
+          "Cobalt": "<0.0200",
+          "Mercury": "<0.0400",
+          "Molybdenum": "<0.0200",
+          "Nickel": "<0.0200",
+          "Lead": "<0.0200",
+          "Selenium": "<0.0200",
+          "Zinc": "=6432.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CH BIOTECH CHERISH 0.3-0-0",
+    "brand": "CH BIOTECH R&D CO LTD",
+    "manufacturer": {
+      "name": "CH BIOTECH R&D CO LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.3
+    },
+    "micros_pct": {
+      "Zn": 0.6,
+      "B": 0.06
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1CD2C1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.04,
+            "Cd": 0.02,
+            "Co": 0.02,
+            "Hg": 0.04,
+            "Mo": 0.02,
+            "Ni": 0.02,
+            "Pb": 0.02,
+            "Se": 0.02,
+            "Zn": 6432.2
+          },
+          "detection_limits_ppm": {
+            "As": 0.04,
+            "Cd": 0.02,
+            "Co": 0.02,
+            "Hg": 0.04,
+            "Mo": 0.02,
+            "Ni": 0.02,
+            "Pb": 0.02,
+            "Se": 0.02
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 6432.2
+      }
+    }
   }
 }

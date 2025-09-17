@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"DA8AD9","source_wsda_record":{"wsda_product_number":"(#3392-0011)","product_name":"BLACK KOW COW MANURE 0.5-0.5-0.5","company_info":{"company":"GRO-WELL BRANDS INC","Mailing Address":"P.O. Box 25406","Post Office Box":null,"City":"Tempe","State":"AZ","Postal Code":"85285","Telephone Number":"602 390-1164","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.5,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1800","Cadmium":"=0.1500","Cobalt":"=1.4000","Mercury":"=0.1000","Molybdenum":"=1.6100","Nickel":"=3.3900","Lead":"=2.0300","Selenium":"=0.2400","Zinc":"=65.4500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.5,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1800","Cadmium":"=0.1500","Cobalt":"=1.4000","Mercury":"=0.1000","Molybdenum":"=1.6100","Nickel":"=3.3900","Lead":"=2.0300","Selenium":"=0.2400","Zinc":"=65.4500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO-WELL BRANDS INC","label_name":"BLACK KOW COW MANURE 0.5-0.5-0.5","wsda_reg_no":"(#3392-0011)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DA8AD9",
+  "metadata": {
+    "registrant": "GRO-WELL BRANDS INC",
+    "label_name": "BLACK KOW COW MANURE 0.5-0.5-0.5",
+    "wsda_reg_no": "(#3392-0011)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3392-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3392-0011)",
+        "product_name": "BLACK KOW COW MANURE 0.5-0.5-0.5",
+        "company_info": {
+          "company": "GRO-WELL BRANDS INC",
+          "Mailing Address": "P.O. Box 25406",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85285",
+          "Telephone Number": "602 390-1164",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.5,
+          "Available Phosphoric Acid (P2O5)": 0.5,
+          "Soluble Potash (K2O)": 0.5,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1800",
+          "Cadmium": "=0.1500",
+          "Cobalt": "=1.4000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=1.6100",
+          "Nickel": "=3.3900",
+          "Lead": "=2.0300",
+          "Selenium": "=0.2400",
+          "Zinc": "=65.4500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BLACK KOW COW MANURE 0.5-0.5-0.5",
+    "brand": "GRO-WELL BRANDS INC",
+    "manufacturer": {
+      "name": "GRO-WELL BRANDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.5,
+      "P2O5_pct": 0.5,
+      "K2O_pct": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DA8AD9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.18,
+            "Cd": 0.15,
+            "Co": 1.4,
+            "Hg": 0.1,
+            "Mo": 1.61,
+            "Ni": 3.39,
+            "Pb": 2.03,
+            "Se": 0.24,
+            "Zn": 65.45
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.18,
+        "Cd": 0.15,
+        "Co": 1.4,
+        "Hg": 0.1,
+        "Mo": 1.61,
+        "Ni": 3.39,
+        "Pb": 2.03,
+        "Se": 0.24,
+        "Zn": 65.45
+      }
+    }
+  }
+}

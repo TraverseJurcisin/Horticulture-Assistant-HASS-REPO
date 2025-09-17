@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "71167C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2181-0031)",
-    "product_name": "GROWER'S SECRET PHOSPHORUS FERTILIZER 0-9-0",
-    "company_info": {
-      "company": "GROWER'S SECRET INC",
-      "Mailing Address": "2300 Wilbur Lane Unit B",
-      "Post Office Box": null,
-      "City": "Antioch",
-      "State": "CA",
-      "Postal Code": "94509",
-      "Telephone Number": "303 525-8458",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 9.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 30.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=6.9000",
-      "Cadmium": "=34.2000",
-      "Cobalt": "<1.0000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=4.1000",
-      "Nickel": "=27.6000",
-      "Lead": "=7.9000",
-      "Selenium": "<10.0000",
-      "Zinc": "=411.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 9.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 30.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=6.9000",
-      "Cadmium": "=34.2000",
-      "Cobalt": "<1.0000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=4.1000",
-      "Nickel": "=27.6000",
-      "Lead": "=7.9000",
-      "Selenium": "<10.0000",
-      "Zinc": "=411.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "71167C",
   "metadata": {
     "registrant": "GROWER'S SECRET INC",
     "label_name": "GROWER'S SECRET PHOSPHORUS FERTILIZER 0-9-0",
     "wsda_reg_no": "(#2181-0031)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2181-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2181-0031)",
+        "product_name": "GROWER'S SECRET PHOSPHORUS FERTILIZER 0-9-0",
+        "company_info": {
+          "company": "GROWER'S SECRET INC",
+          "Mailing Address": "2300 Wilbur Lane Unit B",
+          "Post Office Box": null,
+          "City": "Antioch",
+          "State": "CA",
+          "Postal Code": "94509",
+          "Telephone Number": "303 525-8458",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 9.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 30.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.9000",
+          "Cadmium": "=34.2000",
+          "Cobalt": "<1.0000",
+          "Mercury": "=0.1600",
+          "Molybdenum": "=4.1000",
+          "Nickel": "=27.6000",
+          "Lead": "=7.9000",
+          "Selenium": "<10.0000",
+          "Zinc": "=411.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROWER'S SECRET PHOSPHORUS FERTILIZER 0-9-0",
+    "brand": "GROWER'S SECRET INC",
+    "manufacturer": {
+      "name": "GROWER'S SECRET INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 30.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "71167C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.9,
+            "Cd": 34.2,
+            "Co": 1.0,
+            "Hg": 0.16,
+            "Mo": 4.1,
+            "Ni": 27.6,
+            "Pb": 7.9,
+            "Se": 10.0,
+            "Zn": 411.9
+          },
+          "detection_limits_ppm": {
+            "Co": 1.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.9,
+        "Cd": 34.2,
+        "Hg": 0.16,
+        "Mo": 4.1,
+        "Ni": 27.6,
+        "Pb": 7.9,
+        "Zn": 411.9
+      }
+    }
   }
 }

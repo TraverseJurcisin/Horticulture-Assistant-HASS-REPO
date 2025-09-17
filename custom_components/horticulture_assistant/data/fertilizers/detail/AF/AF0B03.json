@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"AF0B03","source_wsda_record":{"wsda_product_number":"(#0670-0107)","product_name":"BIOFERT ESSENTIAL MICRO 0-0-1","company_info":{"company":"TERRALINK HORTICULTURE INC","Mailing Address":"464 Riverside Rd","Post Office Box":null,"City":"Abbotsford","State":"BC","Postal Code":"V2S 7M1","Telephone Number":"800 661-4559","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":null,"Manganese (Mn)":1.55,"Molybdenum (Mo)":0.0225,"Sodium (Na)":null,"Zinc (Zn)":1.0},"reported_metals":{"Arsenic":"=5.8600","Cadmium":"=0.6200","Cobalt":"=29.7900","Mercury":"<0.0010","Molybdenum":"=224.4000","Nickel":"=7.9700","Lead":"=5.2400","Selenium":"=12.3300","Zinc":"=13250.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":null,"Manganese (Mn)":1.55,"Molybdenum (Mo)":0.0225,"Sodium (Na)":null,"Zinc (Zn)":1.0},"heavy_metals":{"Arsenic":"=5.8600","Cadmium":"=0.6200","Cobalt":"=29.7900","Mercury":"<0.0010","Molybdenum":"=224.4000","Nickel":"=7.9700","Lead":"=5.2400","Selenium":"=12.3300","Zinc":"=13250.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRALINK HORTICULTURE INC","label_name":"BIOFERT ESSENTIAL MICRO 0-0-1","wsda_reg_no":"(#0670-0107)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AF0B03",
+  "metadata": {
+    "registrant": "TERRALINK HORTICULTURE INC",
+    "label_name": "BIOFERT ESSENTIAL MICRO 0-0-1",
+    "wsda_reg_no": "(#0670-0107)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0107)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0107)",
+        "product_name": "BIOFERT ESSENTIAL MICRO 0-0-1",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": 0.6,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.25,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 1.55,
+          "Molybdenum (Mo)": 0.0225,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "=5.8600",
+          "Cadmium": "=0.6200",
+          "Cobalt": "=29.7900",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=224.4000",
+          "Nickel": "=7.9700",
+          "Lead": "=5.2400",
+          "Selenium": "=12.3300",
+          "Zinc": "=13250.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOFERT ESSENTIAL MICRO 0-0-1",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Mn": 1.55,
+      "Zn": 1.0,
+      "Cu": 0.25,
+      "B": 0.6,
+      "Mo": 0.0225
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AF0B03-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.86,
+            "Cd": 0.62,
+            "Co": 29.79,
+            "Hg": 0.001,
+            "Mo": 224.4,
+            "Ni": 7.97,
+            "Pb": 5.24,
+            "Se": 12.33,
+            "Zn": 13250.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.86,
+        "Cd": 0.62,
+        "Co": 29.79,
+        "Mo": 224.4,
+        "Ni": 7.97,
+        "Pb": 5.24,
+        "Se": 12.33,
+        "Zn": 13250.0
+      }
+    }
+  }
+}

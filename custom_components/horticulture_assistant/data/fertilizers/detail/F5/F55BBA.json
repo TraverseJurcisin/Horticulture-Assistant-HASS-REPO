@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"F55BBA","source_wsda_record":{"wsda_product_number":"(#4239-0001)","product_name":"OASIS GROWER SOLUTIONS PLANT FERTILIZER 10-15-30","company_info":{"company":"FLORALIFE","Mailing Address":"751 Thunderbolt Drive","Post Office Box":null,"City":"Walterboro","State":"SC","Postal Code":"29488","Telephone Number":"330 945-5130","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":30.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":3.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.08,"Manganese (Mn)":0.04,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.04},"reported_metals":{"Arsenic":"<0.0010","Cadmium":"<0.0150","Cobalt":"=0.1350","Mercury":"<0.0010","Molybdenum":"=0.2170","Nickel":"=1.0500","Lead":"=0.0470","Selenium":"=0.1780","Zinc":"=394.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":30.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":3.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.08,"Manganese (Mn)":0.04,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.04},"heavy_metals":{"Arsenic":"<0.0010","Cadmium":"<0.0150","Cobalt":"=0.1350","Mercury":"<0.0010","Molybdenum":"=0.2170","Nickel":"=1.0500","Lead":"=0.0470","Selenium":"=0.1780","Zinc":"=394.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FLORALIFE","label_name":"OASIS GROWER SOLUTIONS PLANT FERTILIZER 10-15-30","wsda_reg_no":"(#4239-0001)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F55BBA",
+  "metadata": {
+    "registrant": "FLORALIFE",
+    "label_name": "OASIS GROWER SOLUTIONS PLANT FERTILIZER 10-15-30",
+    "wsda_reg_no": "(#4239-0001)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4239-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4239-0001)",
+        "product_name": "OASIS GROWER SOLUTIONS PLANT FERTILIZER 10-15-30",
+        "company_info": {
+          "company": "FLORALIFE",
+          "Mailing Address": "751 Thunderbolt Drive",
+          "Post Office Box": null,
+          "City": "Walterboro",
+          "State": "SC",
+          "Postal Code": "29488",
+          "Telephone Number": "330 945-5130",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 30.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 3.5,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.02,
+          "Iron (Fe)": 0.08,
+          "Manganese (Mn)": 0.04,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.04
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0010",
+          "Cadmium": "<0.0150",
+          "Cobalt": "=0.1350",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.2170",
+          "Nickel": "=1.0500",
+          "Lead": "=0.0470",
+          "Selenium": "=0.1780",
+          "Zinc": "=394.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "OASIS GROWER SOLUTIONS PLANT FERTILIZER 10-15-30",
+    "brand": "FLORALIFE",
+    "manufacturer": {
+      "name": "FLORALIFE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 15.0,
+      "K2O_pct": 30.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 3.5
+    },
+    "micros_pct": {
+      "Fe": 0.08,
+      "Mn": 0.04,
+      "Zn": 0.04,
+      "Cu": 0.02,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F55BBA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.015,
+            "Co": 0.135,
+            "Hg": 0.001,
+            "Mo": 0.217,
+            "Ni": 1.05,
+            "Pb": 0.047,
+            "Se": 0.178,
+            "Zn": 394.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.001,
+            "Cd": 0.015,
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.135,
+        "Mo": 0.217,
+        "Ni": 1.05,
+        "Pb": 0.047,
+        "Se": 0.178,
+        "Zn": 394.0
+      }
+    }
+  }
+}

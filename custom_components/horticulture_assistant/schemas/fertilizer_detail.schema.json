@@ -1,15 +1,4 @@
-{
+﻿{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": true,
-  "properties": {
-    "schema_version": {
-      "minLength": 1,
-      "type": "string"
-    }
-  },
-  "required": [
-    "schema_version"
-  ],
-  "title": "FertilizerDetail",
-  "type": "object"
+  "$ref": "../data/fertilizers/schema/2025-09-V3e.schema.json"
 }

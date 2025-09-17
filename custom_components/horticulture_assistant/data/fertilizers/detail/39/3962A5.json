@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3962A5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3106-0003)",
-    "product_name": "SOLU-CAL PLUS ENHANCED CALCITIC LIME 0-0-0",
-    "company_info": {
-      "company": "GROWMARK INC",
-      "Mailing Address": "1660 3rd Ave SW",
-      "Post Office Box": null,
-      "City": "Le Mars",
-      "State": "IA",
-      "Postal Code": "51031",
-      "Telephone Number": "712 540-6290",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 36.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0159",
-      "Molybdenum": "<1.2500",
-      "Nickel": "<1.0000",
-      "Lead": "<0.4280",
-      "Selenium": "<0.6860",
-      "Zinc": "<12.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "89.9000",
-      "Calcium Carbonate Equivalent (CaCO3)": "89.9000",
-      "Magnesium Carbonate (MgCO3)": "0.9000",
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 36.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0159",
-      "Molybdenum": "<1.2500",
-      "Nickel": "<1.0000",
-      "Lead": "<0.4280",
-      "Selenium": "<0.6860",
-      "Zinc": "<12.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3962A5",
   "metadata": {
     "registrant": "GROWMARK INC",
     "label_name": "SOLU-CAL PLUS ENHANCED CALCITIC LIME 0-0-0",
     "wsda_reg_no": "(#3106-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3106-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3106-0003)",
+        "product_name": "SOLU-CAL PLUS ENHANCED CALCITIC LIME 0-0-0",
+        "company_info": {
+          "company": "GROWMARK INC",
+          "Mailing Address": "1660 3rd Ave SW",
+          "Post Office Box": null,
+          "City": "Le Mars",
+          "State": "IA",
+          "Postal Code": "51031",
+          "Telephone Number": "712 540-6290",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 36.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.0159",
+          "Molybdenum": "<1.2500",
+          "Nickel": "<1.0000",
+          "Lead": "<0.4280",
+          "Selenium": "<0.6860",
+          "Zinc": "<12.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "89.9000",
+          "Calcium Carbonate Equivalent (CaCO3)": "89.9000",
+          "Magnesium Carbonate (MgCO3)": "0.9000",
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SOLU-CAL PLUS ENHANCED CALCITIC LIME 0-0-0",
+    "brand": "GROWMARK INC",
+    "manufacturer": {
+      "name": "GROWMARK INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 36.0,
+      "Mg": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3962A5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0159,
+            "Mo": 1.25,
+            "Ni": 1.0,
+            "Pb": 0.428,
+            "Se": 0.686,
+            "Zn": 12.5
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0159,
+            "Mo": 1.25,
+            "Ni": 1.0,
+            "Pb": 0.428,
+            "Se": 0.686,
+            "Zn": 12.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

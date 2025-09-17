@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "793992",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2285-0004)",
-    "product_name": "OMRI LISTED GRANULAR TRIO 0-0-22 WITH 10.8% MG 22 %S 0-0-22",
-    "company_info": {
-      "company": "INTREPID POTASH - NEW MEXICO LLC",
-      "Mailing Address": "PO Box 8000",
-      "Post Office Box": null,
-      "City": "Monsey",
-      "State": "NY",
-      "Postal Code": "10952",
-      "Telephone Number": "845 356-8390",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 22.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 10.8,
-      "Sulfur (S)": 22.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "<0.0500",
-      "Cobalt": "=0.1300",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=5.7000",
-      "Lead": "<0.1000",
-      "Selenium": "<1.0000",
-      "Zinc": "=28.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 22.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 10.8,
-      "Sulfur (S)": 22.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "<0.0500",
-      "Cobalt": "=0.1300",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=5.7000",
-      "Lead": "<0.1000",
-      "Selenium": "<1.0000",
-      "Zinc": "=28.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "793992",
   "metadata": {
     "registrant": "INTREPID POTASH - NEW MEXICO LLC",
     "label_name": "OMRI LISTED GRANULAR TRIO 0-0-22 WITH 10.8% MG 22 %S 0-0-22",
     "wsda_reg_no": "(#2285-0004)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2285-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2285-0004)",
+        "product_name": "OMRI LISTED GRANULAR TRIO 0-0-22 WITH 10.8% MG 22 %S 0-0-22",
+        "company_info": {
+          "company": "INTREPID POTASH - NEW MEXICO LLC",
+          "Mailing Address": "PO Box 8000",
+          "Post Office Box": null,
+          "City": "Monsey",
+          "State": "NY",
+          "Postal Code": "10952",
+          "Telephone Number": "845 356-8390",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 22.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 10.8,
+          "Sulfur (S)": 22.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "<0.0500",
+          "Cobalt": "=0.1300",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=5.7000",
+          "Lead": "<0.1000",
+          "Selenium": "<1.0000",
+          "Zinc": "=28.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "OMRI LISTED GRANULAR TRIO 0-0-22 WITH 10.8% MG 22 %S 0-0-22",
+    "brand": "INTREPID POTASH - NEW MEXICO LLC",
+    "manufacturer": {
+      "name": "INTREPID POTASH - NEW MEXICO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 22.0
+    },
+    "macros_pct": {
+      "Mg": 10.8,
+      "S": 22.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "793992-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.05,
+            "Co": 0.13,
+            "Hg": 0.005,
+            "Mo": 0.1,
+            "Ni": 5.7,
+            "Pb": 0.1,
+            "Se": 1.0,
+            "Zn": 28.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Cd": 0.05,
+            "Hg": 0.005,
+            "Mo": 0.1,
+            "Pb": 0.1,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.13,
+        "Ni": 5.7,
+        "Zn": 28.0
+      }
+    }
   }
 }

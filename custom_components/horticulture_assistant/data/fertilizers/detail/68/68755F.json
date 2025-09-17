@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "68755F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0989-0056)",
-    "product_name": "GRO-FINE CRABGRASS PREVENTER PLUS LAWN FOOD 30-0-4",
-    "company_info": {
-      "company": "KNOX FERTILIZER COMPANY INC",
-      "Mailing Address": "PO Box 248",
-      "Post Office Box": null,
-      "City": "Knox",
-      "State": "IN",
-      "Postal Code": "46534",
-      "Telephone Number": "574 772-6278",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 30.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5800",
-      "Cadmium": "<0.4860",
-      "Cobalt": "=0.6730",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.5240",
-      "Nickel": "=0.9200",
-      "Lead": "=0.7040",
-      "Selenium": "<1.1300",
-      "Zinc": "=34.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 30.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5800",
-      "Cadmium": "<0.4860",
-      "Cobalt": "=0.6730",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.5240",
-      "Nickel": "=0.9200",
-      "Lead": "=0.7040",
-      "Selenium": "<1.1300",
-      "Zinc": "=34.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "68755F",
   "metadata": {
     "registrant": "KNOX FERTILIZER COMPANY INC",
     "label_name": "GRO-FINE CRABGRASS PREVENTER PLUS LAWN FOOD 30-0-4",
     "wsda_reg_no": "(#0989-0056)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0989-0056)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0989-0056)",
+        "product_name": "GRO-FINE CRABGRASS PREVENTER PLUS LAWN FOOD 30-0-4",
+        "company_info": {
+          "company": "KNOX FERTILIZER COMPANY INC",
+          "Mailing Address": "PO Box 248",
+          "Post Office Box": null,
+          "City": "Knox",
+          "State": "IN",
+          "Postal Code": "46534",
+          "Telephone Number": "574 772-6278",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 30.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5800",
+          "Cadmium": "<0.4860",
+          "Cobalt": "=0.6730",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.5240",
+          "Nickel": "=0.9200",
+          "Lead": "=0.7040",
+          "Selenium": "<1.1300",
+          "Zinc": "=34.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GRO-FINE CRABGRASS PREVENTER PLUS LAWN FOOD 30-0-4",
+    "brand": "KNOX FERTILIZER COMPANY INC",
+    "manufacturer": {
+      "name": "KNOX FERTILIZER COMPANY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 30.0,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "68755F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.58,
+            "Cd": 0.486,
+            "Co": 0.673,
+            "Hg": 0.005,
+            "Mo": 0.524,
+            "Ni": 0.92,
+            "Pb": 0.704,
+            "Se": 1.13,
+            "Zn": 34.4
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.486,
+            "Hg": 0.005,
+            "Mo": 0.524,
+            "Se": 1.13
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.58,
+        "Co": 0.673,
+        "Ni": 0.92,
+        "Pb": 0.704,
+        "Zn": 34.4
+      }
+    }
   }
 }

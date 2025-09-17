@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F98F7F","source_wsda_record":{"wsda_product_number":"(#3944-0006)","product_name":"MOLY OA 0-0-0","company_info":{"company":"REGENERATIVE INPUTS","Mailing Address":"PO Box 141346","Post Office Box":null,"City":"Spokane Valley","State":"WA","Postal Code":"99214","Telephone Number":"509 688-7951","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":1.0,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0800","Cadmium":"=0.2490","Cobalt":"=4.7800","Mercury":"=0.0100","Molybdenum":"=4080.0000","Nickel":"=1.3700","Lead":"=1.5000","Selenium":"=2.1900","Zinc":"=4.9900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":1.0,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0800","Cadmium":"=0.2490","Cobalt":"=4.7800","Mercury":"=0.0100","Molybdenum":"=4080.0000","Nickel":"=1.3700","Lead":"=1.5000","Selenium":"=2.1900","Zinc":"=4.9900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REGENERATIVE INPUTS","label_name":"MOLY OA 0-0-0","wsda_reg_no":"(#3944-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F98F7F",
+  "metadata": {
+    "registrant": "REGENERATIVE INPUTS",
+    "label_name": "MOLY OA 0-0-0",
+    "wsda_reg_no": "(#3944-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3944-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3944-0006)",
+        "product_name": "MOLY OA 0-0-0",
+        "company_info": {
+          "company": "REGENERATIVE INPUTS",
+          "Mailing Address": "PO Box 141346",
+          "Post Office Box": null,
+          "City": "Spokane Valley",
+          "State": "WA",
+          "Postal Code": "99214",
+          "Telephone Number": "509 688-7951",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 1.0,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0800",
+          "Cadmium": "=0.2490",
+          "Cobalt": "=4.7800",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=4080.0000",
+          "Nickel": "=1.3700",
+          "Lead": "=1.5000",
+          "Selenium": "=2.1900",
+          "Zinc": "=4.9900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MOLY OA 0-0-0",
+    "brand": "REGENERATIVE INPUTS",
+    "manufacturer": {
+      "name": "REGENERATIVE INPUTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mo": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F98F7F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.08,
+            "Cd": 0.249,
+            "Co": 4.78,
+            "Hg": 0.01,
+            "Mo": 4080.0,
+            "Ni": 1.37,
+            "Pb": 1.5,
+            "Se": 2.19,
+            "Zn": 4.99
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.08,
+        "Cd": 0.249,
+        "Co": 4.78,
+        "Hg": 0.01,
+        "Mo": 4080.0,
+        "Ni": 1.37,
+        "Pb": 1.5,
+        "Se": 2.19,
+        "Zn": 4.99
+      }
+    }
+  }
+}

@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "20BC35",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3870-0003)",
-    "product_name": "PLANT ENERGY BOOST 20-5-10",
-    "company_info": {
-      "company": "FITLEAF",
-      "Mailing Address": "1207 Business Park Drive Suite",
-      "Post Office Box": null,
-      "City": "Mission",
-      "State": "TX",
-      "Postal Code": "78572",
-      "Telephone Number": "651 815-0266",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.53,
-      "Sulfur (S)": 3.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.166,
-      "Manganese (Mn)": 0.125,
-      "Molybdenum (Mo)": 0.002,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.166
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5000",
-      "Mercury": "=0.0156",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=0.7500",
-      "Lead": "=2.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=2000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.53,
-      "Sulfur (S)": 3.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.166,
-      "Manganese (Mn)": 0.125,
-      "Molybdenum (Mo)": 0.002,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.166
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5000",
-      "Mercury": "=0.0156",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=0.7500",
-      "Lead": "=2.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=2000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "20BC35",
   "metadata": {
     "registrant": "FITLEAF",
     "label_name": "PLANT ENERGY BOOST 20-5-10",
     "wsda_reg_no": "(#3870-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3870-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3870-0003)",
+        "product_name": "PLANT ENERGY BOOST 20-5-10",
+        "company_info": {
+          "company": "FITLEAF",
+          "Mailing Address": "1207 Business Park Drive Suite",
+          "Post Office Box": null,
+          "City": "Mission",
+          "State": "TX",
+          "Postal Code": "78572",
+          "Telephone Number": "651 815-0266",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.53,
+          "Sulfur (S)": 3.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.166,
+          "Manganese (Mn)": 0.125,
+          "Molybdenum (Mo)": 0.002,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.166
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.5000",
+          "Mercury": "=0.0156",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=0.7500",
+          "Lead": "=2.0000",
+          "Selenium": "=0.5000",
+          "Zinc": "=2000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLANT ENERGY BOOST 20-5-10",
+    "brand": "FITLEAF",
+    "manufacturer": {
+      "name": "FITLEAF"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Mg": 2.53,
+      "S": 3.6
+    },
+    "micros_pct": {
+      "Fe": 0.166,
+      "Mn": 0.125,
+      "Zn": 0.166,
+      "Mo": 0.002
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "20BC35-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0156,
+            "Mo": 5.0,
+            "Ni": 0.75,
+            "Pb": 2.0,
+            "Se": 0.5,
+            "Zn": 2000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 0.1,
+        "Co": 0.5,
+        "Hg": 0.0156,
+        "Mo": 5.0,
+        "Ni": 0.75,
+        "Pb": 2.0,
+        "Se": 0.5,
+        "Zn": 2000.0
+      }
+    }
   }
 }

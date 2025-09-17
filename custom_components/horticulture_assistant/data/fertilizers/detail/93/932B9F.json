@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"932B9F","source_wsda_record":{"wsda_product_number":"(#2173-0006)","product_name":"HOUSE & GARDEN VAN DE ZWAAN COCOS B 0.1-0.3-0.6","company_info":{"company":"ALLIED IMPORTS AND LOGISTICS INC","Mailing Address":"2103 Harrison Ave NW Ste 2 - #","Post Office Box":null,"City":"Olympia","State":"WA","Postal Code":"98502","Telephone Number":"541 359-1580","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.6,"Calcium (Ca)":null,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"=0.0200","Molybdenum":"=0.2000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=0.2500","Zinc":"=2.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.6,"Calcium (Ca)":null,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"=0.0200","Molybdenum":"=0.2000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=0.2500","Zinc":"=2.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ALLIED IMPORTS AND LOGISTICS INC","label_name":"HOUSE & GARDEN VAN DE ZWAAN COCOS B 0.1-0.3-0.6","wsda_reg_no":"(#2173-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "932B9F",
+  "metadata": {
+    "registrant": "ALLIED IMPORTS AND LOGISTICS INC",
+    "label_name": "HOUSE & GARDEN VAN DE ZWAAN COCOS B 0.1-0.3-0.6",
+    "wsda_reg_no": "(#2173-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2173-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2173-0006)",
+        "product_name": "HOUSE & GARDEN VAN DE ZWAAN COCOS B 0.1-0.3-0.6",
+        "company_info": {
+          "company": "ALLIED IMPORTS AND LOGISTICS INC",
+          "Mailing Address": "2103 Harrison Ave NW Ste 2 - #",
+          "Post Office Box": null,
+          "City": "Olympia",
+          "State": "WA",
+          "Postal Code": "98502",
+          "Telephone Number": "541 359-1580",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.3,
+          "Soluble Potash (K2O)": 0.6,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.8,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=2.5000",
+          "Lead": "=5.0000",
+          "Selenium": "=0.2500",
+          "Zinc": "=2.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HOUSE & GARDEN VAN DE ZWAAN COCOS B 0.1-0.3-0.6",
+    "brand": "ALLIED IMPORTS AND LOGISTICS INC",
+    "manufacturer": {
+      "name": "ALLIED IMPORTS AND LOGISTICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.3,
+      "K2O_pct": 0.6
+    },
+    "macros_pct": {
+      "Mg": 0.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "932B9F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 1.0,
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Mo": 0.2,
+            "Ni": 2.5,
+            "Pb": 5.0,
+            "Se": 0.25,
+            "Zn": 2.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 1.0,
+        "Co": 5.0,
+        "Hg": 0.02,
+        "Mo": 0.2,
+        "Ni": 2.5,
+        "Pb": 5.0,
+        "Se": 0.25,
+        "Zn": 2.5
+      }
+    }
+  }
+}

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"AE7A31","source_wsda_record":{"wsda_product_number":"(#3337-0003)","product_name":"ECOPRO MANGANESE 0-0-0","company_info":{"company":"COLUMBIA RIVER PRODUCTS LLC","Mailing Address":"590 N Chamberlin Way","Post Office Box":null,"City":"East Wenatchee","State":"WA","Postal Code":"98802","Telephone Number":"509 663-7151","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":5.6,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.0100","Cadmium":"<0.1000","Cobalt":"=129.7000","Mercury":"=0.0500","Molybdenum":"<0.1000","Nickel":"=161.3000","Lead":"=5.8400","Selenium":"=28.2000","Zinc":"=227.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":5.6,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.0100","Cadmium":"<0.1000","Cobalt":"=129.7000","Mercury":"=0.0500","Molybdenum":"<0.1000","Nickel":"=161.3000","Lead":"=5.8400","Selenium":"=28.2000","Zinc":"=227.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COLUMBIA RIVER PRODUCTS LLC","label_name":"ECOPRO MANGANESE 0-0-0","wsda_reg_no":"(#3337-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AE7A31",
+  "metadata": {
+    "registrant": "COLUMBIA RIVER PRODUCTS LLC",
+    "label_name": "ECOPRO MANGANESE 0-0-0",
+    "wsda_reg_no": "(#3337-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3337-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3337-0003)",
+        "product_name": "ECOPRO MANGANESE 0-0-0",
+        "company_info": {
+          "company": "COLUMBIA RIVER PRODUCTS LLC",
+          "Mailing Address": "590 N Chamberlin Way",
+          "Post Office Box": null,
+          "City": "East Wenatchee",
+          "State": "WA",
+          "Postal Code": "98802",
+          "Telephone Number": "509 663-7151",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 5.6,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0100",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=129.7000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=161.3000",
+          "Lead": "=5.8400",
+          "Selenium": "=28.2000",
+          "Zinc": "=227.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECOPRO MANGANESE 0-0-0",
+    "brand": "COLUMBIA RIVER PRODUCTS LLC",
+    "manufacturer": {
+      "name": "COLUMBIA RIVER PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 5.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AE7A31-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.01,
+            "Cd": 0.1,
+            "Co": 129.7,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 161.3,
+            "Pb": 5.84,
+            "Se": 28.2,
+            "Zn": 227.3
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Mo": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.01,
+        "Co": 129.7,
+        "Hg": 0.05,
+        "Ni": 161.3,
+        "Pb": 5.84,
+        "Se": 28.2,
+        "Zn": 227.3
+      }
+    }
+  }
+}

@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"F944A3","source_wsda_record":{"wsda_product_number":"(#0193-0544)","product_name":"SIGNATURE 33-2-10","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":33.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.9700","Cadmium":"=2.1300","Cobalt":"=0.0500","Mercury":"=0.0210","Molybdenum":"=0.5800","Nickel":"=1.9300","Lead":"=4.0800","Selenium":"=0.0600","Zinc":"=984.3200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":33.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.9700","Cadmium":"=2.1300","Cobalt":"=0.0500","Mercury":"=0.0210","Molybdenum":"=0.5800","Nickel":"=1.9300","Lead":"=4.0800","Selenium":"=0.0600","Zinc":"=984.3200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"SIGNATURE 33-2-10","wsda_reg_no":"(#0193-0544)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F944A3",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "SIGNATURE 33-2-10",
+    "wsda_reg_no": "(#0193-0544)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0544)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0544)",
+        "product_name": "SIGNATURE 33-2-10",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 33.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9700",
+          "Cadmium": "=2.1300",
+          "Cobalt": "=0.0500",
+          "Mercury": "=0.0210",
+          "Molybdenum": "=0.5800",
+          "Nickel": "=1.9300",
+          "Lead": "=4.0800",
+          "Selenium": "=0.0600",
+          "Zinc": "=984.3200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIGNATURE 33-2-10",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 33.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F944A3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.97,
+            "Cd": 2.13,
+            "Co": 0.05,
+            "Hg": 0.021,
+            "Mo": 0.58,
+            "Ni": 1.93,
+            "Pb": 4.08,
+            "Se": 0.06,
+            "Zn": 984.32
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.97,
+        "Cd": 2.13,
+        "Co": 0.05,
+        "Hg": 0.021,
+        "Mo": 0.58,
+        "Ni": 1.93,
+        "Pb": 4.08,
+        "Se": 0.06,
+        "Zn": 984.32
+      }
+    }
+  }
+}

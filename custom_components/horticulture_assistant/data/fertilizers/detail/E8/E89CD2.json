@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E89CD2","source_wsda_record":{"wsda_product_number":"(#1790-0009)","product_name":"KEYPLEX 625 DP 4-0-0","company_info":{"company":"MORSE ENTERPRISES LIMITED INC","Mailing Address":"PO Box 2515","Post Office Box":null,"City":"Winter Park","State":"FL","Postal Code":"32790-2515","Telephone Number":"407 682-6500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":6.0},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"=1.1700","Mercury":"<0.1000","Molybdenum":"<2.0000","Nickel":"=9.8500","Lead":"=4.7600","Selenium":"<1.0000","Zinc":"=68670.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":6.0},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"=1.1700","Mercury":"<0.1000","Molybdenum":"<2.0000","Nickel":"=9.8500","Lead":"=4.7600","Selenium":"<1.0000","Zinc":"=68670.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MORSE ENTERPRISES LIMITED INC","label_name":"KEYPLEX 625 DP 4-0-0","wsda_reg_no":"(#1790-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E89CD2",
+  "metadata": {
+    "registrant": "MORSE ENTERPRISES LIMITED INC",
+    "label_name": "KEYPLEX 625 DP 4-0-0",
+    "wsda_reg_no": "(#1790-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1790-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1790-0009)",
+        "product_name": "KEYPLEX 625 DP 4-0-0",
+        "company_info": {
+          "company": "MORSE ENTERPRISES LIMITED INC",
+          "Mailing Address": "PO Box 2515",
+          "Post Office Box": null,
+          "City": "Winter Park",
+          "State": "FL",
+          "Postal Code": "32790-2515",
+          "Telephone Number": "407 682-6500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 2.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 6.0
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=1.1700",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<2.0000",
+          "Nickel": "=9.8500",
+          "Lead": "=4.7600",
+          "Selenium": "<1.0000",
+          "Zinc": "=68670.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KEYPLEX 625 DP 4-0-0",
+    "brand": "MORSE ENTERPRISES LIMITED INC",
+    "manufacturer": {
+      "name": "MORSE ENTERPRISES LIMITED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 2.0,
+      "Zn": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E89CD2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.17,
+            "Hg": 0.1,
+            "Mo": 2.0,
+            "Ni": 9.85,
+            "Pb": 4.76,
+            "Se": 1.0,
+            "Zn": 68670.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Hg": 0.1,
+            "Mo": 2.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.17,
+        "Ni": 9.85,
+        "Pb": 4.76,
+        "Zn": 68670.0
+      }
+    }
+  }
+}

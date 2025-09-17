@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"8BA2A8","source_wsda_record":{"wsda_product_number":"(#0169-0743)","product_name":"BEST GREENS KING MICRO 10-21-21","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.36,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.09,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3000","Cadmium":"=1.7000","Cobalt":"=2.6000","Mercury":"=0.0200","Molybdenum":"=8.9000","Nickel":"=10.0000","Lead":"=6.2000","Selenium":"=0.7000","Zinc":"=1300.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.36,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.09,"Manganese (Mn)":null,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3000","Cadmium":"=1.7000","Cobalt":"=2.6000","Mercury":"=0.0200","Molybdenum":"=8.9000","Nickel":"=10.0000","Lead":"=6.2000","Selenium":"=0.7000","Zinc":"=1300.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"BEST GREENS KING MICRO 10-21-21","wsda_reg_no":"(#0169-0743)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8BA2A8",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "BEST GREENS KING MICRO 10-21-21",
+    "wsda_reg_no": "(#0169-0743)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0743)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0743)",
+        "product_name": "BEST GREENS KING MICRO 10-21-21",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 21.0,
+          "Soluble Potash (K2O)": 21.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 8.36,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.09,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3000",
+          "Cadmium": "=1.7000",
+          "Cobalt": "=2.6000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=8.9000",
+          "Nickel": "=10.0000",
+          "Lead": "=6.2000",
+          "Selenium": "=0.7000",
+          "Zinc": "=1300.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST GREENS KING MICRO 10-21-21",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 21.0,
+      "K2O_pct": 21.0
+    },
+    "macros_pct": {
+      "S": 8.36
+    },
+    "micros_pct": {
+      "Fe": 1.09,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8BA2A8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.3,
+            "Cd": 1.7,
+            "Co": 2.6,
+            "Hg": 0.02,
+            "Mo": 8.9,
+            "Ni": 10.0,
+            "Pb": 6.2,
+            "Se": 0.7,
+            "Zn": 1300.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.3,
+        "Cd": 1.7,
+        "Co": 2.6,
+        "Hg": 0.02,
+        "Mo": 8.9,
+        "Ni": 10.0,
+        "Pb": 6.2,
+        "Se": 0.7,
+        "Zn": 1300.0
+      }
+    }
+  }
+}

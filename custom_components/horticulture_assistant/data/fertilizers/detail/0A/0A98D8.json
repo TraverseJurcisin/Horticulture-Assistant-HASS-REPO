@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0A98D8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1909-0035)",
-    "product_name": "HYDROGRO GLUCO CAL 0-1-0",
-    "company_info": {
-      "company": "HYDROGRO LLC",
-      "Mailing Address": "7815 S Hardy Dr Suite 101",
-      "Post Office Box": null,
-      "City": "Tempe",
-      "State": "AZ",
-      "Postal Code": "85284",
-      "Telephone Number": "480 248-9336",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 8.2,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.34,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0600",
-      "Cadmium": "=0.0800",
-      "Cobalt": "=0.1040",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=1.0000",
-      "Lead": "=0.2200",
-      "Selenium": "<0.0100",
-      "Zinc": "=4.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 8.2,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.34,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0600",
-      "Cadmium": "=0.0800",
-      "Cobalt": "=0.1040",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=1.0000",
-      "Lead": "=0.2200",
-      "Selenium": "<0.0100",
-      "Zinc": "=4.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0A98D8",
   "metadata": {
     "registrant": "HYDROGRO LLC",
     "label_name": "HYDROGRO GLUCO CAL 0-1-0",
     "wsda_reg_no": "(#1909-0035)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1909-0035)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1909-0035)",
+        "product_name": "HYDROGRO GLUCO CAL 0-1-0",
+        "company_info": {
+          "company": "HYDROGRO LLC",
+          "Mailing Address": "7815 S Hardy Dr Suite 101",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85284",
+          "Telephone Number": "480 248-9336",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 8.2,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.34,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0600",
+          "Cadmium": "=0.0800",
+          "Cobalt": "=0.1040",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=1.0000",
+          "Lead": "=0.2200",
+          "Selenium": "<0.0100",
+          "Zinc": "=4.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYDROGRO GLUCO CAL 0-1-0",
+    "brand": "HYDROGRO LLC",
+    "manufacturer": {
+      "name": "HYDROGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 8.2
+    },
+    "micros_pct": {
+      "B": 0.34
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0A98D8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.06,
+            "Cd": 0.08,
+            "Co": 0.104,
+            "Hg": 0.02,
+            "Mo": 0.3,
+            "Ni": 1.0,
+            "Pb": 0.22,
+            "Se": 0.01,
+            "Zn": 4.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.06,
+        "Cd": 0.08,
+        "Co": 0.104,
+        "Hg": 0.02,
+        "Mo": 0.3,
+        "Ni": 1.0,
+        "Pb": 0.22,
+        "Zn": 4.0
+      }
+    }
   }
 }

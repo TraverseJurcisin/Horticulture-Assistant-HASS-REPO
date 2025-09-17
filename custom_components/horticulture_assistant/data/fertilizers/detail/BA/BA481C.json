@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"BA481C","source_wsda_record":{"wsda_product_number":"(#3330-0053)","product_name":"NUTRI-LINK ZN 7-23-1","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":23.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.1900","Cadmium":"=0.7500","Cobalt":"=1.6400","Mercury":"=0.0020","Molybdenum":"=7.5100","Nickel":"=3.3300","Lead":"=1.4000","Selenium":"=0.2500","Zinc":"=3654.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":23.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.1900","Cadmium":"=0.7500","Cobalt":"=1.6400","Mercury":"=0.0020","Molybdenum":"=7.5100","Nickel":"=3.3300","Lead":"=1.4000","Selenium":"=0.2500","Zinc":"=3654.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"NUTRI-LINK ZN 7-23-1","wsda_reg_no":"(#3330-0053)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BA481C",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "NUTRI-LINK ZN 7-23-1",
+    "wsda_reg_no": "(#3330-0053)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0053)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0053)",
+        "product_name": "NUTRI-LINK ZN 7-23-1",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 23.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.1900",
+          "Cadmium": "=0.7500",
+          "Cobalt": "=1.6400",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=7.5100",
+          "Nickel": "=3.3300",
+          "Lead": "=1.4000",
+          "Selenium": "=0.2500",
+          "Zinc": "=3654.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRI-LINK ZN 7-23-1",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 23.0,
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BA481C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.19,
+            "Cd": 0.75,
+            "Co": 1.64,
+            "Hg": 0.002,
+            "Mo": 7.51,
+            "Ni": 3.33,
+            "Pb": 1.4,
+            "Se": 0.25,
+            "Zn": 3654.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.19,
+        "Cd": 0.75,
+        "Co": 1.64,
+        "Hg": 0.002,
+        "Mo": 7.51,
+        "Ni": 3.33,
+        "Pb": 1.4,
+        "Se": 0.25,
+        "Zn": 3654.0
+      }
+    }
+  }
+}

@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "255CCB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2067-0038)",
-    "product_name": "PK SPIKE 0-14-15",
-    "company_info": {
-      "company": "HIT MANUFACTURING",
-      "Mailing Address": "15374 103 A Ave",
-      "Post Office Box": null,
-      "City": "Surrey",
-      "State": "BC",
-      "Postal Code": "V3R 7A2",
-      "Telephone Number": "605 580-1287",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0510",
-      "Cadmium": "=0.0140",
-      "Cobalt": "<0.0040",
-      "Mercury": "<0.0030",
-      "Molybdenum": "=0.5170",
-      "Nickel": "=0.0960",
-      "Lead": "<0.0080",
-      "Selenium": "=0.2980",
-      "Zinc": "<0.0080"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0510",
-      "Cadmium": "=0.0140",
-      "Cobalt": "<0.0040",
-      "Mercury": "<0.0030",
-      "Molybdenum": "=0.5170",
-      "Nickel": "=0.0960",
-      "Lead": "<0.0080",
-      "Selenium": "=0.2980",
-      "Zinc": "<0.0080"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "255CCB",
   "metadata": {
     "registrant": "HIT MANUFACTURING",
     "label_name": "PK SPIKE 0-14-15",
     "wsda_reg_no": "(#2067-0038)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2067-0038)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2067-0038)",
+        "product_name": "PK SPIKE 0-14-15",
+        "company_info": {
+          "company": "HIT MANUFACTURING",
+          "Mailing Address": "15374 103 A Ave",
+          "Post Office Box": null,
+          "City": "Surrey",
+          "State": "BC",
+          "Postal Code": "V3R 7A2",
+          "Telephone Number": "605 580-1287",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": 15.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0510",
+          "Cadmium": "=0.0140",
+          "Cobalt": "<0.0040",
+          "Mercury": "<0.0030",
+          "Molybdenum": "=0.5170",
+          "Nickel": "=0.0960",
+          "Lead": "<0.0080",
+          "Selenium": "=0.2980",
+          "Zinc": "<0.0080"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PK SPIKE 0-14-15",
+    "brand": "HIT MANUFACTURING",
+    "manufacturer": {
+      "name": "HIT MANUFACTURING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 14.0,
+      "K2O_pct": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "255CCB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.051,
+            "Cd": 0.014,
+            "Co": 0.004,
+            "Hg": 0.003,
+            "Mo": 0.517,
+            "Ni": 0.096,
+            "Pb": 0.008,
+            "Se": 0.298,
+            "Zn": 0.008
+          },
+          "detection_limits_ppm": {
+            "Co": 0.004,
+            "Hg": 0.003,
+            "Pb": 0.008,
+            "Zn": 0.008
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.051,
+        "Cd": 0.014,
+        "Mo": 0.517,
+        "Ni": 0.096,
+        "Se": 0.298
+      }
+    }
   }
 }

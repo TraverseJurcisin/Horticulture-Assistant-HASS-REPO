@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"9ECF4C","source_wsda_record":{"wsda_product_number":"(#0349-0427)","product_name":"LINK MINORS 5-0-0","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.25},"reported_metals":{"Arsenic":"=5.3200","Cadmium":"=0.4260","Cobalt":"=6.5700","Mercury":"=0.0510","Molybdenum":"=2.1300","Nickel":"=16.0000","Lead":"=3.1900","Selenium":"=13.2000","Zinc":"=25200.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.25},"heavy_metals":{"Arsenic":"=5.3200","Cadmium":"=0.4260","Cobalt":"=6.5700","Mercury":"=0.0510","Molybdenum":"=2.1300","Nickel":"=16.0000","Lead":"=3.1900","Selenium":"=13.2000","Zinc":"=25200.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"LINK MINORS 5-0-0","wsda_reg_no":"(#0349-0427)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9ECF4C",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "LINK MINORS 5-0-0",
+    "wsda_reg_no": "(#0349-0427)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0427)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0427)",
+        "product_name": "LINK MINORS 5-0-0",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.5,
+          "Manganese (Mn)": 2.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.25
+        },
+        "reported_metals": {
+          "Arsenic": "=5.3200",
+          "Cadmium": "=0.4260",
+          "Cobalt": "=6.5700",
+          "Mercury": "=0.0510",
+          "Molybdenum": "=2.1300",
+          "Nickel": "=16.0000",
+          "Lead": "=3.1900",
+          "Selenium": "=13.2000",
+          "Zinc": "=25200.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LINK MINORS 5-0-0",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 2.5,
+      "Mn": 2.0,
+      "Zn": 0.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9ECF4C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.32,
+            "Cd": 0.426,
+            "Co": 6.57,
+            "Hg": 0.051,
+            "Mo": 2.13,
+            "Ni": 16.0,
+            "Pb": 3.19,
+            "Se": 13.2,
+            "Zn": 25200.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.32,
+        "Cd": 0.426,
+        "Co": 6.57,
+        "Hg": 0.051,
+        "Mo": 2.13,
+        "Ni": 16.0,
+        "Pb": 3.19,
+        "Se": 13.2,
+        "Zn": 25200.0
+      }
+    }
+  }
+}

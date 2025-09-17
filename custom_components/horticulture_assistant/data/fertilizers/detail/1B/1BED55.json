@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1BED55",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1895-0008)",
-    "product_name": "YARAVITA PHOZTRAC 4-15-0",
-    "company_info": {
-      "company": "YARA UK LTD",
-      "Mailing Address": "100 N Tampa St Ste 300",
-      "Post Office Box": null,
-      "City": "Tampa",
-      "State": "FL",
-      "Postal Code": "33602",
-      "Telephone Number": "813 970-5438",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 15.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 13.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 7.7
-    },
-    "reported_metals": {
-      "Arsenic": "<2.0000",
-      "Cadmium": "<2.0000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<2.0000",
-      "Molybdenum": "<15.0000",
-      "Nickel": "<5.0000",
-      "Lead": "<30.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=77000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 15.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 13.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 7.7
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.0000",
-      "Cadmium": "<2.0000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<2.0000",
-      "Molybdenum": "<15.0000",
-      "Nickel": "<5.0000",
-      "Lead": "<30.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=77000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1BED55",
   "metadata": {
     "registrant": "YARA UK LTD",
     "label_name": "YARAVITA PHOZTRAC 4-15-0",
     "wsda_reg_no": "(#1895-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1895-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1895-0008)",
+        "product_name": "YARAVITA PHOZTRAC 4-15-0",
+        "company_info": {
+          "company": "YARA UK LTD",
+          "Mailing Address": "100 N Tampa St Ste 300",
+          "Post Office Box": null,
+          "City": "Tampa",
+          "State": "FL",
+          "Postal Code": "33602",
+          "Telephone Number": "813 970-5438",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 13.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 7.7
+        },
+        "reported_metals": {
+          "Arsenic": "<2.0000",
+          "Cadmium": "<2.0000",
+          "Cobalt": "<2.0000",
+          "Mercury": "<2.0000",
+          "Molybdenum": "<15.0000",
+          "Nickel": "<5.0000",
+          "Lead": "<30.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=77000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "YARAVITA PHOZTRAC 4-15-0",
+    "brand": "YARA UK LTD",
+    "manufacturer": {
+      "name": "YARA UK LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 15.0
+    },
+    "macros_pct": {
+      "Ca": 13.0
+    },
+    "micros_pct": {
+      "Zn": 7.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1BED55-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 2.0,
+            "Co": 2.0,
+            "Hg": 2.0,
+            "Mo": 15.0,
+            "Ni": 5.0,
+            "Pb": 30.0,
+            "Se": 10.0,
+            "Zn": 77000.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.0,
+            "Cd": 2.0,
+            "Co": 2.0,
+            "Hg": 2.0,
+            "Mo": 15.0,
+            "Ni": 5.0,
+            "Pb": 30.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 77000.0
+      }
+    }
   }
 }

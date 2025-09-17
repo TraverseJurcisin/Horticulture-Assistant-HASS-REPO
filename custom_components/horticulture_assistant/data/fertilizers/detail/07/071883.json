@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "071883",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0216-0006)",
-    "product_name": "NACHURS DOUBLE-OK 0-0-30",
-    "company_info": {
-      "company": "NACHURS ALPINE SOLUTIONS LLC",
-      "Mailing Address": "421 Leader St",
-      "Post Office Box": null,
-      "City": "Marion",
-      "State": "OH",
-      "Postal Code": "43302",
-      "Telephone Number": "740 225-3482",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 30.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=1.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 30.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=1.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "071883",
   "metadata": {
     "registrant": "NACHURS ALPINE SOLUTIONS LLC",
     "label_name": "NACHURS DOUBLE-OK 0-0-30",
     "wsda_reg_no": "(#0216-0006)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0216-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0216-0006)",
+        "product_name": "NACHURS DOUBLE-OK 0-0-30",
+        "company_info": {
+          "company": "NACHURS ALPINE SOLUTIONS LLC",
+          "Mailing Address": "421 Leader St",
+          "Post Office Box": null,
+          "City": "Marion",
+          "State": "OH",
+          "Postal Code": "43302",
+          "Telephone Number": "740 225-3482",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 30.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=0.1000",
+          "Zinc": "=1.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NACHURS DOUBLE-OK 0-0-30",
+    "brand": "NACHURS ALPINE SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "NACHURS ALPINE SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 30.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "071883-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.02,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.0,
+            "Se": 0.1,
+            "Zn": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 1.0,
+        "Co": 1.0,
+        "Hg": 0.02,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 1.0,
+        "Se": 0.1,
+        "Zn": 1.0
+      }
+    }
   }
 }

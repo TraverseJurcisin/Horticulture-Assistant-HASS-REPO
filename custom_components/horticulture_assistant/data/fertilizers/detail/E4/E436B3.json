@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E436B3","source_wsda_record":{"wsda_product_number":"(#3562-0003)","product_name":"ROYAL GOLD CROWN JEWELS IMPERIAL BOOST 0-15-11","company_info":{"company":"ROYAL GOLD LLC","Mailing Address":"PO Box 2531","Post Office Box":null,"City":"Anderson","State":"SC","Postal Code":"29621","Telephone Number":"864 642-9222","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":17.0,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1600","Cadmium":"=0.3800","Cobalt":"=1.0000","Mercury":"<0.0500","Molybdenum":"=0.6000","Nickel":"=1.7000","Lead":"=0.5000","Selenium":"=0.7000","Zinc":"=301.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":17.0,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1600","Cadmium":"=0.3800","Cobalt":"=1.0000","Mercury":"<0.0500","Molybdenum":"=0.6000","Nickel":"=1.7000","Lead":"=0.5000","Selenium":"=0.7000","Zinc":"=301.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROYAL GOLD LLC","label_name":"ROYAL GOLD CROWN JEWELS IMPERIAL BOOST 0-15-11","wsda_reg_no":"(#3562-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E436B3",
+  "metadata": {
+    "registrant": "ROYAL GOLD LLC",
+    "label_name": "ROYAL GOLD CROWN JEWELS IMPERIAL BOOST 0-15-11",
+    "wsda_reg_no": "(#3562-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3562-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3562-0003)",
+        "product_name": "ROYAL GOLD CROWN JEWELS IMPERIAL BOOST 0-15-11",
+        "company_info": {
+          "company": "ROYAL GOLD LLC",
+          "Mailing Address": "PO Box 2531",
+          "Post Office Box": null,
+          "City": "Anderson",
+          "State": "SC",
+          "Postal Code": "29621",
+          "Telephone Number": "864 642-9222",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": 17.0,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1600",
+          "Cadmium": "=0.3800",
+          "Cobalt": "=1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.6000",
+          "Nickel": "=1.7000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.7000",
+          "Zinc": "=301.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROYAL GOLD CROWN JEWELS IMPERIAL BOOST 0-15-11",
+    "brand": "ROYAL GOLD LLC",
+    "manufacturer": {
+      "name": "ROYAL GOLD LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 15.0,
+      "K2O_pct": 11.0
+    },
+    "macros_pct": {
+      "Ca": 17.0,
+      "Mg": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E436B3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.16,
+            "Cd": 0.38,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 0.6,
+            "Ni": 1.7,
+            "Pb": 0.5,
+            "Se": 0.7,
+            "Zn": 301.5
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.16,
+        "Cd": 0.38,
+        "Co": 1.0,
+        "Mo": 0.6,
+        "Ni": 1.7,
+        "Pb": 0.5,
+        "Se": 0.7,
+        "Zn": 301.5
+      }
+    }
+  }
+}

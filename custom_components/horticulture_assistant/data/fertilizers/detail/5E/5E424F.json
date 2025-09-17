@@ -1,106 +1,139 @@
 {
-  "commerce": {
-    "price_history": [],
-    "sku_list": []
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "derived_from_raw": null,
-    "derived_from_tokens": null,
-    "guaranteed_analysis": {
-      "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
-      "Calcium (Ca)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Magnesium (Mg)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Sulfur (S)": null,
-      "Total Nitrogen (N)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0300",
-      "Cadmium": "=0.4250",
-      "Cobalt": "=0.4120",
-      "Lead": "=0.5330",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.4580",
-      "Nickel": "=1.3700",
-      "Selenium": "=0.9900",
-      "Zinc": "=12.6000"
-    }
-  },
+  "id": "5E424F",
   "metadata": {
     "detail_updated_at": "2025-07-25T11:15:37Z",
     "first_seen": "2025-07-25",
     "formulation": null,
     "label_name": "TURF FUEL VERTICAL 0-0-8",
     "registrant": "TARGET SPECIALTY PRODUCTS",
-    "wsda_reg_no": "(#1733-0042)"
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ec_ms_cm": null,
-    "ph": {
-      "max": null,
-      "min": null
+    "wsda_reg_no": "(#1733-0042)",
+    "wsda_product_number": "(#1733-0042)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null,
+          "Magnesium Carbonate (MgCO3)": null
+        },
+        "company_info": {
+          "City": "Santa Fe Springs",
+          "Fax Number": null,
+          "Mailing Address": "15415 Marquardt Ave",
+          "Post Office Box": null,
+          "Postal Code": "90670",
+          "State": "CA",
+          "Telephone Number": "502 802-2238",
+          "company": "TARGET SPECIALTY PRODUCTS"
+        },
+        "guaranteed_analysis": {
+          "Available Phosphoric Acid (P2O5)": null,
+          "Boron (B)": null,
+          "Calcium (Ca)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Magnesium (Mg)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Sulfur (S)": null,
+          "Total Nitrogen (N)": null,
+          "Zinc (Zn)": null
+        },
+        "micronutrient_fertilizer": "N",
+        "product_name": "TURF FUEL VERTICAL 0-0-8",
+        "reported_metals": {
+          "Arsenic": "=1.0300",
+          "Cadmium": "=0.4250",
+          "Cobalt": "=0.4120",
+          "Lead": "=0.5330",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.4580",
+          "Nickel": "=1.3700",
+          "Selenium": "=0.9900",
+          "Zinc": "=12.6000"
+        },
+        "waste_derived_fertilizer": "N",
+        "wsda_product_number": "(#1733-0042)"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ec_ms_cm": null,
+        "ph": {
+          "max": null,
+          "min": null
+        }
+      },
+      "commerce": {
+        "price_history": [],
+        "sku_list": []
+      }
     }
   },
-  "product_id": "5E424F",
-  "schema_version": "2025-07-v1",
-  "source_wsda_record": {
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null,
-      "Magnesium Carbonate (MgCO3)": null
+  "product": {
+    "name": "TURF FUEL VERTICAL 0-0-8",
+    "brand": "TARGET SPECIALTY PRODUCTS",
+    "manufacturer": {
+      "name": "TARGET SPECIALTY PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 8.0
     },
-    "company_info": {
-      "City": "Santa Fe Springs",
-      "Fax Number": null,
-      "Mailing Address": "15415 Marquardt Ave",
-      "Post Office Box": null,
-      "Postal Code": "90670",
-      "State": "CA",
-      "Telephone Number": "502 802-2238",
-      "company": "TARGET SPECIALTY PRODUCTS"
-    },
-    "guaranteed_analysis": {
-      "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
-      "Calcium (Ca)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Magnesium (Mg)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Sulfur (S)": null,
-      "Total Nitrogen (N)": null,
-      "Zinc (Zn)": null
-    },
-    "micronutrient_fertilizer": "N",
-    "product_name": "TURF FUEL VERTICAL 0-0-8",
-    "reported_metals": {
-      "Arsenic": "=1.0300",
-      "Cadmium": "=0.4250",
-      "Cobalt": "=0.4120",
-      "Lead": "=0.5330",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.4580",
-      "Nickel": "=1.3700",
-      "Selenium": "=0.9900",
-      "Zinc": "=12.6000"
-    },
-    "waste_derived_fertilizer": "N",
-    "wsda_product_number": "(#1733-0042)"
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5E424F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.03,
+            "Cd": 0.425,
+            "Co": 0.412,
+            "Pb": 0.533,
+            "Hg": 0.005,
+            "Mo": 0.458,
+            "Ni": 1.37,
+            "Se": 0.99,
+            "Zn": 12.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Pb": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.03,
+        "Cd": 0.425,
+        "Co": 0.412,
+        "Pb": 0.533,
+        "Hg": 0.005,
+        "Mo": 0.458,
+        "Ni": 1.37,
+        "Se": 0.99,
+        "Zn": 12.6
+      }
+    }
   }
 }

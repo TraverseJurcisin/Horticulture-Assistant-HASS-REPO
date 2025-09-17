@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "419F6B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2079-0014)",
-    "product_name": "PLATINUM SERIES CYCO SUGA RUSH 0-0.5-0.3 HYDROPONIC USE 0-0.5-0.3",
-    "company_info": {
-      "company": "SJ ENTERPRISES PTY LTD",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "707 787-0215",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 0.5,
-      "Soluble Potash (K2O)": 0.3,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.1000",
-      "Lead": "=0.1000",
-      "Selenium": "=0.1000",
-      "Zinc": "=0.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 0.5,
-      "Soluble Potash (K2O)": 0.3,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.1000",
-      "Lead": "=0.1000",
-      "Selenium": "=0.1000",
-      "Zinc": "=0.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "419F6B",
   "metadata": {
     "registrant": "SJ ENTERPRISES PTY LTD",
     "label_name": "PLATINUM SERIES CYCO SUGA RUSH 0-0.5-0.3 HYDROPONIC USE 0-0.5-0.3",
     "wsda_reg_no": "(#2079-0014)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2079-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2079-0014)",
+        "product_name": "PLATINUM SERIES CYCO SUGA RUSH 0-0.5-0.3 HYDROPONIC USE 0-0.5-0.3",
+        "company_info": {
+          "company": "SJ ENTERPRISES PTY LTD",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 787-0215",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 0.5,
+          "Soluble Potash (K2O)": 0.3,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.1000",
+          "Lead": "=0.1000",
+          "Selenium": "=0.1000",
+          "Zinc": "=0.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLATINUM SERIES CYCO SUGA RUSH 0-0.5-0.3 HYDROPONIC USE 0-0.5-0.3",
+    "brand": "SJ ENTERPRISES PTY LTD",
+    "manufacturer": {
+      "name": "SJ ENTERPRISES PTY LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 0.5,
+      "K2O_pct": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "419F6B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Mo": 0.1,
+            "Ni": 0.1,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.1,
+        "Co": 0.1,
+        "Hg": 0.01,
+        "Mo": 0.1,
+        "Ni": 0.1,
+        "Pb": 0.1,
+        "Se": 0.1,
+        "Zn": 0.1
+      }
+    }
   }
 }

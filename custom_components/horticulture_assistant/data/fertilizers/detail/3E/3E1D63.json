@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3E1D63",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1719-0005)",
-    "product_name": "DELTAG THE ORIGINAL BORON PLUS SOIL/FOLIAR 0-0-0",
-    "company_info": {
-      "company": "DELTAG FORMULATIONS",
-      "Mailing Address": "PO Box 4812",
-      "Post Office Box": null,
-      "City": "Greenville",
-      "State": "MS",
-      "Postal Code": "38704",
-      "Telephone Number": "662 332-3555",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 5.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.4800",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0133",
-      "Molybdenum": "<0.2500",
-      "Nickel": "<0.2500",
-      "Lead": "<0.3000",
-      "Selenium": "<0.5000",
-      "Zinc": "<50.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 5.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.4800",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0133",
-      "Molybdenum": "<0.2500",
-      "Nickel": "<0.2500",
-      "Lead": "<0.3000",
-      "Selenium": "<0.5000",
-      "Zinc": "<50.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3E1D63",
   "metadata": {
     "registrant": "DELTAG FORMULATIONS",
     "label_name": "DELTAG THE ORIGINAL BORON PLUS SOIL/FOLIAR 0-0-0",
     "wsda_reg_no": "(#1719-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1719-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1719-0005)",
+        "product_name": "DELTAG THE ORIGINAL BORON PLUS SOIL/FOLIAR 0-0-0",
+        "company_info": {
+          "company": "DELTAG FORMULATIONS",
+          "Mailing Address": "PO Box 4812",
+          "Post Office Box": null,
+          "City": "Greenville",
+          "State": "MS",
+          "Postal Code": "38704",
+          "Telephone Number": "662 332-3555",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 5.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.4800",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.0133",
+          "Molybdenum": "<0.2500",
+          "Nickel": "<0.2500",
+          "Lead": "<0.3000",
+          "Selenium": "<0.5000",
+          "Zinc": "<50.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DELTAG THE ORIGINAL BORON PLUS SOIL/FOLIAR 0-0-0",
+    "brand": "DELTAG FORMULATIONS",
+    "manufacturer": {
+      "name": "DELTAG FORMULATIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "B": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3E1D63-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.48,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0133,
+            "Mo": 0.25,
+            "Ni": 0.25,
+            "Pb": 0.3,
+            "Se": 0.5,
+            "Zn": 50.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0133,
+            "Mo": 0.25,
+            "Ni": 0.25,
+            "Pb": 0.3,
+            "Se": 0.5,
+            "Zn": 50.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.48
+      }
+    }
   }
 }

@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6A9988",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0236-0524)",
-    "product_name": "SCOTTS SIERRAFORM GT K-STEP 6-0-27",
-    "company_info": {
-      "company": "SCOTTS COMPANY (THE)",
-      "Mailing Address": "14111 Scottslawn Rd",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 645-2523",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 27.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.2,
-      "Sulfur (S)": 9.3,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.7,
-      "Manganese (Mn)": 0.15,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.6900",
-      "Cadmium": "=0.6480",
-      "Cobalt": "=2.3400",
-      "Mercury": "<0.0531",
-      "Molybdenum": "=25.6000",
-      "Nickel": "=6.2700",
-      "Lead": "=1.7100",
-      "Selenium": "=0.4890",
-      "Zinc": "=279.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 27.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.2,
-      "Sulfur (S)": 9.3,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.7,
-      "Manganese (Mn)": 0.15,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.6900",
-      "Cadmium": "=0.6480",
-      "Cobalt": "=2.3400",
-      "Mercury": "<0.0531",
-      "Molybdenum": "=25.6000",
-      "Nickel": "=6.2700",
-      "Lead": "=1.7100",
-      "Selenium": "=0.4890",
-      "Zinc": "=279.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6A9988",
   "metadata": {
     "registrant": "SCOTTS COMPANY (THE)",
     "label_name": "SCOTTS SIERRAFORM GT K-STEP 6-0-27",
     "wsda_reg_no": "(#0236-0524)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0524)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0524)",
+        "product_name": "SCOTTS SIERRAFORM GT K-STEP 6-0-27",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 27.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.2,
+          "Sulfur (S)": 9.3,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.7,
+          "Manganese (Mn)": 0.15,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6900",
+          "Cadmium": "=0.6480",
+          "Cobalt": "=2.3400",
+          "Mercury": "<0.0531",
+          "Molybdenum": "=25.6000",
+          "Nickel": "=6.2700",
+          "Lead": "=1.7100",
+          "Selenium": "=0.4890",
+          "Zinc": "=279.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS SIERRAFORM GT K-STEP 6-0-27",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "K2O_pct": 27.0
+    },
+    "macros_pct": {
+      "Mg": 1.2,
+      "S": 9.3
+    },
+    "micros_pct": {
+      "Fe": 0.7,
+      "Mn": 0.15,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6A9988-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.69,
+            "Cd": 0.648,
+            "Co": 2.34,
+            "Hg": 0.0531,
+            "Mo": 25.6,
+            "Ni": 6.27,
+            "Pb": 1.71,
+            "Se": 0.489,
+            "Zn": 279.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0531
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.69,
+        "Cd": 0.648,
+        "Co": 2.34,
+        "Mo": 25.6,
+        "Ni": 6.27,
+        "Pb": 1.71,
+        "Se": 0.489,
+        "Zn": 279.0
+      }
+    }
   }
 }

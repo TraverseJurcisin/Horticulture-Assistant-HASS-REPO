@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"D6874D","source_wsda_record":{"wsda_product_number":"(#0103-0142)","product_name":"TECHNIGRO WATER SOLUBLE FERTILIZER 6-30-30 PLUS 6-30-30","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":30.0,"Soluble Potash (K2O)":30.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=3.0400","Cadmium":"<0.1000","Cobalt":"=0.1000","Mercury":"=0.1000","Molybdenum":"=6.5500","Nickel":"=2.2400","Lead":"=3.4500","Selenium":"=0.1000","Zinc":"=548.2600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":30.0,"Soluble Potash (K2O)":30.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=3.0400","Cadmium":"<0.1000","Cobalt":"=0.1000","Mercury":"=0.1000","Molybdenum":"=6.5500","Nickel":"=2.2400","Lead":"=3.4500","Selenium":"=0.1000","Zinc":"=548.2600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"TECHNIGRO WATER SOLUBLE FERTILIZER 6-30-30 PLUS 6-30-30","wsda_reg_no":"(#0103-0142)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D6874D",
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "TECHNIGRO WATER SOLUBLE FERTILIZER 6-30-30 PLUS 6-30-30",
+    "wsda_reg_no": "(#0103-0142)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0142)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0142)",
+        "product_name": "TECHNIGRO WATER SOLUBLE FERTILIZER 6-30-30 PLUS 6-30-30",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 30.0,
+          "Soluble Potash (K2O)": 30.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": 0.015,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=3.0400",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=6.5500",
+          "Nickel": "=2.2400",
+          "Lead": "=3.4500",
+          "Selenium": "=0.1000",
+          "Zinc": "=548.2600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TECHNIGRO WATER SOLUBLE FERTILIZER 6-30-30 PLUS 6-30-30",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 30.0,
+      "K2O_pct": 30.0
+    },
+    "macros_pct": {
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.015,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D6874D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.04,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.1,
+            "Mo": 6.55,
+            "Ni": 2.24,
+            "Pb": 3.45,
+            "Se": 0.1,
+            "Zn": 548.26
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.04,
+        "Co": 0.1,
+        "Hg": 0.1,
+        "Mo": 6.55,
+        "Ni": 2.24,
+        "Pb": 3.45,
+        "Se": 0.1,
+        "Zn": 548.26
+      }
+    }
+  }
+}

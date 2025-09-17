@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "687D75",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0951-0014)",
-    "product_name": "ALLTECH CROP SCIENCE TURN 0-0-0",
-    "company_info": {
-      "company": "IMPROCROP USA INC",
-      "Mailing Address": "3031 Catnip Hill Rd",
-      "Post Office Box": null,
-      "City": "Nicholasville",
-      "State": "KY",
-      "Postal Code": "40356",
-      "Telephone Number": "859 881-2257",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": 1.6,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.2
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0630",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=11.9100",
-      "Mercury": "=0.0003",
-      "Molybdenum": "=0.6900",
-      "Nickel": "=19.7200",
-      "Lead": "=22.9700",
-      "Selenium": "=0.0780",
-      "Zinc": "=3.8900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": 1.6,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.2
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0630",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=11.9100",
-      "Mercury": "=0.0003",
-      "Molybdenum": "=0.6900",
-      "Nickel": "=19.7200",
-      "Lead": "=22.9700",
-      "Selenium": "=0.0780",
-      "Zinc": "=3.8900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "687D75",
   "metadata": {
     "registrant": "IMPROCROP USA INC",
     "label_name": "ALLTECH CROP SCIENCE TURN 0-0-0",
     "wsda_reg_no": "(#0951-0014)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0951-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0951-0014)",
+        "product_name": "ALLTECH CROP SCIENCE TURN 0-0-0",
+        "company_info": {
+          "company": "IMPROCROP USA INC",
+          "Mailing Address": "3031 Catnip Hill Rd",
+          "Post Office Box": null,
+          "City": "Nicholasville",
+          "State": "KY",
+          "Postal Code": "40356",
+          "Telephone Number": "859 881-2257",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 2.0,
+          "Iron (Fe)": 1.6,
+          "Manganese (Mn)": 0.8,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.2
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0630",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=11.9100",
+          "Mercury": "=0.0003",
+          "Molybdenum": "=0.6900",
+          "Nickel": "=19.7200",
+          "Lead": "=22.9700",
+          "Selenium": "=0.0780",
+          "Zinc": "=3.8900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALLTECH CROP SCIENCE TURN 0-0-0",
+    "brand": "IMPROCROP USA INC",
+    "manufacturer": {
+      "name": "IMPROCROP USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 1.6,
+      "Mn": 0.8,
+      "Zn": 3.2,
+      "Cu": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "687D75-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.063,
+            "Cd": 0.1,
+            "Co": 11.91,
+            "Hg": 0.0003,
+            "Mo": 0.69,
+            "Ni": 19.72,
+            "Pb": 22.97,
+            "Se": 0.078,
+            "Zn": 3.89
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.063,
+        "Cd": 0.1,
+        "Co": 11.91,
+        "Hg": 0.0003,
+        "Mo": 0.69,
+        "Ni": 19.72,
+        "Pb": 22.97,
+        "Se": 0.078,
+        "Zn": 3.89
+      }
+    }
   }
 }

@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"DDBFB6","source_wsda_record":{"wsda_product_number":"(#2319-0178)","product_name":"OSMOCOTE BLEND 27-4-8 5-6M 27-4-8","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":1.2,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7700","Cadmium":"=0.3290","Cobalt":"=91.5000","Mercury":"=0.0196","Molybdenum":"=0.6690","Nickel":"=3.1500","Lead":"=0.5880","Selenium":"=1.7200","Zinc":"=18.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":1.2,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7700","Cadmium":"=0.3290","Cobalt":"=91.5000","Mercury":"=0.0196","Molybdenum":"=0.6690","Nickel":"=3.1500","Lead":"=0.5880","Selenium":"=1.7200","Zinc":"=18.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"OSMOCOTE BLEND 27-4-8 5-6M 27-4-8","wsda_reg_no":"(#2319-0178)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DDBFB6",
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "OSMOCOTE BLEND 27-4-8 5-6M 27-4-8",
+    "wsda_reg_no": "(#2319-0178)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2319-0178)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2319-0178)",
+        "product_name": "OSMOCOTE BLEND 27-4-8 5-6M 27-4-8",
+        "company_info": {
+          "company": "EVERRIS NA INC",
+          "Mailing Address": "PO Box 3310",
+          "Post Office Box": null,
+          "City": "Dublin",
+          "State": "OH",
+          "Postal Code": "43016",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 27.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": 1.2,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7700",
+          "Cadmium": "=0.3290",
+          "Cobalt": "=91.5000",
+          "Mercury": "=0.0196",
+          "Molybdenum": "=0.6690",
+          "Nickel": "=3.1500",
+          "Lead": "=0.5880",
+          "Selenium": "=1.7200",
+          "Zinc": "=18.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "OSMOCOTE BLEND 27-4-8 5-6M 27-4-8",
+    "brand": "EVERRIS NA INC",
+    "manufacturer": {
+      "name": "EVERRIS NA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 27.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 1.2,
+      "S": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DDBFB6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.77,
+            "Cd": 0.329,
+            "Co": 91.5,
+            "Hg": 0.0196,
+            "Mo": 0.669,
+            "Ni": 3.15,
+            "Pb": 0.588,
+            "Se": 1.72,
+            "Zn": 18.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.77,
+        "Cd": 0.329,
+        "Co": 91.5,
+        "Hg": 0.0196,
+        "Mo": 0.669,
+        "Ni": 3.15,
+        "Pb": 0.588,
+        "Se": 1.72,
+        "Zn": 18.6
+      }
+    }
+  }
+}

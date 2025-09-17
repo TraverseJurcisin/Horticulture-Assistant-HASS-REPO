@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "42E2ED",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4061-0003)",
-    "product_name": "ROSY SOIL CACTUS & SUCCULENT 0.21-0.05-0.07",
-    "company_info": {
-      "company": "ROSY SOIL PBC",
-      "Mailing Address": "228 Park Ave S., PMB 28244",
-      "Post Office Box": null,
-      "City": "New York",
-      "State": "NY",
-      "Postal Code": "10003",
-      "Telephone Number": "773 633-9088",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.21,
-      "Available Phosphoric Acid (P2O5)": 0.05,
-      "Soluble Potash (K2O)": 0.07,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1060",
-      "Cadmium": "=0.0580",
-      "Cobalt": "=0.3310",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=0.6200",
-      "Nickel": "=11.7000",
-      "Lead": "=1.4300",
-      "Selenium": "=0.0690",
-      "Zinc": "=1.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.21,
-      "Available Phosphoric Acid (P2O5)": 0.05,
-      "Soluble Potash (K2O)": 0.07,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1060",
-      "Cadmium": "=0.0580",
-      "Cobalt": "=0.3310",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=0.6200",
-      "Nickel": "=11.7000",
-      "Lead": "=1.4300",
-      "Selenium": "=0.0690",
-      "Zinc": "=1.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "42E2ED",
   "metadata": {
     "registrant": "ROSY SOIL PBC",
     "label_name": "ROSY SOIL CACTUS & SUCCULENT 0.21-0.05-0.07",
     "wsda_reg_no": "(#4061-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4061-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4061-0003)",
+        "product_name": "ROSY SOIL CACTUS & SUCCULENT 0.21-0.05-0.07",
+        "company_info": {
+          "company": "ROSY SOIL PBC",
+          "Mailing Address": "228 Park Ave S., PMB 28244",
+          "Post Office Box": null,
+          "City": "New York",
+          "State": "NY",
+          "Postal Code": "10003",
+          "Telephone Number": "773 633-9088",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.21,
+          "Available Phosphoric Acid (P2O5)": 0.05,
+          "Soluble Potash (K2O)": 0.07,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1060",
+          "Cadmium": "=0.0580",
+          "Cobalt": "=0.3310",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=0.6200",
+          "Nickel": "=11.7000",
+          "Lead": "=1.4300",
+          "Selenium": "=0.0690",
+          "Zinc": "=1.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROSY SOIL CACTUS & SUCCULENT 0.21-0.05-0.07",
+    "brand": "ROSY SOIL PBC",
+    "manufacturer": {
+      "name": "ROSY SOIL PBC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.21,
+      "P2O5_pct": 0.05,
+      "K2O_pct": 0.07
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "42E2ED-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.106,
+            "Cd": 0.058,
+            "Co": 0.331,
+            "Hg": 0.003,
+            "Mo": 0.62,
+            "Ni": 11.7,
+            "Pb": 1.43,
+            "Se": 0.069,
+            "Zn": 1.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.106,
+        "Cd": 0.058,
+        "Co": 0.331,
+        "Hg": 0.003,
+        "Mo": 0.62,
+        "Ni": 11.7,
+        "Pb": 1.43,
+        "Se": 0.069,
+        "Zn": 1.8
+      }
+    }
   }
 }

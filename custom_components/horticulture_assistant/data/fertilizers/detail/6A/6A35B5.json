@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6A35B5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1444-0189)",
-    "product_name": "BRANDT ORGANIPLEX 4% FE 0-0-0",
-    "company_info": {
-      "company": "BRANDT CONSOLIDATED INC",
-      "Mailing Address": "2935 South Koke Mill Road",
-      "Post Office Box": null,
-      "City": "Springfield",
-      "State": "IL",
-      "Postal Code": "62711-9651",
-      "Telephone Number": "217 547-5867",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.7000",
-      "Cobalt": "=4.1000",
-      "Mercury": "=0.2500",
-      "Molybdenum": "=2.7000",
-      "Nickel": "=33.8000",
-      "Lead": "=32.3000",
-      "Selenium": "=0.6000",
-      "Zinc": "=330.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.7000",
-      "Cobalt": "=4.1000",
-      "Mercury": "=0.2500",
-      "Molybdenum": "=2.7000",
-      "Nickel": "=33.8000",
-      "Lead": "=32.3000",
-      "Selenium": "=0.6000",
-      "Zinc": "=330.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6A35B5",
   "metadata": {
     "registrant": "BRANDT CONSOLIDATED INC",
     "label_name": "BRANDT ORGANIPLEX 4% FE 0-0-0",
     "wsda_reg_no": "(#1444-0189)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1444-0189)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1444-0189)",
+        "product_name": "BRANDT ORGANIPLEX 4% FE 0-0-0",
+        "company_info": {
+          "company": "BRANDT CONSOLIDATED INC",
+          "Mailing Address": "2935 South Koke Mill Road",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711-9651",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.7000",
+          "Cobalt": "=4.1000",
+          "Mercury": "=0.2500",
+          "Molybdenum": "=2.7000",
+          "Nickel": "=33.8000",
+          "Lead": "=32.3000",
+          "Selenium": "=0.6000",
+          "Zinc": "=330.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRANDT ORGANIPLEX 4% FE 0-0-0",
+    "brand": "BRANDT CONSOLIDATED INC",
+    "manufacturer": {
+      "name": "BRANDT CONSOLIDATED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6A35B5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.7,
+            "Co": 4.1,
+            "Hg": 0.25,
+            "Mo": 2.7,
+            "Ni": 33.8,
+            "Pb": 32.3,
+            "Se": 0.6,
+            "Zn": 330.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.7,
+        "Co": 4.1,
+        "Hg": 0.25,
+        "Mo": 2.7,
+        "Ni": 33.8,
+        "Pb": 32.3,
+        "Se": 0.6,
+        "Zn": 330.4
+      }
+    }
   }
 }

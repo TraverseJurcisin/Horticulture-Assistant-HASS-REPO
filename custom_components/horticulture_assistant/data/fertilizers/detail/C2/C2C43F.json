@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"C2C43F","source_wsda_record":{"wsda_product_number":"(#0133-0167)","product_name":"ECO-MATE CROP MIX #120352 0-0-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"reported_metals":{"Arsenic":"=0.0180","Cadmium":"=0.3100","Cobalt":"=0.2600","Mercury":"=0.0010","Molybdenum":"=0.0010","Nickel":"=4.6000","Lead":"=0.7300","Selenium":"=0.0460","Zinc":"=44810.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"heavy_metals":{"Arsenic":"=0.0180","Cadmium":"=0.3100","Cobalt":"=0.2600","Mercury":"=0.0010","Molybdenum":"=0.0010","Nickel":"=4.6000","Lead":"=0.7300","Selenium":"=0.0460","Zinc":"=44810.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"ECO-MATE CROP MIX #120352 0-0-0","wsda_reg_no":"(#0133-0167)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C2C43F",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "ECO-MATE CROP MIX #120352 0-0-0",
+    "wsda_reg_no": "(#0133-0167)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0133-0167)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0133-0167)",
+        "product_name": "ECO-MATE CROP MIX #120352 0-0-0",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0180",
+          "Cadmium": "=0.3100",
+          "Cobalt": "=0.2600",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.0010",
+          "Nickel": "=4.6000",
+          "Lead": "=0.7300",
+          "Selenium": "=0.0460",
+          "Zinc": "=44810.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECO-MATE CROP MIX #120352 0-0-0",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.5
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 1.0,
+      "Zn": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C2C43F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.018,
+            "Cd": 0.31,
+            "Co": 0.26,
+            "Hg": 0.001,
+            "Mo": 0.001,
+            "Ni": 4.6,
+            "Pb": 0.73,
+            "Se": 0.046,
+            "Zn": 44810.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.018,
+        "Cd": 0.31,
+        "Co": 0.26,
+        "Hg": 0.001,
+        "Mo": 0.001,
+        "Ni": 4.6,
+        "Pb": 0.73,
+        "Se": 0.046,
+        "Zn": 44810.0
+      }
+    }
+  }
+}

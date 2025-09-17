@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"E078BC","source_wsda_record":{"wsda_product_number":"(#3037-0005)","product_name":"CHS PRIMELAND 6-0-0 WITH 16.5 CL AMMONIUM CHLORIDE SOLUTION 6-0-0","company_info":{"company":"CHS PRIMELAND - CLARKSTON, WA - WIL","Mailing Address":"2950 Wilma Drive","Post Office Box":null,"City":"Clarkston","State":"WA","Postal Code":"99403","Telephone Number":"509 758-6568","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":16.5,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.0200","Cadmium":"=0.1580","Cobalt":"<0.0100","Mercury":"<0.0020","Molybdenum":"=0.0770","Nickel":"=0.0690","Lead":"<0.0200","Selenium":"<0.0200","Zinc":"=148.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":16.5,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.0200","Cadmium":"=0.1580","Cobalt":"<0.0100","Mercury":"<0.0020","Molybdenum":"=0.0770","Nickel":"=0.0690","Lead":"<0.0200","Selenium":"<0.0200","Zinc":"=148.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CHS PRIMELAND - CLARKSTON, WA - WIL","label_name":"CHS PRIMELAND 6-0-0 WITH 16.5 CL AMMONIUM CHLORIDE SOLUTION 6-0-0","wsda_reg_no":"(#3037-0005)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E078BC",
+  "metadata": {
+    "registrant": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+    "label_name": "CHS PRIMELAND 6-0-0 WITH 16.5 CL AMMONIUM CHLORIDE SOLUTION 6-0-0",
+    "wsda_reg_no": "(#3037-0005)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3037-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3037-0005)",
+        "product_name": "CHS PRIMELAND 6-0-0 WITH 16.5 CL AMMONIUM CHLORIDE SOLUTION 6-0-0",
+        "company_info": {
+          "company": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+          "Mailing Address": "2950 Wilma Drive",
+          "Post Office Box": null,
+          "City": "Clarkston",
+          "State": "WA",
+          "Postal Code": "99403",
+          "Telephone Number": "509 758-6568",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": 16.5,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0200",
+          "Cadmium": "=0.1580",
+          "Cobalt": "<0.0100",
+          "Mercury": "<0.0020",
+          "Molybdenum": "=0.0770",
+          "Nickel": "=0.0690",
+          "Lead": "<0.0200",
+          "Selenium": "<0.0200",
+          "Zinc": "=148.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CHS PRIMELAND 6-0-0 WITH 16.5 CL AMMONIUM CHLORIDE SOLUTION 6-0-0",
+    "brand": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+    "manufacturer": {
+      "name": "CHS PRIMELAND - CLARKSTON, WA - WIL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "micros_pct": {
+      "Cl": 16.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E078BC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.02,
+            "Cd": 0.158,
+            "Co": 0.01,
+            "Hg": 0.002,
+            "Mo": 0.077,
+            "Ni": 0.069,
+            "Pb": 0.02,
+            "Se": 0.02,
+            "Zn": 148.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.02,
+            "Co": 0.01,
+            "Hg": 0.002,
+            "Pb": 0.02,
+            "Se": 0.02
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.158,
+        "Mo": 0.077,
+        "Ni": 0.069,
+        "Zn": 148.0
+      }
+    }
+  }
+}

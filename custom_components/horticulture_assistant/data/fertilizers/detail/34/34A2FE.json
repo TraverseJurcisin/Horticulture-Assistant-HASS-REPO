@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "34A2FE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1265-0078)",
-    "product_name": "PLANT ENERGY PRODUCTS SWEET RAW ALL NATURAL MINERAL SUPPLEMENT 0-0-0",
-    "company_info": {
-      "company": "BOTANICARE",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "707 284-4701",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=9.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=9.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "34A2FE",
   "metadata": {
     "registrant": "BOTANICARE",
     "label_name": "PLANT ENERGY PRODUCTS SWEET RAW ALL NATURAL MINERAL SUPPLEMENT 0-0-0",
     "wsda_reg_no": "(#1265-0078)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1265-0078)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1265-0078)",
+        "product_name": "PLANT ENERGY PRODUCTS SWEET RAW ALL NATURAL MINERAL SUPPLEMENT 0-0-0",
+        "company_info": {
+          "company": "BOTANICARE",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=10.0000",
+          "Zinc": "=9.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLANT ENERGY PRODUCTS SWEET RAW ALL NATURAL MINERAL SUPPLEMENT 0-0-0",
+    "brand": "BOTANICARE",
+    "manufacturer": {
+      "name": "BOTANICARE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 1.5,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "34A2FE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 9.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 10.0,
+        "Zn": 9.4
+      }
+    }
   }
 }

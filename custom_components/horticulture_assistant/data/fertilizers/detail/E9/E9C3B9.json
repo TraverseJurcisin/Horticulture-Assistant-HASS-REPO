@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E9C3B9","source_wsda_record":{"wsda_product_number":"(#3282-0011)","product_name":"WHITNEY FARMS ORGANIC & NATURAL TOMATO & VEGETABLE FOOD 7-6-9","company_info":{"company":"TERRACE BRANDS","Mailing Address":"3993 Howard Hughes Pkwy Suite","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89169-6754","Telephone Number":"937 578-5924","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":6.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9430","Cadmium":"=0.4720","Cobalt":"=0.7430","Mercury":"=0.0220","Molybdenum":"=4.6000","Nickel":"=5.2400","Lead":"=0.4720","Selenium":"=3.7900","Zinc":"=140.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":6.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9430","Cadmium":"=0.4720","Cobalt":"=0.7430","Mercury":"=0.0220","Molybdenum":"=4.6000","Nickel":"=5.2400","Lead":"=0.4720","Selenium":"=3.7900","Zinc":"=140.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRACE BRANDS","label_name":"WHITNEY FARMS ORGANIC & NATURAL TOMATO & VEGETABLE FOOD 7-6-9","wsda_reg_no":"(#3282-0011)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E9C3B9",
+  "metadata": {
+    "registrant": "TERRACE BRANDS",
+    "label_name": "WHITNEY FARMS ORGANIC & NATURAL TOMATO & VEGETABLE FOOD 7-6-9",
+    "wsda_reg_no": "(#3282-0011)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3282-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3282-0011)",
+        "product_name": "WHITNEY FARMS ORGANIC & NATURAL TOMATO & VEGETABLE FOOD 7-6-9",
+        "company_info": {
+          "company": "TERRACE BRANDS",
+          "Mailing Address": "3993 Howard Hughes Pkwy Suite",
+          "Post Office Box": null,
+          "City": "Las Vegas",
+          "State": "NV",
+          "Postal Code": "89169-6754",
+          "Telephone Number": "937 578-5924",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": 6.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9430",
+          "Cadmium": "=0.4720",
+          "Cobalt": "=0.7430",
+          "Mercury": "=0.0220",
+          "Molybdenum": "=4.6000",
+          "Nickel": "=5.2400",
+          "Lead": "=0.4720",
+          "Selenium": "=3.7900",
+          "Zinc": "=140.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WHITNEY FARMS ORGANIC & NATURAL TOMATO & VEGETABLE FOOD 7-6-9",
+    "brand": "TERRACE BRANDS",
+    "manufacturer": {
+      "name": "TERRACE BRANDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 6.0,
+      "Mg": 1.0,
+      "S": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E9C3B9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.943,
+            "Cd": 0.472,
+            "Co": 0.743,
+            "Hg": 0.022,
+            "Mo": 4.6,
+            "Ni": 5.24,
+            "Pb": 0.472,
+            "Se": 3.79,
+            "Zn": 140.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.943,
+        "Cd": 0.472,
+        "Co": 0.743,
+        "Hg": 0.022,
+        "Mo": 4.6,
+        "Ni": 5.24,
+        "Pb": 0.472,
+        "Se": 3.79,
+        "Zn": 140.0
+      }
+    }
+  }
+}

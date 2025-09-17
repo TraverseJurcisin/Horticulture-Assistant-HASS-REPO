@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"BDE3C7","source_wsda_record":{"wsda_product_number":"(#0997-0048)","product_name":"VIGORO WATER SOLUBLE ALL PURPOSE 24-8-16","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.15,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.06},"reported_metals":{"Arsenic":"=0.3370","Cadmium":"=0.1680","Cobalt":"=0.1700","Mercury":"=0.0067","Molybdenum":"=4.5000","Nickel":"=0.3070","Lead":"=0.3000","Selenium":"=0.6740","Zinc":"=571.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":0.15,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.06},"heavy_metals":{"Arsenic":"=0.3370","Cadmium":"=0.1680","Cobalt":"=0.1700","Mercury":"=0.0067","Molybdenum":"=4.5000","Nickel":"=0.3070","Lead":"=0.3000","Selenium":"=0.6740","Zinc":"=571.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"VIGORO WATER SOLUBLE ALL PURPOSE 24-8-16","wsda_reg_no":"(#0997-0048)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BDE3C7",
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "VIGORO WATER SOLUBLE ALL PURPOSE 24-8-16",
+    "wsda_reg_no": "(#0997-0048)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0048)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0048)",
+        "product_name": "VIGORO WATER SOLUBLE ALL PURPOSE 24-8-16",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 24.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.07,
+          "Iron (Fe)": 0.15,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.06
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3370",
+          "Cadmium": "=0.1680",
+          "Cobalt": "=0.1700",
+          "Mercury": "=0.0067",
+          "Molybdenum": "=4.5000",
+          "Nickel": "=0.3070",
+          "Lead": "=0.3000",
+          "Selenium": "=0.6740",
+          "Zinc": "=571.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VIGORO WATER SOLUBLE ALL PURPOSE 24-8-16",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 24.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 0.15,
+      "Mn": 0.05,
+      "Zn": 0.06,
+      "Cu": 0.07,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BDE3C7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.337,
+            "Cd": 0.168,
+            "Co": 0.17,
+            "Hg": 0.0067,
+            "Mo": 4.5,
+            "Ni": 0.307,
+            "Pb": 0.3,
+            "Se": 0.674,
+            "Zn": 571.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.337,
+        "Cd": 0.168,
+        "Co": 0.17,
+        "Hg": 0.0067,
+        "Mo": 4.5,
+        "Ni": 0.307,
+        "Pb": 0.3,
+        "Se": 0.674,
+        "Zn": 571.0
+      }
+    }
+  }
+}

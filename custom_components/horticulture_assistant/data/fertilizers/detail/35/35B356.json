@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "35B356",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3031-0018)",
-    "product_name": "HGS BIOSCIENCE HUMIK WSP 0-0-10",
-    "company_info": {
-      "company": "HUMIC GROWTH SOLUTIONS INC",
-      "Mailing Address": "709 Eastport Rd",
-      "Post Office Box": null,
-      "City": "Jacksonville",
-      "State": "FL",
-      "Postal Code": "32218",
-      "Telephone Number": "904 329-1012",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=3.1600",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.8400",
-      "Nickel": "=5.7200",
-      "Lead": "=8.2900",
-      "Selenium": "=2.2900",
-      "Zinc": "=15.1200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=3.1600",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.8400",
-      "Nickel": "=5.7200",
-      "Lead": "=8.2900",
-      "Selenium": "=2.2900",
-      "Zinc": "=15.1200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "35B356",
   "metadata": {
     "registrant": "HUMIC GROWTH SOLUTIONS INC",
     "label_name": "HGS BIOSCIENCE HUMIK WSP 0-0-10",
     "wsda_reg_no": "(#3031-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3031-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3031-0018)",
+        "product_name": "HGS BIOSCIENCE HUMIK WSP 0-0-10",
+        "company_info": {
+          "company": "HUMIC GROWTH SOLUTIONS INC",
+          "Mailing Address": "709 Eastport Rd",
+          "Post Office Box": null,
+          "City": "Jacksonville",
+          "State": "FL",
+          "Postal Code": "32218",
+          "Telephone Number": "904 329-1012",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7900",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=3.1600",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=0.8400",
+          "Nickel": "=5.7200",
+          "Lead": "=8.2900",
+          "Selenium": "=2.2900",
+          "Zinc": "=15.1200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HGS BIOSCIENCE HUMIK WSP 0-0-10",
+    "brand": "HUMIC GROWTH SOLUTIONS INC",
+    "manufacturer": {
+      "name": "HUMIC GROWTH SOLUTIONS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "35B356-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.79,
+            "Cd": 0.5,
+            "Co": 3.16,
+            "Hg": 0.1,
+            "Mo": 0.84,
+            "Ni": 5.72,
+            "Pb": 8.29,
+            "Se": 2.29,
+            "Zn": 15.12
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.79,
+        "Cd": 0.5,
+        "Co": 3.16,
+        "Hg": 0.1,
+        "Mo": 0.84,
+        "Ni": 5.72,
+        "Pb": 8.29,
+        "Se": 2.29,
+        "Zn": 15.12
+      }
+    }
   }
 }

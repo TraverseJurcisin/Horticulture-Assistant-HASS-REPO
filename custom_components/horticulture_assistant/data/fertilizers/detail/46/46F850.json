@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "46F850",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1168-0075)",
-    "product_name": "EARTH JUICE SEABLAST GROW 17-8-17",
-    "company_info": {
-      "company": "OGM",
-      "Mailing Address": "PO Box 3442",
-      "Post Office Box": null,
-      "City": "Chico",
-      "State": "CA",
-      "Postal Code": "95973",
-      "Telephone Number": "530 961-4659",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 17.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0005,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=5.3600",
-      "Cadmium": "=0.1300",
-      "Cobalt": "=1.4000",
-      "Mercury": "=0.2600",
-      "Molybdenum": "=0.6700",
-      "Nickel": "=2.9000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=596.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 17.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0005,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.3600",
-      "Cadmium": "=0.1300",
-      "Cobalt": "=1.4000",
-      "Mercury": "=0.2600",
-      "Molybdenum": "=0.6700",
-      "Nickel": "=2.9000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=596.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "46F850",
   "metadata": {
     "registrant": "OGM",
     "label_name": "EARTH JUICE SEABLAST GROW 17-8-17",
     "wsda_reg_no": "(#1168-0075)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1168-0075)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1168-0075)",
+        "product_name": "EARTH JUICE SEABLAST GROW 17-8-17",
+        "company_info": {
+          "company": "OGM",
+          "Mailing Address": "PO Box 3442",
+          "Post Office Box": null,
+          "City": "Chico",
+          "State": "CA",
+          "Postal Code": "95973",
+          "Telephone Number": "530 961-4659",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 17.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 17.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.0005,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=5.3600",
+          "Cadmium": "=0.1300",
+          "Cobalt": "=1.4000",
+          "Mercury": "=0.2600",
+          "Molybdenum": "=0.6700",
+          "Nickel": "=2.9000",
+          "Lead": "=5.0000",
+          "Selenium": "=0.5000",
+          "Zinc": "=596.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTH JUICE SEABLAST GROW 17-8-17",
+    "brand": "OGM",
+    "manufacturer": {
+      "name": "OGM"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 17.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 17.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "46F850-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.36,
+            "Cd": 0.13,
+            "Co": 1.4,
+            "Hg": 0.26,
+            "Mo": 0.67,
+            "Ni": 2.9,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 596.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.36,
+        "Cd": 0.13,
+        "Co": 1.4,
+        "Hg": 0.26,
+        "Mo": 0.67,
+        "Ni": 2.9,
+        "Pb": 5.0,
+        "Se": 0.5,
+        "Zn": 596.0
+      }
+    }
   }
 }

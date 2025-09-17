@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "72CA99",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0185-0255)",
-    "product_name": "LEBANON TURF COUNTRY CLUB FERTILIZER 9-9-9",
-    "company_info": {
-      "company": "LEBANON SEABOARD CORPORATION",
-      "Mailing Address": "1600 E Cumberland St",
-      "Post Office Box": null,
-      "City": "Lebanon",
-      "State": "PA",
-      "Postal Code": "17042",
-      "Telephone Number": "800 532-0090",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 9.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": 2.5,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.3000",
-      "Cadmium": "=1.7000",
-      "Cobalt": "=1.2000",
-      "Mercury": "<0.0029",
-      "Molybdenum": "=4.7800",
-      "Nickel": "=6.3000",
-      "Lead": "<1.9000",
-      "Selenium": "<3.8000",
-      "Zinc": "=37.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 9.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": 2.5,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.3000",
-      "Cadmium": "=1.7000",
-      "Cobalt": "=1.2000",
-      "Mercury": "<0.0029",
-      "Molybdenum": "=4.7800",
-      "Nickel": "=6.3000",
-      "Lead": "<1.9000",
-      "Selenium": "<3.8000",
-      "Zinc": "=37.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "72CA99",
   "metadata": {
     "registrant": "LEBANON SEABOARD CORPORATION",
     "label_name": "LEBANON TURF COUNTRY CLUB FERTILIZER 9-9-9",
     "wsda_reg_no": "(#0185-0255)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0255)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0255)",
+        "product_name": "LEBANON TURF COUNTRY CLUB FERTILIZER 9-9-9",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 9.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": 2.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.3000",
+          "Cadmium": "=1.7000",
+          "Cobalt": "=1.2000",
+          "Mercury": "<0.0029",
+          "Molybdenum": "=4.7800",
+          "Nickel": "=6.3000",
+          "Lead": "<1.9000",
+          "Selenium": "<3.8000",
+          "Zinc": "=37.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LEBANON TURF COUNTRY CLUB FERTILIZER 9-9-9",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 9.0,
+      "K2O_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 2.5,
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "72CA99-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.3,
+            "Cd": 1.7,
+            "Co": 1.2,
+            "Hg": 0.0029,
+            "Mo": 4.78,
+            "Ni": 6.3,
+            "Pb": 1.9,
+            "Se": 3.8,
+            "Zn": 37.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0029,
+            "Pb": 1.9,
+            "Se": 3.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.3,
+        "Cd": 1.7,
+        "Co": 1.2,
+        "Mo": 4.78,
+        "Ni": 6.3,
+        "Zn": 37.0
+      }
+    }
   }
 }

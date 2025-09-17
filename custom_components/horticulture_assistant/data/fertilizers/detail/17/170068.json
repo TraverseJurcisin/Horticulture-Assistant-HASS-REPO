@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "170068",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3948-0013)",
-    "product_name": "REDOX BIO-NUTRIENTS O-X MAINSTAY SI 0-0-0",
-    "company_info": {
-      "company": "REDOX BIO-NUTRIENTS LLC",
-      "Mailing Address": "PO Box 129",
-      "Post Office Box": null,
-      "City": "Burley",
-      "State": "ID",
-      "Postal Code": "83318",
-      "Telephone Number": "208 678-2610",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 10.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=5.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 10.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=5.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "170068",
   "metadata": {
     "registrant": "REDOX BIO-NUTRIENTS LLC",
     "label_name": "REDOX BIO-NUTRIENTS O-X MAINSTAY SI 0-0-0",
     "wsda_reg_no": "(#3948-0013)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3948-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3948-0013)",
+        "product_name": "REDOX BIO-NUTRIENTS O-X MAINSTAY SI 0-0-0",
+        "company_info": {
+          "company": "REDOX BIO-NUTRIENTS LLC",
+          "Mailing Address": "PO Box 129",
+          "Post Office Box": null,
+          "City": "Burley",
+          "State": "ID",
+          "Postal Code": "83318",
+          "Telephone Number": "208 678-2610",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 10.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=5.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "REDOX BIO-NUTRIENTS O-X MAINSTAY SI 0-0-0",
+    "brand": "REDOX BIO-NUTRIENTS LLC",
+    "manufacturer": {
+      "name": "REDOX BIO-NUTRIENTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "170068-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 1.0,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 1.0,
+        "Co": 1.0,
+        "Hg": 1.0,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 1.0,
+        "Se": 1.0,
+        "Zn": 5.0
+      }
+    }
   }
 }

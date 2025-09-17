@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"A9DCDC","source_wsda_record":{"wsda_product_number":"(#3111-0007)","product_name":"BLOOM CITY SILICA BOOST 0-0-1","company_info":{"company":"BLOOM CITY ORGANICS LLC","Mailing Address":"PO Box 875","Post Office Box":null,"City":"Bellevue","State":"WA","Postal Code":"98009","Telephone Number":"425 765-8460","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.2500","Cobalt":"=2.4400","Mercury":"=0.0200","Molybdenum":"=2.4400","Nickel":"=0.9000","Lead":"=4.8800","Selenium":"=2.4400","Zinc":"=5.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.2500","Cobalt":"=2.4400","Mercury":"=0.0200","Molybdenum":"=2.4400","Nickel":"=0.9000","Lead":"=4.8800","Selenium":"=2.4400","Zinc":"=5.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BLOOM CITY ORGANICS LLC","label_name":"BLOOM CITY SILICA BOOST 0-0-1","wsda_reg_no":"(#3111-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A9DCDC",
+  "metadata": {
+    "registrant": "BLOOM CITY ORGANICS LLC",
+    "label_name": "BLOOM CITY SILICA BOOST 0-0-1",
+    "wsda_reg_no": "(#3111-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3111-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3111-0007)",
+        "product_name": "BLOOM CITY SILICA BOOST 0-0-1",
+        "company_info": {
+          "company": "BLOOM CITY ORGANICS LLC",
+          "Mailing Address": "PO Box 875",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98009",
+          "Telephone Number": "425 765-8460",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.2500",
+          "Cobalt": "=2.4400",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=2.4400",
+          "Nickel": "=0.9000",
+          "Lead": "=4.8800",
+          "Selenium": "=2.4400",
+          "Zinc": "=5.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BLOOM CITY SILICA BOOST 0-0-1",
+    "brand": "BLOOM CITY ORGANICS LLC",
+    "manufacturer": {
+      "name": "BLOOM CITY ORGANICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A9DCDC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.25,
+            "Co": 2.44,
+            "Hg": 0.02,
+            "Mo": 2.44,
+            "Ni": 0.9,
+            "Pb": 4.88,
+            "Se": 2.44,
+            "Zn": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.25,
+        "Co": 2.44,
+        "Hg": 0.02,
+        "Mo": 2.44,
+        "Ni": 0.9,
+        "Pb": 4.88,
+        "Se": 2.44,
+        "Zn": 5.0
+      }
+    }
+  }
+}

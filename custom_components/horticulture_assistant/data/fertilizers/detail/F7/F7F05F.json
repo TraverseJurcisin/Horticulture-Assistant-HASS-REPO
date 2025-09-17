@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F7F05F","source_wsda_record":{"wsda_product_number":"(#3413-0012)","product_name":"STONINGTON BLEND ORGANIC & NATURAL GROWER'S MIX 0.5-0.34-0.12","company_info":{"company":"COAST OF MAINE ORGANIC PRODUCTS INC","Mailing Address":"145 Newbury St","Post Office Box":null,"City":"Portland","State":"ME","Postal Code":"04101","Telephone Number":"717 786-2146","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.5,"Available Phosphoric Acid (P2O5)":0.34,"Soluble Potash (K2O)":0.12,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2000","Cadmium":"=0.3000","Cobalt":"=2.1000","Mercury":"=0.0170","Molybdenum":"=0.6000","Nickel":"=0.8000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=19.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.5,"Available Phosphoric Acid (P2O5)":0.34,"Soluble Potash (K2O)":0.12,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2000","Cadmium":"=0.3000","Cobalt":"=2.1000","Mercury":"=0.0170","Molybdenum":"=0.6000","Nickel":"=0.8000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=19.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COAST OF MAINE ORGANIC PRODUCTS INC","label_name":"STONINGTON BLEND ORGANIC & NATURAL GROWER'S MIX 0.5-0.34-0.12","wsda_reg_no":"(#3413-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F7F05F",
+  "metadata": {
+    "registrant": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "label_name": "STONINGTON BLEND ORGANIC & NATURAL GROWER'S MIX 0.5-0.34-0.12",
+    "wsda_reg_no": "(#3413-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3413-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3413-0012)",
+        "product_name": "STONINGTON BLEND ORGANIC & NATURAL GROWER'S MIX 0.5-0.34-0.12",
+        "company_info": {
+          "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
+          "Mailing Address": "145 Newbury St",
+          "Post Office Box": null,
+          "City": "Portland",
+          "State": "ME",
+          "Postal Code": "04101",
+          "Telephone Number": "717 786-2146",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.5,
+          "Available Phosphoric Acid (P2O5)": 0.34,
+          "Soluble Potash (K2O)": 0.12,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2000",
+          "Cadmium": "=0.3000",
+          "Cobalt": "=2.1000",
+          "Mercury": "=0.0170",
+          "Molybdenum": "=0.6000",
+          "Nickel": "=0.8000",
+          "Lead": "=1.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=19.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STONINGTON BLEND ORGANIC & NATURAL GROWER'S MIX 0.5-0.34-0.12",
+    "brand": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "COAST OF MAINE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.5,
+      "P2O5_pct": 0.34,
+      "K2O_pct": 0.12
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F7F05F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.2,
+            "Cd": 0.3,
+            "Co": 2.1,
+            "Hg": 0.017,
+            "Mo": 0.6,
+            "Ni": 0.8,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 19.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.2,
+        "Cd": 0.3,
+        "Co": 2.1,
+        "Hg": 0.017,
+        "Mo": 0.6,
+        "Ni": 0.8,
+        "Pb": 1.0,
+        "Se": 1.0,
+        "Zn": 19.3
+      }
+    }
+  }
+}

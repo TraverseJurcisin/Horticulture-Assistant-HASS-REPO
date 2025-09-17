@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2EFAAD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3413-0020)",
-    "product_name": "COAST OF MAINE ORGANIC & NATURAL FERTILIZER FOR RHODIES, AZALEAS & BERRIES 4-5-2",
-    "company_info": {
-      "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
-      "Mailing Address": "145 Newbury St",
-      "Post Office Box": null,
-      "City": "Portland",
-      "State": "ME",
-      "Postal Code": "04101",
-      "Telephone Number": "717 786-2146",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.3600",
-      "Cadmium": "=0.3980",
-      "Cobalt": "<0.5150",
-      "Mercury": "<0.0300",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=3.2900",
-      "Lead": "<0.5150",
-      "Selenium": "<2.0600",
-      "Zinc": "=225.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.3600",
-      "Cadmium": "=0.3980",
-      "Cobalt": "<0.5150",
-      "Mercury": "<0.0300",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=3.2900",
-      "Lead": "<0.5150",
-      "Selenium": "<2.0600",
-      "Zinc": "=225.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2EFAAD",
   "metadata": {
     "registrant": "COAST OF MAINE ORGANIC PRODUCTS INC",
     "label_name": "COAST OF MAINE ORGANIC & NATURAL FERTILIZER FOR RHODIES, AZALEAS & BERRIES 4-5-2",
     "wsda_reg_no": "(#3413-0020)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3413-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3413-0020)",
+        "product_name": "COAST OF MAINE ORGANIC & NATURAL FERTILIZER FOR RHODIES, AZALEAS & BERRIES 4-5-2",
+        "company_info": {
+          "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
+          "Mailing Address": "145 Newbury St",
+          "Post Office Box": null,
+          "City": "Portland",
+          "State": "ME",
+          "Postal Code": "04101",
+          "Telephone Number": "717 786-2146",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.3600",
+          "Cadmium": "=0.3980",
+          "Cobalt": "<0.5150",
+          "Mercury": "<0.0300",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=3.2900",
+          "Lead": "<0.5150",
+          "Selenium": "<2.0600",
+          "Zinc": "=225.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "COAST OF MAINE ORGANIC & NATURAL FERTILIZER FOR RHODIES, AZALEAS & BERRIES 4-5-2",
+    "brand": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "COAST OF MAINE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2EFAAD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.36,
+            "Cd": 0.398,
+            "Co": 0.515,
+            "Hg": 0.03,
+            "Mo": 1.5,
+            "Ni": 3.29,
+            "Pb": 0.515,
+            "Se": 2.06,
+            "Zn": 225.0
+          },
+          "detection_limits_ppm": {
+            "Co": 0.515,
+            "Hg": 0.03,
+            "Pb": 0.515,
+            "Se": 2.06
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.36,
+        "Cd": 0.398,
+        "Mo": 1.5,
+        "Ni": 3.29,
+        "Zn": 225.0
+      }
+    }
   }
 }

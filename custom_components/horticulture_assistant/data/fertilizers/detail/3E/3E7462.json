@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3E7462",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2252-0010)",
-    "product_name": "GUARANTEE COMPLEX 0-0-6",
-    "company_info": {
-      "company": "OCEAN ORGANICS",
-      "Mailing Address": "PO Box 1448",
-      "Post Office Box": null,
-      "City": "Waldoboro",
-      "State": "ME",
-      "Postal Code": "04572",
-      "Telephone Number": "207 832-4305",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "<0.9600",
-      "Cobalt": "<4.8000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "<4.8000",
-      "Nickel": "<0.9600",
-      "Lead": "=7.2000",
-      "Selenium": "<4.8000",
-      "Zinc": "=21.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "<0.9600",
-      "Cobalt": "<4.8000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "<4.8000",
-      "Nickel": "<0.9600",
-      "Lead": "=7.2000",
-      "Selenium": "<4.8000",
-      "Zinc": "=21.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3E7462",
   "metadata": {
     "registrant": "OCEAN ORGANICS",
     "label_name": "GUARANTEE COMPLEX 0-0-6",
     "wsda_reg_no": "(#2252-0010)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2252-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2252-0010)",
+        "product_name": "GUARANTEE COMPLEX 0-0-6",
+        "company_info": {
+          "company": "OCEAN ORGANICS",
+          "Mailing Address": "PO Box 1448",
+          "Post Office Box": null,
+          "City": "Waldoboro",
+          "State": "ME",
+          "Postal Code": "04572",
+          "Telephone Number": "207 832-4305",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.8000",
+          "Cadmium": "<0.9600",
+          "Cobalt": "<4.8000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<4.8000",
+          "Nickel": "<0.9600",
+          "Lead": "=7.2000",
+          "Selenium": "<4.8000",
+          "Zinc": "=21.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GUARANTEE COMPLEX 0-0-6",
+    "brand": "OCEAN ORGANICS",
+    "manufacturer": {
+      "name": "OCEAN ORGANICS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3E7462-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.8,
+            "Cd": 0.96,
+            "Co": 4.8,
+            "Hg": 0.02,
+            "Mo": 4.8,
+            "Ni": 0.96,
+            "Pb": 7.2,
+            "Se": 4.8,
+            "Zn": 21.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.96,
+            "Co": 4.8,
+            "Hg": 0.02,
+            "Mo": 4.8,
+            "Ni": 0.96,
+            "Se": 4.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.8,
+        "Pb": 7.2,
+        "Zn": 21.0
+      }
+    }
   }
 }

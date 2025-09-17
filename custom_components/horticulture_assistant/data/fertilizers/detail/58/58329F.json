@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "58329F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2779-0003)",
-    "product_name": "MYKE TREE & SHRUB 0.1-0.2-1",
-    "company_info": {
-      "company": "PREMIER TECH",
-      "Mailing Address": "1 Avenue Premier",
-      "Post Office Box": null,
-      "City": "Riviere-Du-Loup",
-      "State": "QC",
-      "Postal Code": "G5R 6C1",
-      "Telephone Number": "418 867-8883",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.1,
-      "Available Phosphoric Acid (P2O5)": 0.2,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.7000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=4.2500",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=9.6000",
-      "Lead": "=6.1100",
-      "Selenium": "=1.0000",
-      "Zinc": "=25.2300"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.1,
-      "Available Phosphoric Acid (P2O5)": 0.2,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.7000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=4.2500",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=9.6000",
-      "Lead": "=6.1100",
-      "Selenium": "=1.0000",
-      "Zinc": "=25.2300"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "58329F",
   "metadata": {
     "registrant": "PREMIER TECH",
     "label_name": "MYKE TREE & SHRUB 0.1-0.2-1",
     "wsda_reg_no": "(#2779-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2779-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2779-0003)",
+        "product_name": "MYKE TREE & SHRUB 0.1-0.2-1",
+        "company_info": {
+          "company": "PREMIER TECH",
+          "Mailing Address": "1 Avenue Premier",
+          "Post Office Box": null,
+          "City": "Riviere-Du-Loup",
+          "State": "QC",
+          "Postal Code": "G5R 6C1",
+          "Telephone Number": "418 867-8883",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.2,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=4.2500",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=9.6000",
+          "Lead": "=6.1100",
+          "Selenium": "=1.0000",
+          "Zinc": "=25.2300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MYKE TREE & SHRUB 0.1-0.2-1",
+    "brand": "PREMIER TECH",
+    "manufacturer": {
+      "name": "PREMIER TECH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.2,
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "58329F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.7,
+            "Cd": 1.0,
+            "Co": 4.25,
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Ni": 9.6,
+            "Pb": 6.11,
+            "Se": 1.0,
+            "Zn": 25.23
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.7,
+        "Cd": 1.0,
+        "Co": 4.25,
+        "Hg": 0.1,
+        "Mo": 1.0,
+        "Ni": 9.6,
+        "Pb": 6.11,
+        "Se": 1.0,
+        "Zn": 25.23
+      }
+    }
   }
 }

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"CD3102","source_wsda_record":{"wsda_product_number":"(#3388-0007)","product_name":"PURKOTE 180 DAY POLYMER COATED UREA 42-0-0","company_info":{"company":"PURSELL AGRI TECH","Mailing Address":"104 Calhoun Ave","Post Office Box":null,"City":"Sylacauga","State":"AL","Postal Code":"35150","Telephone Number":"256 242-0230","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":42.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"=0.3000","Cobalt":"=0.1000","Mercury":"<0.0400","Molybdenum":"=0.3000","Nickel":"=1.6000","Lead":"<1.0000","Selenium":"<0.3000","Zinc":"=13.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":42.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"=0.3000","Cobalt":"=0.1000","Mercury":"<0.0400","Molybdenum":"=0.3000","Nickel":"=1.6000","Lead":"<1.0000","Selenium":"<0.3000","Zinc":"=13.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PURSELL AGRI TECH","label_name":"PURKOTE 180 DAY POLYMER COATED UREA 42-0-0","wsda_reg_no":"(#3388-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CD3102",
+  "metadata": {
+    "registrant": "PURSELL AGRI TECH",
+    "label_name": "PURKOTE 180 DAY POLYMER COATED UREA 42-0-0",
+    "wsda_reg_no": "(#3388-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3388-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3388-0007)",
+        "product_name": "PURKOTE 180 DAY POLYMER COATED UREA 42-0-0",
+        "company_info": {
+          "company": "PURSELL AGRI TECH",
+          "Mailing Address": "104 Calhoun Ave",
+          "Post Office Box": null,
+          "City": "Sylacauga",
+          "State": "AL",
+          "Postal Code": "35150",
+          "Telephone Number": "256 242-0230",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 42.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.3000",
+          "Cobalt": "=0.1000",
+          "Mercury": "<0.0400",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=1.6000",
+          "Lead": "<1.0000",
+          "Selenium": "<0.3000",
+          "Zinc": "=13.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PURKOTE 180 DAY POLYMER COATED UREA 42-0-0",
+    "brand": "PURSELL AGRI TECH",
+    "manufacturer": {
+      "name": "PURSELL AGRI TECH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 42.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CD3102-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.3,
+            "Co": 0.1,
+            "Hg": 0.04,
+            "Mo": 0.3,
+            "Ni": 1.6,
+            "Pb": 1.0,
+            "Se": 0.3,
+            "Zn": 13.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.04,
+            "Pb": 1.0,
+            "Se": 0.3
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.3,
+        "Co": 0.1,
+        "Mo": 0.3,
+        "Ni": 1.6,
+        "Zn": 13.0
+      }
+    }
+  }
+}

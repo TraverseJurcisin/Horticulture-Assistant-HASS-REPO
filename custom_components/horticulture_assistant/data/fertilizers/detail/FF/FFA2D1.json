@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"FFA2D1","source_wsda_record":{"wsda_product_number":"(#3814-0002)","product_name":"EMERGEN L 0-0-2","company_info":{"company":"MARRONE BIO INNOVATIONS","Mailing Address":"1540 Drew Avenue","Post Office Box":null,"City":"Davis","State":"CA","Postal Code":"95618","Telephone Number":"530 601-5063","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.01,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=158.0000","Mercury":"=0.0400","Molybdenum":"=12.0000","Nickel":"=2.5000","Lead":"=1.6000","Selenium":"=0.3000","Zinc":"=154.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.01,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=158.0000","Mercury":"=0.0400","Molybdenum":"=12.0000","Nickel":"=2.5000","Lead":"=1.6000","Selenium":"=0.3000","Zinc":"=154.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MARRONE BIO INNOVATIONS","label_name":"EMERGEN L 0-0-2","wsda_reg_no":"(#3814-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FFA2D1",
+  "metadata": {
+    "registrant": "MARRONE BIO INNOVATIONS",
+    "label_name": "EMERGEN L 0-0-2",
+    "wsda_reg_no": "(#3814-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3814-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3814-0002)",
+        "product_name": "EMERGEN L 0-0-2",
+        "company_info": {
+          "company": "MARRONE BIO INNOVATIONS",
+          "Mailing Address": "1540 Drew Avenue",
+          "Post Office Box": null,
+          "City": "Davis",
+          "State": "CA",
+          "Postal Code": "95618",
+          "Telephone Number": "530 601-5063",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.01,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=158.0000",
+          "Mercury": "=0.0400",
+          "Molybdenum": "=12.0000",
+          "Nickel": "=2.5000",
+          "Lead": "=1.6000",
+          "Selenium": "=0.3000",
+          "Zinc": "=154.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMERGEN L 0-0-2",
+    "brand": "MARRONE BIO INNOVATIONS",
+    "manufacturer": {
+      "name": "MARRONE BIO INNOVATIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 2.0
+    },
+    "micros_pct": {
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FFA2D1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 158.0,
+            "Hg": 0.04,
+            "Mo": 12.0,
+            "Ni": 2.5,
+            "Pb": 1.6,
+            "Se": 0.3,
+            "Zn": 154.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 158.0,
+        "Hg": 0.04,
+        "Mo": 12.0,
+        "Ni": 2.5,
+        "Pb": 1.6,
+        "Se": 0.3,
+        "Zn": 154.0
+      }
+    }
+  }
+}

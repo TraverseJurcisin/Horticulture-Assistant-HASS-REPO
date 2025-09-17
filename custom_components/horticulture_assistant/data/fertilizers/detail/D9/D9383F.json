@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"D9383F","source_wsda_record":{"wsda_product_number":"(#0335-0155)","product_name":"FERTI-LOME AZALEA-EVERGREEN FOOD PLUS SYSTEMIC 9-15-13","company_info":{"company":"VOLUNTARY PURCHASING GROUPS INC","Mailing Address":"230 FM 87","Post Office Box":null,"City":"Bonham","State":"TX","Postal Code":"75418-8629","Telephone Number":"903 583-5501","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=1.4200","Cadmium":"=0.2800","Cobalt":"=4.1700","Mercury":"=0.0740","Molybdenum":"=1.5000","Nickel":"=5.1400","Lead":"=0.1700","Selenium":"=0.3500","Zinc":"=0.1100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=1.4200","Cadmium":"=0.2800","Cobalt":"=4.1700","Mercury":"=0.0740","Molybdenum":"=1.5000","Nickel":"=5.1400","Lead":"=0.1700","Selenium":"=0.3500","Zinc":"=0.1100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOLUNTARY PURCHASING GROUPS INC","label_name":"FERTI-LOME AZALEA-EVERGREEN FOOD PLUS SYSTEMIC 9-15-13","wsda_reg_no":"(#0335-0155)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D9383F",
+  "metadata": {
+    "registrant": "VOLUNTARY PURCHASING GROUPS INC",
+    "label_name": "FERTI-LOME AZALEA-EVERGREEN FOOD PLUS SYSTEMIC 9-15-13",
+    "wsda_reg_no": "(#0335-0155)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0155)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0155)",
+        "product_name": "FERTI-LOME AZALEA-EVERGREEN FOOD PLUS SYSTEMIC 9-15-13",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=1.4200",
+          "Cadmium": "=0.2800",
+          "Cobalt": "=4.1700",
+          "Mercury": "=0.0740",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=5.1400",
+          "Lead": "=0.1700",
+          "Selenium": "=0.3500",
+          "Zinc": "=0.1100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTI-LOME AZALEA-EVERGREEN FOOD PLUS SYSTEMIC 9-15-13",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 15.0,
+      "K2O_pct": 13.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D9383F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.42,
+            "Cd": 0.28,
+            "Co": 4.17,
+            "Hg": 0.074,
+            "Mo": 1.5,
+            "Ni": 5.14,
+            "Pb": 0.17,
+            "Se": 0.35,
+            "Zn": 0.11
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.42,
+        "Cd": 0.28,
+        "Co": 4.17,
+        "Hg": 0.074,
+        "Mo": 1.5,
+        "Ni": 5.14,
+        "Pb": 0.17,
+        "Se": 0.35,
+        "Zn": 0.11
+      }
+    }
+  }
+}

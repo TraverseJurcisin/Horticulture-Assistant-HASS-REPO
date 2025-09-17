@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "382D18",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3092-0016)",
-    "product_name": "MASTERGREEN 5-WAY TALL FESCUE 0-0-0",
-    "company_info": {
-      "company": "DLF USA INC",
-      "Mailing Address": "33080 Red Bridge Rd SE",
-      "Post Office Box": null,
-      "City": "Albany",
-      "State": "OR",
-      "Postal Code": "97322",
-      "Telephone Number": "541 369-2251",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": 0.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.1
-    },
-    "reported_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=0.4600",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=6.6800",
-      "Nickel": "=2.1900",
-      "Lead": "=2.1300",
-      "Selenium": "=0.1100",
-      "Zinc": "=453.5800"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": 0.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.1
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=0.4600",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=6.6800",
-      "Nickel": "=2.1900",
-      "Lead": "=2.1300",
-      "Selenium": "=0.1100",
-      "Zinc": "=453.5800"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "382D18",
   "metadata": {
     "registrant": "DLF USA INC",
     "label_name": "MASTERGREEN 5-WAY TALL FESCUE 0-0-0",
     "wsda_reg_no": "(#3092-0016)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3092-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3092-0016)",
+        "product_name": "MASTERGREEN 5-WAY TALL FESCUE 0-0-0",
+        "company_info": {
+          "company": "DLF USA INC",
+          "Mailing Address": "33080 Red Bridge Rd SE",
+          "Post Office Box": null,
+          "City": "Albany",
+          "State": "OR",
+          "Postal Code": "97322",
+          "Telephone Number": "541 369-2251",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.1
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7900",
+          "Cadmium": "=0.1800",
+          "Cobalt": "=0.4600",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=6.6800",
+          "Nickel": "=2.1900",
+          "Lead": "=2.1300",
+          "Selenium": "=0.1100",
+          "Zinc": "=453.5800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MASTERGREEN 5-WAY TALL FESCUE 0-0-0",
+    "brand": "DLF USA INC",
+    "manufacturer": {
+      "name": "DLF USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 3.0,
+      "Mn": 0.5,
+      "Zn": 3.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "382D18-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.79,
+            "Cd": 0.18,
+            "Co": 0.46,
+            "Hg": 0.001,
+            "Mo": 6.68,
+            "Ni": 2.19,
+            "Pb": 2.13,
+            "Se": 0.11,
+            "Zn": 453.58
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.79,
+        "Cd": 0.18,
+        "Co": 0.46,
+        "Hg": 0.001,
+        "Mo": 6.68,
+        "Ni": 2.19,
+        "Pb": 2.13,
+        "Se": 0.11,
+        "Zn": 453.58
+      }
+    }
   }
 }

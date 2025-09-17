@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2E20AB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3195-0055)",
-    "product_name": "CELL POWER N-ERGY 12-0-5",
-    "company_info": {
-      "company": "OMEX AGRIFLUIDS INC",
-      "Mailing Address": "1823 Shaw Ave Ste 103",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93611",
-      "Telephone Number": "559 661-6138",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.1,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.4000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.0900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.1,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.4000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.0900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2E20AB",
   "metadata": {
     "registrant": "OMEX AGRIFLUIDS INC",
     "label_name": "CELL POWER N-ERGY 12-0-5",
     "wsda_reg_no": "(#3195-0055)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3195-0055)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3195-0055)",
+        "product_name": "CELL POWER N-ERGY 12-0-5",
+        "company_info": {
+          "company": "OMEX AGRIFLUIDS INC",
+          "Mailing Address": "1823 Shaw Ave Ste 103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 661-6138",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.4000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=1.0900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CELL POWER N-ERGY 12-0-5",
+    "brand": "OMEX AGRIFLUIDS INC",
+    "manufacturer": {
+      "name": "OMEX AGRIFLUIDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "K2O_pct": 5.0
+    },
+    "micros_pct": {
+      "B": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2E20AB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.4,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 1.09
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 0.4,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 1.09
+      }
+    }
   }
 }

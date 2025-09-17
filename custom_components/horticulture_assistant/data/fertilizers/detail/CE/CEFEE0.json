@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"CEFEE0","source_wsda_record":{"wsda_product_number":"(#2181-0034)","product_name":"GROWER'S SECRET VITALVIT MO 14-0-0","company_info":{"company":"GROWER'S SECRET INC","Mailing Address":"2300 Wilbur Lane Unit B","Post Office Box":null,"City":"Antioch","State":"CA","Postal Code":"94509","Telephone Number":"303 525-8458","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":5.0,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<25.0000","Cadmium":"<2.5000","Cobalt":"=56.8000","Mercury":"<0.0500","Molybdenum":"=60500.0000","Nickel":"=6.8000","Lead":"=38.2000","Selenium":"<50.0000","Zinc":"<10.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":5.0,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<25.0000","Cadmium":"<2.5000","Cobalt":"=56.8000","Mercury":"<0.0500","Molybdenum":"=60500.0000","Nickel":"=6.8000","Lead":"=38.2000","Selenium":"<50.0000","Zinc":"<10.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GROWER'S SECRET INC","label_name":"GROWER'S SECRET VITALVIT MO 14-0-0","wsda_reg_no":"(#2181-0034)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CEFEE0",
+  "metadata": {
+    "registrant": "GROWER'S SECRET INC",
+    "label_name": "GROWER'S SECRET VITALVIT MO 14-0-0",
+    "wsda_reg_no": "(#2181-0034)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2181-0034)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2181-0034)",
+        "product_name": "GROWER'S SECRET VITALVIT MO 14-0-0",
+        "company_info": {
+          "company": "GROWER'S SECRET INC",
+          "Mailing Address": "2300 Wilbur Lane Unit B",
+          "Post Office Box": null,
+          "City": "Antioch",
+          "State": "CA",
+          "Postal Code": "94509",
+          "Telephone Number": "303 525-8458",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 5.0,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<25.0000",
+          "Cadmium": "<2.5000",
+          "Cobalt": "=56.8000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=60500.0000",
+          "Nickel": "=6.8000",
+          "Lead": "=38.2000",
+          "Selenium": "<50.0000",
+          "Zinc": "<10.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROWER'S SECRET VITALVIT MO 14-0-0",
+    "brand": "GROWER'S SECRET INC",
+    "manufacturer": {
+      "name": "GROWER'S SECRET INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0
+    },
+    "micros_pct": {
+      "Mo": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CEFEE0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 25.0,
+            "Cd": 2.5,
+            "Co": 56.8,
+            "Hg": 0.05,
+            "Mo": 60500.0,
+            "Ni": 6.8,
+            "Pb": 38.2,
+            "Se": 50.0,
+            "Zn": 10.0
+          },
+          "detection_limits_ppm": {
+            "As": 25.0,
+            "Cd": 2.5,
+            "Hg": 0.05,
+            "Se": 50.0,
+            "Zn": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 56.8,
+        "Mo": 60500.0,
+        "Ni": 6.8,
+        "Pb": 38.2
+      }
+    }
+  }
+}

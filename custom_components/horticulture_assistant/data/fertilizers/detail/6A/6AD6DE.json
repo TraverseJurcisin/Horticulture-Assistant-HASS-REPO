@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6AD6DE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3536-0009)",
-    "product_name": "TPS NUTRIENTS N-PRIMER 3.3-0-0",
-    "company_info": {
-      "company": "TPS NUTRIENTS INC",
-      "Mailing Address": "PO Box 875",
-      "Post Office Box": null,
-      "City": "Bellevue",
-      "State": "WA",
-      "Postal Code": "98009",
-      "Telephone Number": "425 765-8460",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.3,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2940",
-      "Cadmium": "<0.0294",
-      "Cobalt": "<0.2940",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.2940",
-      "Nickel": "<0.2940",
-      "Lead": "<0.5900",
-      "Selenium": "<0.2940",
-      "Zinc": "=0.5200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.3,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2940",
-      "Cadmium": "<0.0294",
-      "Cobalt": "<0.2940",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.2940",
-      "Nickel": "<0.2940",
-      "Lead": "<0.5900",
-      "Selenium": "<0.2940",
-      "Zinc": "=0.5200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6AD6DE",
   "metadata": {
     "registrant": "TPS NUTRIENTS INC",
     "label_name": "TPS NUTRIENTS N-PRIMER 3.3-0-0",
     "wsda_reg_no": "(#3536-0009)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3536-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3536-0009)",
+        "product_name": "TPS NUTRIENTS N-PRIMER 3.3-0-0",
+        "company_info": {
+          "company": "TPS NUTRIENTS INC",
+          "Mailing Address": "PO Box 875",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98009",
+          "Telephone Number": "425 765-8460",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.3,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2940",
+          "Cadmium": "<0.0294",
+          "Cobalt": "<0.2940",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.2940",
+          "Nickel": "<0.2940",
+          "Lead": "<0.5900",
+          "Selenium": "<0.2940",
+          "Zinc": "=0.5200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TPS NUTRIENTS N-PRIMER 3.3-0-0",
+    "brand": "TPS NUTRIENTS INC",
+    "manufacturer": {
+      "name": "TPS NUTRIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6AD6DE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.294,
+            "Cd": 0.0294,
+            "Co": 0.294,
+            "Hg": 0.01,
+            "Mo": 0.294,
+            "Ni": 0.294,
+            "Pb": 0.59,
+            "Se": 0.294,
+            "Zn": 0.52
+          },
+          "detection_limits_ppm": {
+            "As": 0.294,
+            "Cd": 0.0294,
+            "Co": 0.294,
+            "Hg": 0.01,
+            "Mo": 0.294,
+            "Ni": 0.294,
+            "Pb": 0.59,
+            "Se": 0.294
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 0.52
+      }
+    }
   }
 }

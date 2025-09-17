@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "81B73F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2583-0016)",
-    "product_name": "HAIFA MICRO ZN-EDTA 0-0-0",
-    "company_info": {
-      "company": "HAIFA NORTH AMERICA INC",
-      "Mailing Address": "307 Cranes Roost Blvd #1038",
-      "Post Office Box": null,
-      "City": "Altamonte Springs",
-      "State": "FL",
-      "Postal Code": "32701",
-      "Telephone Number": "800 649-4944",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 15.0
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.1700",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.5000",
-      "Lead": "=1.3000",
-      "Selenium": "=0.8000",
-      "Zinc": "=172500.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 15.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.1700",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.5000",
-      "Lead": "=1.3000",
-      "Selenium": "=0.8000",
-      "Zinc": "=172500.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "81B73F",
   "metadata": {
     "registrant": "HAIFA NORTH AMERICA INC",
     "label_name": "HAIFA MICRO ZN-EDTA 0-0-0",
     "wsda_reg_no": "(#2583-0016)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2583-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2583-0016)",
+        "product_name": "HAIFA MICRO ZN-EDTA 0-0-0",
+        "company_info": {
+          "company": "HAIFA NORTH AMERICA INC",
+          "Mailing Address": "307 Cranes Roost Blvd #1038",
+          "Post Office Box": null,
+          "City": "Altamonte Springs",
+          "State": "FL",
+          "Postal Code": "32701",
+          "Telephone Number": "800 649-4944",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 15.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.1700",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.5000",
+          "Lead": "=1.3000",
+          "Selenium": "=0.8000",
+          "Zinc": "=172500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HAIFA MICRO ZN-EDTA 0-0-0",
+    "brand": "HAIFA NORTH AMERICA INC",
+    "manufacturer": {
+      "name": "HAIFA NORTH AMERICA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Zn": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "81B73F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.17,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.5,
+            "Pb": 1.3,
+            "Se": 0.8,
+            "Zn": 172500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.17,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 0.5,
+        "Pb": 1.3,
+        "Se": 0.8,
+        "Zn": 172500.0
+      }
+    }
   }
 }

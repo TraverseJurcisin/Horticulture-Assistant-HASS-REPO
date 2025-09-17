@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B2C08A","source_wsda_record":{"wsda_product_number":"(#1444-0164)","product_name":"BRANDT COLBALT SULFATE-POWDER 0-0-0","company_info":{"company":"BRANDT CONSOLIDATED INC","Mailing Address":"2935 South Koke Mill Road","Post Office Box":null,"City":"Springfield","State":"IL","Postal Code":"62711-9651","Telephone Number":"217 547-5867","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":33.0,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=75.0000","Cobalt":"=35700.0000","Mercury":"=0.5000","Molybdenum":"=10.0000","Nickel":"=700.0000","Lead":"=5.0000","Selenium":"=76.2000","Zinc":"=10500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":33.0,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=75.0000","Cobalt":"=35700.0000","Mercury":"=0.5000","Molybdenum":"=10.0000","Nickel":"=700.0000","Lead":"=5.0000","Selenium":"=76.2000","Zinc":"=10500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BRANDT CONSOLIDATED INC","label_name":"BRANDT COLBALT SULFATE-POWDER 0-0-0","wsda_reg_no":"(#1444-0164)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B2C08A",
+  "metadata": {
+    "registrant": "BRANDT CONSOLIDATED INC",
+    "label_name": "BRANDT COLBALT SULFATE-POWDER 0-0-0",
+    "wsda_reg_no": "(#1444-0164)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1444-0164)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1444-0164)",
+        "product_name": "BRANDT COLBALT SULFATE-POWDER 0-0-0",
+        "company_info": {
+          "company": "BRANDT CONSOLIDATED INC",
+          "Mailing Address": "2935 South Koke Mill Road",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711-9651",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 18.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 33.0,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=75.0000",
+          "Cobalt": "=35700.0000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=10.0000",
+          "Nickel": "=700.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=76.2000",
+          "Zinc": "=10500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRANDT COLBALT SULFATE-POWDER 0-0-0",
+    "brand": "BRANDT CONSOLIDATED INC",
+    "manufacturer": {
+      "name": "BRANDT CONSOLIDATED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B2C08A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 75.0,
+            "Co": 35700.0,
+            "Hg": 0.5,
+            "Mo": 10.0,
+            "Ni": 700.0,
+            "Pb": 5.0,
+            "Se": 76.2,
+            "Zn": 10500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 75.0,
+        "Co": 35700.0,
+        "Hg": 0.5,
+        "Mo": 10.0,
+        "Ni": 700.0,
+        "Pb": 5.0,
+        "Se": 76.2,
+        "Zn": 10500.0
+      }
+    }
+  }
+}

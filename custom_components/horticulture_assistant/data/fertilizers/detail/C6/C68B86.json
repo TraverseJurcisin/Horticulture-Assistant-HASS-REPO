@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"C68B86","source_wsda_record":{"wsda_product_number":"(#2630-0003)","product_name":"GREEN HOUSE SEED CO POWDER FEEDING HYBRIDS 15-7-22","company_info":{"company":"GHSC TRADING BV","Mailing Address":"247 Prospect Ave Ste 4G","Post Office Box":null,"City":"Brooklyn","State":"NY","Postal Code":"11215","Telephone Number":"949 419-7000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.6,"Sulfur (S)":4.7,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.12,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0600","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=33.1000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=69.6800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.6,"Sulfur (S)":4.7,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.12,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0600","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=33.1000","Nickel":"=0.2000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=69.6800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GHSC TRADING BV","label_name":"GREEN HOUSE SEED CO POWDER FEEDING HYBRIDS 15-7-22","wsda_reg_no":"(#2630-0003)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C68B86",
+  "metadata": {
+    "registrant": "GHSC TRADING BV",
+    "label_name": "GREEN HOUSE SEED CO POWDER FEEDING HYBRIDS 15-7-22",
+    "wsda_reg_no": "(#2630-0003)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2630-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2630-0003)",
+        "product_name": "GREEN HOUSE SEED CO POWDER FEEDING HYBRIDS 15-7-22",
+        "company_info": {
+          "company": "GHSC TRADING BV",
+          "Mailing Address": "247 Prospect Ave Ste 4G",
+          "Post Office Box": null,
+          "City": "Brooklyn",
+          "State": "NY",
+          "Postal Code": "11215",
+          "Telephone Number": "949 419-7000",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 22.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.6,
+          "Sulfur (S)": 4.7,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.12,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0600",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=33.1000",
+          "Nickel": "=0.2000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=69.6800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREEN HOUSE SEED CO POWDER FEEDING HYBRIDS 15-7-22",
+    "brand": "GHSC TRADING BV",
+    "manufacturer": {
+      "name": "GHSC TRADING BV"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 22.0
+    },
+    "macros_pct": {
+      "Mg": 3.6,
+      "S": 4.7
+    },
+    "micros_pct": {
+      "Fe": 0.12,
+      "Mn": 0.05,
+      "B": 0.03,
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C68B86-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.06,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 33.1,
+            "Ni": 0.2,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 69.68
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.06,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 33.1,
+        "Ni": 0.2,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 69.68
+      }
+    }
+  }
+}

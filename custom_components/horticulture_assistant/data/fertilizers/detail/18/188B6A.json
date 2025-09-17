@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "188B6A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3242-0079)",
-    "product_name": "FOXFARM MARINE CUISINE (NO KELP) 10-7-7",
-    "company_info": {
-      "company": "FOXFARM SOIL & FERTILIZER COMPANY",
-      "Mailing Address": "PO Box 787",
-      "Post Office Box": null,
-      "City": "Arcata",
-      "State": "CA",
-      "Postal Code": "95518",
-      "Telephone Number": "707 443-4369",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": 4.34,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 5.8,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.9000",
-      "Cadmium": "=15.0000",
-      "Cobalt": "=3.2000",
-      "Mercury": "<0.0170",
-      "Molybdenum": "=3.4000",
-      "Nickel": "=20.0000",
-      "Lead": "=0.9300",
-      "Selenium": "=0.7400",
-      "Zinc": "=1100.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": 4.34,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 5.8,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.9000",
-      "Cadmium": "=15.0000",
-      "Cobalt": "=3.2000",
-      "Mercury": "<0.0170",
-      "Molybdenum": "=3.4000",
-      "Nickel": "=20.0000",
-      "Lead": "=0.9300",
-      "Selenium": "=0.7400",
-      "Zinc": "=1100.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "188B6A",
   "metadata": {
     "registrant": "FOXFARM SOIL & FERTILIZER COMPANY",
     "label_name": "FOXFARM MARINE CUISINE (NO KELP) 10-7-7",
     "wsda_reg_no": "(#3242-0079)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3242-0079)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3242-0079)",
+        "product_name": "FOXFARM MARINE CUISINE (NO KELP) 10-7-7",
+        "company_info": {
+          "company": "FOXFARM SOIL & FERTILIZER COMPANY",
+          "Mailing Address": "PO Box 787",
+          "Post Office Box": null,
+          "City": "Arcata",
+          "State": "CA",
+          "Postal Code": "95518",
+          "Telephone Number": "707 443-4369",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": 4.34,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 5.8,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.9000",
+          "Cadmium": "=15.0000",
+          "Cobalt": "=3.2000",
+          "Mercury": "<0.0170",
+          "Molybdenum": "=3.4000",
+          "Nickel": "=20.0000",
+          "Lead": "=0.9300",
+          "Selenium": "=0.7400",
+          "Zinc": "=1100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FOXFARM MARINE CUISINE (NO KELP) 10-7-7",
+    "brand": "FOXFARM SOIL & FERTILIZER COMPANY",
+    "manufacturer": {
+      "name": "FOXFARM SOIL & FERTILIZER COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Ca": 4.34,
+      "Mg": 0.5,
+      "S": 5.8
+    },
+    "micros_pct": {
+      "Mn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "188B6A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.9,
+            "Cd": 15.0,
+            "Co": 3.2,
+            "Hg": 0.017,
+            "Mo": 3.4,
+            "Ni": 20.0,
+            "Pb": 0.93,
+            "Se": 0.74,
+            "Zn": 1100.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.017
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.9,
+        "Cd": 15.0,
+        "Co": 3.2,
+        "Mo": 3.4,
+        "Ni": 20.0,
+        "Pb": 0.93,
+        "Se": 0.74,
+        "Zn": 1100.0
+      }
+    }
   }
 }

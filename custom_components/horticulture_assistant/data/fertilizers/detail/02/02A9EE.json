@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "02A9EE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0189-0300)",
-    "product_name": "LESCO PROFESSIONAL TURF FERTILIZER 29-3-6 (#511061) 29-3-6",
-    "company_info": {
-      "company": "LESCO INC",
-      "Mailing Address": "1385 East 36th Street",
-      "Post Office Box": null,
-      "City": "Cleveland",
-      "State": "OH",
-      "Postal Code": "44114-4114",
-      "Telephone Number": "440 454-3672",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 29.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 3.42,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": 2.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.9400",
-      "Cadmium": "=8.3500",
-      "Cobalt": "=22.5000",
-      "Mercury": "=0.0700",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=24.9000",
-      "Lead": "=4.2000",
-      "Selenium": "=6.2000",
-      "Zinc": "=110.7000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 29.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 3.42,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": 2.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.9400",
-      "Cadmium": "=8.3500",
-      "Cobalt": "=22.5000",
-      "Mercury": "=0.0700",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=24.9000",
-      "Lead": "=4.2000",
-      "Selenium": "=6.2000",
-      "Zinc": "=110.7000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "02A9EE",
   "metadata": {
     "registrant": "LESCO INC",
     "label_name": "LESCO PROFESSIONAL TURF FERTILIZER 29-3-6 (#511061) 29-3-6",
     "wsda_reg_no": "(#0189-0300)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0300)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0300)",
+        "product_name": "LESCO PROFESSIONAL TURF FERTILIZER 29-3-6 (#511061) 29-3-6",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 29.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 3.42,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": 2.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9400",
+          "Cadmium": "=8.3500",
+          "Cobalt": "=22.5000",
+          "Mercury": "=0.0700",
+          "Molybdenum": "=1.4000",
+          "Nickel": "=24.9000",
+          "Lead": "=4.2000",
+          "Selenium": "=6.2000",
+          "Zinc": "=110.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO PROFESSIONAL TURF FERTILIZER 29-3-6 (#511061) 29-3-6",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 29.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 3.42
+    },
+    "micros_pct": {
+      "Fe": 3.0,
+      "Mn": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "02A9EE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.94,
+            "Cd": 8.35,
+            "Co": 22.5,
+            "Hg": 0.07,
+            "Mo": 1.4,
+            "Ni": 24.9,
+            "Pb": 4.2,
+            "Se": 6.2,
+            "Zn": 110.7
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.94,
+        "Cd": 8.35,
+        "Co": 22.5,
+        "Hg": 0.07,
+        "Mo": 1.4,
+        "Ni": 24.9,
+        "Pb": 4.2,
+        "Se": 6.2,
+        "Zn": 110.7
+      }
+    }
   }
 }

@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1D979A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1176-0056)",
-    "product_name": "PRO-PELL-IT! MARION MICRO MIX GRANULAR 0-0-0",
-    "company_info": {
-      "company": "MARION AG SERVICE INC",
-      "Mailing Address": "7746 St Paul Hwy NE",
-      "Post Office Box": null,
-      "City": "St Paul",
-      "State": "OR",
-      "Postal Code": "97137",
-      "Telephone Number": "503 633-4562",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 6.0,
-      "Sulfur (S)": 6.5,
-      "Boron (B)": 2.4,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 12.0,
-      "Manganese (Mn)": 6.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 6.0
-    },
-    "reported_metals": {
-      "Arsenic": "=4.8700",
-      "Cadmium": "=21.6000",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.4900",
-      "Molybdenum": "=4.0000",
-      "Nickel": "=49.2000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.5000",
-      "Zinc": "=6671.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 6.0,
-      "Sulfur (S)": 6.5,
-      "Boron (B)": 2.4,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 12.0,
-      "Manganese (Mn)": 6.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 6.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.8700",
-      "Cadmium": "=21.6000",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.4900",
-      "Molybdenum": "=4.0000",
-      "Nickel": "=49.2000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.5000",
-      "Zinc": "=6671.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1D979A",
   "metadata": {
     "registrant": "MARION AG SERVICE INC",
     "label_name": "PRO-PELL-IT! MARION MICRO MIX GRANULAR 0-0-0",
     "wsda_reg_no": "(#1176-0056)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1176-0056)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1176-0056)",
+        "product_name": "PRO-PELL-IT! MARION MICRO MIX GRANULAR 0-0-0",
+        "company_info": {
+          "company": "MARION AG SERVICE INC",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 6.0,
+          "Sulfur (S)": 6.5,
+          "Boron (B)": 2.4,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 12.0,
+          "Manganese (Mn)": 6.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 6.0
+        },
+        "reported_metals": {
+          "Arsenic": "=4.8700",
+          "Cadmium": "=21.6000",
+          "Cobalt": "=1.2000",
+          "Mercury": "=0.4900",
+          "Molybdenum": "=4.0000",
+          "Nickel": "=49.2000",
+          "Lead": "=0.9000",
+          "Selenium": "<0.5000",
+          "Zinc": "=6671.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO-PELL-IT! MARION MICRO MIX GRANULAR 0-0-0",
+    "brand": "MARION AG SERVICE INC",
+    "manufacturer": {
+      "name": "MARION AG SERVICE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 6.0,
+      "S": 6.5
+    },
+    "micros_pct": {
+      "Fe": 12.0,
+      "Mn": 6.0,
+      "Zn": 6.0,
+      "B": 2.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1D979A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.87,
+            "Cd": 21.6,
+            "Co": 1.2,
+            "Hg": 0.49,
+            "Mo": 4.0,
+            "Ni": 49.2,
+            "Pb": 0.9,
+            "Se": 0.5,
+            "Zn": 6671.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.87,
+        "Cd": 21.6,
+        "Co": 1.2,
+        "Hg": 0.49,
+        "Mo": 4.0,
+        "Ni": 49.2,
+        "Pb": 0.9,
+        "Zn": 6671.0
+      }
+    }
   }
 }

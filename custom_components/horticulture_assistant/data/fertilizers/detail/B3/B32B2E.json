@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"B32B2E","source_wsda_record":{"wsda_product_number":"(#3947-0003)","product_name":"ELM DIRT ANCIENT SOIL 1-0.54-0.59","company_info":{"company":"ELM DIRT LLC","Mailing Address":"262 Moody Hollow Rd","Post Office Box":null,"City":"Powell","State":"TN","Postal Code":"37849","Telephone Number":"913 449-6469","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.54,"Soluble Potash (K2O)":0.59,"Calcium (Ca)":1.99,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.35,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.4500","Cadmium":"=0.2900","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=7.1000","Lead":"=1.7000","Selenium":"=0.9000","Zinc":"=0.5400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.54,"Soluble Potash (K2O)":0.59,"Calcium (Ca)":1.99,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.35,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.4500","Cadmium":"=0.2900","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=7.1000","Lead":"=1.7000","Selenium":"=0.9000","Zinc":"=0.5400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ELM DIRT LLC","label_name":"ELM DIRT ANCIENT SOIL 1-0.54-0.59","wsda_reg_no":"(#3947-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B32B2E",
+  "metadata": {
+    "registrant": "ELM DIRT LLC",
+    "label_name": "ELM DIRT ANCIENT SOIL 1-0.54-0.59",
+    "wsda_reg_no": "(#3947-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3947-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3947-0003)",
+        "product_name": "ELM DIRT ANCIENT SOIL 1-0.54-0.59",
+        "company_info": {
+          "company": "ELM DIRT LLC",
+          "Mailing Address": "262 Moody Hollow Rd",
+          "Post Office Box": null,
+          "City": "Powell",
+          "State": "TN",
+          "Postal Code": "37849",
+          "Telephone Number": "913 449-6469",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 0.54,
+          "Soluble Potash (K2O)": 0.59,
+          "Calcium (Ca)": 1.99,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.35,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.4500",
+          "Cadmium": "=0.2900",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=7.1000",
+          "Lead": "=1.7000",
+          "Selenium": "=0.9000",
+          "Zinc": "=0.5400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ELM DIRT ANCIENT SOIL 1-0.54-0.59",
+    "brand": "ELM DIRT LLC",
+    "manufacturer": {
+      "name": "ELM DIRT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 0.54,
+      "K2O_pct": 0.59
+    },
+    "macros_pct": {
+      "Ca": 1.99
+    },
+    "micros_pct": {
+      "Fe": 0.35
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B32B2E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.45,
+            "Cd": 0.29,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 7.1,
+            "Pb": 1.7,
+            "Se": 0.9,
+            "Zn": 0.54
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.45,
+        "Cd": 0.29,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 7.1,
+        "Pb": 1.7,
+        "Se": 0.9,
+        "Zn": 0.54
+      }
+    }
+  }
+}

@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"85C70F","source_wsda_record":{"wsda_product_number":"(#3309-0003)","product_name":"BLUE GOLD SUPER PHOS 23 0-7-0","company_info":{"company":"EDEN SOLUTIONS LLC","Mailing Address":"825 C Merrimon Ave Ste 225","Post Office Box":null,"City":"Asheville","State":"NC","Postal Code":"28804","Telephone Number":"877 752-5360","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":0.3,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.5000","Cadmium":"=5.3200","Cobalt":"=1.1100","Mercury":"<0.0500","Molybdenum":"=4.8000","Nickel":"=10.0000","Lead":"<5.0000","Selenium":"=5.7000","Zinc":"=136.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":0.3,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.5000","Cadmium":"=5.3200","Cobalt":"=1.1100","Mercury":"<0.0500","Molybdenum":"=4.8000","Nickel":"=10.0000","Lead":"<5.0000","Selenium":"=5.7000","Zinc":"=136.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EDEN SOLUTIONS LLC","label_name":"BLUE GOLD SUPER PHOS 23 0-7-0","wsda_reg_no":"(#3309-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "85C70F",
+  "metadata": {
+    "registrant": "EDEN SOLUTIONS LLC",
+    "label_name": "BLUE GOLD SUPER PHOS 23 0-7-0",
+    "wsda_reg_no": "(#3309-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3309-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3309-0003)",
+        "product_name": "BLUE GOLD SUPER PHOS 23 0-7-0",
+        "company_info": {
+          "company": "EDEN SOLUTIONS LLC",
+          "Mailing Address": "825 C Merrimon Ave Ste 225",
+          "Post Office Box": null,
+          "City": "Asheville",
+          "State": "NC",
+          "Postal Code": "28804",
+          "Telephone Number": "877 752-5360",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": 0.3,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.5000",
+          "Cadmium": "=5.3200",
+          "Cobalt": "=1.1100",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=4.8000",
+          "Nickel": "=10.0000",
+          "Lead": "<5.0000",
+          "Selenium": "=5.7000",
+          "Zinc": "=136.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BLUE GOLD SUPER PHOS 23 0-7-0",
+    "brand": "EDEN SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "EDEN SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 7.0
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "85C70F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.5,
+            "Cd": 5.32,
+            "Co": 1.11,
+            "Hg": 0.05,
+            "Mo": 4.8,
+            "Ni": 10.0,
+            "Pb": 5.0,
+            "Se": 5.7,
+            "Zn": 136.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.5,
+        "Cd": 5.32,
+        "Co": 1.11,
+        "Mo": 4.8,
+        "Ni": 10.0,
+        "Se": 5.7,
+        "Zn": 136.6
+      }
+    }
+  }
+}

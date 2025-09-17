@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "14234F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0185-0251)",
-    "product_name": "LEBANON PRO FERTILIZER WITH DIMENSION 0.15% FG TURF AND ORNAMENTAL HERBICIDE 13-0-5",
-    "company_info": {
-      "company": "LEBANON SEABOARD CORPORATION",
-      "Mailing Address": "1600 E Cumberland St",
-      "Post Office Box": null,
-      "City": "Lebanon",
-      "State": "PA",
-      "Postal Code": "17042",
-      "Telephone Number": "800 532-0090",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": 4.0,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.6630",
-      "Cadmium": "=0.0865",
-      "Cobalt": "=0.5530",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.4680",
-      "Nickel": "=1.6000",
-      "Lead": "=1.7200",
-      "Selenium": "=1.2300",
-      "Zinc": "=5.6400"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": 4.0,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.6630",
-      "Cadmium": "=0.0865",
-      "Cobalt": "=0.5530",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.4680",
-      "Nickel": "=1.6000",
-      "Lead": "=1.7200",
-      "Selenium": "=1.2300",
-      "Zinc": "=5.6400"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "14234F",
   "metadata": {
     "registrant": "LEBANON SEABOARD CORPORATION",
     "label_name": "LEBANON PRO FERTILIZER WITH DIMENSION 0.15% FG TURF AND ORNAMENTAL HERBICIDE 13-0-5",
     "wsda_reg_no": "(#0185-0251)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0251)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0251)",
+        "product_name": "LEBANON PRO FERTILIZER WITH DIMENSION 0.15% FG TURF AND ORNAMENTAL HERBICIDE 13-0-5",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": 4.0,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6630",
+          "Cadmium": "=0.0865",
+          "Cobalt": "=0.5530",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.4680",
+          "Nickel": "=1.6000",
+          "Lead": "=1.7200",
+          "Selenium": "=1.2300",
+          "Zinc": "=5.6400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LEBANON PRO FERTILIZER WITH DIMENSION 0.15% FG TURF AND ORNAMENTAL HERBICIDE 13-0-5",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "K2O_pct": 5.0
+    },
+    "micros_pct": {
+      "Cl": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "14234F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.663,
+            "Cd": 0.0865,
+            "Co": 0.553,
+            "Hg": 0.01,
+            "Mo": 0.468,
+            "Ni": 1.6,
+            "Pb": 1.72,
+            "Se": 1.23,
+            "Zn": 5.64
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.663,
+        "Cd": 0.0865,
+        "Co": 0.553,
+        "Hg": 0.01,
+        "Mo": 0.468,
+        "Ni": 1.6,
+        "Pb": 1.72,
+        "Se": 1.23,
+        "Zn": 5.64
+      }
+    }
   }
 }

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"C7D5D3","source_wsda_record":{"wsda_product_number":"(#0126-0195)","product_name":"PROCARE LAWN STARTER FERTILIZER 18-24-6","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.0000","Cadmium":"=4.2700","Cobalt":"=1.3800","Mercury":"=0.0020","Molybdenum":"=5.7900","Nickel":"=14.6000","Lead":"=0.6260","Selenium":"=0.0560","Zinc":"=126.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.0000","Cadmium":"=4.2700","Cobalt":"=1.3800","Mercury":"=0.0020","Molybdenum":"=5.7900","Nickel":"=14.6000","Lead":"=0.6260","Selenium":"=0.0560","Zinc":"=126.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"PROCARE LAWN STARTER FERTILIZER 18-24-6","wsda_reg_no":"(#0126-0195)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C7D5D3",
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "PROCARE LAWN STARTER FERTILIZER 18-24-6",
+    "wsda_reg_no": "(#0126-0195)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0195)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0195)",
+        "product_name": "PROCARE LAWN STARTER FERTILIZER 18-24-6",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 24.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.0000",
+          "Cadmium": "=4.2700",
+          "Cobalt": "=1.3800",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=5.7900",
+          "Nickel": "=14.6000",
+          "Lead": "=0.6260",
+          "Selenium": "=0.0560",
+          "Zinc": "=126.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PROCARE LAWN STARTER FERTILIZER 18-24-6",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 24.0,
+      "K2O_pct": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C7D5D3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.0,
+            "Cd": 4.27,
+            "Co": 1.38,
+            "Hg": 0.002,
+            "Mo": 5.79,
+            "Ni": 14.6,
+            "Pb": 0.626,
+            "Se": 0.056,
+            "Zn": 126.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.0,
+        "Cd": 4.27,
+        "Co": 1.38,
+        "Hg": 0.002,
+        "Mo": 5.79,
+        "Ni": 14.6,
+        "Pb": 0.626,
+        "Se": 0.056,
+        "Zn": 126.0
+      }
+    }
+  }
+}

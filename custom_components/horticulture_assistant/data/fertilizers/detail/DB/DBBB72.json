@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"DBBB72","source_wsda_record":{"wsda_product_number":"(#4065-0002)","product_name":"FERTIFY PREMIUM FERTILIZER PLUS 1% SULFUR 2-8-4","company_info":{"company":"FERTOZ ORGANICS INC.","Mailing Address":"20940 S Frankfort Square Rd","Post Office Box":null,"City":"Frankfort","State":"IL","Postal Code":"60423","Telephone Number":"630 269-6276","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.5100","Cadmium":"=42.3000","Cobalt":"=1.6400","Mercury":"=0.1060","Molybdenum":"=3.4600","Nickel":"=37.3000","Lead":"=6.8300","Selenium":"=6.5400","Zinc":"=521.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.5100","Cadmium":"=42.3000","Cobalt":"=1.6400","Mercury":"=0.1060","Molybdenum":"=3.4600","Nickel":"=37.3000","Lead":"=6.8300","Selenium":"=6.5400","Zinc":"=521.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FERTOZ ORGANICS INC.","label_name":"FERTIFY PREMIUM FERTILIZER PLUS 1% SULFUR 2-8-4","wsda_reg_no":"(#4065-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DBBB72",
+  "metadata": {
+    "registrant": "FERTOZ ORGANICS INC.",
+    "label_name": "FERTIFY PREMIUM FERTILIZER PLUS 1% SULFUR 2-8-4",
+    "wsda_reg_no": "(#4065-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4065-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4065-0002)",
+        "product_name": "FERTIFY PREMIUM FERTILIZER PLUS 1% SULFUR 2-8-4",
+        "company_info": {
+          "company": "FERTOZ ORGANICS INC.",
+          "Mailing Address": "20940 S Frankfort Square Rd",
+          "Post Office Box": null,
+          "City": "Frankfort",
+          "State": "IL",
+          "Postal Code": "60423",
+          "Telephone Number": "630 269-6276",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.5100",
+          "Cadmium": "=42.3000",
+          "Cobalt": "=1.6400",
+          "Mercury": "=0.1060",
+          "Molybdenum": "=3.4600",
+          "Nickel": "=37.3000",
+          "Lead": "=6.8300",
+          "Selenium": "=6.5400",
+          "Zinc": "=521.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTIFY PREMIUM FERTILIZER PLUS 1% SULFUR 2-8-4",
+    "brand": "FERTOZ ORGANICS INC.",
+    "manufacturer": {
+      "name": "FERTOZ ORGANICS INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DBBB72-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.51,
+            "Cd": 42.3,
+            "Co": 1.64,
+            "Hg": 0.106,
+            "Mo": 3.46,
+            "Ni": 37.3,
+            "Pb": 6.83,
+            "Se": 6.54,
+            "Zn": 521.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.51,
+        "Cd": 42.3,
+        "Co": 1.64,
+        "Hg": 0.106,
+        "Mo": 3.46,
+        "Ni": 37.3,
+        "Pb": 6.83,
+        "Se": 6.54,
+        "Zn": 521.0
+      }
+    }
+  }
+}

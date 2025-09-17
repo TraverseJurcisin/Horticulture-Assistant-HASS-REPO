@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"D1519B","source_wsda_record":{"wsda_product_number":"(#0349-0418)","product_name":"INTELLIPHOS 248 BASE 0-24-8","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.4500","Cadmium":"=0.1960","Cobalt":"=0.4900","Mercury":"=0.0521","Molybdenum":"=0.9800","Nickel":"=1.4700","Lead":"=1.4700","Selenium":"=2.4600","Zinc":"=1.9600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.4500","Cadmium":"=0.1960","Cobalt":"=0.4900","Mercury":"=0.0521","Molybdenum":"=0.9800","Nickel":"=1.4700","Lead":"=1.4700","Selenium":"=2.4600","Zinc":"=1.9600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"INTELLIPHOS 248 BASE 0-24-8","wsda_reg_no":"(#0349-0418)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D1519B",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "INTELLIPHOS 248 BASE 0-24-8",
+    "wsda_reg_no": "(#0349-0418)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0418)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0418)",
+        "product_name": "INTELLIPHOS 248 BASE 0-24-8",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 24.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4500",
+          "Cadmium": "=0.1960",
+          "Cobalt": "=0.4900",
+          "Mercury": "=0.0521",
+          "Molybdenum": "=0.9800",
+          "Nickel": "=1.4700",
+          "Lead": "=1.4700",
+          "Selenium": "=2.4600",
+          "Zinc": "=1.9600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "INTELLIPHOS 248 BASE 0-24-8",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 24.0,
+      "K2O_pct": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D1519B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.45,
+            "Cd": 0.196,
+            "Co": 0.49,
+            "Hg": 0.0521,
+            "Mo": 0.98,
+            "Ni": 1.47,
+            "Pb": 1.47,
+            "Se": 2.46,
+            "Zn": 1.96
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.45,
+        "Cd": 0.196,
+        "Co": 0.49,
+        "Hg": 0.0521,
+        "Mo": 0.98,
+        "Ni": 1.47,
+        "Pb": 1.47,
+        "Se": 2.46,
+        "Zn": 1.96
+      }
+    }
+  }
+}

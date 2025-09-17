@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "56F8E1",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0103-0105)",
-    "product_name": "TECHNIGRO 0-35-23 PLUS 0-35-23",
-    "company_info": {
-      "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
-      "Mailing Address": "770 Silver Street",
-      "Post Office Box": null,
-      "City": "Agawam",
-      "State": "MA",
-      "Postal Code": "01001",
-      "Telephone Number": "256 592-0135",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 35.0,
-      "Soluble Potash (K2O)": 23.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 4.0,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.015,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.02,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0015,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.2
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.7000",
-      "Mercury": "=0.1980",
-      "Molybdenum": "=15.1550",
-      "Nickel": "=1.6810",
-      "Lead": "=0.1000",
-      "Selenium": "=0.0500",
-      "Zinc": "=218.0900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 35.0,
-      "Soluble Potash (K2O)": 23.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 4.0,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.015,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.02,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0015,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.2
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.7000",
-      "Mercury": "=0.1980",
-      "Molybdenum": "=15.1550",
-      "Nickel": "=1.6810",
-      "Lead": "=0.1000",
-      "Selenium": "=0.0500",
-      "Zinc": "=218.0900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "56F8E1",
   "metadata": {
     "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
     "label_name": "TECHNIGRO 0-35-23 PLUS 0-35-23",
     "wsda_reg_no": "(#0103-0105)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0105)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0105)",
+        "product_name": "TECHNIGRO 0-35-23 PLUS 0-35-23",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 35.0,
+          "Soluble Potash (K2O)": 23.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 0.015,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.02,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.0015,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.2
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.7000",
+          "Mercury": "=0.1980",
+          "Molybdenum": "=15.1550",
+          "Nickel": "=1.6810",
+          "Lead": "=0.1000",
+          "Selenium": "=0.0500",
+          "Zinc": "=218.0900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TECHNIGRO 0-35-23 PLUS 0-35-23",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 35.0,
+      "K2O_pct": 23.0
+    },
+    "macros_pct": {
+      "Mg": 4.0,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.1,
+      "Zn": 0.2,
+      "Cu": 0.02,
+      "B": 0.015,
+      "Mo": 0.0015
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "56F8E1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 0.7,
+            "Hg": 0.198,
+            "Mo": 15.155,
+            "Ni": 1.681,
+            "Pb": 0.1,
+            "Se": 0.05,
+            "Zn": 218.09
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.1,
+        "Co": 0.7,
+        "Hg": 0.198,
+        "Mo": 15.155,
+        "Ni": 1.681,
+        "Pb": 0.1,
+        "Se": 0.05,
+        "Zn": 218.09
+      }
+    }
   }
 }

@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "633F6B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0103-0160)",
-    "product_name": "GROWER'S GOLD PACIFIC BLEND NATURAL & ORGANIC 0.07-0.03-0.03",
-    "company_info": {
-      "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
-      "Mailing Address": "770 Silver Street",
-      "Post Office Box": null,
-      "City": "Agawam",
-      "State": "MA",
-      "Postal Code": "01001",
-      "Telephone Number": "256 592-0135",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.07,
-      "Available Phosphoric Acid (P2O5)": 0.03,
-      "Soluble Potash (K2O)": 0.03,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.0000",
-      "Cadmium": "<2.0000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "=2.0000",
-      "Lead": "<3.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=18.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.07,
-      "Available Phosphoric Acid (P2O5)": 0.03,
-      "Soluble Potash (K2O)": 0.03,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.0000",
-      "Cadmium": "<2.0000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "=2.0000",
-      "Lead": "<3.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=18.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "633F6B",
   "metadata": {
     "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
     "label_name": "GROWER'S GOLD PACIFIC BLEND NATURAL & ORGANIC 0.07-0.03-0.03",
     "wsda_reg_no": "(#0103-0160)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0160)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0160)",
+        "product_name": "GROWER'S GOLD PACIFIC BLEND NATURAL & ORGANIC 0.07-0.03-0.03",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.07,
+          "Available Phosphoric Acid (P2O5)": 0.03,
+          "Soluble Potash (K2O)": 0.03,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.0000",
+          "Cadmium": "<2.0000",
+          "Cobalt": "<2.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<5.0000",
+          "Nickel": "=2.0000",
+          "Lead": "<3.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=18.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROWER'S GOLD PACIFIC BLEND NATURAL & ORGANIC 0.07-0.03-0.03",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.07,
+      "P2O5_pct": 0.03,
+      "K2O_pct": 0.03
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "633F6B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 2.0,
+            "Co": 2.0,
+            "Hg": 0.1,
+            "Mo": 5.0,
+            "Ni": 2.0,
+            "Pb": 3.0,
+            "Se": 5.0,
+            "Zn": 18.2
+          },
+          "detection_limits_ppm": {
+            "As": 2.0,
+            "Cd": 2.0,
+            "Co": 2.0,
+            "Hg": 0.1,
+            "Mo": 5.0,
+            "Pb": 3.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 2.0,
+        "Zn": 18.2
+      }
+    }
   }
 }

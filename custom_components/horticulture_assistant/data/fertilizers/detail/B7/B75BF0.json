@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"B75BF0","source_wsda_record":{"wsda_product_number":"(#3330-0070)","product_name":"TRACITE 5 FE LF 0-0-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0200","Cadmium":"=2.0600","Cobalt":"=2.9700","Mercury":"=0.0010","Molybdenum":"=0.3800","Nickel":"=23.5200","Lead":"=2.5700","Selenium":"=0.1500","Zinc":"=10.2600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0200","Cadmium":"=2.0600","Cobalt":"=2.9700","Mercury":"=0.0010","Molybdenum":"=0.3800","Nickel":"=23.5200","Lead":"=2.5700","Selenium":"=0.1500","Zinc":"=10.2600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"TRACITE 5 FE LF 0-0-0","wsda_reg_no":"(#3330-0070)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B75BF0",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "TRACITE 5 FE LF 0-0-0",
+    "wsda_reg_no": "(#3330-0070)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0070)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0070)",
+        "product_name": "TRACITE 5 FE LF 0-0-0",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.3,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0200",
+          "Cadmium": "=2.0600",
+          "Cobalt": "=2.9700",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.3800",
+          "Nickel": "=23.5200",
+          "Lead": "=2.5700",
+          "Selenium": "=0.1500",
+          "Zinc": "=10.2600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRACITE 5 FE LF 0-0-0",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.3
+    },
+    "micros_pct": {
+      "Fe": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B75BF0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.02,
+            "Cd": 2.06,
+            "Co": 2.97,
+            "Hg": 0.001,
+            "Mo": 0.38,
+            "Ni": 23.52,
+            "Pb": 2.57,
+            "Se": 0.15,
+            "Zn": 10.26
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.02,
+        "Cd": 2.06,
+        "Co": 2.97,
+        "Hg": 0.001,
+        "Mo": 0.38,
+        "Ni": 23.52,
+        "Pb": 2.57,
+        "Se": 0.15,
+        "Zn": 10.26
+      }
+    }
+  }
+}

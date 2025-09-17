@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"BC1FB7","source_wsda_record":{"wsda_product_number":"(#0349-0422)","product_name":"LINK 12-0-12","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.3100","Cadmium":"=0.3450","Cobalt":"=0.8620","Mercury":"=0.0455","Molybdenum":"=1.7200","Nickel":"=2.5900","Lead":"=2.5900","Selenium":"=4.3100","Zinc":"=18.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.3100","Cadmium":"=0.3450","Cobalt":"=0.8620","Mercury":"=0.0455","Molybdenum":"=1.7200","Nickel":"=2.5900","Lead":"=2.5900","Selenium":"=4.3100","Zinc":"=18.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"LINK 12-0-12","wsda_reg_no":"(#0349-0422)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BC1FB7",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "LINK 12-0-12",
+    "wsda_reg_no": "(#0349-0422)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0422)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0422)",
+        "product_name": "LINK 12-0-12",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.3100",
+          "Cadmium": "=0.3450",
+          "Cobalt": "=0.8620",
+          "Mercury": "=0.0455",
+          "Molybdenum": "=1.7200",
+          "Nickel": "=2.5900",
+          "Lead": "=2.5900",
+          "Selenium": "=4.3100",
+          "Zinc": "=18.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LINK 12-0-12",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "K2O_pct": 12.0
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BC1FB7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.31,
+            "Cd": 0.345,
+            "Co": 0.862,
+            "Hg": 0.0455,
+            "Mo": 1.72,
+            "Ni": 2.59,
+            "Pb": 2.59,
+            "Se": 4.31,
+            "Zn": 18.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.31,
+        "Cd": 0.345,
+        "Co": 0.862,
+        "Hg": 0.0455,
+        "Mo": 1.72,
+        "Ni": 2.59,
+        "Pb": 2.59,
+        "Se": 4.31,
+        "Zn": 18.4
+      }
+    }
+  }
+}

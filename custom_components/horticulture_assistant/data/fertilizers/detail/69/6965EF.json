@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6965EF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3132-0062)",
-    "product_name": "FINISH 5-15-36",
-    "company_info": {
-      "company": "VALLEY AGRONOMICS LLC",
-      "Mailing Address": "PO Box 365",
-      "Post Office Box": null,
-      "City": "Rupert",
-      "State": "ID",
-      "Postal Code": "83350",
-      "Telephone Number": "503 845-8125",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 15.0,
-      "Soluble Potash (K2O)": 36.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.9,
-      "Boron (B)": 1.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.4300",
-      "Cobalt": "=1.7900",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=0.3500",
-      "Nickel": "=1.7100",
-      "Lead": "<0.1000",
-      "Selenium": "<0.1000",
-      "Zinc": "=10830.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 15.0,
-      "Soluble Potash (K2O)": 36.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.9,
-      "Boron (B)": 1.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.4300",
-      "Cobalt": "=1.7900",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=0.3500",
-      "Nickel": "=1.7100",
-      "Lead": "<0.1000",
-      "Selenium": "<0.1000",
-      "Zinc": "=10830.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6965EF",
   "metadata": {
     "registrant": "VALLEY AGRONOMICS LLC",
     "label_name": "FINISH 5-15-36",
     "wsda_reg_no": "(#3132-0062)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0062)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0062)",
+        "product_name": "FINISH 5-15-36",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 36.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.9,
+          "Boron (B)": 1.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "=0.4300",
+          "Cobalt": "=1.7900",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=0.3500",
+          "Nickel": "=1.7100",
+          "Lead": "<0.1000",
+          "Selenium": "<0.1000",
+          "Zinc": "=10830.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FINISH 5-15-36",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 15.0,
+      "K2O_pct": 36.0
+    },
+    "macros_pct": {
+      "S": 3.9
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.1,
+      "Zn": 1.0,
+      "Cu": 0.1,
+      "B": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6965EF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.43,
+            "Co": 1.79,
+            "Hg": 0.01,
+            "Mo": 0.35,
+            "Ni": 1.71,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 10830.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Hg": 0.01,
+            "Pb": 0.1,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.43,
+        "Co": 1.79,
+        "Mo": 0.35,
+        "Ni": 1.71,
+        "Zn": 10830.0
+      }
+    }
   }
 }

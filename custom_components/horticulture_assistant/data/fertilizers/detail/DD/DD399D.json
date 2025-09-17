@@ -1,1 +1,155 @@
-{"schema_version":"2025-07-v1","product_id":"DD399D","source_wsda_record":{"wsda_product_number":"(#1176-0059)","product_name":"ST. PAUL BRAND TOPDRESS 12-8-8","company_info":{"company":"MARION AG SERVICE INC","Mailing Address":"7746 St Paul Hwy NE","Post Office Box":null,"City":"St Paul","State":"OR","Postal Code":"97137","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":4.2,"Magnesium (Mg)":4.0,"Sulfur (S)":7.5,"Boron (B)":0.12,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.12,"Iron (Fe)":2.22,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.28},"reported_metals":{"Arsenic":"=3.5700","Cadmium":"=20.3000","Cobalt":"=3.3000","Mercury":"<0.0500","Molybdenum":"=2.4000","Nickel":"=30.1000","Lead":"=1.5000","Selenium":"=2.1000","Zinc":"=2.0700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":4.2,"Magnesium (Mg)":4.0,"Sulfur (S)":7.5,"Boron (B)":0.12,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.12,"Iron (Fe)":2.22,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.28},"heavy_metals":{"Arsenic":"=3.5700","Cadmium":"=20.3000","Cobalt":"=3.3000","Mercury":"<0.0500","Molybdenum":"=2.4000","Nickel":"=30.1000","Lead":"=1.5000","Selenium":"=2.1000","Zinc":"=2.0700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MARION AG SERVICE INC","label_name":"ST. PAUL BRAND TOPDRESS 12-8-8","wsda_reg_no":"(#1176-0059)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DD399D",
+  "metadata": {
+    "registrant": "MARION AG SERVICE INC",
+    "label_name": "ST. PAUL BRAND TOPDRESS 12-8-8",
+    "wsda_reg_no": "(#1176-0059)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1176-0059)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1176-0059)",
+        "product_name": "ST. PAUL BRAND TOPDRESS 12-8-8",
+        "company_info": {
+          "company": "MARION AG SERVICE INC",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": 4.2,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": 7.5,
+          "Boron (B)": 0.12,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.12,
+          "Iron (Fe)": 2.22,
+          "Manganese (Mn)": 0.3,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.28
+        },
+        "reported_metals": {
+          "Arsenic": "=3.5700",
+          "Cadmium": "=20.3000",
+          "Cobalt": "=3.3000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=2.4000",
+          "Nickel": "=30.1000",
+          "Lead": "=1.5000",
+          "Selenium": "=2.1000",
+          "Zinc": "=2.0700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ST. PAUL BRAND TOPDRESS 12-8-8",
+    "brand": "MARION AG SERVICE INC",
+    "manufacturer": {
+      "name": "MARION AG SERVICE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 4.2,
+      "Mg": 4.0,
+      "S": 7.5
+    },
+    "micros_pct": {
+      "Fe": 2.22,
+      "Mn": 0.3,
+      "Zn": 0.28,
+      "Cu": 0.12,
+      "B": 0.12
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DD399D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.57,
+            "Cd": 20.3,
+            "Co": 3.3,
+            "Hg": 0.05,
+            "Mo": 2.4,
+            "Ni": 30.1,
+            "Pb": 1.5,
+            "Se": 2.1,
+            "Zn": 2.07
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.57,
+        "Cd": 20.3,
+        "Co": 3.3,
+        "Mo": 2.4,
+        "Ni": 30.1,
+        "Pb": 1.5,
+        "Se": 2.1,
+        "Zn": 2.07
+      }
+    }
+  }
+}

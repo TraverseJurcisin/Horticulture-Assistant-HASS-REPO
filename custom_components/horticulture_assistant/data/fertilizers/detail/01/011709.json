@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "011709",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2075-0035)",
-    "product_name": "FBSCIENCES MANRON FOLIAR 0-0-0",
-    "company_info": {
-      "company": "FBSCIENCES INC",
-      "Mailing Address": "1910 Innovation Way Ste 100",
-      "Post Office Box": null,
-      "City": "Libertyville",
-      "State": "IL",
-      "Postal Code": "60048",
-      "Telephone Number": "901 221-1168",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 5.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2600",
-      "Cadmium": "=0.6700",
-      "Cobalt": "=47.5000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=65.2000",
-      "Lead": "=4.1000",
-      "Selenium": "=26.3000",
-      "Zinc": "=467.7000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 5.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2600",
-      "Cadmium": "=0.6700",
-      "Cobalt": "=47.5000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=65.2000",
-      "Lead": "=4.1000",
-      "Selenium": "=26.3000",
-      "Zinc": "=467.7000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "011709",
   "metadata": {
     "registrant": "FBSCIENCES INC",
     "label_name": "FBSCIENCES MANRON FOLIAR 0-0-0",
     "wsda_reg_no": "(#2075-0035)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2075-0035)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2075-0035)",
+        "product_name": "FBSCIENCES MANRON FOLIAR 0-0-0",
+        "company_info": {
+          "company": "FBSCIENCES INC",
+          "Mailing Address": "1910 Innovation Way Ste 100",
+          "Post Office Box": null,
+          "City": "Libertyville",
+          "State": "IL",
+          "Postal Code": "60048",
+          "Telephone Number": "901 221-1168",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 5.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2600",
+          "Cadmium": "=0.6700",
+          "Cobalt": "=47.5000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=65.2000",
+          "Lead": "=4.1000",
+          "Selenium": "=26.3000",
+          "Zinc": "=467.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FBSCIENCES MANRON FOLIAR 0-0-0",
+    "brand": "FBSCIENCES INC",
+    "manufacturer": {
+      "name": "FBSCIENCES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Mn": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "011709-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.26,
+            "Cd": 0.67,
+            "Co": 47.5,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 65.2,
+            "Pb": 4.1,
+            "Se": 26.3,
+            "Zn": 467.7
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Mo": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.26,
+        "Cd": 0.67,
+        "Co": 47.5,
+        "Ni": 65.2,
+        "Pb": 4.1,
+        "Se": 26.3,
+        "Zn": 467.7
+      }
+    }
   }
 }

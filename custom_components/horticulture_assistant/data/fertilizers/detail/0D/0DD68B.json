@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0DD68B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3279-0004)",
-    "product_name": "ARIZONA'S BEST SOIL SULFUR 0-0-0",
-    "company_info": {
-      "company": "WESTERN ORGANICS INC",
-      "Mailing Address": "PO Box 25406",
-      "Post Office Box": null,
-      "City": "Tempe",
-      "State": "AZ",
-      "Postal Code": "85285",
-      "Telephone Number": "602 390-1194",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 90.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=9.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=18.0000",
-      "Mercury": "=0.5000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=22.0000",
-      "Lead": "=63.0000",
-      "Selenium": "=1.5000",
-      "Zinc": "=239.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 90.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=9.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=18.0000",
-      "Mercury": "=0.5000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=22.0000",
-      "Lead": "=63.0000",
-      "Selenium": "=1.5000",
-      "Zinc": "=239.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0DD68B",
   "metadata": {
     "registrant": "WESTERN ORGANICS INC",
     "label_name": "ARIZONA'S BEST SOIL SULFUR 0-0-0",
     "wsda_reg_no": "(#3279-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3279-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3279-0004)",
+        "product_name": "ARIZONA'S BEST SOIL SULFUR 0-0-0",
+        "company_info": {
+          "company": "WESTERN ORGANICS INC",
+          "Mailing Address": "PO Box 25406",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85285",
+          "Telephone Number": "602 390-1194",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 90.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=9.0000",
+          "Cadmium": "=2.0000",
+          "Cobalt": "=18.0000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=22.0000",
+          "Lead": "=63.0000",
+          "Selenium": "=1.5000",
+          "Zinc": "=239.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ARIZONA'S BEST SOIL SULFUR 0-0-0",
+    "brand": "WESTERN ORGANICS INC",
+    "manufacturer": {
+      "name": "WESTERN ORGANICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 90.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0DD68B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.0,
+            "Cd": 2.0,
+            "Co": 18.0,
+            "Hg": 0.5,
+            "Mo": 2.0,
+            "Ni": 22.0,
+            "Pb": 63.0,
+            "Se": 1.5,
+            "Zn": 239.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.0,
+        "Cd": 2.0,
+        "Co": 18.0,
+        "Hg": 0.5,
+        "Mo": 2.0,
+        "Ni": 22.0,
+        "Pb": 63.0,
+        "Se": 1.5,
+        "Zn": 239.0
+      }
+    }
   }
 }

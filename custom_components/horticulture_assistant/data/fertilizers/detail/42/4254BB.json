@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4254BB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1707-0007)",
-    "product_name": "LLC B.C BOOST 3-0-2",
-    "company_info": {
-      "company": "TECHNAFLORA PLANT PRODUCTS",
-      "Mailing Address": "101-7261 River Place",
-      "Post Office Box": null,
-      "City": "Mission",
-      "State": "BC",
-      "Postal Code": "V4S 0A2",
-      "Telephone Number": "604 826-4250",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 3.21,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.0409,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2000",
-      "Cadmium": "=0.0500",
-      "Cobalt": "=0.0900",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=0.0700",
-      "Nickel": "=0.2200",
-      "Lead": "=0.2000",
-      "Selenium": "=0.3500",
-      "Zinc": "=0.9100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 3.21,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.0409,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2000",
-      "Cadmium": "=0.0500",
-      "Cobalt": "=0.0900",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=0.0700",
-      "Nickel": "=0.2200",
-      "Lead": "=0.2000",
-      "Selenium": "=0.3500",
-      "Zinc": "=0.9100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4254BB",
   "metadata": {
     "registrant": "TECHNAFLORA PLANT PRODUCTS",
     "label_name": "LLC B.C BOOST 3-0-2",
     "wsda_reg_no": "(#1707-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1707-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1707-0007)",
+        "product_name": "LLC B.C BOOST 3-0-2",
+        "company_info": {
+          "company": "TECHNAFLORA PLANT PRODUCTS",
+          "Mailing Address": "101-7261 River Place",
+          "Post Office Box": null,
+          "City": "Mission",
+          "State": "BC",
+          "Postal Code": "V4S 0A2",
+          "Telephone Number": "604 826-4250",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 3.21,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.0409,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2000",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=0.0900",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=0.0700",
+          "Nickel": "=0.2200",
+          "Lead": "=0.2000",
+          "Selenium": "=0.3500",
+          "Zinc": "=0.9100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LLC B.C BOOST 3-0-2",
+    "brand": "TECHNAFLORA PLANT PRODUCTS",
+    "manufacturer": {
+      "name": "TECHNAFLORA PLANT PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.21
+    },
+    "micros_pct": {
+      "Fe": 0.0409
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4254BB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.2,
+            "Cd": 0.05,
+            "Co": 0.09,
+            "Hg": 0.02,
+            "Mo": 0.07,
+            "Ni": 0.22,
+            "Pb": 0.2,
+            "Se": 0.35,
+            "Zn": 0.91
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.02
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.2,
+        "Cd": 0.05,
+        "Co": 0.09,
+        "Mo": 0.07,
+        "Ni": 0.22,
+        "Pb": 0.2,
+        "Se": 0.35,
+        "Zn": 0.91
+      }
+    }
   }
 }

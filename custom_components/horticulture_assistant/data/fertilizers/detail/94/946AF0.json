@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"946AF0","source_wsda_record":{"wsda_product_number":"(#0627-0056)","product_name":"PENNINGTON LAWN BOOSTER SUN & SHADE 10-0-0","company_info":{"company":"PENNINGTON SEED INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2400","Cadmium":"=0.0580","Cobalt":"<0.0150","Mercury":"=0.1280","Molybdenum":"=2.3600","Nickel":"=1.6300","Lead":"<0.0150","Selenium":"=0.4420","Zinc":"=16.9600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2400","Cadmium":"=0.0580","Cobalt":"<0.0150","Mercury":"=0.1280","Molybdenum":"=2.3600","Nickel":"=1.6300","Lead":"<0.0150","Selenium":"=0.4420","Zinc":"=16.9600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PENNINGTON SEED INC","label_name":"PENNINGTON LAWN BOOSTER SUN & SHADE 10-0-0","wsda_reg_no":"(#0627-0056)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "946AF0",
+  "metadata": {
+    "registrant": "PENNINGTON SEED INC",
+    "label_name": "PENNINGTON LAWN BOOSTER SUN & SHADE 10-0-0",
+    "wsda_reg_no": "(#0627-0056)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0627-0056)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0627-0056)",
+        "product_name": "PENNINGTON LAWN BOOSTER SUN & SHADE 10-0-0",
+        "company_info": {
+          "company": "PENNINGTON SEED INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2400",
+          "Cadmium": "=0.0580",
+          "Cobalt": "<0.0150",
+          "Mercury": "=0.1280",
+          "Molybdenum": "=2.3600",
+          "Nickel": "=1.6300",
+          "Lead": "<0.0150",
+          "Selenium": "=0.4420",
+          "Zinc": "=16.9600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON LAWN BOOSTER SUN & SHADE 10-0-0",
+    "brand": "PENNINGTON SEED INC",
+    "manufacturer": {
+      "name": "PENNINGTON SEED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "946AF0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.24,
+            "Cd": 0.058,
+            "Co": 0.015,
+            "Hg": 0.128,
+            "Mo": 2.36,
+            "Ni": 1.63,
+            "Pb": 0.015,
+            "Se": 0.442,
+            "Zn": 16.96
+          },
+          "detection_limits_ppm": {
+            "Co": 0.015,
+            "Pb": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.24,
+        "Cd": 0.058,
+        "Hg": 0.128,
+        "Mo": 2.36,
+        "Ni": 1.63,
+        "Se": 0.442,
+        "Zn": 16.96
+      }
+    }
+  }
+}

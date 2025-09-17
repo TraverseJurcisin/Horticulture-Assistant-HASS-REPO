@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "061807",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1589-0073)",
-    "product_name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
-    "company_info": {
-      "company": "TWO RIVERS TERMINAL - PASCO WA - GL",
-      "Mailing Address": "PO Box 2327",
-      "Post Office Box": null,
-      "City": "Pasco",
-      "State": "WA",
-      "Postal Code": "99302",
-      "Telephone Number": "509 547-7776",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=24.0000",
-      "Cadmium": "=1.9200",
-      "Cobalt": "=4.8100",
-      "Mercury": "=0.0568",
-      "Molybdenum": "=9.6200",
-      "Nickel": "=14.4000",
-      "Lead": "=14.4000",
-      "Selenium": "=24.0000",
-      "Zinc": "=19.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=24.0000",
-      "Cadmium": "=1.9200",
-      "Cobalt": "=4.8100",
-      "Mercury": "=0.0568",
-      "Molybdenum": "=9.6200",
-      "Nickel": "=14.4000",
-      "Lead": "=14.4000",
-      "Selenium": "=24.0000",
-      "Zinc": "=19.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "061807",
   "metadata": {
     "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
     "label_name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
     "wsda_reg_no": "(#1589-0073)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1589-0073)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1589-0073)",
+        "product_name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
+        "company_info": {
+          "company": "TWO RIVERS TERMINAL - PASCO WA - GL",
+          "Mailing Address": "PO Box 2327",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99302",
+          "Telephone Number": "509 547-7776",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 24.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=24.0000",
+          "Cadmium": "=1.9200",
+          "Cobalt": "=4.8100",
+          "Mercury": "=0.0568",
+          "Molybdenum": "=9.6200",
+          "Nickel": "=14.4000",
+          "Lead": "=14.4000",
+          "Selenium": "=24.0000",
+          "Zinc": "=19.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "POWER-LINE PROFESSIONAL PRODUCTS 24-0-14 BLENDED FERTILIZER 24-0-14",
+    "brand": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "manufacturer": {
+      "name": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 24.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "S": 11.9
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "061807-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 24.0,
+            "Cd": 1.92,
+            "Co": 4.81,
+            "Hg": 0.0568,
+            "Mo": 9.62,
+            "Ni": 14.4,
+            "Pb": 14.4,
+            "Se": 24.0,
+            "Zn": 19.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 24.0,
+        "Cd": 1.92,
+        "Co": 4.81,
+        "Hg": 0.0568,
+        "Mo": 9.62,
+        "Ni": 14.4,
+        "Pb": 14.4,
+        "Se": 24.0,
+        "Zn": 19.2
+      }
+    }
   }
 }

@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "31B4FA",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0670-0142)",
-    "product_name": "EARTHLINK CUSTOM ENHANCED FALL FERTILIZER 0-7-20",
-    "company_info": {
-      "company": "TERRALINK HORTICULTURE INC",
-      "Mailing Address": "464 Riverside Rd",
-      "Post Office Box": null,
-      "City": "Abbotsford",
-      "State": "BC",
-      "Postal Code": "V2S 7M1",
-      "Telephone Number": "800 661-4559",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 20.0,
-      "Calcium (Ca)": 4.5,
-      "Magnesium (Mg)": 4.5,
-      "Sulfur (S)": 14.0,
-      "Boron (B)": 0.3,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=17.0000",
-      "Cadmium": "=5.6000",
-      "Cobalt": "=2.2100",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=11.9000",
-      "Nickel": "=79.9400",
-      "Lead": "=8.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=96.0600"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 20.0,
-      "Calcium (Ca)": 4.5,
-      "Magnesium (Mg)": 4.5,
-      "Sulfur (S)": 14.0,
-      "Boron (B)": 0.3,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=17.0000",
-      "Cadmium": "=5.6000",
-      "Cobalt": "=2.2100",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=11.9000",
-      "Nickel": "=79.9400",
-      "Lead": "=8.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=96.0600"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "31B4FA",
   "metadata": {
     "registrant": "TERRALINK HORTICULTURE INC",
     "label_name": "EARTHLINK CUSTOM ENHANCED FALL FERTILIZER 0-7-20",
     "wsda_reg_no": "(#0670-0142)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0142)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0142)",
+        "product_name": "EARTHLINK CUSTOM ENHANCED FALL FERTILIZER 0-7-20",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": 4.5,
+          "Magnesium (Mg)": 4.5,
+          "Sulfur (S)": 14.0,
+          "Boron (B)": 0.3,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=17.0000",
+          "Cadmium": "=5.6000",
+          "Cobalt": "=2.2100",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=11.9000",
+          "Nickel": "=79.9400",
+          "Lead": "=8.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=96.0600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTHLINK CUSTOM ENHANCED FALL FERTILIZER 0-7-20",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 7.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Ca": 4.5,
+      "Mg": 4.5,
+      "S": 14.0
+    },
+    "micros_pct": {
+      "B": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "31B4FA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 17.0,
+            "Cd": 5.6,
+            "Co": 2.21,
+            "Hg": 0.2,
+            "Mo": 11.9,
+            "Ni": 79.94,
+            "Pb": 8.0,
+            "Se": 1.0,
+            "Zn": 96.06
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 17.0,
+        "Cd": 5.6,
+        "Co": 2.21,
+        "Hg": 0.2,
+        "Mo": 11.9,
+        "Ni": 79.94,
+        "Pb": 8.0,
+        "Se": 1.0,
+        "Zn": 96.06
+      }
+    }
   }
 }

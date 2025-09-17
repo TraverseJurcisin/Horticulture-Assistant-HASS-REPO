@@ -1,106 +1,155 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "61F11C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3900-0086)",
-    "product_name": "GROTEK BASIX 5-11-26",
-    "company_info": {
-      "company": "HYDROFARM LLC",
-      "Mailing Address": "2103 Harrison Ave NW",
-      "Post Office Box": "Ste 2 #382",
-      "City": "Olympia",
-      "State": "WA",
-      "Postal Code": "98502",
-      "Telephone Number": "541 359-1580",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 26.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 6.0,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": 0.05,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.015,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.015
-    },
-    "reported_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=0.2700",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=141.0000",
-      "Nickel": "<1.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=172.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 26.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 6.0,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": 0.05,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.015,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.015
-    },
-    "heavy_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=0.2700",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=141.0000",
-      "Nickel": "<1.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=172.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "61F11C",
   "metadata": {
     "registrant": "HYDROFARM LLC",
     "label_name": "GROTEK BASIX 5-11-26",
     "wsda_reg_no": "(#3900-0086)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3900-0086)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3900-0086)",
+        "product_name": "GROTEK BASIX 5-11-26",
+        "company_info": {
+          "company": "HYDROFARM LLC",
+          "Mailing Address": "2103 Harrison Ave NW",
+          "Post Office Box": "Ste 2 #382",
+          "City": "Olympia",
+          "State": "WA",
+          "Postal Code": "98502",
+          "Telephone Number": "541 359-1580",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 11.0,
+          "Soluble Potash (K2O)": 26.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 6.0,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": 0.05,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.015,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.015
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "=0.2700",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=141.0000",
+          "Nickel": "<1.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=172.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROTEK BASIX 5-11-26",
+    "brand": "HYDROFARM LLC",
+    "manufacturer": {
+      "name": "HYDROFARM LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 11.0,
+      "K2O_pct": 26.0
+    },
+    "macros_pct": {
+      "Mg": 6.0,
+      "S": 8.0
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.05,
+      "Zn": 0.015,
+      "Cu": 0.015,
+      "B": 0.05,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "61F11C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.27,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 141.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 172.6
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.27,
+        "Mo": 141.0,
+        "Zn": 172.6
+      }
+    }
   }
 }

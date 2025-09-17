@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"9B9BC1","source_wsda_record":{"wsda_product_number":"(#4093-0012)","product_name":"BURPEE NATURAL & ORGANIC PREMIUM POTTING MIX 0.12-0.12-0.12 0.12-0.12-0.12","company_info":{"company":"VOGEL SEED & FERTILIZER, LLC","Mailing Address":"1891 Spring Valley Road","Post Office Box":null,"City":"Jackson","State":"WI","Postal Code":"53037","Telephone Number":"262 677-2273","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.12,"Available Phosphoric Acid (P2O5)":0.12,"Soluble Potash (K2O)":0.12,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9300","Cadmium":"=0.2220","Cobalt":"=0.5760","Mercury":"=0.0722","Molybdenum":"=0.3490","Nickel":"=1.8900","Lead":"=5.1000","Selenium":"<0.3500","Zinc":"=29.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.12,"Available Phosphoric Acid (P2O5)":0.12,"Soluble Potash (K2O)":0.12,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9300","Cadmium":"=0.2220","Cobalt":"=0.5760","Mercury":"=0.0722","Molybdenum":"=0.3490","Nickel":"=1.8900","Lead":"=5.1000","Selenium":"<0.3500","Zinc":"=29.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOGEL SEED & FERTILIZER, LLC","label_name":"BURPEE NATURAL & ORGANIC PREMIUM POTTING MIX 0.12-0.12-0.12 0.12-0.12-0.12","wsda_reg_no":"(#4093-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9B9BC1",
+  "metadata": {
+    "registrant": "VOGEL SEED & FERTILIZER, LLC",
+    "label_name": "BURPEE NATURAL & ORGANIC PREMIUM POTTING MIX 0.12-0.12-0.12 0.12-0.12-0.12",
+    "wsda_reg_no": "(#4093-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4093-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4093-0012)",
+        "product_name": "BURPEE NATURAL & ORGANIC PREMIUM POTTING MIX 0.12-0.12-0.12 0.12-0.12-0.12",
+        "company_info": {
+          "company": "VOGEL SEED & FERTILIZER, LLC",
+          "Mailing Address": "1891 Spring Valley Road",
+          "Post Office Box": null,
+          "City": "Jackson",
+          "State": "WI",
+          "Postal Code": "53037",
+          "Telephone Number": "262 677-2273",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.12,
+          "Available Phosphoric Acid (P2O5)": 0.12,
+          "Soluble Potash (K2O)": 0.12,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9300",
+          "Cadmium": "=0.2220",
+          "Cobalt": "=0.5760",
+          "Mercury": "=0.0722",
+          "Molybdenum": "=0.3490",
+          "Nickel": "=1.8900",
+          "Lead": "=5.1000",
+          "Selenium": "<0.3500",
+          "Zinc": "=29.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BURPEE NATURAL & ORGANIC PREMIUM POTTING MIX 0.12-0.12-0.12 0.12-0.12-0.12",
+    "brand": "VOGEL SEED & FERTILIZER, LLC",
+    "manufacturer": {
+      "name": "VOGEL SEED & FERTILIZER, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.12,
+      "P2O5_pct": 0.12,
+      "K2O_pct": 0.12
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9B9BC1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.93,
+            "Cd": 0.222,
+            "Co": 0.576,
+            "Hg": 0.0722,
+            "Mo": 0.349,
+            "Ni": 1.89,
+            "Pb": 5.1,
+            "Se": 0.35,
+            "Zn": 29.3
+          },
+          "detection_limits_ppm": {
+            "Se": 0.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.93,
+        "Cd": 0.222,
+        "Co": 0.576,
+        "Hg": 0.0722,
+        "Mo": 0.349,
+        "Ni": 1.89,
+        "Pb": 5.1,
+        "Zn": 29.3
+      }
+    }
+  }
+}

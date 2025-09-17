@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "793B7C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4214-0006)",
-    "product_name": "SIMPLE LAWN SOLUTIONS DARKER GREEN 0.75-0-0",
-    "company_info": {
-      "company": "CUSTOM SIMPLE SOLUTIONS LLC",
-      "Mailing Address": "534 CR 529A",
-      "Post Office Box": null,
-      "City": "Lake Panasoffkee",
-      "State": "FL",
-      "Postal Code": "33538",
-      "Telephone Number": "352 789-5024",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.75,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.0,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.0010",
-      "Cadmium": "=0.6130",
-      "Cobalt": "=4.5500",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=0.1550",
-      "Nickel": "=28.3000",
-      "Lead": "=2.3000",
-      "Selenium": "<0.0010",
-      "Zinc": "=36.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.75,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.0,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.0010",
-      "Cadmium": "=0.6130",
-      "Cobalt": "=4.5500",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=0.1550",
-      "Nickel": "=28.3000",
-      "Lead": "=2.3000",
-      "Selenium": "<0.0010",
-      "Zinc": "=36.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "793B7C",
   "metadata": {
     "registrant": "CUSTOM SIMPLE SOLUTIONS LLC",
     "label_name": "SIMPLE LAWN SOLUTIONS DARKER GREEN 0.75-0-0",
     "wsda_reg_no": "(#4214-0006)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4214-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4214-0006)",
+        "product_name": "SIMPLE LAWN SOLUTIONS DARKER GREEN 0.75-0-0",
+        "company_info": {
+          "company": "CUSTOM SIMPLE SOLUTIONS LLC",
+          "Mailing Address": "534 CR 529A",
+          "Post Office Box": null,
+          "City": "Lake Panasoffkee",
+          "State": "FL",
+          "Postal Code": "33538",
+          "Telephone Number": "352 789-5024",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.75,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 6.0,
+          "Manganese (Mn)": 0.8,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0010",
+          "Cadmium": "=0.6130",
+          "Cobalt": "=4.5500",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=0.1550",
+          "Nickel": "=28.3000",
+          "Lead": "=2.3000",
+          "Selenium": "<0.0010",
+          "Zinc": "=36.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLE LAWN SOLUTIONS DARKER GREEN 0.75-0-0",
+    "brand": "CUSTOM SIMPLE SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "CUSTOM SIMPLE SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.75
+    },
+    "micros_pct": {
+      "Fe": 6.0,
+      "Mn": 0.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "793B7C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.613,
+            "Co": 4.55,
+            "Hg": 0.003,
+            "Mo": 0.155,
+            "Ni": 28.3,
+            "Pb": 2.3,
+            "Se": 0.001,
+            "Zn": 36.8
+          },
+          "detection_limits_ppm": {
+            "As": 0.001,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.613,
+        "Co": 4.55,
+        "Hg": 0.003,
+        "Mo": 0.155,
+        "Ni": 28.3,
+        "Pb": 2.3,
+        "Zn": 36.8
+      }
+    }
   }
 }

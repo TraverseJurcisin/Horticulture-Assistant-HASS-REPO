@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "02797D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2165-0020)",
-    "product_name": "CUSTOM AGRICULTURAL FORMULATORS CM GREEN ZINC 10% 0-0-0",
-    "company_info": {
-      "company": "CUSTOM AG FORMULATORS LLC",
-      "Mailing Address": "ICL Speciallty Products Inc. C",
-      "Post Office Box": "622 Emerson Rd Ste 500",
-      "City": "St. Louis",
-      "State": "MO",
-      "Postal Code": "63141",
-      "Telephone Number": "559 435-1052",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 10.0
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2000",
-      "Cadmium": "=0.3250",
-      "Cobalt": "<0.4000",
-      "Mercury": "=0.0040",
-      "Molybdenum": "<2.0000",
-      "Nickel": "=1.6600",
-      "Lead": "<0.2000",
-      "Selenium": "<0.4000",
-      "Zinc": "=163000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 10.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2000",
-      "Cadmium": "=0.3250",
-      "Cobalt": "<0.4000",
-      "Mercury": "=0.0040",
-      "Molybdenum": "<2.0000",
-      "Nickel": "=1.6600",
-      "Lead": "<0.2000",
-      "Selenium": "<0.4000",
-      "Zinc": "=163000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "02797D",
   "metadata": {
     "registrant": "CUSTOM AG FORMULATORS LLC",
     "label_name": "CUSTOM AGRICULTURAL FORMULATORS CM GREEN ZINC 10% 0-0-0",
     "wsda_reg_no": "(#2165-0020)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2165-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2165-0020)",
+        "product_name": "CUSTOM AGRICULTURAL FORMULATORS CM GREEN ZINC 10% 0-0-0",
+        "company_info": {
+          "company": "CUSTOM AG FORMULATORS LLC",
+          "Mailing Address": "ICL Speciallty Products Inc. C",
+          "Post Office Box": "622 Emerson Rd Ste 500",
+          "City": "St. Louis",
+          "State": "MO",
+          "Postal Code": "63141",
+          "Telephone Number": "559 435-1052",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 10.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2000",
+          "Cadmium": "=0.3250",
+          "Cobalt": "<0.4000",
+          "Mercury": "=0.0040",
+          "Molybdenum": "<2.0000",
+          "Nickel": "=1.6600",
+          "Lead": "<0.2000",
+          "Selenium": "<0.4000",
+          "Zinc": "=163000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CUSTOM AGRICULTURAL FORMULATORS CM GREEN ZINC 10% 0-0-0",
+    "brand": "CUSTOM AG FORMULATORS LLC",
+    "manufacturer": {
+      "name": "CUSTOM AG FORMULATORS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Zn": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "02797D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.2,
+            "Cd": 0.325,
+            "Co": 0.4,
+            "Hg": 0.004,
+            "Mo": 2.0,
+            "Ni": 1.66,
+            "Pb": 0.2,
+            "Se": 0.4,
+            "Zn": 163000.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.2,
+            "Co": 0.4,
+            "Mo": 2.0,
+            "Pb": 0.2,
+            "Se": 0.4
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.325,
+        "Hg": 0.004,
+        "Ni": 1.66,
+        "Zn": 163000.0
+      }
+    }
   }
 }

@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"E642E4","source_wsda_record":{"wsda_product_number":"(#1886-0200)","product_name":"WINFIELD GAINER HIGH GRO 28-8-18","company_info":{"company":"WINFIELD SOLUTIONS LLC","Mailing Address":"PO Box 64589","Post Office Box":null,"City":"St Paul","State":"MN","Postal Code":"55164","Telephone Number":"651 375-7228","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":28.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=60.0000","Cadmium":"=20.0000","Cobalt":"=200.0000","Mercury":"=1.0000","Molybdenum":"=300.0000","Nickel":"=150.0000","Lead":"=20.0000","Selenium":"=150.0000","Zinc":"=800.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":28.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=60.0000","Cadmium":"=20.0000","Cobalt":"=200.0000","Mercury":"=1.0000","Molybdenum":"=300.0000","Nickel":"=150.0000","Lead":"=20.0000","Selenium":"=150.0000","Zinc":"=800.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WINFIELD SOLUTIONS LLC","label_name":"WINFIELD GAINER HIGH GRO 28-8-18","wsda_reg_no":"(#1886-0200)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E642E4",
+  "metadata": {
+    "registrant": "WINFIELD SOLUTIONS LLC",
+    "label_name": "WINFIELD GAINER HIGH GRO 28-8-18",
+    "wsda_reg_no": "(#1886-0200)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1886-0200)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1886-0200)",
+        "product_name": "WINFIELD GAINER HIGH GRO 28-8-18",
+        "company_info": {
+          "company": "WINFIELD SOLUTIONS LLC",
+          "Mailing Address": "PO Box 64589",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "MN",
+          "Postal Code": "55164",
+          "Telephone Number": "651 375-7228",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 28.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 18.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=60.0000",
+          "Cadmium": "=20.0000",
+          "Cobalt": "=200.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=300.0000",
+          "Nickel": "=150.0000",
+          "Lead": "=20.0000",
+          "Selenium": "=150.0000",
+          "Zinc": "=800.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WINFIELD GAINER HIGH GRO 28-8-18",
+    "brand": "WINFIELD SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "WINFIELD SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 28.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 18.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E642E4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 60.0,
+            "Cd": 20.0,
+            "Co": 200.0,
+            "Hg": 1.0,
+            "Mo": 300.0,
+            "Ni": 150.0,
+            "Pb": 20.0,
+            "Se": 150.0,
+            "Zn": 800.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 60.0,
+        "Cd": 20.0,
+        "Co": 200.0,
+        "Hg": 1.0,
+        "Mo": 300.0,
+        "Ni": 150.0,
+        "Pb": 20.0,
+        "Se": 150.0,
+        "Zn": 800.0
+      }
+    }
+  }
+}

@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"992C70","source_wsda_record":{"wsda_product_number":"(#1168-0078)","product_name":"EARTH JUICE BLOOM 0-3-2","company_info":{"company":"OGM","Mailing Address":"PO Box 3442","Post Office Box":null,"City":"Chico","State":"CA","Postal Code":"95973","Telephone Number":"530 961-4659","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=0.1000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=12.2100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=0.1000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=12.2100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"OGM","label_name":"EARTH JUICE BLOOM 0-3-2","wsda_reg_no":"(#1168-0078)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "992C70",
+  "metadata": {
+    "registrant": "OGM",
+    "label_name": "EARTH JUICE BLOOM 0-3-2",
+    "wsda_reg_no": "(#1168-0078)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1168-0078)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1168-0078)",
+        "product_name": "EARTH JUICE BLOOM 0-3-2",
+        "company_info": {
+          "company": "OGM",
+          "Mailing Address": "PO Box 3442",
+          "Post Office Box": null,
+          "City": "Chico",
+          "State": "CA",
+          "Postal Code": "95973",
+          "Telephone Number": "530 961-4659",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0300",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=0.1000",
+          "Lead": "<0.5000",
+          "Selenium": "<0.5000",
+          "Zinc": "=12.2100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTH JUICE BLOOM 0-3-2",
+    "brand": "OGM",
+    "manufacturer": {
+      "name": "OGM"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 3.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "992C70-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.1,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 12.21
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Pb": 0.5,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 0.1,
+        "Zn": 12.21
+      }
+    }
+  }
+}

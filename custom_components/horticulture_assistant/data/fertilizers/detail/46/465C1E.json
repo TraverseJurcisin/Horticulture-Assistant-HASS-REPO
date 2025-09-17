@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "465C1E",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1444-0156)",
-    "product_name": "BRANDT ENZUP P DS 12-58-0",
-    "company_info": {
-      "company": "BRANDT CONSOLIDATED INC",
-      "Mailing Address": "2935 South Koke Mill Road",
-      "Post Office Box": null,
-      "City": "Springfield",
-      "State": "IL",
-      "Postal Code": "62711-9651",
-      "Telephone Number": "217 547-5867",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 58.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=5.0000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=10.0000",
-      "Nickel": "=10.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=45.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 58.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=5.0000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=10.0000",
-      "Nickel": "=10.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=45.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "465C1E",
   "metadata": {
     "registrant": "BRANDT CONSOLIDATED INC",
     "label_name": "BRANDT ENZUP P DS 12-58-0",
     "wsda_reg_no": "(#1444-0156)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1444-0156)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1444-0156)",
+        "product_name": "BRANDT ENZUP P DS 12-58-0",
+        "company_info": {
+          "company": "BRANDT CONSOLIDATED INC",
+          "Mailing Address": "2935 South Koke Mill Road",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711-9651",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 58.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=10.0000",
+          "Nickel": "=10.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=45.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRANDT ENZUP P DS 12-58-0",
+    "brand": "BRANDT CONSOLIDATED INC",
+    "manufacturer": {
+      "name": "BRANDT CONSOLIDATED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 58.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "465C1E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 5.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 10.0,
+            "Ni": 10.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 45.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 5.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 10.0,
+        "Ni": 10.0,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 45.0
+      }
+    }
   }
 }

@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"91A751","source_wsda_record":{"wsda_product_number":"(#3330-0009)","product_name":"HELENA CALIBER COTE 14-14-14","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.03,"Sulfur (S)":1.78,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=9.0300","Cadmium":"=24.3300","Cobalt":"=2.0800","Mercury":"=0.0110","Molybdenum":"=2.8900","Nickel":"=50.1500","Lead":"=0.6000","Selenium":"=0.0600","Zinc":"=436.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.03,"Sulfur (S)":1.78,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=9.0300","Cadmium":"=24.3300","Cobalt":"=2.0800","Mercury":"=0.0110","Molybdenum":"=2.8900","Nickel":"=50.1500","Lead":"=0.6000","Selenium":"=0.0600","Zinc":"=436.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"HELENA CALIBER COTE 14-14-14","wsda_reg_no":"(#3330-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "91A751",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "HELENA CALIBER COTE 14-14-14",
+    "wsda_reg_no": "(#3330-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0009)",
+        "product_name": "HELENA CALIBER COTE 14-14-14",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.03,
+          "Sulfur (S)": 1.78,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=9.0300",
+          "Cadmium": "=24.3300",
+          "Cobalt": "=2.0800",
+          "Mercury": "=0.0110",
+          "Molybdenum": "=2.8900",
+          "Nickel": "=50.1500",
+          "Lead": "=0.6000",
+          "Selenium": "=0.0600",
+          "Zinc": "=436.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HELENA CALIBER COTE 14-14-14",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "P2O5_pct": 14.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "Mg": 1.03,
+      "S": 1.78
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "91A751-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.03,
+            "Cd": 24.33,
+            "Co": 2.08,
+            "Hg": 0.011,
+            "Mo": 2.89,
+            "Ni": 50.15,
+            "Pb": 0.6,
+            "Se": 0.06,
+            "Zn": 436.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.03,
+        "Cd": 24.33,
+        "Co": 2.08,
+        "Hg": 0.011,
+        "Mo": 2.89,
+        "Ni": 50.15,
+        "Pb": 0.6,
+        "Se": 0.06,
+        "Zn": 436.3
+      }
+    }
+  }
+}

@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F9C00E","source_wsda_record":{"wsda_product_number":"(#2629-0141)","product_name":"HARRELL'S 16-5-11","company_info":{"company":"HARRELL'S LLC","Mailing Address":"PO Box 807","Post Office Box":null,"City":"Lakeland","State":"FL","Postal Code":"33802","Telephone Number":"863 687-2774","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6000","Cadmium":"=0.6000","Cobalt":"=0.6000","Mercury":"<0.0100","Molybdenum":"<0.3000","Nickel":"=2.1000","Lead":"=0.9000","Selenium":"=0.6000","Zinc":"=17.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":11.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6000","Cadmium":"=0.6000","Cobalt":"=0.6000","Mercury":"<0.0100","Molybdenum":"<0.3000","Nickel":"=2.1000","Lead":"=0.9000","Selenium":"=0.6000","Zinc":"=17.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HARRELL'S LLC","label_name":"HARRELL'S 16-5-11","wsda_reg_no":"(#2629-0141)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F9C00E",
+  "metadata": {
+    "registrant": "HARRELL'S LLC",
+    "label_name": "HARRELL'S 16-5-11",
+    "wsda_reg_no": "(#2629-0141)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2629-0141)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2629-0141)",
+        "product_name": "HARRELL'S 16-5-11",
+        "company_info": {
+          "company": "HARRELL'S LLC",
+          "Mailing Address": "PO Box 807",
+          "Post Office Box": null,
+          "City": "Lakeland",
+          "State": "FL",
+          "Postal Code": "33802",
+          "Telephone Number": "863 687-2774",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.7,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6000",
+          "Cadmium": "=0.6000",
+          "Cobalt": "=0.6000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.3000",
+          "Nickel": "=2.1000",
+          "Lead": "=0.9000",
+          "Selenium": "=0.6000",
+          "Zinc": "=17.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HARRELL'S 16-5-11",
+    "brand": "HARRELL'S LLC",
+    "manufacturer": {
+      "name": "HARRELL'S LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 11.0
+    },
+    "macros_pct": {
+      "S": 3.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F9C00E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.6,
+            "Cd": 0.6,
+            "Co": 0.6,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 2.1,
+            "Pb": 0.9,
+            "Se": 0.6,
+            "Zn": 17.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.01,
+            "Mo": 0.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.6,
+        "Cd": 0.6,
+        "Co": 0.6,
+        "Ni": 2.1,
+        "Pb": 0.9,
+        "Se": 0.6,
+        "Zn": 17.0
+      }
+    }
+  }
+}

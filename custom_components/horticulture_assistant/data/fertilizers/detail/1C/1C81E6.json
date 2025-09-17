@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1C81E6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1168-0036)",
-    "product_name": "EARTH JUICE SUGAR PEAK VEGETATIVE 3-1-5",
-    "company_info": {
-      "company": "OGM",
-      "Mailing Address": "PO Box 3442",
-      "Post Office Box": null,
-      "City": "Chico",
-      "State": "CA",
-      "Postal Code": "95973",
-      "Telephone Number": "530 961-4659",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.0100",
-      "Cadmium": "=1.7000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.2000",
-      "Nickel": "<0.0500",
-      "Lead": "=0.0100",
-      "Selenium": "=1.1800",
-      "Zinc": "=180.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.0100",
-      "Cadmium": "=1.7000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.2000",
-      "Nickel": "<0.0500",
-      "Lead": "=0.0100",
-      "Selenium": "=1.1800",
-      "Zinc": "=180.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1C81E6",
   "metadata": {
     "registrant": "OGM",
     "label_name": "EARTH JUICE SUGAR PEAK VEGETATIVE 3-1-5",
     "wsda_reg_no": "(#1168-0036)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1168-0036)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1168-0036)",
+        "product_name": "EARTH JUICE SUGAR PEAK VEGETATIVE 3-1-5",
+        "company_info": {
+          "company": "OGM",
+          "Mailing Address": "PO Box 3442",
+          "Post Office Box": null,
+          "City": "Chico",
+          "State": "CA",
+          "Postal Code": "95973",
+          "Telephone Number": "530 961-4659",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0100",
+          "Cadmium": "=1.7000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=2.2000",
+          "Nickel": "<0.0500",
+          "Lead": "=0.0100",
+          "Selenium": "=1.1800",
+          "Zinc": "=180.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTH JUICE SUGAR PEAK VEGETATIVE 3-1-5",
+    "brand": "OGM",
+    "manufacturer": {
+      "name": "OGM"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1C81E6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.01,
+            "Cd": 1.7,
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Mo": 2.2,
+            "Ni": 0.05,
+            "Pb": 0.01,
+            "Se": 1.18,
+            "Zn": 180.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.01,
+            "Ni": 0.05
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.7,
+        "Co": 5.0,
+        "Hg": 0.02,
+        "Mo": 2.2,
+        "Pb": 0.01,
+        "Se": 1.18,
+        "Zn": 180.0
+      }
+    }
   }
 }

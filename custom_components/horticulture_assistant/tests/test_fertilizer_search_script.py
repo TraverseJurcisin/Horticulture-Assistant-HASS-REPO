@@ -1,13 +1,17 @@
+﻿import pytest
+
+pytest.importorskip("aiohttp", reason="requires Home Assistant runtime")
+pytest.importorskip("homeassistant.helpers", reason="requires Home Assistant runtime")
 import os
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
-os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+os.environ.setdefault("FERTILIZER_DATASET_INDEX_DIR", str(ROOT / "feature/fertilizer_dataset_sharded/index_sharded"))
+os.environ.setdefault("FERTILIZER_DATASET_DETAIL_DIR", str(ROOT / "feature/fertilizer_dataset_sharded/detail"))
 
-SCRIPT = ROOT / "scripts/wsda_search.py"
+SCRIPT = ROOT / "scripts/fertilizer_search.py"
 
 
 def test_search_cli(tmp_path):

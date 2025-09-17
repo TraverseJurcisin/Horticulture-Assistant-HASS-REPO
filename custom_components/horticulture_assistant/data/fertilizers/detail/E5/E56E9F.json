@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"E56E9F","source_wsda_record":{"wsda_product_number":"(#2849-0177)","product_name":"SITEPRO ESSENTIAL TURF #13965 25-5-5","company_info":{"company":"MAS","Mailing Address":"PO Box 732","Post Office Box":null,"City":"Newberg","State":"OR","Postal Code":"97132","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.9,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.7000","Cadmium":"=14.6000","Cobalt":"=2.2900","Mercury":"=0.1300","Molybdenum":"=5.2000","Nickel":"=27.9000","Lead":"=5.0000","Selenium":"<5.0000","Zinc":"=363.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":25.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.9,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.7000","Cadmium":"=14.6000","Cobalt":"=2.2900","Mercury":"=0.1300","Molybdenum":"=5.2000","Nickel":"=27.9000","Lead":"=5.0000","Selenium":"<5.0000","Zinc":"=363.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MAS","label_name":"SITEPRO ESSENTIAL TURF #13965 25-5-5","wsda_reg_no":"(#2849-0177)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E56E9F",
+  "metadata": {
+    "registrant": "MAS",
+    "label_name": "SITEPRO ESSENTIAL TURF #13965 25-5-5",
+    "wsda_reg_no": "(#2849-0177)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2849-0177)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2849-0177)",
+        "product_name": "SITEPRO ESSENTIAL TURF #13965 25-5-5",
+        "company_info": {
+          "company": "MAS",
+          "Mailing Address": "PO Box 732",
+          "Post Office Box": null,
+          "City": "Newberg",
+          "State": "OR",
+          "Postal Code": "97132",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 25.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.9,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.7000",
+          "Cadmium": "=14.6000",
+          "Cobalt": "=2.2900",
+          "Mercury": "=0.1300",
+          "Molybdenum": "=5.2000",
+          "Nickel": "=27.9000",
+          "Lead": "=5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=363.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SITEPRO ESSENTIAL TURF #13965 25-5-5",
+    "brand": "MAS",
+    "manufacturer": {
+      "name": "MAS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 25.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 10.0
+    },
+    "micros_pct": {
+      "Fe": 0.9,
+      "Mn": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E56E9F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.7,
+            "Cd": 14.6,
+            "Co": 2.29,
+            "Hg": 0.13,
+            "Mo": 5.2,
+            "Ni": 27.9,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 363.2
+          },
+          "detection_limits_ppm": {
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.7,
+        "Cd": 14.6,
+        "Co": 2.29,
+        "Hg": 0.13,
+        "Mo": 5.2,
+        "Ni": 27.9,
+        "Pb": 5.0,
+        "Zn": 363.2
+      }
+    }
+  }
+}

@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "198091",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0969-0006)",
-    "product_name": "FOLIAR BLEND BY AGRIGRO 1-0-0",
-    "company_info": {
-      "company": "AGRI-GRO MARKETING INC",
-      "Mailing Address": "PO Box 520",
-      "Post Office Box": null,
-      "City": "Doniphan",
-      "State": "MO",
-      "Postal Code": "63935",
-      "Telephone Number": "573 996-7384",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.03,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.002,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=128.0000",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=227.0000",
-      "Nickel": "=0.2500",
-      "Lead": "=0.3000",
-      "Selenium": "=0.5000",
-      "Zinc": "=2490.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.03,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.002,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=128.0000",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=227.0000",
-      "Nickel": "=0.2500",
-      "Lead": "=0.3000",
-      "Selenium": "=0.5000",
-      "Zinc": "=2490.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "198091",
   "metadata": {
     "registrant": "AGRI-GRO MARKETING INC",
     "label_name": "FOLIAR BLEND BY AGRIGRO 1-0-0",
     "wsda_reg_no": "(#0969-0006)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0969-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0969-0006)",
+        "product_name": "FOLIAR BLEND BY AGRIGRO 1-0-0",
+        "company_info": {
+          "company": "AGRI-GRO MARKETING INC",
+          "Mailing Address": "PO Box 520",
+          "Post Office Box": null,
+          "City": "Doniphan",
+          "State": "MO",
+          "Postal Code": "63935",
+          "Telephone Number": "573 996-7384",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.002,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.002,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=128.0000",
+          "Mercury": "=0.0133",
+          "Molybdenum": "=227.0000",
+          "Nickel": "=0.2500",
+          "Lead": "=0.3000",
+          "Selenium": "=0.5000",
+          "Zinc": "=2490.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FOLIAR BLEND BY AGRIGRO 1-0-0",
+    "brand": "AGRI-GRO MARKETING INC",
+    "manufacturer": {
+      "name": "AGRI-GRO MARKETING INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "micros_pct": {
+      "Mn": 0.1,
+      "Zn": 0.05,
+      "B": 0.03,
+      "Mo": 0.002
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "198091-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.7,
+            "Cd": 0.2,
+            "Co": 128.0,
+            "Hg": 0.0133,
+            "Mo": 227.0,
+            "Ni": 0.25,
+            "Pb": 0.3,
+            "Se": 0.5,
+            "Zn": 2490.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.7,
+        "Cd": 0.2,
+        "Co": 128.0,
+        "Hg": 0.0133,
+        "Mo": 227.0,
+        "Ni": 0.25,
+        "Pb": 0.3,
+        "Se": 0.5,
+        "Zn": 2490.0
+      }
+    }
   }
 }

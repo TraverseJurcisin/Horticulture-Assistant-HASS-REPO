@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "01372E",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0924-0061)",
-    "product_name": "CAPTAIN JACK'S PLANT FOOD FOR HOUSEPLANTS 10-10-10",
-    "company_info": {
-      "company": "BONIDE PRODUCTS LLC",
-      "Mailing Address": "6301 Sutliff Rd",
-      "Post Office Box": null,
-      "City": "Oriskany",
-      "State": "NY",
-      "Postal Code": "13424",
-      "Telephone Number": "315 736-8231",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.4200",
-      "Cadmium": "=4.5200",
-      "Cobalt": "=0.3500",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=2.8400",
-      "Nickel": "=0.7100",
-      "Lead": "=0.6900",
-      "Selenium": "=0.3500",
-      "Zinc": "=98.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.4200",
-      "Cadmium": "=4.5200",
-      "Cobalt": "=0.3500",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=2.8400",
-      "Nickel": "=0.7100",
-      "Lead": "=0.6900",
-      "Selenium": "=0.3500",
-      "Zinc": "=98.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "01372E",
   "metadata": {
     "registrant": "BONIDE PRODUCTS LLC",
     "label_name": "CAPTAIN JACK'S PLANT FOOD FOR HOUSEPLANTS 10-10-10",
     "wsda_reg_no": "(#0924-0061)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0924-0061)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0924-0061)",
+        "product_name": "CAPTAIN JACK'S PLANT FOOD FOR HOUSEPLANTS 10-10-10",
+        "company_info": {
+          "company": "BONIDE PRODUCTS LLC",
+          "Mailing Address": "6301 Sutliff Rd",
+          "Post Office Box": null,
+          "City": "Oriskany",
+          "State": "NY",
+          "Postal Code": "13424",
+          "Telephone Number": "315 736-8231",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4200",
+          "Cadmium": "=4.5200",
+          "Cobalt": "=0.3500",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=2.8400",
+          "Nickel": "=0.7100",
+          "Lead": "=0.6900",
+          "Selenium": "=0.3500",
+          "Zinc": "=98.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CAPTAIN JACK'S PLANT FOOD FOR HOUSEPLANTS 10-10-10",
+    "brand": "BONIDE PRODUCTS LLC",
+    "manufacturer": {
+      "name": "BONIDE PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "01372E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.42,
+            "Cd": 4.52,
+            "Co": 0.35,
+            "Hg": 0.001,
+            "Mo": 2.84,
+            "Ni": 0.71,
+            "Pb": 0.69,
+            "Se": 0.35,
+            "Zn": 98.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.42,
+        "Cd": 4.52,
+        "Co": 0.35,
+        "Mo": 2.84,
+        "Ni": 0.71,
+        "Pb": 0.69,
+        "Se": 0.35,
+        "Zn": 98.0
+      }
+    }
   }
 }

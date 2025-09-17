@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "68BDE6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3132-0016)",
-    "product_name": "VALLEY AGRONOMICS FERTILIZER 20-0-0 LIQUID 20-0-0",
-    "company_info": {
-      "company": "VALLEY AGRONOMICS LLC",
-      "Mailing Address": "PO Box 365",
-      "Post Office Box": null,
-      "City": "Rupert",
-      "State": "ID",
-      "Postal Code": "83350",
-      "Telephone Number": "503 845-8125",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1020",
-      "Cadmium": "=0.3420",
-      "Cobalt": "<0.2560",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.7300",
-      "Nickel": "<1.2800",
-      "Lead": "<2.5600",
-      "Selenium": "<1.2800",
-      "Zinc": "=0.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1020",
-      "Cadmium": "=0.3420",
-      "Cobalt": "<0.2560",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.7300",
-      "Nickel": "<1.2800",
-      "Lead": "<2.5600",
-      "Selenium": "<1.2800",
-      "Zinc": "=0.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "68BDE6",
   "metadata": {
     "registrant": "VALLEY AGRONOMICS LLC",
     "label_name": "VALLEY AGRONOMICS FERTILIZER 20-0-0 LIQUID 20-0-0",
     "wsda_reg_no": "(#3132-0016)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0016)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 20-0-0 LIQUID 20-0-0",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1020",
+          "Cadmium": "=0.3420",
+          "Cobalt": "<0.2560",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.7300",
+          "Nickel": "<1.2800",
+          "Lead": "<2.5600",
+          "Selenium": "<1.2800",
+          "Zinc": "=0.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 20-0-0 LIQUID 20-0-0",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "68BDE6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.102,
+            "Cd": 0.342,
+            "Co": 0.256,
+            "Hg": 0.005,
+            "Mo": 0.73,
+            "Ni": 1.28,
+            "Pb": 2.56,
+            "Se": 1.28,
+            "Zn": 0.8
+          },
+          "detection_limits_ppm": {
+            "As": 0.102,
+            "Co": 0.256,
+            "Hg": 0.005,
+            "Mo": 0.73,
+            "Ni": 1.28,
+            "Pb": 2.56,
+            "Se": 1.28
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.342,
+        "Zn": 0.8
+      }
+    }
   }
 }

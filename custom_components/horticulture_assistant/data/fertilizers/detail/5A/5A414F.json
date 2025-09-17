@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5A414F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3898-0046)",
-    "product_name": "SPRING PRO 25-3-5",
-    "company_info": {
-      "company": "SIMPLOT TURF & HORTICULTURE",
-      "Mailing Address": "PO Box 9296",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=16.0000",
-      "Cadmium": "=12.0000",
-      "Cobalt": "=14.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=3.1000",
-      "Nickel": "=24.0000",
-      "Lead": "=25.0000",
-      "Selenium": "<0.3300",
-      "Zinc": "=290.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=16.0000",
-      "Cadmium": "=12.0000",
-      "Cobalt": "=14.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=3.1000",
-      "Nickel": "=24.0000",
-      "Lead": "=25.0000",
-      "Selenium": "<0.3300",
-      "Zinc": "=290.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5A414F",
   "metadata": {
     "registrant": "SIMPLOT TURF & HORTICULTURE",
     "label_name": "SPRING PRO 25-3-5",
     "wsda_reg_no": "(#3898-0046)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3898-0046)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3898-0046)",
+        "product_name": "SPRING PRO 25-3-5",
+        "company_info": {
+          "company": "SIMPLOT TURF & HORTICULTURE",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 25.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=16.0000",
+          "Cadmium": "=12.0000",
+          "Cobalt": "=14.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=3.1000",
+          "Nickel": "=24.0000",
+          "Lead": "=25.0000",
+          "Selenium": "<0.3300",
+          "Zinc": "=290.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SPRING PRO 25-3-5",
+    "brand": "SIMPLOT TURF & HORTICULTURE",
+    "manufacturer": {
+      "name": "SIMPLOT TURF & HORTICULTURE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 25.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 10.0
+    },
+    "micros_pct": {
+      "Fe": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5A414F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 16.0,
+            "Cd": 12.0,
+            "Co": 14.0,
+            "Hg": 0.1,
+            "Mo": 3.1,
+            "Ni": 24.0,
+            "Pb": 25.0,
+            "Se": 0.33,
+            "Zn": 290.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.33
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 16.0,
+        "Cd": 12.0,
+        "Co": 14.0,
+        "Hg": 0.1,
+        "Mo": 3.1,
+        "Ni": 24.0,
+        "Pb": 25.0,
+        "Zn": 290.0
+      }
+    }
   }
 }

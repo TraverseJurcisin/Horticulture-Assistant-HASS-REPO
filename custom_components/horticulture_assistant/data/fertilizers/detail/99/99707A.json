@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"99707A","source_wsda_record":{"wsda_product_number":"(#0229-0042)","product_name":"NERI ZINC 0-0-1","company_info":{"company":"NUTRIENT TECHNOLOGIES INC","Mailing Address":"1092 E Kamm Ave","Post Office Box":null,"City":"Dinuba","State":"CA","Postal Code":"93618","Telephone Number":"559 595-8090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":5.0},"reported_metals":{"Arsenic":"=2.0900","Cadmium":"<0.0400","Cobalt":"<0.1500","Mercury":"=0.0900","Molybdenum":"<0.8600","Nickel":"<0.1300","Lead":"<0.1300","Selenium":"<0.0030","Zinc":"=48922.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":5.0},"heavy_metals":{"Arsenic":"=2.0900","Cadmium":"<0.0400","Cobalt":"<0.1500","Mercury":"=0.0900","Molybdenum":"<0.8600","Nickel":"<0.1300","Lead":"<0.1300","Selenium":"<0.0030","Zinc":"=48922.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIENT TECHNOLOGIES INC","label_name":"NERI ZINC 0-0-1","wsda_reg_no":"(#0229-0042)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "99707A",
+  "metadata": {
+    "registrant": "NUTRIENT TECHNOLOGIES INC",
+    "label_name": "NERI ZINC 0-0-1",
+    "wsda_reg_no": "(#0229-0042)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0229-0042)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0229-0042)",
+        "product_name": "NERI ZINC 0-0-1",
+        "company_info": {
+          "company": "NUTRIENT TECHNOLOGIES INC",
+          "Mailing Address": "1092 E Kamm Ave",
+          "Post Office Box": null,
+          "City": "Dinuba",
+          "State": "CA",
+          "Postal Code": "93618",
+          "Telephone Number": "559 595-8090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 5.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0900",
+          "Cadmium": "<0.0400",
+          "Cobalt": "<0.1500",
+          "Mercury": "=0.0900",
+          "Molybdenum": "<0.8600",
+          "Nickel": "<0.1300",
+          "Lead": "<0.1300",
+          "Selenium": "<0.0030",
+          "Zinc": "=48922.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NERI ZINC 0-0-1",
+    "brand": "NUTRIENT TECHNOLOGIES INC",
+    "manufacturer": {
+      "name": "NUTRIENT TECHNOLOGIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Zn": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "99707A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.09,
+            "Cd": 0.04,
+            "Co": 0.15,
+            "Hg": 0.09,
+            "Mo": 0.86,
+            "Ni": 0.13,
+            "Pb": 0.13,
+            "Se": 0.003,
+            "Zn": 48922.4
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.04,
+            "Co": 0.15,
+            "Mo": 0.86,
+            "Ni": 0.13,
+            "Pb": 0.13,
+            "Se": 0.003
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.09,
+        "Hg": 0.09,
+        "Zn": 48922.4
+      }
+    }
+  }
+}

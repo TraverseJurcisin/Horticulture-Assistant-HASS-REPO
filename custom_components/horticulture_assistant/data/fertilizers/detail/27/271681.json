@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "271681",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0236-0758)",
-    "product_name": "SCOTTS TURF BUILDER TRIPLE ACTION FOR MOSS CONTROL 23-0-3",
-    "company_info": {
-      "company": "SCOTTS COMPANY (THE)",
-      "Mailing Address": "14111 Scottslawn Rd",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 645-2523",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 23.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.75,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0400",
-      "Cadmium": "<0.0200",
-      "Cobalt": "=8.6600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.4000",
-      "Nickel": "=11.2000",
-      "Lead": "=0.0600",
-      "Selenium": "<0.1000",
-      "Zinc": "=114.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 23.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.75,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0400",
-      "Cadmium": "<0.0200",
-      "Cobalt": "=8.6600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.4000",
-      "Nickel": "=11.2000",
-      "Lead": "=0.0600",
-      "Selenium": "<0.1000",
-      "Zinc": "=114.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "271681",
   "metadata": {
     "registrant": "SCOTTS COMPANY (THE)",
     "label_name": "SCOTTS TURF BUILDER TRIPLE ACTION FOR MOSS CONTROL 23-0-3",
     "wsda_reg_no": "(#0236-0758)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0758)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0758)",
+        "product_name": "SCOTTS TURF BUILDER TRIPLE ACTION FOR MOSS CONTROL 23-0-3",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 23.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 13.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.75,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0400",
+          "Cadmium": "<0.0200",
+          "Cobalt": "=8.6600",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.4000",
+          "Nickel": "=11.2000",
+          "Lead": "=0.0600",
+          "Selenium": "<0.1000",
+          "Zinc": "=114.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS TURF BUILDER TRIPLE ACTION FOR MOSS CONTROL 23-0-3",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 23.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "S": 13.0
+    },
+    "micros_pct": {
+      "Fe": 5.75
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "271681-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.04,
+            "Cd": 0.02,
+            "Co": 8.66,
+            "Hg": 0.01,
+            "Mo": 0.4,
+            "Ni": 11.2,
+            "Pb": 0.06,
+            "Se": 0.1,
+            "Zn": 114.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.02,
+            "Hg": 0.01,
+            "Mo": 0.4,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.04,
+        "Co": 8.66,
+        "Ni": 11.2,
+        "Pb": 0.06,
+        "Zn": 114.0
+      }
+    }
   }
 }

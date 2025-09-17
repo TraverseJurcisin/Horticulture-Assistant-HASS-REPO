@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "394A69",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3970-0013)",
-    "product_name": "TURN 0-0-0",
-    "company_info": {
-      "company": "INNVICTIS ORGANIC ADVANCEMENTS",
-      "Mailing Address": "PO Box 9296",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "970 397-0856",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": 1.6,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.2
-    },
-    "reported_metals": {
-      "Arsenic": "<2.5000",
-      "Cadmium": "=1.1700",
-      "Cobalt": "=9.8100",
-      "Mercury": "<0.1580",
-      "Molybdenum": "<1.2500",
-      "Nickel": "=14.1000",
-      "Lead": "<1.5000",
-      "Selenium": "<10.0000",
-      "Zinc": "=39100.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": 1.6,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.2
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.5000",
-      "Cadmium": "=1.1700",
-      "Cobalt": "=9.8100",
-      "Mercury": "<0.1580",
-      "Molybdenum": "<1.2500",
-      "Nickel": "=14.1000",
-      "Lead": "<1.5000",
-      "Selenium": "<10.0000",
-      "Zinc": "=39100.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "394A69",
   "metadata": {
     "registrant": "INNVICTIS ORGANIC ADVANCEMENTS",
     "label_name": "TURN 0-0-0",
     "wsda_reg_no": "(#3970-0013)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3970-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3970-0013)",
+        "product_name": "TURN 0-0-0",
+        "company_info": {
+          "company": "INNVICTIS ORGANIC ADVANCEMENTS",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "970 397-0856",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 2.0,
+          "Iron (Fe)": 1.6,
+          "Manganese (Mn)": 0.8,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.2
+        },
+        "reported_metals": {
+          "Arsenic": "<2.5000",
+          "Cadmium": "=1.1700",
+          "Cobalt": "=9.8100",
+          "Mercury": "<0.1580",
+          "Molybdenum": "<1.2500",
+          "Nickel": "=14.1000",
+          "Lead": "<1.5000",
+          "Selenium": "<10.0000",
+          "Zinc": "=39100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TURN 0-0-0",
+    "brand": "INNVICTIS ORGANIC ADVANCEMENTS",
+    "manufacturer": {
+      "name": "INNVICTIS ORGANIC ADVANCEMENTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 1.6,
+      "Mn": 0.8,
+      "Zn": 3.2,
+      "Cu": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "394A69-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.5,
+            "Cd": 1.17,
+            "Co": 9.81,
+            "Hg": 0.158,
+            "Mo": 1.25,
+            "Ni": 14.1,
+            "Pb": 1.5,
+            "Se": 10.0,
+            "Zn": 39100.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.5,
+            "Hg": 0.158,
+            "Mo": 1.25,
+            "Pb": 1.5,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.17,
+        "Co": 9.81,
+        "Ni": 14.1,
+        "Zn": 39100.0
+      }
+    }
   }
 }

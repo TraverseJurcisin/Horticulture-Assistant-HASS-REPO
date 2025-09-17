@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3F9ACB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4273-0002)",
-    "product_name": "VM AGRITECH MICURE MAXX 0-0-0",
-    "company_info": {
-      "company": "VM AGRITECH INC",
-      "Mailing Address": "500 Technology Farm Drive",
-      "Post Office Box": null,
-      "City": "Geneva",
-      "State": "NY",
-      "Postal Code": "14456",
-      "Telephone Number": "706 206-2240",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.65,
-      "Sulfur (S)": 2.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.3,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 1.3,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.3
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1150",
-      "Cadmium": "=0.3480",
-      "Cobalt": "=13.9000",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.0150",
-      "Nickel": "=17.2000",
-      "Lead": "=2.7500",
-      "Selenium": "=8.4900",
-      "Zinc": "=13500.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.65,
-      "Sulfur (S)": 2.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.3,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 1.3,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.3
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1150",
-      "Cadmium": "=0.3480",
-      "Cobalt": "=13.9000",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.0150",
-      "Nickel": "=17.2000",
-      "Lead": "=2.7500",
-      "Selenium": "=8.4900",
-      "Zinc": "=13500.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3F9ACB",
   "metadata": {
     "registrant": "VM AGRITECH INC",
     "label_name": "VM AGRITECH MICURE MAXX 0-0-0",
     "wsda_reg_no": "(#4273-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4273-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4273-0002)",
+        "product_name": "VM AGRITECH MICURE MAXX 0-0-0",
+        "company_info": {
+          "company": "VM AGRITECH INC",
+          "Mailing Address": "500 Technology Farm Drive",
+          "Post Office Box": null,
+          "City": "Geneva",
+          "State": "NY",
+          "Postal Code": "14456",
+          "Telephone Number": "706 206-2240",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.65,
+          "Sulfur (S)": 2.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.3,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 1.3,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.3
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1150",
+          "Cadmium": "=0.3480",
+          "Cobalt": "=13.9000",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.0150",
+          "Nickel": "=17.2000",
+          "Lead": "=2.7500",
+          "Selenium": "=8.4900",
+          "Zinc": "=13500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VM AGRITECH MICURE MAXX 0-0-0",
+    "brand": "VM AGRITECH INC",
+    "manufacturer": {
+      "name": "VM AGRITECH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 0.65,
+      "S": 2.9
+    },
+    "micros_pct": {
+      "Mn": 1.3,
+      "Zn": 1.3,
+      "Cu": 1.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3F9ACB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.115,
+            "Cd": 0.348,
+            "Co": 13.9,
+            "Hg": 0.001,
+            "Mo": 0.015,
+            "Ni": 17.2,
+            "Pb": 2.75,
+            "Se": 8.49,
+            "Zn": 13500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.115,
+        "Cd": 0.348,
+        "Co": 13.9,
+        "Hg": 0.001,
+        "Mo": 0.015,
+        "Ni": 17.2,
+        "Pb": 2.75,
+        "Se": 8.49,
+        "Zn": 13500.0
+      }
+    }
   }
 }

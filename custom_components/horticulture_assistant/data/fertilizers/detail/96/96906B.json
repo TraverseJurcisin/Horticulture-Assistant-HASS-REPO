@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"96906B","source_wsda_record":{"wsda_product_number":"(#1937-0017)","product_name":"NUTRIFIELD FULIFE 0-0-0.6","company_info":{"company":"NUTRIFIELD PTY LTD","Mailing Address":"4 Glomin Ln","Post Office Box":null,"City":"Pottsboro","State":"TX","Postal Code":"75076","Telephone Number":"909 980-2542","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.6,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0820","Cadmium":"<0.0150","Cobalt":"=0.1020","Mercury":"=0.0020","Molybdenum":"=0.0200","Nickel":"=0.0660","Lead":"=0.6600","Selenium":"=0.2010","Zinc":"=32.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.6,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0820","Cadmium":"<0.0150","Cobalt":"=0.1020","Mercury":"=0.0020","Molybdenum":"=0.0200","Nickel":"=0.0660","Lead":"=0.6600","Selenium":"=0.2010","Zinc":"=32.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIFIELD PTY LTD","label_name":"NUTRIFIELD FULIFE 0-0-0.6","wsda_reg_no":"(#1937-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "96906B",
+  "metadata": {
+    "registrant": "NUTRIFIELD PTY LTD",
+    "label_name": "NUTRIFIELD FULIFE 0-0-0.6",
+    "wsda_reg_no": "(#1937-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1937-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1937-0017)",
+        "product_name": "NUTRIFIELD FULIFE 0-0-0.6",
+        "company_info": {
+          "company": "NUTRIFIELD PTY LTD",
+          "Mailing Address": "4 Glomin Ln",
+          "Post Office Box": null,
+          "City": "Pottsboro",
+          "State": "TX",
+          "Postal Code": "75076",
+          "Telephone Number": "909 980-2542",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.6,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0820",
+          "Cadmium": "<0.0150",
+          "Cobalt": "=0.1020",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=0.0200",
+          "Nickel": "=0.0660",
+          "Lead": "=0.6600",
+          "Selenium": "=0.2010",
+          "Zinc": "=32.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIFIELD FULIFE 0-0-0.6",
+    "brand": "NUTRIFIELD PTY LTD",
+    "manufacturer": {
+      "name": "NUTRIFIELD PTY LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 0.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "96906B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.082,
+            "Cd": 0.015,
+            "Co": 0.102,
+            "Hg": 0.002,
+            "Mo": 0.02,
+            "Ni": 0.066,
+            "Pb": 0.66,
+            "Se": 0.201,
+            "Zn": 32.9
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.082,
+        "Co": 0.102,
+        "Hg": 0.002,
+        "Mo": 0.02,
+        "Ni": 0.066,
+        "Pb": 0.66,
+        "Se": 0.201,
+        "Zn": 32.9
+      }
+    }
+  }
+}

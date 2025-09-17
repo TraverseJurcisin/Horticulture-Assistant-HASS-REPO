@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"DABB5B","source_wsda_record":{"wsda_product_number":"(#0126-0196)","product_name":"EXPERT GARDENER ORGANICS EARTHWORM CASTINGS 1-0-0","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.8300","Cadmium":"=0.1680","Cobalt":"=1.8900","Mercury":"=0.0280","Molybdenum":"=2.0300","Nickel":"=5.1400","Lead":"=4.1700","Selenium":"=0.3630","Zinc":"=33.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.8300","Cadmium":"=0.1680","Cobalt":"=1.8900","Mercury":"=0.0280","Molybdenum":"=2.0300","Nickel":"=5.1400","Lead":"=4.1700","Selenium":"=0.3630","Zinc":"=33.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"EXPERT GARDENER ORGANICS EARTHWORM CASTINGS 1-0-0","wsda_reg_no":"(#0126-0196)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DABB5B",
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "EXPERT GARDENER ORGANICS EARTHWORM CASTINGS 1-0-0",
+    "wsda_reg_no": "(#0126-0196)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0196)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0196)",
+        "product_name": "EXPERT GARDENER ORGANICS EARTHWORM CASTINGS 1-0-0",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.8300",
+          "Cadmium": "=0.1680",
+          "Cobalt": "=1.8900",
+          "Mercury": "=0.0280",
+          "Molybdenum": "=2.0300",
+          "Nickel": "=5.1400",
+          "Lead": "=4.1700",
+          "Selenium": "=0.3630",
+          "Zinc": "=33.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EXPERT GARDENER ORGANICS EARTHWORM CASTINGS 1-0-0",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DABB5B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.83,
+            "Cd": 0.168,
+            "Co": 1.89,
+            "Hg": 0.028,
+            "Mo": 2.03,
+            "Ni": 5.14,
+            "Pb": 4.17,
+            "Se": 0.363,
+            "Zn": 33.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.83,
+        "Cd": 0.168,
+        "Co": 1.89,
+        "Hg": 0.028,
+        "Mo": 2.03,
+        "Ni": 5.14,
+        "Pb": 4.17,
+        "Se": 0.363,
+        "Zn": 33.3
+      }
+    }
+  }
+}

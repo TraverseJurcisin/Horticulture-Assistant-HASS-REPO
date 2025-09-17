@@ -1,6 +1,9 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6535A7",
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "6535A7",
   "metadata": {
     "registrant": "GENERAL HYDROPONICS",
     "label_name": "ARMOR SI 0-0-4",
@@ -17,55 +20,76 @@
       "Postal Code": "95407",
       "Telephone Number": "707 284-4701",
       "Fax Number": null
+    },
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
     }
   },
+  "product": {
+    "name": "ARMOR SI 0-0-4",
+    "brand": "GENERAL HYDROPONICS"
+  },
   "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "non_plant_food_ingredients": {
-      "Silicon Dioxide (SiO2)": 10.0
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 4.0
     },
     "heavy_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<0.1000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=0.1000",
-      "Lead": "<0.5000",
-      "Selenium": "<0.5000",
-      "Zinc": "=0.8600"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "waste_derived_fertilizer": "N",
-  "micronutrient_fertilizer": "N",
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6535A7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.3,
+            "Ni": 0.1,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 0.86
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Pb": 0.5,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 0.3,
+        "Ni": 0.1,
+        "Zn": 0.86
+      }
+    }
   }
 }

@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "47F1C8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3279-0001)",
-    "product_name": "ARIZONA'S BEST FOUR SEASON LAWN FOOD 21-7-14",
-    "company_info": {
-      "company": "WESTERN ORGANICS INC",
-      "Mailing Address": "PO Box 25406",
-      "Post Office Box": null,
-      "City": "Tempe",
-      "State": "AZ",
-      "Postal Code": "85285",
-      "Telephone Number": "602 390-1194",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=96.0000",
-      "Cadmium": "=24.0000",
-      "Cobalt": "=193.0000",
-      "Mercury": "=6.0000",
-      "Molybdenum": "=25.0000",
-      "Nickel": "=232.0000",
-      "Lead": "=648.0000",
-      "Selenium": "=17.0000",
-      "Zinc": "=2402.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=96.0000",
-      "Cadmium": "=24.0000",
-      "Cobalt": "=193.0000",
-      "Mercury": "=6.0000",
-      "Molybdenum": "=25.0000",
-      "Nickel": "=232.0000",
-      "Lead": "=648.0000",
-      "Selenium": "=17.0000",
-      "Zinc": "=2402.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "47F1C8",
   "metadata": {
     "registrant": "WESTERN ORGANICS INC",
     "label_name": "ARIZONA'S BEST FOUR SEASON LAWN FOOD 21-7-14",
     "wsda_reg_no": "(#3279-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3279-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3279-0001)",
+        "product_name": "ARIZONA'S BEST FOUR SEASON LAWN FOOD 21-7-14",
+        "company_info": {
+          "company": "WESTERN ORGANICS INC",
+          "Mailing Address": "PO Box 25406",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85285",
+          "Telephone Number": "602 390-1194",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=96.0000",
+          "Cadmium": "=24.0000",
+          "Cobalt": "=193.0000",
+          "Mercury": "=6.0000",
+          "Molybdenum": "=25.0000",
+          "Nickel": "=232.0000",
+          "Lead": "=648.0000",
+          "Selenium": "=17.0000",
+          "Zinc": "=2402.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ARIZONA'S BEST FOUR SEASON LAWN FOOD 21-7-14",
+    "brand": "WESTERN ORGANICS INC",
+    "manufacturer": {
+      "name": "WESTERN ORGANICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "47F1C8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 96.0,
+            "Cd": 24.0,
+            "Co": 193.0,
+            "Hg": 6.0,
+            "Mo": 25.0,
+            "Ni": 232.0,
+            "Pb": 648.0,
+            "Se": 17.0,
+            "Zn": 2402.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 96.0,
+        "Cd": 24.0,
+        "Co": 193.0,
+        "Hg": 6.0,
+        "Mo": 25.0,
+        "Ni": 232.0,
+        "Pb": 648.0,
+        "Se": 17.0,
+        "Zn": 2402.0
+      }
+    }
   }
 }

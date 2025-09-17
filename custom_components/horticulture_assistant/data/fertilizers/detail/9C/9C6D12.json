@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"9C6D12","source_wsda_record":{"wsda_product_number":"(#0193-0411)","product_name":"LOVELAND PRODUCTS NUTRI SYNC MICRO PAK 13-0-1","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.12,"Iron (Fe)":0.12,"Manganese (Mn)":0.12,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.0},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"=0.1000","Cobalt":"=1.2000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=1.8000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=21540.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.12,"Iron (Fe)":0.12,"Manganese (Mn)":0.12,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.0},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"=0.1000","Cobalt":"=1.2000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=1.8000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=21540.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LOVELAND PRODUCTS NUTRI SYNC MICRO PAK 13-0-1","wsda_reg_no":"(#0193-0411)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9C6D12",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LOVELAND PRODUCTS NUTRI SYNC MICRO PAK 13-0-1",
+    "wsda_reg_no": "(#0193-0411)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0411)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0411)",
+        "product_name": "LOVELAND PRODUCTS NUTRI SYNC MICRO PAK 13-0-1",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.12,
+          "Iron (Fe)": 0.12,
+          "Manganese (Mn)": 0.12,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=1.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=1.8000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=21540.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND PRODUCTS NUTRI SYNC MICRO PAK 13-0-1",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.12,
+      "Mn": 0.12,
+      "Zn": 2.0,
+      "Cu": 0.12
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9C6D12-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.1,
+            "Co": 1.2,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 1.8,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 21540.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Hg": 0.05,
+            "Mo": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.1,
+        "Co": 1.2,
+        "Ni": 1.8,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 21540.0
+      }
+    }
+  }
+}

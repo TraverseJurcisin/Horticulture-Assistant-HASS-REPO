@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"9E8D0E","source_wsda_record":{"wsda_product_number":"(#4093-0009)","product_name":"EXPERT GARDENER ORGANICS VEGETABLE & TOMATO FOOD 3-5-6","company_info":{"company":"VOGEL SEED & FERTILIZER, LLC","Mailing Address":"1891 Spring Valley Road","Post Office Box":null,"City":"Jackson","State":"WI","Postal Code":"53037","Telephone Number":"262 677-2273","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.7600","Cadmium":"=0.2070","Cobalt":"=2.7700","Mercury":"=0.0220","Molybdenum":"=13.5000","Nickel":"=14.7000","Lead":"=15.7000","Selenium":"=1.8000","Zinc":"=900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.7600","Cadmium":"=0.2070","Cobalt":"=2.7700","Mercury":"=0.0220","Molybdenum":"=13.5000","Nickel":"=14.7000","Lead":"=15.7000","Selenium":"=1.8000","Zinc":"=900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOGEL SEED & FERTILIZER, LLC","label_name":"EXPERT GARDENER ORGANICS VEGETABLE & TOMATO FOOD 3-5-6","wsda_reg_no":"(#4093-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9E8D0E",
+  "metadata": {
+    "registrant": "VOGEL SEED & FERTILIZER, LLC",
+    "label_name": "EXPERT GARDENER ORGANICS VEGETABLE & TOMATO FOOD 3-5-6",
+    "wsda_reg_no": "(#4093-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4093-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4093-0009)",
+        "product_name": "EXPERT GARDENER ORGANICS VEGETABLE & TOMATO FOOD 3-5-6",
+        "company_info": {
+          "company": "VOGEL SEED & FERTILIZER, LLC",
+          "Mailing Address": "1891 Spring Valley Road",
+          "Post Office Box": null,
+          "City": "Jackson",
+          "State": "WI",
+          "Postal Code": "53037",
+          "Telephone Number": "262 677-2273",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 8.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.7600",
+          "Cadmium": "=0.2070",
+          "Cobalt": "=2.7700",
+          "Mercury": "=0.0220",
+          "Molybdenum": "=13.5000",
+          "Nickel": "=14.7000",
+          "Lead": "=15.7000",
+          "Selenium": "=1.8000",
+          "Zinc": "=900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EXPERT GARDENER ORGANICS VEGETABLE & TOMATO FOOD 3-5-6",
+    "brand": "VOGEL SEED & FERTILIZER, LLC",
+    "manufacturer": {
+      "name": "VOGEL SEED & FERTILIZER, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 8.0,
+      "Mg": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9E8D0E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.76,
+            "Cd": 0.207,
+            "Co": 2.77,
+            "Hg": 0.022,
+            "Mo": 13.5,
+            "Ni": 14.7,
+            "Pb": 15.7,
+            "Se": 1.8,
+            "Zn": 900.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.76,
+        "Cd": 0.207,
+        "Co": 2.77,
+        "Hg": 0.022,
+        "Mo": 13.5,
+        "Ni": 14.7,
+        "Pb": 15.7,
+        "Se": 1.8,
+        "Zn": 900.0
+      }
+    }
+  }
+}

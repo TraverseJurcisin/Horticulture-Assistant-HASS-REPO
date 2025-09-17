@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"D31179","source_wsda_record":{"wsda_product_number":"(#0229-0041)","product_name":"NERI BLEND 0-2-1","company_info":{"company":"NUTRIENT TECHNOLOGIES INC","Mailing Address":"1092 E Kamm Ave","Post Office Box":null,"City":"Dinuba","State":"CA","Postal Code":"93618","Telephone Number":"559 595-8090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":1.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":0.15,"Iron (Fe)":0.3,"Manganese (Mn)":0.5,"Molybdenum (Mo)":0.03,"Sodium (Na)":null,"Zinc (Zn)":0.65},"reported_metals":{"Arsenic":"=3.8500","Cadmium":"<0.0400","Cobalt":"=226.5000","Mercury":"=0.0600","Molybdenum":"=289.6000","Nickel":"<0.1300","Lead":"<0.1300","Selenium":"=4.7430","Zinc":"=6528.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":1.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.08,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":0.15,"Iron (Fe)":0.3,"Manganese (Mn)":0.5,"Molybdenum (Mo)":0.03,"Sodium (Na)":null,"Zinc (Zn)":0.65},"heavy_metals":{"Arsenic":"=3.8500","Cadmium":"<0.0400","Cobalt":"=226.5000","Mercury":"=0.0600","Molybdenum":"=289.6000","Nickel":"<0.1300","Lead":"<0.1300","Selenium":"=4.7430","Zinc":"=6528.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIENT TECHNOLOGIES INC","label_name":"NERI BLEND 0-2-1","wsda_reg_no":"(#0229-0041)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D31179",
+  "metadata": {
+    "registrant": "NUTRIENT TECHNOLOGIES INC",
+    "label_name": "NERI BLEND 0-2-1",
+    "wsda_reg_no": "(#0229-0041)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0229-0041)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0229-0041)",
+        "product_name": "NERI BLEND 0-2-1",
+        "company_info": {
+          "company": "NUTRIENT TECHNOLOGIES INC",
+          "Mailing Address": "1092 E Kamm Ave",
+          "Post Office Box": null,
+          "City": "Dinuba",
+          "State": "CA",
+          "Postal Code": "93618",
+          "Telephone Number": "559 595-8090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 1.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.08,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.02,
+          "Copper (Cu)": 0.15,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": 0.03,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.65
+        },
+        "reported_metals": {
+          "Arsenic": "=3.8500",
+          "Cadmium": "<0.0400",
+          "Cobalt": "=226.5000",
+          "Mercury": "=0.0600",
+          "Molybdenum": "=289.6000",
+          "Nickel": "<0.1300",
+          "Lead": "<0.1300",
+          "Selenium": "=4.7430",
+          "Zinc": "=6528.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NERI BLEND 0-2-1",
+    "brand": "NUTRIENT TECHNOLOGIES INC",
+    "manufacturer": {
+      "name": "NUTRIENT TECHNOLOGIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 2.0,
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 1.5
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.5,
+      "Zn": 0.65,
+      "Cu": 0.15,
+      "B": 0.08,
+      "Mo": 0.03
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D31179-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.85,
+            "Cd": 0.04,
+            "Co": 226.5,
+            "Hg": 0.06,
+            "Mo": 289.6,
+            "Ni": 0.13,
+            "Pb": 0.13,
+            "Se": 4.743,
+            "Zn": 6528.6
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.04,
+            "Ni": 0.13,
+            "Pb": 0.13
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.85,
+        "Co": 226.5,
+        "Hg": 0.06,
+        "Mo": 289.6,
+        "Se": 4.743,
+        "Zn": 6528.6
+      }
+    }
+  }
+}

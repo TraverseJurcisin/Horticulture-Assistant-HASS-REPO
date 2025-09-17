@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"8BA5FE","source_wsda_record":{"wsda_product_number":"(#1645-0032)","product_name":"PRO K 3-26-13","company_info":{"company":"MODERN AG PRODUCTS LLC","Mailing Address":"PO Box 2953","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99302","Telephone Number":"509 547-3163","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":26.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.2200","Cadmium":"=15.7000","Cobalt":"=63.4000","Mercury":"<0.0006","Molybdenum":"=4.1400","Nickel":"=0.2350","Lead":"=0.0910","Selenium":"<0.5000","Zinc":"=272.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":26.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.2200","Cadmium":"=15.7000","Cobalt":"=63.4000","Mercury":"<0.0006","Molybdenum":"=4.1400","Nickel":"=0.2350","Lead":"=0.0910","Selenium":"<0.5000","Zinc":"=272.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MODERN AG PRODUCTS LLC","label_name":"PRO K 3-26-13","wsda_reg_no":"(#1645-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8BA5FE",
+  "metadata": {
+    "registrant": "MODERN AG PRODUCTS LLC",
+    "label_name": "PRO K 3-26-13",
+    "wsda_reg_no": "(#1645-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1645-0032)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1645-0032)",
+        "product_name": "PRO K 3-26-13",
+        "company_info": {
+          "company": "MODERN AG PRODUCTS LLC",
+          "Mailing Address": "PO Box 2953",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99302",
+          "Telephone Number": "509 547-3163",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 26.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.2200",
+          "Cadmium": "=15.7000",
+          "Cobalt": "=63.4000",
+          "Mercury": "<0.0006",
+          "Molybdenum": "=4.1400",
+          "Nickel": "=0.2350",
+          "Lead": "=0.0910",
+          "Selenium": "<0.5000",
+          "Zinc": "=272.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO K 3-26-13",
+    "brand": "MODERN AG PRODUCTS LLC",
+    "manufacturer": {
+      "name": "MODERN AG PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 26.0,
+      "K2O_pct": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8BA5FE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.22,
+            "Cd": 15.7,
+            "Co": 63.4,
+            "Hg": 0.0006,
+            "Mo": 4.14,
+            "Ni": 0.235,
+            "Pb": 0.091,
+            "Se": 0.5,
+            "Zn": 272.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0006,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.22,
+        "Cd": 15.7,
+        "Co": 63.4,
+        "Mo": 4.14,
+        "Ni": 0.235,
+        "Pb": 0.091,
+        "Zn": 272.0
+      }
+    }
+  }
+}

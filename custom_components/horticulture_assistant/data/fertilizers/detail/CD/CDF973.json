@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"CDF973","source_wsda_record":{"wsda_product_number":"(#1762-0072)","product_name":"KELLOGG GARDEN ORGANICS FRUIT TREE FERTILIZER 4-5-4","company_info":{"company":"KELLOGG GARDEN PRODUCTS","Mailing Address":"350 West Sepulveda","Post Office Box":null,"City":"Carson","State":"CA","Postal Code":"90745","Telephone Number":"951 298-8705","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=20.0000","Cadmium":"=5.0000","Cobalt":"=50.0000","Mercury":"=1.5000","Molybdenum":"=5.0000","Nickel":"=20.0000","Lead":"=150.0000","Selenium":"=5.0000","Zinc":"=600.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=20.0000","Cadmium":"=5.0000","Cobalt":"=50.0000","Mercury":"=1.5000","Molybdenum":"=5.0000","Nickel":"=20.0000","Lead":"=150.0000","Selenium":"=5.0000","Zinc":"=600.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KELLOGG GARDEN PRODUCTS","label_name":"KELLOGG GARDEN ORGANICS FRUIT TREE FERTILIZER 4-5-4","wsda_reg_no":"(#1762-0072)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CDF973",
+  "metadata": {
+    "registrant": "KELLOGG GARDEN PRODUCTS",
+    "label_name": "KELLOGG GARDEN ORGANICS FRUIT TREE FERTILIZER 4-5-4",
+    "wsda_reg_no": "(#1762-0072)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1762-0072)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1762-0072)",
+        "product_name": "KELLOGG GARDEN ORGANICS FRUIT TREE FERTILIZER 4-5-4",
+        "company_info": {
+          "company": "KELLOGG GARDEN PRODUCTS",
+          "Mailing Address": "350 West Sepulveda",
+          "Post Office Box": null,
+          "City": "Carson",
+          "State": "CA",
+          "Postal Code": "90745",
+          "Telephone Number": "951 298-8705",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=50.0000",
+          "Mercury": "=1.5000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=20.0000",
+          "Lead": "=150.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=600.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KELLOGG GARDEN ORGANICS FRUIT TREE FERTILIZER 4-5-4",
+    "brand": "KELLOGG GARDEN PRODUCTS",
+    "manufacturer": {
+      "name": "KELLOGG GARDEN PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CDF973-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 5.0,
+            "Co": 50.0,
+            "Hg": 1.5,
+            "Mo": 5.0,
+            "Ni": 20.0,
+            "Pb": 150.0,
+            "Se": 5.0,
+            "Zn": 600.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Cd": 5.0,
+        "Co": 50.0,
+        "Hg": 1.5,
+        "Mo": 5.0,
+        "Ni": 20.0,
+        "Pb": 150.0,
+        "Se": 5.0,
+        "Zn": 600.0
+      }
+    }
+  }
+}

@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"F9EDE4","source_wsda_record":{"wsda_product_number":"(#1563-0004)","product_name":"AG CONCEPTS ENHANCE 7-28-4 FOLIAR NUTRIENT 7-28-4","company_info":{"company":"AG CONCEPTS CORP","Mailing Address":"439 E Shore Dr Ste 200","Post Office Box":null,"City":"Eagle","State":"ID","Postal Code":"83616","Telephone Number":"208 388-1131","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":28.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.15,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"<0.0500","Cadmium":"=49.0000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=9.7000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=1457.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":28.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.15,"Manganese (Mn)":0.1,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"<0.0500","Cadmium":"=49.0000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=9.7000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=1457.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AG CONCEPTS CORP","label_name":"AG CONCEPTS ENHANCE 7-28-4 FOLIAR NUTRIENT 7-28-4","wsda_reg_no":"(#1563-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F9EDE4",
+  "metadata": {
+    "registrant": "AG CONCEPTS CORP",
+    "label_name": "AG CONCEPTS ENHANCE 7-28-4 FOLIAR NUTRIENT 7-28-4",
+    "wsda_reg_no": "(#1563-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1563-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1563-0004)",
+        "product_name": "AG CONCEPTS ENHANCE 7-28-4 FOLIAR NUTRIENT 7-28-4",
+        "company_info": {
+          "company": "AG CONCEPTS CORP",
+          "Mailing Address": "439 E Shore Dr Ste 200",
+          "Post Office Box": null,
+          "City": "Eagle",
+          "State": "ID",
+          "Postal Code": "83616",
+          "Telephone Number": "208 388-1131",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 28.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.15,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0500",
+          "Cadmium": "=49.0000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=9.7000",
+          "Nickel": "<1.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=1457.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AG CONCEPTS ENHANCE 7-28-4 FOLIAR NUTRIENT 7-28-4",
+    "brand": "AG CONCEPTS CORP",
+    "manufacturer": {
+      "name": "AG CONCEPTS CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 28.0,
+      "K2O_pct": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.15,
+      "Mn": 0.1,
+      "Zn": 0.1,
+      "Cu": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F9EDE4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.05,
+            "Cd": 49.0,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 9.7,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 1457.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.05,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 49.0,
+        "Mo": 9.7,
+        "Zn": 1457.0
+      }
+    }
+  }
+}

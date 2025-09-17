@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1D65B2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0698-0133)",
-    "product_name": "MIRACLE-GRO AFRICAN VIOLET POTTING MIX 0.21-0.11-0.16",
-    "company_info": {
-      "company": "MIRACLE-GRO LAWN PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-1573",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.21,
-      "Available Phosphoric Acid (P2O5)": 0.11,
-      "Soluble Potash (K2O)": 0.16,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.9740",
-      "Cadmium": "=0.4860",
-      "Cobalt": "=4.7400",
-      "Mercury": "=0.0334",
-      "Molybdenum": "=1.4600",
-      "Nickel": "=1.8500",
-      "Lead": "=3.7900",
-      "Selenium": "=1.4600",
-      "Zinc": "=18.3000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.21,
-      "Available Phosphoric Acid (P2O5)": 0.11,
-      "Soluble Potash (K2O)": 0.16,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.9740",
-      "Cadmium": "=0.4860",
-      "Cobalt": "=4.7400",
-      "Mercury": "=0.0334",
-      "Molybdenum": "=1.4600",
-      "Nickel": "=1.8500",
-      "Lead": "=3.7900",
-      "Selenium": "=1.4600",
-      "Zinc": "=18.3000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1D65B2",
   "metadata": {
     "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
     "label_name": "MIRACLE-GRO AFRICAN VIOLET POTTING MIX 0.21-0.11-0.16",
     "wsda_reg_no": "(#0698-0133)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0133)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0133)",
+        "product_name": "MIRACLE-GRO AFRICAN VIOLET POTTING MIX 0.21-0.11-0.16",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.21,
+          "Available Phosphoric Acid (P2O5)": 0.11,
+          "Soluble Potash (K2O)": 0.16,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9740",
+          "Cadmium": "=0.4860",
+          "Cobalt": "=4.7400",
+          "Mercury": "=0.0334",
+          "Molybdenum": "=1.4600",
+          "Nickel": "=1.8500",
+          "Lead": "=3.7900",
+          "Selenium": "=1.4600",
+          "Zinc": "=18.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO AFRICAN VIOLET POTTING MIX 0.21-0.11-0.16",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.21,
+      "P2O5_pct": 0.11,
+      "K2O_pct": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1D65B2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.974,
+            "Cd": 0.486,
+            "Co": 4.74,
+            "Hg": 0.0334,
+            "Mo": 1.46,
+            "Ni": 1.85,
+            "Pb": 3.79,
+            "Se": 1.46,
+            "Zn": 18.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.974,
+        "Cd": 0.486,
+        "Co": 4.74,
+        "Hg": 0.0334,
+        "Mo": 1.46,
+        "Ni": 1.85,
+        "Pb": 3.79,
+        "Se": 1.46,
+        "Zn": 18.3
+      }
+    }
   }
 }

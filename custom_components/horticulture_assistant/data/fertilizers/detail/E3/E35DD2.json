@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"E35DD2","source_wsda_record":{"wsda_product_number":"(#2554-0004)","product_name":"TIGER XP SULFUR AGRICULTURAL SULFUR 0-0-0","company_info":{"company":"TIGER-SUL PRODUCTS LLC","Mailing Address":"PO Box126","Post Office Box":null,"City":"Irricana","State":"AB","Postal Code":"T0M1B0","Telephone Number":"403 935-0201","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":85.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7000","Cadmium":"=0.0400","Cobalt":"=0.9900","Mercury":"<0.0010","Molybdenum":"=0.2300","Nickel":"=3.3000","Lead":"=3.0200","Selenium":"=0.2480","Zinc":"=813.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":85.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7000","Cadmium":"=0.0400","Cobalt":"=0.9900","Mercury":"<0.0010","Molybdenum":"=0.2300","Nickel":"=3.3000","Lead":"=3.0200","Selenium":"=0.2480","Zinc":"=813.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TIGER-SUL PRODUCTS LLC","label_name":"TIGER XP SULFUR AGRICULTURAL SULFUR 0-0-0","wsda_reg_no":"(#2554-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E35DD2",
+  "metadata": {
+    "registrant": "TIGER-SUL PRODUCTS LLC",
+    "label_name": "TIGER XP SULFUR AGRICULTURAL SULFUR 0-0-0",
+    "wsda_reg_no": "(#2554-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2554-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2554-0004)",
+        "product_name": "TIGER XP SULFUR AGRICULTURAL SULFUR 0-0-0",
+        "company_info": {
+          "company": "TIGER-SUL PRODUCTS LLC",
+          "Mailing Address": "PO Box126",
+          "Post Office Box": null,
+          "City": "Irricana",
+          "State": "AB",
+          "Postal Code": "T0M1B0",
+          "Telephone Number": "403 935-0201",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 85.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7000",
+          "Cadmium": "=0.0400",
+          "Cobalt": "=0.9900",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.2300",
+          "Nickel": "=3.3000",
+          "Lead": "=3.0200",
+          "Selenium": "=0.2480",
+          "Zinc": "=813.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TIGER XP SULFUR AGRICULTURAL SULFUR 0-0-0",
+    "brand": "TIGER-SUL PRODUCTS LLC",
+    "manufacturer": {
+      "name": "TIGER-SUL PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 85.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E35DD2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.7,
+            "Cd": 0.04,
+            "Co": 0.99,
+            "Hg": 0.001,
+            "Mo": 0.23,
+            "Ni": 3.3,
+            "Pb": 3.02,
+            "Se": 0.248,
+            "Zn": 813.2
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.7,
+        "Cd": 0.04,
+        "Co": 0.99,
+        "Mo": 0.23,
+        "Ni": 3.3,
+        "Pb": 3.02,
+        "Se": 0.248,
+        "Zn": 813.2
+      }
+    }
+  }
+}

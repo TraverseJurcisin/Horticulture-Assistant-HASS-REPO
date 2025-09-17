@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"F3070A","source_wsda_record":{"wsda_product_number":"(#0149-0015)","product_name":"HYPONEX EXTENDED FEED ALL PURPOSE 21-0-0 AMMONIUM SULFATE WITH COATED UREA 21-0-0","company_info":{"company":"HYPONEX CORPORATION","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-5924","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":20.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4860","Cadmium":"<0.2430","Cobalt":"<0.2430","Mercury":"=0.7910","Molybdenum":"<1.4600","Nickel":"=0.4640","Lead":"=0.5770","Selenium":"<0.4860","Zinc":"=8770.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":20.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4860","Cadmium":"<0.2430","Cobalt":"<0.2430","Mercury":"=0.7910","Molybdenum":"<1.4600","Nickel":"=0.4640","Lead":"=0.5770","Selenium":"<0.4860","Zinc":"=8770.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYPONEX CORPORATION","label_name":"HYPONEX EXTENDED FEED ALL PURPOSE 21-0-0 AMMONIUM SULFATE WITH COATED UREA 21-0-0","wsda_reg_no":"(#0149-0015)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F3070A",
+  "metadata": {
+    "registrant": "HYPONEX CORPORATION",
+    "label_name": "HYPONEX EXTENDED FEED ALL PURPOSE 21-0-0 AMMONIUM SULFATE WITH COATED UREA 21-0-0",
+    "wsda_reg_no": "(#0149-0015)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0149-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0149-0015)",
+        "product_name": "HYPONEX EXTENDED FEED ALL PURPOSE 21-0-0 AMMONIUM SULFATE WITH COATED UREA 21-0-0",
+        "company_info": {
+          "company": "HYPONEX CORPORATION",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-5924",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 20.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4860",
+          "Cadmium": "<0.2430",
+          "Cobalt": "<0.2430",
+          "Mercury": "=0.7910",
+          "Molybdenum": "<1.4600",
+          "Nickel": "=0.4640",
+          "Lead": "=0.5770",
+          "Selenium": "<0.4860",
+          "Zinc": "=8770.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYPONEX EXTENDED FEED ALL PURPOSE 21-0-0 AMMONIUM SULFATE WITH COATED UREA 21-0-0",
+    "brand": "HYPONEX CORPORATION",
+    "manufacturer": {
+      "name": "HYPONEX CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0
+    },
+    "macros_pct": {
+      "S": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F3070A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.486,
+            "Cd": 0.243,
+            "Co": 0.243,
+            "Hg": 0.791,
+            "Mo": 1.46,
+            "Ni": 0.464,
+            "Pb": 0.577,
+            "Se": 0.486,
+            "Zn": 8770.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.486,
+            "Cd": 0.243,
+            "Co": 0.243,
+            "Mo": 1.46,
+            "Se": 0.486
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.791,
+        "Ni": 0.464,
+        "Pb": 0.577,
+        "Zn": 8770.0
+      }
+    }
+  }
+}

@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0BFE7C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0349-0551)",
-    "product_name": "WILBUR ELLIS PELLETIZED LIME 0-0-0",
-    "company_info": {
-      "company": "WILBUR ELLIS COMPANY LLC",
-      "Mailing Address": "4582 S. Ulster Street Parkway",
-      "Post Office Box": null,
-      "City": "Denver",
-      "State": "CO",
-      "Postal Code": "80237",
-      "Telephone Number": "802 236-3745",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 35.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=9.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=2.0000",
-      "Mercury": "=0.3700",
-      "Molybdenum": "<0.3000",
-      "Nickel": "=3.7000",
-      "Lead": "=1.6000",
-      "Selenium": "=1.4000",
-      "Zinc": "=75.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "85.0000",
-      "Calcium Carbonate Equivalent (CaCO3)": "85.0000",
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 35.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=9.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=2.0000",
-      "Mercury": "=0.3700",
-      "Molybdenum": "<0.3000",
-      "Nickel": "=3.7000",
-      "Lead": "=1.6000",
-      "Selenium": "=1.4000",
-      "Zinc": "=75.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0BFE7C",
   "metadata": {
     "registrant": "WILBUR ELLIS COMPANY LLC",
     "label_name": "WILBUR ELLIS PELLETIZED LIME 0-0-0",
     "wsda_reg_no": "(#0349-0551)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0551)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0551)",
+        "product_name": "WILBUR ELLIS PELLETIZED LIME 0-0-0",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 35.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=9.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=2.0000",
+          "Mercury": "=0.3700",
+          "Molybdenum": "<0.3000",
+          "Nickel": "=3.7000",
+          "Lead": "=1.6000",
+          "Selenium": "=1.4000",
+          "Zinc": "=75.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "85.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "85.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WILBUR ELLIS PELLETIZED LIME 0-0-0",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 35.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0BFE7C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.0,
+            "Cd": 0.5,
+            "Co": 2.0,
+            "Hg": 0.37,
+            "Mo": 0.3,
+            "Ni": 3.7,
+            "Pb": 1.6,
+            "Se": 1.4,
+            "Zn": 75.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.0,
+        "Cd": 0.5,
+        "Co": 2.0,
+        "Hg": 0.37,
+        "Ni": 3.7,
+        "Pb": 1.6,
+        "Se": 1.4,
+        "Zn": 75.0
+      }
+    }
   }
 }

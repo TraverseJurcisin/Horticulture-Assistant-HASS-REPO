@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "151DAC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4232-0005)",
-    "product_name": "AGRI SCIENCES BIOLOGICALS USA NUENUTRI 2-0-2",
-    "company_info": {
-      "company": "AGRI SCIENCES BIOLOGICALS USA LLC",
-      "Mailing Address": "8601 Six Forks Road Ste 400",
-      "Post Office Box": null,
-      "City": "Raleigh",
-      "State": "NC",
-      "Postal Code": "27615",
-      "Telephone Number": null,
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": 0.05,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.7000",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=3.4000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=565.0000",
-      "Nickel": "=4.9000",
-      "Lead": "<0.1000",
-      "Selenium": "=0.1700",
-      "Zinc": "=3.3000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.8,
-      "Molybdenum (Mo)": 0.05,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.7000",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=3.4000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=565.0000",
-      "Nickel": "=4.9000",
-      "Lead": "<0.1000",
-      "Selenium": "=0.1700",
-      "Zinc": "=3.3000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "151DAC",
   "metadata": {
     "registrant": "AGRI SCIENCES BIOLOGICALS USA LLC",
     "label_name": "AGRI SCIENCES BIOLOGICALS USA NUENUTRI 2-0-2",
     "wsda_reg_no": "(#4232-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4232-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4232-0005)",
+        "product_name": "AGRI SCIENCES BIOLOGICALS USA NUENUTRI 2-0-2",
+        "company_info": {
+          "company": "AGRI SCIENCES BIOLOGICALS USA LLC",
+          "Mailing Address": "8601 Six Forks Road Ste 400",
+          "Post Office Box": null,
+          "City": "Raleigh",
+          "State": "NC",
+          "Postal Code": "27615",
+          "Telephone Number": null,
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.8,
+          "Molybdenum (Mo)": 0.05,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7000",
+          "Cadmium": "=0.1800",
+          "Cobalt": "=3.4000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=565.0000",
+          "Nickel": "=4.9000",
+          "Lead": "<0.1000",
+          "Selenium": "=0.1700",
+          "Zinc": "=3.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGRI SCIENCES BIOLOGICALS USA NUENUTRI 2-0-2",
+    "brand": "AGRI SCIENCES BIOLOGICALS USA LLC",
+    "manufacturer": {
+      "name": "AGRI SCIENCES BIOLOGICALS USA LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 1.5
+    },
+    "micros_pct": {
+      "Mn": 0.8,
+      "Mo": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "151DAC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.7,
+            "Cd": 0.18,
+            "Co": 3.4,
+            "Hg": 0.1,
+            "Mo": 565.0,
+            "Ni": 4.9,
+            "Pb": 0.1,
+            "Se": 0.17,
+            "Zn": 3.3
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1,
+            "Pb": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.7,
+        "Cd": 0.18,
+        "Co": 3.4,
+        "Mo": 565.0,
+        "Ni": 4.9,
+        "Se": 0.17,
+        "Zn": 3.3
+      }
+    }
   }
 }

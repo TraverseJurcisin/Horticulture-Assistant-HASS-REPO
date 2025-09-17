@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "40E194",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2067-0072)",
-    "product_name": "GREEN PLANET HORTI LATE BLOOM 0-24-26",
-    "company_info": {
-      "company": "HIT MANUFACTURING",
-      "Mailing Address": "15374 103 A Ave",
-      "Post Office Box": null,
-      "City": "Surrey",
-      "State": "BC",
-      "Postal Code": "V3R 7A2",
-      "Telephone Number": "605 580-1287",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 24.0,
-      "Soluble Potash (K2O)": 26.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.1,
-      "Sulfur (S)": 7.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4110",
-      "Cadmium": "=0.0290",
-      "Cobalt": "=0.0340",
-      "Mercury": "=0.0040",
-      "Molybdenum": "=0.2380",
-      "Nickel": "=0.2980",
-      "Lead": "=0.0630",
-      "Selenium": "=0.4790",
-      "Zinc": "<0.0200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 24.0,
-      "Soluble Potash (K2O)": 26.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.1,
-      "Sulfur (S)": 7.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4110",
-      "Cadmium": "=0.0290",
-      "Cobalt": "=0.0340",
-      "Mercury": "=0.0040",
-      "Molybdenum": "=0.2380",
-      "Nickel": "=0.2980",
-      "Lead": "=0.0630",
-      "Selenium": "=0.4790",
-      "Zinc": "<0.0200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "40E194",
   "metadata": {
     "registrant": "HIT MANUFACTURING",
     "label_name": "GREEN PLANET HORTI LATE BLOOM 0-24-26",
     "wsda_reg_no": "(#2067-0072)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2067-0072)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2067-0072)",
+        "product_name": "GREEN PLANET HORTI LATE BLOOM 0-24-26",
+        "company_info": {
+          "company": "HIT MANUFACTURING",
+          "Mailing Address": "15374 103 A Ave",
+          "Post Office Box": null,
+          "City": "Surrey",
+          "State": "BC",
+          "Postal Code": "V3R 7A2",
+          "Telephone Number": "605 580-1287",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 24.0,
+          "Soluble Potash (K2O)": 26.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.1,
+          "Sulfur (S)": 7.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4110",
+          "Cadmium": "=0.0290",
+          "Cobalt": "=0.0340",
+          "Mercury": "=0.0040",
+          "Molybdenum": "=0.2380",
+          "Nickel": "=0.2980",
+          "Lead": "=0.0630",
+          "Selenium": "=0.4790",
+          "Zinc": "<0.0200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREEN PLANET HORTI LATE BLOOM 0-24-26",
+    "brand": "HIT MANUFACTURING",
+    "manufacturer": {
+      "name": "HIT MANUFACTURING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 24.0,
+      "K2O_pct": 26.0
+    },
+    "macros_pct": {
+      "Mg": 3.1,
+      "S": 7.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "40E194-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.411,
+            "Cd": 0.029,
+            "Co": 0.034,
+            "Hg": 0.004,
+            "Mo": 0.238,
+            "Ni": 0.298,
+            "Pb": 0.063,
+            "Se": 0.479,
+            "Zn": 0.02
+          },
+          "detection_limits_ppm": {
+            "Zn": 0.02
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.411,
+        "Cd": 0.029,
+        "Co": 0.034,
+        "Hg": 0.004,
+        "Mo": 0.238,
+        "Ni": 0.298,
+        "Pb": 0.063,
+        "Se": 0.479
+      }
+    }
   }
 }

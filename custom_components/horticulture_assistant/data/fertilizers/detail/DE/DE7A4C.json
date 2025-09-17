@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"DE7A4C","source_wsda_record":{"wsda_product_number":"(#0193-0199)","product_name":"LOVELAND PRODUCTS AWAKEN 16-0-2","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.15,"Iron (Fe)":0.15,"Manganese (Mn)":0.15,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":2.7},"reported_metals":{"Arsenic":"<0.5000","Cadmium":"=0.2000","Cobalt":"=2.4000","Mercury":"<0.0500","Molybdenum":"=14.6000","Nickel":"=2.3000","Lead":"=1.2000","Selenium":"<5.5000","Zinc":"=28250.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.15,"Iron (Fe)":0.15,"Manganese (Mn)":0.15,"Molybdenum (Mo)":0.0006,"Sodium (Na)":null,"Zinc (Zn)":2.7},"heavy_metals":{"Arsenic":"<0.5000","Cadmium":"=0.2000","Cobalt":"=2.4000","Mercury":"<0.0500","Molybdenum":"=14.6000","Nickel":"=2.3000","Lead":"=1.2000","Selenium":"<5.5000","Zinc":"=28250.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LOVELAND PRODUCTS AWAKEN 16-0-2","wsda_reg_no":"(#0193-0199)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DE7A4C",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LOVELAND PRODUCTS AWAKEN 16-0-2",
+    "wsda_reg_no": "(#0193-0199)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0199)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0199)",
+        "product_name": "LOVELAND PRODUCTS AWAKEN 16-0-2",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.15,
+          "Iron (Fe)": 0.15,
+          "Manganese (Mn)": 0.15,
+          "Molybdenum (Mo)": 0.0006,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.7
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=2.4000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=14.6000",
+          "Nickel": "=2.3000",
+          "Lead": "=1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=28250.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND PRODUCTS AWAKEN 16-0-2",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "K2O_pct": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.15,
+      "Mn": 0.15,
+      "Zn": 2.7,
+      "Cu": 0.15,
+      "B": 0.02,
+      "Mo": 0.0006
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DE7A4C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.2,
+            "Co": 2.4,
+            "Hg": 0.05,
+            "Mo": 14.6,
+            "Ni": 2.3,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 28250.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Hg": 0.05,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.2,
+        "Co": 2.4,
+        "Mo": 14.6,
+        "Ni": 2.3,
+        "Pb": 1.2,
+        "Zn": 28250.0
+      }
+    }
+  }
+}

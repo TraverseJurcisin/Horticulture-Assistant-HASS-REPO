@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "364425",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2295-0018)",
-    "product_name": "VALAGRO AXILO MIX 5 0-0-0",
-    "company_info": {
-      "company": "VALAGRO USA INC",
-      "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
-      "Post Office Box": null,
-      "City": "Coral Gables",
-      "State": "FL",
-      "Postal Code": "33134",
-      "Telephone Number": "786 719-5842",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.5,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": 0.1,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=15.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=1500.0000",
-      "Nickel": "=40.0000",
-      "Lead": "=48.3000",
-      "Selenium": "=10.0000",
-      "Zinc": "=25000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.5,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": 0.1,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=15.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=1500.0000",
-      "Nickel": "=40.0000",
-      "Lead": "=48.3000",
-      "Selenium": "=10.0000",
-      "Zinc": "=25000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "364425",
   "metadata": {
     "registrant": "VALAGRO USA INC",
     "label_name": "VALAGRO AXILO MIX 5 0-0-0",
     "wsda_reg_no": "(#2295-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2295-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2295-0018)",
+        "product_name": "VALAGRO AXILO MIX 5 0-0-0",
+        "company_info": {
+          "company": "VALAGRO USA INC",
+          "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
+          "Post Office Box": null,
+          "City": "Coral Gables",
+          "State": "FL",
+          "Postal Code": "33134",
+          "Telephone Number": "786 719-5842",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.0,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.5,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": 4.0,
+          "Molybdenum (Mo)": 0.1,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.5
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=15.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=1500.0000",
+          "Nickel": "=40.0000",
+          "Lead": "=48.3000",
+          "Selenium": "=10.0000",
+          "Zinc": "=25000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALAGRO AXILO MIX 5 0-0-0",
+    "brand": "VALAGRO USA INC",
+    "manufacturer": {
+      "name": "VALAGRO USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 3.0
+    },
+    "micros_pct": {
+      "Fe": 4.0,
+      "Mn": 4.0,
+      "Zn": 1.5,
+      "Cu": 1.5,
+      "B": 0.5,
+      "Mo": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "364425-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 1.0,
+            "Co": 15.0,
+            "Hg": 0.1,
+            "Mo": 1500.0,
+            "Ni": 40.0,
+            "Pb": 48.3,
+            "Se": 10.0,
+            "Zn": 25000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 1.0,
+        "Co": 15.0,
+        "Hg": 0.1,
+        "Mo": 1500.0,
+        "Ni": 40.0,
+        "Pb": 48.3,
+        "Se": 10.0,
+        "Zn": 25000.0
+      }
+    }
   }
 }

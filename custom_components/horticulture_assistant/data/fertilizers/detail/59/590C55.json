@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "590C55",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0169-0255)",
-    "product_name": "BEST IRON ADVANTAGE 15-4-6",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 15.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.5,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.7300",
-      "Cadmium": "=13.2000",
-      "Cobalt": "=4.9500",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1.4900",
-      "Nickel": "=26.1000",
-      "Lead": "<2.9300",
-      "Selenium": "<1.2500",
-      "Zinc": "=973.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 15.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.5,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.7300",
-      "Cadmium": "=13.2000",
-      "Cobalt": "=4.9500",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1.4900",
-      "Nickel": "=26.1000",
-      "Lead": "<2.9300",
-      "Selenium": "<1.2500",
-      "Zinc": "=973.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "590C55",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY",
     "label_name": "BEST IRON ADVANTAGE 15-4-6",
     "wsda_reg_no": "(#0169-0255)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0255)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0255)",
+        "product_name": "BEST IRON ADVANTAGE 15-4-6",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 15.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.5,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.7300",
+          "Cadmium": "=13.2000",
+          "Cobalt": "=4.9500",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=1.4900",
+          "Nickel": "=26.1000",
+          "Lead": "<2.9300",
+          "Selenium": "<1.2500",
+          "Zinc": "=973.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST IRON ADVANTAGE 15-4-6",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "S": 15.0
+    },
+    "micros_pct": {
+      "Fe": 3.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "590C55-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.73,
+            "Cd": 13.2,
+            "Co": 4.95,
+            "Hg": 0.01,
+            "Mo": 1.49,
+            "Ni": 26.1,
+            "Pb": 2.93,
+            "Se": 1.25,
+            "Zn": 973.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.01,
+            "Pb": 2.93,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.73,
+        "Cd": 13.2,
+        "Co": 4.95,
+        "Mo": 1.49,
+        "Ni": 26.1,
+        "Zn": 973.0
+      }
+    }
   }
 }

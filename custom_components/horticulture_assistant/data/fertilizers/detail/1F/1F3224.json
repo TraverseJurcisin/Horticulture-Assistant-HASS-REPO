@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1F3224",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0997-0103)",
-    "product_name": "ACE WINTERIZER WEED AND FEED 28-0-10",
-    "company_info": {
-      "company": "SWISS FARM PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Rd",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 645-2523",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 28.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4360",
-      "Cadmium": "=0.2180",
-      "Cobalt": "=0.2180",
-      "Mercury": "=0.0203",
-      "Molybdenum": "=0.3410",
-      "Nickel": "=0.4790",
-      "Lead": "=0.6760",
-      "Selenium": "=0.6540",
-      "Zinc": "=1.7200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 28.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4360",
-      "Cadmium": "=0.2180",
-      "Cobalt": "=0.2180",
-      "Mercury": "=0.0203",
-      "Molybdenum": "=0.3410",
-      "Nickel": "=0.4790",
-      "Lead": "=0.6760",
-      "Selenium": "=0.6540",
-      "Zinc": "=1.7200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1F3224",
   "metadata": {
     "registrant": "SWISS FARM PRODUCTS INC",
     "label_name": "ACE WINTERIZER WEED AND FEED 28-0-10",
     "wsda_reg_no": "(#0997-0103)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0103)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0103)",
+        "product_name": "ACE WINTERIZER WEED AND FEED 28-0-10",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 28.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4360",
+          "Cadmium": "=0.2180",
+          "Cobalt": "=0.2180",
+          "Mercury": "=0.0203",
+          "Molybdenum": "=0.3410",
+          "Nickel": "=0.4790",
+          "Lead": "=0.6760",
+          "Selenium": "=0.6540",
+          "Zinc": "=1.7200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ACE WINTERIZER WEED AND FEED 28-0-10",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 28.0,
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1F3224-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.436,
+            "Cd": 0.218,
+            "Co": 0.218,
+            "Hg": 0.0203,
+            "Mo": 0.341,
+            "Ni": 0.479,
+            "Pb": 0.676,
+            "Se": 0.654,
+            "Zn": 1.72
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.436,
+        "Cd": 0.218,
+        "Co": 0.218,
+        "Hg": 0.0203,
+        "Mo": 0.341,
+        "Ni": 0.479,
+        "Pb": 0.676,
+        "Se": 0.654,
+        "Zn": 1.72
+      }
+    }
   }
 }

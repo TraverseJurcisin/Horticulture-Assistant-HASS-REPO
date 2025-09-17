@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "14E3FD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4093-0006)",
-    "product_name": "BURPEE NATURAL & ORGANIC TOMATO + VEGETABLE GRANULAR PLANT FOOD 3-6-4",
-    "company_info": {
-      "company": "VOGEL SEED & FERTILIZER, LLC",
-      "Mailing Address": "1891 Spring Valley Road",
-      "Post Office Box": null,
-      "City": "Jackson",
-      "State": "WI",
-      "Postal Code": "53037",
-      "Telephone Number": "262 677-2273",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": 0.8,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.4900",
-      "Cadmium": "=0.1910",
-      "Cobalt": "=2.7300",
-      "Mercury": "=0.0620",
-      "Molybdenum": "=14.3000",
-      "Nickel": "=13.5000",
-      "Lead": "=14.0000",
-      "Selenium": "=1.6000",
-      "Zinc": "=920.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": 0.8,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.4900",
-      "Cadmium": "=0.1910",
-      "Cobalt": "=2.7300",
-      "Mercury": "=0.0620",
-      "Molybdenum": "=14.3000",
-      "Nickel": "=13.5000",
-      "Lead": "=14.0000",
-      "Selenium": "=1.6000",
-      "Zinc": "=920.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "14E3FD",
   "metadata": {
     "registrant": "VOGEL SEED & FERTILIZER, LLC",
     "label_name": "BURPEE NATURAL & ORGANIC TOMATO + VEGETABLE GRANULAR PLANT FOOD 3-6-4",
     "wsda_reg_no": "(#4093-0006)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4093-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4093-0006)",
+        "product_name": "BURPEE NATURAL & ORGANIC TOMATO + VEGETABLE GRANULAR PLANT FOOD 3-6-4",
+        "company_info": {
+          "company": "VOGEL SEED & FERTILIZER, LLC",
+          "Mailing Address": "1891 Spring Valley Road",
+          "Post Office Box": null,
+          "City": "Jackson",
+          "State": "WI",
+          "Postal Code": "53037",
+          "Telephone Number": "262 677-2273",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": 0.8,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.4900",
+          "Cadmium": "=0.1910",
+          "Cobalt": "=2.7300",
+          "Mercury": "=0.0620",
+          "Molybdenum": "=14.3000",
+          "Nickel": "=13.5000",
+          "Lead": "=14.0000",
+          "Selenium": "=1.6000",
+          "Zinc": "=920.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BURPEE NATURAL & ORGANIC TOMATO + VEGETABLE GRANULAR PLANT FOOD 3-6-4",
+    "brand": "VOGEL SEED & FERTILIZER, LLC",
+    "manufacturer": {
+      "name": "VOGEL SEED & FERTILIZER, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "Mg": 0.8,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "14E3FD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.49,
+            "Cd": 0.191,
+            "Co": 2.73,
+            "Hg": 0.062,
+            "Mo": 14.3,
+            "Ni": 13.5,
+            "Pb": 14.0,
+            "Se": 1.6,
+            "Zn": 920.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.49,
+        "Cd": 0.191,
+        "Co": 2.73,
+        "Hg": 0.062,
+        "Mo": 14.3,
+        "Ni": 13.5,
+        "Pb": 14.0,
+        "Se": 1.6,
+        "Zn": 920.0
+      }
+    }
   }
 }

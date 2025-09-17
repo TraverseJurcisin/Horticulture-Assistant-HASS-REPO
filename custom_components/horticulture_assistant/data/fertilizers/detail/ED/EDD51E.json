@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"EDD51E","source_wsda_record":{"wsda_product_number":"(#2849-0045)","product_name":"SITEPRO FERROUS SULFATE R4 IRON ACTION(S) 0-0-0","company_info":{"company":"MAS","Mailing Address":"PO Box 732","Post Office Box":null,"City":"Newberg","State":"OR","Postal Code":"97132","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":16.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":30.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=45.6000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=25.1000","Lead":"=8.1000","Selenium":"<0.5000","Zinc":"=117.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":16.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":30.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=45.6000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=25.1000","Lead":"=8.1000","Selenium":"<0.5000","Zinc":"=117.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MAS","label_name":"SITEPRO FERROUS SULFATE R4 IRON ACTION(S) 0-0-0","wsda_reg_no":"(#2849-0045)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EDD51E",
+  "metadata": {
+    "registrant": "MAS",
+    "label_name": "SITEPRO FERROUS SULFATE R4 IRON ACTION(S) 0-0-0",
+    "wsda_reg_no": "(#2849-0045)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2849-0045)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2849-0045)",
+        "product_name": "SITEPRO FERROUS SULFATE R4 IRON ACTION(S) 0-0-0",
+        "company_info": {
+          "company": "MAS",
+          "Mailing Address": "PO Box 732",
+          "Post Office Box": null,
+          "City": "Newberg",
+          "State": "OR",
+          "Postal Code": "97132",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 16.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 30.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0300",
+          "Cobalt": "=45.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=25.1000",
+          "Lead": "=8.1000",
+          "Selenium": "<0.5000",
+          "Zinc": "=117.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SITEPRO FERROUS SULFATE R4 IRON ACTION(S) 0-0-0",
+    "brand": "MAS",
+    "manufacturer": {
+      "name": "MAS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 16.0
+    },
+    "micros_pct": {
+      "Fe": 30.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EDD51E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 45.6,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 25.1,
+            "Pb": 8.1,
+            "Se": 0.5,
+            "Zn": 117.3
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 45.6,
+        "Ni": 25.1,
+        "Pb": 8.1,
+        "Zn": 117.3
+      }
+    }
+  }
+}

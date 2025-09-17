@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "14EF4B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0915-0110)",
-    "product_name": "BIOGRO CALPATIBLE MAGNESIUM 4% 7-0-0",
-    "company_info": {
-      "company": "BIO-GRO INC",
-      "Mailing Address": "PO Box 326",
-      "Post Office Box": null,
-      "City": "Mabton",
-      "State": "WA",
-      "Postal Code": "98935",
-      "Telephone Number": "509 894-4110",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 4.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=14.0000",
-      "Cadmium": "=0.4700",
-      "Cobalt": "=0.5100",
-      "Mercury": "=0.3100",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.1000",
-      "Lead": "=0.1000",
-      "Selenium": "=5.2600",
-      "Zinc": "=6.5100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 4.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=14.0000",
-      "Cadmium": "=0.4700",
-      "Cobalt": "=0.5100",
-      "Mercury": "=0.3100",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.1000",
-      "Lead": "=0.1000",
-      "Selenium": "=5.2600",
-      "Zinc": "=6.5100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "14EF4B",
   "metadata": {
     "registrant": "BIO-GRO INC",
     "label_name": "BIOGRO CALPATIBLE MAGNESIUM 4% 7-0-0",
     "wsda_reg_no": "(#0915-0110)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0110)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0110)",
+        "product_name": "BIOGRO CALPATIBLE MAGNESIUM 4% 7-0-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=14.0000",
+          "Cadmium": "=0.4700",
+          "Cobalt": "=0.5100",
+          "Mercury": "=0.3100",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.1000",
+          "Lead": "=0.1000",
+          "Selenium": "=5.2600",
+          "Zinc": "=6.5100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGRO CALPATIBLE MAGNESIUM 4% 7-0-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0
+    },
+    "macros_pct": {
+      "Mg": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "14EF4B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.0,
+            "Cd": 0.47,
+            "Co": 0.51,
+            "Hg": 0.31,
+            "Mo": 0.1,
+            "Ni": 0.1,
+            "Pb": 0.1,
+            "Se": 5.26,
+            "Zn": 6.51
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.0,
+        "Cd": 0.47,
+        "Co": 0.51,
+        "Hg": 0.31,
+        "Mo": 0.1,
+        "Ni": 0.1,
+        "Pb": 0.1,
+        "Se": 5.26,
+        "Zn": 6.51
+      }
+    }
   }
 }

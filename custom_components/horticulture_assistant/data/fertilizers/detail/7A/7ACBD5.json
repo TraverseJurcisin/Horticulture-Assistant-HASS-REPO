@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7ACBD5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4131-0003)",
-    "product_name": "GYPSUM 0-0-0",
-    "company_info": {
-      "company": "E & LAY PROFESSIONAL NUTRIENTS",
-      "Mailing Address": "14800 4th St",
-      "Post Office Box": "Apt 102D",
-      "City": "Laurel",
-      "State": "MD",
-      "Postal Code": "57131",
-      "Telephone Number": "240 524-6522",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.1900",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<0.2500",
-      "Lead": "<6.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "<1.2500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": "96.0000"
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.1900",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<0.2500",
-      "Lead": "<6.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "<1.2500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7ACBD5",
   "metadata": {
     "registrant": "E & LAY PROFESSIONAL NUTRIENTS",
     "label_name": "GYPSUM 0-0-0",
     "wsda_reg_no": "(#4131-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4131-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4131-0003)",
+        "product_name": "GYPSUM 0-0-0",
+        "company_info": {
+          "company": "E & LAY PROFESSIONAL NUTRIENTS",
+          "Mailing Address": "14800 4th St",
+          "Post Office Box": "Apt 102D",
+          "City": "Laurel",
+          "State": "MD",
+          "Postal Code": "57131",
+          "Telephone Number": "240 524-6522",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.1900",
+          "Molybdenum": "<5.0000",
+          "Nickel": "<0.2500",
+          "Lead": "<6.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "<1.2500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "96.0000"
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GYPSUM 0-0-0",
+    "brand": "E & LAY PROFESSIONAL NUTRIENTS",
+    "manufacturer": {
+      "name": "E & LAY PROFESSIONAL NUTRIENTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7ACBD5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.19,
+            "Mo": 5.0,
+            "Ni": 0.25,
+            "Pb": 6.0,
+            "Se": 10.0,
+            "Zn": 1.25
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.19,
+            "Mo": 5.0,
+            "Ni": 0.25,
+            "Pb": 6.0,
+            "Se": 10.0,
+            "Zn": 1.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

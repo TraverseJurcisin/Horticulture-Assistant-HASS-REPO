@@ -1,1 +1,155 @@
-{"schema_version":"2025-07-v1","product_id":"E608FF","source_wsda_record":{"wsda_product_number":"(#3956-0005)","product_name":"PLATINUM PRO GROW 18-8-16","company_info":{"company":"PLANT LIFE COMPANY","Mailing Address":"958 Tropic Blvd","Post Office Box":null,"City":"Delray Beach","State":"FL","Postal Code":"33483","Telephone Number":"888 502-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.7,"Sulfur (S)":3.55,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.2,"Manganese (Mn)":0.11,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.07},"reported_metals":{"Arsenic":"<0.0100","Cadmium":"=0.3500","Cobalt":"=0.0100","Mercury":"=2.0000","Molybdenum":"=52.7500","Nickel":"=0.3000","Lead":"=7.8000","Selenium":"=0.0100","Zinc":"=614.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.7,"Sulfur (S)":3.55,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.2,"Manganese (Mn)":0.11,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.07},"heavy_metals":{"Arsenic":"<0.0100","Cadmium":"=0.3500","Cobalt":"=0.0100","Mercury":"=2.0000","Molybdenum":"=52.7500","Nickel":"=0.3000","Lead":"=7.8000","Selenium":"=0.0100","Zinc":"=614.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PLANT LIFE COMPANY","label_name":"PLATINUM PRO GROW 18-8-16","wsda_reg_no":"(#3956-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E608FF",
+  "metadata": {
+    "registrant": "PLANT LIFE COMPANY",
+    "label_name": "PLATINUM PRO GROW 18-8-16",
+    "wsda_reg_no": "(#3956-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3956-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3956-0005)",
+        "product_name": "PLATINUM PRO GROW 18-8-16",
+        "company_info": {
+          "company": "PLANT LIFE COMPANY",
+          "Mailing Address": "958 Tropic Blvd",
+          "Post Office Box": null,
+          "City": "Delray Beach",
+          "State": "FL",
+          "Postal Code": "33483",
+          "Telephone Number": "888 502-5752",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.7,
+          "Sulfur (S)": 3.55,
+          "Boron (B)": 0.15,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.02,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.11,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.07
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0100",
+          "Cadmium": "=0.3500",
+          "Cobalt": "=0.0100",
+          "Mercury": "=2.0000",
+          "Molybdenum": "=52.7500",
+          "Nickel": "=0.3000",
+          "Lead": "=7.8000",
+          "Selenium": "=0.0100",
+          "Zinc": "=614.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLATINUM PRO GROW 18-8-16",
+    "brand": "PLANT LIFE COMPANY",
+    "manufacturer": {
+      "name": "PLANT LIFE COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "Mg": 2.7,
+      "S": 3.55
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.11,
+      "Zn": 0.07,
+      "Cu": 0.02,
+      "B": 0.15,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E608FF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.01,
+            "Cd": 0.35,
+            "Co": 0.01,
+            "Hg": 2.0,
+            "Mo": 52.75,
+            "Ni": 0.3,
+            "Pb": 7.8,
+            "Se": 0.01,
+            "Zn": 614.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.01
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.35,
+        "Co": 0.01,
+        "Hg": 2.0,
+        "Mo": 52.75,
+        "Ni": 0.3,
+        "Pb": 7.8,
+        "Se": 0.01,
+        "Zn": 614.0
+      }
+    }
+  }
+}

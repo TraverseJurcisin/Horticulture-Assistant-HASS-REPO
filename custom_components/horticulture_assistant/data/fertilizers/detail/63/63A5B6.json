@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "63A5B6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1052-0112)",
-    "product_name": "DR. EARTH HOME GROWN TOMATO, VEGETABLE & HERB FERTILIZER 3-2-2",
-    "company_info": {
-      "company": "DR EARTH",
-      "Mailing Address": "PO Box 500",
-      "Post Office Box": null,
-      "City": "Elmira",
-      "State": "CA",
-      "Postal Code": "95625",
-      "Telephone Number": "707 448-4676",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4400",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<0.0300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "=1.3900",
-      "Nickel": "=0.9000",
-      "Lead": "<0.0800",
-      "Selenium": "=0.8000",
-      "Zinc": "=22.9100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4400",
-      "Cadmium": "<0.0300",
-      "Cobalt": "<0.0300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "=1.3900",
-      "Nickel": "=0.9000",
-      "Lead": "<0.0800",
-      "Selenium": "=0.8000",
-      "Zinc": "=22.9100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "63A5B6",
   "metadata": {
     "registrant": "DR EARTH",
     "label_name": "DR. EARTH HOME GROWN TOMATO, VEGETABLE & HERB FERTILIZER 3-2-2",
     "wsda_reg_no": "(#1052-0112)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1052-0112)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1052-0112)",
+        "product_name": "DR. EARTH HOME GROWN TOMATO, VEGETABLE & HERB FERTILIZER 3-2-2",
+        "company_info": {
+          "company": "DR EARTH",
+          "Mailing Address": "PO Box 500",
+          "Post Office Box": null,
+          "City": "Elmira",
+          "State": "CA",
+          "Postal Code": "95625",
+          "Telephone Number": "707 448-4676",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4400",
+          "Cadmium": "<0.0300",
+          "Cobalt": "<0.0300",
+          "Mercury": "<0.0400",
+          "Molybdenum": "=1.3900",
+          "Nickel": "=0.9000",
+          "Lead": "<0.0800",
+          "Selenium": "=0.8000",
+          "Zinc": "=22.9100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DR. EARTH HOME GROWN TOMATO, VEGETABLE & HERB FERTILIZER 3-2-2",
+    "brand": "DR EARTH",
+    "manufacturer": {
+      "name": "DR EARTH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "63A5B6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.44,
+            "Cd": 0.03,
+            "Co": 0.03,
+            "Hg": 0.04,
+            "Mo": 1.39,
+            "Ni": 0.9,
+            "Pb": 0.08,
+            "Se": 0.8,
+            "Zn": 22.91
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.03,
+            "Co": 0.03,
+            "Hg": 0.04,
+            "Pb": 0.08
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.44,
+        "Mo": 1.39,
+        "Ni": 0.9,
+        "Se": 0.8,
+        "Zn": 22.91
+      }
+    }
   }
 }

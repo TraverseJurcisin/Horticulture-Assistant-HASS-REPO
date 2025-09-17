@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "71B0E6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0011-0008)",
-    "product_name": "AGRO-K SYMSPRAY 20X 0-0-0",
-    "company_info": {
-      "company": "AGRO-K CORPORATION",
-      "Mailing Address": "8030 Main St NE",
-      "Post Office Box": null,
-      "City": "Minneapolis",
-      "State": "MN",
-      "Postal Code": "55432-1844",
-      "Telephone Number": "763 780-4116",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.17,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 1.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.7
-    },
-    "reported_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=0.6900",
-      "Cobalt": "=1715.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=13.1000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=7846.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.17,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 1.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.7
-    },
-    "heavy_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=0.6900",
-      "Cobalt": "=1715.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=13.1000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=7846.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "71B0E6",
   "metadata": {
     "registrant": "AGRO-K CORPORATION",
     "label_name": "AGRO-K SYMSPRAY 20X 0-0-0",
     "wsda_reg_no": "(#0011-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0011-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0011-0008)",
+        "product_name": "AGRO-K SYMSPRAY 20X 0-0-0",
+        "company_info": {
+          "company": "AGRO-K CORPORATION",
+          "Mailing Address": "8030 Main St NE",
+          "Post Office Box": null,
+          "City": "Minneapolis",
+          "State": "MN",
+          "Postal Code": "55432-1844",
+          "Telephone Number": "763 780-4116",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.17,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 1.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.7
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "=0.6900",
+          "Cobalt": "=1715.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=13.1000",
+          "Lead": "<5.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=7846.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGRO-K SYMSPRAY 20X 0-0-0",
+    "brand": "AGRO-K CORPORATION",
+    "manufacturer": {
+      "name": "AGRO-K CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 1.5,
+      "Zn": 0.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "71B0E6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.69,
+            "Co": 1715.0,
+            "Hg": 0.02,
+            "Mo": 1.0,
+            "Ni": 13.1,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 7846.0
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Hg": 0.02,
+            "Pb": 5.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.69,
+        "Co": 1715.0,
+        "Mo": 1.0,
+        "Ni": 13.1,
+        "Zn": 7846.0
+      }
+    }
   }
 }

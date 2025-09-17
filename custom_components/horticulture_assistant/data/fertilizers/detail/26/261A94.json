@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "261A94",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0698-0163)",
-    "product_name": "MIRACLE-GRO BLOOMING HOUSEPLANT FOOD 0.5-1-0.5",
-    "company_info": {
-      "company": "MIRACLE-GRO LAWN PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-1573",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.5,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 0.5,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0498",
-      "Cadmium": "=0.0249",
-      "Cobalt": "=0.0249",
-      "Mercury": "=0.7420",
-      "Molybdenum": "=0.0747",
-      "Nickel": "=0.0249",
-      "Lead": "=0.0249",
-      "Selenium": "=0.0498",
-      "Zinc": "=0.0125"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.5,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 0.5,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0498",
-      "Cadmium": "=0.0249",
-      "Cobalt": "=0.0249",
-      "Mercury": "=0.7420",
-      "Molybdenum": "=0.0747",
-      "Nickel": "=0.0249",
-      "Lead": "=0.0249",
-      "Selenium": "=0.0498",
-      "Zinc": "=0.0125"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "261A94",
   "metadata": {
     "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
     "label_name": "MIRACLE-GRO BLOOMING HOUSEPLANT FOOD 0.5-1-0.5",
     "wsda_reg_no": "(#0698-0163)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0163)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0163)",
+        "product_name": "MIRACLE-GRO BLOOMING HOUSEPLANT FOOD 0.5-1-0.5",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.5,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 0.5,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0498",
+          "Cadmium": "=0.0249",
+          "Cobalt": "=0.0249",
+          "Mercury": "=0.7420",
+          "Molybdenum": "=0.0747",
+          "Nickel": "=0.0249",
+          "Lead": "=0.0249",
+          "Selenium": "=0.0498",
+          "Zinc": "=0.0125"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO BLOOMING HOUSEPLANT FOOD 0.5-1-0.5",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.5,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "261A94-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.0498,
+            "Cd": 0.0249,
+            "Co": 0.0249,
+            "Hg": 0.742,
+            "Mo": 0.0747,
+            "Ni": 0.0249,
+            "Pb": 0.0249,
+            "Se": 0.0498,
+            "Zn": 0.0125
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.0498,
+        "Cd": 0.0249,
+        "Co": 0.0249,
+        "Hg": 0.742,
+        "Mo": 0.0747,
+        "Ni": 0.0249,
+        "Pb": 0.0249,
+        "Se": 0.0498,
+        "Zn": 0.0125
+      }
+    }
   }
 }

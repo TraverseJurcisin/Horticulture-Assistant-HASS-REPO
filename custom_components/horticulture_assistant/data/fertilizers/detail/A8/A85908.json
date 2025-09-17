@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"A85908","source_wsda_record":{"wsda_product_number":"(#1026-0058)","product_name":"PERFECT BLEND FERTILIZERS LIQUID 5-0-0","company_info":{"company":"PERFECT BLEND LLC","Mailing Address":"10900 NE 8th St Ste 615","Post Office Box":null,"City":"Bellevue","State":"WA","Postal Code":"98004","Telephone Number":"425 456-8889","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=37.0000","Cadmium":"=9.0000","Cobalt":"=74.0000","Mercury":"=2.0000","Molybdenum":"=9.0000","Nickel":"=89.0000","Lead":"=247.0000","Selenium":"=6.0000","Zinc":"=916.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=37.0000","Cadmium":"=9.0000","Cobalt":"=74.0000","Mercury":"=2.0000","Molybdenum":"=9.0000","Nickel":"=89.0000","Lead":"=247.0000","Selenium":"=6.0000","Zinc":"=916.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PERFECT BLEND LLC","label_name":"PERFECT BLEND FERTILIZERS LIQUID 5-0-0","wsda_reg_no":"(#1026-0058)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A85908",
+  "metadata": {
+    "registrant": "PERFECT BLEND LLC",
+    "label_name": "PERFECT BLEND FERTILIZERS LIQUID 5-0-0",
+    "wsda_reg_no": "(#1026-0058)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1026-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1026-0058)",
+        "product_name": "PERFECT BLEND FERTILIZERS LIQUID 5-0-0",
+        "company_info": {
+          "company": "PERFECT BLEND LLC",
+          "Mailing Address": "10900 NE 8th St Ste 615",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98004",
+          "Telephone Number": "425 456-8889",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=37.0000",
+          "Cadmium": "=9.0000",
+          "Cobalt": "=74.0000",
+          "Mercury": "=2.0000",
+          "Molybdenum": "=9.0000",
+          "Nickel": "=89.0000",
+          "Lead": "=247.0000",
+          "Selenium": "=6.0000",
+          "Zinc": "=916.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERFECT BLEND FERTILIZERS LIQUID 5-0-0",
+    "brand": "PERFECT BLEND LLC",
+    "manufacturer": {
+      "name": "PERFECT BLEND LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A85908-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 37.0,
+            "Cd": 9.0,
+            "Co": 74.0,
+            "Hg": 2.0,
+            "Mo": 9.0,
+            "Ni": 89.0,
+            "Pb": 247.0,
+            "Se": 6.0,
+            "Zn": 916.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 37.0,
+        "Cd": 9.0,
+        "Co": 74.0,
+        "Hg": 2.0,
+        "Mo": 9.0,
+        "Ni": 89.0,
+        "Pb": 247.0,
+        "Se": 6.0,
+        "Zn": 916.0
+      }
+    }
+  }
+}

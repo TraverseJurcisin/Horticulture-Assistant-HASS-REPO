@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"FF648B","source_wsda_record":{"wsda_product_number":"(#1895-0030)","product_name":"LEFFINGWELL NUTRA-SPRAY MANZINC 0-0-0","company_info":{"company":"YARA UK LTD","Mailing Address":"100 N Tampa St Ste 300","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":25.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":25.0},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=6.5000","Cobalt":"=88.0000","Mercury":"=5.0000","Molybdenum":"<5.0000","Nickel":"=220.0000","Lead":"=23.0000","Selenium":"<2.0000","Zinc":"=250000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":25.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":25.0},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=6.5000","Cobalt":"=88.0000","Mercury":"=5.0000","Molybdenum":"<5.0000","Nickel":"=220.0000","Lead":"=23.0000","Selenium":"<2.0000","Zinc":"=250000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA UK LTD","label_name":"LEFFINGWELL NUTRA-SPRAY MANZINC 0-0-0","wsda_reg_no":"(#1895-0030)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FF648B",
+  "metadata": {
+    "registrant": "YARA UK LTD",
+    "label_name": "LEFFINGWELL NUTRA-SPRAY MANZINC 0-0-0",
+    "wsda_reg_no": "(#1895-0030)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1895-0030)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1895-0030)",
+        "product_name": "LEFFINGWELL NUTRA-SPRAY MANZINC 0-0-0",
+        "company_info": {
+          "company": "YARA UK LTD",
+          "Mailing Address": "100 N Tampa St Ste 300",
+          "Post Office Box": null,
+          "City": "Tampa",
+          "State": "FL",
+          "Postal Code": "33602",
+          "Telephone Number": "813 970-5438",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 25.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 25.0
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=6.5000",
+          "Cobalt": "=88.0000",
+          "Mercury": "=5.0000",
+          "Molybdenum": "<5.0000",
+          "Nickel": "=220.0000",
+          "Lead": "=23.0000",
+          "Selenium": "<2.0000",
+          "Zinc": "=250000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LEFFINGWELL NUTRA-SPRAY MANZINC 0-0-0",
+    "brand": "YARA UK LTD",
+    "manufacturer": {
+      "name": "YARA UK LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 4.0
+    },
+    "micros_pct": {
+      "Mn": 25.0,
+      "Zn": 25.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FF648B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 6.5,
+            "Co": 88.0,
+            "Hg": 5.0,
+            "Mo": 5.0,
+            "Ni": 220.0,
+            "Pb": 23.0,
+            "Se": 2.0,
+            "Zn": 250000.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Mo": 5.0,
+            "Se": 2.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 6.5,
+        "Co": 88.0,
+        "Hg": 5.0,
+        "Ni": 220.0,
+        "Pb": 23.0,
+        "Zn": 250000.0
+      }
+    }
+  }
+}

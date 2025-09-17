@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"83C174","source_wsda_record":{"wsda_product_number":"(#1176-0072)","product_name":"SITEPRO FERTILIZER WITH SURGE BROADLEAF HERBICIDE 21-3-5 #34121 21-3-5","company_info":{"company":"MARION AG SERVICE INC","Mailing Address":"7746 St Paul Hwy NE","Post Office Box":null,"City":"St Paul","State":"OR","Postal Code":"97137","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.9500","Cadmium":"=1.9300","Cobalt":"=0.9000","Mercury":"=0.2100","Molybdenum":"=7.3000","Nickel":"=6.4000","Lead":"=4.5000","Selenium":"=3.2000","Zinc":"=469.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.9500","Cadmium":"=1.9300","Cobalt":"=0.9000","Mercury":"=0.2100","Molybdenum":"=7.3000","Nickel":"=6.4000","Lead":"=4.5000","Selenium":"=3.2000","Zinc":"=469.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MARION AG SERVICE INC","label_name":"SITEPRO FERTILIZER WITH SURGE BROADLEAF HERBICIDE 21-3-5 #34121 21-3-5","wsda_reg_no":"(#1176-0072)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "83C174",
+  "metadata": {
+    "registrant": "MARION AG SERVICE INC",
+    "label_name": "SITEPRO FERTILIZER WITH SURGE BROADLEAF HERBICIDE 21-3-5 #34121 21-3-5",
+    "wsda_reg_no": "(#1176-0072)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1176-0072)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1176-0072)",
+        "product_name": "SITEPRO FERTILIZER WITH SURGE BROADLEAF HERBICIDE 21-3-5 #34121 21-3-5",
+        "company_info": {
+          "company": "MARION AG SERVICE INC",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9500",
+          "Cadmium": "=1.9300",
+          "Cobalt": "=0.9000",
+          "Mercury": "=0.2100",
+          "Molybdenum": "=7.3000",
+          "Nickel": "=6.4000",
+          "Lead": "=4.5000",
+          "Selenium": "=3.2000",
+          "Zinc": "=469.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SITEPRO FERTILIZER WITH SURGE BROADLEAF HERBICIDE 21-3-5 #34121 21-3-5",
+    "brand": "MARION AG SERVICE INC",
+    "manufacturer": {
+      "name": "MARION AG SERVICE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "83C174-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.95,
+            "Cd": 1.93,
+            "Co": 0.9,
+            "Hg": 0.21,
+            "Mo": 7.3,
+            "Ni": 6.4,
+            "Pb": 4.5,
+            "Se": 3.2,
+            "Zn": 469.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.95,
+        "Cd": 1.93,
+        "Co": 0.9,
+        "Hg": 0.21,
+        "Mo": 7.3,
+        "Ni": 6.4,
+        "Pb": 4.5,
+        "Se": 3.2,
+        "Zn": 469.0
+      }
+    }
+  }
+}

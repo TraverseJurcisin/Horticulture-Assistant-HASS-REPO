@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"AB09A3","source_wsda_record":{"wsda_product_number":"(#0193-0290)","product_name":"LOVELAND PRODUCTS NUTRI SYNC M 0-0-2","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.07,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.7},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0500","Cobalt":"=2.4000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=1.6000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=8310.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.07,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.7},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0500","Cobalt":"=2.4000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=1.6000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=8310.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LOVELAND PRODUCTS NUTRI SYNC M 0-0-2","wsda_reg_no":"(#0193-0290)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AB09A3",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LOVELAND PRODUCTS NUTRI SYNC M 0-0-2",
+    "wsda_reg_no": "(#0193-0290)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0290)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0290)",
+        "product_name": "LOVELAND PRODUCTS NUTRI SYNC M 0-0-2",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.07,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.3,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.7
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=2.4000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=1.6000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=8310.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND PRODUCTS NUTRI SYNC M 0-0-2",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 2.0
+    },
+    "micros_pct": {
+      "Mn": 0.3,
+      "Zn": 0.7,
+      "B": 0.07
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AB09A3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.05,
+            "Co": 2.4,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 1.6,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 8310.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.05,
+        "Co": 2.4,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 1.6,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 8310.0
+      }
+    }
+  }
+}

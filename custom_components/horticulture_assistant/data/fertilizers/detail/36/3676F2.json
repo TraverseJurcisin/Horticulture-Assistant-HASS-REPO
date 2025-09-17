@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3676F2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3593-0078)",
-    "product_name": "ATP NUTRITION RELEAF SOYBEAN 2-23-2",
-    "company_info": {
-      "company": "CHS INC",
-      "Mailing Address": "5500 Cenex Ave MS 326-Allen",
-      "Post Office Box": null,
-      "City": "Inver Grove Heights",
-      "State": "MN",
-      "Postal Code": "55077",
-      "Telephone Number": "320 235-8518",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 23.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=11.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=44.4000",
-      "Nickel": "=5.5000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=10040.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 23.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=11.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=44.4000",
-      "Nickel": "=5.5000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=10040.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3676F2",
   "metadata": {
     "registrant": "CHS INC",
     "label_name": "ATP NUTRITION RELEAF SOYBEAN 2-23-2",
     "wsda_reg_no": "(#3593-0078)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3593-0078)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3593-0078)",
+        "product_name": "ATP NUTRITION RELEAF SOYBEAN 2-23-2",
+        "company_info": {
+          "company": "CHS INC",
+          "Mailing Address": "5500 Cenex Ave MS 326-Allen",
+          "Post Office Box": null,
+          "City": "Inver Grove Heights",
+          "State": "MN",
+          "Postal Code": "55077",
+          "Telephone Number": "320 235-8518",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 23.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=11.4000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=44.4000",
+          "Nickel": "=5.5000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=10040.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ATP NUTRITION RELEAF SOYBEAN 2-23-2",
+    "brand": "CHS INC",
+    "manufacturer": {
+      "name": "CHS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 23.0,
+      "K2O_pct": 2.0
+    },
+    "micros_pct": {
+      "Mn": 3.0,
+      "Zn": 1.0,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3676F2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 11.4,
+            "Hg": 0.05,
+            "Mo": 44.4,
+            "Ni": 5.5,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 10040.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 11.4,
+        "Mo": 44.4,
+        "Ni": 5.5,
+        "Zn": 10040.0
+      }
+    }
   }
 }

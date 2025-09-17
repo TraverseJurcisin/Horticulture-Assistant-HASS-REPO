@@ -1,1 +1,156 @@
-{"schema_version":"2025-07-v1","product_id":"D09FB9","source_wsda_record":{"wsda_product_number":"(#3584-0007)","product_name":"NATURE'S SOURCE NURSERY & LANDSCAPE PLANT FOOD 10-4-5","company_info":{"company":"BALL DPF","Mailing Address":"307 E Mulberry St","Post Office Box":null,"City":"Sherman","State":"TX","Postal Code":"75090","Telephone Number":"903 771-0120","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":0.01,"Magnesium (Mg)":0.05,"Sulfur (S)":0.2,"Boron (B)":0.002,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.001,"Iron (Fe)":0.002,"Manganese (Mn)":0.014,"Molybdenum (Mo)":0.0001,"Sodium (Na)":null,"Zinc (Zn)":0.005},"reported_metals":{"Arsenic":"=0.7570","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=0.7890","Nickel":"=0.1740","Lead":"<0.0150","Selenium":"=0.3510","Zinc":"=78.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":0.01,"Magnesium (Mg)":0.05,"Sulfur (S)":0.2,"Boron (B)":0.002,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.001,"Iron (Fe)":0.002,"Manganese (Mn)":0.014,"Molybdenum (Mo)":0.0001,"Sodium (Na)":null,"Zinc (Zn)":0.005},"heavy_metals":{"Arsenic":"=0.7570","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=0.7890","Nickel":"=0.1740","Lead":"<0.0150","Selenium":"=0.3510","Zinc":"=78.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BALL DPF","label_name":"NATURE'S SOURCE NURSERY & LANDSCAPE PLANT FOOD 10-4-5","wsda_reg_no":"(#3584-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D09FB9",
+  "metadata": {
+    "registrant": "BALL DPF",
+    "label_name": "NATURE'S SOURCE NURSERY & LANDSCAPE PLANT FOOD 10-4-5",
+    "wsda_reg_no": "(#3584-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3584-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3584-0007)",
+        "product_name": "NATURE'S SOURCE NURSERY & LANDSCAPE PLANT FOOD 10-4-5",
+        "company_info": {
+          "company": "BALL DPF",
+          "Mailing Address": "307 E Mulberry St",
+          "Post Office Box": null,
+          "City": "Sherman",
+          "State": "TX",
+          "Postal Code": "75090",
+          "Telephone Number": "903 771-0120",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 0.01,
+          "Magnesium (Mg)": 0.05,
+          "Sulfur (S)": 0.2,
+          "Boron (B)": 0.002,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.001,
+          "Iron (Fe)": 0.002,
+          "Manganese (Mn)": 0.014,
+          "Molybdenum (Mo)": 0.0001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.005
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7570",
+          "Cadmium": "<0.0150",
+          "Cobalt": "<0.0150",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.7890",
+          "Nickel": "=0.1740",
+          "Lead": "<0.0150",
+          "Selenium": "=0.3510",
+          "Zinc": "=78.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE'S SOURCE NURSERY & LANDSCAPE PLANT FOOD 10-4-5",
+    "brand": "BALL DPF",
+    "manufacturer": {
+      "name": "BALL DPF"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 0.01,
+      "Mg": 0.05,
+      "S": 0.2
+    },
+    "micros_pct": {
+      "Fe": 0.002,
+      "Mn": 0.014,
+      "Zn": 0.005,
+      "Cu": 0.001,
+      "B": 0.002,
+      "Mo": 0.0001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D09FB9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.757,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Mo": 0.789,
+            "Ni": 0.174,
+            "Pb": 0.015,
+            "Se": 0.351,
+            "Zn": 78.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Pb": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.757,
+        "Mo": 0.789,
+        "Ni": 0.174,
+        "Se": 0.351,
+        "Zn": 78.0
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "009D1C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0764-0031)",
-    "product_name": "NATURE SAFE DRY FLOWABLE POWDER ORGANIC 7-7-7",
-    "company_info": {
-      "company": "DARLING INGREDIENTS INC",
-      "Mailing Address": "4221 Alexandria Pk",
-      "Post Office Box": null,
-      "City": "Cold Spring",
-      "State": "KY",
-      "Postal Code": "41076",
-      "Telephone Number": "859 344-2227",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5980",
-      "Cadmium": "=0.4880",
-      "Cobalt": "=0.4250",
-      "Mercury": "=0.1020",
-      "Molybdenum": "=1.7900",
-      "Nickel": "=5.3800",
-      "Lead": "=0.6120",
-      "Selenium": "=1.1400",
-      "Zinc": "=187.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5980",
-      "Cadmium": "=0.4880",
-      "Cobalt": "=0.4250",
-      "Mercury": "=0.1020",
-      "Molybdenum": "=1.7900",
-      "Nickel": "=5.3800",
-      "Lead": "=0.6120",
-      "Selenium": "=1.1400",
-      "Zinc": "=187.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "009D1C",
   "metadata": {
     "registrant": "DARLING INGREDIENTS INC",
     "label_name": "NATURE SAFE DRY FLOWABLE POWDER ORGANIC 7-7-7",
     "wsda_reg_no": "(#0764-0031)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0764-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0764-0031)",
+        "product_name": "NATURE SAFE DRY FLOWABLE POWDER ORGANIC 7-7-7",
+        "company_info": {
+          "company": "DARLING INGREDIENTS INC",
+          "Mailing Address": "4221 Alexandria Pk",
+          "Post Office Box": null,
+          "City": "Cold Spring",
+          "State": "KY",
+          "Postal Code": "41076",
+          "Telephone Number": "859 344-2227",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5980",
+          "Cadmium": "=0.4880",
+          "Cobalt": "=0.4250",
+          "Mercury": "=0.1020",
+          "Molybdenum": "=1.7900",
+          "Nickel": "=5.3800",
+          "Lead": "=0.6120",
+          "Selenium": "=1.1400",
+          "Zinc": "=187.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE SAFE DRY FLOWABLE POWDER ORGANIC 7-7-7",
+    "brand": "DARLING INGREDIENTS INC",
+    "manufacturer": {
+      "name": "DARLING INGREDIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 7.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "009D1C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.598,
+            "Cd": 0.488,
+            "Co": 0.425,
+            "Hg": 0.102,
+            "Mo": 1.79,
+            "Ni": 5.38,
+            "Pb": 0.612,
+            "Se": 1.14,
+            "Zn": 187.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.598,
+        "Cd": 0.488,
+        "Co": 0.425,
+        "Hg": 0.102,
+        "Mo": 1.79,
+        "Ni": 5.38,
+        "Pb": 0.612,
+        "Se": 1.14,
+        "Zn": 187.0
+      }
+    }
   }
 }

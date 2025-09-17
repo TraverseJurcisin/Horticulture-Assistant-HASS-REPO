@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3733D1",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0246-0004)",
-    "product_name": "AZOMITE FIELD GRADE 0-0-0.2",
-    "company_info": {
-      "company": "AZOMITE MINERAL PRODUCTS INC",
-      "Mailing Address": "PO Box 21",
-      "Post Office Box": null,
-      "City": "Nephi",
-      "State": "UT",
-      "Postal Code": "84648",
-      "Telephone Number": "435 623-8007",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.2,
-      "Calcium (Ca)": 1.8,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": 0.1,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5500",
-      "Cobalt": "=1.3700",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=1.2000",
-      "Lead": "=9.4000",
-      "Selenium": "<5.0000",
-      "Zinc": "=12.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.2,
-      "Calcium (Ca)": 1.8,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": 0.1,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5500",
-      "Cobalt": "=1.3700",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=1.2000",
-      "Lead": "=9.4000",
-      "Selenium": "<5.0000",
-      "Zinc": "=12.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3733D1",
   "metadata": {
     "registrant": "AZOMITE MINERAL PRODUCTS INC",
     "label_name": "AZOMITE FIELD GRADE 0-0-0.2",
     "wsda_reg_no": "(#0246-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0246-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0246-0004)",
+        "product_name": "AZOMITE FIELD GRADE 0-0-0.2",
+        "company_info": {
+          "company": "AZOMITE MINERAL PRODUCTS INC",
+          "Mailing Address": "PO Box 21",
+          "Post Office Box": null,
+          "City": "Nephi",
+          "State": "UT",
+          "Postal Code": "84648",
+          "Telephone Number": "435 623-8007",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.2,
+          "Calcium (Ca)": 1.8,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": 0.1,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.5500",
+          "Cobalt": "=1.3700",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=1.2000",
+          "Lead": "=9.4000",
+          "Selenium": "<5.0000",
+          "Zinc": "=12.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AZOMITE FIELD GRADE 0-0-0.2",
+    "brand": "AZOMITE MINERAL PRODUCTS INC",
+    "manufacturer": {
+      "name": "AZOMITE MINERAL PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 0.2
+    },
+    "macros_pct": {
+      "Ca": 1.8,
+      "Mg": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3733D1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.55,
+            "Co": 1.37,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.2,
+            "Pb": 9.4,
+            "Se": 5.0,
+            "Zn": 12.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.55,
+        "Co": 1.37,
+        "Ni": 1.2,
+        "Pb": 9.4,
+        "Zn": 12.0
+      }
+    }
   }
 }

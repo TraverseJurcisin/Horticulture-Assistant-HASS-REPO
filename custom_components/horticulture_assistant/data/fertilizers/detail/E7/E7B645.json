@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"E7B645","source_wsda_record":{"wsda_product_number":"(#4062-0001)","product_name":"HOMEGOLD RESCOURCES LTD FOUR J GYPSUM 0-0-0","company_info":{"company":"HOMEGOLD RESOURCES LTD.","Mailing Address":"Unit 5, 2330 Tyner St","Post Office Box":null,"City":"Port Coquitlam","State":"BC","Postal Code":"V3C 2ZI","Telephone Number":"604 970-6402","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":18.0,"Magnesium (Mg)":null,"Sulfur (S)":14.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.8000","Cadmium":"=0.1000","Cobalt":"=0.5000","Mercury":"=0.1630","Molybdenum":"=0.3790","Nickel":"=1.4500","Lead":"=0.5110","Selenium":"=0.5000","Zinc":"=2.5300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"88.0000"},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":18.0,"Magnesium (Mg)":null,"Sulfur (S)":14.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.8000","Cadmium":"=0.1000","Cobalt":"=0.5000","Mercury":"=0.1630","Molybdenum":"=0.3790","Nickel":"=1.4500","Lead":"=0.5110","Selenium":"=0.5000","Zinc":"=2.5300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HOMEGOLD RESOURCES LTD.","label_name":"HOMEGOLD RESCOURCES LTD FOUR J GYPSUM 0-0-0","wsda_reg_no":"(#4062-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E7B645",
+  "metadata": {
+    "registrant": "HOMEGOLD RESOURCES LTD.",
+    "label_name": "HOMEGOLD RESCOURCES LTD FOUR J GYPSUM 0-0-0",
+    "wsda_reg_no": "(#4062-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4062-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4062-0001)",
+        "product_name": "HOMEGOLD RESCOURCES LTD FOUR J GYPSUM 0-0-0",
+        "company_info": {
+          "company": "HOMEGOLD RESOURCES LTD.",
+          "Mailing Address": "Unit 5, 2330 Tyner St",
+          "Post Office Box": null,
+          "City": "Port Coquitlam",
+          "State": "BC",
+          "Postal Code": "V3C 2ZI",
+          "Telephone Number": "604 970-6402",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 18.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 14.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.5000",
+          "Mercury": "=0.1630",
+          "Molybdenum": "=0.3790",
+          "Nickel": "=1.4500",
+          "Lead": "=0.5110",
+          "Selenium": "=0.5000",
+          "Zinc": "=2.5300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "88.0000"
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HOMEGOLD RESCOURCES LTD FOUR J GYPSUM 0-0-0",
+    "brand": "HOMEGOLD RESOURCES LTD.",
+    "manufacturer": {
+      "name": "HOMEGOLD RESOURCES LTD."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 18.0,
+      "S": 14.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E7B645-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.8,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.163,
+            "Mo": 0.379,
+            "Ni": 1.45,
+            "Pb": 0.511,
+            "Se": 0.5,
+            "Zn": 2.53
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.8,
+        "Cd": 0.1,
+        "Co": 0.5,
+        "Hg": 0.163,
+        "Mo": 0.379,
+        "Ni": 1.45,
+        "Pb": 0.511,
+        "Se": 0.5,
+        "Zn": 2.53
+      }
+    }
+  }
+}

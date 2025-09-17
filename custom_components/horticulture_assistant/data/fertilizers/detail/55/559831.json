@@ -1,106 +1,155 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "559831",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1517-0099)",
-    "product_name": "JACK'S PROFESSIONAL 25-5-15 HPF 25-5-15",
-    "company_info": {
-      "company": "JR PETERS INC",
-      "Mailing Address": "6656 Grant Way",
-      "Post Office Box": null,
-      "City": "Allentown",
-      "State": "PA",
-      "Postal Code": "18106",
-      "Telephone Number": "866 522-5752",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.1,
-      "Sulfur (S)": 0.13,
-      "Boron (B)": 0.025,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0125,
-      "Iron (Fe)": 0.125,
-      "Manganese (Mn)": 0.063,
-      "Molybdenum (Mo)": 0.0125,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.063
-    },
-    "reported_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.1560",
-      "Molybdenum": "=47.1000",
-      "Nickel": "<0.2500",
-      "Lead": "<0.3000",
-      "Selenium": "<0.5000",
-      "Zinc": "=635.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.1,
-      "Sulfur (S)": 0.13,
-      "Boron (B)": 0.025,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0125,
-      "Iron (Fe)": 0.125,
-      "Manganese (Mn)": 0.063,
-      "Molybdenum (Mo)": 0.0125,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.063
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.5000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.1560",
-      "Molybdenum": "=47.1000",
-      "Nickel": "<0.2500",
-      "Lead": "<0.3000",
-      "Selenium": "<0.5000",
-      "Zinc": "=635.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "559831",
   "metadata": {
     "registrant": "JR PETERS INC",
     "label_name": "JACK'S PROFESSIONAL 25-5-15 HPF 25-5-15",
     "wsda_reg_no": "(#1517-0099)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1517-0099)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1517-0099)",
+        "product_name": "JACK'S PROFESSIONAL 25-5-15 HPF 25-5-15",
+        "company_info": {
+          "company": "JR PETERS INC",
+          "Mailing Address": "6656 Grant Way",
+          "Post Office Box": null,
+          "City": "Allentown",
+          "State": "PA",
+          "Postal Code": "18106",
+          "Telephone Number": "866 522-5752",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 25.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 15.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.1,
+          "Sulfur (S)": 0.13,
+          "Boron (B)": 0.025,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0125,
+          "Iron (Fe)": 0.125,
+          "Manganese (Mn)": 0.063,
+          "Molybdenum (Mo)": 0.0125,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.063
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.1560",
+          "Molybdenum": "=47.1000",
+          "Nickel": "<0.2500",
+          "Lead": "<0.3000",
+          "Selenium": "<0.5000",
+          "Zinc": "=635.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JACK'S PROFESSIONAL 25-5-15 HPF 25-5-15",
+    "brand": "JR PETERS INC",
+    "manufacturer": {
+      "name": "JR PETERS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 25.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 15.0
+    },
+    "macros_pct": {
+      "Mg": 0.1,
+      "S": 0.13
+    },
+    "micros_pct": {
+      "Fe": 0.125,
+      "Mn": 0.063,
+      "Zn": 0.063,
+      "Cu": 0.0125,
+      "B": 0.025,
+      "Mo": 0.0125
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "559831-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.156,
+            "Mo": 47.1,
+            "Ni": 0.25,
+            "Pb": 0.3,
+            "Se": 0.5,
+            "Zn": 635.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.156,
+            "Ni": 0.25,
+            "Pb": 0.3,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 47.1,
+        "Zn": 635.0
+      }
+    }
   }
 }

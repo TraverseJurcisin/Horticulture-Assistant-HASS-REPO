@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"D3FB00","source_wsda_record":{"wsda_product_number":"(#0698-0261)","product_name":"MIRACLE-GRO PERFORMANCE ORGANICS EDIBLES PLANT NUTRITION GRANULES 7-6-9","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":6.0,"Magnesium (Mg)":0.9,"Sulfur (S)":1.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4610","Cadmium":"=0.8630","Cobalt":"=0.5690","Mercury":"<0.0209","Molybdenum":"=2.0900","Nickel":"=7.8300","Lead":"=0.3170","Selenium":"=2.3100","Zinc":"=211.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":6.0,"Magnesium (Mg)":0.9,"Sulfur (S)":1.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4610","Cadmium":"=0.8630","Cobalt":"=0.5690","Mercury":"<0.0209","Molybdenum":"=2.0900","Nickel":"=7.8300","Lead":"=0.3170","Selenium":"=2.3100","Zinc":"=211.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO PERFORMANCE ORGANICS EDIBLES PLANT NUTRITION GRANULES 7-6-9","wsda_reg_no":"(#0698-0261)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D3FB00",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO PERFORMANCE ORGANICS EDIBLES PLANT NUTRITION GRANULES 7-6-9",
+    "wsda_reg_no": "(#0698-0261)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0261)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0261)",
+        "product_name": "MIRACLE-GRO PERFORMANCE ORGANICS EDIBLES PLANT NUTRITION GRANULES 7-6-9",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": 6.0,
+          "Magnesium (Mg)": 0.9,
+          "Sulfur (S)": 1.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4610",
+          "Cadmium": "=0.8630",
+          "Cobalt": "=0.5690",
+          "Mercury": "<0.0209",
+          "Molybdenum": "=2.0900",
+          "Nickel": "=7.8300",
+          "Lead": "=0.3170",
+          "Selenium": "=2.3100",
+          "Zinc": "=211.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO PERFORMANCE ORGANICS EDIBLES PLANT NUTRITION GRANULES 7-6-9",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 6.0,
+      "Mg": 0.9,
+      "S": 1.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D3FB00-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.461,
+            "Cd": 0.863,
+            "Co": 0.569,
+            "Hg": 0.0209,
+            "Mo": 2.09,
+            "Ni": 7.83,
+            "Pb": 0.317,
+            "Se": 2.31,
+            "Zn": 211.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.461,
+            "Hg": 0.0209
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.863,
+        "Co": 0.569,
+        "Mo": 2.09,
+        "Ni": 7.83,
+        "Pb": 0.317,
+        "Se": 2.31,
+        "Zn": 211.0
+      }
+    }
+  }
+}

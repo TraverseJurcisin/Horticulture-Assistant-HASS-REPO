@@ -34,7 +34,7 @@ get_application_method = fert_mod.get_application_method
 get_application_rate = fert_mod.get_application_rate
 calculate_recommended_application = fert_mod.calculate_recommended_application
 estimate_recommended_application_cost = fert_mod.estimate_recommended_application_cost
-recommend_wsda_products = fert_mod.recommend_wsda_products
+recommend_fertilizer_products = fert_mod.recommend_fertilizer_products
 estimate_deficiency_correction_cost = fert_mod.estimate_deficiency_correction_cost
 CATALOG = fert_mod.CATALOG
 
@@ -288,12 +288,12 @@ def test_catalog_lists_products():
     assert info.product_name
 
 
-WSDA_DIR = Path(os.environ.get("WSDA_INDEX_DIR", ""))
+FERTILIZER_DATASET_DIR = Path(os.environ.get("FERTILIZER_DATASET_INDEX_DIR", ""))
 
 
-@pytest.mark.skipif(not WSDA_DIR.exists(), reason="requires WSDA dataset")
-def test_recommend_wsda_products():
-    products = recommend_wsda_products("N", limit=3)
+@pytest.mark.skipif(not FERTILIZER_DATASET_DIR.exists(), reason="requires fertilizer dataset")
+def test_recommend_fertilizer_products():
+    products = recommend_fertilizer_products("N", limit=3)
     assert len(products) == 3
     assert all(isinstance(p, str) for p in products)
 

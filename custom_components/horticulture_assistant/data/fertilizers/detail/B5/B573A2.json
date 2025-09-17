@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"B573A2","source_wsda_record":{"wsda_product_number":"(#2787-0006)","product_name":"MOSAIC MICROESSENTIALS SZ 12-40-0","company_info":{"company":"MOSAIC GLOBAL SALES LLC","Mailing Address":"13830 Circa Crossing Drive","Post Office Box":null,"City":"Lithia","State":"FL","Postal Code":"33547","Telephone Number":"813 500-6653","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":40.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.0},"reported_metals":{"Arsenic":"=20.0000","Cadmium":"=35.0000","Cobalt":"=5.0000","Mercury":"=0.1000","Molybdenum":"=30.0000","Nickel":"=40.0000","Lead":"=5.0000","Selenium":"=3.0000","Zinc":"=5500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":40.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":10.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.0},"heavy_metals":{"Arsenic":"=20.0000","Cadmium":"=35.0000","Cobalt":"=5.0000","Mercury":"=0.1000","Molybdenum":"=30.0000","Nickel":"=40.0000","Lead":"=5.0000","Selenium":"=3.0000","Zinc":"=5500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MOSAIC GLOBAL SALES LLC","label_name":"MOSAIC MICROESSENTIALS SZ 12-40-0","wsda_reg_no":"(#2787-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B573A2",
+  "metadata": {
+    "registrant": "MOSAIC GLOBAL SALES LLC",
+    "label_name": "MOSAIC MICROESSENTIALS SZ 12-40-0",
+    "wsda_reg_no": "(#2787-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2787-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2787-0006)",
+        "product_name": "MOSAIC MICROESSENTIALS SZ 12-40-0",
+        "company_info": {
+          "company": "MOSAIC GLOBAL SALES LLC",
+          "Mailing Address": "13830 Circa Crossing Drive",
+          "Post Office Box": null,
+          "City": "Lithia",
+          "State": "FL",
+          "Postal Code": "33547",
+          "Telephone Number": "813 500-6653",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 40.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "=35.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=30.0000",
+          "Nickel": "=40.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=3.0000",
+          "Zinc": "=5500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MOSAIC MICROESSENTIALS SZ 12-40-0",
+    "brand": "MOSAIC GLOBAL SALES LLC",
+    "manufacturer": {
+      "name": "MOSAIC GLOBAL SALES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 40.0
+    },
+    "macros_pct": {
+      "S": 10.0
+    },
+    "micros_pct": {
+      "Zn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B573A2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 35.0,
+            "Co": 5.0,
+            "Hg": 0.1,
+            "Mo": 30.0,
+            "Ni": 40.0,
+            "Pb": 5.0,
+            "Se": 3.0,
+            "Zn": 5500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Cd": 35.0,
+        "Co": 5.0,
+        "Hg": 0.1,
+        "Mo": 30.0,
+        "Ni": 40.0,
+        "Pb": 5.0,
+        "Se": 3.0,
+        "Zn": 5500.0
+      }
+    }
+  }
+}

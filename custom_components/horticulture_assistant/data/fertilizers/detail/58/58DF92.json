@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "58DF92",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1079-0002)",
-    "product_name": "ORGANIC BIOLINK CAL PLUS 6% CALCIUM 0-0-0",
-    "company_info": {
-      "company": "WESTBRIDGE AGRICULTURAL PRODUCTS",
-      "Mailing Address": "1260 Avenida Chelsea",
-      "Post Office Box": null,
-      "City": "Vista",
-      "State": "CA",
-      "Postal Code": "92081",
-      "Telephone Number": "760 599-8855",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 6.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.7000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "=0.2300",
-      "Molybdenum": "=5.1000",
-      "Nickel": "=3.2000",
-      "Lead": "<1.2000",
-      "Selenium": "<5.5000",
-      "Zinc": "=4.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 6.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.7000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "=0.2300",
-      "Molybdenum": "=5.1000",
-      "Nickel": "=3.2000",
-      "Lead": "<1.2000",
-      "Selenium": "<5.5000",
-      "Zinc": "=4.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "58DF92",
   "metadata": {
     "registrant": "WESTBRIDGE AGRICULTURAL PRODUCTS",
     "label_name": "ORGANIC BIOLINK CAL PLUS 6% CALCIUM 0-0-0",
     "wsda_reg_no": "(#1079-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1079-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1079-0002)",
+        "product_name": "ORGANIC BIOLINK CAL PLUS 6% CALCIUM 0-0-0",
+        "company_info": {
+          "company": "WESTBRIDGE AGRICULTURAL PRODUCTS",
+          "Mailing Address": "1260 Avenida Chelsea",
+          "Post Office Box": null,
+          "City": "Vista",
+          "State": "CA",
+          "Postal Code": "92081",
+          "Telephone Number": "760 599-8855",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 6.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.7000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "=0.2300",
+          "Molybdenum": "=5.1000",
+          "Nickel": "=3.2000",
+          "Lead": "<1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=4.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ORGANIC BIOLINK CAL PLUS 6% CALCIUM 0-0-0",
+    "brand": "WESTBRIDGE AGRICULTURAL PRODUCTS",
+    "manufacturer": {
+      "name": "WESTBRIDGE AGRICULTURAL PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "58DF92-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.7,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.23,
+            "Mo": 5.1,
+            "Ni": 3.2,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 4.5
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Pb": 1.2,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.7,
+        "Hg": 0.23,
+        "Mo": 5.1,
+        "Ni": 3.2,
+        "Zn": 4.5
+      }
+    }
   }
 }

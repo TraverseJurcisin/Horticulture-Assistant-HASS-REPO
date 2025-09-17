@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"D3172B","source_wsda_record":{"wsda_product_number":"(#0229-0058)","product_name":"NUTRIENT TECH PHI 2-4-0","company_info":{"company":"NUTRIENT TECHNOLOGIES INC","Mailing Address":"1092 E Kamm Ave","Post Office Box":null,"City":"Dinuba","State":"CA","Postal Code":"93618","Telephone Number":"559 595-8090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":2.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.7000","Cadmium":"=0.6200","Cobalt":"=10.5000","Mercury":"=0.0500","Molybdenum":"=2.0000","Nickel":"=3.1000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=1799.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":2.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.7000","Cadmium":"=0.6200","Cobalt":"=10.5000","Mercury":"=0.0500","Molybdenum":"=2.0000","Nickel":"=3.1000","Lead":"=5.0000","Selenium":"=10.0000","Zinc":"=1799.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIENT TECHNOLOGIES INC","label_name":"NUTRIENT TECH PHI 2-4-0","wsda_reg_no":"(#0229-0058)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D3172B",
+  "metadata": {
+    "registrant": "NUTRIENT TECHNOLOGIES INC",
+    "label_name": "NUTRIENT TECH PHI 2-4-0",
+    "wsda_reg_no": "(#0229-0058)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0229-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0229-0058)",
+        "product_name": "NUTRIENT TECH PHI 2-4-0",
+        "company_info": {
+          "company": "NUTRIENT TECHNOLOGIES INC",
+          "Mailing Address": "1092 E Kamm Ave",
+          "Post Office Box": null,
+          "City": "Dinuba",
+          "State": "CA",
+          "Postal Code": "93618",
+          "Telephone Number": "559 595-8090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 2.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.7000",
+          "Cadmium": "=0.6200",
+          "Cobalt": "=10.5000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=3.1000",
+          "Lead": "=5.0000",
+          "Selenium": "=10.0000",
+          "Zinc": "=1799.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIENT TECH PHI 2-4-0",
+    "brand": "NUTRIENT TECHNOLOGIES INC",
+    "manufacturer": {
+      "name": "NUTRIENT TECHNOLOGIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 2.5
+    },
+    "micros_pct": {
+      "Fe": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D3172B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.7,
+            "Cd": 0.62,
+            "Co": 10.5,
+            "Hg": 0.05,
+            "Mo": 2.0,
+            "Ni": 3.1,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 1799.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.7,
+        "Cd": 0.62,
+        "Co": 10.5,
+        "Hg": 0.05,
+        "Mo": 2.0,
+        "Ni": 3.1,
+        "Pb": 5.0,
+        "Se": 10.0,
+        "Zn": 1799.0
+      }
+    }
+  }
+}

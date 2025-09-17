@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"EB9505","source_wsda_record":{"wsda_product_number":"(#0236-0494)","product_name":"SCOTTS TURF BUILDER WINTERGUARD 32-0-10","company_info":{"company":"SCOTTS COMPANY (THE)","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":32.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.6020","Cadmium":"<0.3010","Cobalt":"<0.3000","Mercury":"<0.0120","Molybdenum":"<3.0000","Nickel":"<0.3010","Lead":"<0.3000","Selenium":"<0.6020","Zinc":"=1.9200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":32.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.6020","Cadmium":"<0.3010","Cobalt":"<0.3000","Mercury":"<0.0120","Molybdenum":"<3.0000","Nickel":"<0.3010","Lead":"<0.3000","Selenium":"<0.6020","Zinc":"=1.9200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS COMPANY (THE)","label_name":"SCOTTS TURF BUILDER WINTERGUARD 32-0-10","wsda_reg_no":"(#0236-0494)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EB9505",
+  "metadata": {
+    "registrant": "SCOTTS COMPANY (THE)",
+    "label_name": "SCOTTS TURF BUILDER WINTERGUARD 32-0-10",
+    "wsda_reg_no": "(#0236-0494)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0494)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0494)",
+        "product_name": "SCOTTS TURF BUILDER WINTERGUARD 32-0-10",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 32.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.6020",
+          "Cadmium": "<0.3010",
+          "Cobalt": "<0.3000",
+          "Mercury": "<0.0120",
+          "Molybdenum": "<3.0000",
+          "Nickel": "<0.3010",
+          "Lead": "<0.3000",
+          "Selenium": "<0.6020",
+          "Zinc": "=1.9200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS TURF BUILDER WINTERGUARD 32-0-10",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 32.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EB9505-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.602,
+            "Cd": 0.301,
+            "Co": 0.3,
+            "Hg": 0.012,
+            "Mo": 3.0,
+            "Ni": 0.301,
+            "Pb": 0.3,
+            "Se": 0.602,
+            "Zn": 1.92
+          },
+          "detection_limits_ppm": {
+            "As": 0.602,
+            "Cd": 0.301,
+            "Co": 0.3,
+            "Hg": 0.012,
+            "Mo": 3.0,
+            "Ni": 0.301,
+            "Pb": 0.3,
+            "Se": 0.602
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 1.92
+      }
+    }
+  }
+}

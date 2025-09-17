@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"97869B","source_wsda_record":{"wsda_product_number":"(#0126-0145)","product_name":"EXPERT GARDENER AZALEA, CAMELLIA & RHODODENDRON PLANT FOOD 10-8-8","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":1.0,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=4.8000","Cadmium":"=0.8170","Cobalt":"=5.6500","Mercury":"=0.0570","Molybdenum":"<0.0150","Nickel":"=90.5700","Lead":"=4.5900","Selenium":"<0.0010","Zinc":"=463.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":1.0,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.5,"Manganese (Mn)":0.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=4.8000","Cadmium":"=0.8170","Cobalt":"=5.6500","Mercury":"=0.0570","Molybdenum":"<0.0150","Nickel":"=90.5700","Lead":"=4.5900","Selenium":"<0.0010","Zinc":"=463.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"EXPERT GARDENER AZALEA, CAMELLIA & RHODODENDRON PLANT FOOD 10-8-8","wsda_reg_no":"(#0126-0145)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "97869B",
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "EXPERT GARDENER AZALEA, CAMELLIA & RHODODENDRON PLANT FOOD 10-8-8",
+    "wsda_reg_no": "(#0126-0145)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0145)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0145)",
+        "product_name": "EXPERT GARDENER AZALEA, CAMELLIA & RHODODENDRON PLANT FOOD 10-8-8",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.5,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=4.8000",
+          "Cadmium": "=0.8170",
+          "Cobalt": "=5.6500",
+          "Mercury": "=0.0570",
+          "Molybdenum": "<0.0150",
+          "Nickel": "=90.5700",
+          "Lead": "=4.5900",
+          "Selenium": "<0.0010",
+          "Zinc": "=463.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EXPERT GARDENER AZALEA, CAMELLIA & RHODODENDRON PLANT FOOD 10-8-8",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "Mg": 1.0,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.5,
+      "Mn": 0.2,
+      "Zn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "97869B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.8,
+            "Cd": 0.817,
+            "Co": 5.65,
+            "Hg": 0.057,
+            "Mo": 0.015,
+            "Ni": 90.57,
+            "Pb": 4.59,
+            "Se": 0.001,
+            "Zn": 463.6
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.015,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.8,
+        "Cd": 0.817,
+        "Co": 5.65,
+        "Hg": 0.057,
+        "Ni": 90.57,
+        "Pb": 4.59,
+        "Zn": 463.6
+      }
+    }
+  }
+}

@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"9EAC7A","source_wsda_record":{"wsda_product_number":"(#2136-0016)","product_name":"GREENGRO BIOLOGICALS FLOWER FINISHER 1-5-7","company_info":{"company":"GREENGRO LLC","Mailing Address":"PO Box 976","Post Office Box":null,"City":"Windsor","State":"CA","Postal Code":"95492","Telephone Number":"707 838-2084","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":12.5,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.0961,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.2100","Cadmium":"=0.0300","Cobalt":"=756.1000","Mercury":"=0.5000","Molybdenum":"=1.3000","Nickel":"=6.7000","Lead":"=2.7000","Selenium":"=0.5000","Zinc":"=153.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":12.5,"Magnesium (Mg)":1.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.0961,"Copper (Cu)":null,"Iron (Fe)":0.5,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.2100","Cadmium":"=0.0300","Cobalt":"=756.1000","Mercury":"=0.5000","Molybdenum":"=1.3000","Nickel":"=6.7000","Lead":"=2.7000","Selenium":"=0.5000","Zinc":"=153.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GREENGRO LLC","label_name":"GREENGRO BIOLOGICALS FLOWER FINISHER 1-5-7","wsda_reg_no":"(#2136-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9EAC7A",
+  "metadata": {
+    "registrant": "GREENGRO LLC",
+    "label_name": "GREENGRO BIOLOGICALS FLOWER FINISHER 1-5-7",
+    "wsda_reg_no": "(#2136-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2136-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2136-0016)",
+        "product_name": "GREENGRO BIOLOGICALS FLOWER FINISHER 1-5-7",
+        "company_info": {
+          "company": "GREENGRO LLC",
+          "Mailing Address": "PO Box 976",
+          "Post Office Box": null,
+          "City": "Windsor",
+          "State": "CA",
+          "Postal Code": "95492",
+          "Telephone Number": "707 838-2084",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": 12.5,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.0961,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.2100",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=756.1000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=1.3000",
+          "Nickel": "=6.7000",
+          "Lead": "=2.7000",
+          "Selenium": "=0.5000",
+          "Zinc": "=153.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENGRO BIOLOGICALS FLOWER FINISHER 1-5-7",
+    "brand": "GREENGRO LLC",
+    "manufacturer": {
+      "name": "GREENGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Ca": 12.5,
+      "Mg": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9EAC7A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.21,
+            "Cd": 0.03,
+            "Co": 756.1,
+            "Hg": 0.5,
+            "Mo": 1.3,
+            "Ni": 6.7,
+            "Pb": 2.7,
+            "Se": 0.5,
+            "Zn": 153.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.21,
+        "Cd": 0.03,
+        "Co": 756.1,
+        "Hg": 0.5,
+        "Mo": 1.3,
+        "Ni": 6.7,
+        "Pb": 2.7,
+        "Se": 0.5,
+        "Zn": 153.4
+      }
+    }
+  }
+}

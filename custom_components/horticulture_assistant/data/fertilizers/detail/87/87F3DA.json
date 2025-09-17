@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"87F3DA","source_wsda_record":{"wsda_product_number":"(#0193-0511)","product_name":"LEAF LIFE ORGANO-MAAX K 6% 0-0-6","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.04,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6400","Cadmium":"=0.0600","Cobalt":"=0.3300","Mercury":"=0.0100","Molybdenum":"=0.7600","Nickel":"=0.3600","Lead":"=0.9400","Selenium":"=3.1300","Zinc":"=2.9800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.04,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6400","Cadmium":"=0.0600","Cobalt":"=0.3300","Mercury":"=0.0100","Molybdenum":"=0.7600","Nickel":"=0.3600","Lead":"=0.9400","Selenium":"=3.1300","Zinc":"=2.9800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LEAF LIFE ORGANO-MAAX K 6% 0-0-6","wsda_reg_no":"(#0193-0511)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "87F3DA",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LEAF LIFE ORGANO-MAAX K 6% 0-0-6",
+    "wsda_reg_no": "(#0193-0511)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0511)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0511)",
+        "product_name": "LEAF LIFE ORGANO-MAAX K 6% 0-0-6",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.04,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6400",
+          "Cadmium": "=0.0600",
+          "Cobalt": "=0.3300",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.7600",
+          "Nickel": "=0.3600",
+          "Lead": "=0.9400",
+          "Selenium": "=3.1300",
+          "Zinc": "=2.9800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LEAF LIFE ORGANO-MAAX K 6% 0-0-6",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "S": 2.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "87F3DA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.64,
+            "Cd": 0.06,
+            "Co": 0.33,
+            "Hg": 0.01,
+            "Mo": 0.76,
+            "Ni": 0.36,
+            "Pb": 0.94,
+            "Se": 3.13,
+            "Zn": 2.98
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.64,
+        "Cd": 0.06,
+        "Co": 0.33,
+        "Hg": 0.01,
+        "Mo": 0.76,
+        "Ni": 0.36,
+        "Pb": 0.94,
+        "Se": 3.13,
+        "Zn": 2.98
+      }
+    }
+  }
+}

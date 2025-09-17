@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"E45A3D","source_wsda_record":{"wsda_product_number":"(#0349-0468)","product_name":"WILBUR ELLIS UPPER VALLEY PEAR BLEND F013 6-4-6","company_info":{"company":"WILBUR ELLIS COMPANY LLC","Mailing Address":"4582 S. Ulster Street Parkway","Post Office Box":null,"City":"Denver","State":"CO","Postal Code":"80237","Telephone Number":"802 236-3745","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":9.76,"Magnesium (Mg)":3.31,"Sulfur (S)":16.04,"Boron (B)":0.09,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=9.2600","Cadmium":"=0.7410","Cobalt":"=1.8500","Mercury":"=0.0510","Molybdenum":"=3.7000","Nickel":"=5.5600","Lead":"=9.8000","Selenium":"=9.2600","Zinc":"=645.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":9.76,"Magnesium (Mg)":3.31,"Sulfur (S)":16.04,"Boron (B)":0.09,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=9.2600","Cadmium":"=0.7410","Cobalt":"=1.8500","Mercury":"=0.0510","Molybdenum":"=3.7000","Nickel":"=5.5600","Lead":"=9.8000","Selenium":"=9.2600","Zinc":"=645.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY LLC","label_name":"WILBUR ELLIS UPPER VALLEY PEAR BLEND F013 6-4-6","wsda_reg_no":"(#0349-0468)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E45A3D",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY LLC",
+    "label_name": "WILBUR ELLIS UPPER VALLEY PEAR BLEND F013 6-4-6",
+    "wsda_reg_no": "(#0349-0468)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0468)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0468)",
+        "product_name": "WILBUR ELLIS UPPER VALLEY PEAR BLEND F013 6-4-6",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 9.76,
+          "Magnesium (Mg)": 3.31,
+          "Sulfur (S)": 16.04,
+          "Boron (B)": 0.09,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=9.2600",
+          "Cadmium": "=0.7410",
+          "Cobalt": "=1.8500",
+          "Mercury": "=0.0510",
+          "Molybdenum": "=3.7000",
+          "Nickel": "=5.5600",
+          "Lead": "=9.8000",
+          "Selenium": "=9.2600",
+          "Zinc": "=645.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WILBUR ELLIS UPPER VALLEY PEAR BLEND F013 6-4-6",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 9.76,
+      "Mg": 3.31,
+      "S": 16.04
+    },
+    "micros_pct": {
+      "Zn": 0.1,
+      "B": 0.09
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E45A3D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.26,
+            "Cd": 0.741,
+            "Co": 1.85,
+            "Hg": 0.051,
+            "Mo": 3.7,
+            "Ni": 5.56,
+            "Pb": 9.8,
+            "Se": 9.26,
+            "Zn": 645.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.26,
+        "Cd": 0.741,
+        "Co": 1.85,
+        "Hg": 0.051,
+        "Mo": 3.7,
+        "Ni": 5.56,
+        "Pb": 9.8,
+        "Se": 9.26,
+        "Zn": 645.0
+      }
+    }
+  }
+}

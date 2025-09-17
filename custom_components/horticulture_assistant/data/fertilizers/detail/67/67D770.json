@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "67D770",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3799-0010)",
-    "product_name": "BW PIKSI DUST PLUS 0-0-18",
-    "company_info": {
-      "company": "BW FUSION",
-      "Mailing Address": "3850 Concept Court",
-      "Post Office Box": "Suite 101",
-      "City": "Fort Wayne",
-      "State": "IN",
-      "Postal Code": "46808",
-      "Telephone Number": "260 497-7645",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 18.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.0350",
-      "Cobalt": "=0.0010",
-      "Mercury": "=0.0025",
-      "Molybdenum": "=0.0437",
-      "Nickel": "=0.6100",
-      "Lead": "=0.1400",
-      "Selenium": "=2.2800",
-      "Zinc": "=1.9800"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 18.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.0350",
-      "Cobalt": "=0.0010",
-      "Mercury": "=0.0025",
-      "Molybdenum": "=0.0437",
-      "Nickel": "=0.6100",
-      "Lead": "=0.1400",
-      "Selenium": "=2.2800",
-      "Zinc": "=1.9800"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "67D770",
   "metadata": {
     "registrant": "BW FUSION",
     "label_name": "BW PIKSI DUST PLUS 0-0-18",
     "wsda_reg_no": "(#3799-0010)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3799-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3799-0010)",
+        "product_name": "BW PIKSI DUST PLUS 0-0-18",
+        "company_info": {
+          "company": "BW FUSION",
+          "Mailing Address": "3850 Concept Court",
+          "Post Office Box": "Suite 101",
+          "City": "Fort Wayne",
+          "State": "IN",
+          "Postal Code": "46808",
+          "Telephone Number": "260 497-7645",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 18.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.0350",
+          "Cobalt": "=0.0010",
+          "Mercury": "=0.0025",
+          "Molybdenum": "=0.0437",
+          "Nickel": "=0.6100",
+          "Lead": "=0.1400",
+          "Selenium": "=2.2800",
+          "Zinc": "=1.9800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BW PIKSI DUST PLUS 0-0-18",
+    "brand": "BW FUSION",
+    "manufacturer": {
+      "name": "BW FUSION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "67D770-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.035,
+            "Co": 0.001,
+            "Hg": 0.0025,
+            "Mo": 0.0437,
+            "Ni": 0.61,
+            "Pb": 0.14,
+            "Se": 2.28,
+            "Zn": 1.98
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.035,
+        "Co": 0.001,
+        "Hg": 0.0025,
+        "Mo": 0.0437,
+        "Ni": 0.61,
+        "Pb": 0.14,
+        "Se": 2.28,
+        "Zn": 1.98
+      }
+    }
   }
 }

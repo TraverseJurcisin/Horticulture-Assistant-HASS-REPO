@@ -1,106 +1,154 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7980B6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1440-0004)",
-    "product_name": "SEACHEM FLOURISH TABS 0.8-0.11-0.28",
-    "company_info": {
-      "company": "SEACHEM LABORATORIES INC",
-      "Mailing Address": "1000 Seachem Drive",
-      "Post Office Box": null,
-      "City": "Madison",
-      "State": "GA",
-      "Postal Code": "30650",
-      "Telephone Number": "706 343-6060",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.8,
-      "Available Phosphoric Acid (P2O5)": 0.11,
-      "Soluble Potash (K2O)": 0.28,
-      "Calcium (Ca)": 23.3,
-      "Magnesium (Mg)": 0.29,
-      "Sulfur (S)": 16.15,
-      "Boron (B)": 0.003,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": 0.006,
-      "Iron (Fe)": 3.07,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.003
-    },
-    "reported_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "=2.7000",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.2800",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=15.1000",
-      "Lead": "=4.1000",
-      "Selenium": "=5.8000",
-      "Zinc": "=34.3000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.8,
-      "Available Phosphoric Acid (P2O5)": 0.11,
-      "Soluble Potash (K2O)": 0.28,
-      "Calcium (Ca)": 23.3,
-      "Magnesium (Mg)": 0.29,
-      "Sulfur (S)": 16.15,
-      "Boron (B)": 0.003,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": 0.006,
-      "Iron (Fe)": 3.07,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.003
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "=2.7000",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.2800",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=15.1000",
-      "Lead": "=4.1000",
-      "Selenium": "=5.8000",
-      "Zinc": "=34.3000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7980B6",
   "metadata": {
     "registrant": "SEACHEM LABORATORIES INC",
     "label_name": "SEACHEM FLOURISH TABS 0.8-0.11-0.28",
     "wsda_reg_no": "(#1440-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1440-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1440-0004)",
+        "product_name": "SEACHEM FLOURISH TABS 0.8-0.11-0.28",
+        "company_info": {
+          "company": "SEACHEM LABORATORIES INC",
+          "Mailing Address": "1000 Seachem Drive",
+          "Post Office Box": null,
+          "City": "Madison",
+          "State": "GA",
+          "Postal Code": "30650",
+          "Telephone Number": "706 343-6060",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.8,
+          "Available Phosphoric Acid (P2O5)": 0.11,
+          "Soluble Potash (K2O)": 0.28,
+          "Calcium (Ca)": 23.3,
+          "Magnesium (Mg)": 0.29,
+          "Sulfur (S)": 16.15,
+          "Boron (B)": 0.003,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.002,
+          "Copper (Cu)": 0.006,
+          "Iron (Fe)": 3.07,
+          "Manganese (Mn)": 0.16,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.003
+        },
+        "reported_metals": {
+          "Arsenic": "=5.8000",
+          "Cadmium": "=2.7000",
+          "Cobalt": "=20.0000",
+          "Mercury": "=0.2800",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=15.1000",
+          "Lead": "=4.1000",
+          "Selenium": "=5.8000",
+          "Zinc": "=34.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SEACHEM FLOURISH TABS 0.8-0.11-0.28",
+    "brand": "SEACHEM LABORATORIES INC",
+    "manufacturer": {
+      "name": "SEACHEM LABORATORIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.8,
+      "P2O5_pct": 0.11,
+      "K2O_pct": 0.28
+    },
+    "macros_pct": {
+      "Ca": 23.3,
+      "Mg": 0.29,
+      "S": 16.15
+    },
+    "micros_pct": {
+      "Fe": 3.07,
+      "Mn": 0.16,
+      "Zn": 0.003,
+      "Cu": 0.006,
+      "B": 0.003,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7980B6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.8,
+            "Cd": 2.7,
+            "Co": 20.0,
+            "Hg": 0.28,
+            "Mo": 5.0,
+            "Ni": 15.1,
+            "Pb": 4.1,
+            "Se": 5.8,
+            "Zn": 34.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.8,
+        "Cd": 2.7,
+        "Co": 20.0,
+        "Hg": 0.28,
+        "Mo": 5.0,
+        "Ni": 15.1,
+        "Pb": 4.1,
+        "Se": 5.8,
+        "Zn": 34.3
+      }
+    }
   }
 }

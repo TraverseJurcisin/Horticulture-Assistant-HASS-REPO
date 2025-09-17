@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"ACF799","source_wsda_record":{"wsda_product_number":"(#2948-0052)","product_name":"FLORAPRO GROW 10-12-22","company_info":{"company":"GENERAL HYDROPONICS","Mailing Address":"2877 Giffen Ave","Post Office Box":null,"City":"Santa Rosa","State":"CA","Postal Code":"95407","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.5,"Sulfur (S)":4.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4240","Cadmium":"=0.2120","Cobalt":"=0.2120","Mercury":"=0.0095","Molybdenum":"=5.1400","Nickel":"=0.2120","Lead":"=0.2120","Selenium":"=0.6360","Zinc":"=1.5400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":22.0,"Calcium (Ca)":null,"Magnesium (Mg)":3.5,"Sulfur (S)":4.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4240","Cadmium":"=0.2120","Cobalt":"=0.2120","Mercury":"=0.0095","Molybdenum":"=5.1400","Nickel":"=0.2120","Lead":"=0.2120","Selenium":"=0.6360","Zinc":"=1.5400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENERAL HYDROPONICS","label_name":"FLORAPRO GROW 10-12-22","wsda_reg_no":"(#2948-0052)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "ACF799",
+  "metadata": {
+    "registrant": "GENERAL HYDROPONICS",
+    "label_name": "FLORAPRO GROW 10-12-22",
+    "wsda_reg_no": "(#2948-0052)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2948-0052)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2948-0052)",
+        "product_name": "FLORAPRO GROW 10-12-22",
+        "company_info": {
+          "company": "GENERAL HYDROPONICS",
+          "Mailing Address": "2877 Giffen Ave",
+          "Post Office Box": null,
+          "City": "Santa Rosa",
+          "State": "CA",
+          "Postal Code": "95407",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 12.0,
+          "Soluble Potash (K2O)": 22.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.5,
+          "Sulfur (S)": 4.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4240",
+          "Cadmium": "=0.2120",
+          "Cobalt": "=0.2120",
+          "Mercury": "=0.0095",
+          "Molybdenum": "=5.1400",
+          "Nickel": "=0.2120",
+          "Lead": "=0.2120",
+          "Selenium": "=0.6360",
+          "Zinc": "=1.5400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FLORAPRO GROW 10-12-22",
+    "brand": "GENERAL HYDROPONICS",
+    "manufacturer": {
+      "name": "GENERAL HYDROPONICS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 12.0,
+      "K2O_pct": 22.0
+    },
+    "macros_pct": {
+      "Mg": 3.5,
+      "S": 4.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "ACF799-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.424,
+            "Cd": 0.212,
+            "Co": 0.212,
+            "Hg": 0.0095,
+            "Mo": 5.14,
+            "Ni": 0.212,
+            "Pb": 0.212,
+            "Se": 0.636,
+            "Zn": 1.54
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.424,
+        "Cd": 0.212,
+        "Co": 0.212,
+        "Hg": 0.0095,
+        "Mo": 5.14,
+        "Ni": 0.212,
+        "Pb": 0.212,
+        "Se": 0.636,
+        "Zn": 1.54
+      }
+    }
+  }
+}

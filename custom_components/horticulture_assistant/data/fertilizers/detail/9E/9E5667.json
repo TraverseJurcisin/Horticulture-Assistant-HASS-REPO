@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"9E5667","source_wsda_record":{"wsda_product_number":"(#0628-0029)","product_name":"TESSENDERLO KERLEY K-ROW 23 0-0-23","company_info":{"company":"TESSENDERLO KERLEY INC","Mailing Address":"2910 N 44th ST Ste 100","Post Office Box":null,"City":"Phoenix","State":"AZ","Postal Code":"85018","Telephone Number":"602 889-8448","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":23.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0100","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.7000","Nickel":"=1.7000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=21.7400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":23.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=1.0100","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.7000","Nickel":"=1.7000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=21.7400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TESSENDERLO KERLEY INC","label_name":"TESSENDERLO KERLEY K-ROW 23 0-0-23","wsda_reg_no":"(#0628-0029)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9E5667",
+  "metadata": {
+    "registrant": "TESSENDERLO KERLEY INC",
+    "label_name": "TESSENDERLO KERLEY K-ROW 23 0-0-23",
+    "wsda_reg_no": "(#0628-0029)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0628-0029)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0628-0029)",
+        "product_name": "TESSENDERLO KERLEY K-ROW 23 0-0-23",
+        "company_info": {
+          "company": "TESSENDERLO KERLEY INC",
+          "Mailing Address": "2910 N 44th ST Ste 100",
+          "Post Office Box": null,
+          "City": "Phoenix",
+          "State": "AZ",
+          "Postal Code": "85018",
+          "Telephone Number": "602 889-8448",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 23.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=1.0100",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.7000",
+          "Nickel": "=1.7000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=21.7400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TESSENDERLO KERLEY K-ROW 23 0-0-23",
+    "brand": "TESSENDERLO KERLEY INC",
+    "manufacturer": {
+      "name": "TESSENDERLO KERLEY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 23.0
+    },
+    "macros_pct": {
+      "S": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9E5667-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 1.01,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.7,
+            "Ni": 1.7,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 21.74
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 1.01,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.7,
+        "Ni": 1.7,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 21.74
+      }
+    }
+  }
+}

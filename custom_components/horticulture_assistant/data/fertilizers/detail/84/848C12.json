@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"848C12","source_wsda_record":{"wsda_product_number":"(#1517-0055)","product_name":"JACK'S NUTRIENTS 5-50-18","company_info":{"company":"JR PETERS INC","Mailing Address":"6656 Grant Way","Post Office Box":null,"City":"Allentown","State":"PA","Postal Code":"18106","Telephone Number":"866 522-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":50.0,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.4,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.004,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.002},"reported_metals":{"Arsenic":"=0.9960","Cadmium":"=0.4630","Cobalt":"=0.4030","Mercury":"=0.0050","Molybdenum":"=28.9000","Nickel":"=0.4790","Lead":"=0.5800","Selenium":"=1.0800","Zinc":"=27.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":50.0,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.4,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.004,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.002},"heavy_metals":{"Arsenic":"=0.9960","Cadmium":"=0.4630","Cobalt":"=0.4030","Mercury":"=0.0050","Molybdenum":"=28.9000","Nickel":"=0.4790","Lead":"=0.5800","Selenium":"=1.0800","Zinc":"=27.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR PETERS INC","label_name":"JACK'S NUTRIENTS 5-50-18","wsda_reg_no":"(#1517-0055)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "848C12",
+  "metadata": {
+    "registrant": "JR PETERS INC",
+    "label_name": "JACK'S NUTRIENTS 5-50-18",
+    "wsda_reg_no": "(#1517-0055)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1517-0055)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1517-0055)",
+        "product_name": "JACK'S NUTRIENTS 5-50-18",
+        "company_info": {
+          "company": "JR PETERS INC",
+          "Mailing Address": "6656 Grant Way",
+          "Post Office Box": null,
+          "City": "Allentown",
+          "State": "PA",
+          "Postal Code": "18106",
+          "Telephone Number": "866 522-5752",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 50.0,
+          "Soluble Potash (K2O)": 18.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.4,
+          "Boron (B)": 0.01,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.004,
+          "Iron (Fe)": 0.05,
+          "Manganese (Mn)": 0.02,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.002
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9960",
+          "Cadmium": "=0.4630",
+          "Cobalt": "=0.4030",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=28.9000",
+          "Nickel": "=0.4790",
+          "Lead": "=0.5800",
+          "Selenium": "=1.0800",
+          "Zinc": "=27.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JACK'S NUTRIENTS 5-50-18",
+    "brand": "JR PETERS INC",
+    "manufacturer": {
+      "name": "JR PETERS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 50.0,
+      "K2O_pct": 18.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 1.4
+    },
+    "micros_pct": {
+      "Fe": 0.05,
+      "Mn": 0.02,
+      "Zn": 0.002,
+      "Cu": 0.004,
+      "B": 0.01,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "848C12-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.996,
+            "Cd": 0.463,
+            "Co": 0.403,
+            "Hg": 0.005,
+            "Mo": 28.9,
+            "Ni": 0.479,
+            "Pb": 0.58,
+            "Se": 1.08,
+            "Zn": 27.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.996,
+        "Cd": 0.463,
+        "Co": 0.403,
+        "Hg": 0.005,
+        "Mo": 28.9,
+        "Ni": 0.479,
+        "Pb": 0.58,
+        "Se": 1.08,
+        "Zn": 27.3
+      }
+    }
+  }
+}

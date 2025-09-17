@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"F34CAF","source_wsda_record":{"wsda_product_number":"(#0924-0054)","product_name":"BONIDE GARDEN RICH TRIPLE SUPER PHOSPHATE 0-45-0","company_info":{"company":"BONIDE PRODUCTS LLC","Mailing Address":"6301 Sutliff Rd","Post Office Box":null,"City":"Oriskany","State":"NY","Postal Code":"13424","Telephone Number":"315 736-8231","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":45.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.8900","Cadmium":"=13.1900","Cobalt":"=13.1900","Mercury":"=0.0010","Molybdenum":"=5.0800","Nickel":"=1.0000","Lead":"=25.8500","Selenium":"=0.6140","Zinc":"=344.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":45.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.8900","Cadmium":"=13.1900","Cobalt":"=13.1900","Mercury":"=0.0010","Molybdenum":"=5.0800","Nickel":"=1.0000","Lead":"=25.8500","Selenium":"=0.6140","Zinc":"=344.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BONIDE PRODUCTS LLC","label_name":"BONIDE GARDEN RICH TRIPLE SUPER PHOSPHATE 0-45-0","wsda_reg_no":"(#0924-0054)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F34CAF",
+  "metadata": {
+    "registrant": "BONIDE PRODUCTS LLC",
+    "label_name": "BONIDE GARDEN RICH TRIPLE SUPER PHOSPHATE 0-45-0",
+    "wsda_reg_no": "(#0924-0054)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0924-0054)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0924-0054)",
+        "product_name": "BONIDE GARDEN RICH TRIPLE SUPER PHOSPHATE 0-45-0",
+        "company_info": {
+          "company": "BONIDE PRODUCTS LLC",
+          "Mailing Address": "6301 Sutliff Rd",
+          "Post Office Box": null,
+          "City": "Oriskany",
+          "State": "NY",
+          "Postal Code": "13424",
+          "Telephone Number": "315 736-8231",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 45.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.8900",
+          "Cadmium": "=13.1900",
+          "Cobalt": "=13.1900",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=5.0800",
+          "Nickel": "=1.0000",
+          "Lead": "=25.8500",
+          "Selenium": "=0.6140",
+          "Zinc": "=344.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BONIDE GARDEN RICH TRIPLE SUPER PHOSPHATE 0-45-0",
+    "brand": "BONIDE PRODUCTS LLC",
+    "manufacturer": {
+      "name": "BONIDE PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 45.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F34CAF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.89,
+            "Cd": 13.19,
+            "Co": 13.19,
+            "Hg": 0.001,
+            "Mo": 5.08,
+            "Ni": 1.0,
+            "Pb": 25.85,
+            "Se": 0.614,
+            "Zn": 344.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.89,
+        "Cd": 13.19,
+        "Co": 13.19,
+        "Hg": 0.001,
+        "Mo": 5.08,
+        "Ni": 1.0,
+        "Pb": 25.85,
+        "Se": 0.614,
+        "Zn": 344.0
+      }
+    }
+  }
+}

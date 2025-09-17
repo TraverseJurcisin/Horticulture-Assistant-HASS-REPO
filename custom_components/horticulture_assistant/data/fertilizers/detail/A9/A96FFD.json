@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"A96FFD","source_wsda_record":{"wsda_product_number":"(#0698-0271)","product_name":"MIRACLE GROW TROPICAL POTTING MIX 0.08-0.03-0.06","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.08,"Available Phosphoric Acid (P2O5)":0.03,"Soluble Potash (K2O)":0.06,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.3500","Cadmium":"=0.2290","Cobalt":"=0.7100","Mercury":"=0.0198","Molybdenum":"=0.9410","Nickel":"=2.0300","Lead":"=0.7300","Selenium":"=0.7430","Zinc":"=3.5100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.08,"Available Phosphoric Acid (P2O5)":0.03,"Soluble Potash (K2O)":0.06,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.3500","Cadmium":"=0.2290","Cobalt":"=0.7100","Mercury":"=0.0198","Molybdenum":"=0.9410","Nickel":"=2.0300","Lead":"=0.7300","Selenium":"=0.7430","Zinc":"=3.5100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE GROW TROPICAL POTTING MIX 0.08-0.03-0.06","wsda_reg_no":"(#0698-0271)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A96FFD",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE GROW TROPICAL POTTING MIX 0.08-0.03-0.06",
+    "wsda_reg_no": "(#0698-0271)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0271)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0271)",
+        "product_name": "MIRACLE GROW TROPICAL POTTING MIX 0.08-0.03-0.06",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.08,
+          "Available Phosphoric Acid (P2O5)": 0.03,
+          "Soluble Potash (K2O)": 0.06,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.3500",
+          "Cadmium": "=0.2290",
+          "Cobalt": "=0.7100",
+          "Mercury": "=0.0198",
+          "Molybdenum": "=0.9410",
+          "Nickel": "=2.0300",
+          "Lead": "=0.7300",
+          "Selenium": "=0.7430",
+          "Zinc": "=3.5100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE GROW TROPICAL POTTING MIX 0.08-0.03-0.06",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.08,
+      "P2O5_pct": 0.03,
+      "K2O_pct": 0.06
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A96FFD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.35,
+            "Cd": 0.229,
+            "Co": 0.71,
+            "Hg": 0.0198,
+            "Mo": 0.941,
+            "Ni": 2.03,
+            "Pb": 0.73,
+            "Se": 0.743,
+            "Zn": 3.51
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.35,
+        "Cd": 0.229,
+        "Co": 0.71,
+        "Hg": 0.0198,
+        "Mo": 0.941,
+        "Ni": 2.03,
+        "Pb": 0.73,
+        "Se": 0.743,
+        "Zn": 3.51
+      }
+    }
+  }
+}

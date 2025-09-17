@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"8B9CAB","source_wsda_record":{"wsda_product_number":"(#2295-0010)","product_name":"VALAGRO VIVA LIQUID FERTILIZER 3-0-8","company_info":{"company":"VALAGRO USA INC","Mailing Address":"2020 Ponce de Leon Blvd Ste 12","Post Office Box":null,"City":"Coral Gables","State":"FL","Postal Code":"33134","Telephone Number":"786 719-5842","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=20.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=10.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=20.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=10.0000","Lead":"=20.0000","Selenium":"=20.0000","Zinc":"=500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALAGRO USA INC","label_name":"VALAGRO VIVA LIQUID FERTILIZER 3-0-8","wsda_reg_no":"(#2295-0010)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8B9CAB",
+  "metadata": {
+    "registrant": "VALAGRO USA INC",
+    "label_name": "VALAGRO VIVA LIQUID FERTILIZER 3-0-8",
+    "wsda_reg_no": "(#2295-0010)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2295-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2295-0010)",
+        "product_name": "VALAGRO VIVA LIQUID FERTILIZER 3-0-8",
+        "company_info": {
+          "company": "VALAGRO USA INC",
+          "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
+          "Post Office Box": null,
+          "City": "Coral Gables",
+          "State": "FL",
+          "Postal Code": "33134",
+          "Telephone Number": "786 719-5842",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=10.0000",
+          "Lead": "=20.0000",
+          "Selenium": "=20.0000",
+          "Zinc": "=500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALAGRO VIVA LIQUID FERTILIZER 3-0-8",
+    "brand": "VALAGRO USA INC",
+    "manufacturer": {
+      "name": "VALAGRO USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "K2O_pct": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8B9CAB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 5.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 5.0,
+            "Ni": 10.0,
+            "Pb": 20.0,
+            "Se": 20.0,
+            "Zn": 500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Cd": 5.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 5.0,
+        "Ni": 10.0,
+        "Pb": 20.0,
+        "Se": 20.0,
+        "Zn": 500.0
+      }
+    }
+  }
+}

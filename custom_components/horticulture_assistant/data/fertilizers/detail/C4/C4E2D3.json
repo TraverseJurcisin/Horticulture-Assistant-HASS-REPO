@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"C4E2D3","source_wsda_record":{"wsda_product_number":"(#3391-0001)","product_name":"MOTHER EARTH GROUNDSWELL PERFORMANCE SOIL 0.12-0.06-0.09","company_info":{"company":"HAWTHORNE HYDROPONICS LLC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.12,"Available Phosphoric Acid (P2O5)":0.06,"Soluble Potash (K2O)":0.09,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.8860","Cadmium":"<0.4430","Cobalt":"=1.6100","Mercury":"<0.0371","Molybdenum":"=1.4600","Nickel":"=1.8100","Lead":"=1.0200","Selenium":"<1.3300","Zinc":"=30.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.12,"Available Phosphoric Acid (P2O5)":0.06,"Soluble Potash (K2O)":0.09,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.8860","Cadmium":"<0.4430","Cobalt":"=1.6100","Mercury":"<0.0371","Molybdenum":"=1.4600","Nickel":"=1.8100","Lead":"=1.0200","Selenium":"<1.3300","Zinc":"=30.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE HYDROPONICS LLC","label_name":"MOTHER EARTH GROUNDSWELL PERFORMANCE SOIL 0.12-0.06-0.09","wsda_reg_no":"(#3391-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C4E2D3",
+  "metadata": {
+    "registrant": "HAWTHORNE HYDROPONICS LLC",
+    "label_name": "MOTHER EARTH GROUNDSWELL PERFORMANCE SOIL 0.12-0.06-0.09",
+    "wsda_reg_no": "(#3391-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3391-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3391-0001)",
+        "product_name": "MOTHER EARTH GROUNDSWELL PERFORMANCE SOIL 0.12-0.06-0.09",
+        "company_info": {
+          "company": "HAWTHORNE HYDROPONICS LLC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.12,
+          "Available Phosphoric Acid (P2O5)": 0.06,
+          "Soluble Potash (K2O)": 0.09,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.8860",
+          "Cadmium": "<0.4430",
+          "Cobalt": "=1.6100",
+          "Mercury": "<0.0371",
+          "Molybdenum": "=1.4600",
+          "Nickel": "=1.8100",
+          "Lead": "=1.0200",
+          "Selenium": "<1.3300",
+          "Zinc": "=30.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MOTHER EARTH GROUNDSWELL PERFORMANCE SOIL 0.12-0.06-0.09",
+    "brand": "HAWTHORNE HYDROPONICS LLC",
+    "manufacturer": {
+      "name": "HAWTHORNE HYDROPONICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.12,
+      "P2O5_pct": 0.06,
+      "K2O_pct": 0.09
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C4E2D3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.886,
+            "Cd": 0.443,
+            "Co": 1.61,
+            "Hg": 0.0371,
+            "Mo": 1.46,
+            "Ni": 1.81,
+            "Pb": 1.02,
+            "Se": 1.33,
+            "Zn": 30.4
+          },
+          "detection_limits_ppm": {
+            "As": 0.886,
+            "Cd": 0.443,
+            "Hg": 0.0371,
+            "Se": 1.33
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.61,
+        "Mo": 1.46,
+        "Ni": 1.81,
+        "Pb": 1.02,
+        "Zn": 30.4
+      }
+    }
+  }
+}

@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2282C2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1546-0088)",
-    "product_name": "EB STONE ORGANICS BAT GUANO 7-3-1",
-    "company_info": {
-      "company": "E B STONE & SON INC",
-      "Mailing Address": "P O Box 550",
-      "Post Office Box": null,
-      "City": "Suisun",
-      "State": "CA",
-      "Postal Code": "94585",
-      "Telephone Number": "707 426-2500",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.5000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=3.2000",
-      "Mercury": "<0.0250",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=26.9000",
-      "Lead": "=11.8000",
-      "Selenium": "<2.5000",
-      "Zinc": "=150.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.5000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=3.2000",
-      "Mercury": "<0.0250",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=26.9000",
-      "Lead": "=11.8000",
-      "Selenium": "<2.5000",
-      "Zinc": "=150.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2282C2",
   "metadata": {
     "registrant": "E B STONE & SON INC",
     "label_name": "EB STONE ORGANICS BAT GUANO 7-3-1",
     "wsda_reg_no": "(#1546-0088)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1546-0088)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1546-0088)",
+        "product_name": "EB STONE ORGANICS BAT GUANO 7-3-1",
+        "company_info": {
+          "company": "E B STONE & SON INC",
+          "Mailing Address": "P O Box 550",
+          "Post Office Box": null,
+          "City": "Suisun",
+          "State": "CA",
+          "Postal Code": "94585",
+          "Telephone Number": "707 426-2500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.5000",
+          "Cadmium": "<0.3000",
+          "Cobalt": "=3.2000",
+          "Mercury": "<0.0250",
+          "Molybdenum": "=1.2000",
+          "Nickel": "=26.9000",
+          "Lead": "=11.8000",
+          "Selenium": "<2.5000",
+          "Zinc": "=150.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EB STONE ORGANICS BAT GUANO 7-3-1",
+    "brand": "E B STONE & SON INC",
+    "manufacturer": {
+      "name": "E B STONE & SON INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2282C2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.5,
+            "Cd": 0.3,
+            "Co": 3.2,
+            "Hg": 0.025,
+            "Mo": 1.2,
+            "Ni": 26.9,
+            "Pb": 11.8,
+            "Se": 2.5,
+            "Zn": 150.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.5,
+            "Cd": 0.3,
+            "Hg": 0.025,
+            "Se": 2.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 3.2,
+        "Mo": 1.2,
+        "Ni": 26.9,
+        "Pb": 11.8,
+        "Zn": 150.0
+      }
+    }
   }
 }

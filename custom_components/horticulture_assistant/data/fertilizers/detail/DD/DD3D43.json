@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"DD3D43","source_wsda_record":{"wsda_product_number":"(#0189-0236)","product_name":"LESCO STONEWALL 0.43% PLUS FERTILIZER 19-0-7 (702053) 19-0-7","company_info":{"company":"LESCO INC","Mailing Address":"1385 East 36th Street","Post Office Box":null,"City":"Cleveland","State":"OH","Postal Code":"44114-4114","Telephone Number":"440 454-3672","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.5040","Cadmium":"=0.4920","Cobalt":"=0.4290","Mercury":"=0.0050","Molybdenum":"=0.5300","Nickel":"=2.1300","Lead":"=0.6170","Selenium":"=1.1400","Zinc":"=5.8300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.5040","Cadmium":"=0.4920","Cobalt":"=0.4290","Mercury":"=0.0050","Molybdenum":"=0.5300","Nickel":"=2.1300","Lead":"=0.6170","Selenium":"=1.1400","Zinc":"=5.8300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LESCO INC","label_name":"LESCO STONEWALL 0.43% PLUS FERTILIZER 19-0-7 (702053) 19-0-7","wsda_reg_no":"(#0189-0236)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DD3D43",
+  "metadata": {
+    "registrant": "LESCO INC",
+    "label_name": "LESCO STONEWALL 0.43% PLUS FERTILIZER 19-0-7 (702053) 19-0-7",
+    "wsda_reg_no": "(#0189-0236)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0236)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0236)",
+        "product_name": "LESCO STONEWALL 0.43% PLUS FERTILIZER 19-0-7 (702053) 19-0-7",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 19.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5040",
+          "Cadmium": "=0.4920",
+          "Cobalt": "=0.4290",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.5300",
+          "Nickel": "=2.1300",
+          "Lead": "=0.6170",
+          "Selenium": "=1.1400",
+          "Zinc": "=5.8300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO STONEWALL 0.43% PLUS FERTILIZER 19-0-7 (702053) 19-0-7",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 19.0,
+      "K2O_pct": 7.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DD3D43-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.005,
+            "Mo": 0.53,
+            "Ni": 2.13,
+            "Pb": 0.617,
+            "Se": 1.14,
+            "Zn": 5.83
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.504,
+        "Cd": 0.492,
+        "Co": 0.429,
+        "Hg": 0.005,
+        "Mo": 0.53,
+        "Ni": 2.13,
+        "Pb": 0.617,
+        "Se": 1.14,
+        "Zn": 5.83
+      }
+    }
+  }
+}

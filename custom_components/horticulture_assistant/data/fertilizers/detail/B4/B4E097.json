@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"B4E097","source_wsda_record":{"wsda_product_number":"(#4173-0006)","product_name":"NUTRILING MAGIC DROP 0-1-2","company_info":{"company":"AGRIDO SCIENCE LLC","Mailing Address":"8401 Granite Peak Ct","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89145","Telephone Number":"702 861-5169","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3730","Cadmium":"<0.1040","Cobalt":"=0.1110","Mercury":"=0.1060","Molybdenum":"=0.1340","Nickel":"=0.6180","Lead":"<0.1060","Selenium":"<0.1040","Zinc":"<1.9100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3730","Cadmium":"<0.1040","Cobalt":"=0.1110","Mercury":"=0.1060","Molybdenum":"=0.1340","Nickel":"=0.6180","Lead":"<0.1060","Selenium":"<0.1040","Zinc":"<1.9100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGRIDO SCIENCE LLC","label_name":"NUTRILING MAGIC DROP 0-1-2","wsda_reg_no":"(#4173-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B4E097",
+  "metadata": {
+    "registrant": "AGRIDO SCIENCE LLC",
+    "label_name": "NUTRILING MAGIC DROP 0-1-2",
+    "wsda_reg_no": "(#4173-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4173-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4173-0006)",
+        "product_name": "NUTRILING MAGIC DROP 0-1-2",
+        "company_info": {
+          "company": "AGRIDO SCIENCE LLC",
+          "Mailing Address": "8401 Granite Peak Ct",
+          "Post Office Box": null,
+          "City": "Las Vegas",
+          "State": "NV",
+          "Postal Code": "89145",
+          "Telephone Number": "702 861-5169",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3730",
+          "Cadmium": "<0.1040",
+          "Cobalt": "=0.1110",
+          "Mercury": "=0.1060",
+          "Molybdenum": "=0.1340",
+          "Nickel": "=0.6180",
+          "Lead": "<0.1060",
+          "Selenium": "<0.1040",
+          "Zinc": "<1.9100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRILING MAGIC DROP 0-1-2",
+    "brand": "AGRIDO SCIENCE LLC",
+    "manufacturer": {
+      "name": "AGRIDO SCIENCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 1.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B4E097-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.373,
+            "Cd": 0.104,
+            "Co": 0.111,
+            "Hg": 0.106,
+            "Mo": 0.134,
+            "Ni": 0.618,
+            "Pb": 0.106,
+            "Se": 0.104,
+            "Zn": 1.91
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.104,
+            "Pb": 0.106,
+            "Se": 0.104,
+            "Zn": 1.91
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.373,
+        "Co": 0.111,
+        "Hg": 0.106,
+        "Mo": 0.134,
+        "Ni": 0.618
+      }
+    }
+  }
+}

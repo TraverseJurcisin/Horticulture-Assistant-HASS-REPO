@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"F4DA75","source_wsda_record":{"wsda_product_number":"(#2924-0002)","product_name":"GREENEDGE LAWN & GARDEN FERTILIZER 6-3-2","company_info":{"company":"GREEN TECHNOLOGIES","Mailing Address":"PO Box 357905","Post Office Box":null,"City":"Gainsville","State":"FL","Postal Code":"32635","Telephone Number":"352 379-7780","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.7600","Cadmium":"=0.6710","Cobalt":"=5.0000","Mercury":"=0.8260","Molybdenum":"=37.8000","Nickel":"=37.9000","Lead":"=36.5000","Selenium":"=2.1200","Zinc":"=931.3400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.7600","Cadmium":"=0.6710","Cobalt":"=5.0000","Mercury":"=0.8260","Molybdenum":"=37.8000","Nickel":"=37.9000","Lead":"=36.5000","Selenium":"=2.1200","Zinc":"=931.3400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GREEN TECHNOLOGIES","label_name":"GREENEDGE LAWN & GARDEN FERTILIZER 6-3-2","wsda_reg_no":"(#2924-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F4DA75",
+  "metadata": {
+    "registrant": "GREEN TECHNOLOGIES",
+    "label_name": "GREENEDGE LAWN & GARDEN FERTILIZER 6-3-2",
+    "wsda_reg_no": "(#2924-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2924-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2924-0002)",
+        "product_name": "GREENEDGE LAWN & GARDEN FERTILIZER 6-3-2",
+        "company_info": {
+          "company": "GREEN TECHNOLOGIES",
+          "Mailing Address": "PO Box 357905",
+          "Post Office Box": null,
+          "City": "Gainsville",
+          "State": "FL",
+          "Postal Code": "32635",
+          "Telephone Number": "352 379-7780",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.7600",
+          "Cadmium": "=0.6710",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.8260",
+          "Molybdenum": "=37.8000",
+          "Nickel": "=37.9000",
+          "Lead": "=36.5000",
+          "Selenium": "=2.1200",
+          "Zinc": "=931.3400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENEDGE LAWN & GARDEN FERTILIZER 6-3-2",
+    "brand": "GREEN TECHNOLOGIES",
+    "manufacturer": {
+      "name": "GREEN TECHNOLOGIES"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.0
+    },
+    "micros_pct": {
+      "Fe": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F4DA75-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.76,
+            "Cd": 0.671,
+            "Co": 5.0,
+            "Hg": 0.826,
+            "Mo": 37.8,
+            "Ni": 37.9,
+            "Pb": 36.5,
+            "Se": 2.12,
+            "Zn": 931.34
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.76,
+        "Cd": 0.671,
+        "Co": 5.0,
+        "Hg": 0.826,
+        "Mo": 37.8,
+        "Ni": 37.9,
+        "Pb": 36.5,
+        "Se": 2.12,
+        "Zn": 931.34
+      }
+    }
+  }
+}

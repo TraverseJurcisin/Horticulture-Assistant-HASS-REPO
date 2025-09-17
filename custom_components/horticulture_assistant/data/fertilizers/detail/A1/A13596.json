@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A13596","source_wsda_record":{"wsda_product_number":"(#1589-0007)","product_name":"TWO RIVERS TERMINAL 10% ZINC SOLUTION 0-0-0","company_info":{"company":"TWO RIVERS TERMINAL - PASCO WA - GL","Mailing Address":"PO Box 2327","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99302","Telephone Number":"509 547-7776","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":10.0},"reported_metals":{"Arsenic":"=0.9930","Cadmium":"=0.8520","Cobalt":"=1.5600","Mercury":"<0.0200","Molybdenum":"<0.0200","Nickel":"=7.7100","Lead":"<0.3000","Selenium":"=0.2080","Zinc":"=87600.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":10.0},"heavy_metals":{"Arsenic":"=0.9930","Cadmium":"=0.8520","Cobalt":"=1.5600","Mercury":"<0.0200","Molybdenum":"<0.0200","Nickel":"=7.7100","Lead":"<0.3000","Selenium":"=0.2080","Zinc":"=87600.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TWO RIVERS TERMINAL - PASCO WA - GL","label_name":"TWO RIVERS TERMINAL 10% ZINC SOLUTION 0-0-0","wsda_reg_no":"(#1589-0007)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A13596",
+  "metadata": {
+    "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "label_name": "TWO RIVERS TERMINAL 10% ZINC SOLUTION 0-0-0",
+    "wsda_reg_no": "(#1589-0007)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1589-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1589-0007)",
+        "product_name": "TWO RIVERS TERMINAL 10% ZINC SOLUTION 0-0-0",
+        "company_info": {
+          "company": "TWO RIVERS TERMINAL - PASCO WA - GL",
+          "Mailing Address": "PO Box 2327",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99302",
+          "Telephone Number": "509 547-7776",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 10.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9930",
+          "Cadmium": "=0.8520",
+          "Cobalt": "=1.5600",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.0200",
+          "Nickel": "=7.7100",
+          "Lead": "<0.3000",
+          "Selenium": "=0.2080",
+          "Zinc": "=87600.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TWO RIVERS TERMINAL 10% ZINC SOLUTION 0-0-0",
+    "brand": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "manufacturer": {
+      "name": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Zn": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A13596-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.993,
+            "Cd": 0.852,
+            "Co": 1.56,
+            "Hg": 0.02,
+            "Mo": 0.02,
+            "Ni": 7.71,
+            "Pb": 0.3,
+            "Se": 0.208,
+            "Zn": 87600.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.02,
+            "Mo": 0.02,
+            "Pb": 0.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.993,
+        "Cd": 0.852,
+        "Co": 1.56,
+        "Ni": 7.71,
+        "Se": 0.208,
+        "Zn": 87600.0
+      }
+    }
+  }
+}

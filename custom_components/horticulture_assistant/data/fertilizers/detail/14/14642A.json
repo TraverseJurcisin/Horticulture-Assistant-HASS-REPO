@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "14642A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3842-0050)",
-    "product_name": "ECOFUSION MAGNESIUM SULFATE MONOHYDRATE GRANULAR 0-0-0",
-    "company_info": {
-      "company": "ECOFUSION INC",
-      "Mailing Address": "PO Box 251408",
-      "Post Office Box": null,
-      "City": "Plano",
-      "State": "TX",
-      "Postal Code": "75025",
-      "Telephone Number": "972 403-7449",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 14.0,
-      "Sulfur (S)": 15.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.1000",
-      "Cadmium": "=1.0600",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.0900",
-      "Molybdenum": "=1.1100",
-      "Nickel": "=0.1300",
-      "Lead": "=0.9000",
-      "Selenium": "=0.5500",
-      "Zinc": "=0.6600"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 14.0,
-      "Sulfur (S)": 15.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.1000",
-      "Cadmium": "=1.0600",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.0900",
-      "Molybdenum": "=1.1100",
-      "Nickel": "=0.1300",
-      "Lead": "=0.9000",
-      "Selenium": "=0.5500",
-      "Zinc": "=0.6600"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "14642A",
   "metadata": {
     "registrant": "ECOFUSION INC",
     "label_name": "ECOFUSION MAGNESIUM SULFATE MONOHYDRATE GRANULAR 0-0-0",
     "wsda_reg_no": "(#3842-0050)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3842-0050)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3842-0050)",
+        "product_name": "ECOFUSION MAGNESIUM SULFATE MONOHYDRATE GRANULAR 0-0-0",
+        "company_info": {
+          "company": "ECOFUSION INC",
+          "Mailing Address": "PO Box 251408",
+          "Post Office Box": null,
+          "City": "Plano",
+          "State": "TX",
+          "Postal Code": "75025",
+          "Telephone Number": "972 403-7449",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 14.0,
+          "Sulfur (S)": 15.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1000",
+          "Cadmium": "=1.0600",
+          "Cobalt": "=1.2000",
+          "Mercury": "=0.0900",
+          "Molybdenum": "=1.1100",
+          "Nickel": "=0.1300",
+          "Lead": "=0.9000",
+          "Selenium": "=0.5500",
+          "Zinc": "=0.6600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECOFUSION MAGNESIUM SULFATE MONOHYDRATE GRANULAR 0-0-0",
+    "brand": "ECOFUSION INC",
+    "manufacturer": {
+      "name": "ECOFUSION INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 14.0,
+      "S": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "14642A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.1,
+            "Cd": 1.06,
+            "Co": 1.2,
+            "Hg": 0.09,
+            "Mo": 1.11,
+            "Ni": 0.13,
+            "Pb": 0.9,
+            "Se": 0.55,
+            "Zn": 0.66
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.1,
+        "Cd": 1.06,
+        "Co": 1.2,
+        "Hg": 0.09,
+        "Mo": 1.11,
+        "Ni": 0.13,
+        "Pb": 0.9,
+        "Se": 0.55,
+        "Zn": 0.66
+      }
+    }
   }
 }

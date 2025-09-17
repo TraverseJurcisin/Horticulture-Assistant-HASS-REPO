@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"A6DF0A","source_wsda_record":{"wsda_product_number":"(#0668-0054)","product_name":"HUMA GRO MAX PAK 0-0-0","company_info":{"company":"BIO HUMA NETICS INC","Mailing Address":"1331 W Houston Ave","Post Office Box":null,"City":"Gilbert","State":"AZ","Postal Code":"85233","Telephone Number":"480 961-1220","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":1.0,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":3.5},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"=529.0000","Mercury":"<0.1000","Molybdenum":"=380.0000","Nickel":"=13.8000","Lead":"<5.0000","Selenium":"<1.0000","Zinc":"=25010.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":1.0,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":3.5},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"=529.0000","Mercury":"<0.1000","Molybdenum":"=380.0000","Nickel":"=13.8000","Lead":"<5.0000","Selenium":"<1.0000","Zinc":"=25010.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIO HUMA NETICS INC","label_name":"HUMA GRO MAX PAK 0-0-0","wsda_reg_no":"(#0668-0054)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A6DF0A",
+  "metadata": {
+    "registrant": "BIO HUMA NETICS INC",
+    "label_name": "HUMA GRO MAX PAK 0-0-0",
+    "wsda_reg_no": "(#0668-0054)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0668-0054)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0668-0054)",
+        "product_name": "HUMA GRO MAX PAK 0-0-0",
+        "company_info": {
+          "company": "BIO HUMA NETICS INC",
+          "Mailing Address": "1331 W Houston Ave",
+          "Post Office Box": null,
+          "City": "Gilbert",
+          "State": "AZ",
+          "Postal Code": "85233",
+          "Telephone Number": "480 961-1220",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.6,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.05,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.5
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=529.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=380.0000",
+          "Nickel": "=13.8000",
+          "Lead": "<5.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=25010.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HUMA GRO MAX PAK 0-0-0",
+    "brand": "BIO HUMA NETICS INC",
+    "manufacturer": {
+      "name": "BIO HUMA NETICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 2.0,
+      "Mn": 1.0,
+      "Zn": 3.5,
+      "Cu": 1.0,
+      "B": 0.6,
+      "Mo": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A6DF0A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 529.0,
+            "Hg": 0.1,
+            "Mo": 380.0,
+            "Ni": 13.8,
+            "Pb": 5.0,
+            "Se": 1.0,
+            "Zn": 25010.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Hg": 0.1,
+            "Pb": 5.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 529.0,
+        "Mo": 380.0,
+        "Ni": 13.8,
+        "Zn": 25010.0
+      }
+    }
+  }
+}

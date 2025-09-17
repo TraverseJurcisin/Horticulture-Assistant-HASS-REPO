@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"94D3C9","source_wsda_record":{"wsda_product_number":"(#2422-0012)","product_name":"ROCK ABSORBALIGHT 0-0.3-0.3","company_info":{"company":"ROCK HOLDINGS PTY LTD","Mailing Address":"791 Queens Gate Way","Post Office Box":null,"City":"Wadsworth","State":"OH","Postal Code":"44281","Telephone Number":"330 775-2785","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=5.3000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=6.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.3,"Soluble Potash (K2O)":0.3,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<10.0000","Cadmium":"<0.5000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"=5.3000","Nickel":"<1.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=6.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROCK HOLDINGS PTY LTD","label_name":"ROCK ABSORBALIGHT 0-0.3-0.3","wsda_reg_no":"(#2422-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "94D3C9",
+  "metadata": {
+    "registrant": "ROCK HOLDINGS PTY LTD",
+    "label_name": "ROCK ABSORBALIGHT 0-0.3-0.3",
+    "wsda_reg_no": "(#2422-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2422-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2422-0012)",
+        "product_name": "ROCK ABSORBALIGHT 0-0.3-0.3",
+        "company_info": {
+          "company": "ROCK HOLDINGS PTY LTD",
+          "Mailing Address": "791 Queens Gate Way",
+          "Post Office Box": null,
+          "City": "Wadsworth",
+          "State": "OH",
+          "Postal Code": "44281",
+          "Telephone Number": "330 775-2785",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 0.3,
+          "Soluble Potash (K2O)": 0.3,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=5.3000",
+          "Nickel": "<1.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=6.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROCK ABSORBALIGHT 0-0.3-0.3",
+    "brand": "ROCK HOLDINGS PTY LTD",
+    "manufacturer": {
+      "name": "ROCK HOLDINGS PTY LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 0.3,
+      "K2O_pct": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "94D3C9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 5.3,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 6.3
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 5.3,
+        "Zn": 6.3
+      }
+    }
+  }
+}

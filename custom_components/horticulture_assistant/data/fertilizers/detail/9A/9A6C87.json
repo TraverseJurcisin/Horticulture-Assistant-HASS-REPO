@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"9A6C87","source_wsda_record":{"wsda_product_number":"(#2055-0005)","product_name":"GROWTH TECHNOLOGY IONIC PK BOOST 0-5-6 PLANT NUTRIENT SOLUTION 0-5-6","company_info":{"company":"HYDRODYNAMICS INTERNATIONAL INC","Mailing Address":"3774 Indian Paintbrush Lane","Post Office Box":null,"City":"Island Park","State":"ID","Postal Code":"83429","Telephone Number":"559 313-9456","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=0.1880","Lead":"<0.1000","Selenium":"<0.0500","Zinc":"<0.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"<0.1000","Nickel":"=0.1880","Lead":"<0.1000","Selenium":"<0.0500","Zinc":"<0.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDRODYNAMICS INTERNATIONAL INC","label_name":"GROWTH TECHNOLOGY IONIC PK BOOST 0-5-6 PLANT NUTRIENT SOLUTION 0-5-6","wsda_reg_no":"(#2055-0005)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9A6C87",
+  "metadata": {
+    "registrant": "HYDRODYNAMICS INTERNATIONAL INC",
+    "label_name": "GROWTH TECHNOLOGY IONIC PK BOOST 0-5-6 PLANT NUTRIENT SOLUTION 0-5-6",
+    "wsda_reg_no": "(#2055-0005)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2055-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2055-0005)",
+        "product_name": "GROWTH TECHNOLOGY IONIC PK BOOST 0-5-6 PLANT NUTRIENT SOLUTION 0-5-6",
+        "company_info": {
+          "company": "HYDRODYNAMICS INTERNATIONAL INC",
+          "Mailing Address": "3774 Indian Paintbrush Lane",
+          "Post Office Box": null,
+          "City": "Island Park",
+          "State": "ID",
+          "Postal Code": "83429",
+          "Telephone Number": "559 313-9456",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=0.1880",
+          "Lead": "<0.1000",
+          "Selenium": "<0.0500",
+          "Zinc": "<0.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROWTH TECHNOLOGY IONIC PK BOOST 0-5-6 PLANT NUTRIENT SOLUTION 0-5-6",
+    "brand": "HYDRODYNAMICS INTERNATIONAL INC",
+    "manufacturer": {
+      "name": "HYDRODYNAMICS INTERNATIONAL INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 5.0,
+      "K2O_pct": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9A6C87-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.188,
+            "Pb": 0.1,
+            "Se": 0.05,
+            "Zn": 0.6
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Pb": 0.1,
+            "Se": 0.05,
+            "Zn": 0.6
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.2,
+        "Ni": 0.188
+      }
+    }
+  }
+}

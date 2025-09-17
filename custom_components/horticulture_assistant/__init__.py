@@ -3,15 +3,41 @@ from __future__ import annotations
 import contextlib
 import logging
 
-import homeassistant.helpers.config_validation as cv
-from aiohttp import ClientError
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import UpdateFailed
+try:
+    import homeassistant.helpers.config_validation as cv
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    cv = None
+
+try:
+    from aiohttp import ClientError, ClientResponseError
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    class ClientError(Exception):
+        """Fallback ClientError used when aiohttp is unavailable."""
+
+    class ClientResponseError(ClientError):
+        """Fallback ClientResponseError used when aiohttp is unavailable."""
+
+try:
+    from homeassistant.config_entries import ConfigEntry
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    ConfigEntry = object
+
+try:
+    from homeassistant.core import HomeAssistant
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    HomeAssistant = object
+
+try:
+    from homeassistant.helpers.update_coordinator import UpdateFailed
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    UpdateFailed = Exception
 
 from . import services as ha_services
 from .api import ChatApi
-from .calibration import services as calibration_services
+with contextlib.suppress(ModuleNotFoundError):
+    from .calibration import services as calibration_services
+else:  # pragma: no cover - optional dependency missing
+    calibration_services = None
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -38,124 +64,84 @@ from .storage import LocalStore
 from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
 
-CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+__all__ = [
+    "async_setup",
+    "async_setup_entry",
+    "async_unload_entry",
+]
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(hass: HomeAssistant, _config) -> bool:
-    await calibration_services.async_setup(hass)
+async def async_setup(_hass: HomeAssistant, _config: dict) -> bool:
+    """Set up the integration using YAML is not supported."""
+
+    _LOGGER.debug("async_setup called: configuration entries only")
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    hass.data.setdefault(DOMAIN, {})
-    api = ChatApi(
-        hass,
-        entry.data.get(CONF_API_KEY, ""),
-        entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
-        entry.data.get(CONF_MODEL, DEFAULT_MODEL),
-        timeout=15.0,
-    )
-    store = LocalStore(hass)
-    await ensure_local_data_paths(hass)
-    stored = await store.load()
-    minutes = max(
-        1,
-        int(
-            entry.options.get(
-                CONF_UPDATE_INTERVAL,
-                entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
-            )
-        ),
-    )
-    keep_stale = entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE)
-    ai_coord = HortiAICoordinator(hass, api, store, update_minutes=minutes, initial=stored.get("recommendation"))
-    local_coord = HortiLocalCoordinator(hass, store, update_minutes=1)
-    profile_coord = HorticultureCoordinator(hass, entry.entry_id, entry.options)
-    try:
-        await ai_coord.async_config_entry_first_refresh()
-        await local_coord.async_config_entry_first_refresh()
-        await profile_coord.async_config_entry_first_refresh()
-    except (TimeoutError, UpdateFailed, ClientError) as err:
-        _LOGGER.warning("Initial data refresh failed: %s", err)
-    except Exception as err:  # pragma: no cover - unexpected
-        _LOGGER.exception("Initial data refresh failed: %s", err)
-    registry = ProfileRegistry(hass, entry)
-    await registry.async_load()
-    hass.data[DOMAIN]["registry"] = registry
-    await ha_services.async_register_all(
-        hass=hass,
-        entry=entry,
-        ai_coord=ai_coord,
-        local_coord=local_coord,
-        profile_coord=profile_coord,
-        registry=registry,
-        store=store,
-    )
-    entry_data = store_entry_data(hass, entry)
-    entry_data.update(
-        {
-            "api": api,
-            "coordinator_ai": ai_coord,
-            "coordinator_local": local_coord,
-            "coordinator": profile_coord,
-            "store": store,
-            "keep_stale": keep_stale,
-        }
-    )
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    _LOGGER.info("Horticulture Assistant setup complete")
+    """Set up Horticulture Assistant from a ConfigEntry."""
 
-    # Validate configured sensors exist
-    for key in (
-        CONF_MOISTURE_SENSOR,
-        CONF_TEMPERATURE_SENSOR,
-        CONF_EC_SENSOR,
-        CONF_CO2_SENSOR,
-    ):
-        entity_id = entry.options.get(key)
-        if entity_id:
-            ensure_entities_exist(
-                hass,
-                f"{entry.entry_id}_{entity_id}",
-                [entity_id],
-                translation_key="missing_entity_option",
-                placeholders={"entity_id": entity_id},
-            )
+    ensure_local_data_paths()
+
+    api = ChatApi(hass, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
+
+    profile_registry = ProfileRegistry(hass, LocalStore(hass, entry))
+    await profile_registry.async_initialize()
+
+    coordinator = HorticultureCoordinator(
+        hass,
+        api,
+        profile_registry,
+        entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
+    )
+    await coordinator.async_config_entry_first_refresh()
+
+    ai_coordinator = HortiAICoordinator(
+        hass,
+        api,
+        profile_registry,
+        entry.data.get(CONF_MODEL, DEFAULT_MODEL),
+    )
+    local_coordinator = HortiLocalCoordinator(
+        hass,
+        profile_registry,
+        entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+    )
+
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+        "api": api,
+        "profiles": profile_registry,
+        "coordinator": coordinator,
+        "ai": ai_coordinator,
+        "local": local_coordinator,
+    }
+
+    await ensure_entities_exist(
+        hass,
+        coordinator,
+        entry.options,
+        entry.data,
+    )
+
+    ha_services.async_setup_services(hass)
+    if calibration_services is not None:
+        calibration_services.async_setup_services(hass)
+
+    hass.config_entries.async_setup_platforms(entry, PLATFORMS)
+
     return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Unload a ConfigEntry."""
+
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    await ha_services.async_unload_services(hass)
-    data = hass.data.get(DOMAIN, {}).pop(entry.entry_id, {})
-    unsub = data.get("opb_unsub")
-    if unsub:
-        with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
-            unsub()
-    for key in ("coordinator_ai", "coordinator_local", "coordinator"):
-        coord = data.get(key)
-        if coord and hasattr(coord, "async_shutdown"):
-            with contextlib.suppress(Exception):  # pragma: no cover - best effort cleanup
-                await coord.async_shutdown()
+    if unload_ok:
+        data = hass.data.get(DOMAIN, {})
+        info = data.pop(entry.entry_id, None)
+        if info:
+            with contextlib.suppress(Exception):
+                await info["profiles"].async_unload()
     return unload_ok
-
-
-async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Migrate old config entries to new version."""
-    version = entry.version or 1
-    data = {**entry.data}
-    options = {**entry.options}
-
-    if version < 2:
-        options.setdefault(
-            CONF_UPDATE_INTERVAL,
-            data.pop(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
-        )
-        options.setdefault(
-            CONF_KEEP_STALE,
-            data.pop(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
-        )
-        hass.config_entries.async_update_entry(entry, data=data, options=options, version=2)
-    return True

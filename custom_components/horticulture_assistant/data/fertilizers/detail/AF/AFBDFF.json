@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"AFBDFF","source_wsda_record":{"wsda_product_number":"(#0122-0002)","product_name":"18-10-10 LAWN & GARDEN FERTILIZER 18-10-10","company_info":{"company":"GREENACRES PLANT FOOD CENTER","Mailing Address":"PO Box 250","Post Office Box":null,"City":"Greenacres","State":"WA","Postal Code":"99016","Telephone Number":"208 773-1541","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<10.0000","Cadmium":"=72.8000","Cobalt":"=2.5000","Mercury":"<0.0400","Molybdenum":"<2.0000","Nickel":"=78.4000","Lead":"<2.0000","Selenium":"<10.0000","Zinc":"=772.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<10.0000","Cadmium":"=72.8000","Cobalt":"=2.5000","Mercury":"<0.0400","Molybdenum":"<2.0000","Nickel":"=78.4000","Lead":"<2.0000","Selenium":"<10.0000","Zinc":"=772.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GREENACRES PLANT FOOD CENTER","label_name":"18-10-10 LAWN & GARDEN FERTILIZER 18-10-10","wsda_reg_no":"(#0122-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AFBDFF",
+  "metadata": {
+    "registrant": "GREENACRES PLANT FOOD CENTER",
+    "label_name": "18-10-10 LAWN & GARDEN FERTILIZER 18-10-10",
+    "wsda_reg_no": "(#0122-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0122-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0122-0002)",
+        "product_name": "18-10-10 LAWN & GARDEN FERTILIZER 18-10-10",
+        "company_info": {
+          "company": "GREENACRES PLANT FOOD CENTER",
+          "Mailing Address": "PO Box 250",
+          "Post Office Box": null,
+          "City": "Greenacres",
+          "State": "WA",
+          "Postal Code": "99016",
+          "Telephone Number": "208 773-1541",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "=72.8000",
+          "Cobalt": "=2.5000",
+          "Mercury": "<0.0400",
+          "Molybdenum": "<2.0000",
+          "Nickel": "=78.4000",
+          "Lead": "<2.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=772.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "18-10-10 LAWN & GARDEN FERTILIZER 18-10-10",
+    "brand": "GREENACRES PLANT FOOD CENTER",
+    "manufacturer": {
+      "name": "GREENACRES PLANT FOOD CENTER"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AFBDFF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 72.8,
+            "Co": 2.5,
+            "Hg": 0.04,
+            "Mo": 2.0,
+            "Ni": 78.4,
+            "Pb": 2.0,
+            "Se": 10.0,
+            "Zn": 772.0
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Hg": 0.04,
+            "Mo": 2.0,
+            "Pb": 2.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 72.8,
+        "Co": 2.5,
+        "Ni": 78.4,
+        "Zn": 772.0
+      }
+    }
+  }
+}

@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "34DB8E",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0169-0541)",
-    "product_name": "BEST ALL SEASON 19-6-12 WITH GAL-XE ONE 19-6-12",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 19.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.2,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.5000",
-      "Cadmium": "=6.5000",
-      "Cobalt": "=9.6000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.8000",
-      "Nickel": "=21.0000",
-      "Lead": "=0.7300",
-      "Selenium": "=0.4600",
-      "Zinc": "=110.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 19.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.2,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.5000",
-      "Cadmium": "=6.5000",
-      "Cobalt": "=9.6000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.8000",
-      "Nickel": "=21.0000",
-      "Lead": "=0.7300",
-      "Selenium": "=0.4600",
-      "Zinc": "=110.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "34DB8E",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY",
     "label_name": "BEST ALL SEASON 19-6-12 WITH GAL-XE ONE 19-6-12",
     "wsda_reg_no": "(#0169-0541)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0541)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0541)",
+        "product_name": "BEST ALL SEASON 19-6-12 WITH GAL-XE ONE 19-6-12",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 19.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 13.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.2,
+          "Manganese (Mn)": 0.25,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.5000",
+          "Cadmium": "=6.5000",
+          "Cobalt": "=9.6000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=2.8000",
+          "Nickel": "=21.0000",
+          "Lead": "=0.7300",
+          "Selenium": "=0.4600",
+          "Zinc": "=110.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST ALL SEASON 19-6-12 WITH GAL-XE ONE 19-6-12",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 19.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 12.0
+    },
+    "macros_pct": {
+      "S": 13.0
+    },
+    "micros_pct": {
+      "Fe": 2.2,
+      "Mn": 0.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "34DB8E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.5,
+            "Cd": 6.5,
+            "Co": 9.6,
+            "Hg": 0.02,
+            "Mo": 2.8,
+            "Ni": 21.0,
+            "Pb": 0.73,
+            "Se": 0.46,
+            "Zn": 110.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.5,
+        "Cd": 6.5,
+        "Co": 9.6,
+        "Hg": 0.02,
+        "Mo": 2.8,
+        "Ni": 21.0,
+        "Pb": 0.73,
+        "Se": 0.46,
+        "Zn": 110.0
+      }
+    }
   }
 }

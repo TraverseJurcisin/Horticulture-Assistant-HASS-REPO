@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7DA5F5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3898-0075)",
-    "product_name": "SURFPACK RELY III G STANDARD 0-0-0",
-    "company_info": {
-      "company": "SIMPLOT TURF & HORTICULTURE",
-      "Mailing Address": "PO Box 9296",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "=2.6000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=0.9000",
-      "Lead": "=2.1000",
-      "Selenium": "=0.4000",
-      "Zinc": "=43.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "=2.6000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1.4000",
-      "Nickel": "=0.9000",
-      "Lead": "=2.1000",
-      "Selenium": "=0.4000",
-      "Zinc": "=43.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7DA5F5",
   "metadata": {
     "registrant": "SIMPLOT TURF & HORTICULTURE",
     "label_name": "SURFPACK RELY III G STANDARD 0-0-0",
     "wsda_reg_no": "(#3898-0075)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3898-0075)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3898-0075)",
+        "product_name": "SURFPACK RELY III G STANDARD 0-0-0",
+        "company_info": {
+          "company": "SIMPLOT TURF & HORTICULTURE",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=2.6000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=1.4000",
+          "Nickel": "=0.9000",
+          "Lead": "=2.1000",
+          "Selenium": "=0.4000",
+          "Zinc": "=43.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SURFPACK RELY III G STANDARD 0-0-0",
+    "brand": "SIMPLOT TURF & HORTICULTURE",
+    "manufacturer": {
+      "name": "SIMPLOT TURF & HORTICULTURE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7DA5F5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.7,
+            "Cd": 0.1,
+            "Co": 2.6,
+            "Hg": 0.01,
+            "Mo": 1.4,
+            "Ni": 0.9,
+            "Pb": 2.1,
+            "Se": 0.4,
+            "Zn": 43.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Hg": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.7,
+        "Co": 2.6,
+        "Mo": 1.4,
+        "Ni": 0.9,
+        "Pb": 2.1,
+        "Se": 0.4,
+        "Zn": 43.0
+      }
+    }
   }
 }

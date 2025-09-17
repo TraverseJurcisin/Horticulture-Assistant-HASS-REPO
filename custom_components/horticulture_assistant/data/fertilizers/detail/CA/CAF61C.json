@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"CAF61C","source_wsda_record":{"wsda_product_number":"(#4063-0007)","product_name":"AGVENT WAR HORSE 0-0-0","company_info":{"company":"AGVENT LLC","Mailing Address":"1231 E 1420 N","Post Office Box":null,"City":"Richfield","State":"ID","Postal Code":"83349","Telephone Number":"208 401-6631","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=17.8000","Cadmium":"=1.1700","Cobalt":"=1.6000","Mercury":"=1.3980","Molybdenum":"=2.9000","Nickel":"=5.2990","Lead":"=15.5000","Selenium":"=1.8800","Zinc":"=38.4800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=17.8000","Cadmium":"=1.1700","Cobalt":"=1.6000","Mercury":"=1.3980","Molybdenum":"=2.9000","Nickel":"=5.2990","Lead":"=15.5000","Selenium":"=1.8800","Zinc":"=38.4800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGVENT LLC","label_name":"AGVENT WAR HORSE 0-0-0","wsda_reg_no":"(#4063-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CAF61C",
+  "metadata": {
+    "registrant": "AGVENT LLC",
+    "label_name": "AGVENT WAR HORSE 0-0-0",
+    "wsda_reg_no": "(#4063-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4063-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4063-0007)",
+        "product_name": "AGVENT WAR HORSE 0-0-0",
+        "company_info": {
+          "company": "AGVENT LLC",
+          "Mailing Address": "1231 E 1420 N",
+          "Post Office Box": null,
+          "City": "Richfield",
+          "State": "ID",
+          "Postal Code": "83349",
+          "Telephone Number": "208 401-6631",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 12.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=17.8000",
+          "Cadmium": "=1.1700",
+          "Cobalt": "=1.6000",
+          "Mercury": "=1.3980",
+          "Molybdenum": "=2.9000",
+          "Nickel": "=5.2990",
+          "Lead": "=15.5000",
+          "Selenium": "=1.8800",
+          "Zinc": "=38.4800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGVENT WAR HORSE 0-0-0",
+    "brand": "AGVENT LLC",
+    "manufacturer": {
+      "name": "AGVENT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CAF61C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 17.8,
+            "Cd": 1.17,
+            "Co": 1.6,
+            "Hg": 1.398,
+            "Mo": 2.9,
+            "Ni": 5.299,
+            "Pb": 15.5,
+            "Se": 1.88,
+            "Zn": 38.48
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 17.8,
+        "Cd": 1.17,
+        "Co": 1.6,
+        "Hg": 1.398,
+        "Mo": 2.9,
+        "Ni": 5.299,
+        "Pb": 15.5,
+        "Se": 1.88,
+        "Zn": 38.48
+      }
+    }
+  }
+}

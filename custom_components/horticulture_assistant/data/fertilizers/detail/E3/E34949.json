@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"E34949","source_wsda_record":{"wsda_product_number":"(#2702-0005)","product_name":"NEW MILLENIUM DECISION 0-2.5-3","company_info":{"company":"NEW MILLENIUM GARDEN INC","Mailing Address":"16359 County Rd S","Post Office Box":null,"City":"Fort Morgan","State":"CO","Postal Code":"80701","Telephone Number":"720 369-9857","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":2.5,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.5040","Cadmium":"=0.4920","Cobalt":"=0.4290","Mercury":"=0.0025","Molybdenum":"=0.5300","Nickel":"=0.5100","Lead":"=0.6170","Selenium":"=1.1400","Zinc":"=5.8300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":2.5,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.5040","Cadmium":"=0.4920","Cobalt":"=0.4290","Mercury":"=0.0025","Molybdenum":"=0.5300","Nickel":"=0.5100","Lead":"=0.6170","Selenium":"=1.1400","Zinc":"=5.8300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NEW MILLENIUM GARDEN INC","label_name":"NEW MILLENIUM DECISION 0-2.5-3","wsda_reg_no":"(#2702-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E34949",
+  "metadata": {
+    "registrant": "NEW MILLENIUM GARDEN INC",
+    "label_name": "NEW MILLENIUM DECISION 0-2.5-3",
+    "wsda_reg_no": "(#2702-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2702-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2702-0005)",
+        "product_name": "NEW MILLENIUM DECISION 0-2.5-3",
+        "company_info": {
+          "company": "NEW MILLENIUM GARDEN INC",
+          "Mailing Address": "16359 County Rd S",
+          "Post Office Box": null,
+          "City": "Fort Morgan",
+          "State": "CO",
+          "Postal Code": "80701",
+          "Telephone Number": "720 369-9857",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 2.5,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5040",
+          "Cadmium": "=0.4920",
+          "Cobalt": "=0.4290",
+          "Mercury": "=0.0025",
+          "Molybdenum": "=0.5300",
+          "Nickel": "=0.5100",
+          "Lead": "=0.6170",
+          "Selenium": "=1.1400",
+          "Zinc": "=5.8300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NEW MILLENIUM DECISION 0-2.5-3",
+    "brand": "NEW MILLENIUM GARDEN INC",
+    "manufacturer": {
+      "name": "NEW MILLENIUM GARDEN INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 2.5,
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E34949-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.0025,
+            "Mo": 0.53,
+            "Ni": 0.51,
+            "Pb": 0.617,
+            "Se": 1.14,
+            "Zn": 5.83
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.504,
+        "Cd": 0.492,
+        "Co": 0.429,
+        "Hg": 0.0025,
+        "Mo": 0.53,
+        "Ni": 0.51,
+        "Pb": 0.617,
+        "Se": 1.14,
+        "Zn": 5.83
+      }
+    }
+  }
+}

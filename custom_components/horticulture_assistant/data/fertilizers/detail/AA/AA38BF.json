@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"AA38BF","source_wsda_record":{"wsda_product_number":"(#0103-0116)","product_name":"TECHNIGRO 17-5-24 PLUS CONTAINS 2% MAGNESIUM, 2.5% SULFUR 17-5-24","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":24.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":2.5,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.015,"Iron (Fe)":0.085,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.015},"reported_metals":{"Arsenic":"=2.6610","Cadmium":"=0.1000","Cobalt":"=0.0500","Mercury":"=0.0003","Molybdenum":"=737.6500","Nickel":"=0.1000","Lead":"=0.1000","Selenium":"=0.0500","Zinc":"=426.5300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":24.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":2.5,"Boron (B)":0.015,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.015,"Iron (Fe)":0.085,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.015},"heavy_metals":{"Arsenic":"=2.6610","Cadmium":"=0.1000","Cobalt":"=0.0500","Mercury":"=0.0003","Molybdenum":"=737.6500","Nickel":"=0.1000","Lead":"=0.1000","Selenium":"=0.0500","Zinc":"=426.5300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"TECHNIGRO 17-5-24 PLUS CONTAINS 2% MAGNESIUM, 2.5% SULFUR 17-5-24","wsda_reg_no":"(#0103-0116)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AA38BF",
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "TECHNIGRO 17-5-24 PLUS CONTAINS 2% MAGNESIUM, 2.5% SULFUR 17-5-24",
+    "wsda_reg_no": "(#0103-0116)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0116)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0116)",
+        "product_name": "TECHNIGRO 17-5-24 PLUS CONTAINS 2% MAGNESIUM, 2.5% SULFUR 17-5-24",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 17.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 24.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 2.5,
+          "Boron (B)": 0.015,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.015,
+          "Iron (Fe)": 0.085,
+          "Manganese (Mn)": 0.03,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.015
+        },
+        "reported_metals": {
+          "Arsenic": "=2.6610",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.0500",
+          "Mercury": "=0.0003",
+          "Molybdenum": "=737.6500",
+          "Nickel": "=0.1000",
+          "Lead": "=0.1000",
+          "Selenium": "=0.0500",
+          "Zinc": "=426.5300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TECHNIGRO 17-5-24 PLUS CONTAINS 2% MAGNESIUM, 2.5% SULFUR 17-5-24",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 17.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 24.0
+    },
+    "macros_pct": {
+      "Mg": 2.0,
+      "S": 2.5
+    },
+    "micros_pct": {
+      "Fe": 0.085,
+      "Mn": 0.03,
+      "Zn": 0.015,
+      "Cu": 0.015,
+      "B": 0.015,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AA38BF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.661,
+            "Cd": 0.1,
+            "Co": 0.05,
+            "Hg": 0.0003,
+            "Mo": 737.65,
+            "Ni": 0.1,
+            "Pb": 0.1,
+            "Se": 0.05,
+            "Zn": 426.53
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.661,
+        "Cd": 0.1,
+        "Co": 0.05,
+        "Hg": 0.0003,
+        "Mo": 737.65,
+        "Ni": 0.1,
+        "Pb": 0.1,
+        "Se": 0.05,
+        "Zn": 426.53
+      }
+    }
+  }
+}

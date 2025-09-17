@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"D84669","source_wsda_record":{"wsda_product_number":"(#2123-0009)","product_name":"NOVA FINISH 8-12-40","company_info":{"company":"ICL PREMIUM FERTILIZERS NA","Mailing Address":"622 Emerson Rd #500","Post Office Box":null,"City":"St Louis","State":"MO","Postal Code":"63141","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":40.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.5,"Boron (B)":0.3,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.02,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=18.0000","Mercury":"<0.0100","Molybdenum":"=302.0000","Nickel":"=0.7000","Lead":"=2.1000","Selenium":"=1.7000","Zinc":"=1245.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":40.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.5,"Boron (B)":0.3,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.1,"Molybdenum (Mo)":0.02,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<0.1000","Cobalt":"=18.0000","Mercury":"<0.0100","Molybdenum":"=302.0000","Nickel":"=0.7000","Lead":"=2.1000","Selenium":"=1.7000","Zinc":"=1245.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ICL PREMIUM FERTILIZERS NA","label_name":"NOVA FINISH 8-12-40","wsda_reg_no":"(#2123-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D84669",
+  "metadata": {
+    "registrant": "ICL PREMIUM FERTILIZERS NA",
+    "label_name": "NOVA FINISH 8-12-40",
+    "wsda_reg_no": "(#2123-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2123-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2123-0009)",
+        "product_name": "NOVA FINISH 8-12-40",
+        "company_info": {
+          "company": "ICL PREMIUM FERTILIZERS NA",
+          "Mailing Address": "622 Emerson Rd #500",
+          "Post Office Box": null,
+          "City": "St Louis",
+          "State": "MO",
+          "Postal Code": "63141",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 12.0,
+          "Soluble Potash (K2O)": 40.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.5,
+          "Boron (B)": 0.3,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.02,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=18.0000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=302.0000",
+          "Nickel": "=0.7000",
+          "Lead": "=2.1000",
+          "Selenium": "=1.7000",
+          "Zinc": "=1245.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NOVA FINISH 8-12-40",
+    "brand": "ICL PREMIUM FERTILIZERS NA",
+    "manufacturer": {
+      "name": "ICL PREMIUM FERTILIZERS NA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 12.0,
+      "K2O_pct": 40.0
+    },
+    "macros_pct": {
+      "S": 2.5
+    },
+    "micros_pct": {
+      "Mn": 0.1,
+      "Zn": 0.1,
+      "Cu": 0.05,
+      "B": 0.3,
+      "Mo": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D84669-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 18.0,
+            "Hg": 0.01,
+            "Mo": 302.0,
+            "Ni": 0.7,
+            "Pb": 2.1,
+            "Se": 1.7,
+            "Zn": 1245.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Hg": 0.01
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 18.0,
+        "Mo": 302.0,
+        "Ni": 0.7,
+        "Pb": 2.1,
+        "Se": 1.7,
+        "Zn": 1245.0
+      }
+    }
+  }
+}

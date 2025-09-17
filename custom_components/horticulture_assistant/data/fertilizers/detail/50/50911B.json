@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "50911B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3391-0025)",
-    "product_name": "CYCO POTASH PLUS 0-4-6",
-    "company_info": {
-      "company": "HAWTHORNE HYDROPONICS LLC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "707 284-4701",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.2500",
-      "Cadmium": "=0.0179",
-      "Cobalt": "<1.2500",
-      "Mercury": "<0.0097",
-      "Molybdenum": "<1.2500",
-      "Nickel": "<0.0249",
-      "Lead": "=0.0222",
-      "Selenium": "<1.2500",
-      "Zinc": "=140.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.2500",
-      "Cadmium": "=0.0179",
-      "Cobalt": "<1.2500",
-      "Mercury": "<0.0097",
-      "Molybdenum": "<1.2500",
-      "Nickel": "<0.0249",
-      "Lead": "=0.0222",
-      "Selenium": "<1.2500",
-      "Zinc": "=140.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "50911B",
   "metadata": {
     "registrant": "HAWTHORNE HYDROPONICS LLC",
     "label_name": "CYCO POTASH PLUS 0-4-6",
     "wsda_reg_no": "(#3391-0025)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3391-0025)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3391-0025)",
+        "product_name": "CYCO POTASH PLUS 0-4-6",
+        "company_info": {
+          "company": "HAWTHORNE HYDROPONICS LLC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.2500",
+          "Cadmium": "=0.0179",
+          "Cobalt": "<1.2500",
+          "Mercury": "<0.0097",
+          "Molybdenum": "<1.2500",
+          "Nickel": "<0.0249",
+          "Lead": "=0.0222",
+          "Selenium": "<1.2500",
+          "Zinc": "=140.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CYCO POTASH PLUS 0-4-6",
+    "brand": "HAWTHORNE HYDROPONICS LLC",
+    "manufacturer": {
+      "name": "HAWTHORNE HYDROPONICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 4.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "50911B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.25,
+            "Cd": 0.0179,
+            "Co": 1.25,
+            "Hg": 0.0097,
+            "Mo": 1.25,
+            "Ni": 0.0249,
+            "Pb": 0.0222,
+            "Se": 1.25,
+            "Zn": 140.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.25,
+            "Co": 1.25,
+            "Hg": 0.0097,
+            "Mo": 1.25,
+            "Ni": 0.0249,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.0179,
+        "Pb": 0.0222,
+        "Zn": 140.0
+      }
+    }
   }
 }

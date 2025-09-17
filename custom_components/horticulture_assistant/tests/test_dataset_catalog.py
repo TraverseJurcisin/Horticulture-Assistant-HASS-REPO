@@ -38,8 +38,8 @@ def test_get_dataset_description():
     desc4 = get_dataset_description("irrigation/irrigation_intervals.json")
     assert "irrigation" in desc4
 
-    desc5 = get_dataset_description("feature/wsda_refactored_sharded/index_sharded/")
-    assert "WSDA" in desc5
+    desc5 = get_dataset_description("feature/fertilizer_dataset_sharded/index_sharded/")
+    assert "fertilizer" in desc5
 
     desc6 = get_dataset_description("soil/soil_moisture_guidelines.json")
     assert "moisture" in desc6

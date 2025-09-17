@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3E6344",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3621-0008)",
-    "product_name": "LANDSCAPERS SELECT GENERAL PURPOSE FERTILIZER 13-13-13",
-    "company_info": {
-      "company": "TURF CARE SUPPLY LLC",
-      "Mailing Address": "50 Pearl Rd Ste 200",
-      "Post Office Box": null,
-      "City": "Brunswick",
-      "State": "OH",
-      "Postal Code": "44212",
-      "Telephone Number": "330 558-0910",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": 13.0,
-      "Soluble Potash (K2O)": 13.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.7000",
-      "Cadmium": "=2.7400",
-      "Cobalt": "=1.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=4.0000",
-      "Nickel": "=26.9000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=39.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": 13.0,
-      "Soluble Potash (K2O)": 13.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.7000",
-      "Cadmium": "=2.7400",
-      "Cobalt": "=1.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=4.0000",
-      "Nickel": "=26.9000",
-      "Lead": "<5.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=39.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3E6344",
   "metadata": {
     "registrant": "TURF CARE SUPPLY LLC",
     "label_name": "LANDSCAPERS SELECT GENERAL PURPOSE FERTILIZER 13-13-13",
     "wsda_reg_no": "(#3621-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3621-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3621-0008)",
+        "product_name": "LANDSCAPERS SELECT GENERAL PURPOSE FERTILIZER 13-13-13",
+        "company_info": {
+          "company": "TURF CARE SUPPLY LLC",
+          "Mailing Address": "50 Pearl Rd Ste 200",
+          "Post Office Box": null,
+          "City": "Brunswick",
+          "State": "OH",
+          "Postal Code": "44212",
+          "Telephone Number": "330 558-0910",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": 13.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.7000",
+          "Cadmium": "=2.7400",
+          "Cobalt": "=1.4000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=4.0000",
+          "Nickel": "=26.9000",
+          "Lead": "<5.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=39.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LANDSCAPERS SELECT GENERAL PURPOSE FERTILIZER 13-13-13",
+    "brand": "TURF CARE SUPPLY LLC",
+    "manufacturer": {
+      "name": "TURF CARE SUPPLY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "P2O5_pct": 13.0,
+      "K2O_pct": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3E6344-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.7,
+            "Cd": 2.74,
+            "Co": 1.4,
+            "Hg": 0.05,
+            "Mo": 4.0,
+            "Ni": 26.9,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 39.4
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.7,
+        "Cd": 2.74,
+        "Co": 1.4,
+        "Mo": 4.0,
+        "Ni": 26.9,
+        "Zn": 39.4
+      }
+    }
   }
 }

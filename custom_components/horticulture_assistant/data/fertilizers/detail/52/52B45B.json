@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "52B45B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0354-0016)",
-    "product_name": "CASCADE GREEN PROFESSIONAL QUALITY 12-4-8",
-    "company_info": {
-      "company": "WOLFKILL FEED & FERTILIZER CORP",
-      "Mailing Address": "14481 Lochridge Blvd",
-      "Post Office Box": null,
-      "City": "Covington",
-      "State": "GA",
-      "Postal Code": "30014",
-      "Telephone Number": "770 788-4519",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "reported_metals": {
-      "Arsenic": "=5.4000",
-      "Cadmium": "=12.1000",
-      "Cobalt": "=0.7000",
-      "Mercury": "=0.1900",
-      "Molybdenum": "=2.7000",
-      "Nickel": "=23.3000",
-      "Lead": "=15.1000",
-      "Selenium": "=9.8000",
-      "Zinc": "=1235.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.4000",
-      "Cadmium": "=12.1000",
-      "Cobalt": "=0.7000",
-      "Mercury": "=0.1900",
-      "Molybdenum": "=2.7000",
-      "Nickel": "=23.3000",
-      "Lead": "=15.1000",
-      "Selenium": "=9.8000",
-      "Zinc": "=1235.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "52B45B",
   "metadata": {
     "registrant": "WOLFKILL FEED & FERTILIZER CORP",
     "label_name": "CASCADE GREEN PROFESSIONAL QUALITY 12-4-8",
     "wsda_reg_no": "(#0354-0016)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0354-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0354-0016)",
+        "product_name": "CASCADE GREEN PROFESSIONAL QUALITY 12-4-8",
+        "company_info": {
+          "company": "WOLFKILL FEED & FERTILIZER CORP",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=5.4000",
+          "Cadmium": "=12.1000",
+          "Cobalt": "=0.7000",
+          "Mercury": "=0.1900",
+          "Molybdenum": "=2.7000",
+          "Nickel": "=23.3000",
+          "Lead": "=15.1000",
+          "Selenium": "=9.8000",
+          "Zinc": "=1235.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CASCADE GREEN PROFESSIONAL QUALITY 12-4-8",
+    "brand": "WOLFKILL FEED & FERTILIZER CORP",
+    "manufacturer": {
+      "name": "WOLFKILL FEED & FERTILIZER CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Mg": 2.0,
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Zn": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "52B45B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.4,
+            "Cd": 12.1,
+            "Co": 0.7,
+            "Hg": 0.19,
+            "Mo": 2.7,
+            "Ni": 23.3,
+            "Pb": 15.1,
+            "Se": 9.8,
+            "Zn": 1235.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.4,
+        "Cd": 12.1,
+        "Co": 0.7,
+        "Hg": 0.19,
+        "Mo": 2.7,
+        "Ni": 23.3,
+        "Pb": 15.1,
+        "Se": 9.8,
+        "Zn": 1235.0
+      }
+    }
   }
 }

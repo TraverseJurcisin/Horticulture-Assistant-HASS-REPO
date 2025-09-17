@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "72FBB8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3933-0002)",
-    "product_name": "TERRAMIN COMPLEX 6-0-0",
-    "company_info": {
-      "company": "BIOIBERICA NEBRASKA INC",
-      "Mailing Address": "1660 R St",
-      "Post Office Box": null,
-      "City": "Geneva",
-      "State": "NE",
-      "Postal Code": "68361",
-      "Telephone Number": "402 759-4949",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 1.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "reported_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=17.0000",
-      "Nickel": "=4.5000",
-      "Lead": "=2.5000",
-      "Selenium": "=2.4000",
-      "Zinc": "=1069.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 1.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=17.0000",
-      "Nickel": "=4.5000",
-      "Lead": "=2.5000",
-      "Selenium": "=2.4000",
-      "Zinc": "=1069.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "72FBB8",
   "metadata": {
     "registrant": "BIOIBERICA NEBRASKA INC",
     "label_name": "TERRAMIN COMPLEX 6-0-0",
     "wsda_reg_no": "(#3933-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3933-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3933-0002)",
+        "product_name": "TERRAMIN COMPLEX 6-0-0",
+        "company_info": {
+          "company": "BIOIBERICA NEBRASKA INC",
+          "Mailing Address": "1660 R St",
+          "Post Office Box": null,
+          "City": "Geneva",
+          "State": "NE",
+          "Postal Code": "68361",
+          "Telephone Number": "402 759-4949",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": 1.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=17.0000",
+          "Nickel": "=4.5000",
+          "Lead": "=2.5000",
+          "Selenium": "=2.4000",
+          "Zinc": "=1069.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TERRAMIN COMPLEX 6-0-0",
+    "brand": "BIOIBERICA NEBRASKA INC",
+    "manufacturer": {
+      "name": "BIOIBERICA NEBRASKA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "macros_pct": {
+      "Mg": 0.5
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.1,
+      "Zn": 0.1,
+      "B": 1.5,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "72FBB8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 0.2,
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Mo": 17.0,
+            "Ni": 4.5,
+            "Pb": 2.5,
+            "Se": 2.4,
+            "Zn": 1069.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Cd": 0.2,
+        "Co": 5.0,
+        "Hg": 0.02,
+        "Mo": 17.0,
+        "Ni": 4.5,
+        "Pb": 2.5,
+        "Se": 2.4,
+        "Zn": 1069.0
+      }
+    }
   }
 }

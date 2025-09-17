@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"9D3B24","source_wsda_record":{"wsda_product_number":"(#0169-0673)","product_name":"SIMPLOT MANUFACTURING USE ONLY MG AND S 0-0-0","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":3.0,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4300","Cadmium":"<0.3500","Cobalt":"<0.1700","Mercury":"<0.0240","Molybdenum":"<0.3500","Nickel":"=0.4900","Lead":"<0.4300","Selenium":"<0.8700","Zinc":"<4.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":3.0,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4300","Cadmium":"<0.3500","Cobalt":"<0.1700","Mercury":"<0.0240","Molybdenum":"<0.3500","Nickel":"=0.4900","Lead":"<0.4300","Selenium":"<0.8700","Zinc":"<4.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"SIMPLOT MANUFACTURING USE ONLY MG AND S 0-0-0","wsda_reg_no":"(#0169-0673)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9D3B24",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "SIMPLOT MANUFACTURING USE ONLY MG AND S 0-0-0",
+    "wsda_reg_no": "(#0169-0673)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0673)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0673)",
+        "product_name": "SIMPLOT MANUFACTURING USE ONLY MG AND S 0-0-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.0,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4300",
+          "Cadmium": "<0.3500",
+          "Cobalt": "<0.1700",
+          "Mercury": "<0.0240",
+          "Molybdenum": "<0.3500",
+          "Nickel": "=0.4900",
+          "Lead": "<0.4300",
+          "Selenium": "<0.8700",
+          "Zinc": "<4.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT MANUFACTURING USE ONLY MG AND S 0-0-0",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 3.0,
+      "S": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9D3B24-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.43,
+            "Cd": 0.35,
+            "Co": 0.17,
+            "Hg": 0.024,
+            "Mo": 0.35,
+            "Ni": 0.49,
+            "Pb": 0.43,
+            "Se": 0.87,
+            "Zn": 4.3
+          },
+          "detection_limits_ppm": {
+            "As": 0.43,
+            "Cd": 0.35,
+            "Co": 0.17,
+            "Hg": 0.024,
+            "Mo": 0.35,
+            "Pb": 0.43,
+            "Se": 0.87,
+            "Zn": 4.3
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 0.49
+      }
+    }
+  }
+}

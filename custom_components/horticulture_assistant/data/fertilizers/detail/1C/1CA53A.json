@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1CA53A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2687-0020)",
-    "product_name": "STERIC P III 2-14-0",
-    "company_info": {
-      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
-      "Mailing Address": "1001 Winstead Drive Ste 480",
-      "Post Office Box": null,
-      "City": "Cary",
-      "State": "NC",
-      "Postal Code": "27513",
-      "Telephone Number": "919 825-1901",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0517",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=933.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=1.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0517",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=933.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1CA53A",
   "metadata": {
     "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
     "label_name": "STERIC P III 2-14-0",
     "wsda_reg_no": "(#2687-0020)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0020)",
+        "product_name": "STERIC P III 2-14-0",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0517",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=933.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STERIC P III 2-14-0",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 14.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1CA53A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.0517,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 933.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 1.0,
+        "Co": 1.0,
+        "Hg": 0.0517,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 1.0,
+        "Se": 1.0,
+        "Zn": 933.0
+      }
+    }
   }
 }

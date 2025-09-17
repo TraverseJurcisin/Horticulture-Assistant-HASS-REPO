@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"C560FF","source_wsda_record":{"wsda_product_number":"(#4028-0001)","product_name":"JR CROP TECH FLOWER 0-21-26","company_info":{"company":"JR CROP TECH, LLC","Mailing Address":"c/o KRK Consulting LLC","Post Office Box":"1152 Perry Hwy","City":"Mercer","State":"PA","Postal Code":"16137","Telephone Number":"559 385-6511","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":5.25,"Sulfur (S)":11.0,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.14,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.006,"Sodium (Na)":null,"Zinc (Zn)":0.04},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=130.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=6.0000","Zinc":"=326.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":5.25,"Sulfur (S)":11.0,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.14,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.006,"Sodium (Na)":null,"Zinc (Zn)":0.04},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=130.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=6.0000","Zinc":"=326.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR CROP TECH, LLC","label_name":"JR CROP TECH FLOWER 0-21-26","wsda_reg_no":"(#4028-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C560FF",
+  "metadata": {
+    "registrant": "JR CROP TECH, LLC",
+    "label_name": "JR CROP TECH FLOWER 0-21-26",
+    "wsda_reg_no": "(#4028-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4028-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4028-0001)",
+        "product_name": "JR CROP TECH FLOWER 0-21-26",
+        "company_info": {
+          "company": "JR CROP TECH, LLC",
+          "Mailing Address": "c/o KRK Consulting LLC",
+          "Post Office Box": "1152 Perry Hwy",
+          "City": "Mercer",
+          "State": "PA",
+          "Postal Code": "16137",
+          "Telephone Number": "559 385-6511",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 21.0,
+          "Soluble Potash (K2O)": 26.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 5.25,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.01,
+          "Iron (Fe)": 0.14,
+          "Manganese (Mn)": 0.07,
+          "Molybdenum (Mo)": 0.006,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.04
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=130.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=6.0000",
+          "Zinc": "=326.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JR CROP TECH FLOWER 0-21-26",
+    "brand": "JR CROP TECH, LLC",
+    "manufacturer": {
+      "name": "JR CROP TECH, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 21.0,
+      "K2O_pct": 26.0
+    },
+    "macros_pct": {
+      "Mg": 5.25,
+      "S": 11.0
+    },
+    "micros_pct": {
+      "Fe": 0.14,
+      "Mn": 0.07,
+      "Zn": 0.04,
+      "Cu": 0.01,
+      "B": 0.03,
+      "Mo": 0.006
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C560FF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 130.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 6.0,
+            "Zn": 326.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 130.0,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 6.0,
+        "Zn": 326.6
+      }
+    }
+  }
+}

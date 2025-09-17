@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"A112BE","source_wsda_record":{"wsda_product_number":"(#4013-0001)","product_name":"FANCY CHICKEN FANCY CHICKEN 4-2.5-2","company_info":{"company":"FANCY CHICKEN INC.","Mailing Address":"869 E Badger Rd","Post Office Box":null,"City":"Lynden","State":"WA","Postal Code":"98264","Telephone Number":"604 751-5825","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.5,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3050","Cadmium":"=0.1180","Cobalt":"=0.7370","Mercury":"=0.0110","Molybdenum":"=3.3300","Nickel":"=6.2200","Lead":"=0.3150","Selenium":"=1.4100","Zinc":"=323.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":2.5,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3050","Cadmium":"=0.1180","Cobalt":"=0.7370","Mercury":"=0.0110","Molybdenum":"=3.3300","Nickel":"=6.2200","Lead":"=0.3150","Selenium":"=1.4100","Zinc":"=323.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FANCY CHICKEN INC.","label_name":"FANCY CHICKEN FANCY CHICKEN 4-2.5-2","wsda_reg_no":"(#4013-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A112BE",
+  "metadata": {
+    "registrant": "FANCY CHICKEN INC.",
+    "label_name": "FANCY CHICKEN FANCY CHICKEN 4-2.5-2",
+    "wsda_reg_no": "(#4013-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4013-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4013-0001)",
+        "product_name": "FANCY CHICKEN FANCY CHICKEN 4-2.5-2",
+        "company_info": {
+          "company": "FANCY CHICKEN INC.",
+          "Mailing Address": "869 E Badger Rd",
+          "Post Office Box": null,
+          "City": "Lynden",
+          "State": "WA",
+          "Postal Code": "98264",
+          "Telephone Number": "604 751-5825",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 2.5,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3050",
+          "Cadmium": "=0.1180",
+          "Cobalt": "=0.7370",
+          "Mercury": "=0.0110",
+          "Molybdenum": "=3.3300",
+          "Nickel": "=6.2200",
+          "Lead": "=0.3150",
+          "Selenium": "=1.4100",
+          "Zinc": "=323.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FANCY CHICKEN FANCY CHICKEN 4-2.5-2",
+    "brand": "FANCY CHICKEN INC.",
+    "manufacturer": {
+      "name": "FANCY CHICKEN INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 2.5,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A112BE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.305,
+            "Cd": 0.118,
+            "Co": 0.737,
+            "Hg": 0.011,
+            "Mo": 3.33,
+            "Ni": 6.22,
+            "Pb": 0.315,
+            "Se": 1.41,
+            "Zn": 323.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.305,
+        "Cd": 0.118,
+        "Co": 0.737,
+        "Hg": 0.011,
+        "Mo": 3.33,
+        "Ni": 6.22,
+        "Pb": 0.315,
+        "Se": 1.41,
+        "Zn": 323.0
+      }
+    }
+  }
+}

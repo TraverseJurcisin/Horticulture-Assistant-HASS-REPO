@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"D38494","source_wsda_record":{"wsda_product_number":"(#0335-0158)","product_name":"FERTI-LOME START & GROW PREMIUM PLANT FOOD 19-6-12","company_info":{"company":"VOLUNTARY PURCHASING GROUPS INC","Mailing Address":"230 FM 87","Post Office Box":null,"City":"Bonham","State":"TX","Postal Code":"75418-8629","Telephone Number":"903 583-5501","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=0.4100","Cadmium":"=0.2800","Cobalt":"=2.8600","Mercury":"=0.0600","Molybdenum":"=1.0000","Nickel":"=4.2600","Lead":"=0.5500","Selenium":"=0.0480","Zinc":"=0.1200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":19.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=0.4100","Cadmium":"=0.2800","Cobalt":"=2.8600","Mercury":"=0.0600","Molybdenum":"=1.0000","Nickel":"=4.2600","Lead":"=0.5500","Selenium":"=0.0480","Zinc":"=0.1200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOLUNTARY PURCHASING GROUPS INC","label_name":"FERTI-LOME START & GROW PREMIUM PLANT FOOD 19-6-12","wsda_reg_no":"(#0335-0158)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D38494",
+  "metadata": {
+    "registrant": "VOLUNTARY PURCHASING GROUPS INC",
+    "label_name": "FERTI-LOME START & GROW PREMIUM PLANT FOOD 19-6-12",
+    "wsda_reg_no": "(#0335-0158)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0158)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0158)",
+        "product_name": "FERTI-LOME START & GROW PREMIUM PLANT FOOD 19-6-12",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 19.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4100",
+          "Cadmium": "=0.2800",
+          "Cobalt": "=2.8600",
+          "Mercury": "=0.0600",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=4.2600",
+          "Lead": "=0.5500",
+          "Selenium": "=0.0480",
+          "Zinc": "=0.1200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTI-LOME START & GROW PREMIUM PLANT FOOD 19-6-12",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 19.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 12.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D38494-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.41,
+            "Cd": 0.28,
+            "Co": 2.86,
+            "Hg": 0.06,
+            "Mo": 1.0,
+            "Ni": 4.26,
+            "Pb": 0.55,
+            "Se": 0.048,
+            "Zn": 0.12
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.41,
+        "Cd": 0.28,
+        "Co": 2.86,
+        "Hg": 0.06,
+        "Mo": 1.0,
+        "Ni": 4.26,
+        "Pb": 0.55,
+        "Se": 0.048,
+        "Zn": 0.12
+      }
+    }
+  }
+}

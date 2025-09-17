@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "69CA9D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0335-0144)",
-    "product_name": "HI-YIELD COTTONSEED MEAL 6-1-1",
-    "company_info": {
-      "company": "VOLUNTARY PURCHASING GROUPS INC",
-      "Mailing Address": "230 FM 87",
-      "Post Office Box": null,
-      "City": "Bonham",
-      "State": "TX",
-      "Postal Code": "75418-8629",
-      "Telephone Number": "903 583-5501",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0280",
-      "Cadmium": "=0.1900",
-      "Cobalt": "=0.4300",
-      "Mercury": "=0.0140",
-      "Molybdenum": "=0.4600",
-      "Nickel": "=6.4700",
-      "Lead": "=0.2700",
-      "Selenium": "=0.2520",
-      "Zinc": "=62.3500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0280",
-      "Cadmium": "=0.1900",
-      "Cobalt": "=0.4300",
-      "Mercury": "=0.0140",
-      "Molybdenum": "=0.4600",
-      "Nickel": "=6.4700",
-      "Lead": "=0.2700",
-      "Selenium": "=0.2520",
-      "Zinc": "=62.3500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "69CA9D",
   "metadata": {
     "registrant": "VOLUNTARY PURCHASING GROUPS INC",
     "label_name": "HI-YIELD COTTONSEED MEAL 6-1-1",
     "wsda_reg_no": "(#0335-0144)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0144)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0144)",
+        "product_name": "HI-YIELD COTTONSEED MEAL 6-1-1",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0280",
+          "Cadmium": "=0.1900",
+          "Cobalt": "=0.4300",
+          "Mercury": "=0.0140",
+          "Molybdenum": "=0.4600",
+          "Nickel": "=6.4700",
+          "Lead": "=0.2700",
+          "Selenium": "=0.2520",
+          "Zinc": "=62.3500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HI-YIELD COTTONSEED MEAL 6-1-1",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "69CA9D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.028,
+            "Cd": 0.19,
+            "Co": 0.43,
+            "Hg": 0.014,
+            "Mo": 0.46,
+            "Ni": 6.47,
+            "Pb": 0.27,
+            "Se": 0.252,
+            "Zn": 62.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.028,
+        "Cd": 0.19,
+        "Co": 0.43,
+        "Hg": 0.014,
+        "Mo": 0.46,
+        "Ni": 6.47,
+        "Pb": 0.27,
+        "Se": 0.252,
+        "Zn": 62.35
+      }
+    }
   }
 }

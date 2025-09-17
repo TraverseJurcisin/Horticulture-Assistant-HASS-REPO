@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7CDAF8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4007-0004)",
-    "product_name": "ALCHEMY BIOSCIENCE PIKSI DUST 2X2 0-0-17",
-    "company_info": {
-      "company": "ALCHEMY BIOSCIENCE LLC",
-      "Mailing Address": "PO Box 10317",
-      "Post Office Box": null,
-      "City": "Spokane",
-      "State": "WA",
-      "Postal Code": "99209",
-      "Telephone Number": "406 360-7421",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2600",
-      "Cadmium": "<0.0150",
-      "Cobalt": "<0.0150",
-      "Mercury": "=0.0011",
-      "Molybdenum": "=0.2170",
-      "Nickel": "=0.3490",
-      "Lead": "=0.2870",
-      "Selenium": "=0.3800",
-      "Zinc": "=0.8180"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2600",
-      "Cadmium": "<0.0150",
-      "Cobalt": "<0.0150",
-      "Mercury": "=0.0011",
-      "Molybdenum": "=0.2170",
-      "Nickel": "=0.3490",
-      "Lead": "=0.2870",
-      "Selenium": "=0.3800",
-      "Zinc": "=0.8180"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7CDAF8",
   "metadata": {
     "registrant": "ALCHEMY BIOSCIENCE LLC",
     "label_name": "ALCHEMY BIOSCIENCE PIKSI DUST 2X2 0-0-17",
     "wsda_reg_no": "(#4007-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4007-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4007-0004)",
+        "product_name": "ALCHEMY BIOSCIENCE PIKSI DUST 2X2 0-0-17",
+        "company_info": {
+          "company": "ALCHEMY BIOSCIENCE LLC",
+          "Mailing Address": "PO Box 10317",
+          "Post Office Box": null,
+          "City": "Spokane",
+          "State": "WA",
+          "Postal Code": "99209",
+          "Telephone Number": "406 360-7421",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 17.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2600",
+          "Cadmium": "<0.0150",
+          "Cobalt": "<0.0150",
+          "Mercury": "=0.0011",
+          "Molybdenum": "=0.2170",
+          "Nickel": "=0.3490",
+          "Lead": "=0.2870",
+          "Selenium": "=0.3800",
+          "Zinc": "=0.8180"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALCHEMY BIOSCIENCE PIKSI DUST 2X2 0-0-17",
+    "brand": "ALCHEMY BIOSCIENCE LLC",
+    "manufacturer": {
+      "name": "ALCHEMY BIOSCIENCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7CDAF8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.26,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.0011,
+            "Mo": 0.217,
+            "Ni": 0.349,
+            "Pb": 0.287,
+            "Se": 0.38,
+            "Zn": 0.818
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Co": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.26,
+        "Hg": 0.0011,
+        "Mo": 0.217,
+        "Ni": 0.349,
+        "Pb": 0.287,
+        "Se": 0.38,
+        "Zn": 0.818
+      }
+    }
   }
 }

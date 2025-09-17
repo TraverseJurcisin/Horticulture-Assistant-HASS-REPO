@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6FF95B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1829-0053)",
-    "product_name": "SMARTY PLANTS PREMIUN LAWN SOIL 0.06-0.08-0.04",
-    "company_info": {
-      "company": "OLDCASTLE LAWN & GARDEN",
-      "Mailing Address": "PO Box 468567",
-      "Post Office Box": null,
-      "City": "Atlanta",
-      "State": "GA",
-      "Postal Code": "31146",
-      "Telephone Number": "717 792-8316",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.06,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.04,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.2200",
-      "Cadmium": "=1.1900",
-      "Cobalt": "=2.4000",
-      "Mercury": "<0.4178",
-      "Molybdenum": "=0.7210",
-      "Nickel": "=7.1000",
-      "Lead": "=21.6000",
-      "Selenium": "<1.1400",
-      "Zinc": "=93.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.06,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.04,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.2200",
-      "Cadmium": "=1.1900",
-      "Cobalt": "=2.4000",
-      "Mercury": "<0.4178",
-      "Molybdenum": "=0.7210",
-      "Nickel": "=7.1000",
-      "Lead": "=21.6000",
-      "Selenium": "<1.1400",
-      "Zinc": "=93.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6FF95B",
   "metadata": {
     "registrant": "OLDCASTLE LAWN & GARDEN",
     "label_name": "SMARTY PLANTS PREMIUN LAWN SOIL 0.06-0.08-0.04",
     "wsda_reg_no": "(#1829-0053)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1829-0053)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1829-0053)",
+        "product_name": "SMARTY PLANTS PREMIUN LAWN SOIL 0.06-0.08-0.04",
+        "company_info": {
+          "company": "OLDCASTLE LAWN & GARDEN",
+          "Mailing Address": "PO Box 468567",
+          "Post Office Box": null,
+          "City": "Atlanta",
+          "State": "GA",
+          "Postal Code": "31146",
+          "Telephone Number": "717 792-8316",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.06,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.04,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.2200",
+          "Cadmium": "=1.1900",
+          "Cobalt": "=2.4000",
+          "Mercury": "<0.4178",
+          "Molybdenum": "=0.7210",
+          "Nickel": "=7.1000",
+          "Lead": "=21.6000",
+          "Selenium": "<1.1400",
+          "Zinc": "=93.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SMARTY PLANTS PREMIUN LAWN SOIL 0.06-0.08-0.04",
+    "brand": "OLDCASTLE LAWN & GARDEN",
+    "manufacturer": {
+      "name": "OLDCASTLE LAWN & GARDEN"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.06,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6FF95B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.22,
+            "Cd": 1.19,
+            "Co": 2.4,
+            "Hg": 0.4178,
+            "Mo": 0.721,
+            "Ni": 7.1,
+            "Pb": 21.6,
+            "Se": 1.14,
+            "Zn": 93.4
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.4178,
+            "Se": 1.14
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.22,
+        "Cd": 1.19,
+        "Co": 2.4,
+        "Mo": 0.721,
+        "Ni": 7.1,
+        "Pb": 21.6,
+        "Zn": 93.4
+      }
+    }
   }
 }

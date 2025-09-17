@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2491B2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0411-0033)",
-    "product_name": "IRON COMBO-CHELATE 0-0-1",
-    "company_info": {
-      "company": "BAICOR LC",
-      "Mailing Address": "PO Box 725",
-      "Post Office Box": null,
-      "City": ":Logan",
-      "State": "UT",
-      "Postal Code": "84323-0725",
-      "Telephone Number": "435 752-2475",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.18,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.2,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.8
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=0.6000",
-      "Mercury": "=4.0000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=6.5000",
-      "Lead": "=4.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=8700.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.18,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.2,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.8
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=0.6000",
-      "Mercury": "=4.0000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=6.5000",
-      "Lead": "=4.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=8700.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2491B2",
   "metadata": {
     "registrant": "BAICOR LC",
     "label_name": "IRON COMBO-CHELATE 0-0-1",
     "wsda_reg_no": "(#0411-0033)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0411-0033)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0411-0033)",
+        "product_name": "IRON COMBO-CHELATE 0-0-1",
+        "company_info": {
+          "company": "BAICOR LC",
+          "Mailing Address": "PO Box 725",
+          "Post Office Box": null,
+          "City": ":Logan",
+          "State": "UT",
+          "Postal Code": "84323-0725",
+          "Telephone Number": "435 752-2475",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.18,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.2,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.8
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=0.6000",
+          "Mercury": "=4.0000",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=6.5000",
+          "Lead": "=4.0000",
+          "Selenium": "=0.1000",
+          "Zinc": "=8700.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "IRON COMBO-CHELATE 0-0-1",
+    "brand": "BAICOR LC",
+    "manufacturer": {
+      "name": "BAICOR LC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Fe": 4.0,
+      "Mn": 1.0,
+      "Zn": 0.8,
+      "Cu": 0.2,
+      "B": 0.18
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2491B2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.4,
+            "Co": 0.6,
+            "Hg": 4.0,
+            "Mo": 2.0,
+            "Ni": 6.5,
+            "Pb": 4.0,
+            "Se": 0.1,
+            "Zn": 8700.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.4,
+        "Co": 0.6,
+        "Hg": 4.0,
+        "Mo": 2.0,
+        "Ni": 6.5,
+        "Pb": 4.0,
+        "Se": 0.1,
+        "Zn": 8700.0
+      }
+    }
   }
 }

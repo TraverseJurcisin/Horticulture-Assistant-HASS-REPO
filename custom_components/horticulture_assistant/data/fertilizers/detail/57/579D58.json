@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "579D58",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1909-0024)",
-    "product_name": "HYDROGRO EKLO 0-0-0.13",
-    "company_info": {
-      "company": "HYDROGRO LLC",
-      "Mailing Address": "7815 S Hardy Dr Suite 101",
-      "Post Office Box": null,
-      "City": "Tempe",
-      "State": "AZ",
-      "Postal Code": "85284",
-      "Telephone Number": "480 248-9336",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.13,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": 0.007,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.13
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7610",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5100",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=71.7000",
-      "Nickel": "=1.0900",
-      "Lead": "=0.3990",
-      "Selenium": "=0.5000",
-      "Zinc": "=1330.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.13,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": 0.007,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.13
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7610",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5100",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=71.7000",
-      "Nickel": "=1.0900",
-      "Lead": "=0.3990",
-      "Selenium": "=0.5000",
-      "Zinc": "=1330.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "579D58",
   "metadata": {
     "registrant": "HYDROGRO LLC",
     "label_name": "HYDROGRO EKLO 0-0-0.13",
     "wsda_reg_no": "(#1909-0024)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1909-0024)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1909-0024)",
+        "product_name": "HYDROGRO EKLO 0-0-0.13",
+        "company_info": {
+          "company": "HYDROGRO LLC",
+          "Mailing Address": "7815 S Hardy Dr Suite 101",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85284",
+          "Telephone Number": "480 248-9336",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.13,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.007,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.13
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7610",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.5100",
+          "Mercury": "=0.0133",
+          "Molybdenum": "=71.7000",
+          "Nickel": "=1.0900",
+          "Lead": "=0.3990",
+          "Selenium": "=0.5000",
+          "Zinc": "=1330.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYDROGRO EKLO 0-0-0.13",
+    "brand": "HYDROGRO LLC",
+    "manufacturer": {
+      "name": "HYDROGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 0.13
+    },
+    "micros_pct": {
+      "Zn": 0.13,
+      "Mo": 0.007
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "579D58-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.761,
+            "Cd": 0.1,
+            "Co": 0.51,
+            "Hg": 0.0133,
+            "Mo": 71.7,
+            "Ni": 1.09,
+            "Pb": 0.399,
+            "Se": 0.5,
+            "Zn": 1330.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.761,
+        "Cd": 0.1,
+        "Co": 0.51,
+        "Hg": 0.0133,
+        "Mo": 71.7,
+        "Ni": 1.09,
+        "Pb": 0.399,
+        "Se": 0.5,
+        "Zn": 1330.0
+      }
+    }
   }
 }

@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4EB9CB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0321-0009)",
-    "product_name": "TEXLIME HIGH CALCIUM HYDRATED LIME 0-0-0",
-    "company_info": {
-      "company": "LHOIST NORTH AMERICA OF CANADA INC",
-      "Mailing Address": "20303 102B Ave",
-      "Post Office Box": null,
-      "City": "Langley",
-      "State": "BC",
-      "Postal Code": "V1M 3H1",
-      "Telephone Number": "604 881-4070",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 50.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.4000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "<2.0000",
-      "Nickel": "<2.0000",
-      "Lead": "<3.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=6.8100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "131.0000",
-      "Calcium Carbonate Equivalent (CaCO3)": "131.0000",
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 50.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.4000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "<2.0000",
-      "Nickel": "<2.0000",
-      "Lead": "<3.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=6.8100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4EB9CB",
   "metadata": {
     "registrant": "LHOIST NORTH AMERICA OF CANADA INC",
     "label_name": "TEXLIME HIGH CALCIUM HYDRATED LIME 0-0-0",
     "wsda_reg_no": "(#0321-0009)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0321-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0321-0009)",
+        "product_name": "TEXLIME HIGH CALCIUM HYDRATED LIME 0-0-0",
+        "company_info": {
+          "company": "LHOIST NORTH AMERICA OF CANADA INC",
+          "Mailing Address": "20303 102B Ave",
+          "Post Office Box": null,
+          "City": "Langley",
+          "State": "BC",
+          "Postal Code": "V1M 3H1",
+          "Telephone Number": "604 881-4070",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 50.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.4000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "<2.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<2.0000",
+          "Nickel": "<2.0000",
+          "Lead": "<3.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=6.8100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "131.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "131.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TEXLIME HIGH CALCIUM HYDRATED LIME 0-0-0",
+    "brand": "LHOIST NORTH AMERICA OF CANADA INC",
+    "manufacturer": {
+      "name": "LHOIST NORTH AMERICA OF CANADA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 50.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4EB9CB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.4,
+            "Cd": 0.5,
+            "Co": 2.0,
+            "Hg": 0.02,
+            "Mo": 2.0,
+            "Ni": 2.0,
+            "Pb": 3.0,
+            "Se": 10.0,
+            "Zn": 6.81
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.5,
+            "Co": 2.0,
+            "Hg": 0.02,
+            "Mo": 2.0,
+            "Ni": 2.0,
+            "Pb": 3.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.4,
+        "Zn": 6.81
+      }
+    }
   }
 }

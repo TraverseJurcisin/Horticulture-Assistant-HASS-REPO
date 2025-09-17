@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2840A4",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3832-0008)",
-    "product_name": "PRO-MIX PREMIUM GARDEN MIX 0.3-0.12-0.12",
-    "company_info": {
-      "company": "PREMIER HORTICULTURE INC",
-      "Mailing Address": "1 Avenue Premier",
-      "Post Office Box": null,
-      "City": "Riviere-du-Loup",
-      "State": "QC",
-      "Postal Code": "G5R 6C1",
-      "Telephone Number": "418 867-8883",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": 0.12,
-      "Soluble Potash (K2O)": 0.12,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=1.5100",
-      "Lead": "=4.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=30.2700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.3,
-      "Available Phosphoric Acid (P2O5)": 0.12,
-      "Soluble Potash (K2O)": 0.12,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=1.5100",
-      "Lead": "=4.0000",
-      "Selenium": "=0.1000",
-      "Zinc": "=30.2700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2840A4",
   "metadata": {
     "registrant": "PREMIER HORTICULTURE INC",
     "label_name": "PRO-MIX PREMIUM GARDEN MIX 0.3-0.12-0.12",
     "wsda_reg_no": "(#3832-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3832-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3832-0008)",
+        "product_name": "PRO-MIX PREMIUM GARDEN MIX 0.3-0.12-0.12",
+        "company_info": {
+          "company": "PREMIER HORTICULTURE INC",
+          "Mailing Address": "1 Avenue Premier",
+          "Post Office Box": null,
+          "City": "Riviere-du-Loup",
+          "State": "QC",
+          "Postal Code": "G5R 6C1",
+          "Telephone Number": "418 867-8883",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.3,
+          "Available Phosphoric Acid (P2O5)": 0.12,
+          "Soluble Potash (K2O)": 0.12,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=1.5100",
+          "Lead": "=4.0000",
+          "Selenium": "=0.1000",
+          "Zinc": "=30.2700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO-MIX PREMIUM GARDEN MIX 0.3-0.12-0.12",
+    "brand": "PREMIER HORTICULTURE INC",
+    "manufacturer": {
+      "name": "PREMIER HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.3,
+      "P2O5_pct": 0.12,
+      "K2O_pct": 0.12
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2840A4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Mo": 0.1,
+            "Ni": 1.51,
+            "Pb": 4.0,
+            "Se": 0.1,
+            "Zn": 30.27
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.1,
+        "Mo": 0.1,
+        "Ni": 1.51,
+        "Pb": 4.0,
+        "Se": 0.1,
+        "Zn": 30.27
+      }
+    }
   }
 }

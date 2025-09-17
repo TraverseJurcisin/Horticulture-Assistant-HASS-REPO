@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2D8AF5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0989-0066)",
-    "product_name": "KNOX FERTILIZER EMPRO 18-0-4",
-    "company_info": {
-      "company": "KNOX FERTILIZER COMPANY INC",
-      "Mailing Address": "PO Box 248",
-      "Post Office Box": null,
-      "City": "Knox",
-      "State": "IN",
-      "Postal Code": "46534",
-      "Telephone Number": "574 772-6278",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=3.0000",
-      "Mercury": "=0.1200",
-      "Molybdenum": "=8.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=25.0000",
-      "Selenium": "=3.0000",
-      "Zinc": "=312.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=3.0000",
-      "Mercury": "=0.1200",
-      "Molybdenum": "=8.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=25.0000",
-      "Selenium": "=3.0000",
-      "Zinc": "=312.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2D8AF5",
   "metadata": {
     "registrant": "KNOX FERTILIZER COMPANY INC",
     "label_name": "KNOX FERTILIZER EMPRO 18-0-4",
     "wsda_reg_no": "(#0989-0066)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0989-0066)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0989-0066)",
+        "product_name": "KNOX FERTILIZER EMPRO 18-0-4",
+        "company_info": {
+          "company": "KNOX FERTILIZER COMPANY INC",
+          "Mailing Address": "PO Box 248",
+          "Post Office Box": null,
+          "City": "Knox",
+          "State": "IN",
+          "Postal Code": "46534",
+          "Telephone Number": "574 772-6278",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=3.0000",
+          "Mercury": "=0.1200",
+          "Molybdenum": "=8.0000",
+          "Nickel": "=15.0000",
+          "Lead": "=25.0000",
+          "Selenium": "=3.0000",
+          "Zinc": "=312.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KNOX FERTILIZER EMPRO 18-0-4",
+    "brand": "KNOX FERTILIZER COMPANY INC",
+    "manufacturer": {
+      "name": "KNOX FERTILIZER COMPANY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "S": 17.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2D8AF5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.0,
+            "Cd": 0.1,
+            "Co": 3.0,
+            "Hg": 0.12,
+            "Mo": 8.0,
+            "Ni": 15.0,
+            "Pb": 25.0,
+            "Se": 3.0,
+            "Zn": 312.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.0,
+        "Cd": 0.1,
+        "Co": 3.0,
+        "Hg": 0.12,
+        "Mo": 8.0,
+        "Ni": 15.0,
+        "Pb": 25.0,
+        "Se": 3.0,
+        "Zn": 312.0
+      }
+    }
   }
 }

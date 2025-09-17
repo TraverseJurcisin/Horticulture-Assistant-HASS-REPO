@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6FF219",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0103-0138)",
-    "product_name": "TECHNIGRO 21-7-7 ACID SPECIAL 21-7-7",
-    "company_info": {
-      "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
-      "Mailing Address": "770 Silver Street",
-      "Post Office Box": null,
-      "City": "Agawam",
-      "State": "MA",
-      "Postal Code": "01001",
-      "Telephone Number": "256 592-0135",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 13.5,
-      "Boron (B)": 0.005,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0035,
-      "Iron (Fe)": 0.15,
-      "Manganese (Mn)": 0.025,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.0025
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=1.0200",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=8.4600",
-      "Nickel": "=2.3200",
-      "Lead": "=1.6400",
-      "Selenium": "=4.3200",
-      "Zinc": "=34.9300"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 13.5,
-      "Boron (B)": 0.005,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.0035,
-      "Iron (Fe)": 0.15,
-      "Manganese (Mn)": 0.025,
-      "Molybdenum (Mo)": 0.001,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.0025
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=1.0200",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=8.4600",
-      "Nickel": "=2.3200",
-      "Lead": "=1.6400",
-      "Selenium": "=4.3200",
-      "Zinc": "=34.9300"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6FF219",
   "metadata": {
     "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
     "label_name": "TECHNIGRO 21-7-7 ACID SPECIAL 21-7-7",
     "wsda_reg_no": "(#0103-0138)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0138)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0138)",
+        "product_name": "TECHNIGRO 21-7-7 ACID SPECIAL 21-7-7",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 13.5,
+          "Boron (B)": 0.005,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0035,
+          "Iron (Fe)": 0.15,
+          "Manganese (Mn)": 0.025,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.0025
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=1.0200",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=8.4600",
+          "Nickel": "=2.3200",
+          "Lead": "=1.6400",
+          "Selenium": "=4.3200",
+          "Zinc": "=34.9300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TECHNIGRO 21-7-7 ACID SPECIAL 21-7-7",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 13.5
+    },
+    "micros_pct": {
+      "Fe": 0.15,
+      "Mn": 0.025,
+      "Zn": 0.0025,
+      "Cu": 0.0035,
+      "B": 0.005,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6FF219-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 1.02,
+            "Hg": 0.2,
+            "Mo": 8.46,
+            "Ni": 2.32,
+            "Pb": 1.64,
+            "Se": 4.32,
+            "Zn": 34.93
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.1,
+        "Co": 1.02,
+        "Hg": 0.2,
+        "Mo": 8.46,
+        "Ni": 2.32,
+        "Pb": 1.64,
+        "Se": 4.32,
+        "Zn": 34.93
+      }
+    }
   }
 }

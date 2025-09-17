@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3ACCB7",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0335-0102)",
-    "product_name": "FERTI-LOME YIELD BOOSTER RTU 0-0-0",
-    "company_info": {
-      "company": "VOLUNTARY PURCHASING GROUPS INC",
-      "Mailing Address": "230 FM 87",
-      "Post Office Box": null,
-      "City": "Bonham",
-      "State": "TX",
-      "Postal Code": "75418-8629",
-      "Telephone Number": "903 583-5501",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.5,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0210",
-      "Cadmium": "=0.1200",
-      "Cobalt": "=0.2200",
-      "Mercury": "=0.0020",
-      "Molybdenum": "=0.1700",
-      "Nickel": "=0.2500",
-      "Lead": "=0.3800",
-      "Selenium": "=0.0110",
-      "Zinc": "=1.4600"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.5,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0210",
-      "Cadmium": "=0.1200",
-      "Cobalt": "=0.2200",
-      "Mercury": "=0.0020",
-      "Molybdenum": "=0.1700",
-      "Nickel": "=0.2500",
-      "Lead": "=0.3800",
-      "Selenium": "=0.0110",
-      "Zinc": "=1.4600"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3ACCB7",
   "metadata": {
     "registrant": "VOLUNTARY PURCHASING GROUPS INC",
     "label_name": "FERTI-LOME YIELD BOOSTER RTU 0-0-0",
     "wsda_reg_no": "(#0335-0102)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0102)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0102)",
+        "product_name": "FERTI-LOME YIELD BOOSTER RTU 0-0-0",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 1.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0210",
+          "Cadmium": "=0.1200",
+          "Cobalt": "=0.2200",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=0.1700",
+          "Nickel": "=0.2500",
+          "Lead": "=0.3800",
+          "Selenium": "=0.0110",
+          "Zinc": "=1.4600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTI-LOME YIELD BOOSTER RTU 0-0-0",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3ACCB7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.021,
+            "Cd": 0.12,
+            "Co": 0.22,
+            "Hg": 0.002,
+            "Mo": 0.17,
+            "Ni": 0.25,
+            "Pb": 0.38,
+            "Se": 0.011,
+            "Zn": 1.46
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.021,
+        "Cd": 0.12,
+        "Co": 0.22,
+        "Hg": 0.002,
+        "Mo": 0.17,
+        "Ni": 0.25,
+        "Pb": 0.38,
+        "Se": 0.011,
+        "Zn": 1.46
+      }
+    }
   }
 }

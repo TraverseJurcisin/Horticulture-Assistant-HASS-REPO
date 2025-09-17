@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "114436",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0189-0240)",
-    "product_name": "LESCO DIMENSION 0.15% PLUS FERTILIZER 36-0-3 (#702204) 36-0-3",
-    "company_info": {
-      "company": "LESCO INC",
-      "Mailing Address": "1385 East 36th Street",
-      "Post Office Box": null,
-      "City": "Cleveland",
-      "State": "OH",
-      "Postal Code": "44114-4114",
-      "Telephone Number": "440 454-3672",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 36.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.8500",
-      "Cadmium": "=0.4820",
-      "Cobalt": "=0.4200",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.5190",
-      "Nickel": "=0.8970",
-      "Lead": "=0.7120",
-      "Selenium": "=1.1200",
-      "Zinc": "=9.1100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 36.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.8500",
-      "Cadmium": "=0.4820",
-      "Cobalt": "=0.4200",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.5190",
-      "Nickel": "=0.8970",
-      "Lead": "=0.7120",
-      "Selenium": "=1.1200",
-      "Zinc": "=9.1100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "114436",
   "metadata": {
     "registrant": "LESCO INC",
     "label_name": "LESCO DIMENSION 0.15% PLUS FERTILIZER 36-0-3 (#702204) 36-0-3",
     "wsda_reg_no": "(#0189-0240)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0240)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0240)",
+        "product_name": "LESCO DIMENSION 0.15% PLUS FERTILIZER 36-0-3 (#702204) 36-0-3",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 36.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8500",
+          "Cadmium": "=0.4820",
+          "Cobalt": "=0.4200",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.5190",
+          "Nickel": "=0.8970",
+          "Lead": "=0.7120",
+          "Selenium": "=1.1200",
+          "Zinc": "=9.1100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO DIMENSION 0.15% PLUS FERTILIZER 36-0-3 (#702204) 36-0-3",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 36.0,
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "114436-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.85,
+            "Cd": 0.482,
+            "Co": 0.42,
+            "Hg": 0.005,
+            "Mo": 0.519,
+            "Ni": 0.897,
+            "Pb": 0.712,
+            "Se": 1.12,
+            "Zn": 9.11
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.85,
+        "Cd": 0.482,
+        "Co": 0.42,
+        "Hg": 0.005,
+        "Mo": 0.519,
+        "Ni": 0.897,
+        "Pb": 0.712,
+        "Se": 1.12,
+        "Zn": 9.11
+      }
+    }
   }
 }

@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"E3C6FA","source_wsda_record":{"wsda_product_number":"(#0103-0118)","product_name":"TECHNIGRO 10-30-20 PLUS CONTAINS 0.7 MG, 0.95% SULFUR 10-30-20","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":30.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.07,"Sulfur (S)":0.95,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.01},"reported_metals":{"Arsenic":"=0.4000","Cadmium":"=0.9000","Cobalt":"=2.0000","Mercury":"=0.2000","Molybdenum":"=62.4500","Nickel":"=1.5000","Lead":"=6.5000","Selenium":"=0.0500","Zinc":"=200.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":30.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.07,"Sulfur (S)":0.95,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.01,"Iron (Fe)":0.05,"Manganese (Mn)":0.02,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.01},"heavy_metals":{"Arsenic":"=0.4000","Cadmium":"=0.9000","Cobalt":"=2.0000","Mercury":"=0.2000","Molybdenum":"=62.4500","Nickel":"=1.5000","Lead":"=6.5000","Selenium":"=0.0500","Zinc":"=200.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"TECHNIGRO 10-30-20 PLUS CONTAINS 0.7 MG, 0.95% SULFUR 10-30-20","wsda_reg_no":"(#0103-0118)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E3C6FA",
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "TECHNIGRO 10-30-20 PLUS CONTAINS 0.7 MG, 0.95% SULFUR 10-30-20",
+    "wsda_reg_no": "(#0103-0118)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0118)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0118)",
+        "product_name": "TECHNIGRO 10-30-20 PLUS CONTAINS 0.7 MG, 0.95% SULFUR 10-30-20",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 30.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.07,
+          "Sulfur (S)": 0.95,
+          "Boron (B)": 0.01,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.01,
+          "Iron (Fe)": 0.05,
+          "Manganese (Mn)": 0.02,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.01
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4000",
+          "Cadmium": "=0.9000",
+          "Cobalt": "=2.0000",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=62.4500",
+          "Nickel": "=1.5000",
+          "Lead": "=6.5000",
+          "Selenium": "=0.0500",
+          "Zinc": "=200.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TECHNIGRO 10-30-20 PLUS CONTAINS 0.7 MG, 0.95% SULFUR 10-30-20",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 30.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Mg": 0.07,
+      "S": 0.95
+    },
+    "micros_pct": {
+      "Fe": 0.05,
+      "Mn": 0.02,
+      "Zn": 0.01,
+      "Cu": 0.01,
+      "B": 0.01,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E3C6FA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.4,
+            "Cd": 0.9,
+            "Co": 2.0,
+            "Hg": 0.2,
+            "Mo": 62.45,
+            "Ni": 1.5,
+            "Pb": 6.5,
+            "Se": 0.05,
+            "Zn": 200.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.4,
+        "Cd": 0.9,
+        "Co": 2.0,
+        "Hg": 0.2,
+        "Mo": 62.45,
+        "Ni": 1.5,
+        "Pb": 6.5,
+        "Se": 0.05,
+        "Zn": 200.0
+      }
+    }
+  }
+}

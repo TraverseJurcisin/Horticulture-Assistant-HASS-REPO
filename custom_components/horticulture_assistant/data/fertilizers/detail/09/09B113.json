@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "09B113",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2573-0001)",
-    "product_name": "ROCO GYPSUM 0-0-0",
-    "company_info": {
-      "company": "ROCO SOIL PRODUCTS",
-      "Mailing Address": "5027 Rd. K.8 NE",
-      "Post Office Box": null,
-      "City": "Moses Lake",
-      "State": "WA",
-      "Postal Code": "98837",
-      "Telephone Number": "509 760-2426",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 18.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.6500",
-      "Cadmium": "=5.8000",
-      "Cobalt": "=2.7000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=5.3000",
-      "Nickel": "=41.5000",
-      "Lead": "=8.8500",
-      "Selenium": "=1.0000",
-      "Zinc": "=48.5500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": "85.0000"
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 21.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 18.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.6500",
-      "Cadmium": "=5.8000",
-      "Cobalt": "=2.7000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=5.3000",
-      "Nickel": "=41.5000",
-      "Lead": "=8.8500",
-      "Selenium": "=1.0000",
-      "Zinc": "=48.5500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "09B113",
   "metadata": {
     "registrant": "ROCO SOIL PRODUCTS",
     "label_name": "ROCO GYPSUM 0-0-0",
     "wsda_reg_no": "(#2573-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2573-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2573-0001)",
+        "product_name": "ROCO GYPSUM 0-0-0",
+        "company_info": {
+          "company": "ROCO SOIL PRODUCTS",
+          "Mailing Address": "5027 Rd. K.8 NE",
+          "Post Office Box": null,
+          "City": "Moses Lake",
+          "State": "WA",
+          "Postal Code": "98837",
+          "Telephone Number": "509 760-2426",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 18.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.6500",
+          "Cadmium": "=5.8000",
+          "Cobalt": "=2.7000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.3000",
+          "Nickel": "=41.5000",
+          "Lead": "=8.8500",
+          "Selenium": "=1.0000",
+          "Zinc": "=48.5500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "85.0000"
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROCO GYPSUM 0-0-0",
+    "brand": "ROCO SOIL PRODUCTS",
+    "manufacturer": {
+      "name": "ROCO SOIL PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "09B113-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.65,
+            "Cd": 5.8,
+            "Co": 2.7,
+            "Hg": 1.0,
+            "Mo": 5.3,
+            "Ni": 41.5,
+            "Pb": 8.85,
+            "Se": 1.0,
+            "Zn": 48.55
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.65,
+        "Cd": 5.8,
+        "Co": 2.7,
+        "Hg": 1.0,
+        "Mo": 5.3,
+        "Ni": 41.5,
+        "Pb": 8.85,
+        "Se": 1.0,
+        "Zn": 48.55
+      }
+    }
   }
 }

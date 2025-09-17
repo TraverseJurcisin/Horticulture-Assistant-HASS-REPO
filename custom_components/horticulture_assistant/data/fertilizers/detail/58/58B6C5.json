@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "58B6C5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2214-0030)",
-    "product_name": "GREEN DIAMOND MYKOS PRO BACKFILL 6-2-2",
-    "company_info": {
-      "company": "REFORESTATION TECHNOLOGIES INTERNAT",
-      "Mailing Address": "5355 Monterey Frontage Rd",
-      "Post Office Box": null,
-      "City": "Gilroy",
-      "State": "CA",
-      "Postal Code": "95020",
-      "Telephone Number": "408 848-9604",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.41,
-      "Magnesium (Mg)": 1.03,
-      "Sulfur (S)": 1.91,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.4000",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=0.9800",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=2.4500",
-      "Nickel": "=11.2800",
-      "Lead": "=5.0900",
-      "Selenium": "=0.0600",
-      "Zinc": "=75.7500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.41,
-      "Magnesium (Mg)": 1.03,
-      "Sulfur (S)": 1.91,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.4000",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=0.9800",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=2.4500",
-      "Nickel": "=11.2800",
-      "Lead": "=5.0900",
-      "Selenium": "=0.0600",
-      "Zinc": "=75.7500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "58B6C5",
   "metadata": {
     "registrant": "REFORESTATION TECHNOLOGIES INTERNAT",
     "label_name": "GREEN DIAMOND MYKOS PRO BACKFILL 6-2-2",
     "wsda_reg_no": "(#2214-0030)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2214-0030)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2214-0030)",
+        "product_name": "GREEN DIAMOND MYKOS PRO BACKFILL 6-2-2",
+        "company_info": {
+          "company": "REFORESTATION TECHNOLOGIES INTERNAT",
+          "Mailing Address": "5355 Monterey Frontage Rd",
+          "Post Office Box": null,
+          "City": "Gilroy",
+          "State": "CA",
+          "Postal Code": "95020",
+          "Telephone Number": "408 848-9604",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 1.41,
+          "Magnesium (Mg)": 1.03,
+          "Sulfur (S)": 1.91,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.4000",
+          "Cadmium": "=0.7700",
+          "Cobalt": "=0.9800",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=2.4500",
+          "Nickel": "=11.2800",
+          "Lead": "=5.0900",
+          "Selenium": "=0.0600",
+          "Zinc": "=75.7500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREEN DIAMOND MYKOS PRO BACKFILL 6-2-2",
+    "brand": "REFORESTATION TECHNOLOGIES INTERNAT",
+    "manufacturer": {
+      "name": "REFORESTATION TECHNOLOGIES INTERNAT"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 1.41,
+      "Mg": 1.03,
+      "S": 1.91
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "58B6C5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.4,
+            "Cd": 0.77,
+            "Co": 0.98,
+            "Hg": 0.001,
+            "Mo": 2.45,
+            "Ni": 11.28,
+            "Pb": 5.09,
+            "Se": 0.06,
+            "Zn": 75.75
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.4,
+        "Cd": 0.77,
+        "Co": 0.98,
+        "Mo": 2.45,
+        "Ni": 11.28,
+        "Pb": 5.09,
+        "Se": 0.06,
+        "Zn": 75.75
+      }
+    }
   }
 }

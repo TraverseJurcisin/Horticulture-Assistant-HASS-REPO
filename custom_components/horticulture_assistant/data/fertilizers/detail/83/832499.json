@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"832499","source_wsda_record":{"wsda_product_number":"(#4063-0017)","product_name":"AGVENT RHIZO LIFE HARDY PRIME WP 0-0-0","company_info":{"company":"AGVENT LLC","Mailing Address":"1231 E 1420 N","Post Office Box":null,"City":"Richfield","State":"ID","Postal Code":"83349","Telephone Number":"208 401-6631","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":0.37,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":0.31,"Iron (Fe)":1.2,"Manganese (Mn)":1.2,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":0.7},"reported_metals":{"Arsenic":"=0.0800","Cadmium":"=0.0100","Cobalt":"=520.7000","Mercury":"=0.0100","Molybdenum":"=1051.4000","Nickel":"=3.1000","Lead":"=0.0300","Selenium":"=1.9000","Zinc":"=7002.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":0.37,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":0.31,"Iron (Fe)":1.2,"Manganese (Mn)":1.2,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":0.7},"heavy_metals":{"Arsenic":"=0.0800","Cadmium":"=0.0100","Cobalt":"=520.7000","Mercury":"=0.0100","Molybdenum":"=1051.4000","Nickel":"=3.1000","Lead":"=0.0300","Selenium":"=1.9000","Zinc":"=7002.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGVENT LLC","label_name":"AGVENT RHIZO LIFE HARDY PRIME WP 0-0-0","wsda_reg_no":"(#4063-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "832499",
+  "metadata": {
+    "registrant": "AGVENT LLC",
+    "label_name": "AGVENT RHIZO LIFE HARDY PRIME WP 0-0-0",
+    "wsda_reg_no": "(#4063-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4063-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4063-0017)",
+        "product_name": "AGVENT RHIZO LIFE HARDY PRIME WP 0-0-0",
+        "company_info": {
+          "company": "AGVENT LLC",
+          "Mailing Address": "1231 E 1420 N",
+          "Post Office Box": null,
+          "City": "Richfield",
+          "State": "ID",
+          "Postal Code": "83349",
+          "Telephone Number": "208 401-6631",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": 0.37,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": 0.31,
+          "Iron (Fe)": 1.2,
+          "Manganese (Mn)": 1.2,
+          "Molybdenum (Mo)": 0.1,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.7
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0800",
+          "Cadmium": "=0.0100",
+          "Cobalt": "=520.7000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1051.4000",
+          "Nickel": "=3.1000",
+          "Lead": "=0.0300",
+          "Selenium": "=1.9000",
+          "Zinc": "=7002.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGVENT RHIZO LIFE HARDY PRIME WP 0-0-0",
+    "brand": "AGVENT LLC",
+    "manufacturer": {
+      "name": "AGVENT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 1.2,
+      "Mn": 1.2,
+      "Zn": 0.7,
+      "Cu": 0.31,
+      "B": 0.37,
+      "Mo": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "832499-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.08,
+            "Cd": 0.01,
+            "Co": 520.7,
+            "Hg": 0.01,
+            "Mo": 1051.4,
+            "Ni": 3.1,
+            "Pb": 0.03,
+            "Se": 1.9,
+            "Zn": 7002.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.08,
+        "Cd": 0.01,
+        "Co": 520.7,
+        "Hg": 0.01,
+        "Mo": 1051.4,
+        "Ni": 3.1,
+        "Pb": 0.03,
+        "Se": 1.9,
+        "Zn": 7002.3
+      }
+    }
+  }
+}

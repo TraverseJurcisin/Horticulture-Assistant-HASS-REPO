@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F7ACFE","source_wsda_record":{"wsda_product_number":"(#0924-0055)","product_name":"BONIDE LIQUID AFRICAN VIOLET PLANT FOOD 7-10-7","company_info":{"company":"BONIDE PRODUCTS LLC","Mailing Address":"6301 Sutliff Rd","Post Office Box":null,"City":"Oriskany","State":"NY","Postal Code":"13424","Telephone Number":"315 736-8231","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4160","Cadmium":"=2.8200","Cobalt":"=4.3900","Mercury":"=0.0050","Molybdenum":"=22.1500","Nickel":"=32.4800","Lead":"=0.2190","Selenium":"=0.1690","Zinc":"=358.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4160","Cadmium":"=2.8200","Cobalt":"=4.3900","Mercury":"=0.0050","Molybdenum":"=22.1500","Nickel":"=32.4800","Lead":"=0.2190","Selenium":"=0.1690","Zinc":"=358.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BONIDE PRODUCTS LLC","label_name":"BONIDE LIQUID AFRICAN VIOLET PLANT FOOD 7-10-7","wsda_reg_no":"(#0924-0055)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F7ACFE",
+  "metadata": {
+    "registrant": "BONIDE PRODUCTS LLC",
+    "label_name": "BONIDE LIQUID AFRICAN VIOLET PLANT FOOD 7-10-7",
+    "wsda_reg_no": "(#0924-0055)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0924-0055)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0924-0055)",
+        "product_name": "BONIDE LIQUID AFRICAN VIOLET PLANT FOOD 7-10-7",
+        "company_info": {
+          "company": "BONIDE PRODUCTS LLC",
+          "Mailing Address": "6301 Sutliff Rd",
+          "Post Office Box": null,
+          "City": "Oriskany",
+          "State": "NY",
+          "Postal Code": "13424",
+          "Telephone Number": "315 736-8231",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4160",
+          "Cadmium": "=2.8200",
+          "Cobalt": "=4.3900",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=22.1500",
+          "Nickel": "=32.4800",
+          "Lead": "=0.2190",
+          "Selenium": "=0.1690",
+          "Zinc": "=358.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BONIDE LIQUID AFRICAN VIOLET PLANT FOOD 7-10-7",
+    "brand": "BONIDE PRODUCTS LLC",
+    "manufacturer": {
+      "name": "BONIDE PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 7.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F7ACFE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.416,
+            "Cd": 2.82,
+            "Co": 4.39,
+            "Hg": 0.005,
+            "Mo": 22.15,
+            "Ni": 32.48,
+            "Pb": 0.219,
+            "Se": 0.169,
+            "Zn": 358.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.416,
+        "Cd": 2.82,
+        "Co": 4.39,
+        "Hg": 0.005,
+        "Mo": 22.15,
+        "Ni": 32.48,
+        "Pb": 0.219,
+        "Se": 0.169,
+        "Zn": 358.9
+      }
+    }
+  }
+}

@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "42ACF9",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4065-0001)",
-    "product_name": "FERTOZ ROCK PHOSPHATE POWDER 0-7-0",
-    "company_info": {
-      "company": "FERTOZ ORGANICS INC.",
-      "Mailing Address": "20940 S Frankfort Square Rd",
-      "Post Office Box": null,
-      "City": "Frankfort",
-      "State": "IL",
-      "Postal Code": "60423",
-      "Telephone Number": "630 269-6276",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=128.0000",
-      "Cadmium": "=2.7600",
-      "Cobalt": "=1.5600",
-      "Mercury": "=5.5000",
-      "Molybdenum": "=9.8300",
-      "Nickel": "=16.1000",
-      "Lead": "=29.9000",
-      "Selenium": "=6.4000",
-      "Zinc": "=171.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=128.0000",
-      "Cadmium": "=2.7600",
-      "Cobalt": "=1.5600",
-      "Mercury": "=5.5000",
-      "Molybdenum": "=9.8300",
-      "Nickel": "=16.1000",
-      "Lead": "=29.9000",
-      "Selenium": "=6.4000",
-      "Zinc": "=171.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "42ACF9",
   "metadata": {
     "registrant": "FERTOZ ORGANICS INC.",
     "label_name": "FERTOZ ROCK PHOSPHATE POWDER 0-7-0",
     "wsda_reg_no": "(#4065-0001)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4065-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4065-0001)",
+        "product_name": "FERTOZ ROCK PHOSPHATE POWDER 0-7-0",
+        "company_info": {
+          "company": "FERTOZ ORGANICS INC.",
+          "Mailing Address": "20940 S Frankfort Square Rd",
+          "Post Office Box": null,
+          "City": "Frankfort",
+          "State": "IL",
+          "Postal Code": "60423",
+          "Telephone Number": "630 269-6276",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=128.0000",
+          "Cadmium": "=2.7600",
+          "Cobalt": "=1.5600",
+          "Mercury": "=5.5000",
+          "Molybdenum": "=9.8300",
+          "Nickel": "=16.1000",
+          "Lead": "=29.9000",
+          "Selenium": "=6.4000",
+          "Zinc": "=171.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FERTOZ ROCK PHOSPHATE POWDER 0-7-0",
+    "brand": "FERTOZ ORGANICS INC.",
+    "manufacturer": {
+      "name": "FERTOZ ORGANICS INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 7.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "42ACF9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 128.0,
+            "Cd": 2.76,
+            "Co": 1.56,
+            "Hg": 5.5,
+            "Mo": 9.83,
+            "Ni": 16.1,
+            "Pb": 29.9,
+            "Se": 6.4,
+            "Zn": 171.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 128.0,
+        "Cd": 2.76,
+        "Co": 1.56,
+        "Hg": 5.5,
+        "Mo": 9.83,
+        "Ni": 16.1,
+        "Pb": 29.9,
+        "Se": 6.4,
+        "Zn": 171.0
+      }
+    }
   }
 }

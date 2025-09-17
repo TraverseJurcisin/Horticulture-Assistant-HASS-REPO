@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"F14F72","source_wsda_record":{"wsda_product_number":"(#4006-0006)","product_name":"PURE SEED STA-GREEN PERFORMANCE MAX SUN & SHADE GRASS SEED MIXTURE 1-0-1","company_info":{"company":"ROSE AGRI-SEED, INC","Mailing Address":"PO Box 250","Post Office Box":null,"City":"Hubbard","State":"OR","Postal Code":"97032","Telephone Number":"503 263-0708","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":23.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.8000","Cadmium":"=0.1400","Cobalt":"=0.5800","Mercury":"=0.0100","Molybdenum":"=1.7700","Nickel":"=1.9900","Lead":"=5.8800","Selenium":"=0.0700","Zinc":"=30.5600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":23.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.8000","Cadmium":"=0.1400","Cobalt":"=0.5800","Mercury":"=0.0100","Molybdenum":"=1.7700","Nickel":"=1.9900","Lead":"=5.8800","Selenium":"=0.0700","Zinc":"=30.5600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROSE AGRI-SEED, INC","label_name":"PURE SEED STA-GREEN PERFORMANCE MAX SUN & SHADE GRASS SEED MIXTURE 1-0-1","wsda_reg_no":"(#4006-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F14F72",
+  "metadata": {
+    "registrant": "ROSE AGRI-SEED, INC",
+    "label_name": "PURE SEED STA-GREEN PERFORMANCE MAX SUN & SHADE GRASS SEED MIXTURE 1-0-1",
+    "wsda_reg_no": "(#4006-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4006-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4006-0006)",
+        "product_name": "PURE SEED STA-GREEN PERFORMANCE MAX SUN & SHADE GRASS SEED MIXTURE 1-0-1",
+        "company_info": {
+          "company": "ROSE AGRI-SEED, INC",
+          "Mailing Address": "PO Box 250",
+          "Post Office Box": null,
+          "City": "Hubbard",
+          "State": "OR",
+          "Postal Code": "97032",
+          "Telephone Number": "503 263-0708",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 23.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.8000",
+          "Cadmium": "=0.1400",
+          "Cobalt": "=0.5800",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1.7700",
+          "Nickel": "=1.9900",
+          "Lead": "=5.8800",
+          "Selenium": "=0.0700",
+          "Zinc": "=30.5600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PURE SEED STA-GREEN PERFORMANCE MAX SUN & SHADE GRASS SEED MIXTURE 1-0-1",
+    "brand": "ROSE AGRI-SEED, INC",
+    "manufacturer": {
+      "name": "ROSE AGRI-SEED, INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 23.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F14F72-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.8,
+            "Cd": 0.14,
+            "Co": 0.58,
+            "Hg": 0.01,
+            "Mo": 1.77,
+            "Ni": 1.99,
+            "Pb": 5.88,
+            "Se": 0.07,
+            "Zn": 30.56
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.8,
+        "Cd": 0.14,
+        "Co": 0.58,
+        "Hg": 0.01,
+        "Mo": 1.77,
+        "Ni": 1.99,
+        "Pb": 5.88,
+        "Se": 0.07,
+        "Zn": 30.56
+      }
+    }
+  }
+}

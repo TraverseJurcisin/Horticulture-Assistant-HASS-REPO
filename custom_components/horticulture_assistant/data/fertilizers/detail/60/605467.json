@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "605467",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3037-0007)",
-    "product_name": "CHS PRIMELAND PRIME START 0-0-15",
-    "company_info": {
-      "company": "CHS PRIMELAND - CLARKSTON, WA - WIL",
-      "Mailing Address": "2950 Wilma Drive",
-      "Post Office Box": null,
-      "City": "Clarkston",
-      "State": "WA",
-      "Postal Code": "99403",
-      "Telephone Number": "509 758-6568",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.94,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.25
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=2.0000",
-      "Molybdenum": "=10.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=10.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=50000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 15.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.94,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.25
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=2.0000",
-      "Molybdenum": "=10.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=10.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=50000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "605467",
   "metadata": {
     "registrant": "CHS PRIMELAND - CLARKSTON, WA - WIL",
     "label_name": "CHS PRIMELAND PRIME START 0-0-15",
     "wsda_reg_no": "(#3037-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3037-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3037-0007)",
+        "product_name": "CHS PRIMELAND PRIME START 0-0-15",
+        "company_info": {
+          "company": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+          "Mailing Address": "2950 Wilma Drive",
+          "Post Office Box": null,
+          "City": "Clarkston",
+          "State": "WA",
+          "Postal Code": "99403",
+          "Telephone Number": "509 758-6568",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 15.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.94,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.25
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=10.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=2.0000",
+          "Molybdenum": "=10.0000",
+          "Nickel": "=15.0000",
+          "Lead": "=10.0000",
+          "Selenium": "=10.0000",
+          "Zinc": "=50000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CHS PRIMELAND PRIME START 0-0-15",
+    "brand": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+    "manufacturer": {
+      "name": "CHS PRIMELAND - CLARKSTON, WA - WIL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 15.0
+    },
+    "micros_pct": {
+      "Zn": 2.25,
+      "Cu": 0.94
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "605467-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 10.0,
+            "Co": 10.0,
+            "Hg": 2.0,
+            "Mo": 10.0,
+            "Ni": 15.0,
+            "Pb": 10.0,
+            "Se": 10.0,
+            "Zn": 50000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 10.0,
+        "Co": 10.0,
+        "Hg": 2.0,
+        "Mo": 10.0,
+        "Ni": 15.0,
+        "Pb": 10.0,
+        "Se": 10.0,
+        "Zn": 50000.0
+      }
+    }
   }
 }

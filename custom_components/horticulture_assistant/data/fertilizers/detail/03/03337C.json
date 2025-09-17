@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "03337C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0185-0254)",
-    "product_name": "ROOTS HOLLY BOOST 6-4-6",
-    "company_info": {
-      "company": "LEBANON SEABOARD CORPORATION",
-      "Mailing Address": "1600 E Cumberland St",
-      "Post Office Box": null,
-      "City": "Lebanon",
-      "State": "PA",
-      "Postal Code": "17042",
-      "Telephone Number": "800 532-0090",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.7000",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=1.6100",
-      "Mercury": "=0.0150",
-      "Molybdenum": "=2.1300",
-      "Nickel": "=9.3000",
-      "Lead": "=3.7000",
-      "Selenium": "<11.0000",
-      "Zinc": "=92.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.7000",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=1.6100",
-      "Mercury": "=0.0150",
-      "Molybdenum": "=2.1300",
-      "Nickel": "=9.3000",
-      "Lead": "=3.7000",
-      "Selenium": "<11.0000",
-      "Zinc": "=92.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "03337C",
   "metadata": {
     "registrant": "LEBANON SEABOARD CORPORATION",
     "label_name": "ROOTS HOLLY BOOST 6-4-6",
     "wsda_reg_no": "(#0185-0254)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0254)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0254)",
+        "product_name": "ROOTS HOLLY BOOST 6-4-6",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.7000",
+          "Cadmium": "=1.1500",
+          "Cobalt": "=1.6100",
+          "Mercury": "=0.0150",
+          "Molybdenum": "=2.1300",
+          "Nickel": "=9.3000",
+          "Lead": "=3.7000",
+          "Selenium": "<11.0000",
+          "Zinc": "=92.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROOTS HOLLY BOOST 6-4-6",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 4.0,
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "03337C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.7,
+            "Cd": 1.15,
+            "Co": 1.61,
+            "Hg": 0.015,
+            "Mo": 2.13,
+            "Ni": 9.3,
+            "Pb": 3.7,
+            "Se": 11.0,
+            "Zn": 92.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.7,
+            "Se": 11.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.15,
+        "Co": 1.61,
+        "Hg": 0.015,
+        "Mo": 2.13,
+        "Ni": 9.3,
+        "Pb": 3.7,
+        "Zn": 92.0
+      }
+    }
   }
 }

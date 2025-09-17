@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"AB998C","source_wsda_record":{"wsda_product_number":"(#0300-0048)","product_name":"CASCADE TRADING CO 0-5-25","company_info":{"company":"SKAGIT FARMERS SUPPLY","Mailing Address":"12939 Avon Allen Rd","Post Office Box":null,"City":"Burlington","State":"WA","Postal Code":"98233","Telephone Number":"360 757-7870","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":25.0,"Calcium (Ca)":null,"Magnesium (Mg)":4.0,"Sulfur (S)":14.0,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.53},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2600","Cobalt":"=0.2000","Mercury":"=0.5000","Molybdenum":"=0.1000","Nickel":"=3.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=170.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":25.0,"Calcium (Ca)":null,"Magnesium (Mg)":4.0,"Sulfur (S)":14.0,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.53},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2600","Cobalt":"=0.2000","Mercury":"=0.5000","Molybdenum":"=0.1000","Nickel":"=3.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=170.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SKAGIT FARMERS SUPPLY","label_name":"CASCADE TRADING CO 0-5-25","wsda_reg_no":"(#0300-0048)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AB998C",
+  "metadata": {
+    "registrant": "SKAGIT FARMERS SUPPLY",
+    "label_name": "CASCADE TRADING CO 0-5-25",
+    "wsda_reg_no": "(#0300-0048)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0300-0048)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0300-0048)",
+        "product_name": "CASCADE TRADING CO 0-5-25",
+        "company_info": {
+          "company": "SKAGIT FARMERS SUPPLY",
+          "Mailing Address": "12939 Avon Allen Rd",
+          "Post Office Box": null,
+          "City": "Burlington",
+          "State": "WA",
+          "Postal Code": "98233",
+          "Telephone Number": "360 757-7870",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 25.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": 14.0,
+          "Boron (B)": 0.15,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.53
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.2600",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=3.1000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=170.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CASCADE TRADING CO 0-5-25",
+    "brand": "SKAGIT FARMERS SUPPLY",
+    "manufacturer": {
+      "name": "SKAGIT FARMERS SUPPLY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 5.0,
+      "K2O_pct": 25.0
+    },
+    "macros_pct": {
+      "Mg": 4.0,
+      "S": 14.0
+    },
+    "micros_pct": {
+      "Zn": 0.53,
+      "B": 0.15
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AB998C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.26,
+            "Co": 0.2,
+            "Hg": 0.5,
+            "Mo": 0.1,
+            "Ni": 3.1,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 170.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.26,
+        "Co": 0.2,
+        "Hg": 0.5,
+        "Mo": 0.1,
+        "Ni": 3.1,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 170.1
+      }
+    }
+  }
+}

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B450AB","source_wsda_record":{"wsda_product_number":"(#3132-0086)","product_name":"VALLEY AGRONOMICS FERTILIZER 46-0-0 UREA 46-0-0","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":46.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.9100","Cadmium":"<0.1909","Cobalt":"<1.9100","Mercury":"=0.0660","Molybdenum":"<0.1910","Nickel":"<1.9100","Lead":"<3.8200","Selenium":"<0.1910","Zinc":"=7.3100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":46.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.9100","Cadmium":"<0.1909","Cobalt":"<1.9100","Mercury":"=0.0660","Molybdenum":"<0.1910","Nickel":"<1.9100","Lead":"<3.8200","Selenium":"<0.1910","Zinc":"=7.3100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 46-0-0 UREA 46-0-0","wsda_reg_no":"(#3132-0086)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B450AB",
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 46-0-0 UREA 46-0-0",
+    "wsda_reg_no": "(#3132-0086)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0086)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0086)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 46-0-0 UREA 46-0-0",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 46.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.9100",
+          "Cadmium": "<0.1909",
+          "Cobalt": "<1.9100",
+          "Mercury": "=0.0660",
+          "Molybdenum": "<0.1910",
+          "Nickel": "<1.9100",
+          "Lead": "<3.8200",
+          "Selenium": "<0.1910",
+          "Zinc": "=7.3100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 46-0-0 UREA 46-0-0",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 46.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B450AB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.91,
+            "Cd": 0.1909,
+            "Co": 1.91,
+            "Hg": 0.066,
+            "Mo": 0.191,
+            "Ni": 1.91,
+            "Pb": 3.82,
+            "Se": 0.191,
+            "Zn": 7.31
+          },
+          "detection_limits_ppm": {
+            "As": 1.91,
+            "Cd": 0.1909,
+            "Co": 1.91,
+            "Mo": 0.191,
+            "Ni": 1.91,
+            "Pb": 3.82,
+            "Se": 0.191
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.066,
+        "Zn": 7.31
+      }
+    }
+  }
+}

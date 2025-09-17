@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4A457C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2433-0017)",
-    "product_name": "ADVANCING ECO AGRICULTURE REBOUND MANGANESE 0-0-0",
-    "company_info": {
-      "company": "ADVANCING ECO AGRICULTURE INC.",
-      "Mailing Address": "4551 Parks West Rd",
-      "Post Office Box": null,
-      "City": "Middlefield",
-      "State": "OH",
-      "Postal Code": "44062",
-      "Telephone Number": "330 442-0678",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.5500",
-      "Cadmium": "<0.3800",
-      "Cobalt": "=19.9300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "=5.7700",
-      "Nickel": "=11.1000",
-      "Lead": "<3.9000",
-      "Selenium": "=18.1000",
-      "Zinc": "=20.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.5500",
-      "Cadmium": "<0.3800",
-      "Cobalt": "=19.9300",
-      "Mercury": "<0.0400",
-      "Molybdenum": "=5.7700",
-      "Nickel": "=11.1000",
-      "Lead": "<3.9000",
-      "Selenium": "=18.1000",
-      "Zinc": "=20.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4A457C",
   "metadata": {
     "registrant": "ADVANCING ECO AGRICULTURE INC.",
     "label_name": "ADVANCING ECO AGRICULTURE REBOUND MANGANESE 0-0-0",
     "wsda_reg_no": "(#2433-0017)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2433-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2433-0017)",
+        "product_name": "ADVANCING ECO AGRICULTURE REBOUND MANGANESE 0-0-0",
+        "company_info": {
+          "company": "ADVANCING ECO AGRICULTURE INC.",
+          "Mailing Address": "4551 Parks West Rd",
+          "Post Office Box": null,
+          "City": "Middlefield",
+          "State": "OH",
+          "Postal Code": "44062",
+          "Telephone Number": "330 442-0678",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.5500",
+          "Cadmium": "<0.3800",
+          "Cobalt": "=19.9300",
+          "Mercury": "<0.0400",
+          "Molybdenum": "=5.7700",
+          "Nickel": "=11.1000",
+          "Lead": "<3.9000",
+          "Selenium": "=18.1000",
+          "Zinc": "=20.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ADVANCING ECO AGRICULTURE REBOUND MANGANESE 0-0-0",
+    "brand": "ADVANCING ECO AGRICULTURE INC.",
+    "manufacturer": {
+      "name": "ADVANCING ECO AGRICULTURE INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4A457C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.55,
+            "Cd": 0.38,
+            "Co": 19.93,
+            "Hg": 0.04,
+            "Mo": 5.77,
+            "Ni": 11.1,
+            "Pb": 3.9,
+            "Se": 18.1,
+            "Zn": 20.1
+          },
+          "detection_limits_ppm": {
+            "As": 1.55,
+            "Cd": 0.38,
+            "Hg": 0.04,
+            "Pb": 3.9
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 19.93,
+        "Mo": 5.77,
+        "Ni": 11.1,
+        "Se": 18.1,
+        "Zn": 20.1
+      }
+    }
   }
 }

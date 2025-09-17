@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A0460C","source_wsda_record":{"wsda_product_number":"(#1895-0015)","product_name":"YARAVITA MANCOZIN 3-0-0","company_info":{"company":"YARA UK LTD","Mailing Address":"100 N Tampa St Ste 300","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":6.3,"Iron (Fe)":null,"Manganese (Mn)":18.8,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.8},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=4.8000","Cobalt":"=92.8000","Mercury":"<2.0000","Molybdenum":"<5.0000","Nickel":"=108.3000","Lead":"=25.3000","Selenium":"=107.7000","Zinc":"=48000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":6.3,"Iron (Fe)":null,"Manganese (Mn)":18.8,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.8},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=4.8000","Cobalt":"=92.8000","Mercury":"<2.0000","Molybdenum":"<5.0000","Nickel":"=108.3000","Lead":"=25.3000","Selenium":"=107.7000","Zinc":"=48000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA UK LTD","label_name":"YARAVITA MANCOZIN 3-0-0","wsda_reg_no":"(#1895-0015)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A0460C",
+  "metadata": {
+    "registrant": "YARA UK LTD",
+    "label_name": "YARAVITA MANCOZIN 3-0-0",
+    "wsda_reg_no": "(#1895-0015)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1895-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1895-0015)",
+        "product_name": "YARAVITA MANCOZIN 3-0-0",
+        "company_info": {
+          "company": "YARA UK LTD",
+          "Mailing Address": "100 N Tampa St Ste 300",
+          "Post Office Box": null,
+          "City": "Tampa",
+          "State": "FL",
+          "Postal Code": "33602",
+          "Telephone Number": "813 970-5438",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 6.3,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 18.8,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.8
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=4.8000",
+          "Cobalt": "=92.8000",
+          "Mercury": "<2.0000",
+          "Molybdenum": "<5.0000",
+          "Nickel": "=108.3000",
+          "Lead": "=25.3000",
+          "Selenium": "=107.7000",
+          "Zinc": "=48000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "YARAVITA MANCOZIN 3-0-0",
+    "brand": "YARA UK LTD",
+    "manufacturer": {
+      "name": "YARA UK LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "micros_pct": {
+      "Mn": 18.8,
+      "Zn": 4.8,
+      "Cu": 6.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A0460C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 4.8,
+            "Co": 92.8,
+            "Hg": 2.0,
+            "Mo": 5.0,
+            "Ni": 108.3,
+            "Pb": 25.3,
+            "Se": 107.7,
+            "Zn": 48000.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Hg": 2.0,
+            "Mo": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 4.8,
+        "Co": 92.8,
+        "Ni": 108.3,
+        "Pb": 25.3,
+        "Se": 107.7,
+        "Zn": 48000.0
+      }
+    }
+  }
+}

@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "533F97",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0310-0090)",
-    "product_name": "STOLLER NITRO PLUS 9 9-0-0",
-    "company_info": {
-      "company": "STOLLER ENTERPRISES INC",
-      "Mailing Address": "9090 Katy Freeway Ste 400",
-      "Post Office Box": null,
-      "City": "Houston",
-      "State": "TX",
-      "Postal Code": "77024",
-      "Telephone Number": "713 329-0329",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 7.0,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<2.1000",
-      "Cadmium": "=0.2200",
-      "Cobalt": "=0.3200",
-      "Mercury": "<0.8000",
-      "Molybdenum": "=2.7600",
-      "Nickel": "<1.5000",
-      "Lead": "=3.4100",
-      "Selenium": "=4.6200",
-      "Zinc": "=1.2400"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 7.0,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.1000",
-      "Cadmium": "=0.2200",
-      "Cobalt": "=0.3200",
-      "Mercury": "<0.8000",
-      "Molybdenum": "=2.7600",
-      "Nickel": "<1.5000",
-      "Lead": "=3.4100",
-      "Selenium": "=4.6200",
-      "Zinc": "=1.2400"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "533F97",
   "metadata": {
     "registrant": "STOLLER ENTERPRISES INC",
     "label_name": "STOLLER NITRO PLUS 9 9-0-0",
     "wsda_reg_no": "(#0310-0090)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0310-0090)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0310-0090)",
+        "product_name": "STOLLER NITRO PLUS 9 9-0-0",
+        "company_info": {
+          "company": "STOLLER ENTERPRISES INC",
+          "Mailing Address": "9090 Katy Freeway Ste 400",
+          "Post Office Box": null,
+          "City": "Houston",
+          "State": "TX",
+          "Postal Code": "77024",
+          "Telephone Number": "713 329-0329",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.1000",
+          "Cadmium": "=0.2200",
+          "Cobalt": "=0.3200",
+          "Mercury": "<0.8000",
+          "Molybdenum": "=2.7600",
+          "Nickel": "<1.5000",
+          "Lead": "=3.4100",
+          "Selenium": "=4.6200",
+          "Zinc": "=1.2400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STOLLER NITRO PLUS 9 9-0-0",
+    "brand": "STOLLER ENTERPRISES INC",
+    "manufacturer": {
+      "name": "STOLLER ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "533F97-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.1,
+            "Cd": 0.22,
+            "Co": 0.32,
+            "Hg": 0.8,
+            "Mo": 2.76,
+            "Ni": 1.5,
+            "Pb": 3.41,
+            "Se": 4.62,
+            "Zn": 1.24
+          },
+          "detection_limits_ppm": {
+            "As": 2.1,
+            "Hg": 0.8,
+            "Ni": 1.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.22,
+        "Co": 0.32,
+        "Mo": 2.76,
+        "Pb": 3.41,
+        "Se": 4.62,
+        "Zn": 1.24
+      }
+    }
   }
 }

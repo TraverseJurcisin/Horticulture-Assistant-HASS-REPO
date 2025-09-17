@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5B2A52",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3195-0062)",
-    "product_name": "CELL POWER OCTOMINER 1-0-0",
-    "company_info": {
-      "company": "OMEX AGRIFLUIDS INC",
-      "Mailing Address": "1823 Shaw Ave Ste 103",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93611",
-      "Telephone Number": "559 661-6138",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.05,
-      "Copper (Cu)": 0.35,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.16,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.75
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0300",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=812.3600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1584.7900",
-      "Nickel": "=21.0300",
-      "Lead": "=2.2900",
-      "Selenium": "=5.3400",
-      "Zinc": "=12092.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.05,
-      "Copper (Cu)": 0.35,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.16,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.75
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0300",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=812.3600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=1584.7900",
-      "Nickel": "=21.0300",
-      "Lead": "=2.2900",
-      "Selenium": "=5.3400",
-      "Zinc": "=12092.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5B2A52",
   "metadata": {
     "registrant": "OMEX AGRIFLUIDS INC",
     "label_name": "CELL POWER OCTOMINER 1-0-0",
     "wsda_reg_no": "(#3195-0062)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3195-0062)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3195-0062)",
+        "product_name": "CELL POWER OCTOMINER 1-0-0",
+        "company_info": {
+          "company": "OMEX AGRIFLUIDS INC",
+          "Mailing Address": "1823 Shaw Ave Ste 103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 661-6138",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": 0.35,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.16,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.75
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0300",
+          "Cadmium": "=0.8000",
+          "Cobalt": "=812.3600",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=1584.7900",
+          "Nickel": "=21.0300",
+          "Lead": "=2.2900",
+          "Selenium": "=5.3400",
+          "Zinc": "=12092.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CELL POWER OCTOMINER 1-0-0",
+    "brand": "OMEX AGRIFLUIDS INC",
+    "manufacturer": {
+      "name": "OMEX AGRIFLUIDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 2.0,
+      "Mn": 1.0,
+      "Zn": 0.75,
+      "Cu": 0.35,
+      "Mo": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5B2A52-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.03,
+            "Cd": 0.8,
+            "Co": 812.36,
+            "Hg": 0.01,
+            "Mo": 1584.79,
+            "Ni": 21.03,
+            "Pb": 2.29,
+            "Se": 5.34,
+            "Zn": 12092.5
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.03,
+        "Cd": 0.8,
+        "Co": 812.36,
+        "Mo": 1584.79,
+        "Ni": 21.03,
+        "Pb": 2.29,
+        "Se": 5.34,
+        "Zn": 12092.5
+      }
+    }
   }
 }

@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"E313B4","source_wsda_record":{"wsda_product_number":"(#0951-0016)","product_name":"ALLTECH CROP SCIENCE SPECIFY 0-0-0","company_info":{"company":"IMPROCROP USA INC","Mailing Address":"3031 Catnip Hill Rd","Post Office Box":null,"City":"Nicholasville","State":"KY","Postal Code":"40356","Telephone Number":"859 881-2257","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":0.4,"Manganese (Mn)":1.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.8},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"=0.3200","Cobalt":"=24.7600","Mercury":"=0.0130","Molybdenum":"<0.0200","Nickel":"=20.2900","Lead":"=4.6700","Selenium":"=1.1300","Zinc":"=1.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.25,"Iron (Fe)":0.4,"Manganese (Mn)":1.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.8},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"=0.3200","Cobalt":"=24.7600","Mercury":"=0.0130","Molybdenum":"<0.0200","Nickel":"=20.2900","Lead":"=4.6700","Selenium":"=1.1300","Zinc":"=1.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"IMPROCROP USA INC","label_name":"ALLTECH CROP SCIENCE SPECIFY 0-0-0","wsda_reg_no":"(#0951-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E313B4",
+  "metadata": {
+    "registrant": "IMPROCROP USA INC",
+    "label_name": "ALLTECH CROP SCIENCE SPECIFY 0-0-0",
+    "wsda_reg_no": "(#0951-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0951-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0951-0016)",
+        "product_name": "ALLTECH CROP SCIENCE SPECIFY 0-0-0",
+        "company_info": {
+          "company": "IMPROCROP USA INC",
+          "Mailing Address": "3031 Catnip Hill Rd",
+          "Post Office Box": null,
+          "City": "Nicholasville",
+          "State": "KY",
+          "Postal Code": "40356",
+          "Telephone Number": "859 881-2257",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.25,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 1.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.8
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.3200",
+          "Cobalt": "=24.7600",
+          "Mercury": "=0.0130",
+          "Molybdenum": "<0.0200",
+          "Nickel": "=20.2900",
+          "Lead": "=4.6700",
+          "Selenium": "=1.1300",
+          "Zinc": "=1.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALLTECH CROP SCIENCE SPECIFY 0-0-0",
+    "brand": "IMPROCROP USA INC",
+    "manufacturer": {
+      "name": "IMPROCROP USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 1.5,
+      "Zn": 0.8,
+      "Cu": 0.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E313B4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.32,
+            "Co": 24.76,
+            "Hg": 0.013,
+            "Mo": 0.02,
+            "Ni": 20.29,
+            "Pb": 4.67,
+            "Se": 1.13,
+            "Zn": 1.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.02
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.32,
+        "Co": 24.76,
+        "Hg": 0.013,
+        "Ni": 20.29,
+        "Pb": 4.67,
+        "Se": 1.13,
+        "Zn": 1.0
+      }
+    }
+  }
+}

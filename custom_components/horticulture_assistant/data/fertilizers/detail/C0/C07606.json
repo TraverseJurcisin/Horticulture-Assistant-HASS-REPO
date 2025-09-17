@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"C07606","source_wsda_record":{"wsda_product_number":"(#3984-0003)","product_name":"POTASSIUM CARBONATE EXTRA FINE GRADE 0-0-67.8","company_info":{"company":"ARMAND PRODUCTS COMPANY","Mailing Address":"PO Box 5126","Post Office Box":null,"City":"Valdosta","State":"GA","Postal Code":"31603","Telephone Number":"229 247-6472","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":67.8,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0010","Cadmium":"=0.0150","Cobalt":"=0.0150","Mercury":"=0.0010","Molybdenum":"=0.6110","Nickel":"=0.0150","Lead":"=0.3820","Selenium":"=0.4080","Zinc":"=2.6700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":67.8,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0010","Cadmium":"=0.0150","Cobalt":"=0.0150","Mercury":"=0.0010","Molybdenum":"=0.6110","Nickel":"=0.0150","Lead":"=0.3820","Selenium":"=0.4080","Zinc":"=2.6700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ARMAND PRODUCTS COMPANY","label_name":"POTASSIUM CARBONATE EXTRA FINE GRADE 0-0-67.8","wsda_reg_no":"(#3984-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C07606",
+  "metadata": {
+    "registrant": "ARMAND PRODUCTS COMPANY",
+    "label_name": "POTASSIUM CARBONATE EXTRA FINE GRADE 0-0-67.8",
+    "wsda_reg_no": "(#3984-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3984-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3984-0003)",
+        "product_name": "POTASSIUM CARBONATE EXTRA FINE GRADE 0-0-67.8",
+        "company_info": {
+          "company": "ARMAND PRODUCTS COMPANY",
+          "Mailing Address": "PO Box 5126",
+          "Post Office Box": null,
+          "City": "Valdosta",
+          "State": "GA",
+          "Postal Code": "31603",
+          "Telephone Number": "229 247-6472",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 67.8,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0010",
+          "Cadmium": "=0.0150",
+          "Cobalt": "=0.0150",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.6110",
+          "Nickel": "=0.0150",
+          "Lead": "=0.3820",
+          "Selenium": "=0.4080",
+          "Zinc": "=2.6700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "POTASSIUM CARBONATE EXTRA FINE GRADE 0-0-67.8",
+    "brand": "ARMAND PRODUCTS COMPANY",
+    "manufacturer": {
+      "name": "ARMAND PRODUCTS COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 67.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C07606-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Mo": 0.611,
+            "Ni": 0.015,
+            "Pb": 0.382,
+            "Se": 0.408,
+            "Zn": 2.67
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.001,
+        "Cd": 0.015,
+        "Co": 0.015,
+        "Hg": 0.001,
+        "Mo": 0.611,
+        "Ni": 0.015,
+        "Pb": 0.382,
+        "Se": 0.408,
+        "Zn": 2.67
+      }
+    }
+  }
+}

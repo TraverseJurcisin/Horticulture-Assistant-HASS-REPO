@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"A69B37","source_wsda_record":{"wsda_product_number":"(#0997-0102)","product_name":"ACE CRABGRASS PREVENTER WITH FERTILIZER 29-0-3","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":29.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4360","Cadmium":"<0.2180","Cobalt":"<0.2180","Mercury":"<0.0206","Molybdenum":"<0.6520","Nickel":"=0.8020","Lead":"<0.6760","Selenium":"<0.6540","Zinc":"=1.7200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":29.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4360","Cadmium":"<0.2180","Cobalt":"<0.2180","Mercury":"<0.0206","Molybdenum":"<0.6520","Nickel":"=0.8020","Lead":"<0.6760","Selenium":"<0.6540","Zinc":"=1.7200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"ACE CRABGRASS PREVENTER WITH FERTILIZER 29-0-3","wsda_reg_no":"(#0997-0102)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A69B37",
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "ACE CRABGRASS PREVENTER WITH FERTILIZER 29-0-3",
+    "wsda_reg_no": "(#0997-0102)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0102)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0102)",
+        "product_name": "ACE CRABGRASS PREVENTER WITH FERTILIZER 29-0-3",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 29.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4360",
+          "Cadmium": "<0.2180",
+          "Cobalt": "<0.2180",
+          "Mercury": "<0.0206",
+          "Molybdenum": "<0.6520",
+          "Nickel": "=0.8020",
+          "Lead": "<0.6760",
+          "Selenium": "<0.6540",
+          "Zinc": "=1.7200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ACE CRABGRASS PREVENTER WITH FERTILIZER 29-0-3",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 29.0,
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A69B37-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.436,
+            "Cd": 0.218,
+            "Co": 0.218,
+            "Hg": 0.0206,
+            "Mo": 0.652,
+            "Ni": 0.802,
+            "Pb": 0.676,
+            "Se": 0.654,
+            "Zn": 1.72
+          },
+          "detection_limits_ppm": {
+            "As": 0.436,
+            "Cd": 0.218,
+            "Co": 0.218,
+            "Hg": 0.0206,
+            "Mo": 0.652,
+            "Pb": 0.676,
+            "Se": 0.654
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 0.802,
+        "Zn": 1.72
+      }
+    }
+  }
+}

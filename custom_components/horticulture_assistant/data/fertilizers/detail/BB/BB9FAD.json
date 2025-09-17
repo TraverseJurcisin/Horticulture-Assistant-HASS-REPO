@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"BB9FAD","source_wsda_record":{"wsda_product_number":"(#0303-0005)","product_name":"IDA-GRO PELLETIZED PHOSPHATE 0-3-0","company_info":{"company":"SODA SPRINGS PHOSPHATE II LLC","Mailing Address":"720 East Industrial Pl","Post Office Box":null,"City":"Soda Springs","State":"ID","Postal Code":"83276","Telephone Number":"208 547-3494","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"=49.2000","Cobalt":"=6.1000","Mercury":"=0.3100","Molybdenum":"=14.2000","Nickel":"=218.0000","Lead":"=13.9000","Selenium":"<50.0000","Zinc":"=766.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"=49.2000","Cobalt":"=6.1000","Mercury":"=0.3100","Molybdenum":"=14.2000","Nickel":"=218.0000","Lead":"=13.9000","Selenium":"<50.0000","Zinc":"=766.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SODA SPRINGS PHOSPHATE II LLC","label_name":"IDA-GRO PELLETIZED PHOSPHATE 0-3-0","wsda_reg_no":"(#0303-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BB9FAD",
+  "metadata": {
+    "registrant": "SODA SPRINGS PHOSPHATE II LLC",
+    "label_name": "IDA-GRO PELLETIZED PHOSPHATE 0-3-0",
+    "wsda_reg_no": "(#0303-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0303-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0303-0005)",
+        "product_name": "IDA-GRO PELLETIZED PHOSPHATE 0-3-0",
+        "company_info": {
+          "company": "SODA SPRINGS PHOSPHATE II LLC",
+          "Mailing Address": "720 East Industrial Pl",
+          "Post Office Box": null,
+          "City": "Soda Springs",
+          "State": "ID",
+          "Postal Code": "83276",
+          "Telephone Number": "208 547-3494",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=49.2000",
+          "Cobalt": "=6.1000",
+          "Mercury": "=0.3100",
+          "Molybdenum": "=14.2000",
+          "Nickel": "=218.0000",
+          "Lead": "=13.9000",
+          "Selenium": "<50.0000",
+          "Zinc": "=766.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "IDA-GRO PELLETIZED PHOSPHATE 0-3-0",
+    "brand": "SODA SPRINGS PHOSPHATE II LLC",
+    "manufacturer": {
+      "name": "SODA SPRINGS PHOSPHATE II LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 20.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Zn": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BB9FAD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 49.2,
+            "Co": 6.1,
+            "Hg": 0.31,
+            "Mo": 14.2,
+            "Ni": 218.0,
+            "Pb": 13.9,
+            "Se": 50.0,
+            "Zn": 766.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Se": 50.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 49.2,
+        "Co": 6.1,
+        "Hg": 0.31,
+        "Mo": 14.2,
+        "Ni": 218.0,
+        "Pb": 13.9,
+        "Zn": 766.0
+      }
+    }
+  }
+}

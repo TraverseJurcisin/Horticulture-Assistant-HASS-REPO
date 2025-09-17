@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "374F76",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0872-0005)",
-    "product_name": "MAXIMO MAXIMO 362 ZINC SULFATE-GRANULAR WITH SULFUR 0-0-0",
-    "company_info": {
-      "company": "ZINC NACIONAL SA",
-      "Mailing Address": "Serafin Pena 938 Col",
-      "Post Office Box": "Centro 64000",
-      "City": "Monterrey",
-      "State": "Nu",
-      "Postal Code": "64000",
-      "Telephone Number": "+52 81 8342",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 35.5
-    },
-    "reported_metals": {
-      "Arsenic": "<0.3000",
-      "Cadmium": "=63.5000",
-      "Cobalt": "=5.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<0.2000",
-      "Nickel": "=8.4000",
-      "Lead": "=42.0000",
-      "Selenium": "=9.0000",
-      "Zinc": "=388000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 17.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 35.5
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.3000",
-      "Cadmium": "=63.5000",
-      "Cobalt": "=5.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<0.2000",
-      "Nickel": "=8.4000",
-      "Lead": "=42.0000",
-      "Selenium": "=9.0000",
-      "Zinc": "=388000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "374F76",
   "metadata": {
     "registrant": "ZINC NACIONAL SA",
     "label_name": "MAXIMO MAXIMO 362 ZINC SULFATE-GRANULAR WITH SULFUR 0-0-0",
     "wsda_reg_no": "(#0872-0005)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0872-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0872-0005)",
+        "product_name": "MAXIMO MAXIMO 362 ZINC SULFATE-GRANULAR WITH SULFUR 0-0-0",
+        "company_info": {
+          "company": "ZINC NACIONAL SA",
+          "Mailing Address": "Serafin Pena 938 Col",
+          "Post Office Box": "Centro 64000",
+          "City": "Monterrey",
+          "State": "Nu",
+          "Postal Code": "64000",
+          "Telephone Number": "+52 81 8342",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 35.5
+        },
+        "reported_metals": {
+          "Arsenic": "<0.3000",
+          "Cadmium": "=63.5000",
+          "Cobalt": "=5.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<0.2000",
+          "Nickel": "=8.4000",
+          "Lead": "=42.0000",
+          "Selenium": "=9.0000",
+          "Zinc": "=388000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MAXIMO MAXIMO 362 ZINC SULFATE-GRANULAR WITH SULFUR 0-0-0",
+    "brand": "ZINC NACIONAL SA",
+    "manufacturer": {
+      "name": "ZINC NACIONAL SA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 17.5
+    },
+    "micros_pct": {
+      "Zn": 35.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "374F76-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.3,
+            "Cd": 63.5,
+            "Co": 5.0,
+            "Hg": 0.1,
+            "Mo": 0.2,
+            "Ni": 8.4,
+            "Pb": 42.0,
+            "Se": 9.0,
+            "Zn": 388000.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.3,
+            "Hg": 0.1,
+            "Mo": 0.2
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 63.5,
+        "Co": 5.0,
+        "Ni": 8.4,
+        "Pb": 42.0,
+        "Se": 9.0,
+        "Zn": 388000.0
+      }
+    }
   }
 }

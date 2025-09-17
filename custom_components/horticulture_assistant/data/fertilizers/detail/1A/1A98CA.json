@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1A98CA",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2067-0059)",
-    "product_name": "GREENPLANET NUTRIENTS VITATHRIVE PROPAGATION SOLUTION 0-0-1",
-    "company_info": {
-      "company": "HIT MANUFACTURING",
-      "Mailing Address": "15374 103 A Ave",
-      "Post Office Box": null,
-      "City": "Surrey",
-      "State": "BC",
-      "Postal Code": "V3R 7A2",
-      "Telephone Number": "605 580-1287",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.4940",
-      "Cadmium": "<0.4820",
-      "Cobalt": "<0.4200",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.5190",
-      "Nickel": "<0.5000",
-      "Lead": "<0.6050",
-      "Selenium": "<1.1200",
-      "Zinc": "<5.7200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.4940",
-      "Cadmium": "<0.4820",
-      "Cobalt": "<0.4200",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.5190",
-      "Nickel": "<0.5000",
-      "Lead": "<0.6050",
-      "Selenium": "<1.1200",
-      "Zinc": "<5.7200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1A98CA",
   "metadata": {
     "registrant": "HIT MANUFACTURING",
     "label_name": "GREENPLANET NUTRIENTS VITATHRIVE PROPAGATION SOLUTION 0-0-1",
     "wsda_reg_no": "(#2067-0059)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2067-0059)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2067-0059)",
+        "product_name": "GREENPLANET NUTRIENTS VITATHRIVE PROPAGATION SOLUTION 0-0-1",
+        "company_info": {
+          "company": "HIT MANUFACTURING",
+          "Mailing Address": "15374 103 A Ave",
+          "Post Office Box": null,
+          "City": "Surrey",
+          "State": "BC",
+          "Postal Code": "V3R 7A2",
+          "Telephone Number": "605 580-1287",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4940",
+          "Cadmium": "<0.4820",
+          "Cobalt": "<0.4200",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.5190",
+          "Nickel": "<0.5000",
+          "Lead": "<0.6050",
+          "Selenium": "<1.1200",
+          "Zinc": "<5.7200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENPLANET NUTRIENTS VITATHRIVE PROPAGATION SOLUTION 0-0-1",
+    "brand": "HIT MANUFACTURING",
+    "manufacturer": {
+      "name": "HIT MANUFACTURING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1A98CA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.494,
+            "Cd": 0.482,
+            "Co": 0.42,
+            "Hg": 0.005,
+            "Mo": 0.519,
+            "Ni": 0.5,
+            "Pb": 0.605,
+            "Se": 1.12,
+            "Zn": 5.72
+          },
+          "detection_limits_ppm": {
+            "As": 0.494,
+            "Cd": 0.482,
+            "Co": 0.42,
+            "Hg": 0.005,
+            "Mo": 0.519,
+            "Ni": 0.5,
+            "Pb": 0.605,
+            "Se": 1.12,
+            "Zn": 5.72
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

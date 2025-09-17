@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "237216",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3641-0001)",
-    "product_name": "THORVIN KELP FOR PLANTS 1-0-2",
-    "company_info": {
-      "company": "THORVIN INC",
-      "Mailing Address": "49 Race Street",
-      "Post Office Box": null,
-      "City": "New Castle",
-      "State": "VA",
-      "Postal Code": "24127",
-      "Telephone Number": "540 864-5108",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=30.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=6.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=7.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=1.5000",
-      "Zinc": "=17.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=30.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=6.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=7.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=1.5000",
-      "Zinc": "=17.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "237216",
   "metadata": {
     "registrant": "THORVIN INC",
     "label_name": "THORVIN KELP FOR PLANTS 1-0-2",
     "wsda_reg_no": "(#3641-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3641-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3641-0001)",
+        "product_name": "THORVIN KELP FOR PLANTS 1-0-2",
+        "company_info": {
+          "company": "THORVIN INC",
+          "Mailing Address": "49 Race Street",
+          "Post Office Box": null,
+          "City": "New Castle",
+          "State": "VA",
+          "Postal Code": "24127",
+          "Telephone Number": "540 864-5108",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=30.0000",
+          "Cadmium": "=2.0000",
+          "Cobalt": "=6.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=7.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=1.5000",
+          "Zinc": "=17.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THORVIN KELP FOR PLANTS 1-0-2",
+    "brand": "THORVIN INC",
+    "manufacturer": {
+      "name": "THORVIN INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "Mg": 0.5,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "237216-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 30.0,
+            "Cd": 2.0,
+            "Co": 6.0,
+            "Hg": 0.05,
+            "Mo": 7.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 1.5,
+            "Zn": 17.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 30.0,
+        "Cd": 2.0,
+        "Co": 6.0,
+        "Hg": 0.05,
+        "Mo": 7.0,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 1.5,
+        "Zn": 17.0
+      }
+    }
   }
 }

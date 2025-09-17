@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"8717D4","source_wsda_record":{"wsda_product_number":"(#1895-0064)","product_name":"YARAVITA PENTAFLO 4-15-0","company_info":{"company":"YARA UK LTD","Mailing Address":"100 N Tampa St Ste 300","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.5,"Magnesium (Mg)":3.7,"Sulfur (S)":null,"Boron (B)":1.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.5},"reported_metals":{"Arsenic":"=1.3300","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=3.3800","Lead":"=49.0000","Selenium":"=0.5000","Zinc":"=2500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.5,"Magnesium (Mg)":3.7,"Sulfur (S)":null,"Boron (B)":1.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":2.5},"heavy_metals":{"Arsenic":"=1.3300","Cadmium":"=0.5000","Cobalt":"=0.5000","Mercury":"=0.0100","Molybdenum":"=0.5000","Nickel":"=3.3800","Lead":"=49.0000","Selenium":"=0.5000","Zinc":"=2500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA UK LTD","label_name":"YARAVITA PENTAFLO 4-15-0","wsda_reg_no":"(#1895-0064)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8717D4",
+  "metadata": {
+    "registrant": "YARA UK LTD",
+    "label_name": "YARAVITA PENTAFLO 4-15-0",
+    "wsda_reg_no": "(#1895-0064)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1895-0064)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1895-0064)",
+        "product_name": "YARAVITA PENTAFLO 4-15-0",
+        "company_info": {
+          "company": "YARA UK LTD",
+          "Mailing Address": "100 N Tampa St Ste 300",
+          "Post Office Box": null,
+          "City": "Tampa",
+          "State": "FL",
+          "Postal Code": "33602",
+          "Telephone Number": "813 970-5438",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 12.5,
+          "Magnesium (Mg)": 3.7,
+          "Sulfur (S)": null,
+          "Boron (B)": 1.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.5
+        },
+        "reported_metals": {
+          "Arsenic": "=1.3300",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=0.5000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=3.3800",
+          "Lead": "=49.0000",
+          "Selenium": "=0.5000",
+          "Zinc": "=2500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "YARAVITA PENTAFLO 4-15-0",
+    "brand": "YARA UK LTD",
+    "manufacturer": {
+      "name": "YARA UK LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 15.0
+    },
+    "macros_pct": {
+      "Ca": 12.5,
+      "Mg": 3.7
+    },
+    "micros_pct": {
+      "Zn": 2.5,
+      "B": 1.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8717D4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.33,
+            "Cd": 0.5,
+            "Co": 0.5,
+            "Hg": 0.01,
+            "Mo": 0.5,
+            "Ni": 3.38,
+            "Pb": 49.0,
+            "Se": 0.5,
+            "Zn": 2500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.33,
+        "Cd": 0.5,
+        "Co": 0.5,
+        "Hg": 0.01,
+        "Mo": 0.5,
+        "Ni": 3.38,
+        "Pb": 49.0,
+        "Se": 0.5,
+        "Zn": 2500.0
+      }
+    }
+  }
+}

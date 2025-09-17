@@ -1,106 +1,142 @@
 {
-  "commerce": {
-    "price_history": [],
-    "sku_list": []
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "derived_from_raw": null,
-    "derived_from_tokens": null,
-    "guaranteed_analysis": {
-      "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
-      "Calcium (Ca)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Magnesium (Mg)": 15.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Soluble Potash (K2O)": null,
-      "Sulfur (S)": 21.0,
-      "Total Nitrogen (N)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=23.1000",
-      "Cadmium": "=1.8500",
-      "Cobalt": "=4.6300",
-      "Lead": "=13.9000",
-      "Mercury": "=0.0439",
-      "Molybdenum": "=9.2600",
-      "Nickel": "=13.9000",
-      "Selenium": "=23.1000",
-      "Zinc": "=18.5000"
-    }
-  },
+  "id": "8FEDA2",
   "metadata": {
     "detail_updated_at": "2025-07-25T11:15:37Z",
     "first_seen": "2025-07-25",
     "formulation": "Dry",
     "label_name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
     "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
-    "wsda_reg_no": "(#1589-0071)"
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ec_ms_cm": null,
-    "ph": {
-      "max": null,
-      "min": null
+    "wsda_reg_no": "(#1589-0071)",
+    "wsda_product_number": "(#1589-0071)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null,
+          "Magnesium Carbonate (MgCO3)": null
+        },
+        "company_info": {
+          "City": "Pasco",
+          "Fax Number": null,
+          "Mailing Address": "PO Box 2327",
+          "Post Office Box": null,
+          "Postal Code": "99302",
+          "State": "WA",
+          "Telephone Number": "509 547-7776",
+          "company": "TWO RIVERS TERMINAL - PASCO WA - GL"
+        },
+        "guaranteed_analysis": {
+          "Available Phosphoric Acid (P2O5)": null,
+          "Boron (B)": null,
+          "Calcium (Ca)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Magnesium (Mg)": 15.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Soluble Potash (K2O)": null,
+          "Sulfur (S)": 21.0,
+          "Total Nitrogen (N)": null,
+          "Zinc (Zn)": null
+        },
+        "micronutrient_fertilizer": "N",
+        "product_name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
+        "reported_metals": {
+          "Arsenic": "=23.1000",
+          "Cadmium": "=1.8500",
+          "Cobalt": "=4.6300",
+          "Lead": "=13.9000",
+          "Mercury": "=0.0439",
+          "Molybdenum": "=9.2600",
+          "Nickel": "=13.9000",
+          "Selenium": "=23.1000",
+          "Zinc": "=18.5000"
+        },
+        "waste_derived_fertilizer": "N",
+        "wsda_product_number": "(#1589-0071)"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ec_ms_cm": null,
+        "ph": {
+          "max": null,
+          "min": null
+        }
+      },
+      "commerce": {
+        "price_history": [],
+        "sku_list": []
+      }
     }
   },
-  "product_id": "8FEDA2",
-  "schema_version": "2025-07-v1",
-  "source_wsda_record": {
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null,
-      "Magnesium Carbonate (MgCO3)": null
+  "product": {
+    "name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
+    "brand": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "manufacturer": {
+      "name": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
     },
-    "company_info": {
-      "City": "Pasco",
-      "Fax Number": null,
-      "Mailing Address": "PO Box 2327",
-      "Post Office Box": null,
-      "Postal Code": "99302",
-      "State": "WA",
-      "Telephone Number": "509 547-7776",
-      "company": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    "macros_pct": {
+      "Mg": 15.0,
+      "S": 21.0
     },
-    "guaranteed_analysis": {
-      "Available Phosphoric Acid (P2O5)": null,
-      "Boron (B)": null,
-      "Calcium (Ca)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Magnesium (Mg)": 15.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Soluble Potash (K2O)": null,
-      "Sulfur (S)": 21.0,
-      "Total Nitrogen (N)": null,
-      "Zinc (Zn)": null
-    },
-    "micronutrient_fertilizer": "N",
-    "product_name": "POWER-LINE PROFESSIONAL PRODUCTS POWER-MAG 15 GRANULAR GRADE 0-0-0",
-    "reported_metals": {
-      "Arsenic": "=23.1000",
-      "Cadmium": "=1.8500",
-      "Cobalt": "=4.6300",
-      "Lead": "=13.9000",
-      "Mercury": "=0.0439",
-      "Molybdenum": "=9.2600",
-      "Nickel": "=13.9000",
-      "Selenium": "=23.1000",
-      "Zinc": "=18.5000"
-    },
-    "waste_derived_fertilizer": "N",
-    "wsda_product_number": "(#1589-0071)"
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8FEDA2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 23.1,
+            "Cd": 1.85,
+            "Co": 4.63,
+            "Pb": 13.9,
+            "Hg": 0.0439,
+            "Mo": 9.26,
+            "Ni": 13.9,
+            "Se": 23.1,
+            "Zn": 18.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Pb": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 23.1,
+        "Cd": 1.85,
+        "Co": 4.63,
+        "Pb": 13.9,
+        "Hg": 0.0439,
+        "Mo": 9.26,
+        "Ni": 13.9,
+        "Se": 23.1,
+        "Zn": 18.5
+      }
+    }
   }
 }

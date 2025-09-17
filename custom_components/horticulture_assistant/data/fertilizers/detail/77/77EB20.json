@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "77EB20",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0950-0009)",
-    "product_name": "GROW MORE HERB FOOD 5-1-5",
-    "company_info": {
-      "company": "GROW MORE INC",
-      "Mailing Address": "15600 New Century Drive",
-      "Post Office Box": null,
-      "City": "Gardena",
-      "State": "CA",
-      "Postal Code": "90248",
-      "Telephone Number": "310 515-1700",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4400",
-      "Cadmium": "=3.6000",
-      "Cobalt": "<5.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=0.6000",
-      "Nickel": "=6.5000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.2500",
-      "Zinc": "=114.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4400",
-      "Cadmium": "=3.6000",
-      "Cobalt": "<5.0000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=0.6000",
-      "Nickel": "=6.5000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.2500",
-      "Zinc": "=114.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "77EB20",
   "metadata": {
     "registrant": "GROW MORE INC",
     "label_name": "GROW MORE HERB FOOD 5-1-5",
     "wsda_reg_no": "(#0950-0009)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0950-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0950-0009)",
+        "product_name": "GROW MORE HERB FOOD 5-1-5",
+        "company_info": {
+          "company": "GROW MORE INC",
+          "Mailing Address": "15600 New Century Drive",
+          "Post Office Box": null,
+          "City": "Gardena",
+          "State": "CA",
+          "Postal Code": "90248",
+          "Telephone Number": "310 515-1700",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4400",
+          "Cadmium": "=3.6000",
+          "Cobalt": "<5.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=0.6000",
+          "Nickel": "=6.5000",
+          "Lead": "<5.0000",
+          "Selenium": "<0.2500",
+          "Zinc": "=114.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROW MORE HERB FOOD 5-1-5",
+    "brand": "GROW MORE INC",
+    "manufacturer": {
+      "name": "GROW MORE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "77EB20-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.44,
+            "Cd": 3.6,
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Mo": 0.6,
+            "Ni": 6.5,
+            "Pb": 5.0,
+            "Se": 0.25,
+            "Zn": 114.0
+          },
+          "detection_limits_ppm": {
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Pb": 5.0,
+            "Se": 0.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.44,
+        "Cd": 3.6,
+        "Mo": 0.6,
+        "Ni": 6.5,
+        "Zn": 114.0
+      }
+    }
   }
 }

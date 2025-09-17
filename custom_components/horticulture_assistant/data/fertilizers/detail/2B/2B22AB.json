@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2B22AB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2905-0012)",
-    "product_name": "ROOT FARM TOMATO & VEGGIE SUPPLEMENT 1-5-7",
-    "company_info": {
-      "company": "HAWTHORNE HYDROPONICS BRANDS",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-5924",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.2,
-      "Sulfur (S)": 2.8,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0515",
-      "Cadmium": "=0.0236",
-      "Cobalt": "=0.5260",
-      "Mercury": "=0.0196",
-      "Molybdenum": "=3.0500",
-      "Nickel": "=0.1820",
-      "Lead": "=0.0236",
-      "Selenium": "=0.0473",
-      "Zinc": "=61.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 7.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.2,
-      "Sulfur (S)": 2.8,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0515",
-      "Cadmium": "=0.0236",
-      "Cobalt": "=0.5260",
-      "Mercury": "=0.0196",
-      "Molybdenum": "=3.0500",
-      "Nickel": "=0.1820",
-      "Lead": "=0.0236",
-      "Selenium": "=0.0473",
-      "Zinc": "=61.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2B22AB",
   "metadata": {
     "registrant": "HAWTHORNE HYDROPONICS BRANDS",
     "label_name": "ROOT FARM TOMATO & VEGGIE SUPPLEMENT 1-5-7",
     "wsda_reg_no": "(#2905-0012)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2905-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2905-0012)",
+        "product_name": "ROOT FARM TOMATO & VEGGIE SUPPLEMENT 1-5-7",
+        "company_info": {
+          "company": "HAWTHORNE HYDROPONICS BRANDS",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-5924",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.2,
+          "Sulfur (S)": 2.8,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0515",
+          "Cadmium": "=0.0236",
+          "Cobalt": "=0.5260",
+          "Mercury": "=0.0196",
+          "Molybdenum": "=3.0500",
+          "Nickel": "=0.1820",
+          "Lead": "=0.0236",
+          "Selenium": "=0.0473",
+          "Zinc": "=61.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROOT FARM TOMATO & VEGGIE SUPPLEMENT 1-5-7",
+    "brand": "HAWTHORNE HYDROPONICS BRANDS",
+    "manufacturer": {
+      "name": "HAWTHORNE HYDROPONICS BRANDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Mg": 2.2,
+      "S": 2.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2B22AB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.0515,
+            "Cd": 0.0236,
+            "Co": 0.526,
+            "Hg": 0.0196,
+            "Mo": 3.05,
+            "Ni": 0.182,
+            "Pb": 0.0236,
+            "Se": 0.0473,
+            "Zn": 61.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.0515,
+        "Cd": 0.0236,
+        "Co": 0.526,
+        "Hg": 0.0196,
+        "Mo": 3.05,
+        "Ni": 0.182,
+        "Pb": 0.0236,
+        "Se": 0.0473,
+        "Zn": 61.8
+      }
+    }
   }
 }

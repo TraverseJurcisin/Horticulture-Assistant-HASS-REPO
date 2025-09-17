@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "503825",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2049-0005)",
-    "product_name": "ORGANIC AG PRODUCTS PURE PROTEIN DRY 7.5-1-25",
-    "company_info": {
-      "company": "AZ ENTERPRISES INC",
-      "Mailing Address": "2367 Brant St",
-      "Post Office Box": null,
-      "City": "Arroyo Grande",
-      "State": "CA",
-      "Postal Code": "93420",
-      "Telephone Number": "805 550-7776",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.5,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 25.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8600",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.2000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.7000",
-      "Zinc": "=23.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.5,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 25.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8600",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=0.2000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.7000",
-      "Zinc": "=23.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "503825",
   "metadata": {
     "registrant": "AZ ENTERPRISES INC",
     "label_name": "ORGANIC AG PRODUCTS PURE PROTEIN DRY 7.5-1-25",
     "wsda_reg_no": "(#2049-0005)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2049-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2049-0005)",
+        "product_name": "ORGANIC AG PRODUCTS PURE PROTEIN DRY 7.5-1-25",
+        "company_info": {
+          "company": "AZ ENTERPRISES INC",
+          "Mailing Address": "2367 Brant St",
+          "Post Office Box": null,
+          "City": "Arroyo Grande",
+          "State": "CA",
+          "Postal Code": "93420",
+          "Telephone Number": "805 550-7776",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.5,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 25.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8600",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.2000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.7000",
+          "Zinc": "=23.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ORGANIC AG PRODUCTS PURE PROTEIN DRY 7.5-1-25",
+    "brand": "AZ ENTERPRISES INC",
+    "manufacturer": {
+      "name": "AZ ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.5,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 25.0
+    },
+    "macros_pct": {
+      "S": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "503825-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.86,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.2,
+            "Pb": 0.5,
+            "Se": 0.7,
+            "Zn": 23.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.86,
+        "Cd": 0.03,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 0.2,
+        "Pb": 0.5,
+        "Se": 0.7,
+        "Zn": 23.1
+      }
+    }
   }
 }

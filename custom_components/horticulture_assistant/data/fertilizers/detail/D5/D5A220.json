@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"D5A220","source_wsda_record":{"wsda_product_number":"(#3391-0003)","product_name":"MOTHER EARTH TERRACRAFT POTTING SOIL 0.19-0.08-0.11","company_info":{"company":"HAWTHORNE HYDROPONICS LLC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.19,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.11,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.9600","Cadmium":"<0.5260","Cobalt":"=1.1800","Mercury":"=0.0491","Molybdenum":"=0.7320","Nickel":"=2.7300","Lead":"=4.3900","Selenium":"<1.5800","Zinc":"=40.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.19,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.11,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.9600","Cadmium":"<0.5260","Cobalt":"=1.1800","Mercury":"=0.0491","Molybdenum":"=0.7320","Nickel":"=2.7300","Lead":"=4.3900","Selenium":"<1.5800","Zinc":"=40.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE HYDROPONICS LLC","label_name":"MOTHER EARTH TERRACRAFT POTTING SOIL 0.19-0.08-0.11","wsda_reg_no":"(#3391-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D5A220",
+  "metadata": {
+    "registrant": "HAWTHORNE HYDROPONICS LLC",
+    "label_name": "MOTHER EARTH TERRACRAFT POTTING SOIL 0.19-0.08-0.11",
+    "wsda_reg_no": "(#3391-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3391-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3391-0003)",
+        "product_name": "MOTHER EARTH TERRACRAFT POTTING SOIL 0.19-0.08-0.11",
+        "company_info": {
+          "company": "HAWTHORNE HYDROPONICS LLC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.19,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.11,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9600",
+          "Cadmium": "<0.5260",
+          "Cobalt": "=1.1800",
+          "Mercury": "=0.0491",
+          "Molybdenum": "=0.7320",
+          "Nickel": "=2.7300",
+          "Lead": "=4.3900",
+          "Selenium": "<1.5800",
+          "Zinc": "=40.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MOTHER EARTH TERRACRAFT POTTING SOIL 0.19-0.08-0.11",
+    "brand": "HAWTHORNE HYDROPONICS LLC",
+    "manufacturer": {
+      "name": "HAWTHORNE HYDROPONICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.19,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.11
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D5A220-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.96,
+            "Cd": 0.526,
+            "Co": 1.18,
+            "Hg": 0.0491,
+            "Mo": 0.732,
+            "Ni": 2.73,
+            "Pb": 4.39,
+            "Se": 1.58,
+            "Zn": 40.7
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.526,
+            "Se": 1.58
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.96,
+        "Co": 1.18,
+        "Hg": 0.0491,
+        "Mo": 0.732,
+        "Ni": 2.73,
+        "Pb": 4.39,
+        "Zn": 40.7
+      }
+    }
+  }
+}

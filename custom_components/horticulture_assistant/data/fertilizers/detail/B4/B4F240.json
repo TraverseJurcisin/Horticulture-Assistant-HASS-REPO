@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"B4F240","source_wsda_record":{"wsda_product_number":"(#3025-0003)","product_name":"SIPCAM AGRO USA REVERB 0-0-0","company_info":{"company":"SIPCAM AGRO USA INC","Mailing Address":"2525 Meridian Pkwy Ste 100","Post Office Box":null,"City":"Durham","State":"NC","Postal Code":"27713","Telephone Number":"919 226-1273","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<2.5000","Cadmium":"<0.2500","Cobalt":"<0.5000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<2.5000","Selenium":"<1.0000","Zinc":"=23.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<2.5000","Cadmium":"<0.2500","Cobalt":"<0.5000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<2.5000","Selenium":"<1.0000","Zinc":"=23.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIPCAM AGRO USA INC","label_name":"SIPCAM AGRO USA REVERB 0-0-0","wsda_reg_no":"(#3025-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B4F240",
+  "metadata": {
+    "registrant": "SIPCAM AGRO USA INC",
+    "label_name": "SIPCAM AGRO USA REVERB 0-0-0",
+    "wsda_reg_no": "(#3025-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3025-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3025-0003)",
+        "product_name": "SIPCAM AGRO USA REVERB 0-0-0",
+        "company_info": {
+          "company": "SIPCAM AGRO USA INC",
+          "Mailing Address": "2525 Meridian Pkwy Ste 100",
+          "Post Office Box": null,
+          "City": "Durham",
+          "State": "NC",
+          "Postal Code": "27713",
+          "Telephone Number": "919 226-1273",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.5000",
+          "Cadmium": "<0.2500",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "<1.0000",
+          "Lead": "<2.5000",
+          "Selenium": "<1.0000",
+          "Zinc": "=23.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIPCAM AGRO USA REVERB 0-0-0",
+    "brand": "SIPCAM AGRO USA INC",
+    "manufacturer": {
+      "name": "SIPCAM AGRO USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mn": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B4F240-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.5,
+            "Cd": 0.25,
+            "Co": 0.5,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 2.5,
+            "Se": 1.0,
+            "Zn": 23.2
+          },
+          "detection_limits_ppm": {
+            "As": 2.5,
+            "Cd": 0.25,
+            "Co": 0.5,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 2.5,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 23.2
+      }
+    }
+  }
+}

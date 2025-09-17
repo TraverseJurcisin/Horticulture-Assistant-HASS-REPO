@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"F29102","source_wsda_record":{"wsda_product_number":"(#3588-0010)","product_name":"STRATEGICAL 2-0-7","company_info":{"company":"WAVE GROUP LLC","Mailing Address":"1634 E 3900 N","Post Office Box":null,"City":"Buhl","State":"ID","Postal Code":"83316","Telephone Number":"208 420-5401","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":3.9,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0010","Cadmium":"=0.0150","Cobalt":"=0.2630","Mercury":"=0.0210","Molybdenum":"=1.4400","Nickel":"=0.4420","Lead":"=0.0150","Selenium":"=0.0010","Zinc":"=35.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":3.9,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0010","Cadmium":"=0.0150","Cobalt":"=0.2630","Mercury":"=0.0210","Molybdenum":"=1.4400","Nickel":"=0.4420","Lead":"=0.0150","Selenium":"=0.0010","Zinc":"=35.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WAVE GROUP LLC","label_name":"STRATEGICAL 2-0-7","wsda_reg_no":"(#3588-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F29102",
+  "metadata": {
+    "registrant": "WAVE GROUP LLC",
+    "label_name": "STRATEGICAL 2-0-7",
+    "wsda_reg_no": "(#3588-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3588-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3588-0010)",
+        "product_name": "STRATEGICAL 2-0-7",
+        "company_info": {
+          "company": "WAVE GROUP LLC",
+          "Mailing Address": "1634 E 3900 N",
+          "Post Office Box": null,
+          "City": "Buhl",
+          "State": "ID",
+          "Postal Code": "83316",
+          "Telephone Number": "208 420-5401",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": 3.9,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0010",
+          "Cadmium": "=0.0150",
+          "Cobalt": "=0.2630",
+          "Mercury": "=0.0210",
+          "Molybdenum": "=1.4400",
+          "Nickel": "=0.4420",
+          "Lead": "=0.0150",
+          "Selenium": "=0.0010",
+          "Zinc": "=35.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STRATEGICAL 2-0-7",
+    "brand": "WAVE GROUP LLC",
+    "manufacturer": {
+      "name": "WAVE GROUP LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Ca": 3.9
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F29102-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.015,
+            "Co": 0.263,
+            "Hg": 0.021,
+            "Mo": 1.44,
+            "Ni": 0.442,
+            "Pb": 0.015,
+            "Se": 0.001,
+            "Zn": 35.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.001,
+        "Cd": 0.015,
+        "Co": 0.263,
+        "Hg": 0.021,
+        "Mo": 1.44,
+        "Ni": 0.442,
+        "Pb": 0.015,
+        "Se": 0.001,
+        "Zn": 35.4
+      }
+    }
+  }
+}

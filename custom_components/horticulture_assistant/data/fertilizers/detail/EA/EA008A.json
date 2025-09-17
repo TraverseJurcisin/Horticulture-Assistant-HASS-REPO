@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"EA008A","source_wsda_record":{"wsda_product_number":"(#0185-0176)","product_name":"LEBANONTURF COUNTRY CLUB MD 22-0-16","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":6.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.6,"Manganese (Mn)":0.8,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.0000","Cadmium":"=1.0000","Cobalt":"=20.0000","Mercury":"=0.0150","Molybdenum":"=3.0000","Nickel":"=35.0000","Lead":"=3.0000","Selenium":"=2.0000","Zinc":"=15.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":6.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.6,"Manganese (Mn)":0.8,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.0000","Cadmium":"=1.0000","Cobalt":"=20.0000","Mercury":"=0.0150","Molybdenum":"=3.0000","Nickel":"=35.0000","Lead":"=3.0000","Selenium":"=2.0000","Zinc":"=15.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"LEBANONTURF COUNTRY CLUB MD 22-0-16","wsda_reg_no":"(#0185-0176)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EA008A",
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "LEBANONTURF COUNTRY CLUB MD 22-0-16",
+    "wsda_reg_no": "(#0185-0176)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0176)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0176)",
+        "product_name": "LEBANONTURF COUNTRY CLUB MD 22-0-16",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": 6.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.6,
+          "Manganese (Mn)": 0.8,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=20.0000",
+          "Mercury": "=0.0150",
+          "Molybdenum": "=3.0000",
+          "Nickel": "=35.0000",
+          "Lead": "=3.0000",
+          "Selenium": "=2.0000",
+          "Zinc": "=15.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LEBANONTURF COUNTRY CLUB MD 22-0-16",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "Mg": 0.7,
+      "S": 6.2
+    },
+    "micros_pct": {
+      "Fe": 1.6,
+      "Mn": 0.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EA008A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.0,
+            "Cd": 1.0,
+            "Co": 20.0,
+            "Hg": 0.015,
+            "Mo": 3.0,
+            "Ni": 35.0,
+            "Pb": 3.0,
+            "Se": 2.0,
+            "Zn": 15.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.0,
+        "Cd": 1.0,
+        "Co": 20.0,
+        "Hg": 0.015,
+        "Mo": 3.0,
+        "Ni": 35.0,
+        "Pb": 3.0,
+        "Se": 2.0,
+        "Zn": 15.0
+      }
+    }
+  }
+}

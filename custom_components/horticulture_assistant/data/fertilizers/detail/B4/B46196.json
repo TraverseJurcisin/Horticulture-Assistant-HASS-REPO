@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"B46196","source_wsda_record":{"wsda_product_number":"(#2195-0007)","product_name":"DYNAMITE FLOWER AND VEGETABLE (SUN BULB) 13-13-13","company_info":{"company":"SUN BULB COMPANY INC","Mailing Address":"1615 SW Hwy 17","Post Office Box":null,"City":"Arcadia","State":"FL","Postal Code":"34266","Telephone Number":"863 494-4022","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":3.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.1000","Cadmium":"=0.9000","Cobalt":"=3.7000","Mercury":"<0.0100","Molybdenum":"=3.7000","Nickel":"=6.3000","Lead":"<1.0000","Selenium":"=0.7000","Zinc":"=327.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.7,"Sulfur (S)":3.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.1000","Cadmium":"=0.9000","Cobalt":"=3.7000","Mercury":"<0.0100","Molybdenum":"=3.7000","Nickel":"=6.3000","Lead":"<1.0000","Selenium":"=0.7000","Zinc":"=327.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN BULB COMPANY INC","label_name":"DYNAMITE FLOWER AND VEGETABLE (SUN BULB) 13-13-13","wsda_reg_no":"(#2195-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B46196",
+  "metadata": {
+    "registrant": "SUN BULB COMPANY INC",
+    "label_name": "DYNAMITE FLOWER AND VEGETABLE (SUN BULB) 13-13-13",
+    "wsda_reg_no": "(#2195-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2195-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2195-0007)",
+        "product_name": "DYNAMITE FLOWER AND VEGETABLE (SUN BULB) 13-13-13",
+        "company_info": {
+          "company": "SUN BULB COMPANY INC",
+          "Mailing Address": "1615 SW Hwy 17",
+          "Post Office Box": null,
+          "City": "Arcadia",
+          "State": "FL",
+          "Postal Code": "34266",
+          "Telephone Number": "863 494-4022",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": 13.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": 3.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.1000",
+          "Cadmium": "=0.9000",
+          "Cobalt": "=3.7000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=3.7000",
+          "Nickel": "=6.3000",
+          "Lead": "<1.0000",
+          "Selenium": "=0.7000",
+          "Zinc": "=327.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DYNAMITE FLOWER AND VEGETABLE (SUN BULB) 13-13-13",
+    "brand": "SUN BULB COMPANY INC",
+    "manufacturer": {
+      "name": "SUN BULB COMPANY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "P2O5_pct": 13.0,
+      "K2O_pct": 13.0
+    },
+    "macros_pct": {
+      "Mg": 0.7,
+      "S": 3.5
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.05,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B46196-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.1,
+            "Cd": 0.9,
+            "Co": 3.7,
+            "Hg": 0.01,
+            "Mo": 3.7,
+            "Ni": 6.3,
+            "Pb": 1.0,
+            "Se": 0.7,
+            "Zn": 327.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.01,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.1,
+        "Cd": 0.9,
+        "Co": 3.7,
+        "Mo": 3.7,
+        "Ni": 6.3,
+        "Se": 0.7,
+        "Zn": 327.0
+      }
+    }
+  }
+}

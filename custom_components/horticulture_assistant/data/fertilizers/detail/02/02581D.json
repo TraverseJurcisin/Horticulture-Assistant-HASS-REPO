@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "02581D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2214-0027)",
-    "product_name": "GREEN DIAMOND LANDSCAPE PRO FEEDER PAKS 20-10-5",
-    "company_info": {
-      "company": "REFORESTATION TECHNOLOGIES INTERNAT",
-      "Mailing Address": "5355 Monterey Frontage Rd",
-      "Post Office Box": null,
-      "City": "Gilroy",
-      "State": "CA",
-      "Postal Code": "95020",
-      "Telephone Number": "408 848-9604",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.097,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "reported_metals": {
-      "Arsenic": "=3.8900",
-      "Cadmium": "=23.1700",
-      "Cobalt": "=2.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=5.1000",
-      "Nickel": "=49.8000",
-      "Lead": "=0.7000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1370.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.097,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.1
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.8900",
-      "Cadmium": "=23.1700",
-      "Cobalt": "=2.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=5.1000",
-      "Nickel": "=49.8000",
-      "Lead": "=0.7000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1370.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "02581D",
   "metadata": {
     "registrant": "REFORESTATION TECHNOLOGIES INTERNAT",
     "label_name": "GREEN DIAMOND LANDSCAPE PRO FEEDER PAKS 20-10-5",
     "wsda_reg_no": "(#2214-0027)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2214-0027)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2214-0027)",
+        "product_name": "GREEN DIAMOND LANDSCAPE PRO FEEDER PAKS 20-10-5",
+        "company_info": {
+          "company": "REFORESTATION TECHNOLOGIES INTERNAT",
+          "Mailing Address": "5355 Monterey Frontage Rd",
+          "Post Office Box": null,
+          "City": "Gilroy",
+          "State": "CA",
+          "Postal Code": "95020",
+          "Telephone Number": "408 848-9604",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.097,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=3.8900",
+          "Cadmium": "=23.1700",
+          "Cobalt": "=2.2000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=5.1000",
+          "Nickel": "=49.8000",
+          "Lead": "=0.7000",
+          "Selenium": "=0.5000",
+          "Zinc": "=1370.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREEN DIAMOND LANDSCAPE PRO FEEDER PAKS 20-10-5",
+    "brand": "REFORESTATION TECHNOLOGIES INTERNAT",
+    "manufacturer": {
+      "name": "REFORESTATION TECHNOLOGIES INTERNAT"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "Mg": 2.0,
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.1,
+      "Zn": 0.1,
+      "Cu": 0.097
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "02581D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.89,
+            "Cd": 23.17,
+            "Co": 2.2,
+            "Hg": 0.05,
+            "Mo": 5.1,
+            "Ni": 49.8,
+            "Pb": 0.7,
+            "Se": 0.5,
+            "Zn": 1370.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.89,
+        "Cd": 23.17,
+        "Co": 2.2,
+        "Hg": 0.05,
+        "Mo": 5.1,
+        "Ni": 49.8,
+        "Pb": 0.7,
+        "Se": 0.5,
+        "Zn": 1370.0
+      }
+    }
   }
 }

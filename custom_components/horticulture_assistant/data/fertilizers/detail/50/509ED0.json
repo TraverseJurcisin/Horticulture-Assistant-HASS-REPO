@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "509ED0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0670-0113)",
-    "product_name": "EARTHLINK FRUIT-PRO 12-3-10",
-    "company_info": {
-      "company": "TERRALINK HORTICULTURE INC",
-      "Mailing Address": "464 Riverside Rd",
-      "Post Office Box": null,
-      "City": "Abbotsford",
-      "State": "BC",
-      "Postal Code": "V2S 7M1",
-      "Telephone Number": "800 661-4559",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.6000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "=0.1000",
-      "Nickel": "<0.1000",
-      "Lead": "=0.4600",
-      "Selenium": "=0.8600",
-      "Zinc": "=1.1800"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.6000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "=0.1000",
-      "Nickel": "<0.1000",
-      "Lead": "=0.4600",
-      "Selenium": "=0.8600",
-      "Zinc": "=1.1800"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "509ED0",
   "metadata": {
     "registrant": "TERRALINK HORTICULTURE INC",
     "label_name": "EARTHLINK FRUIT-PRO 12-3-10",
     "wsda_reg_no": "(#0670-0113)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0113)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0113)",
+        "product_name": "EARTHLINK FRUIT-PRO 12-3-10",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0020",
+          "Molybdenum": "=0.1000",
+          "Nickel": "<0.1000",
+          "Lead": "=0.4600",
+          "Selenium": "=0.8600",
+          "Zinc": "=1.1800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTHLINK FRUIT-PRO 12-3-10",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 4.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "509ED0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.6,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.002,
+            "Mo": 0.1,
+            "Ni": 0.1,
+            "Pb": 0.46,
+            "Se": 0.86,
+            "Zn": 1.18
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.002,
+            "Ni": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.6,
+        "Mo": 0.1,
+        "Pb": 0.46,
+        "Se": 0.86,
+        "Zn": 1.18
+      }
+    }
   }
 }

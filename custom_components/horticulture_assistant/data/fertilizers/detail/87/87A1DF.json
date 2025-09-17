@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"87A1DF","source_wsda_record":{"wsda_product_number":"(#2307-0010)","product_name":"CAMERON POWDER MANGANESE SULFATE MONOHYDRATE-32 0-0-0","company_info":{"company":"CAMERON CHEMICALS INC","Mailing Address":"2405 W Vassar Rd","Post Office Box":null,"City":"Reese","State":"MI","Postal Code":"48757","Telephone Number":"989 752-2138","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":32.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<25.0000","Cadmium":"<100.0000","Cobalt":"<100.0000","Mercury":"<5.0000","Molybdenum":"<100.0000","Nickel":"<200.0000","Lead":"<500.0000","Selenium":"<300.0000","Zinc":"<2500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":32.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<25.0000","Cadmium":"<100.0000","Cobalt":"<100.0000","Mercury":"<5.0000","Molybdenum":"<100.0000","Nickel":"<200.0000","Lead":"<500.0000","Selenium":"<300.0000","Zinc":"<2500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CAMERON CHEMICALS INC","label_name":"CAMERON POWDER MANGANESE SULFATE MONOHYDRATE-32 0-0-0","wsda_reg_no":"(#2307-0010)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "87A1DF",
+  "metadata": {
+    "registrant": "CAMERON CHEMICALS INC",
+    "label_name": "CAMERON POWDER MANGANESE SULFATE MONOHYDRATE-32 0-0-0",
+    "wsda_reg_no": "(#2307-0010)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2307-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2307-0010)",
+        "product_name": "CAMERON POWDER MANGANESE SULFATE MONOHYDRATE-32 0-0-0",
+        "company_info": {
+          "company": "CAMERON CHEMICALS INC",
+          "Mailing Address": "2405 W Vassar Rd",
+          "Post Office Box": null,
+          "City": "Reese",
+          "State": "MI",
+          "Postal Code": "48757",
+          "Telephone Number": "989 752-2138",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 32.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<25.0000",
+          "Cadmium": "<100.0000",
+          "Cobalt": "<100.0000",
+          "Mercury": "<5.0000",
+          "Molybdenum": "<100.0000",
+          "Nickel": "<200.0000",
+          "Lead": "<500.0000",
+          "Selenium": "<300.0000",
+          "Zinc": "<2500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CAMERON POWDER MANGANESE SULFATE MONOHYDRATE-32 0-0-0",
+    "brand": "CAMERON CHEMICALS INC",
+    "manufacturer": {
+      "name": "CAMERON CHEMICALS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 17.0
+    },
+    "micros_pct": {
+      "Mn": 32.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "87A1DF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 25.0,
+            "Cd": 100.0,
+            "Co": 100.0,
+            "Hg": 5.0,
+            "Mo": 100.0,
+            "Ni": 200.0,
+            "Pb": 500.0,
+            "Se": 300.0,
+            "Zn": 2500.0
+          },
+          "detection_limits_ppm": {
+            "As": 25.0,
+            "Cd": 100.0,
+            "Co": 100.0,
+            "Hg": 5.0,
+            "Mo": 100.0,
+            "Ni": 200.0,
+            "Pb": 500.0,
+            "Se": 300.0,
+            "Zn": 2500.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
+  }
+}

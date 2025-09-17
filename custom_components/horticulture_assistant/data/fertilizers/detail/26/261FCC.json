@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "261FCC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3201-0003)",
-    "product_name": "PLAGRON GREEN SENSATION 0-8-9",
-    "company_info": {
-      "company": "BERTELS B V",
-      "Mailing Address": "Ommelpad 2 6035 PC",
-      "Post Office Box": null,
-      "City": "Ospel",
-      "State": "NL",
-      "Postal Code": "6035 PC",
-      "Telephone Number": "003149563155",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.5600",
-      "Cadmium": "<0.0282",
-      "Cobalt": "=1.5100",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.2820",
-      "Nickel": "=1.6100",
-      "Lead": "=1.7600",
-      "Selenium": "<0.2820",
-      "Zinc": "=0.3500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.5600",
-      "Cadmium": "<0.0282",
-      "Cobalt": "=1.5100",
-      "Mercury": "<0.0050",
-      "Molybdenum": "<0.2820",
-      "Nickel": "=1.6100",
-      "Lead": "=1.7600",
-      "Selenium": "<0.2820",
-      "Zinc": "=0.3500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "261FCC",
   "metadata": {
     "registrant": "BERTELS B V",
     "label_name": "PLAGRON GREEN SENSATION 0-8-9",
     "wsda_reg_no": "(#3201-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3201-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3201-0003)",
+        "product_name": "PLAGRON GREEN SENSATION 0-8-9",
+        "company_info": {
+          "company": "BERTELS B V",
+          "Mailing Address": "Ommelpad 2 6035 PC",
+          "Post Office Box": null,
+          "City": "Ospel",
+          "State": "NL",
+          "Postal Code": "6035 PC",
+          "Telephone Number": "003149563155",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5600",
+          "Cadmium": "<0.0282",
+          "Cobalt": "=1.5100",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.2820",
+          "Nickel": "=1.6100",
+          "Lead": "=1.7600",
+          "Selenium": "<0.2820",
+          "Zinc": "=0.3500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PLAGRON GREEN SENSATION 0-8-9",
+    "brand": "BERTELS B V",
+    "manufacturer": {
+      "name": "BERTELS B V"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 8.0,
+      "K2O_pct": 9.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "261FCC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.56,
+            "Cd": 0.0282,
+            "Co": 1.51,
+            "Hg": 0.005,
+            "Mo": 0.282,
+            "Ni": 1.61,
+            "Pb": 1.76,
+            "Se": 0.282,
+            "Zn": 0.35
+          },
+          "detection_limits_ppm": {
+            "As": 0.56,
+            "Cd": 0.0282,
+            "Hg": 0.005,
+            "Mo": 0.282,
+            "Se": 0.282
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.51,
+        "Ni": 1.61,
+        "Pb": 1.76,
+        "Zn": 0.35
+      }
+    }
   }
 }

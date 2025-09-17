@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"DE4AA0","source_wsda_record":{"wsda_product_number":"(#3409-0058)","product_name":"5-24-26 WITH 4.02 S 5-24-26","company_info":{"company":"NUTRIEN AG SOLUTIONS","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 613-3191","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.02,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.14,"Manganese (Mn)":0.06,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=8.9400","Cadmium":"=13.3200","Cobalt":"=1.4000","Mercury":"=0.0500","Molybdenum":"=45.3000","Nickel":"=38.0000","Lead":"=2.2000","Selenium":"<0.5000","Zinc":"=825.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":24.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.02,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.14,"Manganese (Mn)":0.06,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=8.9400","Cadmium":"=13.3200","Cobalt":"=1.4000","Mercury":"=0.0500","Molybdenum":"=45.3000","Nickel":"=38.0000","Lead":"=2.2000","Selenium":"<0.5000","Zinc":"=825.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIEN AG SOLUTIONS","label_name":"5-24-26 WITH 4.02 S 5-24-26","wsda_reg_no":"(#3409-0058)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DE4AA0",
+  "metadata": {
+    "registrant": "NUTRIEN AG SOLUTIONS",
+    "label_name": "5-24-26 WITH 4.02 S 5-24-26",
+    "wsda_reg_no": "(#3409-0058)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3409-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3409-0058)",
+        "product_name": "5-24-26 WITH 4.02 S 5-24-26",
+        "company_info": {
+          "company": "NUTRIEN AG SOLUTIONS",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 613-3191",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 24.0,
+          "Soluble Potash (K2O)": 26.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.02,
+          "Boron (B)": 0.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.14,
+          "Manganese (Mn)": 0.06,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=8.9400",
+          "Cadmium": "=13.3200",
+          "Cobalt": "=1.4000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=45.3000",
+          "Nickel": "=38.0000",
+          "Lead": "=2.2000",
+          "Selenium": "<0.5000",
+          "Zinc": "=825.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "5-24-26 WITH 4.02 S 5-24-26",
+    "brand": "NUTRIEN AG SOLUTIONS",
+    "manufacturer": {
+      "name": "NUTRIEN AG SOLUTIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 24.0,
+      "K2O_pct": 26.0
+    },
+    "macros_pct": {
+      "S": 4.02
+    },
+    "micros_pct": {
+      "Fe": 0.14,
+      "Mn": 0.06,
+      "Zn": 0.05,
+      "B": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DE4AA0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.94,
+            "Cd": 13.32,
+            "Co": 1.4,
+            "Hg": 0.05,
+            "Mo": 45.3,
+            "Ni": 38.0,
+            "Pb": 2.2,
+            "Se": 0.5,
+            "Zn": 825.8
+          },
+          "detection_limits_ppm": {
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 8.94,
+        "Cd": 13.32,
+        "Co": 1.4,
+        "Hg": 0.05,
+        "Mo": 45.3,
+        "Ni": 38.0,
+        "Pb": 2.2,
+        "Zn": 825.8
+      }
+    }
+  }
+}

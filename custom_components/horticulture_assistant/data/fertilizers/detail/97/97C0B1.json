@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"97C0B1","source_wsda_record":{"wsda_product_number":"(#0240-0022)","product_name":"NATURE'S INTENT DOLOPRIL 0-0-0","company_info":{"company":"PACIFIC CALCIUM INC - HOLMES RD. -","Mailing Address":"32117 Highway 97","Post Office Box":null,"City":"Tonasket","State":"WA","Postal Code":"98855","Telephone Number":"509 486-1201","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":10.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.6400","Cadmium":"<0.4000","Cobalt":"<0.4000","Mercury":"<0.1190","Molybdenum":"=8.2100","Nickel":"=46.0800","Lead":"=6.7500","Selenium":"=0.0564","Zinc":"=18.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"50.0000","Calcium Carbonate Equivalent (CaCO3)":"90.0000","Magnesium Carbonate (MgCO3)":"34.0000","Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":10.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.6400","Cadmium":"<0.4000","Cobalt":"<0.4000","Mercury":"<0.1190","Molybdenum":"=8.2100","Nickel":"=46.0800","Lead":"=6.7500","Selenium":"=0.0564","Zinc":"=18.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PACIFIC CALCIUM INC - HOLMES RD. -","label_name":"NATURE'S INTENT DOLOPRIL 0-0-0","wsda_reg_no":"(#0240-0022)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "97C0B1",
+  "metadata": {
+    "registrant": "PACIFIC CALCIUM INC - HOLMES RD. -",
+    "label_name": "NATURE'S INTENT DOLOPRIL 0-0-0",
+    "wsda_reg_no": "(#0240-0022)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0240-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0240-0022)",
+        "product_name": "NATURE'S INTENT DOLOPRIL 0-0-0",
+        "company_info": {
+          "company": "PACIFIC CALCIUM INC - HOLMES RD. -",
+          "Mailing Address": "32117 Highway 97",
+          "Post Office Box": null,
+          "City": "Tonasket",
+          "State": "WA",
+          "Postal Code": "98855",
+          "Telephone Number": "509 486-1201",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": 10.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.6400",
+          "Cadmium": "<0.4000",
+          "Cobalt": "<0.4000",
+          "Mercury": "<0.1190",
+          "Molybdenum": "=8.2100",
+          "Nickel": "=46.0800",
+          "Lead": "=6.7500",
+          "Selenium": "=0.0564",
+          "Zinc": "=18.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "50.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "90.0000",
+          "Magnesium Carbonate (MgCO3)": "34.0000",
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE'S INTENT DOLOPRIL 0-0-0",
+    "brand": "PACIFIC CALCIUM INC - HOLMES RD. -",
+    "manufacturer": {
+      "name": "PACIFIC CALCIUM INC - HOLMES RD. -"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 20.0,
+      "Mg": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "97C0B1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.64,
+            "Cd": 0.4,
+            "Co": 0.4,
+            "Hg": 0.119,
+            "Mo": 8.21,
+            "Ni": 46.08,
+            "Pb": 6.75,
+            "Se": 0.0564,
+            "Zn": 18.9
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.4,
+            "Co": 0.4,
+            "Hg": 0.119
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.64,
+        "Mo": 8.21,
+        "Ni": 46.08,
+        "Pb": 6.75,
+        "Se": 0.0564,
+        "Zn": 18.9
+      }
+    }
+  }
+}

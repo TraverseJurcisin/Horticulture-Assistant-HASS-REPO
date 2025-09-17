@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1B3841",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1465-0141)",
-    "product_name": "JUNGLE JUICE MICRO 5-0-1",
-    "company_info": {
-      "company": "ADVANCED NUTRIENTS",
-      "Mailing Address": "PO Box 320523",
-      "Post Office Box": null,
-      "City": "Franklin",
-      "State": "WI",
-      "Postal Code": "53120",
-      "Telephone Number": "262 888-2980",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.01,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0005,
-      "Copper (Cu)": 0.01,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.015
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1200",
-      "Cadmium": "<0.1800",
-      "Cobalt": "=7.6800",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=7.3700",
-      "Nickel": "=2.0600",
-      "Lead": "<0.8600",
-      "Selenium": "<0.5600",
-      "Zinc": "=205.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.01,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0005,
-      "Copper (Cu)": 0.01,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.015
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1200",
-      "Cadmium": "<0.1800",
-      "Cobalt": "=7.6800",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=7.3700",
-      "Nickel": "=2.0600",
-      "Lead": "<0.8600",
-      "Selenium": "<0.5600",
-      "Zinc": "=205.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1B3841",
   "metadata": {
     "registrant": "ADVANCED NUTRIENTS",
     "label_name": "JUNGLE JUICE MICRO 5-0-1",
     "wsda_reg_no": "(#1465-0141)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1465-0141)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1465-0141)",
+        "product_name": "JUNGLE JUICE MICRO 5-0-1",
+        "company_info": {
+          "company": "ADVANCED NUTRIENTS",
+          "Mailing Address": "PO Box 320523",
+          "Post Office Box": null,
+          "City": "Franklin",
+          "State": "WI",
+          "Postal Code": "53120",
+          "Telephone Number": "262 888-2980",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.01,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.0005,
+          "Copper (Cu)": 0.01,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0008,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.015
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1200",
+          "Cadmium": "<0.1800",
+          "Cobalt": "=7.6800",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=7.3700",
+          "Nickel": "=2.0600",
+          "Lead": "<0.8600",
+          "Selenium": "<0.5600",
+          "Zinc": "=205.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JUNGLE JUICE MICRO 5-0-1",
+    "brand": "ADVANCED NUTRIENTS",
+    "manufacturer": {
+      "name": "ADVANCED NUTRIENTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 5.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.015,
+      "Cu": 0.01,
+      "B": 0.01,
+      "Mo": 0.0008
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1B3841-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.12,
+            "Cd": 0.18,
+            "Co": 7.68,
+            "Hg": 0.02,
+            "Mo": 7.37,
+            "Ni": 2.06,
+            "Pb": 0.86,
+            "Se": 0.56,
+            "Zn": 205.9
+          },
+          "detection_limits_ppm": {
+            "As": 0.12,
+            "Cd": 0.18,
+            "Hg": 0.02,
+            "Pb": 0.86,
+            "Se": 0.56
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 7.68,
+        "Mo": 7.37,
+        "Ni": 2.06,
+        "Zn": 205.9
+      }
+    }
   }
 }

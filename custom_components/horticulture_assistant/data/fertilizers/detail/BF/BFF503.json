@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"BFF503","source_wsda_record":{"wsda_product_number":"(#3330-0058)","product_name":"MICRO MERGE 5144 0-0-0","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":1.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":4.0,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":4.0},"reported_metals":{"Arsenic":"=2.2100","Cadmium":"=5.7100","Cobalt":"=9.1100","Mercury":"=3.0000","Molybdenum":"=116.6000","Nickel":"=187.9000","Lead":"=54.7000","Selenium":"=0.0510","Zinc":"=70900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":1.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":4.0,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":4.0},"heavy_metals":{"Arsenic":"=2.2100","Cadmium":"=5.7100","Cobalt":"=9.1100","Mercury":"=3.0000","Molybdenum":"=116.6000","Nickel":"=187.9000","Lead":"=54.7000","Selenium":"=0.0510","Zinc":"=70900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"MICRO MERGE 5144 0-0-0","wsda_reg_no":"(#3330-0058)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BFF503",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "MICRO MERGE 5144 0-0-0",
+    "wsda_reg_no": "(#3330-0058)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0058)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0058)",
+        "product_name": "MICRO MERGE 5144 0-0-0",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 1.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 4.0,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.2100",
+          "Cadmium": "=5.7100",
+          "Cobalt": "=9.1100",
+          "Mercury": "=3.0000",
+          "Molybdenum": "=116.6000",
+          "Nickel": "=187.9000",
+          "Lead": "=54.7000",
+          "Selenium": "=0.0510",
+          "Zinc": "=70900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MICRO MERGE 5144 0-0-0",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Mn": 4.0,
+      "Zn": 4.0,
+      "B": 1.0,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BFF503-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.21,
+            "Cd": 5.71,
+            "Co": 9.11,
+            "Hg": 3.0,
+            "Mo": 116.6,
+            "Ni": 187.9,
+            "Pb": 54.7,
+            "Se": 0.051,
+            "Zn": 70900.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.21,
+        "Cd": 5.71,
+        "Co": 9.11,
+        "Hg": 3.0,
+        "Mo": 116.6,
+        "Ni": 187.9,
+        "Pb": 54.7,
+        "Se": 0.051,
+        "Zn": 70900.0
+      }
+    }
+  }
+}

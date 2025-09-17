@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"ADA712","source_wsda_record":{"wsda_product_number":"(#0989-0061)","product_name":"GREENTHUMB 27-0-5 3 IN 1 WEED & FEED 27-0-5","company_info":{"company":"KNOX FERTILIZER COMPANY INC","Mailing Address":"PO Box 248","Post Office Box":null,"City":"Knox","State":"IN","Postal Code":"46534","Telephone Number":"574 772-6278","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.8260","Cadmium":"<0.4810","Cobalt":"<0.4190","Mercury":"<0.0050","Molybdenum":"=0.6860","Nickel":"=1.4700","Lead":"<0.6030","Selenium":"<1.1200","Zinc":"=8.1700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":27.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.8260","Cadmium":"<0.4810","Cobalt":"<0.4190","Mercury":"<0.0050","Molybdenum":"=0.6860","Nickel":"=1.4700","Lead":"<0.6030","Selenium":"<1.1200","Zinc":"=8.1700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KNOX FERTILIZER COMPANY INC","label_name":"GREENTHUMB 27-0-5 3 IN 1 WEED & FEED 27-0-5","wsda_reg_no":"(#0989-0061)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "ADA712",
+  "metadata": {
+    "registrant": "KNOX FERTILIZER COMPANY INC",
+    "label_name": "GREENTHUMB 27-0-5 3 IN 1 WEED & FEED 27-0-5",
+    "wsda_reg_no": "(#0989-0061)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0989-0061)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0989-0061)",
+        "product_name": "GREENTHUMB 27-0-5 3 IN 1 WEED & FEED 27-0-5",
+        "company_info": {
+          "company": "KNOX FERTILIZER COMPANY INC",
+          "Mailing Address": "PO Box 248",
+          "Post Office Box": null,
+          "City": "Knox",
+          "State": "IN",
+          "Postal Code": "46534",
+          "Telephone Number": "574 772-6278",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 27.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.8260",
+          "Cadmium": "<0.4810",
+          "Cobalt": "<0.4190",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=0.6860",
+          "Nickel": "=1.4700",
+          "Lead": "<0.6030",
+          "Selenium": "<1.1200",
+          "Zinc": "=8.1700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENTHUMB 27-0-5 3 IN 1 WEED & FEED 27-0-5",
+    "brand": "KNOX FERTILIZER COMPANY INC",
+    "manufacturer": {
+      "name": "KNOX FERTILIZER COMPANY INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 27.0,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "ADA712-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.826,
+            "Cd": 0.481,
+            "Co": 0.419,
+            "Hg": 0.005,
+            "Mo": 0.686,
+            "Ni": 1.47,
+            "Pb": 0.603,
+            "Se": 1.12,
+            "Zn": 8.17
+          },
+          "detection_limits_ppm": {
+            "As": 0.826,
+            "Cd": 0.481,
+            "Co": 0.419,
+            "Hg": 0.005,
+            "Pb": 0.603,
+            "Se": 1.12
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 0.686,
+        "Ni": 1.47,
+        "Zn": 8.17
+      }
+    }
+  }
+}

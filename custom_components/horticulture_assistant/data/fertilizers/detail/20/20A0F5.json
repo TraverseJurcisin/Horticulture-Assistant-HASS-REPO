@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "20A0F5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0670-0155)",
-    "product_name": "EARTHLINK CUSTOM ENHANCED 24-1-5",
-    "company_info": {
-      "company": "TERRALINK HORTICULTURE INC",
-      "Mailing Address": "464 Riverside Rd",
-      "Post Office Box": null,
-      "City": "Abbotsford",
-      "State": "BC",
-      "Postal Code": "V2S 7M1",
-      "Telephone Number": "800 661-4559",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": 2.5,
-      "Sulfur (S)": 7.0,
-      "Boron (B)": 0.03,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=22.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=3.4800",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=12.1000",
-      "Nickel": "=82.4100",
-      "Lead": "=8.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=35.1500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 24.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": 2.5,
-      "Sulfur (S)": 7.0,
-      "Boron (B)": 0.03,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=22.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=3.4800",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=12.1000",
-      "Nickel": "=82.4100",
-      "Lead": "=8.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=35.1500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "20A0F5",
   "metadata": {
     "registrant": "TERRALINK HORTICULTURE INC",
     "label_name": "EARTHLINK CUSTOM ENHANCED 24-1-5",
     "wsda_reg_no": "(#0670-0155)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0155)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0155)",
+        "product_name": "EARTHLINK CUSTOM ENHANCED 24-1-5",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 24.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": 7.0,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=22.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=3.4800",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=12.1000",
+          "Nickel": "=82.4100",
+          "Lead": "=8.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=35.1500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTHLINK CUSTOM ENHANCED 24-1-5",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 24.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "Mg": 2.5,
+      "S": 7.0
+    },
+    "micros_pct": {
+      "B": 0.03
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "20A0F5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 22.0,
+            "Cd": 1.0,
+            "Co": 3.48,
+            "Hg": 0.2,
+            "Mo": 12.1,
+            "Ni": 82.41,
+            "Pb": 8.0,
+            "Se": 1.0,
+            "Zn": 35.15
+          },
+          "detection_limits_ppm": {
+            "Cd": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 22.0,
+        "Co": 3.48,
+        "Hg": 0.2,
+        "Mo": 12.1,
+        "Ni": 82.41,
+        "Pb": 8.0,
+        "Se": 1.0,
+        "Zn": 35.15
+      }
+    }
   }
 }

@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"E02FE0","source_wsda_record":{"wsda_product_number":"(#4093-0015)","product_name":"BURPEE ENHANCED NATURAL AND ORGANIC ROSE + BLOOM PLANT FOOD 4-6-4","company_info":{"company":"VOGEL SEED & FERTILIZER, LLC","Mailing Address":"1891 Spring Valley Road","Post Office Box":null,"City":"Jackson","State":"WI","Postal Code":"53037","Telephone Number":"262 677-2273","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":0.8,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.9500","Cadmium":"=0.2800","Cobalt":"=1.9700","Mercury":"<0.0238","Molybdenum":"=4.3400","Nickel":"=11.4000","Lead":"=5.6500","Selenium":"=1.5500","Zinc":"=290.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":0.8,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":0.05,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.9500","Cadmium":"=0.2800","Cobalt":"=1.9700","Mercury":"<0.0238","Molybdenum":"=4.3400","Nickel":"=11.4000","Lead":"=5.6500","Selenium":"=1.5500","Zinc":"=290.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOGEL SEED & FERTILIZER, LLC","label_name":"BURPEE ENHANCED NATURAL AND ORGANIC ROSE + BLOOM PLANT FOOD 4-6-4","wsda_reg_no":"(#4093-0015)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E02FE0",
+  "metadata": {
+    "registrant": "VOGEL SEED & FERTILIZER, LLC",
+    "label_name": "BURPEE ENHANCED NATURAL AND ORGANIC ROSE + BLOOM PLANT FOOD 4-6-4",
+    "wsda_reg_no": "(#4093-0015)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4093-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4093-0015)",
+        "product_name": "BURPEE ENHANCED NATURAL AND ORGANIC ROSE + BLOOM PLANT FOOD 4-6-4",
+        "company_info": {
+          "company": "VOGEL SEED & FERTILIZER, LLC",
+          "Mailing Address": "1891 Spring Valley Road",
+          "Post Office Box": null,
+          "City": "Jackson",
+          "State": "WI",
+          "Postal Code": "53037",
+          "Telephone Number": "262 677-2273",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": 0.8,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9500",
+          "Cadmium": "=0.2800",
+          "Cobalt": "=1.9700",
+          "Mercury": "<0.0238",
+          "Molybdenum": "=4.3400",
+          "Nickel": "=11.4000",
+          "Lead": "=5.6500",
+          "Selenium": "=1.5500",
+          "Zinc": "=290.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BURPEE ENHANCED NATURAL AND ORGANIC ROSE + BLOOM PLANT FOOD 4-6-4",
+    "brand": "VOGEL SEED & FERTILIZER, LLC",
+    "manufacturer": {
+      "name": "VOGEL SEED & FERTILIZER, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "Mg": 0.8,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E02FE0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.95,
+            "Cd": 0.28,
+            "Co": 1.97,
+            "Hg": 0.0238,
+            "Mo": 4.34,
+            "Ni": 11.4,
+            "Pb": 5.65,
+            "Se": 1.55,
+            "Zn": 290.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0238
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.95,
+        "Cd": 0.28,
+        "Co": 1.97,
+        "Mo": 4.34,
+        "Ni": 11.4,
+        "Pb": 5.65,
+        "Se": 1.55,
+        "Zn": 290.0
+      }
+    }
+  }
+}

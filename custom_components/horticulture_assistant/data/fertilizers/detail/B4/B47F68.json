@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B47F68","source_wsda_record":{"wsda_product_number":"(#2625-0004)","product_name":"ALGACELL CALCIUM 880 0-0-0","company_info":{"company":"AGROPLASMA FERTICELL SA DE CV","Mailing Address":"Blvd. Adolfo lopez mateos #281","Post Office Box":"Miguel hidalgo, CP81210","City":"Los machis Sinaloa","State":"Me","Postal Code":"CP 81210","Telephone Number":"480 361-1300","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":28.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=35.8000","Cadmium":"=1.7900","Cobalt":"=3.5800","Mercury":"=0.0165","Molybdenum":"=17.9000","Nickel":"=17.9000","Lead":"=35.8000","Selenium":"=35.8000","Zinc":"=11.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":28.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=35.8000","Cadmium":"=1.7900","Cobalt":"=3.5800","Mercury":"=0.0165","Molybdenum":"=17.9000","Nickel":"=17.9000","Lead":"=35.8000","Selenium":"=35.8000","Zinc":"=11.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGROPLASMA FERTICELL SA DE CV","label_name":"ALGACELL CALCIUM 880 0-0-0","wsda_reg_no":"(#2625-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B47F68",
+  "metadata": {
+    "registrant": "AGROPLASMA FERTICELL SA DE CV",
+    "label_name": "ALGACELL CALCIUM 880 0-0-0",
+    "wsda_reg_no": "(#2625-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2625-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2625-0004)",
+        "product_name": "ALGACELL CALCIUM 880 0-0-0",
+        "company_info": {
+          "company": "AGROPLASMA FERTICELL SA DE CV",
+          "Mailing Address": "Blvd. Adolfo lopez mateos #281",
+          "Post Office Box": "Miguel hidalgo, CP81210",
+          "City": "Los machis Sinaloa",
+          "State": "Me",
+          "Postal Code": "CP 81210",
+          "Telephone Number": "480 361-1300",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 28.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=35.8000",
+          "Cadmium": "=1.7900",
+          "Cobalt": "=3.5800",
+          "Mercury": "=0.0165",
+          "Molybdenum": "=17.9000",
+          "Nickel": "=17.9000",
+          "Lead": "=35.8000",
+          "Selenium": "=35.8000",
+          "Zinc": "=11.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALGACELL CALCIUM 880 0-0-0",
+    "brand": "AGROPLASMA FERTICELL SA DE CV",
+    "manufacturer": {
+      "name": "AGROPLASMA FERTICELL SA DE CV"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 28.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B47F68-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 35.8,
+            "Cd": 1.79,
+            "Co": 3.58,
+            "Hg": 0.0165,
+            "Mo": 17.9,
+            "Ni": 17.9,
+            "Pb": 35.8,
+            "Se": 35.8,
+            "Zn": 11.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 35.8,
+        "Cd": 1.79,
+        "Co": 3.58,
+        "Hg": 0.0165,
+        "Mo": 17.9,
+        "Ni": 17.9,
+        "Pb": 35.8,
+        "Se": 35.8,
+        "Zn": 11.2
+      }
+    }
+  }
+}

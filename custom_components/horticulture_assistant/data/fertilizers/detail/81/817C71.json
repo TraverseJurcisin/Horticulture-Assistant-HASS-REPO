@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "817C71",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3647-0003)",
-    "product_name": "KELPAK KELP EXTRACT 0-0-1",
-    "company_info": {
-      "company": "KELP PRODUCTS INTERNATIONAL PTY LTD",
-      "Mailing Address": "1823 Shaw Ave Suite 103",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93611",
-      "Telephone Number": "559 284-7112",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.6900",
-      "Cadmium": "=0.0400",
-      "Cobalt": "=0.5600",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.7200",
-      "Nickel": "=0.2600",
-      "Lead": "=0.7400",
-      "Selenium": "=0.1500",
-      "Zinc": "=39.4400"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.6900",
-      "Cadmium": "=0.0400",
-      "Cobalt": "=0.5600",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.7200",
-      "Nickel": "=0.2600",
-      "Lead": "=0.7400",
-      "Selenium": "=0.1500",
-      "Zinc": "=39.4400"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "817C71",
   "metadata": {
     "registrant": "KELP PRODUCTS INTERNATIONAL PTY LTD",
     "label_name": "KELPAK KELP EXTRACT 0-0-1",
     "wsda_reg_no": "(#3647-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3647-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3647-0003)",
+        "product_name": "KELPAK KELP EXTRACT 0-0-1",
+        "company_info": {
+          "company": "KELP PRODUCTS INTERNATIONAL PTY LTD",
+          "Mailing Address": "1823 Shaw Ave Suite 103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 284-7112",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6900",
+          "Cadmium": "=0.0400",
+          "Cobalt": "=0.5600",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.7200",
+          "Nickel": "=0.2600",
+          "Lead": "=0.7400",
+          "Selenium": "=0.1500",
+          "Zinc": "=39.4400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KELPAK KELP EXTRACT 0-0-1",
+    "brand": "KELP PRODUCTS INTERNATIONAL PTY LTD",
+    "manufacturer": {
+      "name": "KELP PRODUCTS INTERNATIONAL PTY LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "817C71-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.69,
+            "Cd": 0.04,
+            "Co": 0.56,
+            "Hg": 0.05,
+            "Mo": 0.72,
+            "Ni": 0.26,
+            "Pb": 0.74,
+            "Se": 0.15,
+            "Zn": 39.44
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.69,
+        "Cd": 0.04,
+        "Co": 0.56,
+        "Hg": 0.05,
+        "Mo": 0.72,
+        "Ni": 0.26,
+        "Pb": 0.74,
+        "Se": 0.15,
+        "Zn": 39.44
+      }
+    }
   }
 }

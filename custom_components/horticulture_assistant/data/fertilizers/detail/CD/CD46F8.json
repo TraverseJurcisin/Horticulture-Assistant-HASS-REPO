@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"CD46F8","source_wsda_record":{"wsda_product_number":"(#2789-0004)","product_name":"AFRIKELP O-DS 0.07-0.002-0.028","company_info":{"company":"AKUSA IINC","Mailing Address":"1625 E Shaw Ave Suite 139","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93710","Telephone Number":"559 515-6177","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.07,"Available Phosphoric Acid (P2O5)":0.002,"Soluble Potash (K2O)":0.028,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7400","Cadmium":"=0.0800","Cobalt":"=0.1400","Mercury":"=0.9900","Molybdenum":"=2.0000","Nickel":"=0.4200","Lead":"=0.8000","Selenium":"=1.8400","Zinc":"=1.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.07,"Available Phosphoric Acid (P2O5)":0.002,"Soluble Potash (K2O)":0.028,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7400","Cadmium":"=0.0800","Cobalt":"=0.1400","Mercury":"=0.9900","Molybdenum":"=2.0000","Nickel":"=0.4200","Lead":"=0.8000","Selenium":"=1.8400","Zinc":"=1.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AKUSA IINC","label_name":"AFRIKELP O-DS 0.07-0.002-0.028","wsda_reg_no":"(#2789-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CD46F8",
+  "metadata": {
+    "registrant": "AKUSA IINC",
+    "label_name": "AFRIKELP O-DS 0.07-0.002-0.028",
+    "wsda_reg_no": "(#2789-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2789-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2789-0004)",
+        "product_name": "AFRIKELP O-DS 0.07-0.002-0.028",
+        "company_info": {
+          "company": "AKUSA IINC",
+          "Mailing Address": "1625 E Shaw Ave Suite 139",
+          "Post Office Box": null,
+          "City": "Fresno",
+          "State": "CA",
+          "Postal Code": "93710",
+          "Telephone Number": "559 515-6177",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.07,
+          "Available Phosphoric Acid (P2O5)": 0.002,
+          "Soluble Potash (K2O)": 0.028,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7400",
+          "Cadmium": "=0.0800",
+          "Cobalt": "=0.1400",
+          "Mercury": "=0.9900",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=0.4200",
+          "Lead": "=0.8000",
+          "Selenium": "=1.8400",
+          "Zinc": "=1.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AFRIKELP O-DS 0.07-0.002-0.028",
+    "brand": "AKUSA IINC",
+    "manufacturer": {
+      "name": "AKUSA IINC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.07,
+      "P2O5_pct": 0.002,
+      "K2O_pct": 0.028
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CD46F8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.74,
+            "Cd": 0.08,
+            "Co": 0.14,
+            "Hg": 0.99,
+            "Mo": 2.0,
+            "Ni": 0.42,
+            "Pb": 0.8,
+            "Se": 1.84,
+            "Zn": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.74,
+        "Cd": 0.08,
+        "Co": 0.14,
+        "Hg": 0.99,
+        "Mo": 2.0,
+        "Ni": 0.42,
+        "Pb": 0.8,
+        "Se": 1.84,
+        "Zn": 1.0
+      }
+    }
+  }
+}

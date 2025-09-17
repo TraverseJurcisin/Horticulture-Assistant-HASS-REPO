@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"E139FE","source_wsda_record":{"wsda_product_number":"(#3919-0001)","product_name":"GOOD EARTH ORGANICS BOOST 6-6-3","company_info":{"company":"GOOD EARTH ORGANICS INC","Mailing Address":"30008 Redwood Highway","Post Office Box":null,"City":"Cave Junction","State":"OR","Postal Code":"97523","Telephone Number":"541 592-4855","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":0.69,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.11,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2500","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=0.6000","Nickel":"=3.1000","Lead":"=1.5000","Selenium":"=0.9000","Zinc":"=49.5400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":0.69,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.11,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2500","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=0.6000","Nickel":"=3.1000","Lead":"=1.5000","Selenium":"=0.9000","Zinc":"=49.5400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GOOD EARTH ORGANICS INC","label_name":"GOOD EARTH ORGANICS BOOST 6-6-3","wsda_reg_no":"(#3919-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E139FE",
+  "metadata": {
+    "registrant": "GOOD EARTH ORGANICS INC",
+    "label_name": "GOOD EARTH ORGANICS BOOST 6-6-3",
+    "wsda_reg_no": "(#3919-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3919-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3919-0001)",
+        "product_name": "GOOD EARTH ORGANICS BOOST 6-6-3",
+        "company_info": {
+          "company": "GOOD EARTH ORGANICS INC",
+          "Mailing Address": "30008 Redwood Highway",
+          "Post Office Box": null,
+          "City": "Cave Junction",
+          "State": "OR",
+          "Postal Code": "97523",
+          "Telephone Number": "541 592-4855",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 10.0,
+          "Magnesium (Mg)": 0.69,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.11,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.2500",
+          "Cobalt": "=0.6000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.6000",
+          "Nickel": "=3.1000",
+          "Lead": "=1.5000",
+          "Selenium": "=0.9000",
+          "Zinc": "=49.5400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GOOD EARTH ORGANICS BOOST 6-6-3",
+    "brand": "GOOD EARTH ORGANICS INC",
+    "manufacturer": {
+      "name": "GOOD EARTH ORGANICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 10.0,
+      "Mg": 0.69
+    },
+    "micros_pct": {
+      "Fe": 0.11
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E139FE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.25,
+            "Co": 0.6,
+            "Hg": 0.05,
+            "Mo": 0.6,
+            "Ni": 3.1,
+            "Pb": 1.5,
+            "Se": 0.9,
+            "Zn": 49.54
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.25,
+        "Co": 0.6,
+        "Hg": 0.05,
+        "Mo": 0.6,
+        "Ni": 3.1,
+        "Pb": 1.5,
+        "Se": 0.9,
+        "Zn": 49.54
+      }
+    }
+  }
+}

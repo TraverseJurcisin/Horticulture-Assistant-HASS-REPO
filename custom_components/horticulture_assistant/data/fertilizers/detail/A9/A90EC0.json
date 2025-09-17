@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A90EC0","source_wsda_record":{"wsda_product_number":"(#0335-0153)","product_name":"HI-YIELD TRIPLE 16 16-16-16","company_info":{"company":"VOLUNTARY PURCHASING GROUPS INC","Mailing Address":"230 FM 87","Post Office Box":null,"City":"Bonham","State":"TX","Postal Code":"75418-8629","Telephone Number":"903 583-5501","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.0100","Cadmium":"=0.3600","Cobalt":"=2.6900","Mercury":"=0.1020","Molybdenum":"=0.7300","Nickel":"=2.8900","Lead":"<0.0150","Selenium":"=0.4700","Zinc":"=18.9300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":5.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.0100","Cadmium":"=0.3600","Cobalt":"=2.6900","Mercury":"=0.1020","Molybdenum":"=0.7300","Nickel":"=2.8900","Lead":"<0.0150","Selenium":"=0.4700","Zinc":"=18.9300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOLUNTARY PURCHASING GROUPS INC","label_name":"HI-YIELD TRIPLE 16 16-16-16","wsda_reg_no":"(#0335-0153)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A90EC0",
+  "metadata": {
+    "registrant": "VOLUNTARY PURCHASING GROUPS INC",
+    "label_name": "HI-YIELD TRIPLE 16 16-16-16",
+    "wsda_reg_no": "(#0335-0153)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0153)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0153)",
+        "product_name": "HI-YIELD TRIPLE 16 16-16-16",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.0100",
+          "Cadmium": "=0.3600",
+          "Cobalt": "=2.6900",
+          "Mercury": "=0.1020",
+          "Molybdenum": "=0.7300",
+          "Nickel": "=2.8900",
+          "Lead": "<0.0150",
+          "Selenium": "=0.4700",
+          "Zinc": "=18.9300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HI-YIELD TRIPLE 16 16-16-16",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "P2O5_pct": 16.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A90EC0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.01,
+            "Cd": 0.36,
+            "Co": 2.69,
+            "Hg": 0.102,
+            "Mo": 0.73,
+            "Ni": 2.89,
+            "Pb": 0.015,
+            "Se": 0.47,
+            "Zn": 18.93
+          },
+          "detection_limits_ppm": {
+            "Pb": 0.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.01,
+        "Cd": 0.36,
+        "Co": 2.69,
+        "Hg": 0.102,
+        "Mo": 0.73,
+        "Ni": 2.89,
+        "Se": 0.47,
+        "Zn": 18.93
+      }
+    }
+  }
+}

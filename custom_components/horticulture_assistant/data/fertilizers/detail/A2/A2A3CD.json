@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"A2A3CD","source_wsda_record":{"wsda_product_number":"(#1877-0116)","product_name":"TRUE ORGANIC WORM CASTINGS 1-0-0","company_info":{"company":"TRUE ORGANIC PRODUCTS INC","Mailing Address":"PO Box 7192","Post Office Box":null,"City":"Spreckels","State":"CA","Postal Code":"93962","Telephone Number":"831 375-4796","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=0.4100","Cobalt":"=3.1500","Mercury":"=0.0600","Molybdenum":"=1.3000","Nickel":"=17.2000","Lead":"=20.3000","Selenium":"=1.2000","Zinc":"=173.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=0.4100","Cobalt":"=3.1500","Mercury":"=0.0600","Molybdenum":"=1.3000","Nickel":"=17.2000","Lead":"=20.3000","Selenium":"=1.2000","Zinc":"=173.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TRUE ORGANIC PRODUCTS INC","label_name":"TRUE ORGANIC WORM CASTINGS 1-0-0","wsda_reg_no":"(#1877-0116)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A2A3CD",
+  "metadata": {
+    "registrant": "TRUE ORGANIC PRODUCTS INC",
+    "label_name": "TRUE ORGANIC WORM CASTINGS 1-0-0",
+    "wsda_reg_no": "(#1877-0116)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1877-0116)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1877-0116)",
+        "product_name": "TRUE ORGANIC WORM CASTINGS 1-0-0",
+        "company_info": {
+          "company": "TRUE ORGANIC PRODUCTS INC",
+          "Mailing Address": "PO Box 7192",
+          "Post Office Box": null,
+          "City": "Spreckels",
+          "State": "CA",
+          "Postal Code": "93962",
+          "Telephone Number": "831 375-4796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=0.4100",
+          "Cobalt": "=3.1500",
+          "Mercury": "=0.0600",
+          "Molybdenum": "=1.3000",
+          "Nickel": "=17.2000",
+          "Lead": "=20.3000",
+          "Selenium": "=1.2000",
+          "Zinc": "=173.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRUE ORGANIC WORM CASTINGS 1-0-0",
+    "brand": "TRUE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "TRUE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A2A3CD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.41,
+            "Co": 3.15,
+            "Hg": 0.06,
+            "Mo": 1.3,
+            "Ni": 17.2,
+            "Pb": 20.3,
+            "Se": 1.2,
+            "Zn": 173.9
+          },
+          "detection_limits_ppm": {
+            "As": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.41,
+        "Co": 3.15,
+        "Hg": 0.06,
+        "Mo": 1.3,
+        "Ni": 17.2,
+        "Pb": 20.3,
+        "Se": 1.2,
+        "Zn": 173.9
+      }
+    }
+  }
+}

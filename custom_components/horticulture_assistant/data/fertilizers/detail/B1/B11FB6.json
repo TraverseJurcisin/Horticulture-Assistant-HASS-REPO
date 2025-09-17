@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B11FB6","source_wsda_record":{"wsda_product_number":"(#4048-0001)","product_name":"RIGHTLINE LIGHT IT UP 0-0-0","company_info":{"company":"RIGHTLINE, LLC","Mailing Address":"1823 Shaw #103","Post Office Box":null,"City":"Clovis","State":"CA","Postal Code":"93611","Telephone Number":"770 335-3015","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9750","Cadmium":"=0.7070","Cobalt":"=1.2700","Mercury":"=0.0030","Molybdenum":"=0.0150","Nickel":"=24.4600","Lead":"=0.7870","Selenium":"=0.0010","Zinc":"=61.7100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9750","Cadmium":"=0.7070","Cobalt":"=1.2700","Mercury":"=0.0030","Molybdenum":"=0.0150","Nickel":"=24.4600","Lead":"=0.7870","Selenium":"=0.0010","Zinc":"=61.7100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RIGHTLINE, LLC","label_name":"RIGHTLINE LIGHT IT UP 0-0-0","wsda_reg_no":"(#4048-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B11FB6",
+  "metadata": {
+    "registrant": "RIGHTLINE, LLC",
+    "label_name": "RIGHTLINE LIGHT IT UP 0-0-0",
+    "wsda_reg_no": "(#4048-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4048-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4048-0001)",
+        "product_name": "RIGHTLINE LIGHT IT UP 0-0-0",
+        "company_info": {
+          "company": "RIGHTLINE, LLC",
+          "Mailing Address": "1823 Shaw #103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "770 335-3015",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9750",
+          "Cadmium": "=0.7070",
+          "Cobalt": "=1.2700",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=0.0150",
+          "Nickel": "=24.4600",
+          "Lead": "=0.7870",
+          "Selenium": "=0.0010",
+          "Zinc": "=61.7100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RIGHTLINE LIGHT IT UP 0-0-0",
+    "brand": "RIGHTLINE, LLC",
+    "manufacturer": {
+      "name": "RIGHTLINE, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B11FB6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.975,
+            "Cd": 0.707,
+            "Co": 1.27,
+            "Hg": 0.003,
+            "Mo": 0.015,
+            "Ni": 24.46,
+            "Pb": 0.787,
+            "Se": 0.001,
+            "Zn": 61.71
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.975,
+        "Cd": 0.707,
+        "Co": 1.27,
+        "Hg": 0.003,
+        "Mo": 0.015,
+        "Ni": 24.46,
+        "Pb": 0.787,
+        "Se": 0.001,
+        "Zn": 61.71
+      }
+    }
+  }
+}

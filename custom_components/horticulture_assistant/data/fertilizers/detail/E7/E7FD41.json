@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"E7FD41","source_wsda_record":{"wsda_product_number":"(#1988-0014)","product_name":"PRECISION LABORATORIES VIVAX PLUS FERTILIZER 0-0-20","company_info":{"company":"PRECISION LABORATORIES LLC","Mailing Address":"c/o Delta Analytical Corporati","Post Office Box":"12510 Prosperity Dr Suite 160","City":"Silver Spring","State":"MD","Postal Code":"20904","Telephone Number":"847 282-7280","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.15,"Magnesium (Mg)":null,"Sulfur (S)":9.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5060","Cadmium":"<0.4940","Cobalt":"=1.2100","Mercury":"=0.0080","Molybdenum":"=1.5400","Nickel":"=4.0900","Lead":"=1.8000","Selenium":"<1.1500","Zinc":"=39.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.15,"Magnesium (Mg)":null,"Sulfur (S)":9.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5060","Cadmium":"<0.4940","Cobalt":"=1.2100","Mercury":"=0.0080","Molybdenum":"=1.5400","Nickel":"=4.0900","Lead":"=1.8000","Selenium":"<1.1500","Zinc":"=39.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PRECISION LABORATORIES LLC","label_name":"PRECISION LABORATORIES VIVAX PLUS FERTILIZER 0-0-20","wsda_reg_no":"(#1988-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E7FD41",
+  "metadata": {
+    "registrant": "PRECISION LABORATORIES LLC",
+    "label_name": "PRECISION LABORATORIES VIVAX PLUS FERTILIZER 0-0-20",
+    "wsda_reg_no": "(#1988-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1988-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1988-0014)",
+        "product_name": "PRECISION LABORATORIES VIVAX PLUS FERTILIZER 0-0-20",
+        "company_info": {
+          "company": "PRECISION LABORATORIES LLC",
+          "Mailing Address": "c/o Delta Analytical Corporati",
+          "Post Office Box": "12510 Prosperity Dr Suite 160",
+          "City": "Silver Spring",
+          "State": "MD",
+          "Postal Code": "20904",
+          "Telephone Number": "847 282-7280",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": 3.15,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 9.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5060",
+          "Cadmium": "<0.4940",
+          "Cobalt": "=1.2100",
+          "Mercury": "=0.0080",
+          "Molybdenum": "=1.5400",
+          "Nickel": "=4.0900",
+          "Lead": "=1.8000",
+          "Selenium": "<1.1500",
+          "Zinc": "=39.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRECISION LABORATORIES VIVAX PLUS FERTILIZER 0-0-20",
+    "brand": "PRECISION LABORATORIES LLC",
+    "manufacturer": {
+      "name": "PRECISION LABORATORIES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Ca": 3.15,
+      "S": 9.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E7FD41-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.506,
+            "Cd": 0.494,
+            "Co": 1.21,
+            "Hg": 0.008,
+            "Mo": 1.54,
+            "Ni": 4.09,
+            "Pb": 1.8,
+            "Se": 1.15,
+            "Zn": 39.7
+          },
+          "detection_limits_ppm": {
+            "As": 0.506,
+            "Cd": 0.494,
+            "Se": 1.15
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.21,
+        "Hg": 0.008,
+        "Mo": 1.54,
+        "Ni": 4.09,
+        "Pb": 1.8,
+        "Zn": 39.7
+      }
+    }
+  }
+}

@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2DBCBB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3871-0002)",
-    "product_name": "IV ORGANIC PREMIUM BLEND 2-2-2",
-    "company_info": {
-      "company": "IV ORGANICS INC",
-      "Mailing Address": "4400 W Riverside Dr #110-2201",
-      "Post Office Box": null,
-      "City": "Burbank",
-      "State": "CA",
-      "Postal Code": "91505",
-      "Telephone Number": "323 762-5547",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.6700",
-      "Cadmium": "=0.6200",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.5500",
-      "Nickel": "=5.9100",
-      "Lead": "=2.9100",
-      "Selenium": "=8.2000",
-      "Zinc": "=908.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.6700",
-      "Cadmium": "=0.6200",
-      "Cobalt": "=1.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.5500",
-      "Nickel": "=5.9100",
-      "Lead": "=2.9100",
-      "Selenium": "=8.2000",
-      "Zinc": "=908.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2DBCBB",
   "metadata": {
     "registrant": "IV ORGANICS INC",
     "label_name": "IV ORGANIC PREMIUM BLEND 2-2-2",
     "wsda_reg_no": "(#3871-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3871-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3871-0002)",
+        "product_name": "IV ORGANIC PREMIUM BLEND 2-2-2",
+        "company_info": {
+          "company": "IV ORGANICS INC",
+          "Mailing Address": "4400 W Riverside Dr #110-2201",
+          "Post Office Box": null,
+          "City": "Burbank",
+          "State": "CA",
+          "Postal Code": "91505",
+          "Telephone Number": "323 762-5547",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6700",
+          "Cadmium": "=0.6200",
+          "Cobalt": "=1.2000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=4.5500",
+          "Nickel": "=5.9100",
+          "Lead": "=2.9100",
+          "Selenium": "=8.2000",
+          "Zinc": "=908.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "IV ORGANIC PREMIUM BLEND 2-2-2",
+    "brand": "IV ORGANICS INC",
+    "manufacturer": {
+      "name": "IV ORGANICS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "Mg": 1.0,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2DBCBB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.67,
+            "Cd": 0.62,
+            "Co": 1.2,
+            "Hg": 0.05,
+            "Mo": 4.55,
+            "Ni": 5.91,
+            "Pb": 2.91,
+            "Se": 8.2,
+            "Zn": 908.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.67,
+        "Cd": 0.62,
+        "Co": 1.2,
+        "Hg": 0.05,
+        "Mo": 4.55,
+        "Ni": 5.91,
+        "Pb": 2.91,
+        "Se": 8.2,
+        "Zn": 908.0
+      }
+    }
   }
 }

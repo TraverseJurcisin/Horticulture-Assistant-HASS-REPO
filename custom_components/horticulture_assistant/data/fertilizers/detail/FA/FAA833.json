@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"FAA833","source_wsda_record":{"wsda_product_number":"(#0698-0223)","product_name":"MIRACLE-GRO SHAKE 'N FEED CITRUS, AVOCADO, MANGO PLANT FOOD 8-2-10","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":6.9,"Magnesium (Mg)":5.5,"Sulfur (S)":4.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.92,"Manganese (Mn)":0.34,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.11},"reported_metals":{"Arsenic":"=0.7820","Cadmium":"=0.3780","Cobalt":"=29.8000","Mercury":"=0.0180","Molybdenum":"=0.6750","Nickel":"=9.5300","Lead":"=4.1000","Selenium":"=0.6750","Zinc":"=1360.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":6.9,"Magnesium (Mg)":5.5,"Sulfur (S)":4.7,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.92,"Manganese (Mn)":0.34,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.11},"heavy_metals":{"Arsenic":"=0.7820","Cadmium":"=0.3780","Cobalt":"=29.8000","Mercury":"=0.0180","Molybdenum":"=0.6750","Nickel":"=9.5300","Lead":"=4.1000","Selenium":"=0.6750","Zinc":"=1360.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO SHAKE 'N FEED CITRUS, AVOCADO, MANGO PLANT FOOD 8-2-10","wsda_reg_no":"(#0698-0223)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FAA833",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO SHAKE 'N FEED CITRUS, AVOCADO, MANGO PLANT FOOD 8-2-10",
+    "wsda_reg_no": "(#0698-0223)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0223)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0223)",
+        "product_name": "MIRACLE-GRO SHAKE 'N FEED CITRUS, AVOCADO, MANGO PLANT FOOD 8-2-10",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 6.9,
+          "Magnesium (Mg)": 5.5,
+          "Sulfur (S)": 4.7,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.92,
+          "Manganese (Mn)": 0.34,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.11
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7820",
+          "Cadmium": "=0.3780",
+          "Cobalt": "=29.8000",
+          "Mercury": "=0.0180",
+          "Molybdenum": "=0.6750",
+          "Nickel": "=9.5300",
+          "Lead": "=4.1000",
+          "Selenium": "=0.6750",
+          "Zinc": "=1360.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO SHAKE 'N FEED CITRUS, AVOCADO, MANGO PLANT FOOD 8-2-10",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 6.9,
+      "Mg": 5.5,
+      "S": 4.7
+    },
+    "micros_pct": {
+      "Fe": 0.92,
+      "Mn": 0.34,
+      "Zn": 0.11,
+      "Cu": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FAA833-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.782,
+            "Cd": 0.378,
+            "Co": 29.8,
+            "Hg": 0.018,
+            "Mo": 0.675,
+            "Ni": 9.53,
+            "Pb": 4.1,
+            "Se": 0.675,
+            "Zn": 1360.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.782,
+        "Cd": 0.378,
+        "Co": 29.8,
+        "Hg": 0.018,
+        "Mo": 0.675,
+        "Ni": 9.53,
+        "Pb": 4.1,
+        "Se": 0.675,
+        "Zn": 1360.0
+      }
+    }
+  }
+}

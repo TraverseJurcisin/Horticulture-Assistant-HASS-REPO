@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C07D3C","source_wsda_record":{"wsda_product_number":"(#4214-0004)","product_name":"SIMPLE LAWN SOLUTIONS LAWN FOOD 0-0-25","company_info":{"company":"CUSTOM SIMPLE SOLUTIONS LLC","Mailing Address":"534 CR 529A","Post Office Box":null,"City":"Lake Panasoffkee","State":"FL","Postal Code":"33538","Telephone Number":"352 789-5024","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":25.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0260","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=0.0270","Nickel":"=0.8710","Lead":"=0.0460","Selenium":"=0.0680","Zinc":"=1.1500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":25.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0260","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=0.0270","Nickel":"=0.8710","Lead":"=0.0460","Selenium":"=0.0680","Zinc":"=1.1500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CUSTOM SIMPLE SOLUTIONS LLC","label_name":"SIMPLE LAWN SOLUTIONS LAWN FOOD 0-0-25","wsda_reg_no":"(#4214-0004)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C07D3C",
+  "metadata": {
+    "registrant": "CUSTOM SIMPLE SOLUTIONS LLC",
+    "label_name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 0-0-25",
+    "wsda_reg_no": "(#4214-0004)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4214-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4214-0004)",
+        "product_name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 0-0-25",
+        "company_info": {
+          "company": "CUSTOM SIMPLE SOLUTIONS LLC",
+          "Mailing Address": "534 CR 529A",
+          "Post Office Box": null,
+          "City": "Lake Panasoffkee",
+          "State": "FL",
+          "Postal Code": "33538",
+          "Telephone Number": "352 789-5024",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 25.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0260",
+          "Cadmium": "<0.0150",
+          "Cobalt": "<0.0150",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.0270",
+          "Nickel": "=0.8710",
+          "Lead": "=0.0460",
+          "Selenium": "=0.0680",
+          "Zinc": "=1.1500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 0-0-25",
+    "brand": "CUSTOM SIMPLE SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "CUSTOM SIMPLE SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 25.0
+    },
+    "macros_pct": {
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C07D3C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.026,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Mo": 0.027,
+            "Ni": 0.871,
+            "Pb": 0.046,
+            "Se": 0.068,
+            "Zn": 1.15
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.026,
+        "Mo": 0.027,
+        "Ni": 0.871,
+        "Pb": 0.046,
+        "Se": 0.068,
+        "Zn": 1.15
+      }
+    }
+  }
+}

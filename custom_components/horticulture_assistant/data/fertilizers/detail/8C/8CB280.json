@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"8CB280","source_wsda_record":{"wsda_product_number":"(#0126-0160)","product_name":"EXPERT GARDENER CRABGRASS PREVENTER PLUS FERTILIZER III 30-0-3","company_info":{"company":"GRO TEC INC","Mailing Address":"14481 Lochridge Blvd","Post Office Box":null,"City":"Covington","State":"GA","Postal Code":"30014","Telephone Number":"770 788-4519","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":30.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0200","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=2.7000","Nickel":"=70.5100","Lead":"=2.4300","Selenium":"<0.0010","Zinc":"=506.0600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":30.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0200","Cadmium":"<0.0150","Cobalt":"<0.0150","Mercury":"<0.0010","Molybdenum":"=2.7000","Nickel":"=70.5100","Lead":"=2.4300","Selenium":"<0.0010","Zinc":"=506.0600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO TEC INC","label_name":"EXPERT GARDENER CRABGRASS PREVENTER PLUS FERTILIZER III 30-0-3","wsda_reg_no":"(#0126-0160)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8CB280",
+  "metadata": {
+    "registrant": "GRO TEC INC",
+    "label_name": "EXPERT GARDENER CRABGRASS PREVENTER PLUS FERTILIZER III 30-0-3",
+    "wsda_reg_no": "(#0126-0160)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0160)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0160)",
+        "product_name": "EXPERT GARDENER CRABGRASS PREVENTER PLUS FERTILIZER III 30-0-3",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 30.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0200",
+          "Cadmium": "<0.0150",
+          "Cobalt": "<0.0150",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=2.7000",
+          "Nickel": "=70.5100",
+          "Lead": "=2.4300",
+          "Selenium": "<0.0010",
+          "Zinc": "=506.0600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EXPERT GARDENER CRABGRASS PREVENTER PLUS FERTILIZER III 30-0-3",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 30.0,
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8CB280-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.02,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Mo": 2.7,
+            "Ni": 70.51,
+            "Pb": 2.43,
+            "Se": 0.001,
+            "Zn": 506.06
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.02,
+        "Mo": 2.7,
+        "Ni": 70.51,
+        "Pb": 2.43,
+        "Zn": 506.06
+      }
+    }
+  }
+}

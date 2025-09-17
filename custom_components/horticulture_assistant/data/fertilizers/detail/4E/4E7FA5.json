@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4E7FA5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2393-0007)",
-    "product_name": "EMPRUV 3-0-6",
-    "company_info": {
-      "company": "AGSCITECH INC",
-      "Mailing Address": "365 North 600 West",
-      "Post Office Box": null,
-      "City": "Logan",
-      "State": "UT",
-      "Postal Code": "84321",
-      "Telephone Number": "435 213-9850",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0200",
-      "Cadmium": "=0.1500",
-      "Cobalt": "=7.9100",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=12.0000",
-      "Nickel": "=0.1400",
-      "Lead": "<0.5000",
-      "Selenium": "<1.2500",
-      "Zinc": "=41.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0200",
-      "Cadmium": "=0.1500",
-      "Cobalt": "=7.9100",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=12.0000",
-      "Nickel": "=0.1400",
-      "Lead": "<0.5000",
-      "Selenium": "<1.2500",
-      "Zinc": "=41.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4E7FA5",
   "metadata": {
     "registrant": "AGSCITECH INC",
     "label_name": "EMPRUV 3-0-6",
     "wsda_reg_no": "(#2393-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2393-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2393-0007)",
+        "product_name": "EMPRUV 3-0-6",
+        "company_info": {
+          "company": "AGSCITECH INC",
+          "Mailing Address": "365 North 600 West",
+          "Post Office Box": null,
+          "City": "Logan",
+          "State": "UT",
+          "Postal Code": "84321",
+          "Telephone Number": "435 213-9850",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0200",
+          "Cadmium": "=0.1500",
+          "Cobalt": "=7.9100",
+          "Mercury": "<0.0032",
+          "Molybdenum": "=12.0000",
+          "Nickel": "=0.1400",
+          "Lead": "<0.5000",
+          "Selenium": "<1.2500",
+          "Zinc": "=41.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMPRUV 3-0-6",
+    "brand": "AGSCITECH INC",
+    "manufacturer": {
+      "name": "AGSCITECH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "K2O_pct": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4E7FA5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.02,
+            "Cd": 0.15,
+            "Co": 7.91,
+            "Hg": 0.0032,
+            "Mo": 12.0,
+            "Ni": 0.14,
+            "Pb": 0.5,
+            "Se": 1.25,
+            "Zn": 41.2
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0032,
+            "Pb": 0.5,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.02,
+        "Cd": 0.15,
+        "Co": 7.91,
+        "Mo": 12.0,
+        "Ni": 0.14,
+        "Zn": 41.2
+      }
+    }
   }
 }

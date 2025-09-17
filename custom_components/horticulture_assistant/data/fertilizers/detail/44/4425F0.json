@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4425F0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0170-0021)",
-    "product_name": "SIMPLOT 10-34-0 LIQUID AMMONIUM POLYPHOSPHATE 10-34-0",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY - POCATELLO",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-7083",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 34.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=8.8800",
-      "Cadmium": "=86.8300",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=10.6000",
-      "Nickel": "=0.5320",
-      "Lead": "<1.5000",
-      "Selenium": "<1.2500",
-      "Zinc": "=916.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 34.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=8.8800",
-      "Cadmium": "=86.8300",
-      "Cobalt": "<0.5000",
-      "Mercury": "<0.0200",
-      "Molybdenum": "=10.6000",
-      "Nickel": "=0.5320",
-      "Lead": "<1.5000",
-      "Selenium": "<1.2500",
-      "Zinc": "=916.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4425F0",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY - POCATELLO",
     "label_name": "SIMPLOT 10-34-0 LIQUID AMMONIUM POLYPHOSPHATE 10-34-0",
     "wsda_reg_no": "(#0170-0021)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0170-0021)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0170-0021)",
+        "product_name": "SIMPLOT 10-34-0 LIQUID AMMONIUM POLYPHOSPHATE 10-34-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY - POCATELLO",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-7083",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 34.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=8.8800",
+          "Cadmium": "=86.8300",
+          "Cobalt": "<0.5000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=10.6000",
+          "Nickel": "=0.5320",
+          "Lead": "<1.5000",
+          "Selenium": "<1.2500",
+          "Zinc": "=916.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT 10-34-0 LIQUID AMMONIUM POLYPHOSPHATE 10-34-0",
+    "brand": "J R SIMPLOT COMPANY - POCATELLO",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY - POCATELLO"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 34.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4425F0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.88,
+            "Cd": 86.83,
+            "Co": 0.5,
+            "Hg": 0.02,
+            "Mo": 10.6,
+            "Ni": 0.532,
+            "Pb": 1.5,
+            "Se": 1.25,
+            "Zn": 916.0
+          },
+          "detection_limits_ppm": {
+            "Co": 0.5,
+            "Hg": 0.02,
+            "Pb": 1.5,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 8.88,
+        "Cd": 86.83,
+        "Mo": 10.6,
+        "Ni": 0.532,
+        "Zn": 916.0
+      }
+    }
   }
 }

@@ -1,1 +1,155 @@
-{"schema_version":"2025-07-v1","product_id":"F9772A","source_wsda_record":{"wsda_product_number":"(#2067-0071)","product_name":"GREEN PLANET HORTI BLOOM 5-15-26","company_info":{"company":"HIT MANUFACTURING","Mailing Address":"15374 103 A Ave","Post Office Box":null,"City":"Surrey","State":"BC","Postal Code":"V3R 7A2","Telephone Number":"605 580-1287","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.5,"Sulfur (S)":5.0,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.3,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.009,"Sodium (Na)":null,"Zinc (Zn)":0.02},"reported_metals":{"Arsenic":"=1.8000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=411.9000","Nickel":"=1.2600","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=168.7300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":26.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.5,"Sulfur (S)":5.0,"Boron (B)":0.06,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.02,"Iron (Fe)":0.3,"Manganese (Mn)":0.09,"Molybdenum (Mo)":0.009,"Sodium (Na)":null,"Zinc (Zn)":0.02},"heavy_metals":{"Arsenic":"=1.8000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=411.9000","Nickel":"=1.2600","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=168.7300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HIT MANUFACTURING","label_name":"GREEN PLANET HORTI BLOOM 5-15-26","wsda_reg_no":"(#2067-0071)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F9772A",
+  "metadata": {
+    "registrant": "HIT MANUFACTURING",
+    "label_name": "GREEN PLANET HORTI BLOOM 5-15-26",
+    "wsda_reg_no": "(#2067-0071)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2067-0071)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2067-0071)",
+        "product_name": "GREEN PLANET HORTI BLOOM 5-15-26",
+        "company_info": {
+          "company": "HIT MANUFACTURING",
+          "Mailing Address": "15374 103 A Ave",
+          "Post Office Box": null,
+          "City": "Surrey",
+          "State": "BC",
+          "Postal Code": "V3R 7A2",
+          "Telephone Number": "605 580-1287",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 26.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 0.06,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.02,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 0.09,
+          "Molybdenum (Mo)": 0.009,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.02
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=411.9000",
+          "Nickel": "=1.2600",
+          "Lead": "<1.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=168.7300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREEN PLANET HORTI BLOOM 5-15-26",
+    "brand": "HIT MANUFACTURING",
+    "manufacturer": {
+      "name": "HIT MANUFACTURING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 15.0,
+      "K2O_pct": 26.0
+    },
+    "macros_pct": {
+      "Mg": 2.5,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 0.09,
+      "Zn": 0.02,
+      "Cu": 0.02,
+      "B": 0.06,
+      "Mo": 0.009
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F9772A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.8,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Mo": 411.9,
+            "Ni": 1.26,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 168.73
+          },
+          "detection_limits_ppm": {
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Pb": 1.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.8,
+        "Mo": 411.9,
+        "Ni": 1.26,
+        "Zn": 168.73
+      }
+    }
+  }
+}

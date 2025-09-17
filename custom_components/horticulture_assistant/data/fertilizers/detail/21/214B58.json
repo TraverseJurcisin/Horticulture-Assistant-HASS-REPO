@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "214B58",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4044-0002)",
-    "product_name": "CHLORABLAST 1-0-0",
-    "company_info": {
-      "company": "TRACER MINERALS LLC",
-      "Mailing Address": "18825 24 Road",
-      "Post Office Box": null,
-      "City": "Cimmarron",
-      "State": "KS",
-      "Postal Code": "67835",
-      "Telephone Number": "620 865-2041",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.2,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.6,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.5
-    },
-    "reported_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5100",
-      "Cobalt": "=15.7000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=12.6000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=6369.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.2,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.6,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.5
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5100",
-      "Cobalt": "=15.7000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=12.6000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=6369.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "214B58",
   "metadata": {
     "registrant": "TRACER MINERALS LLC",
     "label_name": "CHLORABLAST 1-0-0",
     "wsda_reg_no": "(#4044-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4044-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4044-0002)",
+        "product_name": "CHLORABLAST 1-0-0",
+        "company_info": {
+          "company": "TRACER MINERALS LLC",
+          "Mailing Address": "18825 24 Road",
+          "Post Office Box": null,
+          "City": "Cimmarron",
+          "State": "KS",
+          "Postal Code": "67835",
+          "Telephone Number": "620 865-2041",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.2,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.6,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.5
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.5100",
+          "Cobalt": "=15.7000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=12.6000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=6369.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CHLORABLAST 1-0-0",
+    "brand": "TRACER MINERALS LLC",
+    "manufacturer": {
+      "name": "TRACER MINERALS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "macros_pct": {
+      "Mg": 1.5
+    },
+    "micros_pct": {
+      "Mn": 0.6,
+      "Zn": 0.5,
+      "Cu": 1.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "214B58-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.51,
+            "Co": 15.7,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 12.6,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 6369.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.51,
+        "Co": 15.7,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 12.6,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 6369.0
+      }
+    }
   }
 }

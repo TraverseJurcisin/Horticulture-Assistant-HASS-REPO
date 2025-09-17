@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"BDD6DA","source_wsda_record":{"wsda_product_number":"(#1517-0084)","product_name":"JACK'S PROFESSIONAL 20-10-20 GENERAL PURPOSE 77840 20-10-20","company_info":{"company":"JR PETERS INC","Mailing Address":"6656 Grant Way","Post Office Box":null,"City":"Allentown","State":"PA","Postal Code":"18106","Telephone Number":"866 522-5752","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.15,"Sulfur (S)":null,"Boron (B)":0.0068,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0036,"Iron (Fe)":0.05,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.0025},"reported_metals":{"Arsenic":"=0.9350","Cadmium":"<0.4780","Cobalt":"<0.4170","Mercury":"<0.0050","Molybdenum":"=4.3500","Nickel":"<0.4960","Lead":"<0.6000","Selenium":"<1.1100","Zinc":"=41.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.15,"Sulfur (S)":null,"Boron (B)":0.0068,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0036,"Iron (Fe)":0.05,"Manganese (Mn)":0.025,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.0025},"heavy_metals":{"Arsenic":"=0.9350","Cadmium":"<0.4780","Cobalt":"<0.4170","Mercury":"<0.0050","Molybdenum":"=4.3500","Nickel":"<0.4960","Lead":"<0.6000","Selenium":"<1.1100","Zinc":"=41.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"JR PETERS INC","label_name":"JACK'S PROFESSIONAL 20-10-20 GENERAL PURPOSE 77840 20-10-20","wsda_reg_no":"(#1517-0084)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BDD6DA",
+  "metadata": {
+    "registrant": "JR PETERS INC",
+    "label_name": "JACK'S PROFESSIONAL 20-10-20 GENERAL PURPOSE 77840 20-10-20",
+    "wsda_reg_no": "(#1517-0084)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1517-0084)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1517-0084)",
+        "product_name": "JACK'S PROFESSIONAL 20-10-20 GENERAL PURPOSE 77840 20-10-20",
+        "company_info": {
+          "company": "JR PETERS INC",
+          "Mailing Address": "6656 Grant Way",
+          "Post Office Box": null,
+          "City": "Allentown",
+          "State": "PA",
+          "Postal Code": "18106",
+          "Telephone Number": "866 522-5752",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.15,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.0068,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0036,
+          "Iron (Fe)": 0.05,
+          "Manganese (Mn)": 0.025,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.0025
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9350",
+          "Cadmium": "<0.4780",
+          "Cobalt": "<0.4170",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=4.3500",
+          "Nickel": "<0.4960",
+          "Lead": "<0.6000",
+          "Selenium": "<1.1100",
+          "Zinc": "=41.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JACK'S PROFESSIONAL 20-10-20 GENERAL PURPOSE 77840 20-10-20",
+    "brand": "JR PETERS INC",
+    "manufacturer": {
+      "name": "JR PETERS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Mg": 0.15
+    },
+    "micros_pct": {
+      "Fe": 0.05,
+      "Mn": 0.025,
+      "Zn": 0.0025,
+      "Cu": 0.0036,
+      "B": 0.0068,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BDD6DA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.935,
+            "Cd": 0.478,
+            "Co": 0.417,
+            "Hg": 0.005,
+            "Mo": 4.35,
+            "Ni": 0.496,
+            "Pb": 0.6,
+            "Se": 1.11,
+            "Zn": 41.1
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.478,
+            "Co": 0.417,
+            "Hg": 0.005,
+            "Ni": 0.496,
+            "Pb": 0.6,
+            "Se": 1.11
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.935,
+        "Mo": 4.35,
+        "Zn": 41.1
+      }
+    }
+  }
+}

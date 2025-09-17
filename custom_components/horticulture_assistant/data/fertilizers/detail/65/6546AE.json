@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6546AE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4214-0012)",
-    "product_name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 3-18-18",
-    "company_info": {
-      "company": "CUSTOM SIMPLE SOLUTIONS LLC",
-      "Mailing Address": "534 CR 529A",
-      "Post Office Box": null,
-      "City": "Lake Panasoffkee",
-      "State": "FL",
-      "Postal Code": "33538",
-      "Telephone Number": "352 789-5024",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 18.0,
-      "Soluble Potash (K2O)": 18.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0550",
-      "Cadmium": "<0.0150",
-      "Cobalt": "<0.0150",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.3620",
-      "Nickel": "=0.0450",
-      "Lead": "=0.0270",
-      "Selenium": "=0.0620",
-      "Zinc": "=0.8230"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 18.0,
-      "Soluble Potash (K2O)": 18.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0550",
-      "Cadmium": "<0.0150",
-      "Cobalt": "<0.0150",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.3620",
-      "Nickel": "=0.0450",
-      "Lead": "=0.0270",
-      "Selenium": "=0.0620",
-      "Zinc": "=0.8230"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6546AE",
   "metadata": {
     "registrant": "CUSTOM SIMPLE SOLUTIONS LLC",
     "label_name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 3-18-18",
     "wsda_reg_no": "(#4214-0012)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4214-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4214-0012)",
+        "product_name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 3-18-18",
+        "company_info": {
+          "company": "CUSTOM SIMPLE SOLUTIONS LLC",
+          "Mailing Address": "534 CR 529A",
+          "Post Office Box": null,
+          "City": "Lake Panasoffkee",
+          "State": "FL",
+          "Postal Code": "33538",
+          "Telephone Number": "352 789-5024",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 18.0,
+          "Soluble Potash (K2O)": 18.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0550",
+          "Cadmium": "<0.0150",
+          "Cobalt": "<0.0150",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.3620",
+          "Nickel": "=0.0450",
+          "Lead": "=0.0270",
+          "Selenium": "=0.0620",
+          "Zinc": "=0.8230"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLE LAWN SOLUTIONS LAWN FOOD 3-18-18",
+    "brand": "CUSTOM SIMPLE SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "CUSTOM SIMPLE SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 18.0,
+      "K2O_pct": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6546AE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.055,
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001,
+            "Mo": 0.362,
+            "Ni": 0.045,
+            "Pb": 0.027,
+            "Se": 0.062,
+            "Zn": 0.823
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Co": 0.015,
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.055,
+        "Mo": 0.362,
+        "Ni": 0.045,
+        "Pb": 0.027,
+        "Se": 0.062,
+        "Zn": 0.823
+      }
+    }
   }
 }

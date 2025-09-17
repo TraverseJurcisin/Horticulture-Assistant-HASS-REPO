@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"9B3F22","source_wsda_record":{"wsda_product_number":"(#3413-0007)","product_name":"COAST OF MAINE STONINGTON BLEND ORGANIC PLANT FOOD 5-2-4","company_info":{"company":"COAST OF MAINE ORGANIC PRODUCTS INC","Mailing Address":"145 Newbury St","Post Office Box":null,"City":"Portland","State":"ME","Postal Code":"04101","Telephone Number":"717 786-2146","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":1.0,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.0900","Cadmium":"=0.0640","Cobalt":"=0.3110","Mercury":"<0.0060","Molybdenum":"=1.1600","Nickel":"=2.1800","Lead":"=0.5800","Selenium":"=0.2000","Zinc":"=64.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":1.0,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.0900","Cadmium":"=0.0640","Cobalt":"=0.3110","Mercury":"<0.0060","Molybdenum":"=1.1600","Nickel":"=2.1800","Lead":"=0.5800","Selenium":"=0.2000","Zinc":"=64.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COAST OF MAINE ORGANIC PRODUCTS INC","label_name":"COAST OF MAINE STONINGTON BLEND ORGANIC PLANT FOOD 5-2-4","wsda_reg_no":"(#3413-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9B3F22",
+  "metadata": {
+    "registrant": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "label_name": "COAST OF MAINE STONINGTON BLEND ORGANIC PLANT FOOD 5-2-4",
+    "wsda_reg_no": "(#3413-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3413-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3413-0007)",
+        "product_name": "COAST OF MAINE STONINGTON BLEND ORGANIC PLANT FOOD 5-2-4",
+        "company_info": {
+          "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
+          "Mailing Address": "145 Newbury St",
+          "Post Office Box": null,
+          "City": "Portland",
+          "State": "ME",
+          "Postal Code": "04101",
+          "Telephone Number": "717 786-2146",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0900",
+          "Cadmium": "=0.0640",
+          "Cobalt": "=0.3110",
+          "Mercury": "<0.0060",
+          "Molybdenum": "=1.1600",
+          "Nickel": "=2.1800",
+          "Lead": "=0.5800",
+          "Selenium": "=0.2000",
+          "Zinc": "=64.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "COAST OF MAINE STONINGTON BLEND ORGANIC PLANT FOOD 5-2-4",
+    "brand": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "COAST OF MAINE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 4.0,
+      "Mg": 1.0,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9B3F22-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.09,
+            "Cd": 0.064,
+            "Co": 0.311,
+            "Hg": 0.006,
+            "Mo": 1.16,
+            "Ni": 2.18,
+            "Pb": 0.58,
+            "Se": 0.2,
+            "Zn": 64.7
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.006
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.09,
+        "Cd": 0.064,
+        "Co": 0.311,
+        "Mo": 1.16,
+        "Ni": 2.18,
+        "Pb": 0.58,
+        "Se": 0.2,
+        "Zn": 64.7
+      }
+    }
+  }
+}

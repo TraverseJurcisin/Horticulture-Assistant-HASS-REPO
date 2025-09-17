@@ -1,106 +1,152 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "72BD48",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2687-0137)",
-    "product_name": "VERDESIAN CROP+ ORGANIC 0-0-0.75",
-    "company_info": {
-      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
-      "Mailing Address": "1001 Winstead Drive Ste 480",
-      "Post Office Box": null,
-      "City": "Cary",
-      "State": "NC",
-      "Postal Code": "27513",
-      "Telephone Number": "919 825-1901",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.75,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.09,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=590.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=505.0000",
-      "Nickel": "=12.7000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=32330.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.75,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.09,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 3.0,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=590.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=505.0000",
-      "Nickel": "=12.7000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=32330.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "72BD48",
   "metadata": {
     "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
     "label_name": "VERDESIAN CROP+ ORGANIC 0-0-0.75",
     "wsda_reg_no": "(#2687-0137)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0137)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0137)",
+        "product_name": "VERDESIAN CROP+ ORGANIC 0-0-0.75",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.75,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 0.09,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.06,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": 0.04,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=590.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=505.0000",
+          "Nickel": "=12.7000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=32330.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VERDESIAN CROP+ ORGANIC 0-0-0.75",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 0.75
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 3.0,
+      "Zn": 3.0,
+      "Cu": 1.0,
+      "B": 0.09,
+      "Mo": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "72BD48-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 590.0,
+            "Hg": 0.05,
+            "Mo": 505.0,
+            "Ni": 12.7,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 32330.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 590.0,
+        "Mo": 505.0,
+        "Ni": 12.7,
+        "Zn": 32330.0
+      }
+    }
   }
 }

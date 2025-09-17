@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"E8108C","source_wsda_record":{"wsda_product_number":"(#0193-0574)","product_name":"LOVELAND SUPER BLEND 20-9-9","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":1.3,"Magnesium (Mg)":1.1,"Sulfur (S)":3.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.9,"Manganese (Mn)":0.4,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.8},"reported_metals":{"Arsenic":"=1.8800","Cadmium":"=19.8300","Cobalt":"=4.9100","Mercury":"<0.0010","Molybdenum":"=2.0700","Nickel":"=44.3700","Lead":"=2.3500","Selenium":"=0.6600","Zinc":"=11501.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":1.3,"Magnesium (Mg)":1.1,"Sulfur (S)":3.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.9,"Manganese (Mn)":0.4,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.8},"heavy_metals":{"Arsenic":"=1.8800","Cadmium":"=19.8300","Cobalt":"=4.9100","Mercury":"<0.0010","Molybdenum":"=2.0700","Nickel":"=44.3700","Lead":"=2.3500","Selenium":"=0.6600","Zinc":"=11501.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LOVELAND SUPER BLEND 20-9-9","wsda_reg_no":"(#0193-0574)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E8108C",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LOVELAND SUPER BLEND 20-9-9",
+    "wsda_reg_no": "(#0193-0574)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0574)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0574)",
+        "product_name": "LOVELAND SUPER BLEND 20-9-9",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 9.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": 1.3,
+          "Magnesium (Mg)": 1.1,
+          "Sulfur (S)": 3.4,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.9,
+          "Manganese (Mn)": 0.4,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.8
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8800",
+          "Cadmium": "=19.8300",
+          "Cobalt": "=4.9100",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=2.0700",
+          "Nickel": "=44.3700",
+          "Lead": "=2.3500",
+          "Selenium": "=0.6600",
+          "Zinc": "=11501.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND SUPER BLEND 20-9-9",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 9.0,
+      "K2O_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 1.3,
+      "Mg": 1.1,
+      "S": 3.4
+    },
+    "micros_pct": {
+      "Fe": 2.9,
+      "Mn": 0.4,
+      "Zn": 0.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E8108C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.88,
+            "Cd": 19.83,
+            "Co": 4.91,
+            "Hg": 0.001,
+            "Mo": 2.07,
+            "Ni": 44.37,
+            "Pb": 2.35,
+            "Se": 0.66,
+            "Zn": 11501.8
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.88,
+        "Cd": 19.83,
+        "Co": 4.91,
+        "Mo": 2.07,
+        "Ni": 44.37,
+        "Pb": 2.35,
+        "Se": 0.66,
+        "Zn": 11501.8
+      }
+    }
+  }
+}

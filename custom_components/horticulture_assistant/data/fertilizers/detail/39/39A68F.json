@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "39A68F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0739-0061)",
-    "product_name": "GEN-MAX NUTRISCIENCE ORTHO BLAST 9-28-0",
-    "company_info": {
-      "company": "GENESIS AGRI-PRODUCTS INC",
-      "Mailing Address": "PO Box 10512",
-      "Post Office Box": null,
-      "City": "Yakima",
-      "State": "WA",
-      "Postal Code": "98909",
-      "Telephone Number": "509 575-8382",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 28.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.1830",
-      "Cadmium": "=0.0520",
-      "Cobalt": "<0.1000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "=0.1020",
-      "Nickel": "<0.1000",
-      "Lead": "<0.0500",
-      "Selenium": "<0.2000",
-      "Zinc": "=0.3670"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 28.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.1830",
-      "Cadmium": "=0.0520",
-      "Cobalt": "<0.1000",
-      "Mercury": "<0.0020",
-      "Molybdenum": "=0.1020",
-      "Nickel": "<0.1000",
-      "Lead": "<0.0500",
-      "Selenium": "<0.2000",
-      "Zinc": "=0.3670"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "39A68F",
   "metadata": {
     "registrant": "GENESIS AGRI-PRODUCTS INC",
     "label_name": "GEN-MAX NUTRISCIENCE ORTHO BLAST 9-28-0",
     "wsda_reg_no": "(#0739-0061)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0739-0061)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0739-0061)",
+        "product_name": "GEN-MAX NUTRISCIENCE ORTHO BLAST 9-28-0",
+        "company_info": {
+          "company": "GENESIS AGRI-PRODUCTS INC",
+          "Mailing Address": "PO Box 10512",
+          "Post Office Box": null,
+          "City": "Yakima",
+          "State": "WA",
+          "Postal Code": "98909",
+          "Telephone Number": "509 575-8382",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 28.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1830",
+          "Cadmium": "=0.0520",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0020",
+          "Molybdenum": "=0.1020",
+          "Nickel": "<0.1000",
+          "Lead": "<0.0500",
+          "Selenium": "<0.2000",
+          "Zinc": "=0.3670"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GEN-MAX NUTRISCIENCE ORTHO BLAST 9-28-0",
+    "brand": "GENESIS AGRI-PRODUCTS INC",
+    "manufacturer": {
+      "name": "GENESIS AGRI-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 28.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "39A68F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.183,
+            "Cd": 0.052,
+            "Co": 0.1,
+            "Hg": 0.002,
+            "Mo": 0.102,
+            "Ni": 0.1,
+            "Pb": 0.05,
+            "Se": 0.2,
+            "Zn": 0.367
+          },
+          "detection_limits_ppm": {
+            "Co": 0.1,
+            "Hg": 0.002,
+            "Ni": 0.1,
+            "Pb": 0.05,
+            "Se": 0.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.183,
+        "Cd": 0.052,
+        "Mo": 0.102,
+        "Zn": 0.367
+      }
+    }
   }
 }

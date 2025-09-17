@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3DA021",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3480-0001)",
-    "product_name": "THE OLD FARMER'S ALMANAC LAWN FOOD PLANT BASED FORMULA 10-0-2",
-    "company_info": {
-      "company": "SIMPLYGRO LLC",
-      "Mailing Address": "6620 Cypresswood Dr Ste 250",
-      "Post Office Box": null,
-      "City": "Spring",
-      "State": "TX",
-      "Postal Code": "77379",
-      "Telephone Number": "877 227-2597",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1540",
-      "Cobalt": "=1.3100",
-      "Mercury": "=0.0141",
-      "Molybdenum": "=0.3880",
-      "Nickel": "=1.0900",
-      "Lead": "=0.3000",
-      "Selenium": "=1.0000",
-      "Zinc": "=13.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1540",
-      "Cobalt": "=1.3100",
-      "Mercury": "=0.0141",
-      "Molybdenum": "=0.3880",
-      "Nickel": "=1.0900",
-      "Lead": "=0.3000",
-      "Selenium": "=1.0000",
-      "Zinc": "=13.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3DA021",
   "metadata": {
     "registrant": "SIMPLYGRO LLC",
     "label_name": "THE OLD FARMER'S ALMANAC LAWN FOOD PLANT BASED FORMULA 10-0-2",
     "wsda_reg_no": "(#3480-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3480-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3480-0001)",
+        "product_name": "THE OLD FARMER'S ALMANAC LAWN FOOD PLANT BASED FORMULA 10-0-2",
+        "company_info": {
+          "company": "SIMPLYGRO LLC",
+          "Mailing Address": "6620 Cypresswood Dr Ste 250",
+          "Post Office Box": null,
+          "City": "Spring",
+          "State": "TX",
+          "Postal Code": "77379",
+          "Telephone Number": "877 227-2597",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1540",
+          "Cobalt": "=1.3100",
+          "Mercury": "=0.0141",
+          "Molybdenum": "=0.3880",
+          "Nickel": "=1.0900",
+          "Lead": "=0.3000",
+          "Selenium": "=1.0000",
+          "Zinc": "=13.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE OLD FARMER'S ALMANAC LAWN FOOD PLANT BASED FORMULA 10-0-2",
+    "brand": "SIMPLYGRO LLC",
+    "manufacturer": {
+      "name": "SIMPLYGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3DA021-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.154,
+            "Co": 1.31,
+            "Hg": 0.0141,
+            "Mo": 0.388,
+            "Ni": 1.09,
+            "Pb": 0.3,
+            "Se": 1.0,
+            "Zn": 13.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.154,
+        "Co": 1.31,
+        "Hg": 0.0141,
+        "Mo": 0.388,
+        "Ni": 1.09,
+        "Pb": 0.3,
+        "Se": 1.0,
+        "Zn": 13.6
+      }
+    }
   }
 }

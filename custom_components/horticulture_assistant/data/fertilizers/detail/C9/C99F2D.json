@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"C99F2D","source_wsda_record":{"wsda_product_number":"(#3092-0025)","product_name":"DLF QUICK & THICK RENEW 9-0-2","company_info":{"company":"DLF USA INC","Mailing Address":"33080 Red Bridge Rd SE","Post Office Box":null,"City":"Albany","State":"OR","Postal Code":"97322","Telephone Number":"541 369-2251","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":6.48,"Magnesium (Mg)":2.45,"Sulfur (S)":3.64,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.68,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.4100","Cadmium":"=0.2200","Cobalt":"=14.5000","Mercury":"=0.0020","Molybdenum":"=3.9100","Nickel":"=353.6300","Lead":"=4.3500","Selenium":"=2.8600","Zinc":"=83.8100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":6.48,"Magnesium (Mg)":2.45,"Sulfur (S)":3.64,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.68,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.4100","Cadmium":"=0.2200","Cobalt":"=14.5000","Mercury":"=0.0020","Molybdenum":"=3.9100","Nickel":"=353.6300","Lead":"=4.3500","Selenium":"=2.8600","Zinc":"=83.8100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"DLF USA INC","label_name":"DLF QUICK & THICK RENEW 9-0-2","wsda_reg_no":"(#3092-0025)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C99F2D",
+  "metadata": {
+    "registrant": "DLF USA INC",
+    "label_name": "DLF QUICK & THICK RENEW 9-0-2",
+    "wsda_reg_no": "(#3092-0025)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3092-0025)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3092-0025)",
+        "product_name": "DLF QUICK & THICK RENEW 9-0-2",
+        "company_info": {
+          "company": "DLF USA INC",
+          "Mailing Address": "33080 Red Bridge Rd SE",
+          "Post Office Box": null,
+          "City": "Albany",
+          "State": "OR",
+          "Postal Code": "97322",
+          "Telephone Number": "541 369-2251",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 6.48,
+          "Magnesium (Mg)": 2.45,
+          "Sulfur (S)": 3.64,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.68,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4100",
+          "Cadmium": "=0.2200",
+          "Cobalt": "=14.5000",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=3.9100",
+          "Nickel": "=353.6300",
+          "Lead": "=4.3500",
+          "Selenium": "=2.8600",
+          "Zinc": "=83.8100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "DLF QUICK & THICK RENEW 9-0-2",
+    "brand": "DLF USA INC",
+    "manufacturer": {
+      "name": "DLF USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 6.48,
+      "Mg": 2.45,
+      "S": 3.64
+    },
+    "micros_pct": {
+      "Fe": 1.68
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C99F2D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.41,
+            "Cd": 0.22,
+            "Co": 14.5,
+            "Hg": 0.002,
+            "Mo": 3.91,
+            "Ni": 353.63,
+            "Pb": 4.35,
+            "Se": 2.86,
+            "Zn": 83.81
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.41,
+        "Cd": 0.22,
+        "Co": 14.5,
+        "Hg": 0.002,
+        "Mo": 3.91,
+        "Ni": 353.63,
+        "Pb": 4.35,
+        "Se": 2.86,
+        "Zn": 83.81
+      }
+    }
+  }
+}

@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"A5A6B7","source_wsda_record":{"wsda_product_number":"(#1707-0001)","product_name":"LLC B.C BLOOM 1-4-7","company_info":{"company":"TECHNAFLORA PLANT PRODUCTS","Mailing Address":"101-7261 River Place","Post Office Box":null,"City":"Mission","State":"BC","Postal Code":"V4S 0A2","Telephone Number":"604 826-4250","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.852,"Sulfur (S)":1.37,"Boron (B)":0.0072,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0027,"Iron (Fe)":null,"Manganese (Mn)":0.024,"Molybdenum (Mo)":0.0001,"Sodium (Na)":null,"Zinc (Zn)":0.0139},"reported_metals":{"Arsenic":"=0.1100","Cadmium":"<0.0400","Cobalt":"=0.4600","Mercury":"<0.0200","Molybdenum":"=8.6500","Nickel":"=0.4400","Lead":"=0.2000","Selenium":"=0.2000","Zinc":"=156.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.852,"Sulfur (S)":1.37,"Boron (B)":0.0072,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0027,"Iron (Fe)":null,"Manganese (Mn)":0.024,"Molybdenum (Mo)":0.0001,"Sodium (Na)":null,"Zinc (Zn)":0.0139},"heavy_metals":{"Arsenic":"=0.1100","Cadmium":"<0.0400","Cobalt":"=0.4600","Mercury":"<0.0200","Molybdenum":"=8.6500","Nickel":"=0.4400","Lead":"=0.2000","Selenium":"=0.2000","Zinc":"=156.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TECHNAFLORA PLANT PRODUCTS","label_name":"LLC B.C BLOOM 1-4-7","wsda_reg_no":"(#1707-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A5A6B7",
+  "metadata": {
+    "registrant": "TECHNAFLORA PLANT PRODUCTS",
+    "label_name": "LLC B.C BLOOM 1-4-7",
+    "wsda_reg_no": "(#1707-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1707-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1707-0001)",
+        "product_name": "LLC B.C BLOOM 1-4-7",
+        "company_info": {
+          "company": "TECHNAFLORA PLANT PRODUCTS",
+          "Mailing Address": "101-7261 River Place",
+          "Post Office Box": null,
+          "City": "Mission",
+          "State": "BC",
+          "Postal Code": "V4S 0A2",
+          "Telephone Number": "604 826-4250",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.852,
+          "Sulfur (S)": 1.37,
+          "Boron (B)": 0.0072,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0027,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.024,
+          "Molybdenum (Mo)": 0.0001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.0139
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1100",
+          "Cadmium": "<0.0400",
+          "Cobalt": "=0.4600",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=8.6500",
+          "Nickel": "=0.4400",
+          "Lead": "=0.2000",
+          "Selenium": "=0.2000",
+          "Zinc": "=156.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LLC B.C BLOOM 1-4-7",
+    "brand": "TECHNAFLORA PLANT PRODUCTS",
+    "manufacturer": {
+      "name": "TECHNAFLORA PLANT PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Mg": 0.852,
+      "S": 1.37
+    },
+    "micros_pct": {
+      "Mn": 0.024,
+      "Zn": 0.0139,
+      "Cu": 0.0027,
+      "B": 0.0072,
+      "Mo": 0.0001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A5A6B7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.11,
+            "Cd": 0.04,
+            "Co": 0.46,
+            "Hg": 0.02,
+            "Mo": 8.65,
+            "Ni": 0.44,
+            "Pb": 0.2,
+            "Se": 0.2,
+            "Zn": 156.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.04,
+            "Hg": 0.02
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.11,
+        "Co": 0.46,
+        "Mo": 8.65,
+        "Ni": 0.44,
+        "Pb": 0.2,
+        "Se": 0.2,
+        "Zn": 156.0
+      }
+    }
+  }
+}

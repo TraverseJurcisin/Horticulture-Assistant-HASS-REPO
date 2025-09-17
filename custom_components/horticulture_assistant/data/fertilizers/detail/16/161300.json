@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "161300",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2626-0053)",
-    "product_name": "PENNINGTON PENNINGTON FULL SEASON ALL PURPOSE PLANT FOOD 10-10-10",
-    "company_info": {
-      "company": "CENTRAL GARDEN & PET DIVISION",
-      "Mailing Address": "PO Box 1019",
-      "Post Office Box": null,
-      "City": "Salem",
-      "State": "VA",
-      "Postal Code": "24153-1019",
-      "Telephone Number": "503 581-7823",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 13.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.4300",
-      "Cadmium": "=21.2000",
-      "Cobalt": "=0.6590",
-      "Mercury": "=0.0065",
-      "Molybdenum": "=3.0600",
-      "Nickel": "=33.8000",
-      "Lead": "=0.6410",
-      "Selenium": "=0.2290",
-      "Zinc": "=387.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 13.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.4300",
-      "Cadmium": "=21.2000",
-      "Cobalt": "=0.6590",
-      "Mercury": "=0.0065",
-      "Molybdenum": "=3.0600",
-      "Nickel": "=33.8000",
-      "Lead": "=0.6410",
-      "Selenium": "=0.2290",
-      "Zinc": "=387.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "161300",
   "metadata": {
     "registrant": "CENTRAL GARDEN & PET DIVISION",
     "label_name": "PENNINGTON PENNINGTON FULL SEASON ALL PURPOSE PLANT FOOD 10-10-10",
     "wsda_reg_no": "(#2626-0053)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0053)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0053)",
+        "product_name": "PENNINGTON PENNINGTON FULL SEASON ALL PURPOSE PLANT FOOD 10-10-10",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 13.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4300",
+          "Cadmium": "=21.2000",
+          "Cobalt": "=0.6590",
+          "Mercury": "=0.0065",
+          "Molybdenum": "=3.0600",
+          "Nickel": "=33.8000",
+          "Lead": "=0.6410",
+          "Selenium": "=0.2290",
+          "Zinc": "=387.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON PENNINGTON FULL SEASON ALL PURPOSE PLANT FOOD 10-10-10",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 13.0,
+      "S": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "161300-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.43,
+            "Cd": 21.2,
+            "Co": 0.659,
+            "Hg": 0.0065,
+            "Mo": 3.06,
+            "Ni": 33.8,
+            "Pb": 0.641,
+            "Se": 0.229,
+            "Zn": 387.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.43,
+        "Cd": 21.2,
+        "Co": 0.659,
+        "Hg": 0.0065,
+        "Mo": 3.06,
+        "Ni": 33.8,
+        "Pb": 0.641,
+        "Se": 0.229,
+        "Zn": 387.0
+      }
+    }
   }
 }

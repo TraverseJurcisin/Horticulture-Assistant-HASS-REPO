@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"BEF5F0","source_wsda_record":{"wsda_product_number":"(#2990-0002)","product_name":"PACIFIC NORTHWEST ORGANICS FISH ON 2-3-0.2","company_info":{"company":"PACIFIC NORTHWEST ORGANICS LLC","Mailing Address":"PO Box 44","Post Office Box":null,"City":"Gasquet","State":"CA","Postal Code":"95543","Telephone Number":"707 954-0311","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.2100","Cadmium":"=0.0300","Cobalt":"=0.2000","Mercury":"=0.0600","Molybdenum":"=0.2000","Nickel":"=0.8000","Lead":"=1.0000","Selenium":"=1.4000","Zinc":"=16.2500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":0.2,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.2100","Cadmium":"=0.0300","Cobalt":"=0.2000","Mercury":"=0.0600","Molybdenum":"=0.2000","Nickel":"=0.8000","Lead":"=1.0000","Selenium":"=1.4000","Zinc":"=16.2500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PACIFIC NORTHWEST ORGANICS LLC","label_name":"PACIFIC NORTHWEST ORGANICS FISH ON 2-3-0.2","wsda_reg_no":"(#2990-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BEF5F0",
+  "metadata": {
+    "registrant": "PACIFIC NORTHWEST ORGANICS LLC",
+    "label_name": "PACIFIC NORTHWEST ORGANICS FISH ON 2-3-0.2",
+    "wsda_reg_no": "(#2990-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2990-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2990-0002)",
+        "product_name": "PACIFIC NORTHWEST ORGANICS FISH ON 2-3-0.2",
+        "company_info": {
+          "company": "PACIFIC NORTHWEST ORGANICS LLC",
+          "Mailing Address": "PO Box 44",
+          "Post Office Box": null,
+          "City": "Gasquet",
+          "State": "CA",
+          "Postal Code": "95543",
+          "Telephone Number": "707 954-0311",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 0.2,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.2100",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0600",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=0.8000",
+          "Lead": "=1.0000",
+          "Selenium": "=1.4000",
+          "Zinc": "=16.2500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PACIFIC NORTHWEST ORGANICS FISH ON 2-3-0.2",
+    "brand": "PACIFIC NORTHWEST ORGANICS LLC",
+    "manufacturer": {
+      "name": "PACIFIC NORTHWEST ORGANICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BEF5F0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.21,
+            "Cd": 0.03,
+            "Co": 0.2,
+            "Hg": 0.06,
+            "Mo": 0.2,
+            "Ni": 0.8,
+            "Pb": 1.0,
+            "Se": 1.4,
+            "Zn": 16.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.21,
+        "Cd": 0.03,
+        "Co": 0.2,
+        "Hg": 0.06,
+        "Mo": 0.2,
+        "Ni": 0.8,
+        "Pb": 1.0,
+        "Se": 1.4,
+        "Zn": 16.25
+      }
+    }
+  }
+}

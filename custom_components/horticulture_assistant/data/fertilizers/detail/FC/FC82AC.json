@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"FC82AC","source_wsda_record":{"wsda_product_number":"(#2317-0017)","product_name":"VEG+BLOOM TAP/HARD 8-5-13","company_info":{"company":"HYDROPONIC RESEARCH","Mailing Address":"4570 Alvarado Canyon Rd Ste E","Post Office Box":null,"City":"San Diego","State":"CA","Postal Code":"92120","Telephone Number":"800 701-9298","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=9.2300","Mercury":"<0.2000","Molybdenum":"=7.7700","Nickel":"=79.3300","Lead":"=6.8100","Selenium":"<0.0500","Zinc":"=71.4100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":2.5,"Sulfur (S)":4.5,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":0.03,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"<0.1000","Cobalt":"=9.2300","Mercury":"<0.2000","Molybdenum":"=7.7700","Nickel":"=79.3300","Lead":"=6.8100","Selenium":"<0.0500","Zinc":"=71.4100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROPONIC RESEARCH","label_name":"VEG+BLOOM TAP/HARD 8-5-13","wsda_reg_no":"(#2317-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FC82AC",
+  "metadata": {
+    "registrant": "HYDROPONIC RESEARCH",
+    "label_name": "VEG+BLOOM TAP/HARD 8-5-13",
+    "wsda_reg_no": "(#2317-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2317-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2317-0017)",
+        "product_name": "VEG+BLOOM TAP/HARD 8-5-13",
+        "company_info": {
+          "company": "HYDROPONIC RESEARCH",
+          "Mailing Address": "4570 Alvarado Canyon Rd Ste E",
+          "Post Office Box": null,
+          "City": "San Diego",
+          "State": "CA",
+          "Postal Code": "92120",
+          "Telephone Number": "800 701-9298",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": 4.5,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.03,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=9.2300",
+          "Mercury": "<0.2000",
+          "Molybdenum": "=7.7700",
+          "Nickel": "=79.3300",
+          "Lead": "=6.8100",
+          "Selenium": "<0.0500",
+          "Zinc": "=71.4100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VEG+BLOOM TAP/HARD 8-5-13",
+    "brand": "HYDROPONIC RESEARCH",
+    "manufacturer": {
+      "name": "HYDROPONIC RESEARCH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 13.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 2.5,
+      "S": 4.5
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.03,
+      "B": 0.02,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FC82AC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 9.23,
+            "Hg": 0.2,
+            "Mo": 7.77,
+            "Ni": 79.33,
+            "Pb": 6.81,
+            "Se": 0.05,
+            "Zn": 71.41
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Hg": 0.2,
+            "Se": 0.05
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 9.23,
+        "Mo": 7.77,
+        "Ni": 79.33,
+        "Pb": 6.81,
+        "Zn": 71.41
+      }
+    }
+  }
+}

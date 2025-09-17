@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"FD518A","source_wsda_record":{"wsda_product_number":"(#4029-0002)","product_name":"IAP PRO 20-20-20","company_info":{"company":"INTEGRATED AGRIBUSINESS PROFESSIONA","Mailing Address":"7108 N Fresno St Suite 150","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93720","Telephone Number":"559 917-1217","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=2.5000","Cadmium":"<0.1000","Cobalt":"=2.2000","Mercury":"<0.0100","Molybdenum":"=6.0000","Nickel":"=1.1000","Lead":"<0.6000","Selenium":"<1.1000","Zinc":"=563.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=2.5000","Cadmium":"<0.1000","Cobalt":"=2.2000","Mercury":"<0.0100","Molybdenum":"=6.0000","Nickel":"=1.1000","Lead":"<0.6000","Selenium":"<1.1000","Zinc":"=563.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INTEGRATED AGRIBUSINESS PROFESSIONA","label_name":"IAP PRO 20-20-20","wsda_reg_no":"(#4029-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FD518A",
+  "metadata": {
+    "registrant": "INTEGRATED AGRIBUSINESS PROFESSIONA",
+    "label_name": "IAP PRO 20-20-20",
+    "wsda_reg_no": "(#4029-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4029-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4029-0002)",
+        "product_name": "IAP PRO 20-20-20",
+        "company_info": {
+          "company": "INTEGRATED AGRIBUSINESS PROFESSIONA",
+          "Mailing Address": "7108 N Fresno St Suite 150",
+          "Post Office Box": null,
+          "City": "Fresno",
+          "State": "CA",
+          "Postal Code": "93720",
+          "Telephone Number": "559 917-1217",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 20.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=2.5000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=2.2000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=6.0000",
+          "Nickel": "=1.1000",
+          "Lead": "<0.6000",
+          "Selenium": "<1.1000",
+          "Zinc": "=563.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "IAP PRO 20-20-20",
+    "brand": "INTEGRATED AGRIBUSINESS PROFESSIONA",
+    "manufacturer": {
+      "name": "INTEGRATED AGRIBUSINESS PROFESSIONA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 20.0,
+      "K2O_pct": 20.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FD518A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.5,
+            "Cd": 0.1,
+            "Co": 2.2,
+            "Hg": 0.01,
+            "Mo": 6.0,
+            "Ni": 1.1,
+            "Pb": 0.6,
+            "Se": 1.1,
+            "Zn": 563.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Hg": 0.01,
+            "Pb": 0.6,
+            "Se": 1.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.5,
+        "Co": 2.2,
+        "Mo": 6.0,
+        "Ni": 1.1,
+        "Zn": 563.0
+      }
+    }
+  }
+}

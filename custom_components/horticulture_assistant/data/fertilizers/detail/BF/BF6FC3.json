@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"BF6FC3","source_wsda_record":{"wsda_product_number":"(#3388-0004)","product_name":"PURKOTE 90 DAY POLYMER COATED CALCIUM NITRATE 13.5-0-0","company_info":{"company":"PURSELL AGRI TECH","Mailing Address":"104 Calhoun Ave","Post Office Box":null,"City":"Sylacauga","State":"AL","Postal Code":"35150","Telephone Number":"256 242-0230","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.5,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":16.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"=0.2000","Cobalt":"=0.2000","Mercury":"<0.0200","Molybdenum":"<0.3000","Nickel":"=1.5000","Lead":"=2.0000","Selenium":"=0.8000","Zinc":"=4.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.5,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":16.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"=0.2000","Cobalt":"=0.2000","Mercury":"<0.0200","Molybdenum":"<0.3000","Nickel":"=1.5000","Lead":"=2.0000","Selenium":"=0.8000","Zinc":"=4.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PURSELL AGRI TECH","label_name":"PURKOTE 90 DAY POLYMER COATED CALCIUM NITRATE 13.5-0-0","wsda_reg_no":"(#3388-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BF6FC3",
+  "metadata": {
+    "registrant": "PURSELL AGRI TECH",
+    "label_name": "PURKOTE 90 DAY POLYMER COATED CALCIUM NITRATE 13.5-0-0",
+    "wsda_reg_no": "(#3388-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3388-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3388-0004)",
+        "product_name": "PURKOTE 90 DAY POLYMER COATED CALCIUM NITRATE 13.5-0-0",
+        "company_info": {
+          "company": "PURSELL AGRI TECH",
+          "Mailing Address": "104 Calhoun Ave",
+          "Post Office Box": null,
+          "City": "Sylacauga",
+          "State": "AL",
+          "Postal Code": "35150",
+          "Telephone Number": "256 242-0230",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.5,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 16.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.3000",
+          "Nickel": "=1.5000",
+          "Lead": "=2.0000",
+          "Selenium": "=0.8000",
+          "Zinc": "=4.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PURKOTE 90 DAY POLYMER COATED CALCIUM NITRATE 13.5-0-0",
+    "brand": "PURSELL AGRI TECH",
+    "manufacturer": {
+      "name": "PURSELL AGRI TECH"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.5
+    },
+    "macros_pct": {
+      "Ca": 16.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BF6FC3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.2,
+            "Co": 0.2,
+            "Hg": 0.02,
+            "Mo": 0.3,
+            "Ni": 1.5,
+            "Pb": 2.0,
+            "Se": 0.8,
+            "Zn": 4.7
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.02,
+            "Mo": 0.3
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.2,
+        "Co": 0.2,
+        "Ni": 1.5,
+        "Pb": 2.0,
+        "Se": 0.8,
+        "Zn": 4.7
+      }
+    }
+  }
+}

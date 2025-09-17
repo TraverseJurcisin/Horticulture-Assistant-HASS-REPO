@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C309BE","source_wsda_record":{"wsda_product_number":"(#2833-0005)","product_name":"ETIMADEN ULEXITE 0-0-0","company_info":{"company":"ETIMINE USA INC","Mailing Address":"411 Hackensack Ave Ste 902","Post Office Box":null,"City":"Hackensack","State":"NJ","Postal Code":"07601","Telephone Number":"201 462-1200","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":10.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=31.0000","Cadmium":"=0.9970","Cobalt":"=1.9900","Mercury":"=0.0330","Molybdenum":"=1.9900","Nickel":"=0.9970","Lead":"=4.9000","Selenium":"=4.9900","Zinc":"=4.9900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":10.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=31.0000","Cadmium":"=0.9970","Cobalt":"=1.9900","Mercury":"=0.0330","Molybdenum":"=1.9900","Nickel":"=0.9970","Lead":"=4.9000","Selenium":"=4.9900","Zinc":"=4.9900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ETIMINE USA INC","label_name":"ETIMADEN ULEXITE 0-0-0","wsda_reg_no":"(#2833-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C309BE",
+  "metadata": {
+    "registrant": "ETIMINE USA INC",
+    "label_name": "ETIMADEN ULEXITE 0-0-0",
+    "wsda_reg_no": "(#2833-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2833-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2833-0005)",
+        "product_name": "ETIMADEN ULEXITE 0-0-0",
+        "company_info": {
+          "company": "ETIMINE USA INC",
+          "Mailing Address": "411 Hackensack Ave Ste 902",
+          "Post Office Box": null,
+          "City": "Hackensack",
+          "State": "NJ",
+          "Postal Code": "07601",
+          "Telephone Number": "201 462-1200",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": 10.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=31.0000",
+          "Cadmium": "=0.9970",
+          "Cobalt": "=1.9900",
+          "Mercury": "=0.0330",
+          "Molybdenum": "=1.9900",
+          "Nickel": "=0.9970",
+          "Lead": "=4.9000",
+          "Selenium": "=4.9900",
+          "Zinc": "=4.9900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ETIMADEN ULEXITE 0-0-0",
+    "brand": "ETIMINE USA INC",
+    "manufacturer": {
+      "name": "ETIMINE USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 1.5
+    },
+    "micros_pct": {
+      "B": 10.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C309BE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 31.0,
+            "Cd": 0.997,
+            "Co": 1.99,
+            "Hg": 0.033,
+            "Mo": 1.99,
+            "Ni": 0.997,
+            "Pb": 4.9,
+            "Se": 4.99,
+            "Zn": 4.99
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 31.0,
+        "Cd": 0.997,
+        "Co": 1.99,
+        "Hg": 0.033,
+        "Mo": 1.99,
+        "Ni": 0.997,
+        "Pb": 4.9,
+        "Se": 4.99,
+        "Zn": 4.99
+      }
+    }
+  }
+}

@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"AAC6C7","source_wsda_record":{"wsda_product_number":"(#0698-0057)","product_name":"MIRACLE-GRO SHAKE 'N FEED TOMATO, FRUITS & VEGETABLES CONTINUOUS RELEASE PLANT FOOD + CALCIUM 9-4-12","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":1.4,"Sulfur (S)":7.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.9,"Manganese (Mn)":0.35,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=0.9160","Cadmium":"=0.6690","Cobalt":"=9.8500","Mercury":"=0.0512","Molybdenum":"=1.7700","Nickel":"=9.8800","Lead":"=3.9500","Selenium":"=1.1900","Zinc":"=1160.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":1.4,"Sulfur (S)":7.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.9,"Manganese (Mn)":0.35,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=0.9160","Cadmium":"=0.6690","Cobalt":"=9.8500","Mercury":"=0.0512","Molybdenum":"=1.7700","Nickel":"=9.8800","Lead":"=3.9500","Selenium":"=1.1900","Zinc":"=1160.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO SHAKE 'N FEED TOMATO, FRUITS & VEGETABLES CONTINUOUS RELEASE PLANT FOOD + CALCIUM 9-4-12","wsda_reg_no":"(#0698-0057)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AAC6C7",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO SHAKE 'N FEED TOMATO, FRUITS & VEGETABLES CONTINUOUS RELEASE PLANT FOOD + CALCIUM 9-4-12",
+    "wsda_reg_no": "(#0698-0057)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0057)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0057)",
+        "product_name": "MIRACLE-GRO SHAKE 'N FEED TOMATO, FRUITS & VEGETABLES CONTINUOUS RELEASE PLANT FOOD + CALCIUM 9-4-12",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": 3.5,
+          "Magnesium (Mg)": 1.4,
+          "Sulfur (S)": 7.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.9,
+          "Manganese (Mn)": 0.35,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9160",
+          "Cadmium": "=0.6690",
+          "Cobalt": "=9.8500",
+          "Mercury": "=0.0512",
+          "Molybdenum": "=1.7700",
+          "Nickel": "=9.8800",
+          "Lead": "=3.9500",
+          "Selenium": "=1.1900",
+          "Zinc": "=1160.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO SHAKE 'N FEED TOMATO, FRUITS & VEGETABLES CONTINUOUS RELEASE PLANT FOOD + CALCIUM 9-4-12",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 12.0
+    },
+    "macros_pct": {
+      "Ca": 3.5,
+      "Mg": 1.4,
+      "S": 7.0
+    },
+    "micros_pct": {
+      "Fe": 0.9,
+      "Mn": 0.35,
+      "Zn": 0.1,
+      "Cu": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AAC6C7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.916,
+            "Cd": 0.669,
+            "Co": 9.85,
+            "Hg": 0.0512,
+            "Mo": 1.77,
+            "Ni": 9.88,
+            "Pb": 3.95,
+            "Se": 1.19,
+            "Zn": 1160.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.916,
+        "Cd": 0.669,
+        "Co": 9.85,
+        "Hg": 0.0512,
+        "Mo": 1.77,
+        "Ni": 9.88,
+        "Pb": 3.95,
+        "Se": 1.19,
+        "Zn": 1160.0
+      }
+    }
+  }
+}

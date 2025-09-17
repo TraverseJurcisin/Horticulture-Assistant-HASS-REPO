@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"88B08D","source_wsda_record":{"wsda_product_number":"(#0169-0675)","product_name":"SIMPLOT SP ECOGREEN 5-6-5 MINI 5-6-5","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":4.3,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4600","Cadmium":"<0.3700","Cobalt":"=0.1900","Mercury":"<0.0290","Molybdenum":"=0.6800","Nickel":"=1.4000","Lead":"=1.8000","Selenium":"<0.9200","Zinc":"=90.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":4.3,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4600","Cadmium":"<0.3700","Cobalt":"=0.1900","Mercury":"<0.0290","Molybdenum":"=0.6800","Nickel":"=1.4000","Lead":"=1.8000","Selenium":"<0.9200","Zinc":"=90.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"SIMPLOT SP ECOGREEN 5-6-5 MINI 5-6-5","wsda_reg_no":"(#0169-0675)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "88B08D",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "SIMPLOT SP ECOGREEN 5-6-5 MINI 5-6-5",
+    "wsda_reg_no": "(#0169-0675)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0675)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0675)",
+        "product_name": "SIMPLOT SP ECOGREEN 5-6-5 MINI 5-6-5",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 4.3,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4600",
+          "Cadmium": "<0.3700",
+          "Cobalt": "=0.1900",
+          "Mercury": "<0.0290",
+          "Molybdenum": "=0.6800",
+          "Nickel": "=1.4000",
+          "Lead": "=1.8000",
+          "Selenium": "<0.9200",
+          "Zinc": "=90.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT SP ECOGREEN 5-6-5 MINI 5-6-5",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 4.3,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "88B08D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.46,
+            "Cd": 0.37,
+            "Co": 0.19,
+            "Hg": 0.029,
+            "Mo": 0.68,
+            "Ni": 1.4,
+            "Pb": 1.8,
+            "Se": 0.92,
+            "Zn": 90.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.46,
+            "Cd": 0.37,
+            "Hg": 0.029,
+            "Se": 0.92
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.19,
+        "Mo": 0.68,
+        "Ni": 1.4,
+        "Pb": 1.8,
+        "Zn": 90.0
+      }
+    }
+  }
+}

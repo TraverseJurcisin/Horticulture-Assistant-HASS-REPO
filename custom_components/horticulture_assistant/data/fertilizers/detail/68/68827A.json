@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "68827A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0698-0274)",
-    "product_name": "MIRACLE-GRO GARDEN TO GO MESCLUN GREENS MIX 0.13-0.13-0.13",
-    "company_info": {
-      "company": "MIRACLE-GRO LAWN PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-1573",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.13,
-      "Available Phosphoric Acid (P2O5)": 0.13,
-      "Soluble Potash (K2O)": 0.13,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.4810",
-      "Cadmium": "<0.2400",
-      "Cobalt": "=0.7090",
-      "Mercury": "<0.0198",
-      "Molybdenum": "<0.7210",
-      "Nickel": "=2.5100",
-      "Lead": "=0.4690",
-      "Selenium": "<0.7210",
-      "Zinc": "=9.0700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.13,
-      "Available Phosphoric Acid (P2O5)": 0.13,
-      "Soluble Potash (K2O)": 0.13,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.4810",
-      "Cadmium": "<0.2400",
-      "Cobalt": "=0.7090",
-      "Mercury": "<0.0198",
-      "Molybdenum": "<0.7210",
-      "Nickel": "=2.5100",
-      "Lead": "=0.4690",
-      "Selenium": "<0.7210",
-      "Zinc": "=9.0700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "68827A",
   "metadata": {
     "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
     "label_name": "MIRACLE-GRO GARDEN TO GO MESCLUN GREENS MIX 0.13-0.13-0.13",
     "wsda_reg_no": "(#0698-0274)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0274)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0274)",
+        "product_name": "MIRACLE-GRO GARDEN TO GO MESCLUN GREENS MIX 0.13-0.13-0.13",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.13,
+          "Available Phosphoric Acid (P2O5)": 0.13,
+          "Soluble Potash (K2O)": 0.13,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4810",
+          "Cadmium": "<0.2400",
+          "Cobalt": "=0.7090",
+          "Mercury": "<0.0198",
+          "Molybdenum": "<0.7210",
+          "Nickel": "=2.5100",
+          "Lead": "=0.4690",
+          "Selenium": "<0.7210",
+          "Zinc": "=9.0700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO GARDEN TO GO MESCLUN GREENS MIX 0.13-0.13-0.13",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.13,
+      "P2O5_pct": 0.13,
+      "K2O_pct": 0.13
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "68827A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.481,
+            "Cd": 0.24,
+            "Co": 0.709,
+            "Hg": 0.0198,
+            "Mo": 0.721,
+            "Ni": 2.51,
+            "Pb": 0.469,
+            "Se": 0.721,
+            "Zn": 9.07
+          },
+          "detection_limits_ppm": {
+            "As": 0.481,
+            "Cd": 0.24,
+            "Hg": 0.0198,
+            "Mo": 0.721,
+            "Se": 0.721
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.709,
+        "Ni": 2.51,
+        "Pb": 0.469,
+        "Zn": 9.07
+      }
+    }
   }
 }

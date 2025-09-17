@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"E2EA0D","source_wsda_record":{"wsda_product_number":"(#0997-0127)","product_name":"INSTEAD HAPPY LAWN SUMMER 11-0-2","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5250","Cadmium":"<0.2630","Cobalt":"=1.1600","Mercury":"<0.0211","Molybdenum":"=1.8500","Nickel":"=0.0936","Lead":"<0.2630","Selenium":"=1.1500","Zinc":"=1.2900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5250","Cadmium":"<0.2630","Cobalt":"=1.1600","Mercury":"<0.0211","Molybdenum":"=1.8500","Nickel":"=0.0936","Lead":"<0.2630","Selenium":"=1.1500","Zinc":"=1.2900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"INSTEAD HAPPY LAWN SUMMER 11-0-2","wsda_reg_no":"(#0997-0127)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E2EA0D",
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "INSTEAD HAPPY LAWN SUMMER 11-0-2",
+    "wsda_reg_no": "(#0997-0127)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0127)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0127)",
+        "product_name": "INSTEAD HAPPY LAWN SUMMER 11-0-2",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5250",
+          "Cadmium": "<0.2630",
+          "Cobalt": "=1.1600",
+          "Mercury": "<0.0211",
+          "Molybdenum": "=1.8500",
+          "Nickel": "=0.0936",
+          "Lead": "<0.2630",
+          "Selenium": "=1.1500",
+          "Zinc": "=1.2900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "INSTEAD HAPPY LAWN SUMMER 11-0-2",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E2EA0D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.525,
+            "Cd": 0.263,
+            "Co": 1.16,
+            "Hg": 0.0211,
+            "Mo": 1.85,
+            "Ni": 0.0936,
+            "Pb": 0.263,
+            "Se": 1.15,
+            "Zn": 1.29
+          },
+          "detection_limits_ppm": {
+            "As": 0.525,
+            "Cd": 0.263,
+            "Hg": 0.0211,
+            "Pb": 0.263
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.16,
+        "Mo": 1.85,
+        "Ni": 0.0936,
+        "Se": 1.15,
+        "Zn": 1.29
+      }
+    }
+  }
+}

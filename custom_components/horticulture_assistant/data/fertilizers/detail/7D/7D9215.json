@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7D9215",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1075-0049)",
-    "product_name": "REDOX RX-C 0-1-1",
-    "company_info": {
-      "company": "REDOX CHEMICALS LLC",
-      "Mailing Address": "PO Box 129",
-      "Post Office Box": null,
-      "City": "Burley",
-      "State": "ID",
-      "Postal Code": "83318",
-      "Telephone Number": "208 678-2610",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.037,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.0
-    },
-    "reported_metals": {
-      "Arsenic": "=0.3100",
-      "Cadmium": "=1.1100",
-      "Cobalt": "=58.8000",
-      "Mercury": "<0.2200",
-      "Molybdenum": "=39.2000",
-      "Nickel": "=0.8000",
-      "Lead": "=3.0600",
-      "Selenium": "=37.3000",
-      "Zinc": "=27847.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 1.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.037,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.3100",
-      "Cadmium": "=1.1100",
-      "Cobalt": "=58.8000",
-      "Mercury": "<0.2200",
-      "Molybdenum": "=39.2000",
-      "Nickel": "=0.8000",
-      "Lead": "=3.0600",
-      "Selenium": "=37.3000",
-      "Zinc": "=27847.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7D9215",
   "metadata": {
     "registrant": "REDOX CHEMICALS LLC",
     "label_name": "REDOX RX-C 0-1-1",
     "wsda_reg_no": "(#1075-0049)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1075-0049)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1075-0049)",
+        "product_name": "REDOX RX-C 0-1-1",
+        "company_info": {
+          "company": "REDOX CHEMICALS LLC",
+          "Mailing Address": "PO Box 129",
+          "Post Office Box": null,
+          "City": "Burley",
+          "State": "ID",
+          "Postal Code": "83318",
+          "Telephone Number": "208 678-2610",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.037,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3100",
+          "Cadmium": "=1.1100",
+          "Cobalt": "=58.8000",
+          "Mercury": "<0.2200",
+          "Molybdenum": "=39.2000",
+          "Nickel": "=0.8000",
+          "Lead": "=3.0600",
+          "Selenium": "=37.3000",
+          "Zinc": "=27847.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "REDOX RX-C 0-1-1",
+    "brand": "REDOX CHEMICALS LLC",
+    "manufacturer": {
+      "name": "REDOX CHEMICALS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 1.0,
+      "Zn": 2.0,
+      "Cu": 1.0,
+      "Mo": 0.037
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7D9215-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.31,
+            "Cd": 1.11,
+            "Co": 58.8,
+            "Hg": 0.22,
+            "Mo": 39.2,
+            "Ni": 0.8,
+            "Pb": 3.06,
+            "Se": 37.3,
+            "Zn": 27847.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.22
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.31,
+        "Cd": 1.11,
+        "Co": 58.8,
+        "Mo": 39.2,
+        "Ni": 0.8,
+        "Pb": 3.06,
+        "Se": 37.3,
+        "Zn": 27847.6
+      }
+    }
   }
 }

@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"8D8FB6","source_wsda_record":{"wsda_product_number":"(#3799-0016)","product_name":"BW BIOBOOST SOY 9-2-5","company_info":{"company":"BW FUSION","Mailing Address":"3850 Concept Court","Post Office Box":"Suite 101","City":"Fort Wayne","State":"IN","Postal Code":"46808","Telephone Number":"260 497-7645","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":null,"Iron (Fe)":0.4,"Manganese (Mn)":0.2,"Molybdenum (Mo)":1.5,"Sodium (Na)":null,"Zinc (Zn)":0.8},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=946.0000","Mercury":"=0.0500","Molybdenum":"=17900.0000","Nickel":"=4.6000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=8517.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":null,"Iron (Fe)":0.4,"Manganese (Mn)":0.2,"Molybdenum (Mo)":1.5,"Sodium (Na)":null,"Zinc (Zn)":0.8},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=0.5000","Cobalt":"=946.0000","Mercury":"=0.0500","Molybdenum":"=17900.0000","Nickel":"=4.6000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=8517.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BW FUSION","label_name":"BW BIOBOOST SOY 9-2-5","wsda_reg_no":"(#3799-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8D8FB6",
+  "metadata": {
+    "registrant": "BW FUSION",
+    "label_name": "BW BIOBOOST SOY 9-2-5",
+    "wsda_reg_no": "(#3799-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3799-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3799-0016)",
+        "product_name": "BW BIOBOOST SOY 9-2-5",
+        "company_info": {
+          "company": "BW FUSION",
+          "Mailing Address": "3850 Concept Court",
+          "Post Office Box": "Suite 101",
+          "City": "Fort Wayne",
+          "State": "IN",
+          "Postal Code": "46808",
+          "Telephone Number": "260 497-7645",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": 1.5,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.8
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=946.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=17900.0000",
+          "Nickel": "=4.6000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=8517.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BW BIOBOOST SOY 9-2-5",
+    "brand": "BW FUSION",
+    "manufacturer": {
+      "name": "BW FUSION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 0.2,
+      "Zn": 0.8,
+      "Mo": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8D8FB6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 946.0,
+            "Hg": 0.05,
+            "Mo": 17900.0,
+            "Ni": 4.6,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 8517.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.5,
+        "Co": 946.0,
+        "Hg": 0.05,
+        "Mo": 17900.0,
+        "Ni": 4.6,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 8517.0
+      }
+    }
+  }
+}

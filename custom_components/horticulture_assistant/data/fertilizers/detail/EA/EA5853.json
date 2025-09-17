@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"EA5853","source_wsda_record":{"wsda_product_number":"(#0198-0051)","product_name":"MCGREGOR WITH 3% MOLY 5-0-0","company_info":{"company":"MCGREGOR COMPANY, (THE)","Mailing Address":"PO Box 740","Post Office Box":null,"City":"Colfax","State":"WA","Postal Code":"99111-0740","Telephone Number":"509 397-4355","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":3.0,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=94.0000","Cadmium":"=2.5700","Cobalt":"=1.9300","Mercury":"=0.6200","Molybdenum":"=4000.0000","Nickel":"=23.2600","Lead":"=6.4600","Selenium":"=5.0000","Zinc":"=239.1800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":3.0,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=94.0000","Cadmium":"=2.5700","Cobalt":"=1.9300","Mercury":"=0.6200","Molybdenum":"=4000.0000","Nickel":"=23.2600","Lead":"=6.4600","Selenium":"=5.0000","Zinc":"=239.1800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MCGREGOR COMPANY, (THE)","label_name":"MCGREGOR WITH 3% MOLY 5-0-0","wsda_reg_no":"(#0198-0051)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EA5853",
+  "metadata": {
+    "registrant": "MCGREGOR COMPANY, (THE)",
+    "label_name": "MCGREGOR WITH 3% MOLY 5-0-0",
+    "wsda_reg_no": "(#0198-0051)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0198-0051)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0198-0051)",
+        "product_name": "MCGREGOR WITH 3% MOLY 5-0-0",
+        "company_info": {
+          "company": "MCGREGOR COMPANY, (THE)",
+          "Mailing Address": "PO Box 740",
+          "Post Office Box": null,
+          "City": "Colfax",
+          "State": "WA",
+          "Postal Code": "99111-0740",
+          "Telephone Number": "509 397-4355",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 3.0,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=94.0000",
+          "Cadmium": "=2.5700",
+          "Cobalt": "=1.9300",
+          "Mercury": "=0.6200",
+          "Molybdenum": "=4000.0000",
+          "Nickel": "=23.2600",
+          "Lead": "=6.4600",
+          "Selenium": "=5.0000",
+          "Zinc": "=239.1800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MCGREGOR WITH 3% MOLY 5-0-0",
+    "brand": "MCGREGOR COMPANY, (THE)",
+    "manufacturer": {
+      "name": "MCGREGOR COMPANY, (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "micros_pct": {
+      "Mo": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EA5853-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 94.0,
+            "Cd": 2.57,
+            "Co": 1.93,
+            "Hg": 0.62,
+            "Mo": 4000.0,
+            "Ni": 23.26,
+            "Pb": 6.46,
+            "Se": 5.0,
+            "Zn": 239.18
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 94.0,
+        "Cd": 2.57,
+        "Co": 1.93,
+        "Hg": 0.62,
+        "Mo": 4000.0,
+        "Ni": 23.26,
+        "Pb": 6.46,
+        "Se": 5.0,
+        "Zn": 239.18
+      }
+    }
+  }
+}

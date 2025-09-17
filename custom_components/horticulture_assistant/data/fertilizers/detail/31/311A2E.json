@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "311A2E",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0349-0693)",
-    "product_name": "TILL-IT BACKBONE LIVE 7-21-0",
-    "company_info": {
-      "company": "WILBUR ELLIS COMPANY LLC",
-      "Mailing Address": "4582 S. Ulster Street Parkway",
-      "Post Office Box": null,
-      "City": "Denver",
-      "State": "CO",
-      "Postal Code": "80237",
-      "Telephone Number": "802 236-3745",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 21.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.3
-    },
-    "reported_metals": {
-      "Arsenic": "=3.2000",
-      "Cadmium": "=43.0000",
-      "Cobalt": "=0.0300",
-      "Mercury": "<0.0076",
-      "Molybdenum": "=9.8000",
-      "Nickel": "=0.1600",
-      "Lead": "=0.3500",
-      "Selenium": "=1.4000",
-      "Zinc": "=3900.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 21.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.3
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.2000",
-      "Cadmium": "=43.0000",
-      "Cobalt": "=0.0300",
-      "Mercury": "<0.0076",
-      "Molybdenum": "=9.8000",
-      "Nickel": "=0.1600",
-      "Lead": "=0.3500",
-      "Selenium": "=1.4000",
-      "Zinc": "=3900.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "311A2E",
   "metadata": {
     "registrant": "WILBUR ELLIS COMPANY LLC",
     "label_name": "TILL-IT BACKBONE LIVE 7-21-0",
     "wsda_reg_no": "(#0349-0693)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0693)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0693)",
+        "product_name": "TILL-IT BACKBONE LIVE 7-21-0",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 21.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.3
+        },
+        "reported_metals": {
+          "Arsenic": "=3.2000",
+          "Cadmium": "=43.0000",
+          "Cobalt": "=0.0300",
+          "Mercury": "<0.0076",
+          "Molybdenum": "=9.8000",
+          "Nickel": "=0.1600",
+          "Lead": "=0.3500",
+          "Selenium": "=1.4000",
+          "Zinc": "=3900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TILL-IT BACKBONE LIVE 7-21-0",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 21.0
+    },
+    "micros_pct": {
+      "Zn": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "311A2E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.2,
+            "Cd": 43.0,
+            "Co": 0.03,
+            "Hg": 0.0076,
+            "Mo": 9.8,
+            "Ni": 0.16,
+            "Pb": 0.35,
+            "Se": 1.4,
+            "Zn": 3900.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0076
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.2,
+        "Cd": 43.0,
+        "Co": 0.03,
+        "Mo": 9.8,
+        "Ni": 0.16,
+        "Pb": 0.35,
+        "Se": 1.4,
+        "Zn": 3900.0
+      }
+    }
   }
 }

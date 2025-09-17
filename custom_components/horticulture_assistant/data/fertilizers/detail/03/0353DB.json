@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0353DB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0198-0069)",
-    "product_name": "MCGREGOR 12-40-0",
-    "company_info": {
-      "company": "MCGREGOR COMPANY, (THE)",
-      "Mailing Address": "PO Box 740",
-      "Post Office Box": null,
-      "City": "Colfax",
-      "State": "WA",
-      "Postal Code": "99111-0740",
-      "Telephone Number": "509 397-4355",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 40.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=14.8000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=0.5000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=35.6000",
-      "Lead": "=9.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=1500.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 40.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=14.8000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=0.5000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=35.6000",
-      "Lead": "=9.0000",
-      "Selenium": "=1.0000",
-      "Zinc": "=1500.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0353DB",
   "metadata": {
     "registrant": "MCGREGOR COMPANY, (THE)",
     "label_name": "MCGREGOR 12-40-0",
     "wsda_reg_no": "(#0198-0069)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0198-0069)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0198-0069)",
+        "product_name": "MCGREGOR 12-40-0",
+        "company_info": {
+          "company": "MCGREGOR COMPANY, (THE)",
+          "Mailing Address": "PO Box 740",
+          "Post Office Box": null,
+          "City": "Colfax",
+          "State": "WA",
+          "Postal Code": "99111-0740",
+          "Telephone Number": "509 397-4355",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 40.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=14.8000",
+          "Cadmium": "=10.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=35.6000",
+          "Lead": "=9.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=1500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MCGREGOR 12-40-0",
+    "brand": "MCGREGOR COMPANY, (THE)",
+    "manufacturer": {
+      "name": "MCGREGOR COMPANY, (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 40.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0353DB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.8,
+            "Cd": 10.0,
+            "Co": 10.0,
+            "Hg": 0.5,
+            "Mo": 1.0,
+            "Ni": 35.6,
+            "Pb": 9.0,
+            "Se": 1.0,
+            "Zn": 1500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.8,
+        "Cd": 10.0,
+        "Co": 10.0,
+        "Hg": 0.5,
+        "Mo": 1.0,
+        "Ni": 35.6,
+        "Pb": 9.0,
+        "Se": 1.0,
+        "Zn": 1500.0
+      }
+    }
   }
 }

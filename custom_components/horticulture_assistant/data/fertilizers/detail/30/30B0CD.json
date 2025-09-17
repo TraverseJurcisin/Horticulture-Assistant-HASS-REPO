@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "30B0CD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0739-0083)",
-    "product_name": "GEN-MAX ROK-IT 0-0-28",
-    "company_info": {
-      "company": "GENESIS AGRI-PRODUCTS INC",
-      "Mailing Address": "PO Box 10512",
-      "Post Office Box": null,
-      "City": "Yakima",
-      "State": "WA",
-      "Postal Code": "98909",
-      "Telephone Number": "509 575-8382",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 28.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.4740",
-      "Cadmium": "<0.1900",
-      "Cobalt": "<0.1900",
-      "Mercury": "<0.0161",
-      "Molybdenum": "<0.9480",
-      "Nickel": "<0.9480",
-      "Lead": "<0.1900",
-      "Selenium": "<0.9480",
-      "Zinc": "<0.9480"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 28.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.4740",
-      "Cadmium": "<0.1900",
-      "Cobalt": "<0.1900",
-      "Mercury": "<0.0161",
-      "Molybdenum": "<0.9480",
-      "Nickel": "<0.9480",
-      "Lead": "<0.1900",
-      "Selenium": "<0.9480",
-      "Zinc": "<0.9480"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "30B0CD",
   "metadata": {
     "registrant": "GENESIS AGRI-PRODUCTS INC",
     "label_name": "GEN-MAX ROK-IT 0-0-28",
     "wsda_reg_no": "(#0739-0083)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0739-0083)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0739-0083)",
+        "product_name": "GEN-MAX ROK-IT 0-0-28",
+        "company_info": {
+          "company": "GENESIS AGRI-PRODUCTS INC",
+          "Mailing Address": "PO Box 10512",
+          "Post Office Box": null,
+          "City": "Yakima",
+          "State": "WA",
+          "Postal Code": "98909",
+          "Telephone Number": "509 575-8382",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 28.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4740",
+          "Cadmium": "<0.1900",
+          "Cobalt": "<0.1900",
+          "Mercury": "<0.0161",
+          "Molybdenum": "<0.9480",
+          "Nickel": "<0.9480",
+          "Lead": "<0.1900",
+          "Selenium": "<0.9480",
+          "Zinc": "<0.9480"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GEN-MAX ROK-IT 0-0-28",
+    "brand": "GENESIS AGRI-PRODUCTS INC",
+    "manufacturer": {
+      "name": "GENESIS AGRI-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 28.0
+    },
+    "macros_pct": {
+      "S": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "30B0CD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.474,
+            "Cd": 0.19,
+            "Co": 0.19,
+            "Hg": 0.0161,
+            "Mo": 0.948,
+            "Ni": 0.948,
+            "Pb": 0.19,
+            "Se": 0.948,
+            "Zn": 0.948
+          },
+          "detection_limits_ppm": {
+            "As": 0.474,
+            "Cd": 0.19,
+            "Co": 0.19,
+            "Hg": 0.0161,
+            "Mo": 0.948,
+            "Ni": 0.948,
+            "Pb": 0.19,
+            "Se": 0.948,
+            "Zn": 0.948
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"8DF2FE","source_wsda_record":{"wsda_product_number":"(#0185-0118)","product_name":"GREENVIEW CRABGRASS CONTROL PLUS LAWN FOOD 26-0-4","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":26.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2200","Cadmium":"<0.1800","Cobalt":"=0.5400","Mercury":"<0.0200","Molybdenum":"<0.7500","Nickel":"=0.6400","Lead":"<0.8600","Selenium":"<0.5600","Zinc":"=2.8400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":26.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2200","Cadmium":"<0.1800","Cobalt":"=0.5400","Mercury":"<0.0200","Molybdenum":"<0.7500","Nickel":"=0.6400","Lead":"<0.8600","Selenium":"<0.5600","Zinc":"=2.8400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"GREENVIEW CRABGRASS CONTROL PLUS LAWN FOOD 26-0-4","wsda_reg_no":"(#0185-0118)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8DF2FE",
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "GREENVIEW CRABGRASS CONTROL PLUS LAWN FOOD 26-0-4",
+    "wsda_reg_no": "(#0185-0118)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0118)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0118)",
+        "product_name": "GREENVIEW CRABGRASS CONTROL PLUS LAWN FOOD 26-0-4",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 26.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2200",
+          "Cadmium": "<0.1800",
+          "Cobalt": "=0.5400",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.7500",
+          "Nickel": "=0.6400",
+          "Lead": "<0.8600",
+          "Selenium": "<0.5600",
+          "Zinc": "=2.8400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENVIEW CRABGRASS CONTROL PLUS LAWN FOOD 26-0-4",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 26.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "S": 3.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8DF2FE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.22,
+            "Cd": 0.18,
+            "Co": 0.54,
+            "Hg": 0.02,
+            "Mo": 0.75,
+            "Ni": 0.64,
+            "Pb": 0.86,
+            "Se": 0.56,
+            "Zn": 2.84
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.18,
+            "Hg": 0.02,
+            "Mo": 0.75,
+            "Pb": 0.86,
+            "Se": 0.56
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.22,
+        "Co": 0.54,
+        "Ni": 0.64,
+        "Zn": 2.84
+      }
+    }
+  }
+}

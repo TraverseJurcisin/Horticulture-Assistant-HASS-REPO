@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "74EA41",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0202-0009)",
-    "product_name": "MID STATE CO-OP ALL PURPOSE FERTILIZER 16-16-16",
-    "company_info": {
-      "company": "MID STATE COOP",
-      "Mailing Address": "PO Box 480",
-      "Post Office Box": null,
-      "City": "Ellensburg",
-      "State": "WA",
-      "Postal Code": "98926",
-      "Telephone Number": "509 925-3378",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 16.0,
-      "Available Phosphoric Acid (P2O5)": 16.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "=58.2000",
-      "Cobalt": "=1.5000",
-      "Mercury": "=0.0220",
-      "Molybdenum": "=6.4000",
-      "Nickel": "=83.3000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.5300",
-      "Zinc": "=2140.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 16.0,
-      "Available Phosphoric Acid (P2O5)": 16.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.8000",
-      "Cadmium": "=58.2000",
-      "Cobalt": "=1.5000",
-      "Mercury": "=0.0220",
-      "Molybdenum": "=6.4000",
-      "Nickel": "=83.3000",
-      "Lead": "=0.9000",
-      "Selenium": "<0.5300",
-      "Zinc": "=2140.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "74EA41",
   "metadata": {
     "registrant": "MID STATE COOP",
     "label_name": "MID STATE CO-OP ALL PURPOSE FERTILIZER 16-16-16",
     "wsda_reg_no": "(#0202-0009)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0202-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0202-0009)",
+        "product_name": "MID STATE CO-OP ALL PURPOSE FERTILIZER 16-16-16",
+        "company_info": {
+          "company": "MID STATE COOP",
+          "Mailing Address": "PO Box 480",
+          "Post Office Box": null,
+          "City": "Ellensburg",
+          "State": "WA",
+          "Postal Code": "98926",
+          "Telephone Number": "509 925-3378",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.8000",
+          "Cadmium": "=58.2000",
+          "Cobalt": "=1.5000",
+          "Mercury": "=0.0220",
+          "Molybdenum": "=6.4000",
+          "Nickel": "=83.3000",
+          "Lead": "=0.9000",
+          "Selenium": "<0.5300",
+          "Zinc": "=2140.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MID STATE CO-OP ALL PURPOSE FERTILIZER 16-16-16",
+    "brand": "MID STATE COOP",
+    "manufacturer": {
+      "name": "MID STATE COOP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "P2O5_pct": 16.0,
+      "K2O_pct": 16.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "74EA41-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.8,
+            "Cd": 58.2,
+            "Co": 1.5,
+            "Hg": 0.022,
+            "Mo": 6.4,
+            "Ni": 83.3,
+            "Pb": 0.9,
+            "Se": 0.53,
+            "Zn": 2140.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.53
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.8,
+        "Cd": 58.2,
+        "Co": 1.5,
+        "Hg": 0.022,
+        "Mo": 6.4,
+        "Ni": 83.3,
+        "Pb": 0.9,
+        "Zn": 2140.0
+      }
+    }
   }
 }

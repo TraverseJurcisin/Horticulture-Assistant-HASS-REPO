@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"DC5F15","source_wsda_record":{"wsda_product_number":"(#4047-0001)","product_name":"CUSTOM BIOSCIENCES COMO5 0-0-0","company_info":{"company":"CUSTOM BIOSCIENCES LLC","Mailing Address":"PO Box 133","Post Office Box":null,"City":"Mission","State":"KS","Postal Code":"66201","Telephone Number":"606 584-0105","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":1.5,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":27.0,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.4800","Cadmium":"=5.0000","Cobalt":"=17000.0000","Mercury":"=0.0500","Molybdenum":"=267000.0000","Nickel":"=25600.0000","Lead":"=0.1000","Selenium":"=2.7800","Zinc":"=30.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":1.5,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":27.0,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.4800","Cadmium":"=5.0000","Cobalt":"=17000.0000","Mercury":"=0.0500","Molybdenum":"=267000.0000","Nickel":"=25600.0000","Lead":"=0.1000","Selenium":"=2.7800","Zinc":"=30.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CUSTOM BIOSCIENCES LLC","label_name":"CUSTOM BIOSCIENCES COMO5 0-0-0","wsda_reg_no":"(#4047-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DC5F15",
+  "metadata": {
+    "registrant": "CUSTOM BIOSCIENCES LLC",
+    "label_name": "CUSTOM BIOSCIENCES COMO5 0-0-0",
+    "wsda_reg_no": "(#4047-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4047-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4047-0001)",
+        "product_name": "CUSTOM BIOSCIENCES COMO5 0-0-0",
+        "company_info": {
+          "company": "CUSTOM BIOSCIENCES LLC",
+          "Mailing Address": "PO Box 133",
+          "Post Office Box": null,
+          "City": "Mission",
+          "State": "KS",
+          "Postal Code": "66201",
+          "Telephone Number": "606 584-0105",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 1.5,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 27.0,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.4800",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=17000.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=267000.0000",
+          "Nickel": "=25600.0000",
+          "Lead": "=0.1000",
+          "Selenium": "=2.7800",
+          "Zinc": "=30.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CUSTOM BIOSCIENCES COMO5 0-0-0",
+    "brand": "CUSTOM BIOSCIENCES LLC",
+    "manufacturer": {
+      "name": "CUSTOM BIOSCIENCES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mo": 27.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DC5F15-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.48,
+            "Cd": 5.0,
+            "Co": 17000.0,
+            "Hg": 0.05,
+            "Mo": 267000.0,
+            "Ni": 25600.0,
+            "Pb": 0.1,
+            "Se": 2.78,
+            "Zn": 30.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.48,
+        "Cd": 5.0,
+        "Co": 17000.0,
+        "Hg": 0.05,
+        "Mo": 267000.0,
+        "Ni": 25600.0,
+        "Pb": 0.1,
+        "Se": 2.78,
+        "Zn": 30.0
+      }
+    }
+  }
+}

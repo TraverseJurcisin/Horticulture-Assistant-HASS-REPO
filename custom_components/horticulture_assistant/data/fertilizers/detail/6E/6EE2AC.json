@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6EE2AC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0193-0341)",
-    "product_name": "SIGNATURE BRAND FERTILIZER 25-0-10",
-    "company_info": {
-      "company": "LOVELAND PRODUCTS INC",
-      "Mailing Address": "PO Box 1286",
-      "Post Office Box": null,
-      "City": "Greeley",
-      "State": "CO",
-      "Postal Code": "80632",
-      "Telephone Number": "970 685-3737",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.5,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5500",
-      "Cadmium": "=1.0900",
-      "Cobalt": "=1.8000",
-      "Mercury": "=0.1400",
-      "Molybdenum": "=3.2000",
-      "Nickel": "=8.2000",
-      "Lead": "=25.2000",
-      "Selenium": "=7.5000",
-      "Zinc": "=3932.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.5,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5500",
-      "Cadmium": "=1.0900",
-      "Cobalt": "=1.8000",
-      "Mercury": "=0.1400",
-      "Molybdenum": "=3.2000",
-      "Nickel": "=8.2000",
-      "Lead": "=25.2000",
-      "Selenium": "=7.5000",
-      "Zinc": "=3932.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6EE2AC",
   "metadata": {
     "registrant": "LOVELAND PRODUCTS INC",
     "label_name": "SIGNATURE BRAND FERTILIZER 25-0-10",
     "wsda_reg_no": "(#0193-0341)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0341)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0341)",
+        "product_name": "SIGNATURE BRAND FERTILIZER 25-0-10",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 25.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.5,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5500",
+          "Cadmium": "=1.0900",
+          "Cobalt": "=1.8000",
+          "Mercury": "=0.1400",
+          "Molybdenum": "=3.2000",
+          "Nickel": "=8.2000",
+          "Lead": "=25.2000",
+          "Selenium": "=7.5000",
+          "Zinc": "=3932.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIGNATURE BRAND FERTILIZER 25-0-10",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 25.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 10.9
+    },
+    "micros_pct": {
+      "Fe": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6EE2AC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.55,
+            "Cd": 1.09,
+            "Co": 1.8,
+            "Hg": 0.14,
+            "Mo": 3.2,
+            "Ni": 8.2,
+            "Pb": 25.2,
+            "Se": 7.5,
+            "Zn": 3932.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.55,
+        "Cd": 1.09,
+        "Co": 1.8,
+        "Hg": 0.14,
+        "Mo": 3.2,
+        "Ni": 8.2,
+        "Pb": 25.2,
+        "Se": 7.5,
+        "Zn": 3932.0
+      }
+    }
   }
 }

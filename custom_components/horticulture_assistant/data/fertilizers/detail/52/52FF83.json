@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "52FF83",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4007-0003)",
-    "product_name": "ALCHEMY BIOSCIENCE KRIMSON 1-0-11",
-    "company_info": {
-      "company": "ALCHEMY BIOSCIENCE LLC",
-      "Mailing Address": "PO Box 10317",
-      "Post Office Box": null,
-      "City": "Spokane",
-      "State": "WA",
-      "Postal Code": "99209",
-      "Telephone Number": "406 360-7421",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2420",
-      "Cadmium": "=0.0490",
-      "Cobalt": "=0.0820",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.4380",
-      "Nickel": "=0.2470",
-      "Lead": "=0.4390",
-      "Selenium": "=0.3690",
-      "Zinc": "=0.8130"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2420",
-      "Cadmium": "=0.0490",
-      "Cobalt": "=0.0820",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.4380",
-      "Nickel": "=0.2470",
-      "Lead": "=0.4390",
-      "Selenium": "=0.3690",
-      "Zinc": "=0.8130"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "52FF83",
   "metadata": {
     "registrant": "ALCHEMY BIOSCIENCE LLC",
     "label_name": "ALCHEMY BIOSCIENCE KRIMSON 1-0-11",
     "wsda_reg_no": "(#4007-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4007-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4007-0003)",
+        "product_name": "ALCHEMY BIOSCIENCE KRIMSON 1-0-11",
+        "company_info": {
+          "company": "ALCHEMY BIOSCIENCE LLC",
+          "Mailing Address": "PO Box 10317",
+          "Post Office Box": null,
+          "City": "Spokane",
+          "State": "WA",
+          "Postal Code": "99209",
+          "Telephone Number": "406 360-7421",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2420",
+          "Cadmium": "=0.0490",
+          "Cobalt": "=0.0820",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.4380",
+          "Nickel": "=0.2470",
+          "Lead": "=0.4390",
+          "Selenium": "=0.3690",
+          "Zinc": "=0.8130"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALCHEMY BIOSCIENCE KRIMSON 1-0-11",
+    "brand": "ALCHEMY BIOSCIENCE LLC",
+    "manufacturer": {
+      "name": "ALCHEMY BIOSCIENCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "K2O_pct": 11.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "52FF83-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.242,
+            "Cd": 0.049,
+            "Co": 0.082,
+            "Hg": 0.001,
+            "Mo": 0.438,
+            "Ni": 0.247,
+            "Pb": 0.439,
+            "Se": 0.369,
+            "Zn": 0.813
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.242,
+        "Cd": 0.049,
+        "Co": 0.082,
+        "Mo": 0.438,
+        "Ni": 0.247,
+        "Pb": 0.439,
+        "Se": 0.369,
+        "Zn": 0.813
+      }
+    }
   }
 }

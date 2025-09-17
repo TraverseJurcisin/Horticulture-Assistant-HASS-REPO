@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"A7BD3B","source_wsda_record":{"wsda_product_number":"(#0835-0017)","product_name":"KEGRIVER ORGANICS KEG90S 0-0-0","company_info":{"company":"KEG RIVER CHEMICAL CORP","Mailing Address":"10350 21st ST","Post Office Box":null,"City":"Edmonton","State":"AB","Postal Code":"T6P 1W4","Telephone Number":"780 417-2463","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":90.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6200","Cadmium":"<0.6400","Cobalt":"=0.4000","Mercury":"<0.2000","Molybdenum":"<0.3200","Nickel":"=0.4700","Lead":"=1.3000","Selenium":"<0.8800","Zinc":"<4.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":90.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6200","Cadmium":"<0.6400","Cobalt":"=0.4000","Mercury":"<0.2000","Molybdenum":"<0.3200","Nickel":"=0.4700","Lead":"=1.3000","Selenium":"<0.8800","Zinc":"<4.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KEG RIVER CHEMICAL CORP","label_name":"KEGRIVER ORGANICS KEG90S 0-0-0","wsda_reg_no":"(#0835-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A7BD3B",
+  "metadata": {
+    "registrant": "KEG RIVER CHEMICAL CORP",
+    "label_name": "KEGRIVER ORGANICS KEG90S 0-0-0",
+    "wsda_reg_no": "(#0835-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0835-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0835-0017)",
+        "product_name": "KEGRIVER ORGANICS KEG90S 0-0-0",
+        "company_info": {
+          "company": "KEG RIVER CHEMICAL CORP",
+          "Mailing Address": "10350 21st ST",
+          "Post Office Box": null,
+          "City": "Edmonton",
+          "State": "AB",
+          "Postal Code": "T6P 1W4",
+          "Telephone Number": "780 417-2463",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 90.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6200",
+          "Cadmium": "<0.6400",
+          "Cobalt": "=0.4000",
+          "Mercury": "<0.2000",
+          "Molybdenum": "<0.3200",
+          "Nickel": "=0.4700",
+          "Lead": "=1.3000",
+          "Selenium": "<0.8800",
+          "Zinc": "<4.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KEGRIVER ORGANICS KEG90S 0-0-0",
+    "brand": "KEG RIVER CHEMICAL CORP",
+    "manufacturer": {
+      "name": "KEG RIVER CHEMICAL CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 90.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A7BD3B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.62,
+            "Cd": 0.64,
+            "Co": 0.4,
+            "Hg": 0.2,
+            "Mo": 0.32,
+            "Ni": 0.47,
+            "Pb": 1.3,
+            "Se": 0.88,
+            "Zn": 4.1
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.64,
+            "Hg": 0.2,
+            "Mo": 0.32,
+            "Se": 0.88,
+            "Zn": 4.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.62,
+        "Co": 0.4,
+        "Ni": 0.47,
+        "Pb": 1.3
+      }
+    }
+  }
+}

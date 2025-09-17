@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"A3F319","source_wsda_record":{"wsda_product_number":"(#3392-0004)","product_name":"BEYOND PEAT PROFESSIONAL ORGANICS ORGANIC ALL PURPOSE RAISED BED MIX 0.1-0.1-0.1","company_info":{"company":"GRO-WELL BRANDS INC","Mailing Address":"P.O. Box 25406","Post Office Box":null,"City":"Tempe","State":"AZ","Postal Code":"85285","Telephone Number":"602 390-1164","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.1,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.5800","Cadmium":"=0.6470","Cobalt":"=4.2100","Mercury":"=0.1000","Molybdenum":"=1.2000","Nickel":"=9.7600","Lead":"=5.6100","Selenium":"=0.1000","Zinc":"=146.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.1,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.5800","Cadmium":"=0.6470","Cobalt":"=4.2100","Mercury":"=0.1000","Molybdenum":"=1.2000","Nickel":"=9.7600","Lead":"=5.6100","Selenium":"=0.1000","Zinc":"=146.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GRO-WELL BRANDS INC","label_name":"BEYOND PEAT PROFESSIONAL ORGANICS ORGANIC ALL PURPOSE RAISED BED MIX 0.1-0.1-0.1","wsda_reg_no":"(#3392-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A3F319",
+  "metadata": {
+    "registrant": "GRO-WELL BRANDS INC",
+    "label_name": "BEYOND PEAT PROFESSIONAL ORGANICS ORGANIC ALL PURPOSE RAISED BED MIX 0.1-0.1-0.1",
+    "wsda_reg_no": "(#3392-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3392-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3392-0004)",
+        "product_name": "BEYOND PEAT PROFESSIONAL ORGANICS ORGANIC ALL PURPOSE RAISED BED MIX 0.1-0.1-0.1",
+        "company_info": {
+          "company": "GRO-WELL BRANDS INC",
+          "Mailing Address": "P.O. Box 25406",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85285",
+          "Telephone Number": "602 390-1164",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.1,
+          "Soluble Potash (K2O)": 0.1,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.5800",
+          "Cadmium": "=0.6470",
+          "Cobalt": "=4.2100",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=1.2000",
+          "Nickel": "=9.7600",
+          "Lead": "=5.6100",
+          "Selenium": "=0.1000",
+          "Zinc": "=146.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEYOND PEAT PROFESSIONAL ORGANICS ORGANIC ALL PURPOSE RAISED BED MIX 0.1-0.1-0.1",
+    "brand": "GRO-WELL BRANDS INC",
+    "manufacturer": {
+      "name": "GRO-WELL BRANDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.1,
+      "K2O_pct": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A3F319-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.58,
+            "Cd": 0.647,
+            "Co": 4.21,
+            "Hg": 0.1,
+            "Mo": 1.2,
+            "Ni": 9.76,
+            "Pb": 5.61,
+            "Se": 0.1,
+            "Zn": 146.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.58,
+        "Cd": 0.647,
+        "Co": 4.21,
+        "Hg": 0.1,
+        "Mo": 1.2,
+        "Ni": 9.76,
+        "Pb": 5.61,
+        "Se": 0.1,
+        "Zn": 146.1
+      }
+    }
+  }
+}

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"988FBC","source_wsda_record":{"wsda_product_number":"(#1790-0020)","product_name":"KEYPLEX KP 120 0-0-0","company_info":{"company":"MORSE ENTERPRISES LIMITED INC","Mailing Address":"PO Box 2515","Post Office Box":null,"City":"Winter Park","State":"FL","Postal Code":"32790-2515","Telephone Number":"407 682-6500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.2,"Manganese (Mn)":0.11,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.11},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.2000","Cobalt":"=0.4000","Mercury":"=0.0100","Molybdenum":"=1.8000","Nickel":"=5.1000","Lead":"=0.7000","Selenium":"=1.2000","Zinc":"=1100.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.2,"Manganese (Mn)":0.11,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.11},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.2000","Cobalt":"=0.4000","Mercury":"=0.0100","Molybdenum":"=1.8000","Nickel":"=5.1000","Lead":"=0.7000","Selenium":"=1.2000","Zinc":"=1100.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MORSE ENTERPRISES LIMITED INC","label_name":"KEYPLEX KP 120 0-0-0","wsda_reg_no":"(#1790-0020)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "988FBC",
+  "metadata": {
+    "registrant": "MORSE ENTERPRISES LIMITED INC",
+    "label_name": "KEYPLEX KP 120 0-0-0",
+    "wsda_reg_no": "(#1790-0020)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1790-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1790-0020)",
+        "product_name": "KEYPLEX KP 120 0-0-0",
+        "company_info": {
+          "company": "MORSE ENTERPRISES LIMITED INC",
+          "Mailing Address": "PO Box 2515",
+          "Post Office Box": null,
+          "City": "Winter Park",
+          "State": "FL",
+          "Postal Code": "32790-2515",
+          "Telephone Number": "407 682-6500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.11,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.11
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=0.4000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1.8000",
+          "Nickel": "=5.1000",
+          "Lead": "=0.7000",
+          "Selenium": "=1.2000",
+          "Zinc": "=1100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KEYPLEX KP 120 0-0-0",
+    "brand": "MORSE ENTERPRISES LIMITED INC",
+    "manufacturer": {
+      "name": "MORSE ENTERPRISES LIMITED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.11,
+      "Zn": 0.11
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "988FBC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.2,
+            "Co": 0.4,
+            "Hg": 0.01,
+            "Mo": 1.8,
+            "Ni": 5.1,
+            "Pb": 0.7,
+            "Se": 1.2,
+            "Zn": 1100.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.2,
+        "Co": 0.4,
+        "Hg": 0.01,
+        "Mo": 1.8,
+        "Ni": 5.1,
+        "Pb": 0.7,
+        "Se": 1.2,
+        "Zn": 1100.0
+      }
+    }
+  }
+}

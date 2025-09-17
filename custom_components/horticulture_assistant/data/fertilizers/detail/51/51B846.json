@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "51B846",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2298-0094)",
-    "product_name": "SBC MICRO 0-0-0",
-    "company_info": {
-      "company": "SOIL BASICS CORPORATION",
-      "Mailing Address": "PO Box 2609",
-      "Post Office Box": null,
-      "City": "Visalia",
-      "State": "CA",
-      "Postal Code": "93279",
-      "Telephone Number": "559 651-2772",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.7,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": 0.32,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.3,
-      "Iron (Fe)": 0.9,
-      "Manganese (Mn)": 1.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=14.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.3000",
-      "Zinc": "=0.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.7,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": 0.32,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.3,
-      "Iron (Fe)": 0.9,
-      "Manganese (Mn)": 1.1,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=20.0000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=14.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.3000",
-      "Zinc": "=0.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "51B846",
   "metadata": {
     "registrant": "SOIL BASICS CORPORATION",
     "label_name": "SBC MICRO 0-0-0",
     "wsda_reg_no": "(#2298-0094)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2298-0094)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2298-0094)",
+        "product_name": "SBC MICRO 0-0-0",
+        "company_info": {
+          "company": "SOIL BASICS CORPORATION",
+          "Mailing Address": "PO Box 2609",
+          "Post Office Box": null,
+          "City": "Visalia",
+          "State": "CA",
+          "Postal Code": "93279",
+          "Telephone Number": "559 651-2772",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.32,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.3,
+          "Iron (Fe)": 0.9,
+          "Manganese (Mn)": 1.1,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.5
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=20.0000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1.2000",
+          "Nickel": "=14.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=0.3000",
+          "Zinc": "=0.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SBC MICRO 0-0-0",
+    "brand": "SOIL BASICS CORPORATION",
+    "manufacturer": {
+      "name": "SOIL BASICS CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 0.7,
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 0.9,
+      "Mn": 1.1,
+      "Zn": 1.5,
+      "Cu": 0.3,
+      "B": 0.32
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "51B846-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 20.0,
+            "Hg": 0.01,
+            "Mo": 1.2,
+            "Ni": 14.0,
+            "Pb": 1.0,
+            "Se": 0.3,
+            "Zn": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 20.0,
+        "Hg": 0.01,
+        "Mo": 1.2,
+        "Ni": 14.0,
+        "Pb": 1.0,
+        "Se": 0.3,
+        "Zn": 0.1
+      }
+    }
   }
 }

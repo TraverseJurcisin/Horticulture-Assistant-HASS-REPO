@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"F084E4","source_wsda_record":{"wsda_product_number":"(#1546-0059)","product_name":"MASTER NURSERY CAMELLIA, AZALEA, GARDENIA & RHODODENDRON FOOD 4-8-5","company_info":{"company":"E B STONE & SON INC","Mailing Address":"P O Box 550","Post Office Box":null,"City":"Suisun","State":"CA","Postal Code":"94585","Telephone Number":"707 426-2500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":0.16,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.16},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=0.9000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=6.6000","Lead":"<4.0000","Selenium":"<8.0000","Zinc":"=220.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":8.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.5,"Manganese (Mn)":0.16,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.16},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=0.9000","Cobalt":"<1.0000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=6.6000","Lead":"<4.0000","Selenium":"<8.0000","Zinc":"=220.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"E B STONE & SON INC","label_name":"MASTER NURSERY CAMELLIA, AZALEA, GARDENIA & RHODODENDRON FOOD 4-8-5","wsda_reg_no":"(#1546-0059)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F084E4",
+  "metadata": {
+    "registrant": "E B STONE & SON INC",
+    "label_name": "MASTER NURSERY CAMELLIA, AZALEA, GARDENIA & RHODODENDRON FOOD 4-8-5",
+    "wsda_reg_no": "(#1546-0059)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1546-0059)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1546-0059)",
+        "product_name": "MASTER NURSERY CAMELLIA, AZALEA, GARDENIA & RHODODENDRON FOOD 4-8-5",
+        "company_info": {
+          "company": "E B STONE & SON INC",
+          "Mailing Address": "P O Box 550",
+          "Post Office Box": null,
+          "City": "Suisun",
+          "State": "CA",
+          "Postal Code": "94585",
+          "Telephone Number": "707 426-2500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 11.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.5,
+          "Manganese (Mn)": 0.16,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.16
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=0.9000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=6.6000",
+          "Lead": "<4.0000",
+          "Selenium": "<8.0000",
+          "Zinc": "=220.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MASTER NURSERY CAMELLIA, AZALEA, GARDENIA & RHODODENDRON FOOD 4-8-5",
+    "brand": "E B STONE & SON INC",
+    "manufacturer": {
+      "name": "E B STONE & SON INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 11.0,
+      "S": 1.5
+    },
+    "micros_pct": {
+      "Fe": 2.5,
+      "Mn": 0.16,
+      "Zn": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F084E4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.9,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 6.6,
+            "Pb": 4.0,
+            "Se": 8.0,
+            "Zn": 220.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Pb": 4.0,
+            "Se": 8.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.9,
+        "Ni": 6.6,
+        "Zn": 220.0
+      }
+    }
+  }
+}

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"939140","source_wsda_record":{"wsda_product_number":"(#0995-0022)","product_name":"RNA 10% BORON SOLUTION A LIQUID WATER SOLUBLE BORON 0-0-0","company_info":{"company":"WILBUR ELLIS COMPANY - SAN JOAQUIN,","Mailing Address":"3300 South Parker Rd Ste 500","Post Office Box":null,"City":"Aurora","State":"CO","Postal Code":"80014","Telephone Number":"209 253-9730","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":10.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<2.0000","Cobalt":"<10.0000","Mercury":"<0.0200","Molybdenum":"=255.0000","Nickel":"<5.0000","Lead":"<10.0000","Selenium":"<0.2500","Zinc":"<5.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":10.0,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<2.0000","Cobalt":"<10.0000","Mercury":"<0.0200","Molybdenum":"=255.0000","Nickel":"<5.0000","Lead":"<10.0000","Selenium":"<0.2500","Zinc":"<5.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"WILBUR ELLIS COMPANY - SAN JOAQUIN,","label_name":"RNA 10% BORON SOLUTION A LIQUID WATER SOLUBLE BORON 0-0-0","wsda_reg_no":"(#0995-0022)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "939140",
+  "metadata": {
+    "registrant": "WILBUR ELLIS COMPANY - SAN JOAQUIN,",
+    "label_name": "RNA 10% BORON SOLUTION A LIQUID WATER SOLUBLE BORON 0-0-0",
+    "wsda_reg_no": "(#0995-0022)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0995-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0995-0022)",
+        "product_name": "RNA 10% BORON SOLUTION A LIQUID WATER SOLUBLE BORON 0-0-0",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY - SAN JOAQUIN,",
+          "Mailing Address": "3300 South Parker Rd Ste 500",
+          "Post Office Box": null,
+          "City": "Aurora",
+          "State": "CO",
+          "Postal Code": "80014",
+          "Telephone Number": "209 253-9730",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 10.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<2.0000",
+          "Cobalt": "<10.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=255.0000",
+          "Nickel": "<5.0000",
+          "Lead": "<10.0000",
+          "Selenium": "<0.2500",
+          "Zinc": "<5.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RNA 10% BORON SOLUTION A LIQUID WATER SOLUBLE BORON 0-0-0",
+    "brand": "WILBUR ELLIS COMPANY - SAN JOAQUIN,",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY - SAN JOAQUIN,"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "B": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "939140-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 2.0,
+            "Co": 10.0,
+            "Hg": 0.02,
+            "Mo": 255.0,
+            "Ni": 5.0,
+            "Pb": 10.0,
+            "Se": 0.25,
+            "Zn": 5.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 2.0,
+            "Co": 10.0,
+            "Hg": 0.02,
+            "Ni": 5.0,
+            "Pb": 10.0,
+            "Se": 0.25,
+            "Zn": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 255.0
+      }
+    }
+  }
+}

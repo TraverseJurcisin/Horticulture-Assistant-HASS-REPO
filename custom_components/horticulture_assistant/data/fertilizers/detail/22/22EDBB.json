@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "22EDBB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1217-0027)",
-    "product_name": "GARDENS ALIVE! FRUIT TREES ALIVE! 2-3-2",
-    "company_info": {
-      "company": "GARDENS ALIVE INC",
-      "Mailing Address": "110 W Elm St",
-      "Post Office Box": null,
-      "City": "Tipp City",
-      "State": "OH",
-      "Postal Code": "45371",
-      "Telephone Number": "937 667-2491",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7710",
-      "Cadmium": "<0.4900",
-      "Cobalt": "=0.4350",
-      "Mercury": "=0.0037",
-      "Molybdenum": "=1.0500",
-      "Nickel": "=9.1100",
-      "Lead": "<0.6150",
-      "Selenium": "<1.1400",
-      "Zinc": "=49.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7710",
-      "Cadmium": "<0.4900",
-      "Cobalt": "=0.4350",
-      "Mercury": "=0.0037",
-      "Molybdenum": "=1.0500",
-      "Nickel": "=9.1100",
-      "Lead": "<0.6150",
-      "Selenium": "<1.1400",
-      "Zinc": "=49.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "22EDBB",
   "metadata": {
     "registrant": "GARDENS ALIVE INC",
     "label_name": "GARDENS ALIVE! FRUIT TREES ALIVE! 2-3-2",
     "wsda_reg_no": "(#1217-0027)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1217-0027)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1217-0027)",
+        "product_name": "GARDENS ALIVE! FRUIT TREES ALIVE! 2-3-2",
+        "company_info": {
+          "company": "GARDENS ALIVE INC",
+          "Mailing Address": "110 W Elm St",
+          "Post Office Box": null,
+          "City": "Tipp City",
+          "State": "OH",
+          "Postal Code": "45371",
+          "Telephone Number": "937 667-2491",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7710",
+          "Cadmium": "<0.4900",
+          "Cobalt": "=0.4350",
+          "Mercury": "=0.0037",
+          "Molybdenum": "=1.0500",
+          "Nickel": "=9.1100",
+          "Lead": "<0.6150",
+          "Selenium": "<1.1400",
+          "Zinc": "=49.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GARDENS ALIVE! FRUIT TREES ALIVE! 2-3-2",
+    "brand": "GARDENS ALIVE INC",
+    "manufacturer": {
+      "name": "GARDENS ALIVE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "22EDBB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.771,
+            "Cd": 0.49,
+            "Co": 0.435,
+            "Hg": 0.0037,
+            "Mo": 1.05,
+            "Ni": 9.11,
+            "Pb": 0.615,
+            "Se": 1.14,
+            "Zn": 49.8
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.49,
+            "Pb": 0.615,
+            "Se": 1.14
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.771,
+        "Co": 0.435,
+        "Hg": 0.0037,
+        "Mo": 1.05,
+        "Ni": 9.11,
+        "Zn": 49.8
+      }
+    }
   }
 }

@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"84BB9C","source_wsda_record":{"wsda_product_number":"(#0193-0528)","product_name":"AWAKEN FLOWBOOST 0-5-0","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":3.0,"Molybdenum (Mo)":2.5,"Sodium (Na)":null,"Zinc (Zn)":10.5},"reported_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=32600.0000","Nickel":"=9.5000","Lead":"=24.0000","Selenium":"=14.0000","Zinc":"=106500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":1.0,"Manganese (Mn)":3.0,"Molybdenum (Mo)":2.5,"Sodium (Na)":null,"Zinc (Zn)":10.5},"heavy_metals":{"Arsenic":"=0.5000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=32600.0000","Nickel":"=9.5000","Lead":"=24.0000","Selenium":"=14.0000","Zinc":"=106500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"AWAKEN FLOWBOOST 0-5-0","wsda_reg_no":"(#0193-0528)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "84BB9C",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "AWAKEN FLOWBOOST 0-5-0",
+    "wsda_reg_no": "(#0193-0528)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0528)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0528)",
+        "product_name": "AWAKEN FLOWBOOST 0-5-0",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 3.0,
+          "Molybdenum (Mo)": 2.5,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 10.5
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=32600.0000",
+          "Nickel": "=9.5000",
+          "Lead": "=24.0000",
+          "Selenium": "=14.0000",
+          "Zinc": "=106500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AWAKEN FLOWBOOST 0-5-0",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 3.0,
+      "Zn": 10.5,
+      "Mo": 2.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "84BB9C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Mo": 32600.0,
+            "Ni": 9.5,
+            "Pb": 24.0,
+            "Se": 14.0,
+            "Zn": 106500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.1,
+        "Co": 0.1,
+        "Hg": 0.01,
+        "Mo": 32600.0,
+        "Ni": 9.5,
+        "Pb": 24.0,
+        "Se": 14.0,
+        "Zn": 106500.0
+      }
+    }
+  }
+}

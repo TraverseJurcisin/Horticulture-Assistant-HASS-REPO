@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "08AA60",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0169-0742)",
-    "product_name": "BEST GREENS KING 24K 10-2-24",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 24.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 12.84,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.53,
-      "Manganese (Mn)": 1.02,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=16.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=6.1000",
-      "Nickel": "=20.0000",
-      "Lead": "=5.6000",
-      "Selenium": "=0.8000",
-      "Zinc": "=1510.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 24.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 12.84,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.53,
-      "Manganese (Mn)": 1.02,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=16.0000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=6.1000",
-      "Nickel": "=20.0000",
-      "Lead": "=5.6000",
-      "Selenium": "=0.8000",
-      "Zinc": "=1510.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "08AA60",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY",
     "label_name": "BEST GREENS KING 24K 10-2-24",
     "wsda_reg_no": "(#0169-0742)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0742)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0742)",
+        "product_name": "BEST GREENS KING 24K 10-2-24",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 24.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 12.84,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.53,
+          "Manganese (Mn)": 1.02,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=16.0000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=6.1000",
+          "Nickel": "=20.0000",
+          "Lead": "=5.6000",
+          "Selenium": "=0.8000",
+          "Zinc": "=1510.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST GREENS KING 24K 10-2-24",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 24.0
+    },
+    "macros_pct": {
+      "S": 12.84
+    },
+    "micros_pct": {
+      "Fe": 1.53,
+      "Mn": 1.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "08AA60-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.4,
+            "Co": 16.0,
+            "Hg": 0.02,
+            "Mo": 6.1,
+            "Ni": 20.0,
+            "Pb": 5.6,
+            "Se": 0.8,
+            "Zn": 1510.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.4,
+        "Co": 16.0,
+        "Hg": 0.02,
+        "Mo": 6.1,
+        "Ni": 20.0,
+        "Pb": 5.6,
+        "Se": 0.8,
+        "Zn": 1510.0
+      }
+    }
   }
 }

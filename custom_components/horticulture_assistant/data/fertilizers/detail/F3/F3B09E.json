@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F3B09E","source_wsda_record":{"wsda_product_number":"(#0698-0135)","product_name":"MIRACLE-GRO CACTUS, PALM & CITRUS POTTING MIX 0.06-0.02-0.04","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.06,"Available Phosphoric Acid (P2O5)":0.02,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3600","Cadmium":"=0.3610","Cobalt":"=1.3900","Mercury":"=0.0328","Molybdenum":"=2.5200","Nickel":"=4.3900","Lead":"=5.5400","Selenium":"=1.0800","Zinc":"=26.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.06,"Available Phosphoric Acid (P2O5)":0.02,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3600","Cadmium":"=0.3610","Cobalt":"=1.3900","Mercury":"=0.0328","Molybdenum":"=2.5200","Nickel":"=4.3900","Lead":"=5.5400","Selenium":"=1.0800","Zinc":"=26.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO CACTUS, PALM & CITRUS POTTING MIX 0.06-0.02-0.04","wsda_reg_no":"(#0698-0135)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F3B09E",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO CACTUS, PALM & CITRUS POTTING MIX 0.06-0.02-0.04",
+    "wsda_reg_no": "(#0698-0135)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0135)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0135)",
+        "product_name": "MIRACLE-GRO CACTUS, PALM & CITRUS POTTING MIX 0.06-0.02-0.04",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.06,
+          "Available Phosphoric Acid (P2O5)": 0.02,
+          "Soluble Potash (K2O)": 0.04,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3600",
+          "Cadmium": "=0.3610",
+          "Cobalt": "=1.3900",
+          "Mercury": "=0.0328",
+          "Molybdenum": "=2.5200",
+          "Nickel": "=4.3900",
+          "Lead": "=5.5400",
+          "Selenium": "=1.0800",
+          "Zinc": "=26.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO CACTUS, PALM & CITRUS POTTING MIX 0.06-0.02-0.04",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.06,
+      "P2O5_pct": 0.02,
+      "K2O_pct": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F3B09E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.36,
+            "Cd": 0.361,
+            "Co": 1.39,
+            "Hg": 0.0328,
+            "Mo": 2.52,
+            "Ni": 4.39,
+            "Pb": 5.54,
+            "Se": 1.08,
+            "Zn": 26.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.36,
+        "Cd": 0.361,
+        "Co": 1.39,
+        "Hg": 0.0328,
+        "Mo": 2.52,
+        "Ni": 4.39,
+        "Pb": 5.54,
+        "Se": 1.08,
+        "Zn": 26.9
+      }
+    }
+  }
+}

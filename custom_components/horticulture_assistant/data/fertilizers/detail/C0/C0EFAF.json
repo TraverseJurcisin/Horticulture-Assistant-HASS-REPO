@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"C0EFAF","source_wsda_record":{"wsda_product_number":"(#2833-0001)","product_name":"ETIMADEN BORIC ACID 0-0-0","company_info":{"company":"ETIMINE USA INC","Mailing Address":"411 Hackensack Ave Ste 902","Post Office Box":null,"City":"Hackensack","State":"NJ","Postal Code":"07601","Telephone Number":"201 462-1200","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":17.4,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.9900","Cadmium":"=0.9970","Cobalt":"=1.9900","Mercury":"=0.0332","Molybdenum":"=1.9900","Nickel":"=0.9970","Lead":"=4.9900","Selenium":"=4.9900","Zinc":"=4.9900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":17.4,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.9900","Cadmium":"=0.9970","Cobalt":"=1.9900","Mercury":"=0.0332","Molybdenum":"=1.9900","Nickel":"=0.9970","Lead":"=4.9900","Selenium":"=4.9900","Zinc":"=4.9900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ETIMINE USA INC","label_name":"ETIMADEN BORIC ACID 0-0-0","wsda_reg_no":"(#2833-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C0EFAF",
+  "metadata": {
+    "registrant": "ETIMINE USA INC",
+    "label_name": "ETIMADEN BORIC ACID 0-0-0",
+    "wsda_reg_no": "(#2833-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2833-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2833-0001)",
+        "product_name": "ETIMADEN BORIC ACID 0-0-0",
+        "company_info": {
+          "company": "ETIMINE USA INC",
+          "Mailing Address": "411 Hackensack Ave Ste 902",
+          "Post Office Box": null,
+          "City": "Hackensack",
+          "State": "NJ",
+          "Postal Code": "07601",
+          "Telephone Number": "201 462-1200",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 17.4,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.9900",
+          "Cadmium": "=0.9970",
+          "Cobalt": "=1.9900",
+          "Mercury": "=0.0332",
+          "Molybdenum": "=1.9900",
+          "Nickel": "=0.9970",
+          "Lead": "=4.9900",
+          "Selenium": "=4.9900",
+          "Zinc": "=4.9900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ETIMADEN BORIC ACID 0-0-0",
+    "brand": "ETIMINE USA INC",
+    "manufacturer": {
+      "name": "ETIMINE USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "B": 17.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C0EFAF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.99,
+            "Cd": 0.997,
+            "Co": 1.99,
+            "Hg": 0.0332,
+            "Mo": 1.99,
+            "Ni": 0.997,
+            "Pb": 4.99,
+            "Se": 4.99,
+            "Zn": 4.99
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.99,
+        "Cd": 0.997,
+        "Co": 1.99,
+        "Hg": 0.0332,
+        "Mo": 1.99,
+        "Ni": 0.997,
+        "Pb": 4.99,
+        "Se": 4.99,
+        "Zn": 4.99
+      }
+    }
+  }
+}

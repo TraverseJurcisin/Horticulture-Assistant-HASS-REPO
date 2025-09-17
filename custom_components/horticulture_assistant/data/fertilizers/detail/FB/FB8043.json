@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"FB8043","source_wsda_record":{"wsda_product_number":"(#1912-0008)","product_name":"PARADIGM AG SOLUTIONS URA-PHOS BRIGHT 8-20-12","company_info":{"company":"PARADIGM AG SOLUTIONS LLC","Mailing Address":"22758 U 2 SW","Post Office Box":null,"City":"Mattawa","State":"WA","Postal Code":"99349","Telephone Number":"509 830-3248","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2990","Cadmium":"=0.0250","Cobalt":"=0.0250","Mercury":"=0.0020","Molybdenum":"=0.2000","Nickel":"=0.2900","Lead":"=0.2500","Selenium":"=0.1250","Zinc":"=4.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":12.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2990","Cadmium":"=0.0250","Cobalt":"=0.0250","Mercury":"=0.0020","Molybdenum":"=0.2000","Nickel":"=0.2900","Lead":"=0.2500","Selenium":"=0.1250","Zinc":"=4.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PARADIGM AG SOLUTIONS LLC","label_name":"PARADIGM AG SOLUTIONS URA-PHOS BRIGHT 8-20-12","wsda_reg_no":"(#1912-0008)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FB8043",
+  "metadata": {
+    "registrant": "PARADIGM AG SOLUTIONS LLC",
+    "label_name": "PARADIGM AG SOLUTIONS URA-PHOS BRIGHT 8-20-12",
+    "wsda_reg_no": "(#1912-0008)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1912-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1912-0008)",
+        "product_name": "PARADIGM AG SOLUTIONS URA-PHOS BRIGHT 8-20-12",
+        "company_info": {
+          "company": "PARADIGM AG SOLUTIONS LLC",
+          "Mailing Address": "22758 U 2 SW",
+          "Post Office Box": null,
+          "City": "Mattawa",
+          "State": "WA",
+          "Postal Code": "99349",
+          "Telephone Number": "509 830-3248",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 20.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2990",
+          "Cadmium": "=0.0250",
+          "Cobalt": "=0.0250",
+          "Mercury": "=0.0020",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=0.2900",
+          "Lead": "=0.2500",
+          "Selenium": "=0.1250",
+          "Zinc": "=4.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PARADIGM AG SOLUTIONS URA-PHOS BRIGHT 8-20-12",
+    "brand": "PARADIGM AG SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "PARADIGM AG SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 20.0,
+      "K2O_pct": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FB8043-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.299,
+            "Cd": 0.025,
+            "Co": 0.025,
+            "Hg": 0.002,
+            "Mo": 0.2,
+            "Ni": 0.29,
+            "Pb": 0.25,
+            "Se": 0.125,
+            "Zn": 4.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.299,
+        "Cd": 0.025,
+        "Co": 0.025,
+        "Hg": 0.002,
+        "Mo": 0.2,
+        "Ni": 0.29,
+        "Pb": 0.25,
+        "Se": 0.125,
+        "Zn": 4.1
+      }
+    }
+  }
+}

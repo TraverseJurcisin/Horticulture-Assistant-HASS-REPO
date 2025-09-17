@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"B0D3F5","source_wsda_record":{"wsda_product_number":"(#0236-0570)","product_name":"SCOTTS TURF BUILDER GRASS SEED PACIFIC NORTHWEST MIX 3-1-0","company_info":{"company":"SCOTTS COMPANY (THE)","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4940","Cadmium":"<0.2460","Cobalt":"<0.2460","Mercury":"<0.0090","Molybdenum":"<0.7400","Nickel":"=2.2700","Lead":"=0.3410","Selenium":"<0.4940","Zinc":"=27.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4940","Cadmium":"<0.2460","Cobalt":"<0.2460","Mercury":"<0.0090","Molybdenum":"<0.7400","Nickel":"=2.2700","Lead":"=0.3410","Selenium":"<0.4940","Zinc":"=27.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS COMPANY (THE)","label_name":"SCOTTS TURF BUILDER GRASS SEED PACIFIC NORTHWEST MIX 3-1-0","wsda_reg_no":"(#0236-0570)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B0D3F5",
+  "metadata": {
+    "registrant": "SCOTTS COMPANY (THE)",
+    "label_name": "SCOTTS TURF BUILDER GRASS SEED PACIFIC NORTHWEST MIX 3-1-0",
+    "wsda_reg_no": "(#0236-0570)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0236-0570)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0236-0570)",
+        "product_name": "SCOTTS TURF BUILDER GRASS SEED PACIFIC NORTHWEST MIX 3-1-0",
+        "company_info": {
+          "company": "SCOTTS COMPANY (THE)",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4940",
+          "Cadmium": "<0.2460",
+          "Cobalt": "<0.2460",
+          "Mercury": "<0.0090",
+          "Molybdenum": "<0.7400",
+          "Nickel": "=2.2700",
+          "Lead": "=0.3410",
+          "Selenium": "<0.4940",
+          "Zinc": "=27.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SCOTTS TURF BUILDER GRASS SEED PACIFIC NORTHWEST MIX 3-1-0",
+    "brand": "SCOTTS COMPANY (THE)",
+    "manufacturer": {
+      "name": "SCOTTS COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B0D3F5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.494,
+            "Cd": 0.246,
+            "Co": 0.246,
+            "Hg": 0.009,
+            "Mo": 0.74,
+            "Ni": 2.27,
+            "Pb": 0.341,
+            "Se": 0.494,
+            "Zn": 27.3
+          },
+          "detection_limits_ppm": {
+            "As": 0.494,
+            "Cd": 0.246,
+            "Co": 0.246,
+            "Hg": 0.009,
+            "Mo": 0.74,
+            "Se": 0.494
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 2.27,
+        "Pb": 0.341,
+        "Zn": 27.3
+      }
+    }
+  }
+}

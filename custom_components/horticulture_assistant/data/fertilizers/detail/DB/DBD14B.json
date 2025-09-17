@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"DBD14B","source_wsda_record":{"wsda_product_number":"(#4022-0004)","product_name":"HERITAGE LANDSCAPE SUPPLY GROUP GRAVITY L 38 SPECIAL TO 5-0-15","company_info":{"company":"HERITAGE LANDSCAPE SUPPLY GROUP, IN","Mailing Address":"7440 State Highway 121","Post Office Box":null,"City":"McKinney","State":"TX","Postal Code":"75070","Telephone Number":"469 638-7386","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":15.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=44.2000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=2.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":15.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=44.2000","Cadmium":"=0.5000","Cobalt":"=1.0000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=2.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HERITAGE LANDSCAPE SUPPLY GROUP, IN","label_name":"HERITAGE LANDSCAPE SUPPLY GROUP GRAVITY L 38 SPECIAL TO 5-0-15","wsda_reg_no":"(#4022-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DBD14B",
+  "metadata": {
+    "registrant": "HERITAGE LANDSCAPE SUPPLY GROUP, IN",
+    "label_name": "HERITAGE LANDSCAPE SUPPLY GROUP GRAVITY L 38 SPECIAL TO 5-0-15",
+    "wsda_reg_no": "(#4022-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4022-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4022-0004)",
+        "product_name": "HERITAGE LANDSCAPE SUPPLY GROUP GRAVITY L 38 SPECIAL TO 5-0-15",
+        "company_info": {
+          "company": "HERITAGE LANDSCAPE SUPPLY GROUP, IN",
+          "Mailing Address": "7440 State Highway 121",
+          "Post Office Box": null,
+          "City": "McKinney",
+          "State": "TX",
+          "Postal Code": "75070",
+          "Telephone Number": "469 638-7386",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 15.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=44.2000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=2.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HERITAGE LANDSCAPE SUPPLY GROUP GRAVITY L 38 SPECIAL TO 5-0-15",
+    "brand": "HERITAGE LANDSCAPE SUPPLY GROUP, IN",
+    "manufacturer": {
+      "name": "HERITAGE LANDSCAPE SUPPLY GROUP, IN"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "K2O_pct": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DBD14B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 44.2,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 2.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 44.2,
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 2.0
+      }
+    }
+  }
+}

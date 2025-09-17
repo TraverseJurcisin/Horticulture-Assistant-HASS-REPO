@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"E6AA0D","source_wsda_record":{"wsda_product_number":"(#0308-0075)","product_name":"MIRACLE-GRO MIRACLE-GRO GARDEN SOIL ROSES 0.1-0.09-0.07","company_info":{"company":"SCOTTS MIRACLE-GRO PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.09,"Soluble Potash (K2O)":0.07,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.8370","Cadmium":"<0.4170","Cobalt":"=1.2100","Mercury":"<0.0346","Molybdenum":"<1.2500","Nickel":"=2.2900","Lead":"=4.3700","Selenium":"<1.2500","Zinc":"=21.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.09,"Soluble Potash (K2O)":0.07,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.8370","Cadmium":"<0.4170","Cobalt":"=1.2100","Mercury":"<0.0346","Molybdenum":"<1.2500","Nickel":"=2.2900","Lead":"=4.3700","Selenium":"<1.2500","Zinc":"=21.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SCOTTS MIRACLE-GRO PRODUCTS INC","label_name":"MIRACLE-GRO MIRACLE-GRO GARDEN SOIL ROSES 0.1-0.09-0.07","wsda_reg_no":"(#0308-0075)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E6AA0D",
+  "metadata": {
+    "registrant": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+    "label_name": "MIRACLE-GRO MIRACLE-GRO GARDEN SOIL ROSES 0.1-0.09-0.07",
+    "wsda_reg_no": "(#0308-0075)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0308-0075)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0308-0075)",
+        "product_name": "MIRACLE-GRO MIRACLE-GRO GARDEN SOIL ROSES 0.1-0.09-0.07",
+        "company_info": {
+          "company": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.09,
+          "Soluble Potash (K2O)": 0.07,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.8370",
+          "Cadmium": "<0.4170",
+          "Cobalt": "=1.2100",
+          "Mercury": "<0.0346",
+          "Molybdenum": "<1.2500",
+          "Nickel": "=2.2900",
+          "Lead": "=4.3700",
+          "Selenium": "<1.2500",
+          "Zinc": "=21.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO MIRACLE-GRO GARDEN SOIL ROSES 0.1-0.09-0.07",
+    "brand": "SCOTTS MIRACLE-GRO PRODUCTS INC",
+    "manufacturer": {
+      "name": "SCOTTS MIRACLE-GRO PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.09,
+      "K2O_pct": 0.07
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E6AA0D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.837,
+            "Cd": 0.417,
+            "Co": 1.21,
+            "Hg": 0.0346,
+            "Mo": 1.25,
+            "Ni": 2.29,
+            "Pb": 4.37,
+            "Se": 1.25,
+            "Zn": 21.3
+          },
+          "detection_limits_ppm": {
+            "As": 0.837,
+            "Cd": 0.417,
+            "Hg": 0.0346,
+            "Mo": 1.25,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.21,
+        "Ni": 2.29,
+        "Pb": 4.37,
+        "Zn": 21.3
+      }
+    }
+  }
+}

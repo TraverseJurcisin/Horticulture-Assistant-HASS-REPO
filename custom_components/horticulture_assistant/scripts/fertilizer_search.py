@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Search the WSDA fertilizer database for matching products."""
+"""Search the fertilizer dataset for matching products."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.wsda_lookup import (
+from plant_engine.fertilizer_dataset_lookup import (
     get_product_analysis_by_number,
     search_products,
 )
@@ -27,7 +27,7 @@ def _print_analysis(analysis: dict) -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Search WSDA fertilizer database")
+    parser = argparse.ArgumentParser(description="Search fertilizer dataset")
     parser.add_argument("query", help="search string or product number")
     parser.add_argument(
         "--number",

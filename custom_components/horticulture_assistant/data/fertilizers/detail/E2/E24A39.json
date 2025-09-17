@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"E24A39","source_wsda_record":{"wsda_product_number":"(#2402-0005)","product_name":"MYCOAPPLY SOLUBLE MAXX 1-0.5-5","company_info":{"company":"MYCORRHIZAL APPLICATIONS","Mailing Address":"710 NW E St","Post Office Box":null,"City":"Grants Pass","State":"OR","Postal Code":"97526","Telephone Number":"541 476-3985","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=13.7000","Cadmium":"=0.4000","Cobalt":"=5.3000","Mercury":"<0.0500","Molybdenum":"=1.5000","Nickel":"=9.0000","Lead":"=6.6000","Selenium":"=0.5000","Zinc":"=21.4800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=13.7000","Cadmium":"=0.4000","Cobalt":"=5.3000","Mercury":"<0.0500","Molybdenum":"=1.5000","Nickel":"=9.0000","Lead":"=6.6000","Selenium":"=0.5000","Zinc":"=21.4800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MYCORRHIZAL APPLICATIONS","label_name":"MYCOAPPLY SOLUBLE MAXX 1-0.5-5","wsda_reg_no":"(#2402-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E24A39",
+  "metadata": {
+    "registrant": "MYCORRHIZAL APPLICATIONS",
+    "label_name": "MYCOAPPLY SOLUBLE MAXX 1-0.5-5",
+    "wsda_reg_no": "(#2402-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2402-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2402-0005)",
+        "product_name": "MYCOAPPLY SOLUBLE MAXX 1-0.5-5",
+        "company_info": {
+          "company": "MYCORRHIZAL APPLICATIONS",
+          "Mailing Address": "710 NW E St",
+          "Post Office Box": null,
+          "City": "Grants Pass",
+          "State": "OR",
+          "Postal Code": "97526",
+          "Telephone Number": "541 476-3985",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 0.5,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=13.7000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=5.3000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=9.0000",
+          "Lead": "=6.6000",
+          "Selenium": "=0.5000",
+          "Zinc": "=21.4800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MYCOAPPLY SOLUBLE MAXX 1-0.5-5",
+    "brand": "MYCORRHIZAL APPLICATIONS",
+    "manufacturer": {
+      "name": "MYCORRHIZAL APPLICATIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 0.5,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E24A39-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 13.7,
+            "Cd": 0.4,
+            "Co": 5.3,
+            "Hg": 0.05,
+            "Mo": 1.5,
+            "Ni": 9.0,
+            "Pb": 6.6,
+            "Se": 0.5,
+            "Zn": 21.48
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 13.7,
+        "Cd": 0.4,
+        "Co": 5.3,
+        "Mo": 1.5,
+        "Ni": 9.0,
+        "Pb": 6.6,
+        "Se": 0.5,
+        "Zn": 21.48
+      }
+    }
+  }
+}

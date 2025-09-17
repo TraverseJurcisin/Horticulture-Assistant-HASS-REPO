@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-"""Utilities for looking up fertilizer analysis data from the WSDA database."""
+"""Utilities for looking up fertilizer analysis data from the fertilizer dataset."""
 
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from functools import cache
+from typing import Any
 
 try:
-    from . import wsda_loader
+    from . import fertilizer_dataset_loader as dataset_loader
 except ImportError:  # pragma: no cover - fallback when run as script
-    from plant_engine import wsda_loader  # type: ignore
+    from plant_engine import fertilizer_dataset_loader as dataset_loader  # type: ignore
 
 __all__ = [
     "get_product_npk_by_name",
@@ -29,36 +30,87 @@ class _Product:
 
     product_id: str
     name: str
-    wsda_reg_no: str
+    registration_number: str
     npk: tuple[float | None, float | None, float | None]
 
 
-def _parse_analysis(raw: Mapping[str, object]) -> dict[str, float]:
-    """Return numeric nutrient analysis from a raw WSDA mapping."""
+def _coerce_float(value: Any) -> float | None:
+    try:
+        return float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
 
-    parsed: dict[str, float] = {}
-    for key, value in raw.items():
-        try:
-            val = float(value)
-        except (TypeError, ValueError):
-            continue
-        if key.startswith("Total Nitrogen"):
-            parsed["N"] = val
-        elif "Phosphoric" in key:
-            parsed["P"] = val
-        elif "Potash" in key:
-            parsed["K"] = val
-        else:
-            abbrev = key.split(" ")[0].replace("(", "").replace(")", "")
-            parsed[abbrev] = val
-    return parsed
+
+def _npk_from_composition(comp: Mapping[str, Any]) -> tuple[float | None, float | None, float | None]:
+    npk_block = comp.get("npk")
+    if not isinstance(npk_block, Mapping):
+        return (None, None, None)
+
+    n = _coerce_float(npk_block.get("N_pct"))
+
+    p = _coerce_float(npk_block.get("P_pct"))
+    if p is None:
+        p = _coerce_float(npk_block.get("P2O5_pct"))
+
+    k = _coerce_float(npk_block.get("K_pct"))
+    if k is None:
+        k = _coerce_float(npk_block.get("K2O_pct"))
+
+    return (n, p, k)
+
+
+def _analysis_from_composition(comp: Mapping[str, Any]) -> dict[str, float]:
+    """Convert a schema ``composition`` mapping into flat nutrient analysis."""
+
+    analysis: dict[str, float] = {}
+    n, p, k = _npk_from_composition(comp)
+    if n is not None:
+        analysis["N"] = n
+    if p is not None:
+        analysis["P"] = p
+    if k is not None:
+        analysis["K"] = k
+
+    macros = comp.get("macros_pct")
+    if isinstance(macros, Mapping):
+        for key in ("Ca", "Mg", "S"):
+            value = _coerce_float(macros.get(key))
+            if value is not None:
+                analysis[key] = value
+
+    micros = comp.get("micros_pct")
+    if isinstance(micros, Mapping):
+        for key, value in micros.items():
+            val = _coerce_float(value)
+            if val is not None:
+                analysis[key] = val
+
+    return analysis
+
+
+def _normalize_index_record(rec: Mapping[str, object]) -> _Product | None:
+    """Return a standard :class:`_Product` from schema index rows."""
+
+    product_id = str(rec.get("id") or rec.get("product_id") or "").strip()
+    product = rec.get("product") if isinstance(rec.get("product"), Mapping) else {}
+    metadata = rec.get("metadata") if isinstance(rec.get("metadata"), Mapping) else {}
+    composition = rec.get("composition") if isinstance(rec.get("composition"), Mapping) else {}
+
+    name = str((product or {}).get("name") or "").strip()
+    registration_number = str(metadata.get("wsda_reg_no") or "").strip()
+    npk = _npk_from_composition(composition)
+
+    if not product_id and not name:
+        return None
+
+    return _Product(product_id=product_id, name=name, registration_number=registration_number, npk=npk)
 
 
 @cache
 def _records() -> Iterable[Mapping[str, object]]:
-    """Return WSDA fertilizer records loaded from sharded index."""
+    """Return fertilizer dataset records loaded from sharded index."""
 
-    return tuple(wsda_loader.stream_index())
+    return tuple(dataset_loader.stream_index())
 
 
 @cache
@@ -72,15 +124,13 @@ def _build_indexes() -> tuple[dict[str, _Product], dict[str, _Product]]:
     names: dict[str, _Product] = {}
     numbers: dict[str, _Product] = {}
     for rec in records:
-        name = str(rec.get("label_name", "")).strip()
-        number = rec.get("wsda_reg_no", "")
-        prod_id = rec.get("product_id", "")
-        npk = (rec.get("n"), rec.get("p"), rec.get("k"))
-        product = _Product(product_id=prod_id, name=name, wsda_reg_no=number, npk=npk)
-        if name:
-            names[name.lower()] = product
-        if number:
-            numbers[str(number)] = product
+        product = _normalize_index_record(rec)
+        if not product:
+            continue
+        if product.name:
+            names[product.name.lower()] = product
+        if product.registration_number:
+            numbers[product.registration_number] = product
 
     return names, numbers
 
@@ -102,20 +152,18 @@ def _extract_npk(prod: _Product | None) -> dict[str, float]:
 @cache
 def _load_analysis(product_id: str) -> dict[str, float]:
     try:
-        detail = wsda_loader.load_detail(product_id)
+        detail = dataset_loader.load_detail(product_id)
     except FileNotFoundError:
         return {}
-    ga = {}
-    comp = detail.get("composition", {})
-    if isinstance(comp, Mapping):
-        ga = comp.get("guaranteed_analysis", {}) or {}
-    if not ga:
-        src = detail.get("source_wsda_record", {})
-        if isinstance(src, Mapping):
-            ga = src.get("guaranteed_analysis", {}) or {}
-    return _parse_analysis(ga)
+    if not isinstance(detail, Mapping):
+        return {}
+    comp = detail.get("composition")
+    if not isinstance(comp, Mapping):
+        return {}
+    return _analysis_from_composition(comp)
 
 
+@cache
 def _extract_analysis(prod: _Product | None) -> dict[str, float]:
     """Return the full nutrient analysis for ``prod`` if available."""
     if not prod:
@@ -135,20 +183,20 @@ def get_product_npk_by_name(name: str) -> dict[str, float]:
 
 
 def get_product_npk_by_number(number: str) -> dict[str, float]:
-    """Return NPK percentages for a WSDA ``number`` such as ``(#4083-0001)``."""
+    """Return NPK percentages for a fertilizer registration number such as ``(#4083-0001)``."""
     _, numbers = _build_indexes()
     return _extract_npk(numbers.get(number))
 
 
 def get_product_analysis_by_name(name: str) -> dict[str, float]:
-    """Return the complete guaranteed analysis for ``name``."""
+    """Return the complete nutrient analysis for ``name``."""
     name_l = name.lower()
     names, _ = _build_indexes()
     return _extract_analysis(names.get(name_l))
 
 
 def get_product_analysis_by_number(number: str) -> dict[str, float]:
-    """Return guaranteed analysis for a WSDA ``number``."""
+    """Return nutrient analysis for a fertilizer registration number."""
     _, numbers = _build_indexes()
     return _extract_analysis(numbers.get(number))
 
@@ -169,7 +217,7 @@ def list_product_names() -> list[str]:
 
 
 def list_product_numbers() -> list[str]:
-    """Return all WSDA product numbers sorted alphabetically."""
+    """Return all fertilizer registration numbers sorted alphabetically."""
     _, numbers = _build_indexes()
     return sorted(numbers.keys())
 
@@ -180,12 +228,12 @@ def recommend_products_for_nutrient(nutrient: str, limit: int = 5) -> list[str]:
     The search is case-insensitive and results are sorted by nutrient
     concentration in descending order.
     """
-    n = nutrient.upper().strip()
+    n_key = nutrient.upper().strip()
     names, _ = _build_indexes()
-    ranked = []
+    ranked: list[tuple[str, float]] = []
     for prod in names.values():
         analysis = _load_analysis(prod.product_id)
-        value = analysis.get(n)
+        value = analysis.get(n_key)
         if value is not None:
             ranked.append((prod.name, value))
 

@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "398C66",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1762-0043)",
-    "product_name": "GARDNER & BLOOME G&B SIMPLES SOFT ROCK PHOSPHATE 0-2-0",
-    "company_info": {
-      "company": "KELLOGG GARDEN PRODUCTS",
-      "Mailing Address": "350 West Sepulveda",
-      "Post Office Box": null,
-      "City": "Carson",
-      "State": "CA",
-      "Postal Code": "90745",
-      "Telephone Number": "951 298-8705",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 16.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=9.1100",
-      "Cadmium": "=2.5200",
-      "Cobalt": "=5.4800",
-      "Mercury": "<0.1969",
-      "Molybdenum": "<0.5210",
-      "Nickel": "=26.1000",
-      "Lead": "=15.8000",
-      "Selenium": "<10.4000",
-      "Zinc": "=41.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 16.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=9.1100",
-      "Cadmium": "=2.5200",
-      "Cobalt": "=5.4800",
-      "Mercury": "<0.1969",
-      "Molybdenum": "<0.5210",
-      "Nickel": "=26.1000",
-      "Lead": "=15.8000",
-      "Selenium": "<10.4000",
-      "Zinc": "=41.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "398C66",
   "metadata": {
     "registrant": "KELLOGG GARDEN PRODUCTS",
     "label_name": "GARDNER & BLOOME G&B SIMPLES SOFT ROCK PHOSPHATE 0-2-0",
     "wsda_reg_no": "(#1762-0043)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1762-0043)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1762-0043)",
+        "product_name": "GARDNER & BLOOME G&B SIMPLES SOFT ROCK PHOSPHATE 0-2-0",
+        "company_info": {
+          "company": "KELLOGG GARDEN PRODUCTS",
+          "Mailing Address": "350 West Sepulveda",
+          "Post Office Box": null,
+          "City": "Carson",
+          "State": "CA",
+          "Postal Code": "90745",
+          "Telephone Number": "951 298-8705",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 16.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=9.1100",
+          "Cadmium": "=2.5200",
+          "Cobalt": "=5.4800",
+          "Mercury": "<0.1969",
+          "Molybdenum": "<0.5210",
+          "Nickel": "=26.1000",
+          "Lead": "=15.8000",
+          "Selenium": "<10.4000",
+          "Zinc": "=41.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GARDNER & BLOOME G&B SIMPLES SOFT ROCK PHOSPHATE 0-2-0",
+    "brand": "KELLOGG GARDEN PRODUCTS",
+    "manufacturer": {
+      "name": "KELLOGG GARDEN PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 16.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "398C66-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.11,
+            "Cd": 2.52,
+            "Co": 5.48,
+            "Hg": 0.1969,
+            "Mo": 0.521,
+            "Ni": 26.1,
+            "Pb": 15.8,
+            "Se": 10.4,
+            "Zn": 41.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1969,
+            "Mo": 0.521,
+            "Se": 10.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.11,
+        "Cd": 2.52,
+        "Co": 5.48,
+        "Ni": 26.1,
+        "Pb": 15.8,
+        "Zn": 41.6
+      }
+    }
   }
 }

@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"C86633","source_wsda_record":{"wsda_product_number":"(#0915-0109)","product_name":"BIOGRO WHATCOM MICRO MIX 8-0-0","company_info":{"company":"BIO-GRO INC","Mailing Address":"PO Box 326","Post Office Box":null,"City":"Mabton","State":"WA","Postal Code":"98935","Telephone Number":"509 894-4110","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.28,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.6,"Iron (Fe)":1.6,"Manganese (Mn)":1.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.6},"reported_metals":{"Arsenic":"=39.1000","Cadmium":"=6.2500","Cobalt":"=52.0000","Mercury":"<0.0500","Molybdenum":"=31.2000","Nickel":"=39.1000","Lead":"=39.1000","Selenium":"=78.1000","Zinc":"=15400.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.28,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.6,"Iron (Fe)":1.6,"Manganese (Mn)":1.2,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.6},"heavy_metals":{"Arsenic":"=39.1000","Cadmium":"=6.2500","Cobalt":"=52.0000","Mercury":"<0.0500","Molybdenum":"=31.2000","Nickel":"=39.1000","Lead":"=39.1000","Selenium":"=78.1000","Zinc":"=15400.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BIO-GRO INC","label_name":"BIOGRO WHATCOM MICRO MIX 8-0-0","wsda_reg_no":"(#0915-0109)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C86633",
+  "metadata": {
+    "registrant": "BIO-GRO INC",
+    "label_name": "BIOGRO WHATCOM MICRO MIX 8-0-0",
+    "wsda_reg_no": "(#0915-0109)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0109)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0109)",
+        "product_name": "BIOGRO WHATCOM MICRO MIX 8-0-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.28,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.6,
+          "Iron (Fe)": 1.6,
+          "Manganese (Mn)": 1.2,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.6
+        },
+        "reported_metals": {
+          "Arsenic": "=39.1000",
+          "Cadmium": "=6.2500",
+          "Cobalt": "=52.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=31.2000",
+          "Nickel": "=39.1000",
+          "Lead": "=39.1000",
+          "Selenium": "=78.1000",
+          "Zinc": "=15400.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGRO WHATCOM MICRO MIX 8-0-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0
+    },
+    "micros_pct": {
+      "Fe": 1.6,
+      "Mn": 1.2,
+      "Zn": 1.6,
+      "Cu": 0.6,
+      "B": 0.28
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C86633-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 39.1,
+            "Cd": 6.25,
+            "Co": 52.0,
+            "Hg": 0.05,
+            "Mo": 31.2,
+            "Ni": 39.1,
+            "Pb": 39.1,
+            "Se": 78.1,
+            "Zn": 15400.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 39.1,
+        "Cd": 6.25,
+        "Co": 52.0,
+        "Mo": 31.2,
+        "Ni": 39.1,
+        "Pb": 39.1,
+        "Se": 78.1,
+        "Zn": 15400.0
+      }
+    }
+  }
+}

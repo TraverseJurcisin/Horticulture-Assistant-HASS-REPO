@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"BE4CC5","source_wsda_record":{"wsda_product_number":"(#3842-0049)","product_name":"ECOFUSION MANGANESE SULFATE MONOHYDRATE 0-0-0","company_info":{"company":"ECOFUSION INC","Mailing Address":"PO Box 251408","Post Office Box":null,"City":"Plano","State":"TX","Postal Code":"75025","Telephone Number":"972 403-7449","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":31.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.7000","Cadmium":"=3.3000","Cobalt":"=4.1000","Mercury":"=0.0600","Molybdenum":"=2.3000","Nickel":"=1.2500","Lead":"=2.5000","Selenium":"=1.0000","Zinc":"=4.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":31.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.7000","Cadmium":"=3.3000","Cobalt":"=4.1000","Mercury":"=0.0600","Molybdenum":"=2.3000","Nickel":"=1.2500","Lead":"=2.5000","Selenium":"=1.0000","Zinc":"=4.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ECOFUSION INC","label_name":"ECOFUSION MANGANESE SULFATE MONOHYDRATE 0-0-0","wsda_reg_no":"(#3842-0049)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BE4CC5",
+  "metadata": {
+    "registrant": "ECOFUSION INC",
+    "label_name": "ECOFUSION MANGANESE SULFATE MONOHYDRATE 0-0-0",
+    "wsda_reg_no": "(#3842-0049)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3842-0049)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3842-0049)",
+        "product_name": "ECOFUSION MANGANESE SULFATE MONOHYDRATE 0-0-0",
+        "company_info": {
+          "company": "ECOFUSION INC",
+          "Mailing Address": "PO Box 251408",
+          "Post Office Box": null,
+          "City": "Plano",
+          "State": "TX",
+          "Postal Code": "75025",
+          "Telephone Number": "972 403-7449",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 18.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 31.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.7000",
+          "Cadmium": "=3.3000",
+          "Cobalt": "=4.1000",
+          "Mercury": "=0.0600",
+          "Molybdenum": "=2.3000",
+          "Nickel": "=1.2500",
+          "Lead": "=2.5000",
+          "Selenium": "=1.0000",
+          "Zinc": "=4.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECOFUSION MANGANESE SULFATE MONOHYDRATE 0-0-0",
+    "brand": "ECOFUSION INC",
+    "manufacturer": {
+      "name": "ECOFUSION INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 18.0
+    },
+    "micros_pct": {
+      "Mn": 31.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BE4CC5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.7,
+            "Cd": 3.3,
+            "Co": 4.1,
+            "Hg": 0.06,
+            "Mo": 2.3,
+            "Ni": 1.25,
+            "Pb": 2.5,
+            "Se": 1.0,
+            "Zn": 4.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.7,
+        "Cd": 3.3,
+        "Co": 4.1,
+        "Hg": 0.06,
+        "Mo": 2.3,
+        "Ni": 1.25,
+        "Pb": 2.5,
+        "Se": 1.0,
+        "Zn": 4.0
+      }
+    }
+  }
+}

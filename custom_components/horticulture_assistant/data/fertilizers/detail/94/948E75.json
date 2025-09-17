@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"948E75","source_wsda_record":{"wsda_product_number":"(#0274-0003)","product_name":"RICHLAWN PRO-RICH 14-2-5","company_info":{"company":"RICHLAWN TURF FOOD LLC","Mailing Address":"15121 Weld County Rd 32","Post Office Box":null,"City":"Platteville","State":"CO","Postal Code":"80651","Telephone Number":"303 659-6003","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"=6.8400","Cobalt":"=4.1000","Mercury":"<0.0200","Molybdenum":"=10.1000","Nickel":"=14.5000","Lead":"<0.1000","Selenium":"=0.2000","Zinc":"=379.4500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":14.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":4.0,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"=6.8400","Cobalt":"=4.1000","Mercury":"<0.0200","Molybdenum":"=10.1000","Nickel":"=14.5000","Lead":"<0.1000","Selenium":"=0.2000","Zinc":"=379.4500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RICHLAWN TURF FOOD LLC","label_name":"RICHLAWN PRO-RICH 14-2-5","wsda_reg_no":"(#0274-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "948E75",
+  "metadata": {
+    "registrant": "RICHLAWN TURF FOOD LLC",
+    "label_name": "RICHLAWN PRO-RICH 14-2-5",
+    "wsda_reg_no": "(#0274-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0274-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0274-0003)",
+        "product_name": "RICHLAWN PRO-RICH 14-2-5",
+        "company_info": {
+          "company": "RICHLAWN TURF FOOD LLC",
+          "Mailing Address": "15121 Weld County Rd 32",
+          "Post Office Box": null,
+          "City": "Platteville",
+          "State": "CO",
+          "Postal Code": "80651",
+          "Telephone Number": "303 659-6003",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "=6.8400",
+          "Cobalt": "=4.1000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "=10.1000",
+          "Nickel": "=14.5000",
+          "Lead": "<0.1000",
+          "Selenium": "=0.2000",
+          "Zinc": "=379.4500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RICHLAWN PRO-RICH 14-2-5",
+    "brand": "RICHLAWN TURF FOOD LLC",
+    "manufacturer": {
+      "name": "RICHLAWN TURF FOOD LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 4.0,
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "948E75-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 6.84,
+            "Co": 4.1,
+            "Hg": 0.02,
+            "Mo": 10.1,
+            "Ni": 14.5,
+            "Pb": 0.1,
+            "Se": 0.2,
+            "Zn": 379.45
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Hg": 0.02,
+            "Pb": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 6.84,
+        "Co": 4.1,
+        "Mo": 10.1,
+        "Ni": 14.5,
+        "Se": 0.2,
+        "Zn": 379.45
+      }
+    }
+  }
+}

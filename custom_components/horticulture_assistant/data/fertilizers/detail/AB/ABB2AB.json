@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"ABB2AB","source_wsda_record":{"wsda_product_number":"(#1837-0023)","product_name":"BIOAG TM-7 0-0-0","company_info":{"company":"FAUST BIO-AGRICULTURAL SERVICES INC","Mailing Address":"6080 Wigrich Rd","Post Office Box":null,"City":"Independence","State":"OR","Postal Code":"97351","Telephone Number":"503 838-2467","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":0.37,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":0.31,"Iron (Fe)":1.2,"Manganese (Mn)":1.2,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":0.7},"reported_metals":{"Arsenic":"=6.4200","Cadmium":"=0.0300","Cobalt":"=500.0000","Mercury":"=0.0500","Molybdenum":"=1000.0000","Nickel":"=21.5000","Lead":"=1.8000","Selenium":"=19.2000","Zinc":"=7305.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":0.37,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":0.31,"Iron (Fe)":1.2,"Manganese (Mn)":1.2,"Molybdenum (Mo)":0.1,"Sodium (Na)":null,"Zinc (Zn)":0.7},"heavy_metals":{"Arsenic":"=6.4200","Cadmium":"=0.0300","Cobalt":"=500.0000","Mercury":"=0.0500","Molybdenum":"=1000.0000","Nickel":"=21.5000","Lead":"=1.8000","Selenium":"=19.2000","Zinc":"=7305.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FAUST BIO-AGRICULTURAL SERVICES INC","label_name":"BIOAG TM-7 0-0-0","wsda_reg_no":"(#1837-0023)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "ABB2AB",
+  "metadata": {
+    "registrant": "FAUST BIO-AGRICULTURAL SERVICES INC",
+    "label_name": "BIOAG TM-7 0-0-0",
+    "wsda_reg_no": "(#1837-0023)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1837-0023)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1837-0023)",
+        "product_name": "BIOAG TM-7 0-0-0",
+        "company_info": {
+          "company": "FAUST BIO-AGRICULTURAL SERVICES INC",
+          "Mailing Address": "6080 Wigrich Rd",
+          "Post Office Box": null,
+          "City": "Independence",
+          "State": "OR",
+          "Postal Code": "97351",
+          "Telephone Number": "503 838-2467",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": 0.37,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": 0.31,
+          "Iron (Fe)": 1.2,
+          "Manganese (Mn)": 1.2,
+          "Molybdenum (Mo)": 0.1,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.7
+        },
+        "reported_metals": {
+          "Arsenic": "=6.4200",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=500.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1000.0000",
+          "Nickel": "=21.5000",
+          "Lead": "=1.8000",
+          "Selenium": "=19.2000",
+          "Zinc": "=7305.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOAG TM-7 0-0-0",
+    "brand": "FAUST BIO-AGRICULTURAL SERVICES INC",
+    "manufacturer": {
+      "name": "FAUST BIO-AGRICULTURAL SERVICES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 1.2,
+      "Mn": 1.2,
+      "Zn": 0.7,
+      "Cu": 0.31,
+      "B": 0.37,
+      "Mo": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "ABB2AB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.42,
+            "Cd": 0.03,
+            "Co": 500.0,
+            "Hg": 0.05,
+            "Mo": 1000.0,
+            "Ni": 21.5,
+            "Pb": 1.8,
+            "Se": 19.2,
+            "Zn": 7305.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.42,
+        "Cd": 0.03,
+        "Co": 500.0,
+        "Hg": 0.05,
+        "Mo": 1000.0,
+        "Ni": 21.5,
+        "Pb": 1.8,
+        "Se": 19.2,
+        "Zn": 7305.0
+      }
+    }
+  }
+}

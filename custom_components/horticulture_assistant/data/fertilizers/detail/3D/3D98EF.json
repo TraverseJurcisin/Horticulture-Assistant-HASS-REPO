@@ -1,106 +1,154 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3D98EF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3132-0066)",
-    "product_name": "START 12-43-10",
-    "company_info": {
-      "company": "VALLEY AGRONOMICS LLC",
-      "Mailing Address": "PO Box 365",
-      "Post Office Box": null,
-      "City": "Rupert",
-      "State": "ID",
-      "Postal Code": "83350",
-      "Telephone Number": "503 845-8125",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 43.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.25
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.5500",
-      "Cobalt": "=1.6600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=5.6400",
-      "Nickel": "=1.3600",
-      "Lead": "<0.1000",
-      "Selenium": "<0.1000",
-      "Zinc": "=2154.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 43.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.25
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.5500",
-      "Cobalt": "=1.6600",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=5.6400",
-      "Nickel": "=1.3600",
-      "Lead": "<0.1000",
-      "Selenium": "<0.1000",
-      "Zinc": "=2154.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3D98EF",
   "metadata": {
     "registrant": "VALLEY AGRONOMICS LLC",
     "label_name": "START 12-43-10",
     "wsda_reg_no": "(#3132-0066)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0066)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0066)",
+        "product_name": "START 12-43-10",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 43.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.25
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "=0.5500",
+          "Cobalt": "=1.6600",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=5.6400",
+          "Nickel": "=1.3600",
+          "Lead": "<0.1000",
+          "Selenium": "<0.1000",
+          "Zinc": "=2154.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "START 12-43-10",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 43.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.1,
+      "Zn": 0.25,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3D98EF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.55,
+            "Co": 1.66,
+            "Hg": 0.01,
+            "Mo": 5.64,
+            "Ni": 1.36,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 2154.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Hg": 0.01,
+            "Pb": 0.1,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.55,
+        "Co": 1.66,
+        "Mo": 5.64,
+        "Ni": 1.36,
+        "Zn": 2154.0
+      }
+    }
   }
 }

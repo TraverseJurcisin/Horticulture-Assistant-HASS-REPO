@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1C38A8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1176-0081)",
-    "product_name": "EMPRO DIMENSION 0.25% PLUS FERTILIZER 0-0-0",
-    "company_info": {
-      "company": "MARION AG SERVICE INC",
-      "Mailing Address": "7746 St Paul Hwy NE",
-      "Post Office Box": null,
-      "City": "St Paul",
-      "State": "OR",
-      "Postal Code": "97137",
-      "Telephone Number": "503 633-4562",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 34.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=5.6000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.9500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 34.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=5.6000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.9500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1C38A8",
   "metadata": {
     "registrant": "MARION AG SERVICE INC",
     "label_name": "EMPRO DIMENSION 0.25% PLUS FERTILIZER 0-0-0",
     "wsda_reg_no": "(#1176-0081)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1176-0081)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1176-0081)",
+        "product_name": "EMPRO DIMENSION 0.25% PLUS FERTILIZER 0-0-0",
+        "company_info": {
+          "company": "MARION AG SERVICE INC",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 34.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=5.6000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=1.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMPRO DIMENSION 0.25% PLUS FERTILIZER 0-0-0",
+    "brand": "MARION AG SERVICE INC",
+    "manufacturer": {
+      "name": "MARION AG SERVICE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 34.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1C38A8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 5.6,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 1.95
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 0.2,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 5.6,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 1.95
+      }
+    }
   }
 }

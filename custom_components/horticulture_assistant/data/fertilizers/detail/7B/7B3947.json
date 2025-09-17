@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7B3947",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0347-0017)",
-    "product_name": "FOOD FOR LAWNS & GARDENS 10-2-4",
-    "company_info": {
-      "company": "CHS NORTHWEST",
-      "Mailing Address": "2014 Agronomy Way",
-      "Post Office Box": null,
-      "City": "Lynden",
-      "State": "WA",
-      "Postal Code": "98264",
-      "Telephone Number": "503 633-4562",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.5000",
-      "Cadmium": "=7.3900",
-      "Cobalt": "=13.4000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.5000",
-      "Lead": "=1.5000",
-      "Selenium": "=2.5000",
-      "Zinc": "=89.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.5000",
-      "Cadmium": "=7.3900",
-      "Cobalt": "=13.4000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.5000",
-      "Lead": "=1.5000",
-      "Selenium": "=2.5000",
-      "Zinc": "=89.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7B3947",
   "metadata": {
     "registrant": "CHS NORTHWEST",
     "label_name": "FOOD FOR LAWNS & GARDENS 10-2-4",
     "wsda_reg_no": "(#0347-0017)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0347-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0347-0017)",
+        "product_name": "FOOD FOR LAWNS & GARDENS 10-2-4",
+        "company_info": {
+          "company": "CHS NORTHWEST",
+          "Mailing Address": "2014 Agronomy Way",
+          "Post Office Box": null,
+          "City": "Lynden",
+          "State": "WA",
+          "Postal Code": "98264",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 10.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.5000",
+          "Cadmium": "=7.3900",
+          "Cobalt": "=13.4000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.5000",
+          "Lead": "=1.5000",
+          "Selenium": "=2.5000",
+          "Zinc": "=89.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FOOD FOR LAWNS & GARDENS 10-2-4",
+    "brand": "CHS NORTHWEST",
+    "manufacturer": {
+      "name": "CHS NORTHWEST"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "S": 5.6
+    },
+    "micros_pct": {
+      "Fe": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7B3947-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.5,
+            "Cd": 7.39,
+            "Co": 13.4,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.5,
+            "Pb": 1.5,
+            "Se": 2.5,
+            "Zn": 89.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.5,
+        "Cd": 7.39,
+        "Co": 13.4,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 1.5,
+        "Pb": 1.5,
+        "Se": 2.5,
+        "Zn": 89.0
+      }
+    }
   }
 }

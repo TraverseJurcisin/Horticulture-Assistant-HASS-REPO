@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2B34C6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1790-0017)",
-    "product_name": "KEYPLEX JUMPSTART 5-20-4",
-    "company_info": {
-      "company": "MORSE ENTERPRISES LIMITED INC",
-      "Mailing Address": "PO Box 2515",
-      "Post Office Box": null,
-      "City": "Winter Park",
-      "State": "FL",
-      "Postal Code": "32790-2515",
-      "Telephone Number": "407 682-6500",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 20.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=4.5600",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=36.2800",
-      "Nickel": "=1.5600",
-      "Lead": "=2.9200",
-      "Selenium": "<1.0000",
-      "Zinc": "=1426.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 20.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=4.5600",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=36.2800",
-      "Nickel": "=1.5600",
-      "Lead": "=2.9200",
-      "Selenium": "<1.0000",
-      "Zinc": "=1426.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2B34C6",
   "metadata": {
     "registrant": "MORSE ENTERPRISES LIMITED INC",
     "label_name": "KEYPLEX JUMPSTART 5-20-4",
     "wsda_reg_no": "(#1790-0017)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1790-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1790-0017)",
+        "product_name": "KEYPLEX JUMPSTART 5-20-4",
+        "company_info": {
+          "company": "MORSE ENTERPRISES LIMITED INC",
+          "Mailing Address": "PO Box 2515",
+          "Post Office Box": null,
+          "City": "Winter Park",
+          "State": "FL",
+          "Postal Code": "32790-2515",
+          "Telephone Number": "407 682-6500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 20.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=4.5600",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=36.2800",
+          "Nickel": "=1.5600",
+          "Lead": "=2.9200",
+          "Selenium": "<1.0000",
+          "Zinc": "=1426.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KEYPLEX JUMPSTART 5-20-4",
+    "brand": "MORSE ENTERPRISES LIMITED INC",
+    "manufacturer": {
+      "name": "MORSE ENTERPRISES LIMITED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 20.0,
+      "K2O_pct": 4.0
+    },
+    "micros_pct": {
+      "Mn": 0.2,
+      "B": 0.02,
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2B34C6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 4.56,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Mo": 36.28,
+            "Ni": 1.56,
+            "Pb": 2.92,
+            "Se": 1.0,
+            "Zn": 1426.2
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 4.56,
+        "Mo": 36.28,
+        "Ni": 1.56,
+        "Pb": 2.92,
+        "Zn": 1426.2
+      }
+    }
   }
 }

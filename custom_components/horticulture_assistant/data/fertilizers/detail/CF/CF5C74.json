@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"CF5C74","source_wsda_record":{"wsda_product_number":"(#3173-0013)","product_name":"BIOADVANCED SCIENCE-BASED SOLUTIONS ALL-IN-ONE ROSE & FLOWER CARE READY-TO-USE GRANULES 6-9-6","company_info":{"company":"SBM LIFE SCIENCE CORPORATION","Mailing Address":"PO Box 525","Post Office Box":null,"City":"Morrisville","State":"NC","Postal Code":"27560","Telephone Number":"802 705-9730","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.5800","Cadmium":"=1.0000","Cobalt":"=1.1000","Mercury":"=0.0500","Molybdenum":"=1.8000","Nickel":"=30.6000","Lead":"=1.3000","Selenium":"<0.5000","Zinc":"=25.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":9.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.5800","Cadmium":"=1.0000","Cobalt":"=1.1000","Mercury":"=0.0500","Molybdenum":"=1.8000","Nickel":"=30.6000","Lead":"=1.3000","Selenium":"<0.5000","Zinc":"=25.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SBM LIFE SCIENCE CORPORATION","label_name":"BIOADVANCED SCIENCE-BASED SOLUTIONS ALL-IN-ONE ROSE & FLOWER CARE READY-TO-USE GRANULES 6-9-6","wsda_reg_no":"(#3173-0013)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CF5C74",
+  "metadata": {
+    "registrant": "SBM LIFE SCIENCE CORPORATION",
+    "label_name": "BIOADVANCED SCIENCE-BASED SOLUTIONS ALL-IN-ONE ROSE & FLOWER CARE READY-TO-USE GRANULES 6-9-6",
+    "wsda_reg_no": "(#3173-0013)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3173-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3173-0013)",
+        "product_name": "BIOADVANCED SCIENCE-BASED SOLUTIONS ALL-IN-ONE ROSE & FLOWER CARE READY-TO-USE GRANULES 6-9-6",
+        "company_info": {
+          "company": "SBM LIFE SCIENCE CORPORATION",
+          "Mailing Address": "PO Box 525",
+          "Post Office Box": null,
+          "City": "Morrisville",
+          "State": "NC",
+          "Postal Code": "27560",
+          "Telephone Number": "802 705-9730",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 9.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.5800",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.8000",
+          "Nickel": "=30.6000",
+          "Lead": "=1.3000",
+          "Selenium": "<0.5000",
+          "Zinc": "=25.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOADVANCED SCIENCE-BASED SOLUTIONS ALL-IN-ONE ROSE & FLOWER CARE READY-TO-USE GRANULES 6-9-6",
+    "brand": "SBM LIFE SCIENCE CORPORATION",
+    "manufacturer": {
+      "name": "SBM LIFE SCIENCE CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 9.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CF5C74-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.58,
+            "Cd": 1.0,
+            "Co": 1.1,
+            "Hg": 0.05,
+            "Mo": 1.8,
+            "Ni": 30.6,
+            "Pb": 1.3,
+            "Se": 0.5,
+            "Zn": 25.4
+          },
+          "detection_limits_ppm": {
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.58,
+        "Cd": 1.0,
+        "Co": 1.1,
+        "Hg": 0.05,
+        "Mo": 1.8,
+        "Ni": 30.6,
+        "Pb": 1.3,
+        "Zn": 25.4
+      }
+    }
+  }
+}

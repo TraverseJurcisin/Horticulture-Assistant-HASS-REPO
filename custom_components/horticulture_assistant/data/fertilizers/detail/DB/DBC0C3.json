@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"DBC0C3","source_wsda_record":{"wsda_product_number":"(#1130-0001)","product_name":"HAMPTON LUMBER MILLS HAMPTON WOOD ASH 0.11-0.28-2.2","company_info":{"company":"HAMPTON LUMBER MILLS - RANDLE, WA","Mailing Address":"PO Box 189","Post Office Box":null,"City":"Randle","State":"WA","Postal Code":"98377","Telephone Number":"360 497-5030","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.11,"Available Phosphoric Acid (P2O5)":0.28,"Soluble Potash (K2O)":2.2,"Calcium (Ca)":4.3,"Magnesium (Mg)":0.7,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.4,"Molybdenum (Mo)":null,"Sodium (Na)":0.28,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.0100","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=11.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.11,"Available Phosphoric Acid (P2O5)":0.28,"Soluble Potash (K2O)":2.2,"Calcium (Ca)":4.3,"Magnesium (Mg)":0.7,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.4,"Molybdenum (Mo)":null,"Sodium (Na)":0.28,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"<1.0000","Cobalt":"<1.0000","Mercury":"<0.0100","Molybdenum":"<1.0000","Nickel":"<1.0000","Lead":"<1.0000","Selenium":"<1.0000","Zinc":"=11.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAMPTON LUMBER MILLS - RANDLE, WA","label_name":"HAMPTON LUMBER MILLS HAMPTON WOOD ASH 0.11-0.28-2.2","wsda_reg_no":"(#1130-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DBC0C3",
+  "metadata": {
+    "registrant": "HAMPTON LUMBER MILLS - RANDLE, WA",
+    "label_name": "HAMPTON LUMBER MILLS HAMPTON WOOD ASH 0.11-0.28-2.2",
+    "wsda_reg_no": "(#1130-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1130-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1130-0001)",
+        "product_name": "HAMPTON LUMBER MILLS HAMPTON WOOD ASH 0.11-0.28-2.2",
+        "company_info": {
+          "company": "HAMPTON LUMBER MILLS - RANDLE, WA",
+          "Mailing Address": "PO Box 189",
+          "Post Office Box": null,
+          "City": "Randle",
+          "State": "WA",
+          "Postal Code": "98377",
+          "Telephone Number": "360 497-5030",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.11,
+          "Available Phosphoric Acid (P2O5)": 0.28,
+          "Soluble Potash (K2O)": 2.2,
+          "Calcium (Ca)": 4.3,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.4,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": 0.28,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<1.0000",
+          "Nickel": "<1.0000",
+          "Lead": "<1.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=11.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HAMPTON LUMBER MILLS HAMPTON WOOD ASH 0.11-0.28-2.2",
+    "brand": "HAMPTON LUMBER MILLS - RANDLE, WA",
+    "manufacturer": {
+      "name": "HAMPTON LUMBER MILLS - RANDLE, WA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.11,
+      "P2O5_pct": 0.28,
+      "K2O_pct": 2.2
+    },
+    "macros_pct": {
+      "Ca": 4.3,
+      "Mg": 0.7
+    },
+    "micros_pct": {
+      "Mn": 0.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DBC0C3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 11.6
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 1.0,
+            "Ni": 1.0,
+            "Pb": 1.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 11.6
+      }
+    }
+  }
+}

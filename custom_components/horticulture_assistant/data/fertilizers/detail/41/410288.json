@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "410288",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3410-0004)",
-    "product_name": "FRONT ROW AG PART A HW WATER SOLUBLE FERTILIZER 14-0-8",
-    "company_info": {
-      "company": "FRONT ROW AG LLC",
-      "Mailing Address": "2935 S Koke Mill Rd",
-      "Post Office Box": null,
-      "City": "Springfield",
-      "State": "IL",
-      "Postal Code": "62711",
-      "Telephone Number": "217 547-5867",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": 14.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.07,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.06,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.07
-    },
-    "reported_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=0.8000",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=52.9000",
-      "Nickel": "=1.1000",
-      "Lead": "<0.8000",
-      "Selenium": "<1.4000",
-      "Zinc": "=989.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": 14.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.07,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.06,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.07
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.4000",
-      "Cobalt": "=0.8000",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=52.9000",
-      "Nickel": "=1.1000",
-      "Lead": "<0.8000",
-      "Selenium": "<1.4000",
-      "Zinc": "=989.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "410288",
   "metadata": {
     "registrant": "FRONT ROW AG LLC",
     "label_name": "FRONT ROW AG PART A HW WATER SOLUBLE FERTILIZER 14-0-8",
     "wsda_reg_no": "(#3410-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3410-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3410-0004)",
+        "product_name": "FRONT ROW AG PART A HW WATER SOLUBLE FERTILIZER 14-0-8",
+        "company_info": {
+          "company": "FRONT ROW AG LLC",
+          "Mailing Address": "2935 S Koke Mill Rd",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": 14.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.07,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.06,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.07
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=0.8000",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=52.9000",
+          "Nickel": "=1.1000",
+          "Lead": "<0.8000",
+          "Selenium": "<1.4000",
+          "Zinc": "=989.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FRONT ROW AG PART A HW WATER SOLUBLE FERTILIZER 14-0-8",
+    "brand": "FRONT ROW AG LLC",
+    "manufacturer": {
+      "name": "FRONT ROW AG LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 14.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 0.1,
+      "Zn": 0.07,
+      "Cu": 0.06,
+      "B": 0.07,
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "410288-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.4,
+            "Co": 0.8,
+            "Hg": 0.001,
+            "Mo": 52.9,
+            "Ni": 1.1,
+            "Pb": 0.8,
+            "Se": 1.4,
+            "Zn": 989.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.001,
+            "Pb": 0.8,
+            "Se": 1.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.4,
+        "Co": 0.8,
+        "Mo": 52.9,
+        "Ni": 1.1,
+        "Zn": 989.0
+      }
+    }
   }
 }

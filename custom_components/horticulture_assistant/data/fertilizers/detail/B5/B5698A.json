@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"B5698A","source_wsda_record":{"wsda_product_number":"(#2572-0012)","product_name":"HUMBOLDT COUNTY'S OWN MAGNUM (HB) 0-0-0","company_info":{"company":"HUMBOLDT BOTTLING","Mailing Address":"PO Box 429","Post Office Box":null,"City":"Fortuna","State":"CA","Postal Code":"95540","Telephone Number":"707 725-4119","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1300","Cobalt":"=0.3100","Mercury":"=0.0100","Molybdenum":"=0.4300","Nickel":"=2.1000","Lead":"=2.8000","Selenium":"=0.3300","Zinc":"=10.9800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1300","Cobalt":"=0.3100","Mercury":"=0.0100","Molybdenum":"=0.4300","Nickel":"=2.1000","Lead":"=2.8000","Selenium":"=0.3300","Zinc":"=10.9800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HUMBOLDT BOTTLING","label_name":"HUMBOLDT COUNTY'S OWN MAGNUM (HB) 0-0-0","wsda_reg_no":"(#2572-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B5698A",
+  "metadata": {
+    "registrant": "HUMBOLDT BOTTLING",
+    "label_name": "HUMBOLDT COUNTY'S OWN MAGNUM (HB) 0-0-0",
+    "wsda_reg_no": "(#2572-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2572-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2572-0012)",
+        "product_name": "HUMBOLDT COUNTY'S OWN MAGNUM (HB) 0-0-0",
+        "company_info": {
+          "company": "HUMBOLDT BOTTLING",
+          "Mailing Address": "PO Box 429",
+          "Post Office Box": null,
+          "City": "Fortuna",
+          "State": "CA",
+          "Postal Code": "95540",
+          "Telephone Number": "707 725-4119",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.1300",
+          "Cobalt": "=0.3100",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.4300",
+          "Nickel": "=2.1000",
+          "Lead": "=2.8000",
+          "Selenium": "=0.3300",
+          "Zinc": "=10.9800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HUMBOLDT COUNTY'S OWN MAGNUM (HB) 0-0-0",
+    "brand": "HUMBOLDT BOTTLING",
+    "manufacturer": {
+      "name": "HUMBOLDT BOTTLING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 2.0,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B5698A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.13,
+            "Co": 0.31,
+            "Hg": 0.01,
+            "Mo": 0.43,
+            "Ni": 2.1,
+            "Pb": 2.8,
+            "Se": 0.33,
+            "Zn": 10.98
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.13,
+        "Co": 0.31,
+        "Hg": 0.01,
+        "Mo": 0.43,
+        "Ni": 2.1,
+        "Pb": 2.8,
+        "Se": 0.33,
+        "Zn": 10.98
+      }
+    }
+  }
+}

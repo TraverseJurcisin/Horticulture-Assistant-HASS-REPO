@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1AEA33",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1578-0060)",
-    "product_name": "ESPOMA ORGANIC LAWN FOOD SUMMER REVITALIZER 8-0-0",
-    "company_info": {
-      "company": "ESPOMA COMPANY (THE)",
-      "Mailing Address": "6 Espoma Rd",
-      "Post Office Box": null,
-      "City": "Millville",
-      "State": "NJ",
-      "Postal Code": "08332",
-      "Telephone Number": "856 825-0542",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=7.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=166.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=5.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=5.0000",
-      "Nickel": "=7.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=5.0000",
-      "Zinc": "=166.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1AEA33",
   "metadata": {
     "registrant": "ESPOMA COMPANY (THE)",
     "label_name": "ESPOMA ORGANIC LAWN FOOD SUMMER REVITALIZER 8-0-0",
     "wsda_reg_no": "(#1578-0060)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1578-0060)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1578-0060)",
+        "product_name": "ESPOMA ORGANIC LAWN FOOD SUMMER REVITALIZER 8-0-0",
+        "company_info": {
+          "company": "ESPOMA COMPANY (THE)",
+          "Mailing Address": "6 Espoma Rd",
+          "Post Office Box": null,
+          "City": "Millville",
+          "State": "NJ",
+          "Postal Code": "08332",
+          "Telephone Number": "856 825-0542",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.0000",
+          "Cadmium": "=2.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=7.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=166.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ESPOMA ORGANIC LAWN FOOD SUMMER REVITALIZER 8-0-0",
+    "brand": "ESPOMA COMPANY (THE)",
+    "manufacturer": {
+      "name": "ESPOMA COMPANY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1AEA33-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.0,
+            "Cd": 2.0,
+            "Co": 5.0,
+            "Hg": 0.2,
+            "Mo": 5.0,
+            "Ni": 7.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 166.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.0,
+        "Cd": 2.0,
+        "Co": 5.0,
+        "Hg": 0.2,
+        "Mo": 5.0,
+        "Ni": 7.0,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 166.0
+      }
+    }
   }
 }

@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"BA96B5","source_wsda_record":{"wsda_product_number":"(#3132-0031)","product_name":"VALLEY AGRONOMICS FERTILIZER 20-12-8 WITH 8% SULFUR 20-12-8","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.09,"Iron (Fe)":0.7,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.06},"reported_metals":{"Arsenic":"=3.8700","Cadmium":"=34.3200","Cobalt":"=2.0100","Mercury":"=0.0628","Molybdenum":"<0.8210","Nickel":"=84.1000","Lead":"<1.6200","Selenium":"=0.7050","Zinc":"=2150.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":12.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":8.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.09,"Iron (Fe)":0.7,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.06},"heavy_metals":{"Arsenic":"=3.8700","Cadmium":"=34.3200","Cobalt":"=2.0100","Mercury":"=0.0628","Molybdenum":"<0.8210","Nickel":"=84.1000","Lead":"<1.6200","Selenium":"=0.7050","Zinc":"=2150.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 20-12-8 WITH 8% SULFUR 20-12-8","wsda_reg_no":"(#3132-0031)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BA96B5",
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 20-12-8 WITH 8% SULFUR 20-12-8",
+    "wsda_reg_no": "(#3132-0031)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0031)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 20-12-8 WITH 8% SULFUR 20-12-8",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 12.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.09,
+          "Iron (Fe)": 0.7,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.06
+        },
+        "reported_metals": {
+          "Arsenic": "=3.8700",
+          "Cadmium": "=34.3200",
+          "Cobalt": "=2.0100",
+          "Mercury": "=0.0628",
+          "Molybdenum": "<0.8210",
+          "Nickel": "=84.1000",
+          "Lead": "<1.6200",
+          "Selenium": "=0.7050",
+          "Zinc": "=2150.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 20-12-8 WITH 8% SULFUR 20-12-8",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 12.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 8.0
+    },
+    "micros_pct": {
+      "Fe": 0.7,
+      "Zn": 0.06,
+      "Cu": 0.09
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BA96B5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.87,
+            "Cd": 34.32,
+            "Co": 2.01,
+            "Hg": 0.0628,
+            "Mo": 0.821,
+            "Ni": 84.1,
+            "Pb": 1.62,
+            "Se": 0.705,
+            "Zn": 2150.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.821,
+            "Pb": 1.62
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.87,
+        "Cd": 34.32,
+        "Co": 2.01,
+        "Hg": 0.0628,
+        "Ni": 84.1,
+        "Se": 0.705,
+        "Zn": 2150.0
+      }
+    }
+  }
+}

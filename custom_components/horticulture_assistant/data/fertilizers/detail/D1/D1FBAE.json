@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"D1FBAE","source_wsda_record":{"wsda_product_number":"(#3898-0045)","product_name":"MINI 23-0-10","company_info":{"company":"SIMPLOT TURF & HORTICULTURE","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":23.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.2000","Cadmium":"<0.0430","Cobalt":"=4.9000","Mercury":"<0.0900","Molybdenum":"<0.1000","Nickel":"=5.6000","Lead":"=11.0000","Selenium":"<0.3500","Zinc":"=65.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":23.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.2000","Cadmium":"<0.0430","Cobalt":"=4.9000","Mercury":"<0.0900","Molybdenum":"<0.1000","Nickel":"=5.6000","Lead":"=11.0000","Selenium":"<0.3500","Zinc":"=65.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT TURF & HORTICULTURE","label_name":"MINI 23-0-10","wsda_reg_no":"(#3898-0045)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D1FBAE",
+  "metadata": {
+    "registrant": "SIMPLOT TURF & HORTICULTURE",
+    "label_name": "MINI 23-0-10",
+    "wsda_reg_no": "(#3898-0045)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3898-0045)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3898-0045)",
+        "product_name": "MINI 23-0-10",
+        "company_info": {
+          "company": "SIMPLOT TURF & HORTICULTURE",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 23.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.2000",
+          "Cadmium": "<0.0430",
+          "Cobalt": "=4.9000",
+          "Mercury": "<0.0900",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=5.6000",
+          "Lead": "=11.0000",
+          "Selenium": "<0.3500",
+          "Zinc": "=65.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MINI 23-0-10",
+    "brand": "SIMPLOT TURF & HORTICULTURE",
+    "manufacturer": {
+      "name": "SIMPLOT TURF & HORTICULTURE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 23.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 11.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D1FBAE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.2,
+            "Cd": 0.043,
+            "Co": 4.9,
+            "Hg": 0.09,
+            "Mo": 0.1,
+            "Ni": 5.6,
+            "Pb": 11.0,
+            "Se": 0.35,
+            "Zn": 65.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.043,
+            "Hg": 0.09,
+            "Mo": 0.1,
+            "Se": 0.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.2,
+        "Co": 4.9,
+        "Ni": 5.6,
+        "Pb": 11.0,
+        "Zn": 65.0
+      }
+    }
+  }
+}

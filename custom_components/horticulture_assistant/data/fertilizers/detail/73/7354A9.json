@@ -1,106 +1,155 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7354A9",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2629-0093)",
-    "product_name": "HARRELL'S 20-10-20 ALL PUPOSE 20-10-20",
-    "company_info": {
-      "company": "HARRELL'S LLC",
-      "Mailing Address": "PO Box 807",
-      "Post Office Box": null,
-      "City": "Lakeland",
-      "State": "FL",
-      "Postal Code": "33802",
-      "Telephone Number": "863 687-2774",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 20.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.3,
-      "Sulfur (S)": 0.5,
-      "Boron (B)": 0.012,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.008,
-      "Iron (Fe)": 0.07,
-      "Manganese (Mn)": 0.035,
-      "Molybdenum (Mo)": 0.005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.01
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=84.0000",
-      "Nickel": "<0.1000",
-      "Lead": "<1.0000",
-      "Selenium": "<0.3000",
-      "Zinc": "=146.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 20.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.3,
-      "Sulfur (S)": 0.5,
-      "Boron (B)": 0.012,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.008,
-      "Iron (Fe)": 0.07,
-      "Manganese (Mn)": 0.035,
-      "Molybdenum (Mo)": 0.005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.01
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "<0.1000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=84.0000",
-      "Nickel": "<0.1000",
-      "Lead": "<1.0000",
-      "Selenium": "<0.3000",
-      "Zinc": "=146.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7354A9",
   "metadata": {
     "registrant": "HARRELL'S LLC",
     "label_name": "HARRELL'S 20-10-20 ALL PUPOSE 20-10-20",
     "wsda_reg_no": "(#2629-0093)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2629-0093)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2629-0093)",
+        "product_name": "HARRELL'S 20-10-20 ALL PUPOSE 20-10-20",
+        "company_info": {
+          "company": "HARRELL'S LLC",
+          "Mailing Address": "PO Box 807",
+          "Post Office Box": null,
+          "City": "Lakeland",
+          "State": "FL",
+          "Postal Code": "33802",
+          "Telephone Number": "863 687-2774",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.3,
+          "Sulfur (S)": 0.5,
+          "Boron (B)": 0.012,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.008,
+          "Iron (Fe)": 0.07,
+          "Manganese (Mn)": 0.035,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.01
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=84.0000",
+          "Nickel": "<0.1000",
+          "Lead": "<1.0000",
+          "Selenium": "<0.3000",
+          "Zinc": "=146.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HARRELL'S 20-10-20 ALL PUPOSE 20-10-20",
+    "brand": "HARRELL'S LLC",
+    "manufacturer": {
+      "name": "HARRELL'S LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Mg": 0.3,
+      "S": 0.5
+    },
+    "micros_pct": {
+      "Fe": 0.07,
+      "Mn": 0.035,
+      "Zn": 0.01,
+      "Cu": 0.008,
+      "B": 0.012,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7354A9-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.02,
+            "Mo": 84.0,
+            "Ni": 0.1,
+            "Pb": 1.0,
+            "Se": 0.3,
+            "Zn": 146.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Ni": 0.1,
+            "Pb": 1.0,
+            "Se": 0.3
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.02,
+        "Mo": 84.0,
+        "Zn": 146.0
+      }
+    }
   }
 }

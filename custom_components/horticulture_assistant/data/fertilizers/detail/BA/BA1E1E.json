@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"BA1E1E","source_wsda_record":{"wsda_product_number":"(#1410-0025)","product_name":"SUPERNATURAL BRAND SUPER BOOST 11-49-9","company_info":{"company":"RAPIDGROW INDUSTRIES INC","Mailing Address":"PO Box 31020","Post Office Box":null,"City":"Windsor","State":"ON","Postal Code":"N9G 2Y2","Telephone Number":"519 959-4324","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":49.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.007,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=0.1190","Cadmium":"=0.3500","Cobalt":"=0.7780","Mercury":"=0.0010","Molybdenum":"=71.3800","Nickel":"=1.9600","Lead":"=2.2000","Selenium":"=0.0590","Zinc":"=500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":49.0,"Soluble Potash (K2O)":9.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":null,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.007,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=0.1190","Cadmium":"=0.3500","Cobalt":"=0.7780","Mercury":"=0.0010","Molybdenum":"=71.3800","Nickel":"=1.9600","Lead":"=2.2000","Selenium":"=0.0590","Zinc":"=500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RAPIDGROW INDUSTRIES INC","label_name":"SUPERNATURAL BRAND SUPER BOOST 11-49-9","wsda_reg_no":"(#1410-0025)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BA1E1E",
+  "metadata": {
+    "registrant": "RAPIDGROW INDUSTRIES INC",
+    "label_name": "SUPERNATURAL BRAND SUPER BOOST 11-49-9",
+    "wsda_reg_no": "(#1410-0025)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1410-0025)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1410-0025)",
+        "product_name": "SUPERNATURAL BRAND SUPER BOOST 11-49-9",
+        "company_info": {
+          "company": "RAPIDGROW INDUSTRIES INC",
+          "Mailing Address": "PO Box 31020",
+          "Post Office Box": null,
+          "City": "Windsor",
+          "State": "ON",
+          "Postal Code": "N9G 2Y2",
+          "Telephone Number": "519 959-4324",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 49.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.007,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1190",
+          "Cadmium": "=0.3500",
+          "Cobalt": "=0.7780",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=71.3800",
+          "Nickel": "=1.9600",
+          "Lead": "=2.2000",
+          "Selenium": "=0.0590",
+          "Zinc": "=500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUPERNATURAL BRAND SUPER BOOST 11-49-9",
+    "brand": "RAPIDGROW INDUSTRIES INC",
+    "manufacturer": {
+      "name": "RAPIDGROW INDUSTRIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 49.0,
+      "K2O_pct": 9.0
+    },
+    "micros_pct": {
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "Mo": 0.007
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BA1E1E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.119,
+            "Cd": 0.35,
+            "Co": 0.778,
+            "Hg": 0.001,
+            "Mo": 71.38,
+            "Ni": 1.96,
+            "Pb": 2.2,
+            "Se": 0.059,
+            "Zn": 500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.119,
+        "Cd": 0.35,
+        "Co": 0.778,
+        "Hg": 0.001,
+        "Mo": 71.38,
+        "Ni": 1.96,
+        "Pb": 2.2,
+        "Se": 0.059,
+        "Zn": 500.0
+      }
+    }
+  }
+}

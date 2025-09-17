@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"8AEA0D","source_wsda_record":{"wsda_product_number":"(#0030-0001)","product_name":"ACCESS GROUP INT'L LLC NUTRIPLANT AG 6-4-3","company_info":{"company":"ACCESS BUSINESS GROUP INT'L LLC","Mailing Address":"7575 Fulton St East 50-1A","Post Office Box":null,"City":"Ada","State":"MI","Postal Code":"49355","Telephone Number":"616 787-4331","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.015,"Copper (Cu)":0.28,"Iron (Fe)":0.36,"Manganese (Mn)":0.3,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.6},"reported_metals":{"Arsenic":"=5.3800","Cadmium":"=1.0200","Cobalt":"=150.0000","Mercury":"=0.0050","Molybdenum":"=9.0000","Nickel":"=4.7000","Lead":"=1.3300","Selenium":"=82.3000","Zinc":"=6000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.015,"Copper (Cu)":0.28,"Iron (Fe)":0.36,"Manganese (Mn)":0.3,"Molybdenum (Mo)":0.0009,"Sodium (Na)":null,"Zinc (Zn)":0.6},"heavy_metals":{"Arsenic":"=5.3800","Cadmium":"=1.0200","Cobalt":"=150.0000","Mercury":"=0.0050","Molybdenum":"=9.0000","Nickel":"=4.7000","Lead":"=1.3300","Selenium":"=82.3000","Zinc":"=6000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ACCESS BUSINESS GROUP INT'L LLC","label_name":"ACCESS GROUP INT'L LLC NUTRIPLANT AG 6-4-3","wsda_reg_no":"(#0030-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8AEA0D",
+  "metadata": {
+    "registrant": "ACCESS BUSINESS GROUP INT'L LLC",
+    "label_name": "ACCESS GROUP INT'L LLC NUTRIPLANT AG 6-4-3",
+    "wsda_reg_no": "(#0030-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0030-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0030-0001)",
+        "product_name": "ACCESS GROUP INT'L LLC NUTRIPLANT AG 6-4-3",
+        "company_info": {
+          "company": "ACCESS BUSINESS GROUP INT'L LLC",
+          "Mailing Address": "7575 Fulton St East 50-1A",
+          "Post Office Box": null,
+          "City": "Ada",
+          "State": "MI",
+          "Postal Code": "49355",
+          "Telephone Number": "616 787-4331",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.015,
+          "Copper (Cu)": 0.28,
+          "Iron (Fe)": 0.36,
+          "Manganese (Mn)": 0.3,
+          "Molybdenum (Mo)": 0.0009,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.6
+        },
+        "reported_metals": {
+          "Arsenic": "=5.3800",
+          "Cadmium": "=1.0200",
+          "Cobalt": "=150.0000",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=9.0000",
+          "Nickel": "=4.7000",
+          "Lead": "=1.3300",
+          "Selenium": "=82.3000",
+          "Zinc": "=6000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ACCESS GROUP INT'L LLC NUTRIPLANT AG 6-4-3",
+    "brand": "ACCESS BUSINESS GROUP INT'L LLC",
+    "manufacturer": {
+      "name": "ACCESS BUSINESS GROUP INT'L LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.36,
+      "Mn": 0.3,
+      "Zn": 0.6,
+      "Cu": 0.28,
+      "B": 0.02,
+      "Mo": 0.0009
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8AEA0D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.38,
+            "Cd": 1.02,
+            "Co": 150.0,
+            "Hg": 0.005,
+            "Mo": 9.0,
+            "Ni": 4.7,
+            "Pb": 1.33,
+            "Se": 82.3,
+            "Zn": 6000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.38,
+        "Cd": 1.02,
+        "Co": 150.0,
+        "Hg": 0.005,
+        "Mo": 9.0,
+        "Ni": 4.7,
+        "Pb": 1.33,
+        "Se": 82.3,
+        "Zn": 6000.0
+      }
+    }
+  }
+}

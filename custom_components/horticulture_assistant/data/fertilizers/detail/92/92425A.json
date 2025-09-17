@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"92425A","source_wsda_record":{"wsda_product_number":"(#1410-0032)","product_name":"SUPERNATURAL BRAND ENORMOUS 0-0-2","company_info":{"company":"RAPIDGROW INDUSTRIES INC","Mailing Address":"PO Box 31020","Post Office Box":null,"City":"Windsor","State":"ON","Postal Code":"N9G 2Y2","Telephone Number":"519 959-4324","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.0010","Cadmium":"=0.1790","Cobalt":"<0.0120","Mercury":"<0.0010","Molybdenum":"=0.4540","Nickel":"=0.2060","Lead":"=2.0600","Selenium":"<0.0010","Zinc":"=13.9500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.0010","Cadmium":"=0.1790","Cobalt":"<0.0120","Mercury":"<0.0010","Molybdenum":"=0.4540","Nickel":"=0.2060","Lead":"=2.0600","Selenium":"<0.0010","Zinc":"=13.9500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RAPIDGROW INDUSTRIES INC","label_name":"SUPERNATURAL BRAND ENORMOUS 0-0-2","wsda_reg_no":"(#1410-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "92425A",
+  "metadata": {
+    "registrant": "RAPIDGROW INDUSTRIES INC",
+    "label_name": "SUPERNATURAL BRAND ENORMOUS 0-0-2",
+    "wsda_reg_no": "(#1410-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1410-0032)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1410-0032)",
+        "product_name": "SUPERNATURAL BRAND ENORMOUS 0-0-2",
+        "company_info": {
+          "company": "RAPIDGROW INDUSTRIES INC",
+          "Mailing Address": "PO Box 31020",
+          "Post Office Box": null,
+          "City": "Windsor",
+          "State": "ON",
+          "Postal Code": "N9G 2Y2",
+          "Telephone Number": "519 959-4324",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0010",
+          "Cadmium": "=0.1790",
+          "Cobalt": "<0.0120",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.4540",
+          "Nickel": "=0.2060",
+          "Lead": "=2.0600",
+          "Selenium": "<0.0010",
+          "Zinc": "=13.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUPERNATURAL BRAND ENORMOUS 0-0-2",
+    "brand": "RAPIDGROW INDUSTRIES INC",
+    "manufacturer": {
+      "name": "RAPIDGROW INDUSTRIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "92425A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.179,
+            "Co": 0.012,
+            "Hg": 0.001,
+            "Mo": 0.454,
+            "Ni": 0.206,
+            "Pb": 2.06,
+            "Se": 0.001,
+            "Zn": 13.95
+          },
+          "detection_limits_ppm": {
+            "As": 0.001,
+            "Co": 0.012,
+            "Hg": 0.001,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.179,
+        "Mo": 0.454,
+        "Ni": 0.206,
+        "Pb": 2.06,
+        "Zn": 13.95
+      }
+    }
+  }
+}

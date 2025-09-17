@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"AD2AD2","source_wsda_record":{"wsda_product_number":"(#0016-0037)","product_name":"METALOSATE POTASSIUM SOLUBLE POWDER FOLIAR FERTILIZER 3-0-35","company_info":{"company":"ALBION LABORATORIES INC","Mailing Address":"67 S Main Street Ste 100","Post Office Box":null,"City":"Layton","State":"UT","Postal Code":"84041","Telephone Number":"845 421-0151","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":35.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1560","Cadmium":"<0.0218","Cobalt":"<0.2180","Mercury":"<0.0174","Molybdenum":"<0.2180","Nickel":"=0.2180","Lead":"=0.1160","Selenium":"=0.1410","Zinc":"<0.0196"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":35.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1560","Cadmium":"<0.0218","Cobalt":"<0.2180","Mercury":"<0.0174","Molybdenum":"<0.2180","Nickel":"=0.2180","Lead":"=0.1160","Selenium":"=0.1410","Zinc":"<0.0196"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ALBION LABORATORIES INC","label_name":"METALOSATE POTASSIUM SOLUBLE POWDER FOLIAR FERTILIZER 3-0-35","wsda_reg_no":"(#0016-0037)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD2AD2",
+  "metadata": {
+    "registrant": "ALBION LABORATORIES INC",
+    "label_name": "METALOSATE POTASSIUM SOLUBLE POWDER FOLIAR FERTILIZER 3-0-35",
+    "wsda_reg_no": "(#0016-0037)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0016-0037)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0016-0037)",
+        "product_name": "METALOSATE POTASSIUM SOLUBLE POWDER FOLIAR FERTILIZER 3-0-35",
+        "company_info": {
+          "company": "ALBION LABORATORIES INC",
+          "Mailing Address": "67 S Main Street Ste 100",
+          "Post Office Box": null,
+          "City": "Layton",
+          "State": "UT",
+          "Postal Code": "84041",
+          "Telephone Number": "845 421-0151",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 35.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1560",
+          "Cadmium": "<0.0218",
+          "Cobalt": "<0.2180",
+          "Mercury": "<0.0174",
+          "Molybdenum": "<0.2180",
+          "Nickel": "=0.2180",
+          "Lead": "=0.1160",
+          "Selenium": "=0.1410",
+          "Zinc": "<0.0196"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "METALOSATE POTASSIUM SOLUBLE POWDER FOLIAR FERTILIZER 3-0-35",
+    "brand": "ALBION LABORATORIES INC",
+    "manufacturer": {
+      "name": "ALBION LABORATORIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "K2O_pct": 35.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD2AD2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.156,
+            "Cd": 0.0218,
+            "Co": 0.218,
+            "Hg": 0.0174,
+            "Mo": 0.218,
+            "Ni": 0.218,
+            "Pb": 0.116,
+            "Se": 0.141,
+            "Zn": 0.0196
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.0218,
+            "Co": 0.218,
+            "Hg": 0.0174,
+            "Mo": 0.218,
+            "Zn": 0.0196
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.156,
+        "Ni": 0.218,
+        "Pb": 0.116,
+        "Se": 0.141
+      }
+    }
+  }
+}

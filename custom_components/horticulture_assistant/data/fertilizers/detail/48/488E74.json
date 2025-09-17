@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "488E74",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0705-0050)",
-    "product_name": "NUTRIAG PHITAK 0-0-11",
-    "company_info": {
-      "company": "NUTRIAG LTD",
-      "Mailing Address": "172 Belfield Rd",
-      "Post Office Box": null,
-      "City": "Toronto",
-      "State": "ON",
-      "Postal Code": "M9W 1H1",
-      "Telephone Number": "416 572-1968",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.3000",
-      "Cadmium": "=0.0848",
-      "Cobalt": "=0.1700",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.1590",
-      "Nickel": "=0.8480",
-      "Lead": "=1.7000",
-      "Selenium": "=0.7720",
-      "Zinc": "=1.5900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.3000",
-      "Cadmium": "=0.0848",
-      "Cobalt": "=0.1700",
-      "Mercury": "=0.0050",
-      "Molybdenum": "=0.1590",
-      "Nickel": "=0.8480",
-      "Lead": "=1.7000",
-      "Selenium": "=0.7720",
-      "Zinc": "=1.5900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "488E74",
   "metadata": {
     "registrant": "NUTRIAG LTD",
     "label_name": "NUTRIAG PHITAK 0-0-11",
     "wsda_reg_no": "(#0705-0050)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0050)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0050)",
+        "product_name": "NUTRIAG PHITAK 0-0-11",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.3000",
+          "Cadmium": "=0.0848",
+          "Cobalt": "=0.1700",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.1590",
+          "Nickel": "=0.8480",
+          "Lead": "=1.7000",
+          "Selenium": "=0.7720",
+          "Zinc": "=1.5900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIAG PHITAK 0-0-11",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 11.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "488E74-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.3,
+            "Cd": 0.0848,
+            "Co": 0.17,
+            "Hg": 0.005,
+            "Mo": 0.159,
+            "Ni": 0.848,
+            "Pb": 1.7,
+            "Se": 0.772,
+            "Zn": 1.59
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.3,
+        "Cd": 0.0848,
+        "Co": 0.17,
+        "Hg": 0.005,
+        "Mo": 0.159,
+        "Ni": 0.848,
+        "Pb": 1.7,
+        "Se": 0.772,
+        "Zn": 1.59
+      }
+    }
   }
 }

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"EEF40E","source_wsda_record":{"wsda_product_number":"(#0411-0031)","product_name":"MOLYBDENUM 3.0% 0-0-0","company_info":{"company":"BAICOR LC","Mailing Address":"PO Box 725","Post Office Box":null,"City":":Logan","State":"UT","Postal Code":"84323-0725","Telephone Number":"435 752-2475","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":3.0,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<8.3000","Cadmium":"<0.4000","Cobalt":"<0.8000","Mercury":"<0.0050","Molybdenum":"=374.0000","Nickel":"<4.1000","Lead":"<8.3000","Selenium":"<8.3000","Zinc":"<0.8300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":3.0,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<8.3000","Cadmium":"<0.4000","Cobalt":"<0.8000","Mercury":"<0.0050","Molybdenum":"=374.0000","Nickel":"<4.1000","Lead":"<8.3000","Selenium":"<8.3000","Zinc":"<0.8300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BAICOR LC","label_name":"MOLYBDENUM 3.0% 0-0-0","wsda_reg_no":"(#0411-0031)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EEF40E",
+  "metadata": {
+    "registrant": "BAICOR LC",
+    "label_name": "MOLYBDENUM 3.0% 0-0-0",
+    "wsda_reg_no": "(#0411-0031)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0411-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0411-0031)",
+        "product_name": "MOLYBDENUM 3.0% 0-0-0",
+        "company_info": {
+          "company": "BAICOR LC",
+          "Mailing Address": "PO Box 725",
+          "Post Office Box": null,
+          "City": ":Logan",
+          "State": "UT",
+          "Postal Code": "84323-0725",
+          "Telephone Number": "435 752-2475",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 3.0,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<8.3000",
+          "Cadmium": "<0.4000",
+          "Cobalt": "<0.8000",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=374.0000",
+          "Nickel": "<4.1000",
+          "Lead": "<8.3000",
+          "Selenium": "<8.3000",
+          "Zinc": "<0.8300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MOLYBDENUM 3.0% 0-0-0",
+    "brand": "BAICOR LC",
+    "manufacturer": {
+      "name": "BAICOR LC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Mo": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EEF40E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.3,
+            "Cd": 0.4,
+            "Co": 0.8,
+            "Hg": 0.005,
+            "Mo": 374.0,
+            "Ni": 4.1,
+            "Pb": 8.3,
+            "Se": 8.3,
+            "Zn": 0.83
+          },
+          "detection_limits_ppm": {
+            "As": 8.3,
+            "Cd": 0.4,
+            "Co": 0.8,
+            "Hg": 0.005,
+            "Ni": 4.1,
+            "Pb": 8.3,
+            "Se": 8.3,
+            "Zn": 0.83
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 374.0
+      }
+    }
+  }
+}

@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"B5757F","source_wsda_record":{"wsda_product_number":"(#4137-0001)","product_name":"FLOURISH BLOOM 0-5-4","company_info":{"company":"BZRTH INC","Mailing Address":"8798 9th St","Post Office Box":null,"City":"Rancho Cucamonga","State":"CA","Postal Code":"91730","Telephone Number":"877 786-9608","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=1.0000","Molybdenum":"=1.0000","Nickel":"=1.3000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=1.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0000","Cobalt":"=1.0000","Mercury":"=1.0000","Molybdenum":"=1.0000","Nickel":"=1.3000","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=1.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BZRTH INC","label_name":"FLOURISH BLOOM 0-5-4","wsda_reg_no":"(#4137-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B5757F",
+  "metadata": {
+    "registrant": "BZRTH INC",
+    "label_name": "FLOURISH BLOOM 0-5-4",
+    "wsda_reg_no": "(#4137-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4137-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4137-0001)",
+        "product_name": "FLOURISH BLOOM 0-5-4",
+        "company_info": {
+          "company": "BZRTH INC",
+          "Mailing Address": "8798 9th St",
+          "Post Office Box": null,
+          "City": "Rancho Cucamonga",
+          "State": "CA",
+          "Postal Code": "91730",
+          "Telephone Number": "877 786-9608",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.3000",
+          "Lead": "=1.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=1.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FLOURISH BLOOM 0-5-4",
+    "brand": "BZRTH INC",
+    "manufacturer": {
+      "name": "BZRTH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 5.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Mg": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B5757F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 1.0,
+            "Hg": 1.0,
+            "Mo": 1.0,
+            "Ni": 1.3,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 1.0,
+        "Co": 1.0,
+        "Hg": 1.0,
+        "Mo": 1.0,
+        "Ni": 1.3,
+        "Pb": 1.0,
+        "Se": 1.0,
+        "Zn": 1.0
+      }
+    }
+  }
+}

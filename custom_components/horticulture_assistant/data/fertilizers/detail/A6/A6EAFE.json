@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"A6EAFE","source_wsda_record":{"wsda_product_number":"(#3162-0001)","product_name":"NEEM GOLD 4-1-2","company_info":{"company":"NIMTREE ORGANICS LLC","Mailing Address":"30551 58th Ave S","Post Office Box":null,"City":"Auburn","State":"WA","Postal Code":"98001","Telephone Number":"765 586-2046","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.5000","Nickel":"=1.6000","Lead":"<0.5000","Selenium":"=1.6000","Zinc":"=37.1600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.5000","Nickel":"=1.6000","Lead":"<0.5000","Selenium":"=1.6000","Zinc":"=37.1600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NIMTREE ORGANICS LLC","label_name":"NEEM GOLD 4-1-2","wsda_reg_no":"(#3162-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A6EAFE",
+  "metadata": {
+    "registrant": "NIMTREE ORGANICS LLC",
+    "label_name": "NEEM GOLD 4-1-2",
+    "wsda_reg_no": "(#3162-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3162-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3162-0001)",
+        "product_name": "NEEM GOLD 4-1-2",
+        "company_info": {
+          "company": "NIMTREE ORGANICS LLC",
+          "Mailing Address": "30551 58th Ave S",
+          "Post Office Box": null,
+          "City": "Auburn",
+          "State": "WA",
+          "Postal Code": "98001",
+          "Telephone Number": "765 586-2046",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0300",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=1.6000",
+          "Lead": "<0.5000",
+          "Selenium": "=1.6000",
+          "Zinc": "=37.1600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NEEM GOLD 4-1-2",
+    "brand": "NIMTREE ORGANICS LLC",
+    "manufacturer": {
+      "name": "NIMTREE ORGANICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A6EAFE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.5,
+            "Ni": 1.6,
+            "Pb": 0.5,
+            "Se": 1.6,
+            "Zn": 37.16
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Hg": 0.05,
+            "Pb": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.2,
+        "Mo": 0.5,
+        "Ni": 1.6,
+        "Se": 1.6,
+        "Zn": 37.16
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5B9FE8",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2687-0025)",
-    "product_name": "POLYAMINE CALCIUM 0-0-0",
-    "company_info": {
-      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
-      "Mailing Address": "1001 Winstead Drive Ste 480",
-      "Post Office Box": null,
-      "City": "Cary",
-      "State": "NC",
-      "Postal Code": "27513",
-      "Telephone Number": "919 825-1901",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8820",
-      "Cadmium": "=0.8820",
-      "Cobalt": "=0.8820",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.8820",
-      "Nickel": "=4.0400",
-      "Lead": "=0.8820",
-      "Selenium": "=0.8820",
-      "Zinc": "=154.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8820",
-      "Cadmium": "=0.8820",
-      "Cobalt": "=0.8820",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.8820",
-      "Nickel": "=4.0400",
-      "Lead": "=0.8820",
-      "Selenium": "=0.8820",
-      "Zinc": "=154.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5B9FE8",
   "metadata": {
     "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
     "label_name": "POLYAMINE CALCIUM 0-0-0",
     "wsda_reg_no": "(#2687-0025)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0025)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0025)",
+        "product_name": "POLYAMINE CALCIUM 0-0-0",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8820",
+          "Cadmium": "=0.8820",
+          "Cobalt": "=0.8820",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.8820",
+          "Nickel": "=4.0400",
+          "Lead": "=0.8820",
+          "Selenium": "=0.8820",
+          "Zinc": "=154.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "POLYAMINE CALCIUM 0-0-0",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5B9FE8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.882,
+            "Cd": 0.882,
+            "Co": 0.882,
+            "Hg": 0.001,
+            "Mo": 0.882,
+            "Ni": 4.04,
+            "Pb": 0.882,
+            "Se": 0.882,
+            "Zn": 154.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.882,
+        "Cd": 0.882,
+        "Co": 0.882,
+        "Hg": 0.001,
+        "Mo": 0.882,
+        "Ni": 4.04,
+        "Pb": 0.882,
+        "Se": 0.882,
+        "Zn": 154.0
+      }
+    }
   }
 }

@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"B6627B","source_wsda_record":{"wsda_product_number":"(#1026-0055)","product_name":"PERFECT BLEND ORGANICS 4-4-2 S 4-4-2","company_info":{"company":"PERFECT BLEND LLC","Mailing Address":"10900 NE 8th St Ste 615","Post Office Box":null,"City":"Bellevue","State":"WA","Postal Code":"98004","Telephone Number":"425 456-8889","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.7,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=12.0000","Cadmium":"=1.0000","Cobalt":"=10.0000","Mercury":"=1.0000","Molybdenum":"=13.1000","Nickel":"=75.0000","Lead":"=1.0000","Selenium":"=3.0000","Zinc":"=1221.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.7,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=12.0000","Cadmium":"=1.0000","Cobalt":"=10.0000","Mercury":"=1.0000","Molybdenum":"=13.1000","Nickel":"=75.0000","Lead":"=1.0000","Selenium":"=3.0000","Zinc":"=1221.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PERFECT BLEND LLC","label_name":"PERFECT BLEND ORGANICS 4-4-2 S 4-4-2","wsda_reg_no":"(#1026-0055)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B6627B",
+  "metadata": {
+    "registrant": "PERFECT BLEND LLC",
+    "label_name": "PERFECT BLEND ORGANICS 4-4-2 S 4-4-2",
+    "wsda_reg_no": "(#1026-0055)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1026-0055)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1026-0055)",
+        "product_name": "PERFECT BLEND ORGANICS 4-4-2 S 4-4-2",
+        "company_info": {
+          "company": "PERFECT BLEND LLC",
+          "Mailing Address": "10900 NE 8th St Ste 615",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98004",
+          "Telephone Number": "425 456-8889",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=12.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=13.1000",
+          "Nickel": "=75.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=3.0000",
+          "Zinc": "=1221.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERFECT BLEND ORGANICS 4-4-2 S 4-4-2",
+    "brand": "PERFECT BLEND LLC",
+    "manufacturer": {
+      "name": "PERFECT BLEND LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 0.7,
+      "S": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B6627B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 12.0,
+            "Cd": 1.0,
+            "Co": 10.0,
+            "Hg": 1.0,
+            "Mo": 13.1,
+            "Ni": 75.0,
+            "Pb": 1.0,
+            "Se": 3.0,
+            "Zn": 1221.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 12.0,
+        "Cd": 1.0,
+        "Co": 10.0,
+        "Hg": 1.0,
+        "Mo": 13.1,
+        "Ni": 75.0,
+        "Pb": 1.0,
+        "Se": 3.0,
+        "Zn": 1221.0
+      }
+    }
+  }
+}

@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"B8B4F4","source_wsda_record":{"wsda_product_number":"(#1265-0131)","product_name":"CAL-MAG PLUS 2-0-0","company_info":{"company":"BOTANICARE","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"707 284-4701","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":3.2,"Magnesium (Mg)":1.2,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1240","Cadmium":"=0.0096","Cobalt":"=0.2760","Mercury":"<0.0187","Molybdenum":"=1.3300","Nickel":"=0.7050","Lead":"=0.0215","Selenium":"=0.8350","Zinc":"=6.0900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":3.2,"Magnesium (Mg)":1.2,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1240","Cadmium":"=0.0096","Cobalt":"=0.2760","Mercury":"<0.0187","Molybdenum":"=1.3300","Nickel":"=0.7050","Lead":"=0.0215","Selenium":"=0.8350","Zinc":"=6.0900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BOTANICARE","label_name":"CAL-MAG PLUS 2-0-0","wsda_reg_no":"(#1265-0131)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B8B4F4",
+  "metadata": {
+    "registrant": "BOTANICARE",
+    "label_name": "CAL-MAG PLUS 2-0-0",
+    "wsda_reg_no": "(#1265-0131)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1265-0131)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1265-0131)",
+        "product_name": "CAL-MAG PLUS 2-0-0",
+        "company_info": {
+          "company": "BOTANICARE",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 3.2,
+          "Magnesium (Mg)": 1.2,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1240",
+          "Cadmium": "=0.0096",
+          "Cobalt": "=0.2760",
+          "Mercury": "<0.0187",
+          "Molybdenum": "=1.3300",
+          "Nickel": "=0.7050",
+          "Lead": "=0.0215",
+          "Selenium": "=0.8350",
+          "Zinc": "=6.0900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CAL-MAG PLUS 2-0-0",
+    "brand": "BOTANICARE",
+    "manufacturer": {
+      "name": "BOTANICARE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.2,
+      "Mg": 1.2
+    },
+    "micros_pct": {
+      "Fe": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B8B4F4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.124,
+            "Cd": 0.0096,
+            "Co": 0.276,
+            "Hg": 0.0187,
+            "Mo": 1.33,
+            "Ni": 0.705,
+            "Pb": 0.0215,
+            "Se": 0.835,
+            "Zn": 6.09
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0187
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.124,
+        "Cd": 0.0096,
+        "Co": 0.276,
+        "Mo": 1.33,
+        "Ni": 0.705,
+        "Pb": 0.0215,
+        "Se": 0.835,
+        "Zn": 6.09
+      }
+    }
+  }
+}

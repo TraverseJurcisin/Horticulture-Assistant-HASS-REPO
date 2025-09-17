@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"C28550","source_wsda_record":{"wsda_product_number":"(#0954-0083)","product_name":"SUPERSOIL BRAND SUPERSOIL ENRICHED PLANTING COMPOST 0.09-0.03-0.04","company_info":{"company":"ROD MCLELLAN","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.03,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0200","Cadmium":"=0.5090","Cobalt":"=1.4300","Mercury":"=0.0387","Molybdenum":"=2.0700","Nickel":"=3.4000","Lead":"=2.2400","Selenium":"=1.5300","Zinc":"=57.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.03,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0200","Cadmium":"=0.5090","Cobalt":"=1.4300","Mercury":"=0.0387","Molybdenum":"=2.0700","Nickel":"=3.4000","Lead":"=2.2400","Selenium":"=1.5300","Zinc":"=57.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROD MCLELLAN","label_name":"SUPERSOIL BRAND SUPERSOIL ENRICHED PLANTING COMPOST 0.09-0.03-0.04","wsda_reg_no":"(#0954-0083)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C28550",
+  "metadata": {
+    "registrant": "ROD MCLELLAN",
+    "label_name": "SUPERSOIL BRAND SUPERSOIL ENRICHED PLANTING COMPOST 0.09-0.03-0.04",
+    "wsda_reg_no": "(#0954-0083)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0954-0083)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0954-0083)",
+        "product_name": "SUPERSOIL BRAND SUPERSOIL ENRICHED PLANTING COMPOST 0.09-0.03-0.04",
+        "company_info": {
+          "company": "ROD MCLELLAN",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.09,
+          "Available Phosphoric Acid (P2O5)": 0.03,
+          "Soluble Potash (K2O)": 0.04,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0200",
+          "Cadmium": "=0.5090",
+          "Cobalt": "=1.4300",
+          "Mercury": "=0.0387",
+          "Molybdenum": "=2.0700",
+          "Nickel": "=3.4000",
+          "Lead": "=2.2400",
+          "Selenium": "=1.5300",
+          "Zinc": "=57.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUPERSOIL BRAND SUPERSOIL ENRICHED PLANTING COMPOST 0.09-0.03-0.04",
+    "brand": "ROD MCLELLAN",
+    "manufacturer": {
+      "name": "ROD MCLELLAN"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.09,
+      "P2O5_pct": 0.03,
+      "K2O_pct": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C28550-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.02,
+            "Cd": 0.509,
+            "Co": 1.43,
+            "Hg": 0.0387,
+            "Mo": 2.07,
+            "Ni": 3.4,
+            "Pb": 2.24,
+            "Se": 1.53,
+            "Zn": 57.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.02,
+        "Cd": 0.509,
+        "Co": 1.43,
+        "Hg": 0.0387,
+        "Mo": 2.07,
+        "Ni": 3.4,
+        "Pb": 2.24,
+        "Se": 1.53,
+        "Zn": 57.0
+      }
+    }
+  }
+}

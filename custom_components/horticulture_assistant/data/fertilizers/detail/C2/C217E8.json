@@ -1,1 +1,155 @@
-{"schema_version":"2025-07-v1","product_id":"C217E8","source_wsda_record":{"wsda_product_number":"(#1440-0001)","product_name":"FLOURISH COMPREHENSIVE SUPPLEMENT FOR PLANTED AQUARIUM 0.07-0.01-0.37","company_info":{"company":"SEACHEM LABORATORIES INC","Mailing Address":"1000 Seachem Drive","Post Office Box":null,"City":"Madison","State":"GA","Postal Code":"30650","Telephone Number":"706 343-6060","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.07,"Available Phosphoric Acid (P2O5)":0.01,"Soluble Potash (K2O)":0.37,"Calcium (Ca)":0.14,"Magnesium (Mg)":0.11,"Sulfur (S)":0.2773,"Boron (B)":0.009,"Chlorine (Cl)":1.15,"Cobalt (Co)":0.0004,"Copper (Cu)":0.0001,"Iron (Fe)":0.32,"Manganese (Mn)":0.0118,"Molybdenum (Mo)":0.0009,"Sodium (Na)":0.13,"Zinc (Zn)":0.0007},"reported_metals":{"Arsenic":"=4.2530","Cadmium":"=0.9979","Cobalt":"=3.8080","Mercury":"=0.0310","Molybdenum":"=14.7000","Nickel":"=1.2700","Lead":"=2.0250","Selenium":"=13.0000","Zinc":"=7.3610"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.07,"Available Phosphoric Acid (P2O5)":0.01,"Soluble Potash (K2O)":0.37,"Calcium (Ca)":0.14,"Magnesium (Mg)":0.11,"Sulfur (S)":0.2773,"Boron (B)":0.009,"Chlorine (Cl)":1.15,"Cobalt (Co)":0.0004,"Copper (Cu)":0.0001,"Iron (Fe)":0.32,"Manganese (Mn)":0.0118,"Molybdenum (Mo)":0.0009,"Sodium (Na)":0.13,"Zinc (Zn)":0.0007},"heavy_metals":{"Arsenic":"=4.2530","Cadmium":"=0.9979","Cobalt":"=3.8080","Mercury":"=0.0310","Molybdenum":"=14.7000","Nickel":"=1.2700","Lead":"=2.0250","Selenium":"=13.0000","Zinc":"=7.3610"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SEACHEM LABORATORIES INC","label_name":"FLOURISH COMPREHENSIVE SUPPLEMENT FOR PLANTED AQUARIUM 0.07-0.01-0.37","wsda_reg_no":"(#1440-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C217E8",
+  "metadata": {
+    "registrant": "SEACHEM LABORATORIES INC",
+    "label_name": "FLOURISH COMPREHENSIVE SUPPLEMENT FOR PLANTED AQUARIUM 0.07-0.01-0.37",
+    "wsda_reg_no": "(#1440-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1440-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1440-0001)",
+        "product_name": "FLOURISH COMPREHENSIVE SUPPLEMENT FOR PLANTED AQUARIUM 0.07-0.01-0.37",
+        "company_info": {
+          "company": "SEACHEM LABORATORIES INC",
+          "Mailing Address": "1000 Seachem Drive",
+          "Post Office Box": null,
+          "City": "Madison",
+          "State": "GA",
+          "Postal Code": "30650",
+          "Telephone Number": "706 343-6060",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.07,
+          "Available Phosphoric Acid (P2O5)": 0.01,
+          "Soluble Potash (K2O)": 0.37,
+          "Calcium (Ca)": 0.14,
+          "Magnesium (Mg)": 0.11,
+          "Sulfur (S)": 0.2773,
+          "Boron (B)": 0.009,
+          "Chlorine (Cl)": 1.15,
+          "Cobalt (Co)": 0.0004,
+          "Copper (Cu)": 0.0001,
+          "Iron (Fe)": 0.32,
+          "Manganese (Mn)": 0.0118,
+          "Molybdenum (Mo)": 0.0009,
+          "Sodium (Na)": 0.13,
+          "Zinc (Zn)": 0.0007
+        },
+        "reported_metals": {
+          "Arsenic": "=4.2530",
+          "Cadmium": "=0.9979",
+          "Cobalt": "=3.8080",
+          "Mercury": "=0.0310",
+          "Molybdenum": "=14.7000",
+          "Nickel": "=1.2700",
+          "Lead": "=2.0250",
+          "Selenium": "=13.0000",
+          "Zinc": "=7.3610"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FLOURISH COMPREHENSIVE SUPPLEMENT FOR PLANTED AQUARIUM 0.07-0.01-0.37",
+    "brand": "SEACHEM LABORATORIES INC",
+    "manufacturer": {
+      "name": "SEACHEM LABORATORIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.07,
+      "P2O5_pct": 0.01,
+      "K2O_pct": 0.37
+    },
+    "macros_pct": {
+      "Ca": 0.14,
+      "Mg": 0.11,
+      "S": 0.2773
+    },
+    "micros_pct": {
+      "Fe": 0.32,
+      "Mn": 0.0118,
+      "Zn": 0.0007,
+      "Cu": 0.0001,
+      "B": 0.009,
+      "Mo": 0.0009,
+      "Cl": 1.15
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C217E8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.253,
+            "Cd": 0.9979,
+            "Co": 3.808,
+            "Hg": 0.031,
+            "Mo": 14.7,
+            "Ni": 1.27,
+            "Pb": 2.025,
+            "Se": 13.0,
+            "Zn": 7.361
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.253,
+        "Cd": 0.9979,
+        "Co": 3.808,
+        "Hg": 0.031,
+        "Mo": 14.7,
+        "Ni": 1.27,
+        "Pb": 2.025,
+        "Se": 13.0,
+        "Zn": 7.361
+      }
+    }
+  }
+}

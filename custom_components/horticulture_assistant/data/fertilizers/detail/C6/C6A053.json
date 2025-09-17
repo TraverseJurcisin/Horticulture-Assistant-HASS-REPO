@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"C6A053","source_wsda_record":{"wsda_product_number":"(#0144-0024)","product_name":"HOWARD JOHNSON'S ALL PURPOSE 16-16-16","company_info":{"company":"HOWARD JOHNSON'S ENTERPRISES INC","Mailing Address":"9675 S 60th St","Post Office Box":null,"City":"Franklin","State":"WI","Postal Code":"53132-9113","Telephone Number":"414 304-3590","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.5000","Cadmium":"=28.1000","Cobalt":"=0.9000","Mercury":"<0.0500","Molybdenum":"=4.5000","Nickel":"=64.7000","Lead":"<1.2000","Selenium":"=8.3000","Zinc":"=438.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.5000","Cadmium":"=28.1000","Cobalt":"=0.9000","Mercury":"<0.0500","Molybdenum":"=4.5000","Nickel":"=64.7000","Lead":"<1.2000","Selenium":"=8.3000","Zinc":"=438.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HOWARD JOHNSON'S ENTERPRISES INC","label_name":"HOWARD JOHNSON'S ALL PURPOSE 16-16-16","wsda_reg_no":"(#0144-0024)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C6A053",
+  "metadata": {
+    "registrant": "HOWARD JOHNSON'S ENTERPRISES INC",
+    "label_name": "HOWARD JOHNSON'S ALL PURPOSE 16-16-16",
+    "wsda_reg_no": "(#0144-0024)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0144-0024)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0144-0024)",
+        "product_name": "HOWARD JOHNSON'S ALL PURPOSE 16-16-16",
+        "company_info": {
+          "company": "HOWARD JOHNSON'S ENTERPRISES INC",
+          "Mailing Address": "9675 S 60th St",
+          "Post Office Box": null,
+          "City": "Franklin",
+          "State": "WI",
+          "Postal Code": "53132-9113",
+          "Telephone Number": "414 304-3590",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.5000",
+          "Cadmium": "=28.1000",
+          "Cobalt": "=0.9000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=4.5000",
+          "Nickel": "=64.7000",
+          "Lead": "<1.2000",
+          "Selenium": "=8.3000",
+          "Zinc": "=438.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HOWARD JOHNSON'S ALL PURPOSE 16-16-16",
+    "brand": "HOWARD JOHNSON'S ENTERPRISES INC",
+    "manufacturer": {
+      "name": "HOWARD JOHNSON'S ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "P2O5_pct": 16.0,
+      "K2O_pct": 16.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C6A053-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.5,
+            "Cd": 28.1,
+            "Co": 0.9,
+            "Hg": 0.05,
+            "Mo": 4.5,
+            "Ni": 64.7,
+            "Pb": 1.2,
+            "Se": 8.3,
+            "Zn": 438.2
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 1.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.5,
+        "Cd": 28.1,
+        "Co": 0.9,
+        "Mo": 4.5,
+        "Ni": 64.7,
+        "Se": 8.3,
+        "Zn": 438.2
+      }
+    }
+  }
+}

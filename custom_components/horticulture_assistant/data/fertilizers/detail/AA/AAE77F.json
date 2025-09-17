@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"AAE77F","source_wsda_record":{"wsda_product_number":"(#1589-0001)","product_name":"TWO RIVERS TERMINAL POTASH SOLUTION 0-0-13","company_info":{"company":"TWO RIVERS TERMINAL - PASCO WA - GL","Mailing Address":"PO Box 2327","Post Office Box":null,"City":"Pasco","State":"WA","Postal Code":"99302","Telephone Number":"509 547-7776","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":9.79,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7140","Cadmium":"<0.0020","Cobalt":"=0.1400","Mercury":"<0.0200","Molybdenum":"<0.0200","Nickel":"=2.6300","Lead":"<0.3000","Selenium":"=0.2670","Zinc":"=38.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":9.79,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7140","Cadmium":"<0.0020","Cobalt":"=0.1400","Mercury":"<0.0200","Molybdenum":"<0.0200","Nickel":"=2.6300","Lead":"<0.3000","Selenium":"=0.2670","Zinc":"=38.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TWO RIVERS TERMINAL - PASCO WA - GL","label_name":"TWO RIVERS TERMINAL POTASH SOLUTION 0-0-13","wsda_reg_no":"(#1589-0001)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AAE77F",
+  "metadata": {
+    "registrant": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "label_name": "TWO RIVERS TERMINAL POTASH SOLUTION 0-0-13",
+    "wsda_reg_no": "(#1589-0001)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1589-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1589-0001)",
+        "product_name": "TWO RIVERS TERMINAL POTASH SOLUTION 0-0-13",
+        "company_info": {
+          "company": "TWO RIVERS TERMINAL - PASCO WA - GL",
+          "Mailing Address": "PO Box 2327",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99302",
+          "Telephone Number": "509 547-7776",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": 9.79,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7140",
+          "Cadmium": "<0.0020",
+          "Cobalt": "=0.1400",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.0200",
+          "Nickel": "=2.6300",
+          "Lead": "<0.3000",
+          "Selenium": "=0.2670",
+          "Zinc": "=38.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TWO RIVERS TERMINAL POTASH SOLUTION 0-0-13",
+    "brand": "TWO RIVERS TERMINAL - PASCO WA - GL",
+    "manufacturer": {
+      "name": "TWO RIVERS TERMINAL - PASCO WA - GL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 13.0
+    },
+    "micros_pct": {
+      "Cl": 9.79
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AAE77F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.714,
+            "Cd": 0.002,
+            "Co": 0.14,
+            "Hg": 0.02,
+            "Mo": 0.02,
+            "Ni": 2.63,
+            "Pb": 0.3,
+            "Se": 0.267,
+            "Zn": 38.5
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.002,
+            "Hg": 0.02,
+            "Mo": 0.02,
+            "Pb": 0.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.714,
+        "Co": 0.14,
+        "Ni": 2.63,
+        "Se": 0.267,
+        "Zn": 38.5
+      }
+    }
+  }
+}

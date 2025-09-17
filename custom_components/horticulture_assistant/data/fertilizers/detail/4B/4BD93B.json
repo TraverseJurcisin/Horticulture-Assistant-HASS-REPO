@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4BD93B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2849-0059)",
-    "product_name": "TURF FUEL G PROFESSIONAL TURF FERTILIZER 22-2-10 #26110 22-2-10",
-    "company_info": {
-      "company": "MAS",
-      "Mailing Address": "PO Box 732",
-      "Post Office Box": null,
-      "City": "Newberg",
-      "State": "OR",
-      "Postal Code": "97132",
-      "Telephone Number": "503 633-4562",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0300",
-      "Cadmium": "=1.8100",
-      "Cobalt": "=0.6000",
-      "Mercury": "=0.1800",
-      "Molybdenum": "=4.1000",
-      "Nickel": "=4.8000",
-      "Lead": "=2.9000",
-      "Selenium": "=1.5000",
-      "Zinc": "=268.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.6,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0300",
-      "Cadmium": "=1.8100",
-      "Cobalt": "=0.6000",
-      "Mercury": "=0.1800",
-      "Molybdenum": "=4.1000",
-      "Nickel": "=4.8000",
-      "Lead": "=2.9000",
-      "Selenium": "=1.5000",
-      "Zinc": "=268.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4BD93B",
   "metadata": {
     "registrant": "MAS",
     "label_name": "TURF FUEL G PROFESSIONAL TURF FERTILIZER 22-2-10 #26110 22-2-10",
     "wsda_reg_no": "(#2849-0059)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2849-0059)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2849-0059)",
+        "product_name": "TURF FUEL G PROFESSIONAL TURF FERTILIZER 22-2-10 #26110 22-2-10",
+        "company_info": {
+          "company": "MAS",
+          "Mailing Address": "PO Box 732",
+          "Post Office Box": null,
+          "City": "Newberg",
+          "State": "OR",
+          "Postal Code": "97132",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0300",
+          "Cadmium": "=1.8100",
+          "Cobalt": "=0.6000",
+          "Mercury": "=0.1800",
+          "Molybdenum": "=4.1000",
+          "Nickel": "=4.8000",
+          "Lead": "=2.9000",
+          "Selenium": "=1.5000",
+          "Zinc": "=268.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TURF FUEL G PROFESSIONAL TURF FERTILIZER 22-2-10 #26110 22-2-10",
+    "brand": "MAS",
+    "manufacturer": {
+      "name": "MAS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "S": 1.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4BD93B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.03,
+            "Cd": 1.81,
+            "Co": 0.6,
+            "Hg": 0.18,
+            "Mo": 4.1,
+            "Ni": 4.8,
+            "Pb": 2.9,
+            "Se": 1.5,
+            "Zn": 268.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.03,
+        "Cd": 1.81,
+        "Co": 0.6,
+        "Hg": 0.18,
+        "Mo": 4.1,
+        "Ni": 4.8,
+        "Pb": 2.9,
+        "Se": 1.5,
+        "Zn": 268.8
+      }
+    }
   }
 }

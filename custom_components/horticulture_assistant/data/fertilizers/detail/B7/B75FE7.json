@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"B75FE7","source_wsda_record":{"wsda_product_number":"(#3404-0003)","product_name":"ATP NUTRITION IMPEL COPPER 7-16-0","company_info":{"company":"CONCENTRIC AG CORPORATION","Mailing Address":"190 Agri Park Rd","Post Office Box":null,"City":"Oak Bluff","State":"MB","Postal Code":"R4G 0AS","Telephone Number":"204 287-2023","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":4.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.0000","Cadmium":"=58.9700","Cobalt":"=17.4500","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"=201.9400","Lead":"<1.0000","Selenium":"=140.5100","Zinc":"=97.9100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":16.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":4.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.0000","Cadmium":"=58.9700","Cobalt":"=17.4500","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"=201.9400","Lead":"<1.0000","Selenium":"=140.5100","Zinc":"=97.9100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CONCENTRIC AG CORPORATION","label_name":"ATP NUTRITION IMPEL COPPER 7-16-0","wsda_reg_no":"(#3404-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B75FE7",
+  "metadata": {
+    "registrant": "CONCENTRIC AG CORPORATION",
+    "label_name": "ATP NUTRITION IMPEL COPPER 7-16-0",
+    "wsda_reg_no": "(#3404-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3404-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3404-0003)",
+        "product_name": "ATP NUTRITION IMPEL COPPER 7-16-0",
+        "company_info": {
+          "company": "CONCENTRIC AG CORPORATION",
+          "Mailing Address": "190 Agri Park Rd",
+          "Post Office Box": null,
+          "City": "Oak Bluff",
+          "State": "MB",
+          "Postal Code": "R4G 0AS",
+          "Telephone Number": "204 287-2023",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 4.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.0000",
+          "Cadmium": "=58.9700",
+          "Cobalt": "=17.4500",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=201.9400",
+          "Lead": "<1.0000",
+          "Selenium": "=140.5100",
+          "Zinc": "=97.9100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ATP NUTRITION IMPEL COPPER 7-16-0",
+    "brand": "CONCENTRIC AG CORPORATION",
+    "manufacturer": {
+      "name": "CONCENTRIC AG CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 16.0
+    },
+    "micros_pct": {
+      "Cu": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B75FE7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.0,
+            "Cd": 58.97,
+            "Co": 17.45,
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Ni": 201.94,
+            "Pb": 1.0,
+            "Se": 140.51,
+            "Zn": 97.91
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.0,
+        "Cd": 58.97,
+        "Co": 17.45,
+        "Ni": 201.94,
+        "Se": 140.51,
+        "Zn": 97.91
+      }
+    }
+  }
+}

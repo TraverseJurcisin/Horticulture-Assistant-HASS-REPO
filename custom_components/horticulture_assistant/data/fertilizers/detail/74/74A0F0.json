@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "74A0F0",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3799-0008)",
-    "product_name": "BW AMINO 13-0-0",
-    "company_info": {
-      "company": "BW FUSION",
-      "Mailing Address": "3850 Concept Court",
-      "Post Office Box": "Suite 101",
-      "City": "Fort Wayne",
-      "State": "IN",
-      "Postal Code": "46808",
-      "Telephone Number": "260 497-7645",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.3180",
-      "Cadmium": "=0.5300",
-      "Cobalt": "=327.0000",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=1510.0000",
-      "Nickel": "=91.6000",
-      "Lead": "=0.1370",
-      "Selenium": "=0.2840",
-      "Zinc": "=1380.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.3180",
-      "Cadmium": "=0.5300",
-      "Cobalt": "=327.0000",
-      "Mercury": "=0.0030",
-      "Molybdenum": "=1510.0000",
-      "Nickel": "=91.6000",
-      "Lead": "=0.1370",
-      "Selenium": "=0.2840",
-      "Zinc": "=1380.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "74A0F0",
   "metadata": {
     "registrant": "BW FUSION",
     "label_name": "BW AMINO 13-0-0",
     "wsda_reg_no": "(#3799-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3799-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3799-0008)",
+        "product_name": "BW AMINO 13-0-0",
+        "company_info": {
+          "company": "BW FUSION",
+          "Mailing Address": "3850 Concept Court",
+          "Post Office Box": "Suite 101",
+          "City": "Fort Wayne",
+          "State": "IN",
+          "Postal Code": "46808",
+          "Telephone Number": "260 497-7645",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3180",
+          "Cadmium": "=0.5300",
+          "Cobalt": "=327.0000",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=1510.0000",
+          "Nickel": "=91.6000",
+          "Lead": "=0.1370",
+          "Selenium": "=0.2840",
+          "Zinc": "=1380.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BW AMINO 13-0-0",
+    "brand": "BW FUSION",
+    "manufacturer": {
+      "name": "BW FUSION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "74A0F0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.318,
+            "Cd": 0.53,
+            "Co": 327.0,
+            "Hg": 0.003,
+            "Mo": 1510.0,
+            "Ni": 91.6,
+            "Pb": 0.137,
+            "Se": 0.284,
+            "Zn": 1380.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.318,
+        "Cd": 0.53,
+        "Co": 327.0,
+        "Hg": 0.003,
+        "Mo": 1510.0,
+        "Ni": 91.6,
+        "Pb": 0.137,
+        "Se": 0.284,
+        "Zn": 1380.0
+      }
+    }
   }
 }

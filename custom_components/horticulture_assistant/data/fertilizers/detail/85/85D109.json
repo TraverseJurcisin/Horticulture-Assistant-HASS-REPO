@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"85D109","source_wsda_record":{"wsda_product_number":"(#1531-0041)","product_name":"YARA REXOLIN FEEDDHA 5-0-0","company_info":{"company":"YARA NORTH AMERICA INC","Mailing Address":"100 N Tampa St Ste 3800","Post Office Box":null,"City":"Tampa","State":"FL","Postal Code":"33602","Telephone Number":"813 970-5438","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":6.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.3000","Cadmium":"=1.8000","Cobalt":"=3.4000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=3.9000","Lead":"=6.6000","Selenium":"=0.6000","Zinc":"=8.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":6.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.3000","Cadmium":"=1.8000","Cobalt":"=3.4000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=3.9000","Lead":"=6.6000","Selenium":"=0.6000","Zinc":"=8.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"YARA NORTH AMERICA INC","label_name":"YARA REXOLIN FEEDDHA 5-0-0","wsda_reg_no":"(#1531-0041)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "85D109",
+  "metadata": {
+    "registrant": "YARA NORTH AMERICA INC",
+    "label_name": "YARA REXOLIN FEEDDHA 5-0-0",
+    "wsda_reg_no": "(#1531-0041)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1531-0041)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1531-0041)",
+        "product_name": "YARA REXOLIN FEEDDHA 5-0-0",
+        "company_info": {
+          "company": "YARA NORTH AMERICA INC",
+          "Mailing Address": "100 N Tampa St Ste 3800",
+          "Post Office Box": null,
+          "City": "Tampa",
+          "State": "FL",
+          "Postal Code": "33602",
+          "Telephone Number": "813 970-5438",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 6.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3000",
+          "Cadmium": "=1.8000",
+          "Cobalt": "=3.4000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=3.9000",
+          "Lead": "=6.6000",
+          "Selenium": "=0.6000",
+          "Zinc": "=8.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "YARA REXOLIN FEEDDHA 5-0-0",
+    "brand": "YARA NORTH AMERICA INC",
+    "manufacturer": {
+      "name": "YARA NORTH AMERICA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "micros_pct": {
+      "Fe": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "85D109-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.3,
+            "Cd": 1.8,
+            "Co": 3.4,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 3.9,
+            "Pb": 6.6,
+            "Se": 0.6,
+            "Zn": 8.3
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.3,
+        "Cd": 1.8,
+        "Co": 3.4,
+        "Hg": 0.01,
+        "Mo": 0.3,
+        "Ni": 3.9,
+        "Pb": 6.6,
+        "Se": 0.6,
+        "Zn": 8.3
+      }
+    }
+  }
+}

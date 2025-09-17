@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7B161C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0924-0037)",
-    "product_name": "BONIDE DURATURF LAWN SEED STARTER FERTILIZER 10-25-12",
-    "company_info": {
-      "company": "BONIDE PRODUCTS LLC",
-      "Mailing Address": "6301 Sutliff Rd",
-      "Post Office Box": null,
-      "City": "Oriskany",
-      "State": "NY",
-      "Postal Code": "13424",
-      "Telephone Number": "315 736-8231",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 25.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 34.0,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=2.9200",
-      "Cadmium": "=17.6700",
-      "Cobalt": "=7.4000",
-      "Mercury": "=0.0145",
-      "Molybdenum": "=14.2400",
-      "Nickel": "=55.8100",
-      "Lead": "=32.5700",
-      "Selenium": "=1.1200",
-      "Zinc": "=658.9800"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 25.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 34.0,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.9200",
-      "Cadmium": "=17.6700",
-      "Cobalt": "=7.4000",
-      "Mercury": "=0.0145",
-      "Molybdenum": "=14.2400",
-      "Nickel": "=55.8100",
-      "Lead": "=32.5700",
-      "Selenium": "=1.1200",
-      "Zinc": "=658.9800"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7B161C",
   "metadata": {
     "registrant": "BONIDE PRODUCTS LLC",
     "label_name": "BONIDE DURATURF LAWN SEED STARTER FERTILIZER 10-25-12",
     "wsda_reg_no": "(#0924-0037)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0924-0037)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0924-0037)",
+        "product_name": "BONIDE DURATURF LAWN SEED STARTER FERTILIZER 10-25-12",
+        "company_info": {
+          "company": "BONIDE PRODUCTS LLC",
+          "Mailing Address": "6301 Sutliff Rd",
+          "Post Office Box": null,
+          "City": "Oriskany",
+          "State": "NY",
+          "Postal Code": "13424",
+          "Telephone Number": "315 736-8231",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 25.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 34.0,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=2.9200",
+          "Cadmium": "=17.6700",
+          "Cobalt": "=7.4000",
+          "Mercury": "=0.0145",
+          "Molybdenum": "=14.2400",
+          "Nickel": "=55.8100",
+          "Lead": "=32.5700",
+          "Selenium": "=1.1200",
+          "Zinc": "=658.9800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BONIDE DURATURF LAWN SEED STARTER FERTILIZER 10-25-12",
+    "brand": "BONIDE PRODUCTS LLC",
+    "manufacturer": {
+      "name": "BONIDE PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 25.0,
+      "K2O_pct": 12.0
+    },
+    "micros_pct": {
+      "Fe": 34.0,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7B161C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.92,
+            "Cd": 17.67,
+            "Co": 7.4,
+            "Hg": 0.0145,
+            "Mo": 14.24,
+            "Ni": 55.81,
+            "Pb": 32.57,
+            "Se": 1.12,
+            "Zn": 658.98
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.92,
+        "Cd": 17.67,
+        "Co": 7.4,
+        "Hg": 0.0145,
+        "Mo": 14.24,
+        "Ni": 55.81,
+        "Pb": 32.57,
+        "Se": 1.12,
+        "Zn": 658.98
+      }
+    }
   }
 }

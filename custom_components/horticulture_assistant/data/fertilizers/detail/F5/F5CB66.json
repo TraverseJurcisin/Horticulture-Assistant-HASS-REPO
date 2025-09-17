@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"F5CB66","source_wsda_record":{"wsda_product_number":"(#1561-0080)","product_name":"CANNA CONTINENTAL COCO B (HC) 1-7-4","company_info":{"company":"HORTISOL USA CORP","Mailing Address":"122-A E Foothill Blvd #196","Post Office Box":null,"City":"Arcadia","State":"CA","Postal Code":"91006","Telephone Number":"877 268-9767","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":3.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<3.0000","Cadmium":"<0.3000","Cobalt":"=16.0000","Mercury":"<0.0400","Molybdenum":"=28.0000","Nickel":"<1.0000","Lead":"<2.0000","Selenium":"<3.0000","Zinc":"=110.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.0,"Sulfur (S)":3.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.003,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<3.0000","Cadmium":"<0.3000","Cobalt":"=16.0000","Mercury":"<0.0400","Molybdenum":"=28.0000","Nickel":"<1.0000","Lead":"<2.0000","Selenium":"<3.0000","Zinc":"=110.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HORTISOL USA CORP","label_name":"CANNA CONTINENTAL COCO B (HC) 1-7-4","wsda_reg_no":"(#1561-0080)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F5CB66",
+  "metadata": {
+    "registrant": "HORTISOL USA CORP",
+    "label_name": "CANNA CONTINENTAL COCO B (HC) 1-7-4",
+    "wsda_reg_no": "(#1561-0080)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1561-0080)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1561-0080)",
+        "product_name": "CANNA CONTINENTAL COCO B (HC) 1-7-4",
+        "company_info": {
+          "company": "HORTISOL USA CORP",
+          "Mailing Address": "122-A E Foothill Blvd #196",
+          "Post Office Box": null,
+          "City": "Arcadia",
+          "State": "CA",
+          "Postal Code": "91006",
+          "Telephone Number": "877 268-9767",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 3.4,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<3.0000",
+          "Cadmium": "<0.3000",
+          "Cobalt": "=16.0000",
+          "Mercury": "<0.0400",
+          "Molybdenum": "=28.0000",
+          "Nickel": "<1.0000",
+          "Lead": "<2.0000",
+          "Selenium": "<3.0000",
+          "Zinc": "=110.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CANNA CONTINENTAL COCO B (HC) 1-7-4",
+    "brand": "HORTISOL USA CORP",
+    "manufacturer": {
+      "name": "HORTISOL USA CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Mg": 2.0,
+      "S": 3.4
+    },
+    "micros_pct": {
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F5CB66-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.0,
+            "Cd": 0.3,
+            "Co": 16.0,
+            "Hg": 0.04,
+            "Mo": 28.0,
+            "Ni": 1.0,
+            "Pb": 2.0,
+            "Se": 3.0,
+            "Zn": 110.0
+          },
+          "detection_limits_ppm": {
+            "As": 3.0,
+            "Cd": 0.3,
+            "Hg": 0.04,
+            "Ni": 1.0,
+            "Pb": 2.0,
+            "Se": 3.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 16.0,
+        "Mo": 28.0,
+        "Zn": 110.0
+      }
+    }
+  }
+}

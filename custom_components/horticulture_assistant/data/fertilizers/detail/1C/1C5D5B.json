@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1C5D5B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2583-0007)",
-    "product_name": "HAIFA NORTH AMERICA HAIFA CROP FEED 13-0-40",
-    "company_info": {
-      "company": "HAIFA NORTH AMERICA INC",
-      "Mailing Address": "307 Cranes Roost Blvd #1038",
-      "Post Office Box": null,
-      "City": "Altamonte Springs",
-      "State": "FL",
-      "Postal Code": "32701",
-      "Telephone Number": "800 649-4944",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 40.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5000",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=0.4240",
-      "Nickel": "=3.8500",
-      "Lead": "=0.3000",
-      "Selenium": "=0.5000",
-      "Zinc": "=0.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 40.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 6.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.5000",
-      "Mercury": "=0.0133",
-      "Molybdenum": "=0.4240",
-      "Nickel": "=3.8500",
-      "Lead": "=0.3000",
-      "Selenium": "=0.5000",
-      "Zinc": "=0.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1C5D5B",
   "metadata": {
     "registrant": "HAIFA NORTH AMERICA INC",
     "label_name": "HAIFA NORTH AMERICA HAIFA CROP FEED 13-0-40",
     "wsda_reg_no": "(#2583-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2583-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2583-0007)",
+        "product_name": "HAIFA NORTH AMERICA HAIFA CROP FEED 13-0-40",
+        "company_info": {
+          "company": "HAIFA NORTH AMERICA INC",
+          "Mailing Address": "307 Cranes Roost Blvd #1038",
+          "Post Office Box": null,
+          "City": "Altamonte Springs",
+          "State": "FL",
+          "Postal Code": "32701",
+          "Telephone Number": "800 649-4944",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 40.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.5000",
+          "Mercury": "=0.0133",
+          "Molybdenum": "=0.4240",
+          "Nickel": "=3.8500",
+          "Lead": "=0.3000",
+          "Selenium": "=0.5000",
+          "Zinc": "=0.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HAIFA NORTH AMERICA HAIFA CROP FEED 13-0-40",
+    "brand": "HAIFA NORTH AMERICA INC",
+    "manufacturer": {
+      "name": "HAIFA NORTH AMERICA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "K2O_pct": 40.0
+    },
+    "macros_pct": {
+      "S": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1C5D5B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.5,
+            "Hg": 0.0133,
+            "Mo": 0.424,
+            "Ni": 3.85,
+            "Pb": 0.3,
+            "Se": 0.5,
+            "Zn": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 0.5,
+        "Hg": 0.0133,
+        "Mo": 0.424,
+        "Ni": 3.85,
+        "Pb": 0.3,
+        "Se": 0.5,
+        "Zn": 0.5
+      }
+    }
   }
 }

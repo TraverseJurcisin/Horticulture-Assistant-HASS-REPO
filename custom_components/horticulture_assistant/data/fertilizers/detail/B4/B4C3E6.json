@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"B4C3E6","source_wsda_record":{"wsda_product_number":"(#1410-0026)","product_name":"SUPERNATURAL BRAND SUPER LEACH 0-0-1","company_info":{"company":"RAPIDGROW INDUSTRIES INC","Mailing Address":"PO Box 31020","Post Office Box":null,"City":"Windsor","State":"ON","Postal Code":"N9G 2Y2","Telephone Number":"519 959-4324","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":10.0,"Sulfur (S)":13.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0010","Cadmium":"=0.3670","Cobalt":"=1.2800","Mercury":"=0.0010","Molybdenum":"=2.0300","Nickel":"=1.7800","Lead":"=3.3700","Selenium":"=0.0560","Zinc":"=50.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":10.0,"Sulfur (S)":13.3,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0010","Cadmium":"=0.3670","Cobalt":"=1.2800","Mercury":"=0.0010","Molybdenum":"=2.0300","Nickel":"=1.7800","Lead":"=3.3700","Selenium":"=0.0560","Zinc":"=50.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RAPIDGROW INDUSTRIES INC","label_name":"SUPERNATURAL BRAND SUPER LEACH 0-0-1","wsda_reg_no":"(#1410-0026)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B4C3E6",
+  "metadata": {
+    "registrant": "RAPIDGROW INDUSTRIES INC",
+    "label_name": "SUPERNATURAL BRAND SUPER LEACH 0-0-1",
+    "wsda_reg_no": "(#1410-0026)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1410-0026)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1410-0026)",
+        "product_name": "SUPERNATURAL BRAND SUPER LEACH 0-0-1",
+        "company_info": {
+          "company": "RAPIDGROW INDUSTRIES INC",
+          "Mailing Address": "PO Box 31020",
+          "Post Office Box": null,
+          "City": "Windsor",
+          "State": "ON",
+          "Postal Code": "N9G 2Y2",
+          "Telephone Number": "519 959-4324",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 10.0,
+          "Sulfur (S)": 13.3,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0010",
+          "Cadmium": "=0.3670",
+          "Cobalt": "=1.2800",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=2.0300",
+          "Nickel": "=1.7800",
+          "Lead": "=3.3700",
+          "Selenium": "=0.0560",
+          "Zinc": "=50.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUPERNATURAL BRAND SUPER LEACH 0-0-1",
+    "brand": "RAPIDGROW INDUSTRIES INC",
+    "manufacturer": {
+      "name": "RAPIDGROW INDUSTRIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Mg": 10.0,
+      "S": 13.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B4C3E6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.367,
+            "Co": 1.28,
+            "Hg": 0.001,
+            "Mo": 2.03,
+            "Ni": 1.78,
+            "Pb": 3.37,
+            "Se": 0.056,
+            "Zn": 50.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.001,
+        "Cd": 0.367,
+        "Co": 1.28,
+        "Hg": 0.001,
+        "Mo": 2.03,
+        "Ni": 1.78,
+        "Pb": 3.37,
+        "Se": 0.056,
+        "Zn": 50.0
+      }
+    }
+  }
+}

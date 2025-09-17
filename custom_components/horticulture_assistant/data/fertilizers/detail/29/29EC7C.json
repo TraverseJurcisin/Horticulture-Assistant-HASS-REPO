@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "29EC7C",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0349-0637)",
-    "product_name": "PERFECTION ROYAL GREEN 20-3-16",
-    "company_info": {
-      "company": "WILBUR ELLIS COMPANY LLC",
-      "Mailing Address": "4582 S. Ulster Street Parkway",
-      "Post Office Box": null,
-      "City": "Denver",
-      "State": "CO",
-      "Postal Code": "80237",
-      "Telephone Number": "802 236-3745",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": 1.2,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.2,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.2
-    },
-    "reported_metals": {
-      "Arsenic": "=4.9000",
-      "Cadmium": "=11.0000",
-      "Cobalt": "=3.9000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=2.2000",
-      "Nickel": "=21.0000",
-      "Lead": "=8.6000",
-      "Selenium": "=0.3000",
-      "Zinc": "=2182.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 20.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 16.0,
-      "Calcium (Ca)": 1.2,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.2,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.2
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.9000",
-      "Cadmium": "=11.0000",
-      "Cobalt": "=3.9000",
-      "Mercury": "=0.1600",
-      "Molybdenum": "=2.2000",
-      "Nickel": "=21.0000",
-      "Lead": "=8.6000",
-      "Selenium": "=0.3000",
-      "Zinc": "=2182.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "29EC7C",
   "metadata": {
     "registrant": "WILBUR ELLIS COMPANY LLC",
     "label_name": "PERFECTION ROYAL GREEN 20-3-16",
     "wsda_reg_no": "(#0349-0637)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0637)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0637)",
+        "product_name": "PERFECTION ROYAL GREEN 20-3-16",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": 1.2,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.2
+        },
+        "reported_metals": {
+          "Arsenic": "=4.9000",
+          "Cadmium": "=11.0000",
+          "Cobalt": "=3.9000",
+          "Mercury": "=0.1600",
+          "Molybdenum": "=2.2000",
+          "Nickel": "=21.0000",
+          "Lead": "=8.6000",
+          "Selenium": "=0.3000",
+          "Zinc": "=2182.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERFECTION ROYAL GREEN 20-3-16",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "Ca": 1.2,
+      "S": 4.2
+    },
+    "micros_pct": {
+      "Fe": 4.0,
+      "Zn": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "29EC7C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.9,
+            "Cd": 11.0,
+            "Co": 3.9,
+            "Hg": 0.16,
+            "Mo": 2.2,
+            "Ni": 21.0,
+            "Pb": 8.6,
+            "Se": 0.3,
+            "Zn": 2182.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.9,
+        "Cd": 11.0,
+        "Co": 3.9,
+        "Hg": 0.16,
+        "Mo": 2.2,
+        "Ni": 21.0,
+        "Pb": 8.6,
+        "Se": 0.3,
+        "Zn": 2182.0
+      }
+    }
   }
 }

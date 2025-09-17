@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "567FD4",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0193-0048)",
-    "product_name": "LOVELAND PRODUCTS FEATURE 6-0-0",
-    "company_info": {
-      "company": "LOVELAND PRODUCTS INC",
-      "Mailing Address": "PO Box 1286",
-      "Post Office Box": null,
-      "City": "Greeley",
-      "State": "CO",
-      "Postal Code": "80632",
-      "Telephone Number": "970 685-3737",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": 2.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=25.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=120.0000",
-      "Nickel": "=25.0000",
-      "Lead": "=9.0000",
-      "Selenium": "<8.0000",
-      "Zinc": "=520.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": 2.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=25.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=120.0000",
-      "Nickel": "=25.0000",
-      "Lead": "=9.0000",
-      "Selenium": "<8.0000",
-      "Zinc": "=520.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "567FD4",
   "metadata": {
     "registrant": "LOVELAND PRODUCTS INC",
     "label_name": "LOVELAND PRODUCTS FEATURE 6-0-0",
     "wsda_reg_no": "(#0193-0048)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0048)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0048)",
+        "product_name": "LOVELAND PRODUCTS FEATURE 6-0-0",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 10.0,
+          "Manganese (Mn)": 2.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.3000",
+          "Cobalt": "=25.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=120.0000",
+          "Nickel": "=25.0000",
+          "Lead": "=9.0000",
+          "Selenium": "<8.0000",
+          "Zinc": "=520.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND PRODUCTS FEATURE 6-0-0",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 8.0
+    },
+    "micros_pct": {
+      "Fe": 10.0,
+      "Mn": 2.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "567FD4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.3,
+            "Co": 25.0,
+            "Hg": 0.05,
+            "Mo": 120.0,
+            "Ni": 25.0,
+            "Pb": 9.0,
+            "Se": 8.0,
+            "Zn": 520.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.3,
+            "Hg": 0.05,
+            "Se": 8.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 25.0,
+        "Mo": 120.0,
+        "Ni": 25.0,
+        "Pb": 9.0,
+        "Zn": 520.0
+      }
+    }
   }
 }

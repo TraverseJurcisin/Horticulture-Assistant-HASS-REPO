@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"C39B9E","source_wsda_record":{"wsda_product_number":"(#3855-0018)","product_name":"SIMPLOT TURF & HORTICULTURE GROWTHPACK BIOKELP 0-0-1","company_info":{"company":"SIMPLOT AB RETAIL INC","Mailing Address":"P.O. Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=14.0000","Cadmium":"=0.5000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=0.6000","Lead":"=1.0000","Selenium":"=0.3000","Zinc":"=3.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=14.0000","Cadmium":"=0.5000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=0.6000","Lead":"=1.0000","Selenium":"=0.3000","Zinc":"=3.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT AB RETAIL INC","label_name":"SIMPLOT TURF & HORTICULTURE GROWTHPACK BIOKELP 0-0-1","wsda_reg_no":"(#3855-0018)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C39B9E",
+  "metadata": {
+    "registrant": "SIMPLOT AB RETAIL INC",
+    "label_name": "SIMPLOT TURF & HORTICULTURE GROWTHPACK BIOKELP 0-0-1",
+    "wsda_reg_no": "(#3855-0018)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3855-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3855-0018)",
+        "product_name": "SIMPLOT TURF & HORTICULTURE GROWTHPACK BIOKELP 0-0-1",
+        "company_info": {
+          "company": "SIMPLOT AB RETAIL INC",
+          "Mailing Address": "P.O. Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=14.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=0.6000",
+          "Lead": "=1.0000",
+          "Selenium": "=0.3000",
+          "Zinc": "=3.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT TURF & HORTICULTURE GROWTHPACK BIOKELP 0-0-1",
+    "brand": "SIMPLOT AB RETAIL INC",
+    "manufacturer": {
+      "name": "SIMPLOT AB RETAIL INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C39B9E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.0,
+            "Cd": 0.5,
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 0.6,
+            "Pb": 1.0,
+            "Se": 0.3,
+            "Zn": 3.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.0,
+        "Cd": 0.5,
+        "Co": 0.1,
+        "Hg": 0.01,
+        "Mo": 0.3,
+        "Ni": 0.6,
+        "Pb": 1.0,
+        "Se": 0.3,
+        "Zn": 3.6
+      }
+    }
+  }
+}

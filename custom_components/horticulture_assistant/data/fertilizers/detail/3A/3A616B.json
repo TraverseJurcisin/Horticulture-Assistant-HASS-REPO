@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3A616B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2393-0020)",
-    "product_name": "AGSCITECH STS SPRING + MICROS 9-4-6",
-    "company_info": {
-      "company": "AGSCITECH INC",
-      "Mailing Address": "365 North 600 West",
-      "Post Office Box": null,
-      "City": "Logan",
-      "State": "UT",
-      "Postal Code": "84321",
-      "Telephone Number": "435 213-9850",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.12
-    },
-    "reported_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.6300",
-      "Cobalt": "=4.7800",
-      "Mercury": "=0.0036",
-      "Molybdenum": "=337.0000",
-      "Nickel": "=9.8700",
-      "Lead": "=2.6300",
-      "Selenium": "=0.1000",
-      "Zinc": "=1460.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": 0.003,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.12
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.7900",
-      "Cadmium": "=0.6300",
-      "Cobalt": "=4.7800",
-      "Mercury": "=0.0036",
-      "Molybdenum": "=337.0000",
-      "Nickel": "=9.8700",
-      "Lead": "=2.6300",
-      "Selenium": "=0.1000",
-      "Zinc": "=1460.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3A616B",
   "metadata": {
     "registrant": "AGSCITECH INC",
     "label_name": "AGSCITECH STS SPRING + MICROS 9-4-6",
     "wsda_reg_no": "(#2393-0020)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2393-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2393-0020)",
+        "product_name": "AGSCITECH STS SPRING + MICROS 9-4-6",
+        "company_info": {
+          "company": "AGSCITECH INC",
+          "Mailing Address": "365 North 600 West",
+          "Post Office Box": null,
+          "City": "Logan",
+          "State": "UT",
+          "Postal Code": "84321",
+          "Telephone Number": "435 213-9850",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.25,
+          "Molybdenum (Mo)": 0.003,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.12
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7900",
+          "Cadmium": "=0.6300",
+          "Cobalt": "=4.7800",
+          "Mercury": "=0.0036",
+          "Molybdenum": "=337.0000",
+          "Nickel": "=9.8700",
+          "Lead": "=2.6300",
+          "Selenium": "=0.1000",
+          "Zinc": "=1460.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGSCITECH STS SPRING + MICROS 9-4-6",
+    "brand": "AGSCITECH INC",
+    "manufacturer": {
+      "name": "AGSCITECH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 6.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.25,
+      "Zn": 0.12,
+      "Mo": 0.003
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3A616B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.79,
+            "Cd": 0.63,
+            "Co": 4.78,
+            "Hg": 0.0036,
+            "Mo": 337.0,
+            "Ni": 9.87,
+            "Pb": 2.63,
+            "Se": 0.1,
+            "Zn": 1460.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.79,
+        "Cd": 0.63,
+        "Co": 4.78,
+        "Hg": 0.0036,
+        "Mo": 337.0,
+        "Ni": 9.87,
+        "Pb": 2.63,
+        "Se": 0.1,
+        "Zn": 1460.0
+      }
+    }
   }
 }

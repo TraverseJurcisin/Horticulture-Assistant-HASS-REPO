@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-os.environ.setdefault("WSDA_INDEX_DIR", str(ROOT / "feature/wsda_refactored_sharded/index_sharded"))
-os.environ.setdefault("WSDA_DETAIL_DIR", str(ROOT / "feature/wsda_refactored_sharded/detail"))
+os.environ.setdefault("FERTILIZER_DATASET_INDEX_DIR", str(ROOT / "feature/fertilizer_dataset_sharded/index_sharded"))
+os.environ.setdefault("FERTILIZER_DATASET_DETAIL_DIR", str(ROOT / "feature/fertilizer_dataset_sharded/detail"))
 
-from custom_components.horticulture_assistant.utils.wsda_product_index import (  # noqa: E402
+from custom_components.horticulture_assistant.utils.fertilizer_product_index import (  # noqa: E402
     get_product_by_id,
     get_product_by_number,
     list_products,

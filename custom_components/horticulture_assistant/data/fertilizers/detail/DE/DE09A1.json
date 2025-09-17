@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"DE09A1","source_wsda_record":{"wsda_product_number":"(#0705-0117)","product_name":"NEX LEX 0-0-8","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":2.4,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.1000","Cadmium":"=0.0160","Cobalt":"=0.0300","Mercury":"<0.0010","Molybdenum":"=0.1300","Nickel":"=0.7800","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"=5.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":2.4,"Magnesium (Mg)":0.8,"Sulfur (S)":null,"Boron (B)":0.2,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.1000","Cadmium":"=0.0160","Cobalt":"=0.0300","Mercury":"<0.0010","Molybdenum":"=0.1300","Nickel":"=0.7800","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"=5.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NEX LEX 0-0-8","wsda_reg_no":"(#0705-0117)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DE09A1",
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NEX LEX 0-0-8",
+    "wsda_reg_no": "(#0705-0117)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0117)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0117)",
+        "product_name": "NEX LEX 0-0-8",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": 2.4,
+          "Magnesium (Mg)": 0.8,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "=0.0160",
+          "Cobalt": "=0.0300",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.1300",
+          "Nickel": "=0.7800",
+          "Lead": "<0.1000",
+          "Selenium": "<0.1000",
+          "Zinc": "=5.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NEX LEX 0-0-8",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Ca": 2.4,
+      "Mg": 0.8
+    },
+    "micros_pct": {
+      "B": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DE09A1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.016,
+            "Co": 0.03,
+            "Hg": 0.001,
+            "Mo": 0.13,
+            "Ni": 0.78,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 5.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Hg": 0.001,
+            "Pb": 0.1,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.016,
+        "Co": 0.03,
+        "Mo": 0.13,
+        "Ni": 0.78,
+        "Zn": 5.0
+      }
+    }
+  }
+}

@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"D149FD","source_wsda_record":{"wsda_product_number":"(#0193-0012)","product_name":"SIGNATURE BRAND FERTILIZER MOSS CONTROL PLUS LAWN FOOD 6-0-0","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":14.0,"Magnesium (Mg)":null,"Sulfur (S)":12.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.2000","Cadmium":"=4.2000","Cobalt":"=9.2000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=7.9000","Lead":"=3.9000","Selenium":"<5.5000","Zinc":"=75.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":14.0,"Magnesium (Mg)":null,"Sulfur (S)":12.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":10.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.2000","Cadmium":"=4.2000","Cobalt":"=9.2000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"=7.9000","Lead":"=3.9000","Selenium":"<5.5000","Zinc":"=75.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"SIGNATURE BRAND FERTILIZER MOSS CONTROL PLUS LAWN FOOD 6-0-0","wsda_reg_no":"(#0193-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D149FD",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "SIGNATURE BRAND FERTILIZER MOSS CONTROL PLUS LAWN FOOD 6-0-0",
+    "wsda_reg_no": "(#0193-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0012)",
+        "product_name": "SIGNATURE BRAND FERTILIZER MOSS CONTROL PLUS LAWN FOOD 6-0-0",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 14.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 12.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 10.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.2000",
+          "Cadmium": "=4.2000",
+          "Cobalt": "=9.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=7.9000",
+          "Lead": "=3.9000",
+          "Selenium": "<5.5000",
+          "Zinc": "=75.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIGNATURE BRAND FERTILIZER MOSS CONTROL PLUS LAWN FOOD 6-0-0",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 14.0,
+      "S": 12.5
+    },
+    "micros_pct": {
+      "Fe": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D149FD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.2,
+            "Cd": 4.2,
+            "Co": 9.2,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 7.9,
+            "Pb": 3.9,
+            "Se": 5.5,
+            "Zn": 75.4
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.2,
+        "Cd": 4.2,
+        "Co": 9.2,
+        "Ni": 7.9,
+        "Pb": 3.9,
+        "Zn": 75.4
+      }
+    }
+  }
+}

@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"CF5348","source_wsda_record":{"wsda_product_number":"(#1026-0022)","product_name":"PERFECT BLEND ORGANICS BIOTIC CONVENTIONAL 4-4-4","company_info":{"company":"PERFECT BLEND LLC","Mailing Address":"10900 NE 8th St Ste 615","Post Office Box":null,"City":"Bellevue","State":"WA","Postal Code":"98004","Telephone Number":"425 456-8889","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.7,"Sulfur (S)":3.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":0.1,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=15.0000","Lead":"=15.0000","Selenium":"=5.0000","Zinc":"=1000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":0.7,"Sulfur (S)":3.0,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":0.0005,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":0.1,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=15.0000","Lead":"=15.0000","Selenium":"=5.0000","Zinc":"=1000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"PERFECT BLEND LLC","label_name":"PERFECT BLEND ORGANICS BIOTIC CONVENTIONAL 4-4-4","wsda_reg_no":"(#1026-0022)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CF5348",
+  "metadata": {
+    "registrant": "PERFECT BLEND LLC",
+    "label_name": "PERFECT BLEND ORGANICS BIOTIC CONVENTIONAL 4-4-4",
+    "wsda_reg_no": "(#1026-0022)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1026-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1026-0022)",
+        "product_name": "PERFECT BLEND ORGANICS BIOTIC CONVENTIONAL 4-4-4",
+        "company_info": {
+          "company": "PERFECT BLEND LLC",
+          "Mailing Address": "10900 NE 8th St Ste 615",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98004",
+          "Telephone Number": "425 456-8889",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": 0.7,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.0005,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": 0.1,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=15.0000",
+          "Lead": "=15.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=1000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PERFECT BLEND ORGANICS BIOTIC CONVENTIONAL 4-4-4",
+    "brand": "PERFECT BLEND LLC",
+    "manufacturer": {
+      "name": "PERFECT BLEND LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "Mg": 0.7,
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CF5348-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 5.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 5.0,
+            "Ni": 15.0,
+            "Pb": 15.0,
+            "Se": 5.0,
+            "Zn": 1000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 5.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 5.0,
+        "Ni": 15.0,
+        "Pb": 15.0,
+        "Se": 5.0,
+        "Zn": 1000.0
+      }
+    }
+  }
+}

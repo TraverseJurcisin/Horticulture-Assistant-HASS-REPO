@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"A951ED","source_wsda_record":{"wsda_product_number":"(#3621-0051)","product_name":"CURB APPEAL WHIPLASH (906150) 22-0-2","company_info":{"company":"TURF CARE SUPPLY LLC","Mailing Address":"50 Pearl Rd Ste 200","Post Office Box":null,"City":"Brunswick","State":"OH","Postal Code":"44212","Telephone Number":"330 558-0910","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.73,"Magnesium (Mg)":1.0,"Sulfur (S)":5.94,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<10.0000","Cadmium":"<1.0000","Cobalt":"=20.1000","Mercury":"=0.0500","Molybdenum":"=2.1000","Nickel":"=11.3000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=149.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.73,"Magnesium (Mg)":1.0,"Sulfur (S)":5.94,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<10.0000","Cadmium":"<1.0000","Cobalt":"=20.1000","Mercury":"=0.0500","Molybdenum":"=2.1000","Nickel":"=11.3000","Lead":"<5.0000","Selenium":"<10.0000","Zinc":"=149.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TURF CARE SUPPLY LLC","label_name":"CURB APPEAL WHIPLASH (906150) 22-0-2","wsda_reg_no":"(#3621-0051)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A951ED",
+  "metadata": {
+    "registrant": "TURF CARE SUPPLY LLC",
+    "label_name": "CURB APPEAL WHIPLASH (906150) 22-0-2",
+    "wsda_reg_no": "(#3621-0051)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3621-0051)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3621-0051)",
+        "product_name": "CURB APPEAL WHIPLASH (906150) 22-0-2",
+        "company_info": {
+          "company": "TURF CARE SUPPLY LLC",
+          "Mailing Address": "50 Pearl Rd Ste 200",
+          "Post Office Box": null,
+          "City": "Brunswick",
+          "State": "OH",
+          "Postal Code": "44212",
+          "Telephone Number": "330 558-0910",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 3.73,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 5.94,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=20.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=2.1000",
+          "Nickel": "=11.3000",
+          "Lead": "<5.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=149.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CURB APPEAL WHIPLASH (906150) 22-0-2",
+    "brand": "TURF CARE SUPPLY LLC",
+    "manufacturer": {
+      "name": "TURF CARE SUPPLY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.73,
+      "Mg": 1.0,
+      "S": 5.94
+    },
+    "micros_pct": {
+      "Fe": 2.0,
+      "Mn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A951ED-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 1.0,
+            "Co": 20.1,
+            "Hg": 0.05,
+            "Mo": 2.1,
+            "Ni": 11.3,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 149.3
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Cd": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 20.1,
+        "Hg": 0.05,
+        "Mo": 2.1,
+        "Ni": 11.3,
+        "Zn": 149.3
+      }
+    }
+  }
+}

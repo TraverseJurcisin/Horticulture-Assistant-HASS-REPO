@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"AD3024","source_wsda_record":{"wsda_product_number":"(#2319-0051)","product_name":"PETERS EXCEL 15-2-20 PANSY, SALVIA & VINCA 15-2-20","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.75,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0187,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0075,"Sodium (Na)":null,"Zinc (Zn)":0.0375},"reported_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=1.6000","Mercury":"=0.0010","Molybdenum":"=160.0000","Nickel":"=0.9230","Lead":"=0.1000","Selenium":"=0.5000","Zinc":"=775.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":3.75,"Magnesium (Mg)":2.0,"Sulfur (S)":null,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.0187,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0075,"Sodium (Na)":null,"Zinc (Zn)":0.0375},"heavy_metals":{"Arsenic":"=0.1000","Cadmium":"=0.1000","Cobalt":"=1.6000","Mercury":"=0.0010","Molybdenum":"=160.0000","Nickel":"=0.9230","Lead":"=0.1000","Selenium":"=0.5000","Zinc":"=775.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"PETERS EXCEL 15-2-20 PANSY, SALVIA & VINCA 15-2-20","wsda_reg_no":"(#2319-0051)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD3024",
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "PETERS EXCEL 15-2-20 PANSY, SALVIA & VINCA 15-2-20",
+    "wsda_reg_no": "(#2319-0051)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2319-0051)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2319-0051)",
+        "product_name": "PETERS EXCEL 15-2-20 PANSY, SALVIA & VINCA 15-2-20",
+        "company_info": {
+          "company": "EVERRIS NA INC",
+          "Mailing Address": "PO Box 3310",
+          "Post Office Box": null,
+          "City": "Dublin",
+          "State": "OH",
+          "Postal Code": "43016",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": 3.75,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.0187,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0075,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.0375
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=1.6000",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=160.0000",
+          "Nickel": "=0.9230",
+          "Lead": "=0.1000",
+          "Selenium": "=0.5000",
+          "Zinc": "=775.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PETERS EXCEL 15-2-20 PANSY, SALVIA & VINCA 15-2-20",
+    "brand": "EVERRIS NA INC",
+    "manufacturer": {
+      "name": "EVERRIS NA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "Ca": 3.75,
+      "Mg": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.0375,
+      "Cu": 0.0187,
+      "B": 0.03,
+      "Mo": 0.0075
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD3024-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 1.6,
+            "Hg": 0.001,
+            "Mo": 160.0,
+            "Ni": 0.923,
+            "Pb": 0.1,
+            "Se": 0.5,
+            "Zn": 775.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.1,
+        "Cd": 0.1,
+        "Co": 1.6,
+        "Hg": 0.001,
+        "Mo": 160.0,
+        "Ni": 0.923,
+        "Pb": 0.1,
+        "Se": 0.5,
+        "Zn": 775.0
+      }
+    }
+  }
+}

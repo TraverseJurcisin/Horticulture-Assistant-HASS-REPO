@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"9C66EB","source_wsda_record":{"wsda_product_number":"(#0969-0010)","product_name":"SEED MAXX BY AGRIGRO 0-0-1","company_info":{"company":"AGRI-GRO MARKETING INC","Mailing Address":"PO Box 520","Post Office Box":null,"City":"Doniphan","State":"MO","Postal Code":"63935","Telephone Number":"573 996-7384","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.04,"Chlorine (Cl)":null,"Cobalt (Co)":0.01,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.2,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=200.0000","Mercury":"=0.0133","Molybdenum":"=300.0000","Nickel":"=1.0000","Lead":"=0.3000","Selenium":"=1.0000","Zinc":"=5000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.04,"Chlorine (Cl)":null,"Cobalt (Co)":0.01,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":0.2,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=200.0000","Mercury":"=0.0133","Molybdenum":"=300.0000","Nickel":"=1.0000","Lead":"=0.3000","Selenium":"=1.0000","Zinc":"=5000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGRI-GRO MARKETING INC","label_name":"SEED MAXX BY AGRIGRO 0-0-1","wsda_reg_no":"(#0969-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9C66EB",
+  "metadata": {
+    "registrant": "AGRI-GRO MARKETING INC",
+    "label_name": "SEED MAXX BY AGRIGRO 0-0-1",
+    "wsda_reg_no": "(#0969-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0969-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0969-0010)",
+        "product_name": "SEED MAXX BY AGRIGRO 0-0-1",
+        "company_info": {
+          "company": "AGRI-GRO MARKETING INC",
+          "Mailing Address": "PO Box 520",
+          "Post Office Box": null,
+          "City": "Doniphan",
+          "State": "MO",
+          "Postal Code": "63935",
+          "Telephone Number": "573 996-7384",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.04,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.01,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=200.0000",
+          "Mercury": "=0.0133",
+          "Molybdenum": "=300.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=0.3000",
+          "Selenium": "=1.0000",
+          "Zinc": "=5000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SEED MAXX BY AGRIGRO 0-0-1",
+    "brand": "AGRI-GRO MARKETING INC",
+    "manufacturer": {
+      "name": "AGRI-GRO MARKETING INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Mn": 0.2,
+      "Zn": 0.1,
+      "B": 0.04,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9C66EB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 200.0,
+            "Hg": 0.0133,
+            "Mo": 300.0,
+            "Ni": 1.0,
+            "Pb": 0.3,
+            "Se": 1.0,
+            "Zn": 5000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 200.0,
+        "Hg": 0.0133,
+        "Mo": 300.0,
+        "Ni": 1.0,
+        "Pb": 0.3,
+        "Se": 1.0,
+        "Zn": 5000.0
+      }
+    }
+  }
+}

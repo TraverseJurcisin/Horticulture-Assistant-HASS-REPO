@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"D1ECCD","source_wsda_record":{"wsda_product_number":"(#2687-0046)","product_name":"VERDESIAN TREE SHIELD 0-0-19","company_info":{"company":"VERDESIAN LIFE SCIENCES U.S. LLC","Mailing Address":"1001 Winstead Drive Ste 480","Post Office Box":null,"City":"Cary","State":"NC","Postal Code":"27513","Telephone Number":"919 825-1901","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=33.9000","Cadmium":"=1.0000","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.3800","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=3.3200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=33.9000","Cadmium":"=1.0000","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=1.0000","Nickel":"=1.3800","Lead":"=1.0000","Selenium":"=1.0000","Zinc":"=3.3200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VERDESIAN LIFE SCIENCES U.S. LLC","label_name":"VERDESIAN TREE SHIELD 0-0-19","wsda_reg_no":"(#2687-0046)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D1ECCD",
+  "metadata": {
+    "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "label_name": "VERDESIAN TREE SHIELD 0-0-19",
+    "wsda_reg_no": "(#2687-0046)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0046)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0046)",
+        "product_name": "VERDESIAN TREE SHIELD 0-0-19",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 19.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=33.9000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.3800",
+          "Lead": "=1.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=3.3200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VERDESIAN TREE SHIELD 0-0-19",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 19.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D1ECCD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 33.9,
+            "Cd": 1.0,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.38,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 3.32
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 33.9,
+        "Cd": 1.0,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 1.38,
+        "Pb": 1.0,
+        "Se": 1.0,
+        "Zn": 3.32
+      }
+    }
+  }
+}

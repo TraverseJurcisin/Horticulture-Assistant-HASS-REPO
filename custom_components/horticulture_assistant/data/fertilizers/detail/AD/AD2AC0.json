@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"AD2AC0","source_wsda_record":{"wsda_product_number":"(#0705-0070)","product_name":"NUTRIAG PROMAG-6 COLUMBIA RIVER 0-0-0","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":6.0,"Sulfur (S)":null,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.8490","Cadmium":"=0.0606","Cobalt":"=0.2420","Mercury":"=0.0050","Molybdenum":"=0.1210","Nickel":"=1.2100","Lead":"=2.4200","Selenium":"=0.6060","Zinc":"=2.4400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":6.0,"Sulfur (S)":null,"Boron (B)":0.5,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.8490","Cadmium":"=0.0606","Cobalt":"=0.2420","Mercury":"=0.0050","Molybdenum":"=0.1210","Nickel":"=1.2100","Lead":"=2.4200","Selenium":"=0.6060","Zinc":"=2.4400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NUTRIAG PROMAG-6 COLUMBIA RIVER 0-0-0","wsda_reg_no":"(#0705-0070)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD2AC0",
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NUTRIAG PROMAG-6 COLUMBIA RIVER 0-0-0",
+    "wsda_reg_no": "(#0705-0070)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0070)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0070)",
+        "product_name": "NUTRIAG PROMAG-6 COLUMBIA RIVER 0-0-0",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 6.0,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8490",
+          "Cadmium": "=0.0606",
+          "Cobalt": "=0.2420",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=0.1210",
+          "Nickel": "=1.2100",
+          "Lead": "=2.4200",
+          "Selenium": "=0.6060",
+          "Zinc": "=2.4400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIAG PROMAG-6 COLUMBIA RIVER 0-0-0",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 6.0
+    },
+    "micros_pct": {
+      "B": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD2AC0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.849,
+            "Cd": 0.0606,
+            "Co": 0.242,
+            "Hg": 0.005,
+            "Mo": 0.121,
+            "Ni": 1.21,
+            "Pb": 2.42,
+            "Se": 0.606,
+            "Zn": 2.44
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.849,
+        "Cd": 0.0606,
+        "Co": 0.242,
+        "Hg": 0.005,
+        "Mo": 0.121,
+        "Ni": 1.21,
+        "Pb": 2.42,
+        "Se": 0.606,
+        "Zn": 2.44
+      }
+    }
+  }
+}

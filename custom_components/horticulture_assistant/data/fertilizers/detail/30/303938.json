@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "303938",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1645-0039)",
-    "product_name": "COBALT 0-0-0",
-    "company_info": {
-      "company": "MODERN AG PRODUCTS LLC",
-      "Mailing Address": "PO Box 2953",
-      "Post Office Box": null,
-      "City": "Pasco",
-      "State": "WA",
-      "Postal Code": "99302",
-      "Telephone Number": "509 547-3163",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 6.0,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "=45520.0000",
-      "Mercury": "<0.0006",
-      "Molybdenum": "=3.4000",
-      "Nickel": "=13.0000",
-      "Lead": "=10.0000",
-      "Selenium": "<0.1000",
-      "Zinc": "=819.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 6.0,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "<0.1000",
-      "Cobalt": "=45520.0000",
-      "Mercury": "<0.0006",
-      "Molybdenum": "=3.4000",
-      "Nickel": "=13.0000",
-      "Lead": "=10.0000",
-      "Selenium": "<0.1000",
-      "Zinc": "=819.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "303938",
   "metadata": {
     "registrant": "MODERN AG PRODUCTS LLC",
     "label_name": "COBALT 0-0-0",
     "wsda_reg_no": "(#1645-0039)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1645-0039)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1645-0039)",
+        "product_name": "COBALT 0-0-0",
+        "company_info": {
+          "company": "MODERN AG PRODUCTS LLC",
+          "Mailing Address": "PO Box 2953",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99302",
+          "Telephone Number": "509 547-3163",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 6.0,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=45520.0000",
+          "Mercury": "<0.0006",
+          "Molybdenum": "=3.4000",
+          "Nickel": "=13.0000",
+          "Lead": "=10.0000",
+          "Selenium": "<0.1000",
+          "Zinc": "=819.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "COBALT 0-0-0",
+    "brand": "MODERN AG PRODUCTS LLC",
+    "manufacturer": {
+      "name": "MODERN AG PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "303938-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Co": 45520.0,
+            "Hg": 0.0006,
+            "Mo": 3.4,
+            "Ni": 13.0,
+            "Pb": 10.0,
+            "Se": 0.1,
+            "Zn": 819.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Cd": 0.1,
+            "Hg": 0.0006,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 45520.0,
+        "Mo": 3.4,
+        "Ni": 13.0,
+        "Pb": 10.0,
+        "Zn": 819.0
+      }
+    }
   }
 }

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"87B726","source_wsda_record":{"wsda_product_number":"(#3986-0001)","product_name":"INTERFOR PA BIOMASS BOILER ASH 1.0 0.014-0.23-0.012","company_info":{"company":"INTERFOR U.S. INC","Mailing Address":"243701 Highway 101 West","Post Office Box":null,"City":"Port Angeles","State":"WA","Postal Code":"98363-9472","Telephone Number":"360 417-6180","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.014,"Available Phosphoric Acid (P2O5)":0.23,"Soluble Potash (K2O)":0.012,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.1700","Cadmium":"=0.3850","Cobalt":"=32.2000","Mercury":"=0.0100","Molybdenum":"=2.6400","Nickel":"=31.1000","Lead":"=1.0800","Selenium":"=0.9780","Zinc":"=128.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.014,"Available Phosphoric Acid (P2O5)":0.23,"Soluble Potash (K2O)":0.012,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.1700","Cadmium":"=0.3850","Cobalt":"=32.2000","Mercury":"=0.0100","Molybdenum":"=2.6400","Nickel":"=31.1000","Lead":"=1.0800","Selenium":"=0.9780","Zinc":"=128.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INTERFOR U.S. INC","label_name":"INTERFOR PA BIOMASS BOILER ASH 1.0 0.014-0.23-0.012","wsda_reg_no":"(#3986-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "87B726",
+  "metadata": {
+    "registrant": "INTERFOR U.S. INC",
+    "label_name": "INTERFOR PA BIOMASS BOILER ASH 1.0 0.014-0.23-0.012",
+    "wsda_reg_no": "(#3986-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3986-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3986-0001)",
+        "product_name": "INTERFOR PA BIOMASS BOILER ASH 1.0 0.014-0.23-0.012",
+        "company_info": {
+          "company": "INTERFOR U.S. INC",
+          "Mailing Address": "243701 Highway 101 West",
+          "Post Office Box": null,
+          "City": "Port Angeles",
+          "State": "WA",
+          "Postal Code": "98363-9472",
+          "Telephone Number": "360 417-6180",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.014,
+          "Available Phosphoric Acid (P2O5)": 0.23,
+          "Soluble Potash (K2O)": 0.012,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.1700",
+          "Cadmium": "=0.3850",
+          "Cobalt": "=32.2000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=2.6400",
+          "Nickel": "=31.1000",
+          "Lead": "=1.0800",
+          "Selenium": "=0.9780",
+          "Zinc": "=128.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "INTERFOR PA BIOMASS BOILER ASH 1.0 0.014-0.23-0.012",
+    "brand": "INTERFOR U.S. INC",
+    "manufacturer": {
+      "name": "INTERFOR U.S. INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.014,
+      "P2O5_pct": 0.23,
+      "K2O_pct": 0.012
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "87B726-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.17,
+            "Cd": 0.385,
+            "Co": 32.2,
+            "Hg": 0.01,
+            "Mo": 2.64,
+            "Ni": 31.1,
+            "Pb": 1.08,
+            "Se": 0.978,
+            "Zn": 128.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.17,
+        "Cd": 0.385,
+        "Co": 32.2,
+        "Hg": 0.01,
+        "Mo": 2.64,
+        "Ni": 31.1,
+        "Pb": 1.08,
+        "Se": 0.978,
+        "Zn": 128.0
+      }
+    }
+  }
+}

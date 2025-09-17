@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"C7F9AB","source_wsda_record":{"wsda_product_number":"(#4087-0012)","product_name":"HUMA MAX PAK 0-0-0","company_info":{"company":"HUMA, INC.","Mailing Address":"1331 W Houston Ave","Post Office Box":null,"City":"Gilbert","State":"AZ","Postal Code":"85233","Telephone Number":"480 961-1220","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":1.0,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":3.5},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0900","Cobalt":"=649.0000","Mercury":"=0.1000","Molybdenum":"=567.0000","Nickel":"=14.7700","Lead":"=5.0000","Selenium":"=1.0000","Zinc":"=35266.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":null},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":0.6,"Chlorine (Cl)":null,"Cobalt (Co)":0.05,"Copper (Cu)":1.0,"Iron (Fe)":2.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":3.5},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=1.0900","Cobalt":"=649.0000","Mercury":"=0.1000","Molybdenum":"=567.0000","Nickel":"=14.7700","Lead":"=5.0000","Selenium":"=1.0000","Zinc":"=35266.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HUMA, INC.","label_name":"HUMA MAX PAK 0-0-0","wsda_reg_no":"(#4087-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C7F9AB",
+  "metadata": {
+    "registrant": "HUMA, INC.",
+    "label_name": "HUMA MAX PAK 0-0-0",
+    "wsda_reg_no": "(#4087-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4087-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4087-0012)",
+        "product_name": "HUMA MAX PAK 0-0-0",
+        "company_info": {
+          "company": "HUMA, INC.",
+          "Mailing Address": "1331 W Houston Ave",
+          "Post Office Box": null,
+          "City": "Gilbert",
+          "State": "AZ",
+          "Postal Code": "85233",
+          "Telephone Number": "480 961-1220",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": 0.6,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.05,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.5
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=1.0900",
+          "Cobalt": "=649.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=567.0000",
+          "Nickel": "=14.7700",
+          "Lead": "=5.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=35266.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": null
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": null,
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HUMA MAX PAK 0-0-0",
+    "brand": "HUMA, INC.",
+    "manufacturer": {
+      "name": "HUMA, INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 2.0,
+      "Mn": 1.0,
+      "Zn": 3.5,
+      "Cu": 1.0,
+      "B": 0.6,
+      "Mo": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C7F9AB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.09,
+            "Co": 649.0,
+            "Hg": 0.1,
+            "Mo": 567.0,
+            "Ni": 14.77,
+            "Pb": 5.0,
+            "Se": 1.0,
+            "Zn": 35266.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 1.09,
+        "Co": 649.0,
+        "Hg": 0.1,
+        "Mo": 567.0,
+        "Ni": 14.77,
+        "Pb": 5.0,
+        "Se": 1.0,
+        "Zn": 35266.0
+      }
+    }
+  }
+}

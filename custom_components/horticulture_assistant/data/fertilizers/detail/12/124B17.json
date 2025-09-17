@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "124B17",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0580-0004)",
-    "product_name": "SEED VIGOR LIQUID SEED & ROOT STARTER 2-11-5",
-    "company_info": {
-      "company": "R & A PLANT/SOIL INC",
-      "Mailing Address": "4461 Venture Place PR",
-      "Post Office Box": null,
-      "City": "Pasco",
-      "State": "WA",
-      "Postal Code": "99301-4465",
-      "Telephone Number": "509 302-0362",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=12.2900",
-      "Cadmium": "<0.3500",
-      "Cobalt": "<0.2000",
-      "Mercury": "<0.0009",
-      "Molybdenum": "=9.5100",
-      "Nickel": "=1.6000",
-      "Lead": "<2.4000",
-      "Selenium": "<2.9000",
-      "Zinc": "=256.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=12.2900",
-      "Cadmium": "<0.3500",
-      "Cobalt": "<0.2000",
-      "Mercury": "<0.0009",
-      "Molybdenum": "=9.5100",
-      "Nickel": "=1.6000",
-      "Lead": "<2.4000",
-      "Selenium": "<2.9000",
-      "Zinc": "=256.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "124B17",
   "metadata": {
     "registrant": "R & A PLANT/SOIL INC",
     "label_name": "SEED VIGOR LIQUID SEED & ROOT STARTER 2-11-5",
     "wsda_reg_no": "(#0580-0004)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0580-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0580-0004)",
+        "product_name": "SEED VIGOR LIQUID SEED & ROOT STARTER 2-11-5",
+        "company_info": {
+          "company": "R & A PLANT/SOIL INC",
+          "Mailing Address": "4461 Venture Place PR",
+          "Post Office Box": null,
+          "City": "Pasco",
+          "State": "WA",
+          "Postal Code": "99301-4465",
+          "Telephone Number": "509 302-0362",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 11.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=12.2900",
+          "Cadmium": "<0.3500",
+          "Cobalt": "<0.2000",
+          "Mercury": "<0.0009",
+          "Molybdenum": "=9.5100",
+          "Nickel": "=1.6000",
+          "Lead": "<2.4000",
+          "Selenium": "<2.9000",
+          "Zinc": "=256.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SEED VIGOR LIQUID SEED & ROOT STARTER 2-11-5",
+    "brand": "R & A PLANT/SOIL INC",
+    "manufacturer": {
+      "name": "R & A PLANT/SOIL INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 11.0,
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "124B17-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 12.29,
+            "Cd": 0.35,
+            "Co": 0.2,
+            "Hg": 0.0009,
+            "Mo": 9.51,
+            "Ni": 1.6,
+            "Pb": 2.4,
+            "Se": 2.9,
+            "Zn": 256.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.35,
+            "Co": 0.2,
+            "Hg": 0.0009,
+            "Pb": 2.4,
+            "Se": 2.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 12.29,
+        "Mo": 9.51,
+        "Ni": 1.6,
+        "Zn": 256.0
+      }
+    }
   }
 }

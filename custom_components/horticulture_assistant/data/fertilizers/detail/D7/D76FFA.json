@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"D76FFA","source_wsda_record":{"wsda_product_number":"(#4041-0004)","product_name":"MACROSOURCE MAP MONOAMMONIUM PHOSPHATE 11-52-0","company_info":{"company":"MACROSOURCE LLC","Mailing Address":"5 Skidway Village Walk","Post Office Box":null,"City":"Savannah","State":"GA","Postal Code":"31411","Telephone Number":"912 436-3354","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":52.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=21.8000","Cadmium":"=2.0700","Cobalt":"=29.7000","Mercury":"<0.0400","Molybdenum":"=6.0000","Nickel":"=48.4000","Lead":"<2.0000","Selenium":"<2.5000","Zinc":"=377.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":52.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=21.8000","Cadmium":"=2.0700","Cobalt":"=29.7000","Mercury":"<0.0400","Molybdenum":"=6.0000","Nickel":"=48.4000","Lead":"<2.0000","Selenium":"<2.5000","Zinc":"=377.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MACROSOURCE LLC","label_name":"MACROSOURCE MAP MONOAMMONIUM PHOSPHATE 11-52-0","wsda_reg_no":"(#4041-0004)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D76FFA",
+  "metadata": {
+    "registrant": "MACROSOURCE LLC",
+    "label_name": "MACROSOURCE MAP MONOAMMONIUM PHOSPHATE 11-52-0",
+    "wsda_reg_no": "(#4041-0004)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4041-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4041-0004)",
+        "product_name": "MACROSOURCE MAP MONOAMMONIUM PHOSPHATE 11-52-0",
+        "company_info": {
+          "company": "MACROSOURCE LLC",
+          "Mailing Address": "5 Skidway Village Walk",
+          "Post Office Box": null,
+          "City": "Savannah",
+          "State": "GA",
+          "Postal Code": "31411",
+          "Telephone Number": "912 436-3354",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 52.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=21.8000",
+          "Cadmium": "=2.0700",
+          "Cobalt": "=29.7000",
+          "Mercury": "<0.0400",
+          "Molybdenum": "=6.0000",
+          "Nickel": "=48.4000",
+          "Lead": "<2.0000",
+          "Selenium": "<2.5000",
+          "Zinc": "=377.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MACROSOURCE MAP MONOAMMONIUM PHOSPHATE 11-52-0",
+    "brand": "MACROSOURCE LLC",
+    "manufacturer": {
+      "name": "MACROSOURCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 52.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D76FFA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 21.8,
+            "Cd": 2.07,
+            "Co": 29.7,
+            "Hg": 0.04,
+            "Mo": 6.0,
+            "Ni": 48.4,
+            "Pb": 2.0,
+            "Se": 2.5,
+            "Zn": 377.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.04,
+            "Pb": 2.0,
+            "Se": 2.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 21.8,
+        "Cd": 2.07,
+        "Co": 29.7,
+        "Mo": 6.0,
+        "Ni": 48.4,
+        "Zn": 377.0
+      }
+    }
+  }
+}

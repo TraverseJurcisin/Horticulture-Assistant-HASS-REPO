@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"C0534E","source_wsda_record":{"wsda_product_number":"(#3927-0006)","product_name":"TOP CHOICE SUN & SHADE 0.006-0-0.006","company_info":{"company":"MOUNTAIN VIEW SEEDS","Mailing Address":"8955 Sunnyview Rd NE","Post Office Box":null,"City":"Salem","State":"OR","Postal Code":"97305","Telephone Number":"503 588-7333","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.006,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.006,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.7600","Cadmium":"=0.1900","Cobalt":"=0.1200","Mercury":"=0.0100","Molybdenum":"=1.8200","Nickel":"=0.6900","Lead":"=0.0300","Selenium":"=0.3000","Zinc":"=56.2200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.006,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.006,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.7600","Cadmium":"=0.1900","Cobalt":"=0.1200","Mercury":"=0.0100","Molybdenum":"=1.8200","Nickel":"=0.6900","Lead":"=0.0300","Selenium":"=0.3000","Zinc":"=56.2200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MOUNTAIN VIEW SEEDS","label_name":"TOP CHOICE SUN & SHADE 0.006-0-0.006","wsda_reg_no":"(#3927-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C0534E",
+  "metadata": {
+    "registrant": "MOUNTAIN VIEW SEEDS",
+    "label_name": "TOP CHOICE SUN & SHADE 0.006-0-0.006",
+    "wsda_reg_no": "(#3927-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3927-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3927-0006)",
+        "product_name": "TOP CHOICE SUN & SHADE 0.006-0-0.006",
+        "company_info": {
+          "company": "MOUNTAIN VIEW SEEDS",
+          "Mailing Address": "8955 Sunnyview Rd NE",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "OR",
+          "Postal Code": "97305",
+          "Telephone Number": "503 588-7333",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.006,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.006,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.7600",
+          "Cadmium": "=0.1900",
+          "Cobalt": "=0.1200",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=1.8200",
+          "Nickel": "=0.6900",
+          "Lead": "=0.0300",
+          "Selenium": "=0.3000",
+          "Zinc": "=56.2200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TOP CHOICE SUN & SHADE 0.006-0-0.006",
+    "brand": "MOUNTAIN VIEW SEEDS",
+    "manufacturer": {
+      "name": "MOUNTAIN VIEW SEEDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.006,
+      "K2O_pct": 0.006
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C0534E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.76,
+            "Cd": 0.19,
+            "Co": 0.12,
+            "Hg": 0.01,
+            "Mo": 1.82,
+            "Ni": 0.69,
+            "Pb": 0.03,
+            "Se": 0.3,
+            "Zn": 56.22
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.76,
+        "Cd": 0.19,
+        "Co": 0.12,
+        "Hg": 0.01,
+        "Mo": 1.82,
+        "Ni": 0.69,
+        "Pb": 0.03,
+        "Se": 0.3,
+        "Zn": 56.22
+      }
+    }
+  }
+}

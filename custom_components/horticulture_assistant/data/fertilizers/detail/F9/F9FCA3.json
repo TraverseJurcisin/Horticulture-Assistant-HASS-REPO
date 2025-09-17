@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F9FCA3","source_wsda_record":{"wsda_product_number":"(#2554-0008)","product_name":"TIGER MICRONUTRIENTS MANGANESE 15% 0-0-0","company_info":{"company":"TIGER-SUL PRODUCTS LLC","Mailing Address":"PO Box126","Post Office Box":null,"City":"Irricana","State":"AB","Postal Code":"T0M1B0","Telephone Number":"403 935-0201","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":65.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":15.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=11.2600","Cadmium":"=1.0400","Cobalt":"=236.4000","Mercury":"=0.0290","Molybdenum":"<0.0200","Nickel":"=102.3000","Lead":"=28.2000","Selenium":"=1.0000","Zinc":"=1838.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":65.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":15.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=11.2600","Cadmium":"=1.0400","Cobalt":"=236.4000","Mercury":"=0.0290","Molybdenum":"<0.0200","Nickel":"=102.3000","Lead":"=28.2000","Selenium":"=1.0000","Zinc":"=1838.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TIGER-SUL PRODUCTS LLC","label_name":"TIGER MICRONUTRIENTS MANGANESE 15% 0-0-0","wsda_reg_no":"(#2554-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F9FCA3",
+  "metadata": {
+    "registrant": "TIGER-SUL PRODUCTS LLC",
+    "label_name": "TIGER MICRONUTRIENTS MANGANESE 15% 0-0-0",
+    "wsda_reg_no": "(#2554-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2554-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2554-0008)",
+        "product_name": "TIGER MICRONUTRIENTS MANGANESE 15% 0-0-0",
+        "company_info": {
+          "company": "TIGER-SUL PRODUCTS LLC",
+          "Mailing Address": "PO Box126",
+          "Post Office Box": null,
+          "City": "Irricana",
+          "State": "AB",
+          "Postal Code": "T0M1B0",
+          "Telephone Number": "403 935-0201",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 65.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 15.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=11.2600",
+          "Cadmium": "=1.0400",
+          "Cobalt": "=236.4000",
+          "Mercury": "=0.0290",
+          "Molybdenum": "<0.0200",
+          "Nickel": "=102.3000",
+          "Lead": "=28.2000",
+          "Selenium": "=1.0000",
+          "Zinc": "=1838.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TIGER MICRONUTRIENTS MANGANESE 15% 0-0-0",
+    "brand": "TIGER-SUL PRODUCTS LLC",
+    "manufacturer": {
+      "name": "TIGER-SUL PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 65.0
+    },
+    "micros_pct": {
+      "Mn": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F9FCA3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 11.26,
+            "Cd": 1.04,
+            "Co": 236.4,
+            "Hg": 0.029,
+            "Mo": 0.02,
+            "Ni": 102.3,
+            "Pb": 28.2,
+            "Se": 1.0,
+            "Zn": 1838.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.02
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 11.26,
+        "Cd": 1.04,
+        "Co": 236.4,
+        "Hg": 0.029,
+        "Ni": 102.3,
+        "Pb": 28.2,
+        "Se": 1.0,
+        "Zn": 1838.0
+      }
+    }
+  }
+}

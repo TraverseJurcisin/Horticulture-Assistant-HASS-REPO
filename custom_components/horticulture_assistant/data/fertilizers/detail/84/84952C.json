@@ -1,1 +1,91 @@
-{"schema_version": "2025-07-v1", "product_id": "84952C", "source_wsda_record": {"wsda_product_number": "(#9000-0020)", "product_name": "CaMg+ 0-0-0", "company_info": {"company": "GENERAL HYDROPONICS"}, "guaranteed_analysis": {"Total Nitrogen (N)": 0.0, "Available Phosphoric Acid (P2O5)": 0.0, "Soluble Potash (K2O)": 0.0, "Calcium (Ca)": null, "Magnesium (Mg)": null, "Sulfur (S)": null, "Boron (B)": null, "Chlorine (Cl)": null, "Cobalt (Co)": null, "Copper (Cu)": null, "Iron (Fe)": null, "Manganese (Mn)": null, "Molybdenum (Mo)": null, "Sodium (Na)": null, "Zinc (Zn)": null}, "reported_metals": {"Arsenic": null, "Cadmium": null, "Cobalt": null, "Mercury": null, "Molybdenum": null, "Nickel": null, "Lead": null, "Selenium": null, "Zinc": null}, "waste_derived_fertilizer": "N", "micronutrient_fertilizer": "N", "GYPSUM & LIMING MATERIALS": {"Calcium Carbonate (CaCO3)": null, "Calcium Carbonate Equivalent (CaCO3)": null, "Magnesium Carbonate (MgCO3)": null, "Calcium Sulfate (CaSO42H2O)": null}}, "composition": {"guaranteed_analysis": {"Total Nitrogen (N)": 0.0, "Available Phosphoric Acid (P2O5)": 0.0, "Soluble Potash (K2O)": 0.0, "Calcium (Ca)": null, "Magnesium (Mg)": null, "Sulfur (S)": null, "Boron (B)": null, "Chlorine (Cl)": null, "Cobalt (Co)": null, "Copper (Cu)": null, "Iron (Fe)": null, "Manganese (Mn)": null, "Molybdenum (Mo)": null, "Sodium (Na)": null, "Zinc (Zn)": null}, "heavy_metals": {"Arsenic": null, "Cadmium": null, "Cobalt": null, "Mercury": null, "Molybdenum": null, "Nickel": null, "Lead": null, "Selenium": null, "Zinc": null}, "derived_from_raw": null, "derived_from_tokens": ["calcium carbonate", "magnesium carbonate"], "active_ingredients": ["Calcium carbonate", "Magnesium carbonate"]}, "physicochemical": {"density_kg_per_l": null, "ph": {"min": null, "max": null}, "ec_ms_cm": null}, "commerce": {"sku_list": [], "price_history": []}, "metadata": {"registrant": "GENERAL HYDROPONICS", "label_name": "CaMg+ 0-0-0", "wsda_reg_no": "(#9000-0020)", "formulation": null, "first_seen": "2025-07-25", "detail_updated_at": "2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "84952C",
+  "metadata": {
+    "registrant": "GENERAL HYDROPONICS",
+    "label_name": "CaMg+ 0-0-0",
+    "wsda_reg_no": "(#9000-0020)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#9000-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#9000-0020)",
+        "product_name": "CaMg+ 0-0-0",
+        "company_info": {
+          "company": "GENERAL HYDROPONICS"
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.0,
+          "Available Phosphoric Acid (P2O5)": 0.0,
+          "Soluble Potash (K2O)": 0.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": null,
+          "Cadmium": null,
+          "Cobalt": null,
+          "Mercury": null,
+          "Molybdenum": null,
+          "Nickel": null,
+          "Lead": null,
+          "Selenium": null,
+          "Zinc": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N",
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        }
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CaMg+ 0-0-0",
+    "brand": "GENERAL HYDROPONICS",
+    "manufacturer": {
+      "name": "GENERAL HYDROPONICS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.0,
+      "P2O5_pct": 0.0,
+      "K2O_pct": 0.0
+    }
+  }
+}

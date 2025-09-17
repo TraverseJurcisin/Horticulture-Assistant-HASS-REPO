@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"E1B0E0","source_wsda_record":{"wsda_product_number":"(#2075-0037)","product_name":"FBSCIENCES PHOTOGREEN FOLIAR 0-0-0","company_info":{"company":"FBSCIENCES INC","Mailing Address":"1910 Innovation Way Ste 100","Post Office Box":null,"City":"Libertyville","State":"IL","Postal Code":"60048","Telephone Number":"901 221-1168","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=21.5000","Mercury":"<0.0500","Molybdenum":"=0.5000","Nickel":"=26.7000","Lead":"=2.5000","Selenium":"<0.5000","Zinc":"=50.3500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":5.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=21.5000","Mercury":"<0.0500","Molybdenum":"=0.5000","Nickel":"=26.7000","Lead":"=2.5000","Selenium":"<0.5000","Zinc":"=50.3500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FBSCIENCES INC","label_name":"FBSCIENCES PHOTOGREEN FOLIAR 0-0-0","wsda_reg_no":"(#2075-0037)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E1B0E0",
+  "metadata": {
+    "registrant": "FBSCIENCES INC",
+    "label_name": "FBSCIENCES PHOTOGREEN FOLIAR 0-0-0",
+    "wsda_reg_no": "(#2075-0037)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2075-0037)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2075-0037)",
+        "product_name": "FBSCIENCES PHOTOGREEN FOLIAR 0-0-0",
+        "company_info": {
+          "company": "FBSCIENCES INC",
+          "Mailing Address": "1910 Innovation Way Ste 100",
+          "Post Office Box": null,
+          "City": "Libertyville",
+          "State": "IL",
+          "Postal Code": "60048",
+          "Telephone Number": "901 221-1168",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0300",
+          "Cobalt": "=21.5000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=26.7000",
+          "Lead": "=2.5000",
+          "Selenium": "<0.5000",
+          "Zinc": "=50.3500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FBSCIENCES PHOTOGREEN FOLIAR 0-0-0",
+    "brand": "FBSCIENCES INC",
+    "manufacturer": {
+      "name": "FBSCIENCES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 5.0,
+      "Mn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E1B0E0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 21.5,
+            "Hg": 0.05,
+            "Mo": 0.5,
+            "Ni": 26.7,
+            "Pb": 2.5,
+            "Se": 0.5,
+            "Zn": 50.35
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 21.5,
+        "Mo": 0.5,
+        "Ni": 26.7,
+        "Pb": 2.5,
+        "Zn": 50.35
+      }
+    }
+  }
+}

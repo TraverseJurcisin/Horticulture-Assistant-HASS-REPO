@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"E43657","source_wsda_record":{"wsda_product_number":"(#0193-0262)","product_name":"LOVELAND PRODUCTS 9-19-19","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":19.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.7,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=6.0000","Cadmium":"=43.4000","Cobalt":"=8.0000","Mercury":"<0.0500","Molybdenum":"=8.8000","Nickel":"=127.1000","Lead":"=3.2000","Selenium":"<5.5000","Zinc":"=2736.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":19.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.7,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=6.0000","Cadmium":"=43.4000","Cobalt":"=8.0000","Mercury":"<0.0500","Molybdenum":"=8.8000","Nickel":"=127.1000","Lead":"=3.2000","Selenium":"<5.5000","Zinc":"=2736.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"LOVELAND PRODUCTS 9-19-19","wsda_reg_no":"(#0193-0262)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E43657",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "LOVELAND PRODUCTS 9-19-19",
+    "wsda_reg_no": "(#0193-0262)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0262)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0262)",
+        "product_name": "LOVELAND PRODUCTS 9-19-19",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 19.0,
+          "Soluble Potash (K2O)": 19.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.7,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.0000",
+          "Cadmium": "=43.4000",
+          "Cobalt": "=8.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=8.8000",
+          "Nickel": "=127.1000",
+          "Lead": "=3.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=2736.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LOVELAND PRODUCTS 9-19-19",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 19.0,
+      "K2O_pct": 19.0
+    },
+    "macros_pct": {
+      "S": 6.0
+    },
+    "micros_pct": {
+      "Fe": 2.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E43657-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.0,
+            "Cd": 43.4,
+            "Co": 8.0,
+            "Hg": 0.05,
+            "Mo": 8.8,
+            "Ni": 127.1,
+            "Pb": 3.2,
+            "Se": 5.5,
+            "Zn": 2736.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.0,
+        "Cd": 43.4,
+        "Co": 8.0,
+        "Mo": 8.8,
+        "Ni": 127.1,
+        "Pb": 3.2,
+        "Zn": 2736.0
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "28E986",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1021-0007)",
-    "product_name": "ADVANCED MICROBIAL SOLUTIONS NUTRILIFE 3-0-0",
-    "company_info": {
-      "company": "ADVANCED MICROBIAL SOLUTIONS LLC",
-      "Mailing Address": "1150 18th St NW Ste 475",
-      "Post Office Box": null,
-      "City": "Washington",
-      "State": "DC",
-      "Postal Code": "20036",
-      "Telephone Number": "530 601-5062",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8020",
-      "Cadmium": "=0.0140",
-      "Cobalt": "=1.5200",
-      "Mercury": "=0.0280",
-      "Molybdenum": "=3.3250",
-      "Nickel": "=0.4550",
-      "Lead": "<0.0100",
-      "Selenium": "=0.1540",
-      "Zinc": "=229.0800"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8020",
-      "Cadmium": "=0.0140",
-      "Cobalt": "=1.5200",
-      "Mercury": "=0.0280",
-      "Molybdenum": "=3.3250",
-      "Nickel": "=0.4550",
-      "Lead": "<0.0100",
-      "Selenium": "=0.1540",
-      "Zinc": "=229.0800"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "28E986",
   "metadata": {
     "registrant": "ADVANCED MICROBIAL SOLUTIONS LLC",
     "label_name": "ADVANCED MICROBIAL SOLUTIONS NUTRILIFE 3-0-0",
     "wsda_reg_no": "(#1021-0007)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1021-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1021-0007)",
+        "product_name": "ADVANCED MICROBIAL SOLUTIONS NUTRILIFE 3-0-0",
+        "company_info": {
+          "company": "ADVANCED MICROBIAL SOLUTIONS LLC",
+          "Mailing Address": "1150 18th St NW Ste 475",
+          "Post Office Box": null,
+          "City": "Washington",
+          "State": "DC",
+          "Postal Code": "20036",
+          "Telephone Number": "530 601-5062",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8020",
+          "Cadmium": "=0.0140",
+          "Cobalt": "=1.5200",
+          "Mercury": "=0.0280",
+          "Molybdenum": "=3.3250",
+          "Nickel": "=0.4550",
+          "Lead": "<0.0100",
+          "Selenium": "=0.1540",
+          "Zinc": "=229.0800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ADVANCED MICROBIAL SOLUTIONS NUTRILIFE 3-0-0",
+    "brand": "ADVANCED MICROBIAL SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "ADVANCED MICROBIAL SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "28E986-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.802,
+            "Cd": 0.014,
+            "Co": 1.52,
+            "Hg": 0.028,
+            "Mo": 3.325,
+            "Ni": 0.455,
+            "Pb": 0.01,
+            "Se": 0.154,
+            "Zn": 229.08
+          },
+          "detection_limits_ppm": {
+            "Pb": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.802,
+        "Cd": 0.014,
+        "Co": 1.52,
+        "Hg": 0.028,
+        "Mo": 3.325,
+        "Ni": 0.455,
+        "Se": 0.154,
+        "Zn": 229.08
+      }
+    }
   }
 }

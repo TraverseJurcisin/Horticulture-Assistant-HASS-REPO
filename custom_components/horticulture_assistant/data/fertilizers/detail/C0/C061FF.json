@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C061FF","source_wsda_record":{"wsda_product_number":"(#3906-0002)","product_name":"BUILDASOIL CRAFT BLEND 3-5-2","company_info":{"company":"BUILDASOIL LLC","Mailing Address":"5016 N Townsend Ave","Post Office Box":null,"City":"Montrose","State":"CO","Postal Code":"81401","Telephone Number":"855 877-7645","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.8000","Cadmium":"=7.0000","Cobalt":"=7.0000","Mercury":"=0.1000","Molybdenum":"=7.0000","Nickel":"=20.8000","Lead":"=10.0000","Selenium":"=10.5000","Zinc":"=143.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":3.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":10.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.8000","Cadmium":"=7.0000","Cobalt":"=7.0000","Mercury":"=0.1000","Molybdenum":"=7.0000","Nickel":"=20.8000","Lead":"=10.0000","Selenium":"=10.5000","Zinc":"=143.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BUILDASOIL LLC","label_name":"BUILDASOIL CRAFT BLEND 3-5-2","wsda_reg_no":"(#3906-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C061FF",
+  "metadata": {
+    "registrant": "BUILDASOIL LLC",
+    "label_name": "BUILDASOIL CRAFT BLEND 3-5-2",
+    "wsda_reg_no": "(#3906-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3906-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3906-0002)",
+        "product_name": "BUILDASOIL CRAFT BLEND 3-5-2",
+        "company_info": {
+          "company": "BUILDASOIL LLC",
+          "Mailing Address": "5016 N Townsend Ave",
+          "Post Office Box": null,
+          "City": "Montrose",
+          "State": "CO",
+          "Postal Code": "81401",
+          "Telephone Number": "855 877-7645",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 10.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=10.8000",
+          "Cadmium": "=7.0000",
+          "Cobalt": "=7.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=7.0000",
+          "Nickel": "=20.8000",
+          "Lead": "=10.0000",
+          "Selenium": "=10.5000",
+          "Zinc": "=143.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BUILDASOIL CRAFT BLEND 3-5-2",
+    "brand": "BUILDASOIL LLC",
+    "manufacturer": {
+      "name": "BUILDASOIL LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C061FF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.8,
+            "Cd": 7.0,
+            "Co": 7.0,
+            "Hg": 0.1,
+            "Mo": 7.0,
+            "Ni": 20.8,
+            "Pb": 10.0,
+            "Se": 10.5,
+            "Zn": 143.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.8,
+        "Cd": 7.0,
+        "Co": 7.0,
+        "Hg": 0.1,
+        "Mo": 7.0,
+        "Ni": 20.8,
+        "Pb": 10.0,
+        "Se": 10.5,
+        "Zn": 143.0
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "70B2A2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4063-0002)",
-    "product_name": "AGVENT REGEN PLUS 0-0-0",
-    "company_info": {
-      "company": "AGVENT LLC",
-      "Mailing Address": "1231 E 1420 N",
-      "Post Office Box": null,
-      "City": "Richfield",
-      "State": "ID",
-      "Postal Code": "83349",
-      "Telephone Number": "208 401-6631",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 30.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=36.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.1000",
-      "Molybdenum": "=12.5900",
-      "Nickel": "=4.3800",
-      "Lead": "=13.0000",
-      "Selenium": "=13.0000",
-      "Zinc": "=50.1700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "69.0000",
-      "Calcium Carbonate Equivalent (CaCO3)": "53.0000",
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 30.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=36.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.1000",
-      "Molybdenum": "=12.5900",
-      "Nickel": "=4.3800",
-      "Lead": "=13.0000",
-      "Selenium": "=13.0000",
-      "Zinc": "=50.1700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "70B2A2",
   "metadata": {
     "registrant": "AGVENT LLC",
     "label_name": "AGVENT REGEN PLUS 0-0-0",
     "wsda_reg_no": "(#4063-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4063-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4063-0002)",
+        "product_name": "AGVENT REGEN PLUS 0-0-0",
+        "company_info": {
+          "company": "AGVENT LLC",
+          "Mailing Address": "1231 E 1420 N",
+          "Post Office Box": null,
+          "City": "Richfield",
+          "State": "ID",
+          "Postal Code": "83349",
+          "Telephone Number": "208 401-6631",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 30.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=36.0000",
+          "Cadmium": "=2.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=1.1000",
+          "Molybdenum": "=12.5900",
+          "Nickel": "=4.3800",
+          "Lead": "=13.0000",
+          "Selenium": "=13.0000",
+          "Zinc": "=50.1700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "69.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "53.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGVENT REGEN PLUS 0-0-0",
+    "brand": "AGVENT LLC",
+    "manufacturer": {
+      "name": "AGVENT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 30.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "70B2A2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 36.0,
+            "Cd": 2.0,
+            "Co": 10.0,
+            "Hg": 1.1,
+            "Mo": 12.59,
+            "Ni": 4.38,
+            "Pb": 13.0,
+            "Se": 13.0,
+            "Zn": 50.17
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 36.0,
+        "Cd": 2.0,
+        "Co": 10.0,
+        "Hg": 1.1,
+        "Mo": 12.59,
+        "Ni": 4.38,
+        "Pb": 13.0,
+        "Se": 13.0,
+        "Zn": 50.17
+      }
+    }
   }
 }

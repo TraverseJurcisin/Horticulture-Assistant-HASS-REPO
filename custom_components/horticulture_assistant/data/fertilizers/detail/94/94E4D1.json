@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"94E4D1","source_wsda_record":{"wsda_product_number":"(#3898-0032)","product_name":"SLOW RELEASE NITROGEN AND MICRONUTRIENTS 15-15-10","company_info":{"company":"SIMPLOT TURF & HORTICULTURE","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":2.5,"Magnesium (Mg)":null,"Sulfur (S)":7.3,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.18,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":0.07},"reported_metals":{"Arsenic":"=4.0000","Cadmium":"=20.0000","Cobalt":"=8.3000","Mercury":"=0.0500","Molybdenum":"=3.9000","Nickel":"=96.0000","Lead":"=3.2000","Selenium":"<0.3500","Zinc":"=690.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":2.5,"Magnesium (Mg)":null,"Sulfur (S)":7.3,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.18,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.0007,"Sodium (Na)":null,"Zinc (Zn)":0.07},"heavy_metals":{"Arsenic":"=4.0000","Cadmium":"=20.0000","Cobalt":"=8.3000","Mercury":"=0.0500","Molybdenum":"=3.9000","Nickel":"=96.0000","Lead":"=3.2000","Selenium":"<0.3500","Zinc":"=690.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT TURF & HORTICULTURE","label_name":"SLOW RELEASE NITROGEN AND MICRONUTRIENTS 15-15-10","wsda_reg_no":"(#3898-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "94E4D1",
+  "metadata": {
+    "registrant": "SIMPLOT TURF & HORTICULTURE",
+    "label_name": "SLOW RELEASE NITROGEN AND MICRONUTRIENTS 15-15-10",
+    "wsda_reg_no": "(#3898-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3898-0032)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3898-0032)",
+        "product_name": "SLOW RELEASE NITROGEN AND MICRONUTRIENTS 15-15-10",
+        "company_info": {
+          "company": "SIMPLOT TURF & HORTICULTURE",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 2.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 7.3,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.18,
+          "Manganese (Mn)": 0.07,
+          "Molybdenum (Mo)": 0.0007,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.07
+        },
+        "reported_metals": {
+          "Arsenic": "=4.0000",
+          "Cadmium": "=20.0000",
+          "Cobalt": "=8.3000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=3.9000",
+          "Nickel": "=96.0000",
+          "Lead": "=3.2000",
+          "Selenium": "<0.3500",
+          "Zinc": "=690.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SLOW RELEASE NITROGEN AND MICRONUTRIENTS 15-15-10",
+    "brand": "SIMPLOT TURF & HORTICULTURE",
+    "manufacturer": {
+      "name": "SIMPLOT TURF & HORTICULTURE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 15.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 2.5,
+      "S": 7.3
+    },
+    "micros_pct": {
+      "Fe": 0.18,
+      "Mn": 0.07,
+      "Zn": 0.07,
+      "B": 0.03,
+      "Mo": 0.0007
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "94E4D1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.0,
+            "Cd": 20.0,
+            "Co": 8.3,
+            "Hg": 0.05,
+            "Mo": 3.9,
+            "Ni": 96.0,
+            "Pb": 3.2,
+            "Se": 0.35,
+            "Zn": 690.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.0,
+        "Cd": 20.0,
+        "Co": 8.3,
+        "Hg": 0.05,
+        "Mo": 3.9,
+        "Ni": 96.0,
+        "Pb": 3.2,
+        "Zn": 690.0
+      }
+    }
+  }
+}

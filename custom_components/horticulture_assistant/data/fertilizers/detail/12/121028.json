@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "121028",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0075-0067)",
-    "product_name": "CYTOZYME SEED+GRAPHITE A VERDESIAN NUE SOLUTION 0-0-0",
-    "company_info": {
-      "company": "CYTOZYME LABORATORIES INC",
-      "Mailing Address": "2700 South 600 West",
-      "Post Office Box": null,
-      "City": "Salt Lake City",
-      "State": "UT",
-      "Postal Code": "84115",
-      "Telephone Number": "801 533-9208",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.07,
-      "Copper (Cu)": 0.09,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.7,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.0
-    },
-    "reported_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "<0.4000",
-      "Cobalt": "=0.0840",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.0980",
-      "Nickel": "=14.1800",
-      "Lead": "=6.6200",
-      "Selenium": "<0.5000",
-      "Zinc": "=2.0400"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.07,
-      "Copper (Cu)": 0.09,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.7,
-      "Molybdenum (Mo)": 0.08,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "<0.4000",
-      "Cobalt": "=0.0840",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.0980",
-      "Nickel": "=14.1800",
-      "Lead": "=6.6200",
-      "Selenium": "<0.5000",
-      "Zinc": "=2.0400"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "121028",
   "metadata": {
     "registrant": "CYTOZYME LABORATORIES INC",
     "label_name": "CYTOZYME SEED+GRAPHITE A VERDESIAN NUE SOLUTION 0-0-0",
     "wsda_reg_no": "(#0075-0067)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0075-0067)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0075-0067)",
+        "product_name": "CYTOZYME SEED+GRAPHITE A VERDESIAN NUE SOLUTION 0-0-0",
+        "company_info": {
+          "company": "CYTOZYME LABORATORIES INC",
+          "Mailing Address": "2700 South 600 West",
+          "Post Office Box": null,
+          "City": "Salt Lake City",
+          "State": "UT",
+          "Postal Code": "84115",
+          "Telephone Number": "801 533-9208",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.07,
+          "Copper (Cu)": 0.09,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.7,
+          "Molybdenum (Mo)": 0.08,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "<0.4000",
+          "Cobalt": "=0.0840",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.0980",
+          "Nickel": "=14.1800",
+          "Lead": "=6.6200",
+          "Selenium": "<0.5000",
+          "Zinc": "=2.0400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CYTOZYME SEED+GRAPHITE A VERDESIAN NUE SOLUTION 0-0-0",
+    "brand": "CYTOZYME LABORATORIES INC",
+    "manufacturer": {
+      "name": "CYTOZYME LABORATORIES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 4.0,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.7,
+      "Zn": 2.0,
+      "Cu": 0.09,
+      "Mo": 0.08
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "121028-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 0.4,
+            "Co": 0.084,
+            "Hg": 0.001,
+            "Mo": 0.098,
+            "Ni": 14.18,
+            "Pb": 6.62,
+            "Se": 0.5,
+            "Zn": 2.04
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.4,
+            "Hg": 0.001,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Co": 0.084,
+        "Mo": 0.098,
+        "Ni": 14.18,
+        "Pb": 6.62,
+        "Zn": 2.04
+      }
+    }
   }
 }

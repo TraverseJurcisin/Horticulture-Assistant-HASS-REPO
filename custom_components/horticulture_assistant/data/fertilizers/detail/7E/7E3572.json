@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7E3572",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0189-0328)",
-    "product_name": "LESCO PROFESSIONAL STARTER FERTILIZER 18-24-12",
-    "company_info": {
-      "company": "LESCO INC",
-      "Mailing Address": "1385 East 36th Street",
-      "Post Office Box": null,
-      "City": "Cleveland",
-      "State": "OH",
-      "Postal Code": "44114-4114",
-      "Telephone Number": "440 454-3672",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": 24.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.04,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.5400",
-      "Cadmium": "=4.7000",
-      "Cobalt": "=1.2000",
-      "Mercury": "<0.0050",
-      "Molybdenum": "=4.9200",
-      "Nickel": "=6.7400",
-      "Lead": "=1.3600",
-      "Selenium": "<0.0535",
-      "Zinc": "=68.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 18.0,
-      "Available Phosphoric Acid (P2O5)": 24.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.04,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.5400",
-      "Cadmium": "=4.7000",
-      "Cobalt": "=1.2000",
-      "Mercury": "<0.0050",
-      "Molybdenum": "=4.9200",
-      "Nickel": "=6.7400",
-      "Lead": "=1.3600",
-      "Selenium": "<0.0535",
-      "Zinc": "=68.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7E3572",
   "metadata": {
     "registrant": "LESCO INC",
     "label_name": "LESCO PROFESSIONAL STARTER FERTILIZER 18-24-12",
     "wsda_reg_no": "(#0189-0328)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0328)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0328)",
+        "product_name": "LESCO PROFESSIONAL STARTER FERTILIZER 18-24-12",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 24.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.04,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.5400",
+          "Cadmium": "=4.7000",
+          "Cobalt": "=1.2000",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=4.9200",
+          "Nickel": "=6.7400",
+          "Lead": "=1.3600",
+          "Selenium": "<0.0535",
+          "Zinc": "=68.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO PROFESSIONAL STARTER FERTILIZER 18-24-12",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 24.0,
+      "K2O_pct": 12.0
+    },
+    "macros_pct": {
+      "S": 2.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7E3572-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.54,
+            "Cd": 4.7,
+            "Co": 1.2,
+            "Hg": 0.005,
+            "Mo": 4.92,
+            "Ni": 6.74,
+            "Pb": 1.36,
+            "Se": 0.0535,
+            "Zn": 68.5
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.005,
+            "Se": 0.0535
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.54,
+        "Cd": 4.7,
+        "Co": 1.2,
+        "Mo": 4.92,
+        "Ni": 6.74,
+        "Pb": 1.36,
+        "Zn": 68.5
+      }
+    }
   }
 }

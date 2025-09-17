@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"DD49B2","source_wsda_record":{"wsda_product_number":"(#3173-0032)","product_name":"BABY BIO HERB FOOD 4-5-4","company_info":{"company":"SBM LIFE SCIENCE CORPORATION","Mailing Address":"PO Box 525","Post Office Box":null,"City":"Morrisville","State":"NC","Postal Code":"27560","Telephone Number":"802 705-9730","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.4000","Nickel":"=0.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=0.6400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.4000","Nickel":"=0.1000","Lead":"=0.5000","Selenium":"=0.5000","Zinc":"=0.6400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SBM LIFE SCIENCE CORPORATION","label_name":"BABY BIO HERB FOOD 4-5-4","wsda_reg_no":"(#3173-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DD49B2",
+  "metadata": {
+    "registrant": "SBM LIFE SCIENCE CORPORATION",
+    "label_name": "BABY BIO HERB FOOD 4-5-4",
+    "wsda_reg_no": "(#3173-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3173-0032)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3173-0032)",
+        "product_name": "BABY BIO HERB FOOD 4-5-4",
+        "company_info": {
+          "company": "SBM LIFE SCIENCE CORPORATION",
+          "Mailing Address": "PO Box 525",
+          "Post Office Box": null,
+          "City": "Morrisville",
+          "State": "NC",
+          "Postal Code": "27560",
+          "Telephone Number": "802 705-9730",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.4000",
+          "Nickel": "=0.1000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=0.6400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BABY BIO HERB FOOD 4-5-4",
+    "brand": "SBM LIFE SCIENCE CORPORATION",
+    "manufacturer": {
+      "name": "SBM LIFE SCIENCE CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DD49B2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.4,
+            "Ni": 0.1,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 0.64
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.4,
+        "Ni": 0.1,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 0.64
+      }
+    }
+  }
+}

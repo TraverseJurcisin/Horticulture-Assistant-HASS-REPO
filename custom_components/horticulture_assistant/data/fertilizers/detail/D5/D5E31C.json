@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"D5E31C","source_wsda_record":{"wsda_product_number":"(#4173-0001)","product_name":"NUTRILING BLOOM SPIRIT 0-5-4","company_info":{"company":"AGRIDO SCIENCE LLC","Mailing Address":"8401 Granite Peak Ct","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89145","Telephone Number":"702 861-5169","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.4900","Cadmium":"<0.0880","Cobalt":"<0.0880","Mercury":"<0.0880","Molybdenum":"<0.0880","Nickel":"=0.0189","Lead":"<0.0176","Selenium":"<0.0880","Zinc":"<0.3380"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.5,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.4900","Cadmium":"<0.0880","Cobalt":"<0.0880","Mercury":"<0.0880","Molybdenum":"<0.0880","Nickel":"=0.0189","Lead":"<0.0176","Selenium":"<0.0880","Zinc":"<0.3380"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGRIDO SCIENCE LLC","label_name":"NUTRILING BLOOM SPIRIT 0-5-4","wsda_reg_no":"(#4173-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D5E31C",
+  "metadata": {
+    "registrant": "AGRIDO SCIENCE LLC",
+    "label_name": "NUTRILING BLOOM SPIRIT 0-5-4",
+    "wsda_reg_no": "(#4173-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4173-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4173-0001)",
+        "product_name": "NUTRILING BLOOM SPIRIT 0-5-4",
+        "company_info": {
+          "company": "AGRIDO SCIENCE LLC",
+          "Mailing Address": "8401 Granite Peak Ct",
+          "Post Office Box": null,
+          "City": "Las Vegas",
+          "State": "NV",
+          "Postal Code": "89145",
+          "Telephone Number": "702 861-5169",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.4900",
+          "Cadmium": "<0.0880",
+          "Cobalt": "<0.0880",
+          "Mercury": "<0.0880",
+          "Molybdenum": "<0.0880",
+          "Nickel": "=0.0189",
+          "Lead": "<0.0176",
+          "Selenium": "<0.0880",
+          "Zinc": "<0.3380"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRILING BLOOM SPIRIT 0-5-4",
+    "brand": "AGRIDO SCIENCE LLC",
+    "manufacturer": {
+      "name": "AGRIDO SCIENCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 5.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Mg": 1.5,
+      "S": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D5E31C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.49,
+            "Cd": 0.088,
+            "Co": 0.088,
+            "Hg": 0.088,
+            "Mo": 0.088,
+            "Ni": 0.0189,
+            "Pb": 0.0176,
+            "Se": 0.088,
+            "Zn": 0.338
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.088,
+            "Co": 0.088,
+            "Hg": 0.088,
+            "Mo": 0.088,
+            "Pb": 0.0176,
+            "Se": 0.088,
+            "Zn": 0.338
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.49,
+        "Ni": 0.0189
+      }
+    }
+  }
+}

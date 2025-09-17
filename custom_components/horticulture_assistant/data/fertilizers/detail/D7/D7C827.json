@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"D7C827","source_wsda_record":{"wsda_product_number":"(#4250-0002)","product_name":"NUTICOS PLANT ROOTING POWDER 10-47-0","company_info":{"company":"SNOWYANDME LLC","Mailing Address":"PO Box 9657","Post Office Box":null,"City":"Chandler Heights","State":"AZ","Postal Code":"85127","Telephone Number":"480 570-9637","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":47.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":3.1,"Sulfur (S)":2.0,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.94,"Manganese (Mn)":0.055,"Molybdenum (Mo)":null,"Sodium (Na)":0.34,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=32.0000","Cadmium":"=0.4600","Cobalt":"=4.5000","Mercury":"<0.1000","Molybdenum":"=3.1000","Nickel":"=14.0000","Lead":"=1.5000","Selenium":"=1.6000","Zinc":"=63.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":10.0,"Available Phosphoric Acid (P2O5)":47.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":3.1,"Sulfur (S)":2.0,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.94,"Manganese (Mn)":0.055,"Molybdenum (Mo)":null,"Sodium (Na)":0.34,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=32.0000","Cadmium":"=0.4600","Cobalt":"=4.5000","Mercury":"<0.1000","Molybdenum":"=3.1000","Nickel":"=14.0000","Lead":"=1.5000","Selenium":"=1.6000","Zinc":"=63.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SNOWYANDME LLC","label_name":"NUTICOS PLANT ROOTING POWDER 10-47-0","wsda_reg_no":"(#4250-0002)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D7C827",
+  "metadata": {
+    "registrant": "SNOWYANDME LLC",
+    "label_name": "NUTICOS PLANT ROOTING POWDER 10-47-0",
+    "wsda_reg_no": "(#4250-0002)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4250-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4250-0002)",
+        "product_name": "NUTICOS PLANT ROOTING POWDER 10-47-0",
+        "company_info": {
+          "company": "SNOWYANDME LLC",
+          "Mailing Address": "PO Box 9657",
+          "Post Office Box": null,
+          "City": "Chandler Heights",
+          "State": "AZ",
+          "Postal Code": "85127",
+          "Telephone Number": "480 570-9637",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 47.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.1,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": 0.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.94,
+          "Manganese (Mn)": 0.055,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": 0.34,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=32.0000",
+          "Cadmium": "=0.4600",
+          "Cobalt": "=4.5000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=3.1000",
+          "Nickel": "=14.0000",
+          "Lead": "=1.5000",
+          "Selenium": "=1.6000",
+          "Zinc": "=63.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTICOS PLANT ROOTING POWDER 10-47-0",
+    "brand": "SNOWYANDME LLC",
+    "manufacturer": {
+      "name": "SNOWYANDME LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 47.0
+    },
+    "macros_pct": {
+      "Mg": 3.1,
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.94,
+      "Mn": 0.055,
+      "B": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D7C827-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 32.0,
+            "Cd": 0.46,
+            "Co": 4.5,
+            "Hg": 0.1,
+            "Mo": 3.1,
+            "Ni": 14.0,
+            "Pb": 1.5,
+            "Se": 1.6,
+            "Zn": 63.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 32.0,
+        "Cd": 0.46,
+        "Co": 4.5,
+        "Mo": 3.1,
+        "Ni": 14.0,
+        "Pb": 1.5,
+        "Se": 1.6,
+        "Zn": 63.0
+      }
+    }
+  }
+}

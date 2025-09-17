@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"C592F2","source_wsda_record":{"wsda_product_number":"(#3401-0005)","product_name":"TEP PHOSNITE 0-4-0","company_info":{"company":"TEP INC","Mailing Address":"1823 Shaw Ave Ste 103","Post Office Box":null,"City":"Clovis","State":"CA","Postal Code":"93611","Telephone Number":"559 907-1017","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":17.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=8.2200","Cadmium":"=9.0500","Cobalt":"=1.2000","Mercury":"=0.0800","Molybdenum":"=1.6000","Nickel":"=14.8000","Lead":"=5.6000","Selenium":"=2.1000","Zinc":"=145.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":17.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=8.2200","Cadmium":"=9.0500","Cobalt":"=1.2000","Mercury":"=0.0800","Molybdenum":"=1.6000","Nickel":"=14.8000","Lead":"=5.6000","Selenium":"=2.1000","Zinc":"=145.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TEP INC","label_name":"TEP PHOSNITE 0-4-0","wsda_reg_no":"(#3401-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C592F2",
+  "metadata": {
+    "registrant": "TEP INC",
+    "label_name": "TEP PHOSNITE 0-4-0",
+    "wsda_reg_no": "(#3401-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3401-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3401-0005)",
+        "product_name": "TEP PHOSNITE 0-4-0",
+        "company_info": {
+          "company": "TEP INC",
+          "Mailing Address": "1823 Shaw Ave Ste 103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 907-1017",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 17.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=8.2200",
+          "Cadmium": "=9.0500",
+          "Cobalt": "=1.2000",
+          "Mercury": "=0.0800",
+          "Molybdenum": "=1.6000",
+          "Nickel": "=14.8000",
+          "Lead": "=5.6000",
+          "Selenium": "=2.1000",
+          "Zinc": "=145.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TEP PHOSNITE 0-4-0",
+    "brand": "TEP INC",
+    "manufacturer": {
+      "name": "TEP INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C592F2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.22,
+            "Cd": 9.05,
+            "Co": 1.2,
+            "Hg": 0.08,
+            "Mo": 1.6,
+            "Ni": 14.8,
+            "Pb": 5.6,
+            "Se": 2.1,
+            "Zn": 145.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 8.22,
+        "Cd": 9.05,
+        "Co": 1.2,
+        "Hg": 0.08,
+        "Mo": 1.6,
+        "Ni": 14.8,
+        "Pb": 5.6,
+        "Se": 2.1,
+        "Zn": 145.4
+      }
+    }
+  }
+}

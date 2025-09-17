@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"E6A666","source_wsda_record":{"wsda_product_number":"(#0310-0102)","product_name":"STOLLER GOLDEN HARVEST PLUS 5-18-2","company_info":{"company":"STOLLER ENTERPRISES INC","Mailing Address":"9090 Katy Freeway Ste 400","Post Office Box":null,"City":"Houston","State":"TX","Postal Code":"77024","Telephone Number":"713 329-0329","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":0.1,"Iron (Fe)":null,"Manganese (Mn)":0.4,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":0.6},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=526.0000","Mercury":"<0.0500","Molybdenum":"=500.0000","Nickel":"=108.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=8015.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":18.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.1,"Chlorine (Cl)":null,"Cobalt (Co)":0.02,"Copper (Cu)":0.1,"Iron (Fe)":null,"Manganese (Mn)":0.4,"Molybdenum (Mo)":0.05,"Sodium (Na)":null,"Zinc (Zn)":0.6},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=526.0000","Mercury":"<0.0500","Molybdenum":"=500.0000","Nickel":"=108.0000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=8015.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"STOLLER ENTERPRISES INC","label_name":"STOLLER GOLDEN HARVEST PLUS 5-18-2","wsda_reg_no":"(#0310-0102)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E6A666",
+  "metadata": {
+    "registrant": "STOLLER ENTERPRISES INC",
+    "label_name": "STOLLER GOLDEN HARVEST PLUS 5-18-2",
+    "wsda_reg_no": "(#0310-0102)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0310-0102)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0310-0102)",
+        "product_name": "STOLLER GOLDEN HARVEST PLUS 5-18-2",
+        "company_info": {
+          "company": "STOLLER ENTERPRISES INC",
+          "Mailing Address": "9090 Katy Freeway Ste 400",
+          "Post Office Box": null,
+          "City": "Houston",
+          "State": "TX",
+          "Postal Code": "77024",
+          "Telephone Number": "713 329-0329",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 18.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.1,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.02,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.4,
+          "Molybdenum (Mo)": 0.05,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.6
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "=526.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=500.0000",
+          "Nickel": "=108.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=8015.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STOLLER GOLDEN HARVEST PLUS 5-18-2",
+    "brand": "STOLLER ENTERPRISES INC",
+    "manufacturer": {
+      "name": "STOLLER ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 18.0,
+      "K2O_pct": 2.0
+    },
+    "micros_pct": {
+      "Mn": 0.4,
+      "Zn": 0.6,
+      "Cu": 0.1,
+      "B": 0.1,
+      "Mo": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E6A666-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 526.0,
+            "Hg": 0.05,
+            "Mo": 500.0,
+            "Ni": 108.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 8015.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 526.0,
+        "Mo": 500.0,
+        "Ni": 108.0,
+        "Zn": 8015.0
+      }
+    }
+  }
+}

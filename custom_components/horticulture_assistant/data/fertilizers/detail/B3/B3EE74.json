@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B3EE74","source_wsda_record":{"wsda_product_number":"(#3818-0005)","product_name":"GROPRO PASSPORT 0-0-0","company_info":{"company":"GROPRO INC","Mailing Address":"c/o KRK Consulting LLC","Post Office Box":"1152 Perry Hwy","City":"Mercer","State":"PA","Postal Code":"16137","Telephone Number":"833 476-7761","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.6600","Cadmium":"=0.2100","Cobalt":"=0.1100","Mercury":"=0.0010","Molybdenum":"=0.0300","Nickel":"=0.1900","Lead":"=2.8600","Selenium":"=1.5700","Zinc":"=4.1200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.6600","Cadmium":"=0.2100","Cobalt":"=0.1100","Mercury":"=0.0010","Molybdenum":"=0.0300","Nickel":"=0.1900","Lead":"=2.8600","Selenium":"=1.5700","Zinc":"=4.1200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GROPRO INC","label_name":"GROPRO PASSPORT 0-0-0","wsda_reg_no":"(#3818-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B3EE74",
+  "metadata": {
+    "registrant": "GROPRO INC",
+    "label_name": "GROPRO PASSPORT 0-0-0",
+    "wsda_reg_no": "(#3818-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3818-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3818-0005)",
+        "product_name": "GROPRO PASSPORT 0-0-0",
+        "company_info": {
+          "company": "GROPRO INC",
+          "Mailing Address": "c/o KRK Consulting LLC",
+          "Post Office Box": "1152 Perry Hwy",
+          "City": "Mercer",
+          "State": "PA",
+          "Postal Code": "16137",
+          "Telephone Number": "833 476-7761",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.6600",
+          "Cadmium": "=0.2100",
+          "Cobalt": "=0.1100",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.0300",
+          "Nickel": "=0.1900",
+          "Lead": "=2.8600",
+          "Selenium": "=1.5700",
+          "Zinc": "=4.1200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROPRO PASSPORT 0-0-0",
+    "brand": "GROPRO INC",
+    "manufacturer": {
+      "name": "GROPRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B3EE74-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.66,
+            "Cd": 0.21,
+            "Co": 0.11,
+            "Hg": 0.001,
+            "Mo": 0.03,
+            "Ni": 0.19,
+            "Pb": 2.86,
+            "Se": 1.57,
+            "Zn": 4.12
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.66,
+        "Cd": 0.21,
+        "Co": 0.11,
+        "Hg": 0.001,
+        "Mo": 0.03,
+        "Ni": 0.19,
+        "Pb": 2.86,
+        "Se": 1.57,
+        "Zn": 4.12
+      }
+    }
+  }
+}

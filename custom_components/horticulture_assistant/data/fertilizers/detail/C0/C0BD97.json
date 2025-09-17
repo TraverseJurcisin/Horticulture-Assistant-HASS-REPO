@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C0BD97","source_wsda_record":{"wsda_product_number":"(#3409-0030)","product_name":"0-45-0 TRIPLE SUPERPHOSPHATE 0-45-0","company_info":{"company":"NUTRIEN AG SOLUTIONS","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 613-3191","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":45.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":15.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=12.8000","Cadmium":"=95.7000","Cobalt":"=2.9000","Mercury":"<0.0500","Molybdenum":"=11.2000","Nickel":"=118.1000","Lead":"=3.9000","Selenium":"<5.5000","Zinc":"=1296.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":45.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":15.5,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=12.8000","Cadmium":"=95.7000","Cobalt":"=2.9000","Mercury":"<0.0500","Molybdenum":"=11.2000","Nickel":"=118.1000","Lead":"=3.9000","Selenium":"<5.5000","Zinc":"=1296.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIEN AG SOLUTIONS","label_name":"0-45-0 TRIPLE SUPERPHOSPHATE 0-45-0","wsda_reg_no":"(#3409-0030)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C0BD97",
+  "metadata": {
+    "registrant": "NUTRIEN AG SOLUTIONS",
+    "label_name": "0-45-0 TRIPLE SUPERPHOSPHATE 0-45-0",
+    "wsda_reg_no": "(#3409-0030)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3409-0030)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3409-0030)",
+        "product_name": "0-45-0 TRIPLE SUPERPHOSPHATE 0-45-0",
+        "company_info": {
+          "company": "NUTRIEN AG SOLUTIONS",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 613-3191",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 45.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 15.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=12.8000",
+          "Cadmium": "=95.7000",
+          "Cobalt": "=2.9000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=11.2000",
+          "Nickel": "=118.1000",
+          "Lead": "=3.9000",
+          "Selenium": "<5.5000",
+          "Zinc": "=1296.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "0-45-0 TRIPLE SUPERPHOSPHATE 0-45-0",
+    "brand": "NUTRIEN AG SOLUTIONS",
+    "manufacturer": {
+      "name": "NUTRIEN AG SOLUTIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 45.0
+    },
+    "macros_pct": {
+      "Ca": 15.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C0BD97-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 12.8,
+            "Cd": 95.7,
+            "Co": 2.9,
+            "Hg": 0.05,
+            "Mo": 11.2,
+            "Ni": 118.1,
+            "Pb": 3.9,
+            "Se": 5.5,
+            "Zn": 1296.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 12.8,
+        "Cd": 95.7,
+        "Co": 2.9,
+        "Mo": 11.2,
+        "Ni": 118.1,
+        "Pb": 3.9,
+        "Zn": 1296.0
+      }
+    }
+  }
+}

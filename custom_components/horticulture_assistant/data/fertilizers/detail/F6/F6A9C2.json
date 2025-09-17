@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"F6A9C2","source_wsda_record":{"wsda_product_number":"(#0189-0217)","product_name":"LESCO PROFESSIONAL TURF PRODUCTS WITH POLYPLUS 15-4-21","company_info":{"company":"LESCO INC","Mailing Address":"1385 East 36th Street","Post Office Box":null,"City":"Cleveland","State":"OH","Postal Code":"44114-4114","Telephone Number":"440 454-3672","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.64,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.0000","Cadmium":"=5.9000","Cobalt":"=9.6000","Mercury":"<0.0500","Molybdenum":"=16.7000","Nickel":"=24.9000","Lead":"=18.1000","Selenium":"<5.5000","Zinc":"=11690.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":21.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.64,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.0000","Cadmium":"=5.9000","Cobalt":"=9.6000","Mercury":"<0.0500","Molybdenum":"=16.7000","Nickel":"=24.9000","Lead":"=18.1000","Selenium":"<5.5000","Zinc":"=11690.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LESCO INC","label_name":"LESCO PROFESSIONAL TURF PRODUCTS WITH POLYPLUS 15-4-21","wsda_reg_no":"(#0189-0217)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F6A9C2",
+  "metadata": {
+    "registrant": "LESCO INC",
+    "label_name": "LESCO PROFESSIONAL TURF PRODUCTS WITH POLYPLUS 15-4-21",
+    "wsda_reg_no": "(#0189-0217)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0217)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0217)",
+        "product_name": "LESCO PROFESSIONAL TURF PRODUCTS WITH POLYPLUS 15-4-21",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 21.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.64,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=5.9000",
+          "Cobalt": "=9.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=16.7000",
+          "Nickel": "=24.9000",
+          "Lead": "=18.1000",
+          "Selenium": "<5.5000",
+          "Zinc": "=11690.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO PROFESSIONAL TURF PRODUCTS WITH POLYPLUS 15-4-21",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 21.0
+    },
+    "macros_pct": {
+      "Ca": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.64
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F6A9C2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 5.9,
+            "Co": 9.6,
+            "Hg": 0.05,
+            "Mo": 16.7,
+            "Ni": 24.9,
+            "Pb": 18.1,
+            "Se": 5.5,
+            "Zn": 11690.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 5.9,
+        "Co": 9.6,
+        "Mo": 16.7,
+        "Ni": 24.9,
+        "Pb": 18.1,
+        "Zn": 11690.0
+      }
+    }
+  }
+}

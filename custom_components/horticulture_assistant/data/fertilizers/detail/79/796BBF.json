@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "796BBF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3195-0013)",
-    "product_name": "CELL POWER ZYNERGY 0-0-0",
-    "company_info": {
-      "company": "OMEX AGRIFLUIDS INC",
-      "Mailing Address": "1823 Shaw Ave Ste 103",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93611",
-      "Telephone Number": "559 661-6138",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "reported_metals": {
-      "Arsenic": "=1.3800",
-      "Cadmium": "=0.1700",
-      "Cobalt": "=1.1300",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=0.2000",
-      "Nickel": "=127.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=43550.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 2.0,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 3.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.3800",
-      "Cadmium": "=0.1700",
-      "Cobalt": "=1.1300",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=0.2000",
-      "Nickel": "=127.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=43550.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "796BBF",
   "metadata": {
     "registrant": "OMEX AGRIFLUIDS INC",
     "label_name": "CELL POWER ZYNERGY 0-0-0",
     "wsda_reg_no": "(#3195-0013)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3195-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3195-0013)",
+        "product_name": "CELL POWER ZYNERGY 0-0-0",
+        "company_info": {
+          "company": "OMEX AGRIFLUIDS INC",
+          "Mailing Address": "1823 Shaw Ave Ste 103",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 661-6138",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 2.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "=1.3800",
+          "Cadmium": "=0.1700",
+          "Cobalt": "=1.1300",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=127.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=0.5000",
+          "Zinc": "=43550.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CELL POWER ZYNERGY 0-0-0",
+    "brand": "OMEX AGRIFLUIDS INC",
+    "manufacturer": {
+      "name": "OMEX AGRIFLUIDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Zn": 3.0,
+      "Cu": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "796BBF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.38,
+            "Cd": 0.17,
+            "Co": 1.13,
+            "Hg": 0.05,
+            "Mo": 0.2,
+            "Ni": 127.0,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 43550.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.38,
+        "Cd": 0.17,
+        "Co": 1.13,
+        "Mo": 0.2,
+        "Ni": 127.0,
+        "Pb": 5.0,
+        "Se": 0.5,
+        "Zn": 43550.0
+      }
+    }
   }
 }

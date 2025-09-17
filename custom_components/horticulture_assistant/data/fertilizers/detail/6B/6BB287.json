@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6BB287",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4010-0001)",
-    "product_name": "NUTRIEN MONOAMMONIUM PHOSPHATE MAP 11-52-0",
-    "company_info": {
-      "company": "NUTRIEN US LLC",
-      "Mailing Address": "5296 Harvest Lake Drive",
-      "Post Office Box": null,
-      "City": "Loveland",
-      "State": "CO",
-      "Postal Code": "80538",
-      "Telephone Number": "970 613-3191",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 11.0,
-      "Available Phosphoric Acid (P2O5)": 52.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.8000",
-      "Cadmium": "=56.0000",
-      "Cobalt": "=3.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=14.0000",
-      "Nickel": "=40.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.3000",
-      "Zinc": "=803.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 11.0,
-      "Available Phosphoric Acid (P2O5)": 52.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.8000",
-      "Cadmium": "=56.0000",
-      "Cobalt": "=3.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=14.0000",
-      "Nickel": "=40.0000",
-      "Lead": "=1.0000",
-      "Selenium": "=0.3000",
-      "Zinc": "=803.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6BB287",
   "metadata": {
     "registrant": "NUTRIEN US LLC",
     "label_name": "NUTRIEN MONOAMMONIUM PHOSPHATE MAP 11-52-0",
     "wsda_reg_no": "(#4010-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4010-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4010-0001)",
+        "product_name": "NUTRIEN MONOAMMONIUM PHOSPHATE MAP 11-52-0",
+        "company_info": {
+          "company": "NUTRIEN US LLC",
+          "Mailing Address": "5296 Harvest Lake Drive",
+          "Post Office Box": null,
+          "City": "Loveland",
+          "State": "CO",
+          "Postal Code": "80538",
+          "Telephone Number": "970 613-3191",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 52.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.8000",
+          "Cadmium": "=56.0000",
+          "Cobalt": "=3.3000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=14.0000",
+          "Nickel": "=40.0000",
+          "Lead": "=1.0000",
+          "Selenium": "=0.3000",
+          "Zinc": "=803.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIEN MONOAMMONIUM PHOSPHATE MAP 11-52-0",
+    "brand": "NUTRIEN US LLC",
+    "manufacturer": {
+      "name": "NUTRIEN US LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 52.0
+    },
+    "micros_pct": {
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6BB287-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.8,
+            "Cd": 56.0,
+            "Co": 3.3,
+            "Hg": 0.01,
+            "Mo": 14.0,
+            "Ni": 40.0,
+            "Pb": 1.0,
+            "Se": 0.3,
+            "Zn": 803.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.8,
+        "Cd": 56.0,
+        "Co": 3.3,
+        "Hg": 0.01,
+        "Mo": 14.0,
+        "Ni": 40.0,
+        "Pb": 1.0,
+        "Se": 0.3,
+        "Zn": 803.0
+      }
+    }
   }
 }

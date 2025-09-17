@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "27FFA3",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3092-0015)",
-    "product_name": "QUICK & THICK PLUS LAWN REPAIR 0.48-0-0.48",
-    "company_info": {
-      "company": "DLF USA INC",
-      "Mailing Address": "33080 Red Bridge Rd SE",
-      "Post Office Box": null,
-      "City": "Albany",
-      "State": "OR",
-      "Postal Code": "97322",
-      "Telephone Number": "541 369-2251",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.48,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.48,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.125
-    },
-    "reported_metals": {
-      "Arsenic": "=0.3200",
-      "Cadmium": "=0.1400",
-      "Cobalt": "=1.0800",
-      "Mercury": "=0.0110",
-      "Molybdenum": "=0.4400",
-      "Nickel": "=0.9800",
-      "Lead": "=3.0000",
-      "Selenium": "=0.3300",
-      "Zinc": "=850.8300"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.48,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 0.48,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.125
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.3200",
-      "Cadmium": "=0.1400",
-      "Cobalt": "=1.0800",
-      "Mercury": "=0.0110",
-      "Molybdenum": "=0.4400",
-      "Nickel": "=0.9800",
-      "Lead": "=3.0000",
-      "Selenium": "=0.3300",
-      "Zinc": "=850.8300"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "27FFA3",
   "metadata": {
     "registrant": "DLF USA INC",
     "label_name": "QUICK & THICK PLUS LAWN REPAIR 0.48-0-0.48",
     "wsda_reg_no": "(#3092-0015)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3092-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3092-0015)",
+        "product_name": "QUICK & THICK PLUS LAWN REPAIR 0.48-0-0.48",
+        "company_info": {
+          "company": "DLF USA INC",
+          "Mailing Address": "33080 Red Bridge Rd SE",
+          "Post Office Box": null,
+          "City": "Albany",
+          "State": "OR",
+          "Postal Code": "97322",
+          "Telephone Number": "541 369-2251",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.48,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.48,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.125
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3200",
+          "Cadmium": "=0.1400",
+          "Cobalt": "=1.0800",
+          "Mercury": "=0.0110",
+          "Molybdenum": "=0.4400",
+          "Nickel": "=0.9800",
+          "Lead": "=3.0000",
+          "Selenium": "=0.3300",
+          "Zinc": "=850.8300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "QUICK & THICK PLUS LAWN REPAIR 0.48-0-0.48",
+    "brand": "DLF USA INC",
+    "manufacturer": {
+      "name": "DLF USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.48,
+      "K2O_pct": 0.48
+    },
+    "micros_pct": {
+      "Zn": 0.125
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "27FFA3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.32,
+            "Cd": 0.14,
+            "Co": 1.08,
+            "Hg": 0.011,
+            "Mo": 0.44,
+            "Ni": 0.98,
+            "Pb": 3.0,
+            "Se": 0.33,
+            "Zn": 850.83
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.32,
+        "Cd": 0.14,
+        "Co": 1.08,
+        "Hg": 0.011,
+        "Mo": 0.44,
+        "Ni": 0.98,
+        "Pb": 3.0,
+        "Se": 0.33,
+        "Zn": 850.83
+      }
+    }
   }
 }

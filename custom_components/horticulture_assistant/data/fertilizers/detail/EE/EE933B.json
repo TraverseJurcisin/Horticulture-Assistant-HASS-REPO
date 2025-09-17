@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"EE933B","source_wsda_record":{"wsda_product_number":"(#3877-0010)","product_name":"VERDELNX GRN BOOST SI 4-0-8","company_info":{"company":"AQUATROLS CORP OF AMERICA","Mailing Address":"1273 Imperial Way","Post Office Box":null,"City":"Paulsboro","State":"NJ","Postal Code":"08066","Telephone Number":"800 257-7797","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0500","Cobalt":"<0.1000","Mercury":"<0.0224","Molybdenum":"<0.1500","Nickel":"<0.1500","Lead":"<0.2000","Selenium":"<0.3500","Zinc":"<0.8500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0500","Cobalt":"<0.1000","Mercury":"<0.0224","Molybdenum":"<0.1500","Nickel":"<0.1500","Lead":"<0.2000","Selenium":"<0.3500","Zinc":"<0.8500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AQUATROLS CORP OF AMERICA","label_name":"VERDELNX GRN BOOST SI 4-0-8","wsda_reg_no":"(#3877-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EE933B",
+  "metadata": {
+    "registrant": "AQUATROLS CORP OF AMERICA",
+    "label_name": "VERDELNX GRN BOOST SI 4-0-8",
+    "wsda_reg_no": "(#3877-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3877-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3877-0010)",
+        "product_name": "VERDELNX GRN BOOST SI 4-0-8",
+        "company_info": {
+          "company": "AQUATROLS CORP OF AMERICA",
+          "Mailing Address": "1273 Imperial Way",
+          "Post Office Box": null,
+          "City": "Paulsboro",
+          "State": "NJ",
+          "Postal Code": "08066",
+          "Telephone Number": "800 257-7797",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0500",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0224",
+          "Molybdenum": "<0.1500",
+          "Nickel": "<0.1500",
+          "Lead": "<0.2000",
+          "Selenium": "<0.3500",
+          "Zinc": "<0.8500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VERDELNX GRN BOOST SI 4-0-8",
+    "brand": "AQUATROLS CORP OF AMERICA",
+    "manufacturer": {
+      "name": "AQUATROLS CORP OF AMERICA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "K2O_pct": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EE933B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.05,
+            "Co": 0.1,
+            "Hg": 0.0224,
+            "Mo": 0.15,
+            "Ni": 0.15,
+            "Pb": 0.2,
+            "Se": 0.35,
+            "Zn": 0.85
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.05,
+            "Co": 0.1,
+            "Hg": 0.0224,
+            "Mo": 0.15,
+            "Ni": 0.15,
+            "Pb": 0.2,
+            "Se": 0.35,
+            "Zn": 0.85
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
+  }
+}

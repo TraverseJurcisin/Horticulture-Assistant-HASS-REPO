@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"F3AB77","source_wsda_record":{"wsda_product_number":"(#3481-0017)","product_name":"VAN IPEREN FOLIASTIM CALCIUM SC 0-0-0.7","company_info":{"company":"VAN IPEREN INTERNATIONAL B.V.","Mailing Address":"Smidsweg 24","Post Office Box":null,"City":"Westmaas","State":"NL","Postal Code":"3273LK","Telephone Number":"311 865-7888","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=5.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=20.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=5.0000","Cobalt":"=5.0000","Mercury":"=1.0000","Molybdenum":"=5.0000","Nickel":"=5.0000","Lead":"=5.0000","Selenium":"=5.0000","Zinc":"=20.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VAN IPEREN INTERNATIONAL B.V.","label_name":"VAN IPEREN FOLIASTIM CALCIUM SC 0-0-0.7","wsda_reg_no":"(#3481-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F3AB77",
+  "metadata": {
+    "registrant": "VAN IPEREN INTERNATIONAL B.V.",
+    "label_name": "VAN IPEREN FOLIASTIM CALCIUM SC 0-0-0.7",
+    "wsda_reg_no": "(#3481-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3481-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3481-0017)",
+        "product_name": "VAN IPEREN FOLIASTIM CALCIUM SC 0-0-0.7",
+        "company_info": {
+          "company": "VAN IPEREN INTERNATIONAL B.V.",
+          "Mailing Address": "Smidsweg 24",
+          "Post Office Box": null,
+          "City": "Westmaas",
+          "State": "NL",
+          "Postal Code": "3273LK",
+          "Telephone Number": "311 865-7888",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.7,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=5.0000",
+          "Nickel": "=5.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=5.0000",
+          "Zinc": "=20.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VAN IPEREN FOLIASTIM CALCIUM SC 0-0-0.7",
+    "brand": "VAN IPEREN INTERNATIONAL B.V.",
+    "manufacturer": {
+      "name": "VAN IPEREN INTERNATIONAL B.V."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 0.7
+    },
+    "macros_pct": {
+      "Ca": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F3AB77-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 5.0,
+            "Co": 5.0,
+            "Hg": 1.0,
+            "Mo": 5.0,
+            "Ni": 5.0,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 20.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 5.0,
+        "Co": 5.0,
+        "Hg": 1.0,
+        "Mo": 5.0,
+        "Ni": 5.0,
+        "Pb": 5.0,
+        "Se": 5.0,
+        "Zn": 20.0
+      }
+    }
+  }
+}

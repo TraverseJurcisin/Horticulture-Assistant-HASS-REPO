@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"E25FED","source_wsda_record":{"wsda_product_number":"(#2281-0035)","product_name":"SUSTANE NATURALLY NATURAL BASED GRANULATED SLOW RELEASE NITROGEN FERTILIZER PLUS IRON 5-2-4","company_info":{"company":"SUSTANE NATURAL FERTILIZER INC","Mailing Address":"310 Holiday Ave","Post Office Box":null,"City":"Cannon Falls","State":"MN","Postal Code":"55009","Telephone Number":"507 263-3003","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.4200","Cadmium":"<0.2000","Cobalt":"=5.2000","Mercury":"<0.0500","Molybdenum":"=10.5000","Nickel":"=20.7000","Lead":"=14.6000","Selenium":"=1.4900","Zinc":"=399.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":null,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.4200","Cadmium":"<0.2000","Cobalt":"=5.2000","Mercury":"<0.0500","Molybdenum":"=10.5000","Nickel":"=20.7000","Lead":"=14.6000","Selenium":"=1.4900","Zinc":"=399.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUSTANE NATURAL FERTILIZER INC","label_name":"SUSTANE NATURALLY NATURAL BASED GRANULATED SLOW RELEASE NITROGEN FERTILIZER PLUS IRON 5-2-4","wsda_reg_no":"(#2281-0035)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E25FED",
+  "metadata": {
+    "registrant": "SUSTANE NATURAL FERTILIZER INC",
+    "label_name": "SUSTANE NATURALLY NATURAL BASED GRANULATED SLOW RELEASE NITROGEN FERTILIZER PLUS IRON 5-2-4",
+    "wsda_reg_no": "(#2281-0035)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2281-0035)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2281-0035)",
+        "product_name": "SUSTANE NATURALLY NATURAL BASED GRANULATED SLOW RELEASE NITROGEN FERTILIZER PLUS IRON 5-2-4",
+        "company_info": {
+          "company": "SUSTANE NATURAL FERTILIZER INC",
+          "Mailing Address": "310 Holiday Ave",
+          "Post Office Box": null,
+          "City": "Cannon Falls",
+          "State": "MN",
+          "Postal Code": "55009",
+          "Telephone Number": "507 263-3003",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4200",
+          "Cadmium": "<0.2000",
+          "Cobalt": "=5.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=10.5000",
+          "Nickel": "=20.7000",
+          "Lead": "=14.6000",
+          "Selenium": "=1.4900",
+          "Zinc": "=399.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUSTANE NATURALLY NATURAL BASED GRANULATED SLOW RELEASE NITROGEN FERTILIZER PLUS IRON 5-2-4",
+    "brand": "SUSTANE NATURAL FERTILIZER INC",
+    "manufacturer": {
+      "name": "SUSTANE NATURAL FERTILIZER INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "S": 2.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E25FED-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.42,
+            "Cd": 0.2,
+            "Co": 5.2,
+            "Hg": 0.05,
+            "Mo": 10.5,
+            "Ni": 20.7,
+            "Pb": 14.6,
+            "Se": 1.49,
+            "Zn": 399.6
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.2,
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.42,
+        "Co": 5.2,
+        "Mo": 10.5,
+        "Ni": 20.7,
+        "Pb": 14.6,
+        "Se": 1.49,
+        "Zn": 399.6
+      }
+    }
+  }
+}

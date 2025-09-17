@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3EB472",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2626-0041)",
-    "product_name": "PENNINGTON REJUVENATE PLANT FOOD ROSE & FLOWER 4-6-3",
-    "company_info": {
-      "company": "CENTRAL GARDEN & PET DIVISION",
-      "Mailing Address": "PO Box 1019",
-      "Post Office Box": null,
-      "City": "Salem",
-      "State": "VA",
-      "Postal Code": "24153-1019",
-      "Telephone Number": "503 581-7823",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": 8.75,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.25,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "=0.0800",
-      "Cobalt": "=0.7000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=7.0000",
-      "Lead": "=1.9000",
-      "Selenium": "=1.0000",
-      "Zinc": "=159.4000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": 8.75,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.25,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2500",
-      "Cadmium": "=0.0800",
-      "Cobalt": "=0.7000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=7.0000",
-      "Lead": "=1.9000",
-      "Selenium": "=1.0000",
-      "Zinc": "=159.4000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3EB472",
   "metadata": {
     "registrant": "CENTRAL GARDEN & PET DIVISION",
     "label_name": "PENNINGTON REJUVENATE PLANT FOOD ROSE & FLOWER 4-6-3",
     "wsda_reg_no": "(#2626-0041)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0041)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0041)",
+        "product_name": "PENNINGTON REJUVENATE PLANT FOOD ROSE & FLOWER 4-6-3",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 8.75,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 1.25,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "=0.0800",
+          "Cobalt": "=0.7000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.2000",
+          "Nickel": "=7.0000",
+          "Lead": "=1.9000",
+          "Selenium": "=1.0000",
+          "Zinc": "=159.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON REJUVENATE PLANT FOOD ROSE & FLOWER 4-6-3",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 8.75,
+      "Mg": 0.5,
+      "S": 1.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3EB472-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.08,
+            "Co": 0.7,
+            "Hg": 0.05,
+            "Mo": 1.2,
+            "Ni": 7.0,
+            "Pb": 1.9,
+            "Se": 1.0,
+            "Zn": 159.4
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.08,
+        "Co": 0.7,
+        "Mo": 1.2,
+        "Ni": 7.0,
+        "Pb": 1.9,
+        "Se": 1.0,
+        "Zn": 159.4
+      }
+    }
   }
 }

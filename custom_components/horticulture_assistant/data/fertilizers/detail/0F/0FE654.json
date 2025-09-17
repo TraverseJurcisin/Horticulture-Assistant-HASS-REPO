@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0FE654",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1886-0162)",
-    "product_name": "2-28-25 MUP 2-28-25",
-    "company_info": {
-      "company": "WINFIELD SOLUTIONS LLC",
-      "Mailing Address": "PO Box 64589",
-      "Post Office Box": null,
-      "City": "St Paul",
-      "State": "MN",
-      "Postal Code": "55164",
-      "Telephone Number": "651 375-7228",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 28.0,
-      "Soluble Potash (K2O)": 25.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.24,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.6,
-      "Iron (Fe)": 1.2,
-      "Manganese (Mn)": 0.6,
-      "Molybdenum (Mo)": 0.006,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.6
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.0500",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=74.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=5425.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": 28.0,
-      "Soluble Potash (K2O)": 25.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.24,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.6,
-      "Iron (Fe)": 1.2,
-      "Manganese (Mn)": 0.6,
-      "Molybdenum (Mo)": 0.006,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.6
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=0.0500",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=74.0000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=5425.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0FE654",
   "metadata": {
     "registrant": "WINFIELD SOLUTIONS LLC",
     "label_name": "2-28-25 MUP 2-28-25",
     "wsda_reg_no": "(#1886-0162)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1886-0162)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1886-0162)",
+        "product_name": "2-28-25 MUP 2-28-25",
+        "company_info": {
+          "company": "WINFIELD SOLUTIONS LLC",
+          "Mailing Address": "PO Box 64589",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "MN",
+          "Postal Code": "55164",
+          "Telephone Number": "651 375-7228",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 28.0,
+          "Soluble Potash (K2O)": 25.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.24,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.6,
+          "Iron (Fe)": 1.2,
+          "Manganese (Mn)": 0.6,
+          "Molybdenum (Mo)": 0.006,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.6
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=74.0000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=10.0000",
+          "Zinc": "=5425.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "2-28-25 MUP 2-28-25",
+    "brand": "WINFIELD SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "WINFIELD SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 28.0,
+      "K2O_pct": 25.0
+    },
+    "micros_pct": {
+      "Fe": 1.2,
+      "Mn": 0.6,
+      "Zn": 0.6,
+      "Cu": 0.6,
+      "B": 0.24,
+      "Mo": 0.006
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0FE654-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 0.05,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 74.0,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 5425.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 0.05,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 74.0,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 10.0,
+        "Zn": 5425.0
+      }
+    }
   }
 }

@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "16F6CD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2626-0031)",
-    "product_name": "PENNINGTON ULTRAGREEN STARTER FERTILIZER 22-23-4",
-    "company_info": {
-      "company": "CENTRAL GARDEN & PET DIVISION",
-      "Mailing Address": "PO Box 1019",
-      "Post Office Box": null,
-      "City": "Salem",
-      "State": "VA",
-      "Postal Code": "24153-1019",
-      "Telephone Number": "503 581-7823",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": 23.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.3700",
-      "Cadmium": "=1.4100",
-      "Cobalt": "=2.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=8.3000",
-      "Nickel": "=13.5000",
-      "Lead": "=2.6000",
-      "Selenium": "<0.5000",
-      "Zinc": "=49.8900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": 23.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 5.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.3700",
-      "Cadmium": "=1.4100",
-      "Cobalt": "=2.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=8.3000",
-      "Nickel": "=13.5000",
-      "Lead": "=2.6000",
-      "Selenium": "<0.5000",
-      "Zinc": "=49.8900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "16F6CD",
   "metadata": {
     "registrant": "CENTRAL GARDEN & PET DIVISION",
     "label_name": "PENNINGTON ULTRAGREEN STARTER FERTILIZER 22-23-4",
     "wsda_reg_no": "(#2626-0031)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0031)",
+        "product_name": "PENNINGTON ULTRAGREEN STARTER FERTILIZER 22-23-4",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": 23.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 5.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3700",
+          "Cadmium": "=1.4100",
+          "Cobalt": "=2.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=8.3000",
+          "Nickel": "=13.5000",
+          "Lead": "=2.6000",
+          "Selenium": "<0.5000",
+          "Zinc": "=49.8900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON ULTRAGREEN STARTER FERTILIZER 22-23-4",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "P2O5_pct": 23.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 1.0
+    },
+    "micros_pct": {
+      "Fe": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "16F6CD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.37,
+            "Cd": 1.41,
+            "Co": 2.6,
+            "Hg": 0.05,
+            "Mo": 8.3,
+            "Ni": 13.5,
+            "Pb": 2.6,
+            "Se": 0.5,
+            "Zn": 49.89
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.37,
+        "Cd": 1.41,
+        "Co": 2.6,
+        "Mo": 8.3,
+        "Ni": 13.5,
+        "Pb": 2.6,
+        "Zn": 49.89
+      }
+    }
   }
 }

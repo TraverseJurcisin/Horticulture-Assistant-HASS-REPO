@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3FD17D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3243-0003)",
-    "product_name": "SEA GREEN 1-0.3-4",
-    "company_info": {
-      "company": "PRIMORDIAL SOLUTIONS",
-      "Mailing Address": "501 S Reino Rd Ste 398",
-      "Post Office Box": null,
-      "City": "Newbury Park",
-      "State": "CA",
-      "Postal Code": "91320",
-      "Telephone Number": "866 846-7426",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": 0.3,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.6100",
-      "Cadmium": "=0.0400",
-      "Cobalt": "=0.7900",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.8100",
-      "Nickel": "=1.2100",
-      "Lead": "=0.6900",
-      "Selenium": "=0.1400",
-      "Zinc": "=7.2900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.0,
-      "Available Phosphoric Acid (P2O5)": 0.3,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.6100",
-      "Cadmium": "=0.0400",
-      "Cobalt": "=0.7900",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.8100",
-      "Nickel": "=1.2100",
-      "Lead": "=0.6900",
-      "Selenium": "=0.1400",
-      "Zinc": "=7.2900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3FD17D",
   "metadata": {
     "registrant": "PRIMORDIAL SOLUTIONS",
     "label_name": "SEA GREEN 1-0.3-4",
     "wsda_reg_no": "(#3243-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3243-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3243-0003)",
+        "product_name": "SEA GREEN 1-0.3-4",
+        "company_info": {
+          "company": "PRIMORDIAL SOLUTIONS",
+          "Mailing Address": "501 S Reino Rd Ste 398",
+          "Post Office Box": null,
+          "City": "Newbury Park",
+          "State": "CA",
+          "Postal Code": "91320",
+          "Telephone Number": "866 846-7426",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 0.3,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6100",
+          "Cadmium": "=0.0400",
+          "Cobalt": "=0.7900",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.8100",
+          "Nickel": "=1.2100",
+          "Lead": "=0.6900",
+          "Selenium": "=0.1400",
+          "Zinc": "=7.2900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SEA GREEN 1-0.3-4",
+    "brand": "PRIMORDIAL SOLUTIONS",
+    "manufacturer": {
+      "name": "PRIMORDIAL SOLUTIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 0.3,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3FD17D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.61,
+            "Cd": 0.04,
+            "Co": 0.79,
+            "Hg": 0.05,
+            "Mo": 0.81,
+            "Ni": 1.21,
+            "Pb": 0.69,
+            "Se": 0.14,
+            "Zn": 7.29
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.61,
+        "Cd": 0.04,
+        "Co": 0.79,
+        "Hg": 0.05,
+        "Mo": 0.81,
+        "Ni": 1.21,
+        "Pb": 0.69,
+        "Se": 0.14,
+        "Zn": 7.29
+      }
+    }
   }
 }

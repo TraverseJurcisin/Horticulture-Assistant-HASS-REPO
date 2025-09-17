@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "79E8EE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2626-0014)",
-    "product_name": "PENNINGTON ULTRAGREEN COLOR BLOOMS & BULBS PLANT FOOD 15-10-10",
-    "company_info": {
-      "company": "CENTRAL GARDEN & PET DIVISION",
-      "Mailing Address": "PO Box 1019",
-      "Post Office Box": null,
-      "City": "Salem",
-      "State": "VA",
-      "Postal Code": "24153-1019",
-      "Telephone Number": "503 581-7823",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.7400",
-      "Cadmium": "=0.7400",
-      "Cobalt": "=1.7000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=3.9000",
-      "Nickel": "=14.1000",
-      "Lead": "=2.5000",
-      "Selenium": "<0.5000",
-      "Zinc": "=23.9500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 1.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 2.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.7400",
-      "Cadmium": "=0.7400",
-      "Cobalt": "=1.7000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=3.9000",
-      "Nickel": "=14.1000",
-      "Lead": "=2.5000",
-      "Selenium": "<0.5000",
-      "Zinc": "=23.9500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "79E8EE",
   "metadata": {
     "registrant": "CENTRAL GARDEN & PET DIVISION",
     "label_name": "PENNINGTON ULTRAGREEN COLOR BLOOMS & BULBS PLANT FOOD 15-10-10",
     "wsda_reg_no": "(#2626-0014)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0014)",
+        "product_name": "PENNINGTON ULTRAGREEN COLOR BLOOMS & BULBS PLANT FOOD 15-10-10",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.7400",
+          "Cadmium": "=0.7400",
+          "Cobalt": "=1.7000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=3.9000",
+          "Nickel": "=14.1000",
+          "Lead": "=2.5000",
+          "Selenium": "<0.5000",
+          "Zinc": "=23.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON ULTRAGREEN COLOR BLOOMS & BULBS PLANT FOOD 15-10-10",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "79E8EE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.74,
+            "Cd": 0.74,
+            "Co": 1.7,
+            "Hg": 0.05,
+            "Mo": 3.9,
+            "Ni": 14.1,
+            "Pb": 2.5,
+            "Se": 0.5,
+            "Zn": 23.95
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.74,
+        "Cd": 0.74,
+        "Co": 1.7,
+        "Mo": 3.9,
+        "Ni": 14.1,
+        "Pb": 2.5,
+        "Zn": 23.95
+      }
+    }
   }
 }

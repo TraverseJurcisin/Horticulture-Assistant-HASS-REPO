@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"846527","source_wsda_record":{"wsda_product_number":"(#0705-0092)","product_name":"NUTRIAG ENVIRO MAGNESIUM 0-0-0","company_info":{"company":"NUTRIAG LTD","Mailing Address":"172 Belfield Rd","Post Office Box":null,"City":"Toronto","State":"ON","Postal Code":"M9W 1H1","Telephone Number":"416 572-1968","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":4.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.0200","Cadmium":"=0.0004","Cobalt":"=0.0343","Mercury":"=0.0700","Molybdenum":"=0.1270","Nickel":"=0.3700","Lead":"=0.0050","Selenium":"<0.0040","Zinc":"=0.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":4.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.0200","Cadmium":"=0.0004","Cobalt":"=0.0343","Mercury":"=0.0700","Molybdenum":"=0.1270","Nickel":"=0.3700","Lead":"=0.0050","Selenium":"<0.0040","Zinc":"=0.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NUTRIAG LTD","label_name":"NUTRIAG ENVIRO MAGNESIUM 0-0-0","wsda_reg_no":"(#0705-0092)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "846527",
+  "metadata": {
+    "registrant": "NUTRIAG LTD",
+    "label_name": "NUTRIAG ENVIRO MAGNESIUM 0-0-0",
+    "wsda_reg_no": "(#0705-0092)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0092)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0092)",
+        "product_name": "NUTRIAG ENVIRO MAGNESIUM 0-0-0",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 4.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.0200",
+          "Cadmium": "=0.0004",
+          "Cobalt": "=0.0343",
+          "Mercury": "=0.0700",
+          "Molybdenum": "=0.1270",
+          "Nickel": "=0.3700",
+          "Lead": "=0.0050",
+          "Selenium": "<0.0040",
+          "Zinc": "=0.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIAG ENVIRO MAGNESIUM 0-0-0",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "846527-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.02,
+            "Cd": 0.0004,
+            "Co": 0.0343,
+            "Hg": 0.07,
+            "Mo": 0.127,
+            "Ni": 0.37,
+            "Pb": 0.005,
+            "Se": 0.004,
+            "Zn": 0.5
+          },
+          "detection_limits_ppm": {
+            "As": 0.02,
+            "Se": 0.004
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.0004,
+        "Co": 0.0343,
+        "Hg": 0.07,
+        "Mo": 0.127,
+        "Ni": 0.37,
+        "Pb": 0.005,
+        "Zn": 0.5
+      }
+    }
+  }
+}

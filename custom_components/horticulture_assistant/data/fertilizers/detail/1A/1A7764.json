@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1A7764",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3240-0015)",
-    "product_name": "RX GREEN TECHNOLOGIES DRY FERTILIZER PART A 4-16-21",
-    "company_info": {
-      "company": "RX GREEN TECHNOLOGIES LLC",
-      "Mailing Address": "10 Iron Horse Dr Unit C",
-      "Post Office Box": null,
-      "City": "Bedford",
-      "State": "NH",
-      "Postal Code": "03110",
-      "Telephone Number": "603 759-3450",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 16.0,
-      "Soluble Potash (K2O)": 21.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 7.0,
-      "Sulfur (S)": 11.0,
-      "Boron (B)": 0.14,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.06,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.06
-    },
-    "reported_metals": {
-      "Arsenic": "=0.3300",
-      "Cadmium": "=0.5300",
-      "Cobalt": "=0.1300",
-      "Mercury": "=0.0230",
-      "Molybdenum": "=4.5000",
-      "Nickel": "=0.3300",
-      "Lead": "=0.3300",
-      "Selenium": "=0.9900",
-      "Zinc": "=34.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 16.0,
-      "Soluble Potash (K2O)": 21.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 7.0,
-      "Sulfur (S)": 11.0,
-      "Boron (B)": 0.14,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.06,
-      "Iron (Fe)": 0.4,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": 0.008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.06
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.3300",
-      "Cadmium": "=0.5300",
-      "Cobalt": "=0.1300",
-      "Mercury": "=0.0230",
-      "Molybdenum": "=4.5000",
-      "Nickel": "=0.3300",
-      "Lead": "=0.3300",
-      "Selenium": "=0.9900",
-      "Zinc": "=34.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1A7764",
   "metadata": {
     "registrant": "RX GREEN TECHNOLOGIES LLC",
     "label_name": "RX GREEN TECHNOLOGIES DRY FERTILIZER PART A 4-16-21",
     "wsda_reg_no": "(#3240-0015)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3240-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3240-0015)",
+        "product_name": "RX GREEN TECHNOLOGIES DRY FERTILIZER PART A 4-16-21",
+        "company_info": {
+          "company": "RX GREEN TECHNOLOGIES LLC",
+          "Mailing Address": "10 Iron Horse Dr Unit C",
+          "Post Office Box": null,
+          "City": "Bedford",
+          "State": "NH",
+          "Postal Code": "03110",
+          "Telephone Number": "603 759-3450",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 16.0,
+          "Soluble Potash (K2O)": 21.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 7.0,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": 0.14,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.06,
+          "Iron (Fe)": 0.4,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.008,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.06
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3300",
+          "Cadmium": "=0.5300",
+          "Cobalt": "=0.1300",
+          "Mercury": "=0.0230",
+          "Molybdenum": "=4.5000",
+          "Nickel": "=0.3300",
+          "Lead": "=0.3300",
+          "Selenium": "=0.9900",
+          "Zinc": "=34.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RX GREEN TECHNOLOGIES DRY FERTILIZER PART A 4-16-21",
+    "brand": "RX GREEN TECHNOLOGIES LLC",
+    "manufacturer": {
+      "name": "RX GREEN TECHNOLOGIES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 16.0,
+      "K2O_pct": 21.0
+    },
+    "macros_pct": {
+      "Mg": 7.0,
+      "S": 11.0
+    },
+    "micros_pct": {
+      "Fe": 0.4,
+      "Mn": 0.05,
+      "Zn": 0.06,
+      "Cu": 0.06,
+      "B": 0.14,
+      "Mo": 0.008
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1A7764-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.33,
+            "Cd": 0.53,
+            "Co": 0.13,
+            "Hg": 0.023,
+            "Mo": 4.5,
+            "Ni": 0.33,
+            "Pb": 0.33,
+            "Se": 0.99,
+            "Zn": 34.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.33,
+        "Cd": 0.53,
+        "Co": 0.13,
+        "Hg": 0.023,
+        "Mo": 4.5,
+        "Ni": 0.33,
+        "Pb": 0.33,
+        "Se": 0.99,
+        "Zn": 34.0
+      }
+    }
   }
 }

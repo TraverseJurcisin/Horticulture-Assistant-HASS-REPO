@@ -1,106 +1,153 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7E3936",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1465-0268)",
-    "product_name": "SENSI GROW A WATER SOLUBLE POWDER PRO SERIES 9-10-28",
-    "company_info": {
-      "company": "ADVANCED NUTRIENTS",
-      "Mailing Address": "PO Box 320523",
-      "Post Office Box": null,
-      "City": "Franklin",
-      "State": "WI",
-      "Postal Code": "53120",
-      "Telephone Number": "262 888-2980",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 28.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.0,
-      "Sulfur (S)": 4.8,
-      "Boron (B)": 0.04,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.002,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.03
-    },
-    "reported_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.3000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=211.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 9.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": 28.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 3.0,
-      "Sulfur (S)": 4.8,
-      "Boron (B)": 0.04,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.002,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.03
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.3000",
-      "Nickel": "=1.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=0.5000",
-      "Zinc": "=211.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7E3936",
   "metadata": {
     "registrant": "ADVANCED NUTRIENTS",
     "label_name": "SENSI GROW A WATER SOLUBLE POWDER PRO SERIES 9-10-28",
     "wsda_reg_no": "(#1465-0268)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1465-0268)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1465-0268)",
+        "product_name": "SENSI GROW A WATER SOLUBLE POWDER PRO SERIES 9-10-28",
+        "company_info": {
+          "company": "ADVANCED NUTRIENTS",
+          "Mailing Address": "PO Box 320523",
+          "Post Office Box": null,
+          "City": "Franklin",
+          "State": "WI",
+          "Postal Code": "53120",
+          "Telephone Number": "262 888-2980",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 28.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 3.0,
+          "Sulfur (S)": 4.8,
+          "Boron (B)": 0.04,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.002,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.03
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=4.3000",
+          "Nickel": "=1.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=0.5000",
+          "Zinc": "=211.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SENSI GROW A WATER SOLUBLE POWDER PRO SERIES 9-10-28",
+    "brand": "ADVANCED NUTRIENTS",
+    "manufacturer": {
+      "name": "ADVANCED NUTRIENTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 28.0
+    },
+    "macros_pct": {
+      "Mg": 3.0,
+      "S": 4.8
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.2,
+      "Zn": 0.03,
+      "Cu": 0.002,
+      "B": 0.04,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7E3936-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 4.3,
+            "Ni": 1.0,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 211.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 4.3,
+        "Ni": 1.0,
+        "Pb": 5.0,
+        "Se": 0.5,
+        "Zn": 211.2
+      }
+    }
   }
 }

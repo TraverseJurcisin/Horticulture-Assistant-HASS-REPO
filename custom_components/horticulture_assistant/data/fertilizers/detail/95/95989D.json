@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"95989D","source_wsda_record":{"wsda_product_number":"(#2355-0002)","product_name":"KOCH UREA AMMONIUM NITRATE SOLUTION UAN 32-0-0","company_info":{"company":"KOCH FERTILIZER CANADA ULC","Mailing Address":"PO Box 2900","Post Office Box":null,"City":"Wichita","State":"KS","Postal Code":"67201-2900","Telephone Number":"316 828-6492","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":32.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.1200","Cobalt":"=2.9000","Mercury":"=0.0500","Molybdenum":"=0.2000","Nickel":"=1.8000","Lead":"=2.8000","Selenium":"=1.7000","Zinc":"=114.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":32.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.1200","Cobalt":"=2.9000","Mercury":"=0.0500","Molybdenum":"=0.2000","Nickel":"=1.8000","Lead":"=2.8000","Selenium":"=1.7000","Zinc":"=114.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KOCH FERTILIZER CANADA ULC","label_name":"KOCH UREA AMMONIUM NITRATE SOLUTION UAN 32-0-0","wsda_reg_no":"(#2355-0002)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "95989D",
+  "metadata": {
+    "registrant": "KOCH FERTILIZER CANADA ULC",
+    "label_name": "KOCH UREA AMMONIUM NITRATE SOLUTION UAN 32-0-0",
+    "wsda_reg_no": "(#2355-0002)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2355-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2355-0002)",
+        "product_name": "KOCH UREA AMMONIUM NITRATE SOLUTION UAN 32-0-0",
+        "company_info": {
+          "company": "KOCH FERTILIZER CANADA ULC",
+          "Mailing Address": "PO Box 2900",
+          "Post Office Box": null,
+          "City": "Wichita",
+          "State": "KS",
+          "Postal Code": "67201-2900",
+          "Telephone Number": "316 828-6492",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 32.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.1200",
+          "Cobalt": "=2.9000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=1.8000",
+          "Lead": "=2.8000",
+          "Selenium": "=1.7000",
+          "Zinc": "=114.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KOCH UREA AMMONIUM NITRATE SOLUTION UAN 32-0-0",
+    "brand": "KOCH FERTILIZER CANADA ULC",
+    "manufacturer": {
+      "name": "KOCH FERTILIZER CANADA ULC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 32.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "95989D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.12,
+            "Co": 2.9,
+            "Hg": 0.05,
+            "Mo": 0.2,
+            "Ni": 1.8,
+            "Pb": 2.8,
+            "Se": 1.7,
+            "Zn": 114.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.12,
+        "Co": 2.9,
+        "Hg": 0.05,
+        "Mo": 0.2,
+        "Ni": 1.8,
+        "Pb": 2.8,
+        "Se": 1.7,
+        "Zn": 114.5
+      }
+    }
+  }
+}

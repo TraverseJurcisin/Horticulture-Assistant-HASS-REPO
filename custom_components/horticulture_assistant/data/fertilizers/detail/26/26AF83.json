@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "26AF83",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1938-0015)",
-    "product_name": "RICH GROW 8-2-14 GREENS GRADE GRANULAR FERTILIZER 8-2-14",
-    "company_info": {
-      "company": "PLANET TURF",
-      "Mailing Address": "6422 E 2nd Ave",
-      "Post Office Box": null,
-      "City": "Spokane Valley",
-      "State": "WA",
-      "Postal Code": "99212",
-      "Telephone Number": "509 921-5421",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.1000",
-      "Cadmium": "=6.2200",
-      "Cobalt": "=2.8400",
-      "Mercury": "=0.0572",
-      "Molybdenum": "=9.2200",
-      "Nickel": "=14.8000",
-      "Lead": "=5.5900",
-      "Selenium": "=2.2700",
-      "Zinc": "=1180.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.1000",
-      "Cadmium": "=6.2200",
-      "Cobalt": "=2.8400",
-      "Mercury": "=0.0572",
-      "Molybdenum": "=9.2200",
-      "Nickel": "=14.8000",
-      "Lead": "=5.5900",
-      "Selenium": "=2.2700",
-      "Zinc": "=1180.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "26AF83",
   "metadata": {
     "registrant": "PLANET TURF",
     "label_name": "RICH GROW 8-2-14 GREENS GRADE GRANULAR FERTILIZER 8-2-14",
     "wsda_reg_no": "(#1938-0015)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1938-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1938-0015)",
+        "product_name": "RICH GROW 8-2-14 GREENS GRADE GRANULAR FERTILIZER 8-2-14",
+        "company_info": {
+          "company": "PLANET TURF",
+          "Mailing Address": "6422 E 2nd Ave",
+          "Post Office Box": null,
+          "City": "Spokane Valley",
+          "State": "WA",
+          "Postal Code": "99212",
+          "Telephone Number": "509 921-5421",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.1000",
+          "Cadmium": "=6.2200",
+          "Cobalt": "=2.8400",
+          "Mercury": "=0.0572",
+          "Molybdenum": "=9.2200",
+          "Nickel": "=14.8000",
+          "Lead": "=5.5900",
+          "Selenium": "=2.2700",
+          "Zinc": "=1180.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RICH GROW 8-2-14 GREENS GRADE GRANULAR FERTILIZER 8-2-14",
+    "brand": "PLANET TURF",
+    "manufacturer": {
+      "name": "PLANET TURF"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "26AF83-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.1,
+            "Cd": 6.22,
+            "Co": 2.84,
+            "Hg": 0.0572,
+            "Mo": 9.22,
+            "Ni": 14.8,
+            "Pb": 5.59,
+            "Se": 2.27,
+            "Zn": 1180.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.1,
+        "Cd": 6.22,
+        "Co": 2.84,
+        "Hg": 0.0572,
+        "Mo": 9.22,
+        "Ni": 14.8,
+        "Pb": 5.59,
+        "Se": 2.27,
+        "Zn": 1180.0
+      }
+    }
   }
 }

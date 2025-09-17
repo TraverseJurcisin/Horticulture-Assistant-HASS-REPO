@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2D52B7",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1837-0018)",
-    "product_name": "FAUST BIO-AGRICULTURAL SERVICES CYTOPLUS L 0-0-5",
-    "company_info": {
-      "company": "FAUST BIO-AGRICULTURAL SERVICES INC",
-      "Mailing Address": "6080 Wigrich Rd",
-      "Post Office Box": null,
-      "City": "Independence",
-      "State": "OR",
-      "Postal Code": "97351",
-      "Telephone Number": "503 838-2467",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": 0.28,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.024,
-      "Copper (Cu)": 0.2,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.064,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.4
-    },
-    "reported_metals": {
-      "Arsenic": "=2.0400",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=358.4000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=678.9000",
-      "Nickel": "=18.1000",
-      "Lead": "=0.7000",
-      "Selenium": "=4.3000",
-      "Zinc": "=4331.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": 0.28,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.024,
-      "Copper (Cu)": 0.2,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 0.16,
-      "Molybdenum (Mo)": 0.064,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.4
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.0400",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=358.4000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=678.9000",
-      "Nickel": "=18.1000",
-      "Lead": "=0.7000",
-      "Selenium": "=4.3000",
-      "Zinc": "=4331.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2D52B7",
   "metadata": {
     "registrant": "FAUST BIO-AGRICULTURAL SERVICES INC",
     "label_name": "FAUST BIO-AGRICULTURAL SERVICES CYTOPLUS L 0-0-5",
     "wsda_reg_no": "(#1837-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1837-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1837-0018)",
+        "product_name": "FAUST BIO-AGRICULTURAL SERVICES CYTOPLUS L 0-0-5",
+        "company_info": {
+          "company": "FAUST BIO-AGRICULTURAL SERVICES INC",
+          "Mailing Address": "6080 Wigrich Rd",
+          "Post Office Box": null,
+          "City": "Independence",
+          "State": "OR",
+          "Postal Code": "97351",
+          "Telephone Number": "503 838-2467",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": 0.28,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.024,
+          "Copper (Cu)": 0.2,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 0.16,
+          "Molybdenum (Mo)": 0.064,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.4
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0400",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=358.4000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=678.9000",
+          "Nickel": "=18.1000",
+          "Lead": "=0.7000",
+          "Selenium": "=4.3000",
+          "Zinc": "=4331.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FAUST BIO-AGRICULTURAL SERVICES CYTOPLUS L 0-0-5",
+    "brand": "FAUST BIO-AGRICULTURAL SERVICES INC",
+    "manufacturer": {
+      "name": "FAUST BIO-AGRICULTURAL SERVICES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 0.16,
+      "Zn": 0.4,
+      "Cu": 0.2,
+      "B": 0.28,
+      "Mo": 0.064
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2D52B7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.04,
+            "Cd": 0.03,
+            "Co": 358.4,
+            "Hg": 0.05,
+            "Mo": 678.9,
+            "Ni": 18.1,
+            "Pb": 0.7,
+            "Se": 4.3,
+            "Zn": 4331.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.04,
+        "Cd": 0.03,
+        "Co": 358.4,
+        "Hg": 0.05,
+        "Mo": 678.9,
+        "Ni": 18.1,
+        "Pb": 0.7,
+        "Se": 4.3,
+        "Zn": 4331.9
+      }
+    }
   }
 }

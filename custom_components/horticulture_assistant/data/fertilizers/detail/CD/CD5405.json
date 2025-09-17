@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"CD5405","source_wsda_record":{"wsda_product_number":"(#3330-0014)","product_name":"PRO-MATE TURF & ORNAMENTAL FERTILIZER 20-1-5","company_info":{"company":"HELENA AGRI-ENTERPRISES LLC","Mailing Address":"225 Schilling Blvd Ste 300","Post Office Box":null,"City":"Collierville","State":"TN","Postal Code":"38017","Telephone Number":"901 752-4429","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3600","Cadmium":"=0.2100","Cobalt":"=4.9600","Mercury":"=0.0047","Molybdenum":"=2.0700","Nickel":"=3.3000","Lead":"=1.4600","Selenium":"=0.1400","Zinc":"=158.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3600","Cadmium":"=0.2100","Cobalt":"=4.9600","Mercury":"=0.0047","Molybdenum":"=2.0700","Nickel":"=3.3000","Lead":"=1.4600","Selenium":"=0.1400","Zinc":"=158.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HELENA AGRI-ENTERPRISES LLC","label_name":"PRO-MATE TURF & ORNAMENTAL FERTILIZER 20-1-5","wsda_reg_no":"(#3330-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CD5405",
+  "metadata": {
+    "registrant": "HELENA AGRI-ENTERPRISES LLC",
+    "label_name": "PRO-MATE TURF & ORNAMENTAL FERTILIZER 20-1-5",
+    "wsda_reg_no": "(#3330-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0014)",
+        "product_name": "PRO-MATE TURF & ORNAMENTAL FERTILIZER 20-1-5",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3600",
+          "Cadmium": "=0.2100",
+          "Cobalt": "=4.9600",
+          "Mercury": "=0.0047",
+          "Molybdenum": "=2.0700",
+          "Nickel": "=3.3000",
+          "Lead": "=1.4600",
+          "Selenium": "=0.1400",
+          "Zinc": "=158.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRO-MATE TURF & ORNAMENTAL FERTILIZER 20-1-5",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CD5405-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.36,
+            "Cd": 0.21,
+            "Co": 4.96,
+            "Hg": 0.0047,
+            "Mo": 2.07,
+            "Ni": 3.3,
+            "Pb": 1.46,
+            "Se": 0.14,
+            "Zn": 158.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.36,
+        "Cd": 0.21,
+        "Co": 4.96,
+        "Hg": 0.0047,
+        "Mo": 2.07,
+        "Ni": 3.3,
+        "Pb": 1.46,
+        "Se": 0.14,
+        "Zn": 158.4
+      }
+    }
+  }
+}

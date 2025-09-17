@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C9F163","source_wsda_record":{"wsda_product_number":"(#0764-0045)","product_name":"NATURE SAFE FERTILIZER FOR ORGANIC PRODUCTION 9-6-1","company_info":{"company":"DARLING INGREDIENTS INC","Mailing Address":"4221 Alexandria Pk","Post Office Box":null,"City":"Cold Spring","State":"KY","Postal Code":"41076","Telephone Number":"859 344-2227","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1990","Cadmium":"=0.0800","Cobalt":"=0.1590","Mercury":"=0.0030","Molybdenum":"=0.3980","Nickel":"=4.2800","Lead":"=2.6700","Selenium":"=4.6400","Zinc":"=93.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1990","Cadmium":"=0.0800","Cobalt":"=0.1590","Mercury":"=0.0030","Molybdenum":"=0.3980","Nickel":"=4.2800","Lead":"=2.6700","Selenium":"=4.6400","Zinc":"=93.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"DARLING INGREDIENTS INC","label_name":"NATURE SAFE FERTILIZER FOR ORGANIC PRODUCTION 9-6-1","wsda_reg_no":"(#0764-0045)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C9F163",
+  "metadata": {
+    "registrant": "DARLING INGREDIENTS INC",
+    "label_name": "NATURE SAFE FERTILIZER FOR ORGANIC PRODUCTION 9-6-1",
+    "wsda_reg_no": "(#0764-0045)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0764-0045)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0764-0045)",
+        "product_name": "NATURE SAFE FERTILIZER FOR ORGANIC PRODUCTION 9-6-1",
+        "company_info": {
+          "company": "DARLING INGREDIENTS INC",
+          "Mailing Address": "4221 Alexandria Pk",
+          "Post Office Box": null,
+          "City": "Cold Spring",
+          "State": "KY",
+          "Postal Code": "41076",
+          "Telephone Number": "859 344-2227",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1990",
+          "Cadmium": "=0.0800",
+          "Cobalt": "=0.1590",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=0.3980",
+          "Nickel": "=4.2800",
+          "Lead": "=2.6700",
+          "Selenium": "=4.6400",
+          "Zinc": "=93.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE SAFE FERTILIZER FOR ORGANIC PRODUCTION 9-6-1",
+    "brand": "DARLING INGREDIENTS INC",
+    "manufacturer": {
+      "name": "DARLING INGREDIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C9F163-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.199,
+            "Cd": 0.08,
+            "Co": 0.159,
+            "Hg": 0.003,
+            "Mo": 0.398,
+            "Ni": 4.28,
+            "Pb": 2.67,
+            "Se": 4.64,
+            "Zn": 93.4
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.199,
+        "Cd": 0.08,
+        "Co": 0.159,
+        "Hg": 0.003,
+        "Mo": 0.398,
+        "Ni": 4.28,
+        "Pb": 2.67,
+        "Se": 4.64,
+        "Zn": 93.4
+      }
+    }
+  }
+}

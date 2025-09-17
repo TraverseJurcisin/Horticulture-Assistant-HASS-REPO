@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"FC9A45","source_wsda_record":{"wsda_product_number":"(#4173-0007)","product_name":"NUTRILING MASS WIZARD 0-15-16","company_info":{"company":"AGRIDO SCIENCE LLC","Mailing Address":"8401 Granite Peak Ct","Post Office Box":null,"City":"Las Vegas","State":"NV","Postal Code":"89145","Telephone Number":"702 861-5169","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=4.1100","Cadmium":"=1.8000","Cobalt":"=0.3160","Mercury":"<0.1000","Molybdenum":"=1.5200","Nickel":"=4.5900","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"<0.5180"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":15.0,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.3,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=4.1100","Cadmium":"=1.8000","Cobalt":"=0.3160","Mercury":"<0.1000","Molybdenum":"=1.5200","Nickel":"=4.5900","Lead":"<0.1000","Selenium":"<0.1000","Zinc":"<0.5180"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGRIDO SCIENCE LLC","label_name":"NUTRILING MASS WIZARD 0-15-16","wsda_reg_no":"(#4173-0007)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FC9A45",
+  "metadata": {
+    "registrant": "AGRIDO SCIENCE LLC",
+    "label_name": "NUTRILING MASS WIZARD 0-15-16",
+    "wsda_reg_no": "(#4173-0007)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4173-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4173-0007)",
+        "product_name": "NUTRILING MASS WIZARD 0-15-16",
+        "company_info": {
+          "company": "AGRIDO SCIENCE LLC",
+          "Mailing Address": "8401 Granite Peak Ct",
+          "Post Office Box": null,
+          "City": "Las Vegas",
+          "State": "NV",
+          "Postal Code": "89145",
+          "Telephone Number": "702 861-5169",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 15.0,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.1100",
+          "Cadmium": "=1.8000",
+          "Cobalt": "=0.3160",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=1.5200",
+          "Nickel": "=4.5900",
+          "Lead": "<0.1000",
+          "Selenium": "<0.1000",
+          "Zinc": "<0.5180"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRILING MASS WIZARD 0-15-16",
+    "brand": "AGRIDO SCIENCE LLC",
+    "manufacturer": {
+      "name": "AGRIDO SCIENCE LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 15.0,
+      "K2O_pct": 16.0
+    },
+    "micros_pct": {
+      "Fe": 0.3
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FC9A45-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.11,
+            "Cd": 1.8,
+            "Co": 0.316,
+            "Hg": 0.1,
+            "Mo": 1.52,
+            "Ni": 4.59,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 0.518
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1,
+            "Pb": 0.1,
+            "Se": 0.1,
+            "Zn": 0.518
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.11,
+        "Cd": 1.8,
+        "Co": 0.316,
+        "Mo": 1.52,
+        "Ni": 4.59
+      }
+    }
+  }
+}

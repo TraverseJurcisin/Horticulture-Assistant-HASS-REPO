@@ -1,1 +1,95 @@
-{"schema_version":"2025-07-v1","product_id":"9B8648","source_wsda_record":{"wsda_product_number":"(#0757-0012)","product_name":"CUSTOMER FORMULA MIX X-X-X","company_info":{"company":"D & M CHEM INC","Mailing Address":"PO Box 197","Post Office Box":null,"City":"Moxee","State":"WA","Postal Code":"98936","Telephone Number":"509 454-8154","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":null,"micronutrient_fertilizer":null},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"D & M CHEM INC","label_name":"CUSTOMER FORMULA MIX X-X-X","wsda_reg_no":"(#0757-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9B8648",
+  "metadata": {
+    "registrant": "D & M CHEM INC",
+    "label_name": "CUSTOMER FORMULA MIX X-X-X",
+    "wsda_reg_no": "(#0757-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0757-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0757-0012)",
+        "product_name": "CUSTOMER FORMULA MIX X-X-X",
+        "company_info": {
+          "company": "D & M CHEM INC",
+          "Mailing Address": "PO Box 197",
+          "Post Office Box": null,
+          "City": "Moxee",
+          "State": "WA",
+          "Postal Code": "98936",
+          "Telephone Number": "509 454-8154",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": null,
+          "Cadmium": null,
+          "Cobalt": null,
+          "Mercury": null,
+          "Molybdenum": null,
+          "Nickel": null,
+          "Lead": null,
+          "Selenium": null,
+          "Zinc": null
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": null,
+        "micronutrient_fertilizer": null
+      },
+      "waste_derived_fertilizer": null,
+      "micronutrient_fertilizer": null,
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CUSTOMER FORMULA MIX X-X-X",
+    "brand": "D & M CHEM INC",
+    "manufacturer": {
+      "name": "D & M CHEM INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    }
+  }
+}

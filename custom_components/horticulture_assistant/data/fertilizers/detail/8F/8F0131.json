@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"8F0131","source_wsda_record":{"wsda_product_number":"(#2626-0026)","product_name":"PENNINGTON FAST ACTING LIME PLUS AST 0-0-0","company_info":{"company":"CENTRAL GARDEN & PET DIVISION","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153-1019","Telephone Number":"503 581-7823","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":24.0,"Magnesium (Mg)":2.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=0.3000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=1.5000","Lead":"=1.1000","Selenium":"=0.5000","Zinc":"=3.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"66.2000","Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":"13.0000","Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":24.0,"Magnesium (Mg)":2.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=0.3000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=1.5000","Lead":"=1.1000","Selenium":"=0.5000","Zinc":"=3.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CENTRAL GARDEN & PET DIVISION","label_name":"PENNINGTON FAST ACTING LIME PLUS AST 0-0-0","wsda_reg_no":"(#2626-0026)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8F0131",
+  "metadata": {
+    "registrant": "CENTRAL GARDEN & PET DIVISION",
+    "label_name": "PENNINGTON FAST ACTING LIME PLUS AST 0-0-0",
+    "wsda_reg_no": "(#2626-0026)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0026)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0026)",
+        "product_name": "PENNINGTON FAST ACTING LIME PLUS AST 0-0-0",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 24.0,
+          "Magnesium (Mg)": 2.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.3000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=1.5000",
+          "Lead": "=1.1000",
+          "Selenium": "=0.5000",
+          "Zinc": "=3.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "66.2000",
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": "13.0000",
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON FAST ACTING LIME PLUS AST 0-0-0",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 24.0,
+      "Mg": 2.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8F0131-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.3,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 1.5,
+            "Pb": 1.1,
+            "Se": 0.5,
+            "Zn": 3.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 0.3,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 1.5,
+        "Pb": 1.1,
+        "Se": 0.5,
+        "Zn": 3.6
+      }
+    }
+  }
+}

@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"DFE4C4","source_wsda_record":{"wsda_product_number":"(#1161-0438)","product_name":"THE ANDERSONS FOLTEC SG 16-0-16","company_info":{"company":"THE ANDERSONS INC","Mailing Address":"PO Box 119","Post Office Box":null,"City":"Maumee","State":"OH","Postal Code":"43537","Telephone Number":"419 891-6633","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":3.72,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":1.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.07},"reported_metals":{"Arsenic":"=6.1600","Cadmium":"=1.3400","Cobalt":"=1.4800","Mercury":"=0.0250","Molybdenum":"=3.5400","Nickel":"=1.3600","Lead":"=5.9200","Selenium":"=4.7000","Zinc":"=320.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":16.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.5,"Sulfur (S)":3.72,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.07,"Iron (Fe)":1.0,"Manganese (Mn)":0.5,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.07},"heavy_metals":{"Arsenic":"=6.1600","Cadmium":"=1.3400","Cobalt":"=1.4800","Mercury":"=0.0250","Molybdenum":"=3.5400","Nickel":"=1.3600","Lead":"=5.9200","Selenium":"=4.7000","Zinc":"=320.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"THE ANDERSONS INC","label_name":"THE ANDERSONS FOLTEC SG 16-0-16","wsda_reg_no":"(#1161-0438)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DFE4C4",
+  "metadata": {
+    "registrant": "THE ANDERSONS INC",
+    "label_name": "THE ANDERSONS FOLTEC SG 16-0-16",
+    "wsda_reg_no": "(#1161-0438)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1161-0438)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1161-0438)",
+        "product_name": "THE ANDERSONS FOLTEC SG 16-0-16",
+        "company_info": {
+          "company": "THE ANDERSONS INC",
+          "Mailing Address": "PO Box 119",
+          "Post Office Box": null,
+          "City": "Maumee",
+          "State": "OH",
+          "Postal Code": "43537",
+          "Telephone Number": "419 891-6633",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 16.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 3.72,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.07,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.07
+        },
+        "reported_metals": {
+          "Arsenic": "=6.1600",
+          "Cadmium": "=1.3400",
+          "Cobalt": "=1.4800",
+          "Mercury": "=0.0250",
+          "Molybdenum": "=3.5400",
+          "Nickel": "=1.3600",
+          "Lead": "=5.9200",
+          "Selenium": "=4.7000",
+          "Zinc": "=320.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE ANDERSONS FOLTEC SG 16-0-16",
+    "brand": "THE ANDERSONS INC",
+    "manufacturer": {
+      "name": "THE ANDERSONS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "K2O_pct": 16.0
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 3.72
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.5,
+      "Zn": 0.07,
+      "Cu": 0.07
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DFE4C4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.16,
+            "Cd": 1.34,
+            "Co": 1.48,
+            "Hg": 0.025,
+            "Mo": 3.54,
+            "Ni": 1.36,
+            "Pb": 5.92,
+            "Se": 4.7,
+            "Zn": 320.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.16,
+        "Cd": 1.34,
+        "Co": 1.48,
+        "Hg": 0.025,
+        "Mo": 3.54,
+        "Ni": 1.36,
+        "Pb": 5.92,
+        "Se": 4.7,
+        "Zn": 320.0
+      }
+    }
+  }
+}

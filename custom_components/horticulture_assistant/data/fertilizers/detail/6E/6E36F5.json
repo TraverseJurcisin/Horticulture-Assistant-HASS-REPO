@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6E36F5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3536-0011)",
-    "product_name": "TPS NUTRIENTS SIGNAL 0-0-3.1",
-    "company_info": {
-      "company": "TPS NUTRIENTS INC",
-      "Mailing Address": "PO Box 875",
-      "Post Office Box": null,
-      "City": "Bellevue",
-      "State": "WA",
-      "Postal Code": "98009",
-      "Telephone Number": "425 765-8460",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.1,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.2610",
-      "Cadmium": "<0.0261",
-      "Cobalt": "<0.2610",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.2610",
-      "Nickel": "<0.2610",
-      "Lead": "<0.5200",
-      "Selenium": "<0.2610",
-      "Zinc": "=0.3000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.1,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.5,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.2610",
-      "Cadmium": "<0.0261",
-      "Cobalt": "<0.2610",
-      "Mercury": "<0.0100",
-      "Molybdenum": "<0.2610",
-      "Nickel": "<0.2610",
-      "Lead": "<0.5200",
-      "Selenium": "<0.2610",
-      "Zinc": "=0.3000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6E36F5",
   "metadata": {
     "registrant": "TPS NUTRIENTS INC",
     "label_name": "TPS NUTRIENTS SIGNAL 0-0-3.1",
     "wsda_reg_no": "(#3536-0011)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3536-0011)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3536-0011)",
+        "product_name": "TPS NUTRIENTS SIGNAL 0-0-3.1",
+        "company_info": {
+          "company": "TPS NUTRIENTS INC",
+          "Mailing Address": "PO Box 875",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98009",
+          "Telephone Number": "425 765-8460",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.1,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2610",
+          "Cadmium": "<0.0261",
+          "Cobalt": "<0.2610",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.2610",
+          "Nickel": "<0.2610",
+          "Lead": "<0.5200",
+          "Selenium": "<0.2610",
+          "Zinc": "=0.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TPS NUTRIENTS SIGNAL 0-0-3.1",
+    "brand": "TPS NUTRIENTS INC",
+    "manufacturer": {
+      "name": "TPS NUTRIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 3.1
+    },
+    "macros_pct": {
+      "Mg": 0.5,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6E36F5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.261,
+            "Cd": 0.0261,
+            "Co": 0.261,
+            "Hg": 0.01,
+            "Mo": 0.261,
+            "Ni": 0.261,
+            "Pb": 0.52,
+            "Se": 0.261,
+            "Zn": 0.3
+          },
+          "detection_limits_ppm": {
+            "As": 0.261,
+            "Cd": 0.0261,
+            "Co": 0.261,
+            "Hg": 0.01,
+            "Mo": 0.261,
+            "Ni": 0.261,
+            "Pb": 0.52,
+            "Se": 0.261
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 0.3
+      }
+    }
   }
 }

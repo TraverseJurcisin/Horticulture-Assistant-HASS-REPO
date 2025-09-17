@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "53B9AE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0126-0197)",
-    "product_name": "STA-GREEN PERFORMANCE MAX MULTI-ACTION WEED & FEED PLUS CRABGRASS CONTROL 25-0-3",
-    "company_info": {
-      "company": "GRO TEC INC",
-      "Mailing Address": "14481 Lochridge Blvd",
-      "Post Office Box": null,
-      "City": "Covington",
-      "State": "GA",
-      "Postal Code": "30014",
-      "Telephone Number": "770 788-4519",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": 25.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.0,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=1.4400",
-      "Cadmium": "=0.3700",
-      "Cobalt": "=11.6000",
-      "Mercury": "=0.0300",
-      "Molybdenum": "=3.5300",
-      "Nickel": "=14.6000",
-      "Lead": "=10.1000",
-      "Selenium": "=1.7700",
-      "Zinc": "=1349.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 25.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": 25.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.5,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.0,
-      "Manganese (Mn)": 0.2,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.4400",
-      "Cadmium": "=0.3700",
-      "Cobalt": "=11.6000",
-      "Mercury": "=0.0300",
-      "Molybdenum": "=3.5300",
-      "Nickel": "=14.6000",
-      "Lead": "=10.1000",
-      "Selenium": "=1.7700",
-      "Zinc": "=1349.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "53B9AE",
   "metadata": {
     "registrant": "GRO TEC INC",
     "label_name": "STA-GREEN PERFORMANCE MAX MULTI-ACTION WEED & FEED PLUS CRABGRASS CONTROL 25-0-3",
     "wsda_reg_no": "(#0126-0197)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0126-0197)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0126-0197)",
+        "product_name": "STA-GREEN PERFORMANCE MAX MULTI-ACTION WEED & FEED PLUS CRABGRASS CONTROL 25-0-3",
+        "company_info": {
+          "company": "GRO TEC INC",
+          "Mailing Address": "14481 Lochridge Blvd",
+          "Post Office Box": null,
+          "City": "Covington",
+          "State": "GA",
+          "Postal Code": "30014",
+          "Telephone Number": "770 788-4519",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 25.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 25.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 6.0,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=1.4400",
+          "Cadmium": "=0.3700",
+          "Cobalt": "=11.6000",
+          "Mercury": "=0.0300",
+          "Molybdenum": "=3.5300",
+          "Nickel": "=14.6000",
+          "Lead": "=10.1000",
+          "Selenium": "=1.7700",
+          "Zinc": "=1349.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STA-GREEN PERFORMANCE MAX MULTI-ACTION WEED & FEED PLUS CRABGRASS CONTROL 25-0-3",
+    "brand": "GRO TEC INC",
+    "manufacturer": {
+      "name": "GRO TEC INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 25.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 25.0,
+      "S": 2.5
+    },
+    "micros_pct": {
+      "Fe": 6.0,
+      "Mn": 0.2,
+      "Zn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "53B9AE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.44,
+            "Cd": 0.37,
+            "Co": 11.6,
+            "Hg": 0.03,
+            "Mo": 3.53,
+            "Ni": 14.6,
+            "Pb": 10.1,
+            "Se": 1.77,
+            "Zn": 1349.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.44,
+        "Cd": 0.37,
+        "Co": 11.6,
+        "Hg": 0.03,
+        "Mo": 3.53,
+        "Ni": 14.6,
+        "Pb": 10.1,
+        "Se": 1.77,
+        "Zn": 1349.0
+      }
+    }
   }
 }

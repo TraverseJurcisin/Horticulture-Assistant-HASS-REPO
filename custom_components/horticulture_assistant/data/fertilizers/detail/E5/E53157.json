@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E53157","source_wsda_record":{"wsda_product_number":"(#2554-0009)","product_name":"TIGER MICRONUTRIENTS IRON 22% 0-0-0","company_info":{"company":"TIGER-SUL PRODUCTS LLC","Mailing Address":"PO Box126","Post Office Box":null,"City":"Irricana","State":"AB","Postal Code":"T0M1B0","Telephone Number":"403 935-0201","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":55.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":22.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.8410","Cadmium":"<0.0150","Cobalt":"=11.8700","Mercury":"<0.0010","Molybdenum":"<0.0150","Nickel":"=34.6200","Lead":"=7.6400","Selenium":"<0.0100","Zinc":"=48.2800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":55.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":22.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.8410","Cadmium":"<0.0150","Cobalt":"=11.8700","Mercury":"<0.0010","Molybdenum":"<0.0150","Nickel":"=34.6200","Lead":"=7.6400","Selenium":"<0.0100","Zinc":"=48.2800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TIGER-SUL PRODUCTS LLC","label_name":"TIGER MICRONUTRIENTS IRON 22% 0-0-0","wsda_reg_no":"(#2554-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E53157",
+  "metadata": {
+    "registrant": "TIGER-SUL PRODUCTS LLC",
+    "label_name": "TIGER MICRONUTRIENTS IRON 22% 0-0-0",
+    "wsda_reg_no": "(#2554-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2554-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2554-0009)",
+        "product_name": "TIGER MICRONUTRIENTS IRON 22% 0-0-0",
+        "company_info": {
+          "company": "TIGER-SUL PRODUCTS LLC",
+          "Mailing Address": "PO Box126",
+          "Post Office Box": null,
+          "City": "Irricana",
+          "State": "AB",
+          "Postal Code": "T0M1B0",
+          "Telephone Number": "403 935-0201",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 55.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 22.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8410",
+          "Cadmium": "<0.0150",
+          "Cobalt": "=11.8700",
+          "Mercury": "<0.0010",
+          "Molybdenum": "<0.0150",
+          "Nickel": "=34.6200",
+          "Lead": "=7.6400",
+          "Selenium": "<0.0100",
+          "Zinc": "=48.2800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TIGER MICRONUTRIENTS IRON 22% 0-0-0",
+    "brand": "TIGER-SUL PRODUCTS LLC",
+    "manufacturer": {
+      "name": "TIGER-SUL PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 55.0
+    },
+    "micros_pct": {
+      "Fe": 22.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E53157-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.841,
+            "Cd": 0.015,
+            "Co": 11.87,
+            "Hg": 0.001,
+            "Mo": 0.015,
+            "Ni": 34.62,
+            "Pb": 7.64,
+            "Se": 0.01,
+            "Zn": 48.28
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Hg": 0.001,
+            "Mo": 0.015,
+            "Se": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.841,
+        "Co": 11.87,
+        "Ni": 34.62,
+        "Pb": 7.64,
+        "Zn": 48.28
+      }
+    }
+  }
+}

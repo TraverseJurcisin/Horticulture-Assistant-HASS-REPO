@@ -1,1 +1,95 @@
-{"schema_version":"2025-07-v1","product_id":"B21A12","source_wsda_record":{"wsda_product_number":"(#2433-0050)","product_name":"AEA CUSTOMER FORMULA MIX X-X-X","company_info":{"company":"ADVANCING ECO AGRICULTURE INC.","Mailing Address":"4551 Parks West Rd","Post Office Box":null,"City":"Middlefield","State":"OH","Postal Code":"44062","Telephone Number":"330 442-0678","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":null,"micronutrient_fertilizer":null},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":null,"Cadmium":null,"Cobalt":null,"Mercury":null,"Molybdenum":null,"Nickel":null,"Lead":null,"Selenium":null,"Zinc":null},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ADVANCING ECO AGRICULTURE INC.","label_name":"AEA CUSTOMER FORMULA MIX X-X-X","wsda_reg_no":"(#2433-0050)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B21A12",
+  "metadata": {
+    "registrant": "ADVANCING ECO AGRICULTURE INC.",
+    "label_name": "AEA CUSTOMER FORMULA MIX X-X-X",
+    "wsda_reg_no": "(#2433-0050)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2433-0050)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2433-0050)",
+        "product_name": "AEA CUSTOMER FORMULA MIX X-X-X",
+        "company_info": {
+          "company": "ADVANCING ECO AGRICULTURE INC.",
+          "Mailing Address": "4551 Parks West Rd",
+          "Post Office Box": null,
+          "City": "Middlefield",
+          "State": "OH",
+          "Postal Code": "44062",
+          "Telephone Number": "330 442-0678",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": null,
+          "Cadmium": null,
+          "Cobalt": null,
+          "Mercury": null,
+          "Molybdenum": null,
+          "Nickel": null,
+          "Lead": null,
+          "Selenium": null,
+          "Zinc": null
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": null,
+        "micronutrient_fertilizer": null
+      },
+      "waste_derived_fertilizer": null,
+      "micronutrient_fertilizer": null,
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AEA CUSTOMER FORMULA MIX X-X-X",
+    "brand": "ADVANCING ECO AGRICULTURE INC.",
+    "manufacturer": {
+      "name": "ADVANCING ECO AGRICULTURE INC."
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    }
+  }
+}

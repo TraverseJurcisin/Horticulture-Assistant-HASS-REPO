@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F6A870","source_wsda_record":{"wsda_product_number":"(#1632-0069)","product_name":"20-10-10","company_info":{"company":"SIMPLOT GROWER SOLUTIONS","Mailing Address":"P O Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<10.6000","Cadmium":"=54.0000","Cobalt":"<4.2400","Mercury":"=0.0510","Molybdenum":"<8.4700","Nickel":"=124.0000","Lead":"<10.6000","Selenium":"<21.2000","Zinc":"=684.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<10.6000","Cadmium":"=54.0000","Cobalt":"<4.2400","Mercury":"=0.0510","Molybdenum":"<8.4700","Nickel":"=124.0000","Lead":"<10.6000","Selenium":"<21.2000","Zinc":"=684.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SIMPLOT GROWER SOLUTIONS","label_name":"20-10-10","wsda_reg_no":"(#1632-0069)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F6A870",
+  "metadata": {
+    "registrant": "SIMPLOT GROWER SOLUTIONS",
+    "label_name": "20-10-10",
+    "wsda_reg_no": "(#1632-0069)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1632-0069)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1632-0069)",
+        "product_name": "20-10-10",
+        "company_info": {
+          "company": "SIMPLOT GROWER SOLUTIONS",
+          "Mailing Address": "P O Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<10.6000",
+          "Cadmium": "=54.0000",
+          "Cobalt": "<4.2400",
+          "Mercury": "=0.0510",
+          "Molybdenum": "<8.4700",
+          "Nickel": "=124.0000",
+          "Lead": "<10.6000",
+          "Selenium": "<21.2000",
+          "Zinc": "=684.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "20-10-10",
+    "brand": "SIMPLOT GROWER SOLUTIONS",
+    "manufacturer": {
+      "name": "SIMPLOT GROWER SOLUTIONS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 11.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F6A870-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.6,
+            "Cd": 54.0,
+            "Co": 4.24,
+            "Hg": 0.051,
+            "Mo": 8.47,
+            "Ni": 124.0,
+            "Pb": 10.6,
+            "Se": 21.2,
+            "Zn": 684.0
+          },
+          "detection_limits_ppm": {
+            "As": 10.6,
+            "Co": 4.24,
+            "Mo": 8.47,
+            "Pb": 10.6,
+            "Se": 21.2
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 54.0,
+        "Hg": 0.051,
+        "Ni": 124.0,
+        "Zn": 684.0
+      }
+    }
+  }
+}

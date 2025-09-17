@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "55C3FA",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2687-0098)",
-    "product_name": "MICROSYNC ULTRA 0-0-0",
-    "company_info": {
-      "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
-      "Mailing Address": "1001 Winstead Drive Ste 480",
-      "Post Office Box": null,
-      "City": "Cary",
-      "State": "NC",
-      "Postal Code": "27513",
-      "Telephone Number": "919 825-1901",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 7.5,
-      "Boron (B)": 1.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 5.0
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "=0.2200",
-      "Cobalt": "=9.1900",
-      "Mercury": "=2.4100",
-      "Molybdenum": "=2.4000",
-      "Nickel": "=48.3000",
-      "Lead": "=10.4000",
-      "Selenium": "<5.0000",
-      "Zinc": "=58740.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 7.5,
-      "Boron (B)": 1.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 5.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "=0.2200",
-      "Cobalt": "=9.1900",
-      "Mercury": "=2.4100",
-      "Molybdenum": "=2.4000",
-      "Nickel": "=48.3000",
-      "Lead": "=10.4000",
-      "Selenium": "<5.0000",
-      "Zinc": "=58740.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "55C3FA",
   "metadata": {
     "registrant": "VERDESIAN LIFE SCIENCES U.S. LLC",
     "label_name": "MICROSYNC ULTRA 0-0-0",
     "wsda_reg_no": "(#2687-0098)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2687-0098)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2687-0098)",
+        "product_name": "MICROSYNC ULTRA 0-0-0",
+        "company_info": {
+          "company": "VERDESIAN LIFE SCIENCES U.S. LLC",
+          "Mailing Address": "1001 Winstead Drive Ste 480",
+          "Post Office Box": null,
+          "City": "Cary",
+          "State": "NC",
+          "Postal Code": "27513",
+          "Telephone Number": "919 825-1901",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 7.5,
+          "Boron (B)": 1.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 4.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 5.0
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=0.2200",
+          "Cobalt": "=9.1900",
+          "Mercury": "=2.4100",
+          "Molybdenum": "=2.4000",
+          "Nickel": "=48.3000",
+          "Lead": "=10.4000",
+          "Selenium": "<5.0000",
+          "Zinc": "=58740.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MICROSYNC ULTRA 0-0-0",
+    "brand": "VERDESIAN LIFE SCIENCES U.S. LLC",
+    "manufacturer": {
+      "name": "VERDESIAN LIFE SCIENCES U.S. LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "S": 7.5
+    },
+    "micros_pct": {
+      "Mn": 4.0,
+      "Zn": 5.0,
+      "B": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "55C3FA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.22,
+            "Co": 9.19,
+            "Hg": 2.41,
+            "Mo": 2.4,
+            "Ni": 48.3,
+            "Pb": 10.4,
+            "Se": 5.0,
+            "Zn": 58740.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.22,
+        "Co": 9.19,
+        "Hg": 2.41,
+        "Mo": 2.4,
+        "Ni": 48.3,
+        "Pb": 10.4,
+        "Zn": 58740.0
+      }
+    }
   }
 }

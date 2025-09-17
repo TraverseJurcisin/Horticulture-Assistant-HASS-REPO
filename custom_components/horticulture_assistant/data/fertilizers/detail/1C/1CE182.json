@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1CE182",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2572-0013)",
-    "product_name": "HUMBOLDT COUNTY'S OWN PURPLE MAXX (HB) 0-0-3",
-    "company_info": {
-      "company": "HUMBOLDT BOTTLING",
-      "Mailing Address": "PO Box 429",
-      "Post Office Box": null,
-      "City": "Fortuna",
-      "State": "CA",
-      "Postal Code": "95540",
-      "Telephone Number": "707 725-4119",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.6300",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.4000",
-      "Nickel": "=1.9600",
-      "Lead": "=1.5100",
-      "Selenium": "=0.3300",
-      "Zinc": "=17.9900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.6300",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=0.4000",
-      "Nickel": "=1.9600",
-      "Lead": "=1.5100",
-      "Selenium": "=0.3300",
-      "Zinc": "=17.9900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1CE182",
   "metadata": {
     "registrant": "HUMBOLDT BOTTLING",
     "label_name": "HUMBOLDT COUNTY'S OWN PURPLE MAXX (HB) 0-0-3",
     "wsda_reg_no": "(#2572-0013)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2572-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2572-0013)",
+        "product_name": "HUMBOLDT COUNTY'S OWN PURPLE MAXX (HB) 0-0-3",
+        "company_info": {
+          "company": "HUMBOLDT BOTTLING",
+          "Mailing Address": "PO Box 429",
+          "Post Office Box": null,
+          "City": "Fortuna",
+          "State": "CA",
+          "Postal Code": "95540",
+          "Telephone Number": "707 725-4119",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6300",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.3000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.4000",
+          "Nickel": "=1.9600",
+          "Lead": "=1.5100",
+          "Selenium": "=0.3300",
+          "Zinc": "=17.9900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HUMBOLDT COUNTY'S OWN PURPLE MAXX (HB) 0-0-3",
+    "brand": "HUMBOLDT BOTTLING",
+    "manufacturer": {
+      "name": "HUMBOLDT BOTTLING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1CE182-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.63,
+            "Cd": 0.1,
+            "Co": 0.3,
+            "Hg": 0.01,
+            "Mo": 0.4,
+            "Ni": 1.96,
+            "Pb": 1.51,
+            "Se": 0.33,
+            "Zn": 17.99
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.63,
+        "Cd": 0.1,
+        "Co": 0.3,
+        "Hg": 0.01,
+        "Mo": 0.4,
+        "Ni": 1.96,
+        "Pb": 1.51,
+        "Se": 0.33,
+        "Zn": 17.99
+      }
+    }
   }
 }

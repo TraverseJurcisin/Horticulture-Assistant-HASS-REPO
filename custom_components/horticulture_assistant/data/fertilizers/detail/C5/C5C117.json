@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"C5C117","source_wsda_record":{"wsda_product_number":"(#1877-0076)","product_name":"TRUE ORGANIC RAISED BED FOOD 6-3-6","company_info":{"company":"TRUE ORGANIC PRODUCTS INC","Mailing Address":"PO Box 7192","Post Office Box":null,"City":"Spreckels","State":"CA","Postal Code":"93962","Telephone Number":"831 375-4796","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.8300","Cadmium":"=0.3700","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.6000","Nickel":"=5.1000","Lead":"=0.5000","Selenium":"=1.3000","Zinc":"=48.4200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":5.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.8300","Cadmium":"=0.3700","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.6000","Nickel":"=5.1000","Lead":"=0.5000","Selenium":"=1.3000","Zinc":"=48.4200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TRUE ORGANIC PRODUCTS INC","label_name":"TRUE ORGANIC RAISED BED FOOD 6-3-6","wsda_reg_no":"(#1877-0076)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C5C117",
+  "metadata": {
+    "registrant": "TRUE ORGANIC PRODUCTS INC",
+    "label_name": "TRUE ORGANIC RAISED BED FOOD 6-3-6",
+    "wsda_reg_no": "(#1877-0076)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1877-0076)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1877-0076)",
+        "product_name": "TRUE ORGANIC RAISED BED FOOD 6-3-6",
+        "company_info": {
+          "company": "TRUE ORGANIC PRODUCTS INC",
+          "Mailing Address": "PO Box 7192",
+          "Post Office Box": null,
+          "City": "Spreckels",
+          "State": "CA",
+          "Postal Code": "93962",
+          "Telephone Number": "831 375-4796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8300",
+          "Cadmium": "=0.3700",
+          "Cobalt": "=0.1000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.6000",
+          "Nickel": "=5.1000",
+          "Lead": "=0.5000",
+          "Selenium": "=1.3000",
+          "Zinc": "=48.4200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRUE ORGANIC RAISED BED FOOD 6-3-6",
+    "brand": "TRUE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "TRUE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C5C117-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.83,
+            "Cd": 0.37,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.6,
+            "Ni": 5.1,
+            "Pb": 0.5,
+            "Se": 1.3,
+            "Zn": 48.42
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.83,
+        "Cd": 0.37,
+        "Co": 0.1,
+        "Mo": 0.6,
+        "Ni": 5.1,
+        "Pb": 0.5,
+        "Se": 1.3,
+        "Zn": 48.42
+      }
+    }
+  }
+}

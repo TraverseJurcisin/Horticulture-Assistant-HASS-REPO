@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "77576F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2082-0004)",
-    "product_name": "AMPLE C 0-0-0",
-    "company_info": {
-      "company": "KEYAG DISTRIBUTORS",
-      "Mailing Address": "P.O Box 150",
-      "Post Office Box": null,
-      "City": "Murtaugh",
-      "State": "ID",
-      "Postal Code": "83344",
-      "Telephone Number": "208 432-6602",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=351.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=2.0000",
-      "Lead": "<1.0000",
-      "Selenium": "<1.0000",
-      "Zinc": "=7570.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.06,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=351.0000",
-      "Mercury": "=0.1000",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=2.0000",
-      "Lead": "<1.0000",
-      "Selenium": "<1.0000",
-      "Zinc": "=7570.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "77576F",
   "metadata": {
     "registrant": "KEYAG DISTRIBUTORS",
     "label_name": "AMPLE C 0-0-0",
     "wsda_reg_no": "(#2082-0004)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2082-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2082-0004)",
+        "product_name": "AMPLE C 0-0-0",
+        "company_info": {
+          "company": "KEYAG DISTRIBUTORS",
+          "Mailing Address": "P.O Box 150",
+          "Post Office Box": null,
+          "City": "Murtaugh",
+          "State": "ID",
+          "Postal Code": "83344",
+          "Telephone Number": "208 432-6602",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.06,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=351.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=2.0000",
+          "Lead": "<1.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=7570.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AMPLE C 0-0-0",
+    "brand": "KEYAG DISTRIBUTORS",
+    "manufacturer": {
+      "name": "KEYAG DISTRIBUTORS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "77576F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 1.0,
+            "Co": 351.0,
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Ni": 2.0,
+            "Pb": 1.0,
+            "Se": 1.0,
+            "Zn": 7570.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 1.0,
+            "Mo": 1.0,
+            "Pb": 1.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Co": 351.0,
+        "Hg": 0.1,
+        "Ni": 2.0,
+        "Zn": 7570.0
+      }
+    }
   }
 }

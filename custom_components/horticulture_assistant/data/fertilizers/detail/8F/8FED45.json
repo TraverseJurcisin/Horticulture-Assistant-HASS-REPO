@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"8FED45","source_wsda_record":{"wsda_product_number":"(#2422-0005)","product_name":"ROCK FUSION GROWTH 6-2-6","company_info":{"company":"ROCK HOLDINGS PTY LTD","Mailing Address":"791 Queens Gate Way","Post Office Box":null,"City":"Wadsworth","State":"OH","Postal Code":"44281","Telephone Number":"330 775-2785","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":1.66,"Magnesium (Mg)":0.59,"Sulfur (S)":1.22,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2000","Cadmium":"=0.1000","Cobalt":"=2.6000","Mercury":"=0.0500","Molybdenum":"=8.8000","Nickel":"=3.5000","Lead":"=1.2000","Selenium":"=5.5000","Zinc":"=35.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":1.66,"Magnesium (Mg)":0.59,"Sulfur (S)":1.22,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2000","Cadmium":"=0.1000","Cobalt":"=2.6000","Mercury":"=0.0500","Molybdenum":"=8.8000","Nickel":"=3.5000","Lead":"=1.2000","Selenium":"=5.5000","Zinc":"=35.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ROCK HOLDINGS PTY LTD","label_name":"ROCK FUSION GROWTH 6-2-6","wsda_reg_no":"(#2422-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8FED45",
+  "metadata": {
+    "registrant": "ROCK HOLDINGS PTY LTD",
+    "label_name": "ROCK FUSION GROWTH 6-2-6",
+    "wsda_reg_no": "(#2422-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2422-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2422-0005)",
+        "product_name": "ROCK FUSION GROWTH 6-2-6",
+        "company_info": {
+          "company": "ROCK HOLDINGS PTY LTD",
+          "Mailing Address": "791 Queens Gate Way",
+          "Post Office Box": null,
+          "City": "Wadsworth",
+          "State": "OH",
+          "Postal Code": "44281",
+          "Telephone Number": "330 775-2785",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 1.66,
+          "Magnesium (Mg)": 0.59,
+          "Sulfur (S)": 1.22,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=2.6000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=8.8000",
+          "Nickel": "=3.5000",
+          "Lead": "=1.2000",
+          "Selenium": "=5.5000",
+          "Zinc": "=35.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROCK FUSION GROWTH 6-2-6",
+    "brand": "ROCK HOLDINGS PTY LTD",
+    "manufacturer": {
+      "name": "ROCK HOLDINGS PTY LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 1.66,
+      "Mg": 0.59,
+      "S": 1.22
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8FED45-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.2,
+            "Cd": 0.1,
+            "Co": 2.6,
+            "Hg": 0.05,
+            "Mo": 8.8,
+            "Ni": 3.5,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 35.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.2,
+        "Cd": 0.1,
+        "Co": 2.6,
+        "Hg": 0.05,
+        "Mo": 8.8,
+        "Ni": 3.5,
+        "Pb": 1.2,
+        "Se": 5.5,
+        "Zn": 35.2
+      }
+    }
+  }
+}

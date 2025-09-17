@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "21F6D4",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0169-0762)",
-    "product_name": "BEST AMMONIUM PHOSPHATE SULFATE WITH 13% SULFUR 16-20-0",
-    "company_info": {
-      "company": "J R SIMPLOT COMPANY",
-      "Mailing Address": "PO Box 70013",
-      "Post Office Box": null,
-      "City": "Boise",
-      "State": "ID",
-      "Postal Code": "83707",
-      "Telephone Number": "208 780-0838",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 16.0,
-      "Available Phosphoric Acid (P2O5)": 20.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=6.9000",
-      "Cadmium": "=34.0000",
-      "Cobalt": "=1.9000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=7.3000",
-      "Nickel": "=62.0000",
-      "Lead": "=1.9000",
-      "Selenium": "=0.9000",
-      "Zinc": "=510.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 16.0,
-      "Available Phosphoric Acid (P2O5)": 20.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 13.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=6.9000",
-      "Cadmium": "=34.0000",
-      "Cobalt": "=1.9000",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=7.3000",
-      "Nickel": "=62.0000",
-      "Lead": "=1.9000",
-      "Selenium": "=0.9000",
-      "Zinc": "=510.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "21F6D4",
   "metadata": {
     "registrant": "J R SIMPLOT COMPANY",
     "label_name": "BEST AMMONIUM PHOSPHATE SULFATE WITH 13% SULFUR 16-20-0",
     "wsda_reg_no": "(#0169-0762)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0762)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0762)",
+        "product_name": "BEST AMMONIUM PHOSPHATE SULFATE WITH 13% SULFUR 16-20-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": 20.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 13.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=6.9000",
+          "Cadmium": "=34.0000",
+          "Cobalt": "=1.9000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=7.3000",
+          "Nickel": "=62.0000",
+          "Lead": "=1.9000",
+          "Selenium": "=0.9000",
+          "Zinc": "=510.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST AMMONIUM PHOSPHATE SULFATE WITH 13% SULFUR 16-20-0",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0,
+      "P2O5_pct": 20.0
+    },
+    "macros_pct": {
+      "S": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "21F6D4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 6.9,
+            "Cd": 34.0,
+            "Co": 1.9,
+            "Hg": 0.01,
+            "Mo": 7.3,
+            "Ni": 62.0,
+            "Pb": 1.9,
+            "Se": 0.9,
+            "Zn": 510.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 6.9,
+        "Cd": 34.0,
+        "Co": 1.9,
+        "Mo": 7.3,
+        "Ni": 62.0,
+        "Pb": 1.9,
+        "Se": 0.9,
+        "Zn": 510.0
+      }
+    }
   }
 }

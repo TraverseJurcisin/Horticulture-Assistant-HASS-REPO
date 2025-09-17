@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"866483","source_wsda_record":{"wsda_product_number":"(#0310-0116)","product_name":"STOLLER ENTERPRISES TOP COP WITH SULFUR 0-0-0","company_info":{"company":"STOLLER ENTERPRISES INC","Mailing Address":"9090 Katy Freeway Ste 400","Post Office Box":null,"City":"Houston","State":"TX","Postal Code":"77024","Telephone Number":"713 329-0329","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":50.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":4.7,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=1.2000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=2.5000","Lead":"=2.4000","Selenium":"=0.3000","Zinc":"=66.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":50.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":4.7,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=1.2000","Mercury":"=0.0100","Molybdenum":"=0.3000","Nickel":"=2.5000","Lead":"=2.4000","Selenium":"=0.3000","Zinc":"=66.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"STOLLER ENTERPRISES INC","label_name":"STOLLER ENTERPRISES TOP COP WITH SULFUR 0-0-0","wsda_reg_no":"(#0310-0116)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "866483",
+  "metadata": {
+    "registrant": "STOLLER ENTERPRISES INC",
+    "label_name": "STOLLER ENTERPRISES TOP COP WITH SULFUR 0-0-0",
+    "wsda_reg_no": "(#0310-0116)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0310-0116)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0310-0116)",
+        "product_name": "STOLLER ENTERPRISES TOP COP WITH SULFUR 0-0-0",
+        "company_info": {
+          "company": "STOLLER ENTERPRISES INC",
+          "Mailing Address": "9090 Katy Freeway Ste 400",
+          "Post Office Box": null,
+          "City": "Houston",
+          "State": "TX",
+          "Postal Code": "77024",
+          "Telephone Number": "713 329-0329",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 50.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 4.7,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=1.2000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=2.5000",
+          "Lead": "=2.4000",
+          "Selenium": "=0.3000",
+          "Zinc": "=66.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STOLLER ENTERPRISES TOP COP WITH SULFUR 0-0-0",
+    "brand": "STOLLER ENTERPRISES INC",
+    "manufacturer": {
+      "name": "STOLLER ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 50.0
+    },
+    "micros_pct": {
+      "Cu": 4.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "866483-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 1.2,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 2.5,
+            "Pb": 2.4,
+            "Se": 0.3,
+            "Zn": 66.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 1.2,
+        "Hg": 0.01,
+        "Mo": 0.3,
+        "Ni": 2.5,
+        "Pb": 2.4,
+        "Se": 0.3,
+        "Zn": 66.0
+      }
+    }
+  }
+}

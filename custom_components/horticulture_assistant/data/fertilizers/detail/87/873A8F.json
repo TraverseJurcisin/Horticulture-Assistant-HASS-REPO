@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"873A8F","source_wsda_record":{"wsda_product_number":"(#4269-0006)","product_name":"SUPERNUTES NUTES B 0-4-4","company_info":{"company":"SUPERNUTES LLC","Mailing Address":"1721 Maplelane Ave","Post Office Box":null,"City":"Hazel Park","State":"MI","Postal Code":"48030","Telephone Number":"248 249-5365","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.8,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.04,"Manganese (Mn)":0.01,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.009},"reported_metals":{"Arsenic":"=0.0400","Cadmium":"=0.0300","Cobalt":"=1.0000","Mercury":"=0.0100","Molybdenum":"=24.5000","Nickel":"=0.5000","Lead":"=0.0500","Selenium":"=0.1000","Zinc":"=123.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.0,"Sulfur (S)":1.8,"Boron (B)":0.01,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.04,"Manganese (Mn)":0.01,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.009},"heavy_metals":{"Arsenic":"=0.0400","Cadmium":"=0.0300","Cobalt":"=1.0000","Mercury":"=0.0100","Molybdenum":"=24.5000","Nickel":"=0.5000","Lead":"=0.0500","Selenium":"=0.1000","Zinc":"=123.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUPERNUTES LLC","label_name":"SUPERNUTES NUTES B 0-4-4","wsda_reg_no":"(#4269-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "873A8F",
+  "metadata": {
+    "registrant": "SUPERNUTES LLC",
+    "label_name": "SUPERNUTES NUTES B 0-4-4",
+    "wsda_reg_no": "(#4269-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4269-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4269-0006)",
+        "product_name": "SUPERNUTES NUTES B 0-4-4",
+        "company_info": {
+          "company": "SUPERNUTES LLC",
+          "Mailing Address": "1721 Maplelane Ave",
+          "Post Office Box": null,
+          "City": "Hazel Park",
+          "State": "MI",
+          "Postal Code": "48030",
+          "Telephone Number": "248 249-5365",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.8,
+          "Boron (B)": 0.01,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.04,
+          "Manganese (Mn)": 0.01,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.009
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0400",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=24.5000",
+          "Nickel": "=0.5000",
+          "Lead": "=0.0500",
+          "Selenium": "=0.1000",
+          "Zinc": "=123.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUPERNUTES NUTES B 0-4-4",
+    "brand": "SUPERNUTES LLC",
+    "manufacturer": {
+      "name": "SUPERNUTES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 4.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Mg": 1.0,
+      "S": 1.8
+    },
+    "micros_pct": {
+      "Fe": 0.04,
+      "Mn": 0.01,
+      "Zn": 0.009,
+      "B": 0.01,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "873A8F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.04,
+            "Cd": 0.03,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 24.5,
+            "Ni": 0.5,
+            "Pb": 0.05,
+            "Se": 0.1,
+            "Zn": 123.7
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.04,
+        "Cd": 0.03,
+        "Co": 1.0,
+        "Hg": 0.01,
+        "Mo": 24.5,
+        "Ni": 0.5,
+        "Pb": 0.05,
+        "Se": 0.1,
+        "Zn": 123.7
+      }
+    }
+  }
+}

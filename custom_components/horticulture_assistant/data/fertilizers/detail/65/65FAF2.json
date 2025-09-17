@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "65FAF2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2214-0022)",
-    "product_name": "OLD TRUCK ORGANICS ROSE & FLOWER PLANT FOOD 4-2-2",
-    "company_info": {
-      "company": "REFORESTATION TECHNOLOGIES INTERNAT",
-      "Mailing Address": "5355 Monterey Frontage Rd",
-      "Post Office Box": null,
-      "City": "Gilroy",
-      "State": "CA",
-      "Postal Code": "95020",
-      "Telephone Number": "408 848-9604",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.5,
-      "Magnesium (Mg)": 1.1,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.1200",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.3000",
-      "Nickel": "=10.0000",
-      "Lead": "=1.6000",
-      "Selenium": "=0.5000",
-      "Zinc": "=46.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 2.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 1.5,
-      "Magnesium (Mg)": 1.1,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.1200",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.3000",
-      "Nickel": "=10.0000",
-      "Lead": "=1.6000",
-      "Selenium": "=0.5000",
-      "Zinc": "=46.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "65FAF2",
   "metadata": {
     "registrant": "REFORESTATION TECHNOLOGIES INTERNAT",
     "label_name": "OLD TRUCK ORGANICS ROSE & FLOWER PLANT FOOD 4-2-2",
     "wsda_reg_no": "(#2214-0022)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2214-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2214-0022)",
+        "product_name": "OLD TRUCK ORGANICS ROSE & FLOWER PLANT FOOD 4-2-2",
+        "company_info": {
+          "company": "REFORESTATION TECHNOLOGIES INTERNAT",
+          "Mailing Address": "5355 Monterey Frontage Rd",
+          "Post Office Box": null,
+          "City": "Gilroy",
+          "State": "CA",
+          "Postal Code": "95020",
+          "Telephone Number": "408 848-9604",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 1.5,
+          "Magnesium (Mg)": 1.1,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.1200",
+          "Cadmium": "=0.7700",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=4.3000",
+          "Nickel": "=10.0000",
+          "Lead": "=1.6000",
+          "Selenium": "=0.5000",
+          "Zinc": "=46.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "OLD TRUCK ORGANICS ROSE & FLOWER PLANT FOOD 4-2-2",
+    "brand": "REFORESTATION TECHNOLOGIES INTERNAT",
+    "manufacturer": {
+      "name": "REFORESTATION TECHNOLOGIES INTERNAT"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 1.5,
+      "Mg": 1.1,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "65FAF2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.12,
+            "Cd": 0.77,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 4.3,
+            "Ni": 10.0,
+            "Pb": 1.6,
+            "Se": 0.5,
+            "Zn": 46.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.12,
+        "Cd": 0.77,
+        "Co": 1.0,
+        "Hg": 0.05,
+        "Mo": 4.3,
+        "Ni": 10.0,
+        "Pb": 1.6,
+        "Se": 0.5,
+        "Zn": 46.2
+      }
+    }
   }
 }

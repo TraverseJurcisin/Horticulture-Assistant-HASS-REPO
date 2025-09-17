@@ -1,1 +1,152 @@
-{"schema_version":"2025-07-v1","product_id":"B3D2CF","source_wsda_record":{"wsda_product_number":"(#0169-0731)","product_name":"BEST GREENS KING 20-3-20 MICRO WITH NUTRALENE #7425650 20-3-20","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.8,"Boron (B)":0.11,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.18,"Iron (Fe)":0.57,"Manganese (Mn)":0.29,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.21},"reported_metals":{"Arsenic":"=2.3000","Cadmium":"=1.7000","Cobalt":"=5.9000","Mercury":"=0.0250","Molybdenum":"=37.0000","Nickel":"=9.5000","Lead":"=8.3000","Selenium":"=0.3800","Zinc":"=1900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":6.8,"Boron (B)":0.11,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.18,"Iron (Fe)":0.57,"Manganese (Mn)":0.29,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.21},"heavy_metals":{"Arsenic":"=2.3000","Cadmium":"=1.7000","Cobalt":"=5.9000","Mercury":"=0.0250","Molybdenum":"=37.0000","Nickel":"=9.5000","Lead":"=8.3000","Selenium":"=0.3800","Zinc":"=1900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"BEST GREENS KING 20-3-20 MICRO WITH NUTRALENE #7425650 20-3-20","wsda_reg_no":"(#0169-0731)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B3D2CF",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "BEST GREENS KING 20-3-20 MICRO WITH NUTRALENE #7425650 20-3-20",
+    "wsda_reg_no": "(#0169-0731)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0731)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0731)",
+        "product_name": "BEST GREENS KING 20-3-20 MICRO WITH NUTRALENE #7425650 20-3-20",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 6.8,
+          "Boron (B)": 0.11,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.18,
+          "Iron (Fe)": 0.57,
+          "Manganese (Mn)": 0.29,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.21
+        },
+        "reported_metals": {
+          "Arsenic": "=2.3000",
+          "Cadmium": "=1.7000",
+          "Cobalt": "=5.9000",
+          "Mercury": "=0.0250",
+          "Molybdenum": "=37.0000",
+          "Nickel": "=9.5000",
+          "Lead": "=8.3000",
+          "Selenium": "=0.3800",
+          "Zinc": "=1900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BEST GREENS KING 20-3-20 MICRO WITH NUTRALENE #7425650 20-3-20",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 20.0
+    },
+    "macros_pct": {
+      "S": 6.8
+    },
+    "micros_pct": {
+      "Fe": 0.57,
+      "Mn": 0.29,
+      "Zn": 0.21,
+      "Cu": 0.18,
+      "B": 0.11,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B3D2CF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.3,
+            "Cd": 1.7,
+            "Co": 5.9,
+            "Hg": 0.025,
+            "Mo": 37.0,
+            "Ni": 9.5,
+            "Pb": 8.3,
+            "Se": 0.38,
+            "Zn": 1900.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.3,
+        "Cd": 1.7,
+        "Co": 5.9,
+        "Hg": 0.025,
+        "Mo": 37.0,
+        "Ni": 9.5,
+        "Pb": 8.3,
+        "Se": 0.38,
+        "Zn": 1900.0
+      }
+    }
+  }
+}

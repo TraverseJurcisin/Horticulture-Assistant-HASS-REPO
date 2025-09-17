@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0C4F38",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0189-0202)",
-    "product_name": "LESCO PROFESSIONAL LANDSCAPE AND ORNAMENTAL ALL-PURPOSE FERTILIZER 14-14-14 (#510075) 14-14-14",
-    "company_info": {
-      "company": "LESCO INC",
-      "Mailing Address": "1385 East 36th Street",
-      "Post Office Box": null,
-      "City": "Cleveland",
-      "State": "OH",
-      "Postal Code": "44114-4114",
-      "Telephone Number": "440 454-3672",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.69,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.45,
-      "Manganese (Mn)": 0.45,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=4.8300",
-      "Cadmium": "=3.1100",
-      "Cobalt": "=3.9400",
-      "Mercury": "=0.0080",
-      "Molybdenum": "=1.7100",
-      "Nickel": "=17.0700",
-      "Lead": "=31.3800",
-      "Selenium": "=0.0110",
-      "Zinc": "=60.2100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 14.0,
-      "Available Phosphoric Acid (P2O5)": 14.0,
-      "Soluble Potash (K2O)": 14.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 4.69,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.45,
-      "Manganese (Mn)": 0.45,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=4.8300",
-      "Cadmium": "=3.1100",
-      "Cobalt": "=3.9400",
-      "Mercury": "=0.0080",
-      "Molybdenum": "=1.7100",
-      "Nickel": "=17.0700",
-      "Lead": "=31.3800",
-      "Selenium": "=0.0110",
-      "Zinc": "=60.2100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0C4F38",
   "metadata": {
     "registrant": "LESCO INC",
     "label_name": "LESCO PROFESSIONAL LANDSCAPE AND ORNAMENTAL ALL-PURPOSE FERTILIZER 14-14-14 (#510075) 14-14-14",
     "wsda_reg_no": "(#0189-0202)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0189-0202)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0189-0202)",
+        "product_name": "LESCO PROFESSIONAL LANDSCAPE AND ORNAMENTAL ALL-PURPOSE FERTILIZER 14-14-14 (#510075) 14-14-14",
+        "company_info": {
+          "company": "LESCO INC",
+          "Mailing Address": "1385 East 36th Street",
+          "Post Office Box": null,
+          "City": "Cleveland",
+          "State": "OH",
+          "Postal Code": "44114-4114",
+          "Telephone Number": "440 454-3672",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 14.0,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.69,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.45,
+          "Manganese (Mn)": 0.45,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=4.8300",
+          "Cadmium": "=3.1100",
+          "Cobalt": "=3.9400",
+          "Mercury": "=0.0080",
+          "Molybdenum": "=1.7100",
+          "Nickel": "=17.0700",
+          "Lead": "=31.3800",
+          "Selenium": "=0.0110",
+          "Zinc": "=60.2100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LESCO PROFESSIONAL LANDSCAPE AND ORNAMENTAL ALL-PURPOSE FERTILIZER 14-14-14 (#510075) 14-14-14",
+    "brand": "LESCO INC",
+    "manufacturer": {
+      "name": "LESCO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 14.0,
+      "P2O5_pct": 14.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "S": 4.69
+    },
+    "micros_pct": {
+      "Fe": 0.45,
+      "Mn": 0.45
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0C4F38-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.83,
+            "Cd": 3.11,
+            "Co": 3.94,
+            "Hg": 0.008,
+            "Mo": 1.71,
+            "Ni": 17.07,
+            "Pb": 31.38,
+            "Se": 0.011,
+            "Zn": 60.21
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 4.83,
+        "Cd": 3.11,
+        "Co": 3.94,
+        "Hg": 0.008,
+        "Mo": 1.71,
+        "Ni": 17.07,
+        "Pb": 31.38,
+        "Se": 0.011,
+        "Zn": 60.21
+      }
+    }
   }
 }

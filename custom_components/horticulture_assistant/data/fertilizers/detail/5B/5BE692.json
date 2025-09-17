@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5BE692",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1217-0033)",
-    "product_name": "GARDENS ALIVE ROOTS ALIVE! FERTILIZER TABLETS 12-8-4",
-    "company_info": {
-      "company": "GARDENS ALIVE INC",
-      "Mailing Address": "110 W Elm St",
-      "Post Office Box": null,
-      "City": "Tipp City",
-      "State": "OH",
-      "Postal Code": "45371",
-      "Telephone Number": "937 667-2491",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=13.8000",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=34.9000",
-      "Lead": "<2.0000",
-      "Selenium": "<4.0000",
-      "Zinc": "=68.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "<1.0000",
-      "Cobalt": "=13.8000",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=1.5000",
-      "Nickel": "=34.9000",
-      "Lead": "<2.0000",
-      "Selenium": "<4.0000",
-      "Zinc": "=68.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5BE692",
   "metadata": {
     "registrant": "GARDENS ALIVE INC",
     "label_name": "GARDENS ALIVE ROOTS ALIVE! FERTILIZER TABLETS 12-8-4",
     "wsda_reg_no": "(#1217-0033)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1217-0033)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1217-0033)",
+        "product_name": "GARDENS ALIVE ROOTS ALIVE! FERTILIZER TABLETS 12-8-4",
+        "company_info": {
+          "company": "GARDENS ALIVE INC",
+          "Mailing Address": "110 W Elm St",
+          "Post Office Box": null,
+          "City": "Tipp City",
+          "State": "OH",
+          "Postal Code": "45371",
+          "Telephone Number": "937 667-2491",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=13.8000",
+          "Mercury": "<0.0032",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=34.9000",
+          "Lead": "<2.0000",
+          "Selenium": "<4.0000",
+          "Zinc": "=68.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GARDENS ALIVE ROOTS ALIVE! FERTILIZER TABLETS 12-8-4",
+    "brand": "GARDENS ALIVE INC",
+    "manufacturer": {
+      "name": "GARDENS ALIVE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5BE692-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Co": 13.8,
+            "Hg": 0.0032,
+            "Mo": 1.5,
+            "Ni": 34.9,
+            "Pb": 2.0,
+            "Se": 4.0,
+            "Zn": 68.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Cd": 1.0,
+            "Hg": 0.0032,
+            "Pb": 2.0,
+            "Se": 4.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 13.8,
+        "Mo": 1.5,
+        "Ni": 34.9,
+        "Zn": 68.0
+      }
+    }
   }
 }

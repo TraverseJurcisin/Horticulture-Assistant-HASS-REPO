@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"B92D18","source_wsda_record":{"wsda_product_number":"(#0924-0005)","product_name":"BONIDE HYDRATED LIME 0-0-0","company_info":{"company":"BONIDE PRODUCTS LLC","Mailing Address":"6301 Sutliff Rd","Post Office Box":null,"City":"Oriskany","State":"NY","Postal Code":"13424","Telephone Number":"315 736-8231","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":34.2,"Magnesium (Mg)":20.4,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1200","Cadmium":"<0.2500","Cobalt":"<2.5000","Mercury":"<0.0200","Molybdenum":"<0.5000","Nickel":"=3.4300","Lead":"<0.2500","Selenium":"<0.2500","Zinc":"=6.9400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":"131.7000","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":34.2,"Magnesium (Mg)":20.4,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1200","Cadmium":"<0.2500","Cobalt":"<2.5000","Mercury":"<0.0200","Molybdenum":"<0.5000","Nickel":"=3.4300","Lead":"<0.2500","Selenium":"<0.2500","Zinc":"=6.9400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BONIDE PRODUCTS LLC","label_name":"BONIDE HYDRATED LIME 0-0-0","wsda_reg_no":"(#0924-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B92D18",
+  "metadata": {
+    "registrant": "BONIDE PRODUCTS LLC",
+    "label_name": "BONIDE HYDRATED LIME 0-0-0",
+    "wsda_reg_no": "(#0924-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0924-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0924-0005)",
+        "product_name": "BONIDE HYDRATED LIME 0-0-0",
+        "company_info": {
+          "company": "BONIDE PRODUCTS LLC",
+          "Mailing Address": "6301 Sutliff Rd",
+          "Post Office Box": null,
+          "City": "Oriskany",
+          "State": "NY",
+          "Postal Code": "13424",
+          "Telephone Number": "315 736-8231",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 34.2,
+          "Magnesium (Mg)": 20.4,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1200",
+          "Cadmium": "<0.2500",
+          "Cobalt": "<2.5000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.5000",
+          "Nickel": "=3.4300",
+          "Lead": "<0.2500",
+          "Selenium": "<0.2500",
+          "Zinc": "=6.9400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": "131.7000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BONIDE HYDRATED LIME 0-0-0",
+    "brand": "BONIDE PRODUCTS LLC",
+    "manufacturer": {
+      "name": "BONIDE PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 34.2,
+      "Mg": 20.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B92D18-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.12,
+            "Cd": 0.25,
+            "Co": 2.5,
+            "Hg": 0.02,
+            "Mo": 0.5,
+            "Ni": 3.43,
+            "Pb": 0.25,
+            "Se": 0.25,
+            "Zn": 6.94
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.25,
+            "Co": 2.5,
+            "Hg": 0.02,
+            "Mo": 0.5,
+            "Pb": 0.25,
+            "Se": 0.25
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.12,
+        "Ni": 3.43,
+        "Zn": 6.94
+      }
+    }
+  }
+}

@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A27A90","source_wsda_record":{"wsda_product_number":"(#2626-0039)","product_name":"CENTRAL GARDEN & PET GARDEN DIVISION IRONITE FROM THE MAKERS OF PENNINGTON MINERAL SUPPLEMENT 1-0-0","company_info":{"company":"CENTRAL GARDEN & PET DIVISION","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153-1019","Telephone Number":"503 581-7823","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":33.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":9.9,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=4.6000","Mercury":"=0.1900","Molybdenum":"=1.8000","Nickel":"=11.6000","Lead":"=3.1000","Selenium":"=1.5000","Zinc":"=16.7900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":11.0,"Magnesium (Mg)":null,"Sulfur (S)":33.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":9.9,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0300","Cobalt":"=4.6000","Mercury":"=0.1900","Molybdenum":"=1.8000","Nickel":"=11.6000","Lead":"=3.1000","Selenium":"=1.5000","Zinc":"=16.7900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CENTRAL GARDEN & PET DIVISION","label_name":"CENTRAL GARDEN & PET GARDEN DIVISION IRONITE FROM THE MAKERS OF PENNINGTON MINERAL SUPPLEMENT 1-0-0","wsda_reg_no":"(#2626-0039)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A27A90",
+  "metadata": {
+    "registrant": "CENTRAL GARDEN & PET DIVISION",
+    "label_name": "CENTRAL GARDEN & PET GARDEN DIVISION IRONITE FROM THE MAKERS OF PENNINGTON MINERAL SUPPLEMENT 1-0-0",
+    "wsda_reg_no": "(#2626-0039)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0039)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0039)",
+        "product_name": "CENTRAL GARDEN & PET GARDEN DIVISION IRONITE FROM THE MAKERS OF PENNINGTON MINERAL SUPPLEMENT 1-0-0",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 11.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 33.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 9.9,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=4.6000",
+          "Mercury": "=0.1900",
+          "Molybdenum": "=1.8000",
+          "Nickel": "=11.6000",
+          "Lead": "=3.1000",
+          "Selenium": "=1.5000",
+          "Zinc": "=16.7900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CENTRAL GARDEN & PET GARDEN DIVISION IRONITE FROM THE MAKERS OF PENNINGTON MINERAL SUPPLEMENT 1-0-0",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 11.0,
+      "S": 33.0
+    },
+    "micros_pct": {
+      "Fe": 9.9
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A27A90-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 4.6,
+            "Hg": 0.19,
+            "Mo": 1.8,
+            "Ni": 11.6,
+            "Pb": 3.1,
+            "Se": 1.5,
+            "Zn": 16.79
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 4.6,
+        "Hg": 0.19,
+        "Mo": 1.8,
+        "Ni": 11.6,
+        "Pb": 3.1,
+        "Se": 1.5,
+        "Zn": 16.79
+      }
+    }
+  }
+}

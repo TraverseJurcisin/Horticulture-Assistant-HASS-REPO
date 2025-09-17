@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"AD34F8","source_wsda_record":{"wsda_product_number":"(#2625-0008)","product_name":"ALGACELL MICROELEMENTS 1-0-0","company_info":{"company":"AGROPLASMA FERTICELL SA DE CV","Mailing Address":"Blvd. Adolfo lopez mateos #281","Post Office Box":"Miguel hidalgo, CP81210","City":"Los machis Sinaloa","State":"Me","Postal Code":"CP 81210","Telephone Number":"480 361-1300","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.8,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.2,"Iron (Fe)":0.2,"Manganese (Mn)":0.75,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.5},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"=20.0000","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"=18.0000","Lead":"<40.0000","Selenium":"<1.0000","Zinc":"=15317.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":1.8,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.2,"Iron (Fe)":0.2,"Manganese (Mn)":0.75,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.5},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<1.0000","Cobalt":"=20.0000","Mercury":"<0.1000","Molybdenum":"<1.0000","Nickel":"=18.0000","Lead":"<40.0000","Selenium":"<1.0000","Zinc":"=15317.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGROPLASMA FERTICELL SA DE CV","label_name":"ALGACELL MICROELEMENTS 1-0-0","wsda_reg_no":"(#2625-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD34F8",
+  "metadata": {
+    "registrant": "AGROPLASMA FERTICELL SA DE CV",
+    "label_name": "ALGACELL MICROELEMENTS 1-0-0",
+    "wsda_reg_no": "(#2625-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2625-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2625-0008)",
+        "product_name": "ALGACELL MICROELEMENTS 1-0-0",
+        "company_info": {
+          "company": "AGROPLASMA FERTICELL SA DE CV",
+          "Mailing Address": "Blvd. Adolfo lopez mateos #281",
+          "Post Office Box": "Miguel hidalgo, CP81210",
+          "City": "Los machis Sinaloa",
+          "State": "Me",
+          "Postal Code": "CP 81210",
+          "Telephone Number": "480 361-1300",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.8,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.2,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.75,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.5
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=20.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=18.0000",
+          "Lead": "<40.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=15317.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALGACELL MICROELEMENTS 1-0-0",
+    "brand": "AGROPLASMA FERTICELL SA DE CV",
+    "manufacturer": {
+      "name": "AGROPLASMA FERTICELL SA DE CV"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0
+    },
+    "macros_pct": {
+      "S": 1.8
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.75,
+      "Zn": 1.5,
+      "Cu": 0.2,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD34F8-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 20.0,
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Ni": 18.0,
+            "Pb": 40.0,
+            "Se": 1.0,
+            "Zn": 15317.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Hg": 0.1,
+            "Mo": 1.0,
+            "Pb": 40.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 20.0,
+        "Ni": 18.0,
+        "Zn": 15317.0
+      }
+    }
+  }
+}

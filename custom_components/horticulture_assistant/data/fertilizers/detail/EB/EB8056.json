@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"EB8056","source_wsda_record":{"wsda_product_number":"(#3309-0005)","product_name":"BLUE GOLD FUSION COMPOST FLOWERING STAGES 7-4-2","company_info":{"company":"EDEN SOLUTIONS LLC","Mailing Address":"825 C Merrimon Ave Ste 225","Post Office Box":null,"City":"Asheville","State":"NC","Postal Code":"28804","Telephone Number":"877 752-5360","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"=1.0400","Cobalt":"=7.6000","Mercury":"<0.0500","Molybdenum":"=24.7000","Nickel":"=10.4000","Lead":"<5.0000","Selenium":"=8.6000","Zinc":"=96.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":3.0,"Magnesium (Mg)":1.0,"Sulfur (S)":1.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"=1.0400","Cobalt":"=7.6000","Mercury":"<0.0500","Molybdenum":"=24.7000","Nickel":"=10.4000","Lead":"<5.0000","Selenium":"=8.6000","Zinc":"=96.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EDEN SOLUTIONS LLC","label_name":"BLUE GOLD FUSION COMPOST FLOWERING STAGES 7-4-2","wsda_reg_no":"(#3309-0005)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EB8056",
+  "metadata": {
+    "registrant": "EDEN SOLUTIONS LLC",
+    "label_name": "BLUE GOLD FUSION COMPOST FLOWERING STAGES 7-4-2",
+    "wsda_reg_no": "(#3309-0005)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3309-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3309-0005)",
+        "product_name": "BLUE GOLD FUSION COMPOST FLOWERING STAGES 7-4-2",
+        "company_info": {
+          "company": "EDEN SOLUTIONS LLC",
+          "Mailing Address": "825 C Merrimon Ave Ste 225",
+          "Post Office Box": null,
+          "City": "Asheville",
+          "State": "NC",
+          "Postal Code": "28804",
+          "Telephone Number": "877 752-5360",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "=1.0400",
+          "Cobalt": "=7.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=24.7000",
+          "Nickel": "=10.4000",
+          "Lead": "<5.0000",
+          "Selenium": "=8.6000",
+          "Zinc": "=96.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BLUE GOLD FUSION COMPOST FLOWERING STAGES 7-4-2",
+    "brand": "EDEN SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "EDEN SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "Mg": 1.0,
+      "S": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EB8056-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.04,
+            "Co": 7.6,
+            "Hg": 0.05,
+            "Mo": 24.7,
+            "Ni": 10.4,
+            "Pb": 5.0,
+            "Se": 8.6,
+            "Zn": 96.5
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Hg": 0.05,
+            "Pb": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.04,
+        "Co": 7.6,
+        "Mo": 24.7,
+        "Ni": 10.4,
+        "Se": 8.6,
+        "Zn": 96.5
+      }
+    }
+  }
+}

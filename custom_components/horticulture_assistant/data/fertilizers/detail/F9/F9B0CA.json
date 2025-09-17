@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F9B0CA","source_wsda_record":{"wsda_product_number":"(#3448-0003)","product_name":"GREENE COUNTY FERTILIZER COMPANY N-EXT AIR-8 0-0-5","company_info":{"company":"GREENE COUNTY FERTILIZER COMPANY IN","Mailing Address":"131 Sunset Ave Suite E #354","Post Office Box":null,"City":"Suisun City","State":"CA","Postal Code":"94585","Telephone Number":"706 410-2269","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=0.2100","Mercury":"<0.0500","Molybdenum":"<0.0500","Nickel":"<0.1500","Lead":"=0.6300","Selenium":"<0.2500","Zinc":"=0.9600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<0.0300","Cobalt":"=0.2100","Mercury":"<0.0500","Molybdenum":"<0.0500","Nickel":"<0.1500","Lead":"=0.6300","Selenium":"<0.2500","Zinc":"=0.9600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GREENE COUNTY FERTILIZER COMPANY IN","label_name":"GREENE COUNTY FERTILIZER COMPANY N-EXT AIR-8 0-0-5","wsda_reg_no":"(#3448-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F9B0CA",
+  "metadata": {
+    "registrant": "GREENE COUNTY FERTILIZER COMPANY IN",
+    "label_name": "GREENE COUNTY FERTILIZER COMPANY N-EXT AIR-8 0-0-5",
+    "wsda_reg_no": "(#3448-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3448-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3448-0003)",
+        "product_name": "GREENE COUNTY FERTILIZER COMPANY N-EXT AIR-8 0-0-5",
+        "company_info": {
+          "company": "GREENE COUNTY FERTILIZER COMPANY IN",
+          "Mailing Address": "131 Sunset Ave Suite E #354",
+          "Post Office Box": null,
+          "City": "Suisun City",
+          "State": "CA",
+          "Postal Code": "94585",
+          "Telephone Number": "706 410-2269",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<0.0300",
+          "Cobalt": "=0.2100",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.0500",
+          "Nickel": "<0.1500",
+          "Lead": "=0.6300",
+          "Selenium": "<0.2500",
+          "Zinc": "=0.9600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENE COUNTY FERTILIZER COMPANY N-EXT AIR-8 0-0-5",
+    "brand": "GREENE COUNTY FERTILIZER COMPANY IN",
+    "manufacturer": {
+      "name": "GREENE COUNTY FERTILIZER COMPANY IN"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F9B0CA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.21,
+            "Hg": 0.05,
+            "Mo": 0.05,
+            "Ni": 0.15,
+            "Pb": 0.63,
+            "Se": 0.25,
+            "Zn": 0.96
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Hg": 0.05,
+            "Mo": 0.05,
+            "Ni": 0.15,
+            "Se": 0.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.21,
+        "Pb": 0.63,
+        "Zn": 0.96
+      }
+    }
+  }
+}

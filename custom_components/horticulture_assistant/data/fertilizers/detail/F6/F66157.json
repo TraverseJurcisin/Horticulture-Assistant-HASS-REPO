@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"F66157","source_wsda_record":{"wsda_product_number":"(#4106-0003)","product_name":"EMPRO REVIVE 13-0-0","company_info":{"company":"SUMMIT NUTRIENTS, LLC","Mailing Address":"Attention: Kelly Woofter","Post Office Box":"PO Box 2076","City":"Belle Glade","State":"FL","Postal Code":"33430","Telephone Number":"561 516-5278","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":3.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.0000","Cadmium":"=0.2000","Cobalt":"=16.2000","Mercury":"=0.0200","Molybdenum":"=3.0000","Nickel":"=64.0000","Lead":"=2.6000","Selenium":"=0.6000","Zinc":"=40.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":3.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":3.0,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.0000","Cadmium":"=0.2000","Cobalt":"=16.2000","Mercury":"=0.0200","Molybdenum":"=3.0000","Nickel":"=64.0000","Lead":"=2.6000","Selenium":"=0.6000","Zinc":"=40.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUMMIT NUTRIENTS, LLC","label_name":"EMPRO REVIVE 13-0-0","wsda_reg_no":"(#4106-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F66157",
+  "metadata": {
+    "registrant": "SUMMIT NUTRIENTS, LLC",
+    "label_name": "EMPRO REVIVE 13-0-0",
+    "wsda_reg_no": "(#4106-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4106-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4106-0003)",
+        "product_name": "EMPRO REVIVE 13-0-0",
+        "company_info": {
+          "company": "SUMMIT NUTRIENTS, LLC",
+          "Mailing Address": "Attention: Kelly Woofter",
+          "Post Office Box": "PO Box 2076",
+          "City": "Belle Glade",
+          "State": "FL",
+          "Postal Code": "33430",
+          "Telephone Number": "561 516-5278",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=16.2000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=3.0000",
+          "Nickel": "=64.0000",
+          "Lead": "=2.6000",
+          "Selenium": "=0.6000",
+          "Zinc": "=40.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMPRO REVIVE 13-0-0",
+    "brand": "SUMMIT NUTRIENTS, LLC",
+    "manufacturer": {
+      "name": "SUMMIT NUTRIENTS, LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "micros_pct": {
+      "Fe": 3.0,
+      "Mn": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F66157-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 0.2,
+            "Co": 16.2,
+            "Hg": 0.02,
+            "Mo": 3.0,
+            "Ni": 64.0,
+            "Pb": 2.6,
+            "Se": 0.6,
+            "Zn": 40.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Cd": 0.2,
+        "Co": 16.2,
+        "Hg": 0.02,
+        "Mo": 3.0,
+        "Ni": 64.0,
+        "Pb": 2.6,
+        "Se": 0.6,
+        "Zn": 40.0
+      }
+    }
+  }
+}

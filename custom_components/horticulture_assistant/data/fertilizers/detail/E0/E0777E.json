@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"E0777E","source_wsda_record":{"wsda_product_number":"(#1214-0128)","product_name":"ALASKA FISH PLANT FOOD 5-1-1","company_info":{"company":"LILLY MILLER BRANDS","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153","Telephone Number":"540 375-8826","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.9300","Cadmium":"=0.6300","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=1.0000","Lead":"<0.5000","Selenium":"=4.9000","Zinc":"=18.3700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.9300","Cadmium":"=0.6300","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.2000","Nickel":"=1.0000","Lead":"<0.5000","Selenium":"=4.9000","Zinc":"=18.3700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LILLY MILLER BRANDS","label_name":"ALASKA FISH PLANT FOOD 5-1-1","wsda_reg_no":"(#1214-0128)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E0777E",
+  "metadata": {
+    "registrant": "LILLY MILLER BRANDS",
+    "label_name": "ALASKA FISH PLANT FOOD 5-1-1",
+    "wsda_reg_no": "(#1214-0128)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1214-0128)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1214-0128)",
+        "product_name": "ALASKA FISH PLANT FOOD 5-1-1",
+        "company_info": {
+          "company": "LILLY MILLER BRANDS",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153",
+          "Telephone Number": "540 375-8826",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.9300",
+          "Cadmium": "=0.6300",
+          "Cobalt": "=0.1000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=1.0000",
+          "Lead": "<0.5000",
+          "Selenium": "=4.9000",
+          "Zinc": "=18.3700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALASKA FISH PLANT FOOD 5-1-1",
+    "brand": "LILLY MILLER BRANDS",
+    "manufacturer": {
+      "name": "LILLY MILLER BRANDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E0777E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.93,
+            "Cd": 0.63,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.2,
+            "Ni": 1.0,
+            "Pb": 0.5,
+            "Se": 4.9,
+            "Zn": 18.37
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.93,
+        "Cd": 0.63,
+        "Co": 0.1,
+        "Mo": 0.2,
+        "Ni": 1.0,
+        "Se": 4.9,
+        "Zn": 18.37
+      }
+    }
+  }
+}

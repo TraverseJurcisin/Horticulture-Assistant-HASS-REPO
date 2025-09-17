@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"C1F7C0","source_wsda_record":{"wsda_product_number":"(#4011-0001)","product_name":". PHYTONIX 0-0-1","company_info":{"company":"MOONSHOT ENTERPRISES INC","Mailing Address":"8508 Van Buren Rd.","Post Office Box":null,"City":"Everson","State":"WA","Postal Code":"98247","Telephone Number":"877 227-2597","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4000","Cadmium":"<0.0500","Cobalt":"<0.1000","Mercury":"<0.0030","Molybdenum":"<0.1000","Nickel":"<0.3000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"<0.9500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4000","Cadmium":"<0.0500","Cobalt":"<0.1000","Mercury":"<0.0030","Molybdenum":"<0.1000","Nickel":"<0.3000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"<0.9500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MOONSHOT ENTERPRISES INC","label_name":". PHYTONIX 0-0-1","wsda_reg_no":"(#4011-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C1F7C0",
+  "metadata": {
+    "registrant": "MOONSHOT ENTERPRISES INC",
+    "label_name": ". PHYTONIX 0-0-1",
+    "wsda_reg_no": "(#4011-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4011-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4011-0001)",
+        "product_name": ". PHYTONIX 0-0-1",
+        "company_info": {
+          "company": "MOONSHOT ENTERPRISES INC",
+          "Mailing Address": "8508 Van Buren Rd.",
+          "Post Office Box": null,
+          "City": "Everson",
+          "State": "WA",
+          "Postal Code": "98247",
+          "Telephone Number": "877 227-2597",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4000",
+          "Cadmium": "<0.0500",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0030",
+          "Molybdenum": "<0.1000",
+          "Nickel": "<0.3000",
+          "Lead": "<0.5000",
+          "Selenium": "<0.5000",
+          "Zinc": "<0.9500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": ". PHYTONIX 0-0-1",
+    "brand": "MOONSHOT ENTERPRISES INC",
+    "manufacturer": {
+      "name": "MOONSHOT ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C1F7C0-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.4,
+            "Cd": 0.05,
+            "Co": 0.1,
+            "Hg": 0.003,
+            "Mo": 0.1,
+            "Ni": 0.3,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 0.95
+          },
+          "detection_limits_ppm": {
+            "As": 0.4,
+            "Cd": 0.05,
+            "Co": 0.1,
+            "Hg": 0.003,
+            "Mo": 0.1,
+            "Ni": 0.3,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 0.95
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
+  }
+}

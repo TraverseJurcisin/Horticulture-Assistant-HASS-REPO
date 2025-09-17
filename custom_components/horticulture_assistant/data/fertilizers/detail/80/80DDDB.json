@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "80DDDB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2554-0002)",
-    "product_name": "TIGER 90CR ORGANIC SULFUR 0-0-0",
-    "company_info": {
-      "company": "TIGER-SUL PRODUCTS LLC",
-      "Mailing Address": "PO Box126",
-      "Post Office Box": null,
-      "City": "Irricana",
-      "State": "AB",
-      "Postal Code": "T0M1B0",
-      "Telephone Number": "403 935-0201",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 90.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.3070",
-      "Cadmium": "<0.0150",
-      "Cobalt": "=0.3450",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.5750",
-      "Nickel": "=1.4800",
-      "Lead": "=1.4600",
-      "Selenium": "=0.0450",
-      "Zinc": "<1.0150"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 90.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.3070",
-      "Cadmium": "<0.0150",
-      "Cobalt": "=0.3450",
-      "Mercury": "<0.0010",
-      "Molybdenum": "=0.5750",
-      "Nickel": "=1.4800",
-      "Lead": "=1.4600",
-      "Selenium": "=0.0450",
-      "Zinc": "<1.0150"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "80DDDB",
   "metadata": {
     "registrant": "TIGER-SUL PRODUCTS LLC",
     "label_name": "TIGER 90CR ORGANIC SULFUR 0-0-0",
     "wsda_reg_no": "(#2554-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2554-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2554-0002)",
+        "product_name": "TIGER 90CR ORGANIC SULFUR 0-0-0",
+        "company_info": {
+          "company": "TIGER-SUL PRODUCTS LLC",
+          "Mailing Address": "PO Box126",
+          "Post Office Box": null,
+          "City": "Irricana",
+          "State": "AB",
+          "Postal Code": "T0M1B0",
+          "Telephone Number": "403 935-0201",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 90.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3070",
+          "Cadmium": "<0.0150",
+          "Cobalt": "=0.3450",
+          "Mercury": "<0.0010",
+          "Molybdenum": "=0.5750",
+          "Nickel": "=1.4800",
+          "Lead": "=1.4600",
+          "Selenium": "=0.0450",
+          "Zinc": "<1.0150"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TIGER 90CR ORGANIC SULFUR 0-0-0",
+    "brand": "TIGER-SUL PRODUCTS LLC",
+    "manufacturer": {
+      "name": "TIGER-SUL PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 90.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "80DDDB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.307,
+            "Cd": 0.015,
+            "Co": 0.345,
+            "Hg": 0.001,
+            "Mo": 0.575,
+            "Ni": 1.48,
+            "Pb": 1.46,
+            "Se": 0.045,
+            "Zn": 1.015
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.015,
+            "Hg": 0.001,
+            "Zn": 1.015
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.307,
+        "Co": 0.345,
+        "Mo": 0.575,
+        "Ni": 1.48,
+        "Pb": 1.46,
+        "Se": 0.045
+      }
+    }
   }
 }

@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "63C51B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1790-0018)",
-    "product_name": "KEYPLEX IRONPLEX 0-0-0",
-    "company_info": {
-      "company": "MORSE ENTERPRISES LIMITED INC",
-      "Mailing Address": "PO Box 2515",
-      "Post Office Box": null,
-      "City": "Winter Park",
-      "State": "FL",
-      "Postal Code": "32790-2515",
-      "Telephone Number": "407 682-6500",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.75,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.25,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=1.1400",
-      "Cobalt": "=8.5900",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<2.0000",
-      "Nickel": "=129.3500",
-      "Lead": "=7.7400",
-      "Selenium": "<1.0000",
-      "Zinc": "=40.5100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.75,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 6.25,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=1.1400",
-      "Cobalt": "=8.5900",
-      "Mercury": "<0.1000",
-      "Molybdenum": "<2.0000",
-      "Nickel": "=129.3500",
-      "Lead": "=7.7400",
-      "Selenium": "<1.0000",
-      "Zinc": "=40.5100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "63C51B",
   "metadata": {
     "registrant": "MORSE ENTERPRISES LIMITED INC",
     "label_name": "KEYPLEX IRONPLEX 0-0-0",
     "wsda_reg_no": "(#1790-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1790-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1790-0018)",
+        "product_name": "KEYPLEX IRONPLEX 0-0-0",
+        "company_info": {
+          "company": "MORSE ENTERPRISES LIMITED INC",
+          "Mailing Address": "PO Box 2515",
+          "Post Office Box": null,
+          "City": "Winter Park",
+          "State": "FL",
+          "Postal Code": "32790-2515",
+          "Telephone Number": "407 682-6500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.75,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 6.25,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=1.1400",
+          "Cobalt": "=8.5900",
+          "Mercury": "<0.1000",
+          "Molybdenum": "<2.0000",
+          "Nickel": "=129.3500",
+          "Lead": "=7.7400",
+          "Selenium": "<1.0000",
+          "Zinc": "=40.5100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KEYPLEX IRONPLEX 0-0-0",
+    "brand": "MORSE ENTERPRISES LIMITED INC",
+    "manufacturer": {
+      "name": "MORSE ENTERPRISES LIMITED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 3.75
+    },
+    "micros_pct": {
+      "Fe": 6.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "63C51B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 1.14,
+            "Co": 8.59,
+            "Hg": 0.1,
+            "Mo": 2.0,
+            "Ni": 129.35,
+            "Pb": 7.74,
+            "Se": 1.0,
+            "Zn": 40.51
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.1,
+            "Mo": 2.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.14,
+        "Co": 8.59,
+        "Ni": 129.35,
+        "Pb": 7.74,
+        "Zn": 40.51
+      }
+    }
   }
 }

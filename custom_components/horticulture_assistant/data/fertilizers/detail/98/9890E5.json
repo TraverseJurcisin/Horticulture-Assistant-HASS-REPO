@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"9890E5","source_wsda_record":{"wsda_product_number":"(#3536-0010)","product_name":"TPS NUTRIENTS ROOT BOOST 1.4-3.2-0.7","company_info":{"company":"TPS NUTRIENTS INC","Mailing Address":"PO Box 875","Post Office Box":null,"City":"Bellevue","State":"WA","Postal Code":"98009","Telephone Number":"425 765-8460","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.4,"Available Phosphoric Acid (P2O5)":3.2,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2790","Cadmium":"=0.0300","Cobalt":"<0.2790","Mercury":"<0.0100","Molybdenum":"<0.2790","Nickel":"<0.2790","Lead":"<0.5600","Selenium":"<0.2790","Zinc":"=0.9700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.4,"Available Phosphoric Acid (P2O5)":3.2,"Soluble Potash (K2O)":0.7,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2790","Cadmium":"=0.0300","Cobalt":"<0.2790","Mercury":"<0.0100","Molybdenum":"<0.2790","Nickel":"<0.2790","Lead":"<0.5600","Selenium":"<0.2790","Zinc":"=0.9700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TPS NUTRIENTS INC","label_name":"TPS NUTRIENTS ROOT BOOST 1.4-3.2-0.7","wsda_reg_no":"(#3536-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9890E5",
+  "metadata": {
+    "registrant": "TPS NUTRIENTS INC",
+    "label_name": "TPS NUTRIENTS ROOT BOOST 1.4-3.2-0.7",
+    "wsda_reg_no": "(#3536-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3536-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3536-0010)",
+        "product_name": "TPS NUTRIENTS ROOT BOOST 1.4-3.2-0.7",
+        "company_info": {
+          "company": "TPS NUTRIENTS INC",
+          "Mailing Address": "PO Box 875",
+          "Post Office Box": null,
+          "City": "Bellevue",
+          "State": "WA",
+          "Postal Code": "98009",
+          "Telephone Number": "425 765-8460",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.4,
+          "Available Phosphoric Acid (P2O5)": 3.2,
+          "Soluble Potash (K2O)": 0.7,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2790",
+          "Cadmium": "=0.0300",
+          "Cobalt": "<0.2790",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.2790",
+          "Nickel": "<0.2790",
+          "Lead": "<0.5600",
+          "Selenium": "<0.2790",
+          "Zinc": "=0.9700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TPS NUTRIENTS ROOT BOOST 1.4-3.2-0.7",
+    "brand": "TPS NUTRIENTS INC",
+    "manufacturer": {
+      "name": "TPS NUTRIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.4,
+      "P2O5_pct": 3.2,
+      "K2O_pct": 0.7
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9890E5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.279,
+            "Cd": 0.03,
+            "Co": 0.279,
+            "Hg": 0.01,
+            "Mo": 0.279,
+            "Ni": 0.279,
+            "Pb": 0.56,
+            "Se": 0.279,
+            "Zn": 0.97
+          },
+          "detection_limits_ppm": {
+            "As": 0.279,
+            "Co": 0.279,
+            "Hg": 0.01,
+            "Mo": 0.279,
+            "Ni": 0.279,
+            "Pb": 0.56,
+            "Se": 0.279
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.03,
+        "Zn": 0.97
+      }
+    }
+  }
+}

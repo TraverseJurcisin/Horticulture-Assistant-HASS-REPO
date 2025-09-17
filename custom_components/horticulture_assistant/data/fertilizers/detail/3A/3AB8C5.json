@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3AB8C5",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3912-0001)",
-    "product_name": "HUMITECH POWHUMUS 0-0-12",
-    "company_info": {
-      "company": "AGRICULTURA, BIOLOGIA SERVICIOS SA",
-      "Mailing Address": "6620 Cypresswood Drive Suite",
-      "Post Office Box": null,
-      "City": "Spring",
-      "State": "TX",
-      "Postal Code": "77379",
-      "Telephone Number": "877 227-2597",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=17.0000",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=8.7000",
-      "Mercury": "=0.2300",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=30.0000",
-      "Lead": "=4.7000",
-      "Selenium": "=0.7000",
-      "Zinc": "=11.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=17.0000",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=8.7000",
-      "Mercury": "=0.2300",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=30.0000",
-      "Lead": "=4.7000",
-      "Selenium": "=0.7000",
-      "Zinc": "=11.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3AB8C5",
   "metadata": {
     "registrant": "AGRICULTURA, BIOLOGIA SERVICIOS SA",
     "label_name": "HUMITECH POWHUMUS 0-0-12",
     "wsda_reg_no": "(#3912-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3912-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3912-0001)",
+        "product_name": "HUMITECH POWHUMUS 0-0-12",
+        "company_info": {
+          "company": "AGRICULTURA, BIOLOGIA SERVICIOS SA",
+          "Mailing Address": "6620 Cypresswood Drive Suite",
+          "Post Office Box": null,
+          "City": "Spring",
+          "State": "TX",
+          "Postal Code": "77379",
+          "Telephone Number": "877 227-2597",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=17.0000",
+          "Cadmium": "=0.8000",
+          "Cobalt": "=8.7000",
+          "Mercury": "=0.2300",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=30.0000",
+          "Lead": "=4.7000",
+          "Selenium": "=0.7000",
+          "Zinc": "=11.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HUMITECH POWHUMUS 0-0-12",
+    "brand": "AGRICULTURA, BIOLOGIA SERVICIOS SA",
+    "manufacturer": {
+      "name": "AGRICULTURA, BIOLOGIA SERVICIOS SA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3AB8C5-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 17.0,
+            "Cd": 0.8,
+            "Co": 8.7,
+            "Hg": 0.23,
+            "Mo": 0.3,
+            "Ni": 30.0,
+            "Pb": 4.7,
+            "Se": 0.7,
+            "Zn": 11.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 17.0,
+        "Cd": 0.8,
+        "Co": 8.7,
+        "Hg": 0.23,
+        "Mo": 0.3,
+        "Ni": 30.0,
+        "Pb": 4.7,
+        "Se": 0.7,
+        "Zn": 11.0
+      }
+    }
   }
 }

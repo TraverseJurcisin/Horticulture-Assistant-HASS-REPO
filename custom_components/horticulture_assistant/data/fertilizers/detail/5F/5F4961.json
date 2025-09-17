@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5F4961",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1877-0128)",
-    "product_name": "TRUE ORGANIC PRODUCTS VIGORO CITRUS 5-3-4",
-    "company_info": {
-      "company": "TRUE ORGANIC PRODUCTS INC",
-      "Mailing Address": "PO Box 7192",
-      "Post Office Box": null,
-      "City": "Spreckels",
-      "State": "CA",
-      "Postal Code": "93962",
-      "Telephone Number": "831 375-4796",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 6.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.9400",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=4.4000",
-      "Lead": "<5.0000",
-      "Selenium": "=0.6300",
-      "Zinc": "=133.3000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 6.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.9400",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.2000",
-      "Nickel": "=4.4000",
-      "Lead": "<5.0000",
-      "Selenium": "=0.6300",
-      "Zinc": "=133.3000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5F4961",
   "metadata": {
     "registrant": "TRUE ORGANIC PRODUCTS INC",
     "label_name": "TRUE ORGANIC PRODUCTS VIGORO CITRUS 5-3-4",
     "wsda_reg_no": "(#1877-0128)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1877-0128)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1877-0128)",
+        "product_name": "TRUE ORGANIC PRODUCTS VIGORO CITRUS 5-3-4",
+        "company_info": {
+          "company": "TRUE ORGANIC PRODUCTS INC",
+          "Mailing Address": "PO Box 7192",
+          "Post Office Box": null,
+          "City": "Spreckels",
+          "State": "CA",
+          "Postal Code": "93962",
+          "Telephone Number": "831 375-4796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 6.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.9400",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.2000",
+          "Nickel": "=4.4000",
+          "Lead": "<5.0000",
+          "Selenium": "=0.6300",
+          "Zinc": "=133.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRUE ORGANIC PRODUCTS VIGORO CITRUS 5-3-4",
+    "brand": "TRUE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "TRUE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 6.0,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5F4961-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.94,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 1.2,
+            "Ni": 4.4,
+            "Pb": 5.0,
+            "Se": 0.63,
+            "Zn": 133.3
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.94,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Pb": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Mo": 1.2,
+        "Ni": 4.4,
+        "Se": 0.63,
+        "Zn": 133.3
+      }
+    }
   }
 }

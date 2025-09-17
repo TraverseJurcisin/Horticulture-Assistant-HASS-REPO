@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4B9FFC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1265-0154)",
-    "product_name": "ORGANICARE BLOOM 5-7-10",
-    "company_info": {
-      "company": "BOTANICARE",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "707 284-4701",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 7.32,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 1.2,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.4730",
-      "Cadmium": "=0.6220",
-      "Cobalt": "=0.4000",
-      "Mercury": "<0.0206",
-      "Molybdenum": "=4.4800",
-      "Nickel": "=6.2000",
-      "Lead": "<0.2360",
-      "Selenium": "=1.7700",
-      "Zinc": "=123.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 7.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": 7.32,
-      "Magnesium (Mg)": 1.0,
-      "Sulfur (S)": 1.2,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.4730",
-      "Cadmium": "=0.6220",
-      "Cobalt": "=0.4000",
-      "Mercury": "<0.0206",
-      "Molybdenum": "=4.4800",
-      "Nickel": "=6.2000",
-      "Lead": "<0.2360",
-      "Selenium": "=1.7700",
-      "Zinc": "=123.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4B9FFC",
   "metadata": {
     "registrant": "BOTANICARE",
     "label_name": "ORGANICARE BLOOM 5-7-10",
     "wsda_reg_no": "(#1265-0154)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1265-0154)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1265-0154)",
+        "product_name": "ORGANICARE BLOOM 5-7-10",
+        "company_info": {
+          "company": "BOTANICARE",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 7.32,
+          "Magnesium (Mg)": 1.0,
+          "Sulfur (S)": 1.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4730",
+          "Cadmium": "=0.6220",
+          "Cobalt": "=0.4000",
+          "Mercury": "<0.0206",
+          "Molybdenum": "=4.4800",
+          "Nickel": "=6.2000",
+          "Lead": "<0.2360",
+          "Selenium": "=1.7700",
+          "Zinc": "=123.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ORGANICARE BLOOM 5-7-10",
+    "brand": "BOTANICARE",
+    "manufacturer": {
+      "name": "BOTANICARE"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 7.32,
+      "Mg": 1.0,
+      "S": 1.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4B9FFC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.473,
+            "Cd": 0.622,
+            "Co": 0.4,
+            "Hg": 0.0206,
+            "Mo": 4.48,
+            "Ni": 6.2,
+            "Pb": 0.236,
+            "Se": 1.77,
+            "Zn": 123.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.473,
+            "Hg": 0.0206,
+            "Pb": 0.236
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.622,
+        "Co": 0.4,
+        "Mo": 4.48,
+        "Ni": 6.2,
+        "Se": 1.77,
+        "Zn": 123.0
+      }
+    }
   }
 }

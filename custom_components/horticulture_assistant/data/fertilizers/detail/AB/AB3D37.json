@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"AB3D37","source_wsda_record":{"wsda_product_number":"(#0698-0187)","product_name":"MIRACLE-GRO GARDEN SOIL ALL PURPOSE 0.09-0.08-0.07","company_info":{"company":"MIRACLE-GRO LAWN PRODUCTS INC","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 578-1573","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.07,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.3500","Cadmium":"<2.6800","Cobalt":"=16.7000","Mercury":"<0.0405","Molybdenum":"<8.0300","Nickel":"<2.6800","Lead":"=4.2000","Selenium":"<8.0300","Zinc":"=21.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.07,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.3500","Cadmium":"<2.6800","Cobalt":"=16.7000","Mercury":"<0.0405","Molybdenum":"<8.0300","Nickel":"<2.6800","Lead":"=4.2000","Selenium":"<8.0300","Zinc":"=21.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MIRACLE-GRO LAWN PRODUCTS INC","label_name":"MIRACLE-GRO GARDEN SOIL ALL PURPOSE 0.09-0.08-0.07","wsda_reg_no":"(#0698-0187)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AB3D37",
+  "metadata": {
+    "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "label_name": "MIRACLE-GRO GARDEN SOIL ALL PURPOSE 0.09-0.08-0.07",
+    "wsda_reg_no": "(#0698-0187)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0187)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0187)",
+        "product_name": "MIRACLE-GRO GARDEN SOIL ALL PURPOSE 0.09-0.08-0.07",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.09,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.07,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.3500",
+          "Cadmium": "<2.6800",
+          "Cobalt": "=16.7000",
+          "Mercury": "<0.0405",
+          "Molybdenum": "<8.0300",
+          "Nickel": "<2.6800",
+          "Lead": "=4.2000",
+          "Selenium": "<8.0300",
+          "Zinc": "=21.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO GARDEN SOIL ALL PURPOSE 0.09-0.08-0.07",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.09,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.07
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AB3D37-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.35,
+            "Cd": 2.68,
+            "Co": 16.7,
+            "Hg": 0.0405,
+            "Mo": 8.03,
+            "Ni": 2.68,
+            "Pb": 4.2,
+            "Se": 8.03,
+            "Zn": 21.4
+          },
+          "detection_limits_ppm": {
+            "As": 5.35,
+            "Cd": 2.68,
+            "Hg": 0.0405,
+            "Mo": 8.03,
+            "Ni": 2.68,
+            "Se": 8.03
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 16.7,
+        "Pb": 4.2,
+        "Zn": 21.4
+      }
+    }
+  }
+}

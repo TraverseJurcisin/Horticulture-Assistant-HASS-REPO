@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"897EC7","source_wsda_record":{"wsda_product_number":"(#0884-0198)","product_name":"JOBE'S ORGANICS HERB GRANULAR PLANT FOOD 4-3-3","company_info":{"company":"EASY GARDENER INC","Mailing Address":"1750 17th St","Post Office Box":null,"City":"Paris","State":"KY","Postal Code":"40361","Telephone Number":"859 984-5389","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.0000","Cadmium":"=8.0000","Cobalt":"=24.0000","Mercury":"=1.0000","Molybdenum":"=30.0000","Nickel":"=200.0000","Lead":"=15.0000","Selenium":"=4.0000","Zinc":"=1500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":4.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":0.5,"Sulfur (S)":1.4,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.0000","Cadmium":"=8.0000","Cobalt":"=24.0000","Mercury":"=1.0000","Molybdenum":"=30.0000","Nickel":"=200.0000","Lead":"=15.0000","Selenium":"=4.0000","Zinc":"=1500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EASY GARDENER INC","label_name":"JOBE'S ORGANICS HERB GRANULAR PLANT FOOD 4-3-3","wsda_reg_no":"(#0884-0198)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "897EC7",
+  "metadata": {
+    "registrant": "EASY GARDENER INC",
+    "label_name": "JOBE'S ORGANICS HERB GRANULAR PLANT FOOD 4-3-3",
+    "wsda_reg_no": "(#0884-0198)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0884-0198)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0884-0198)",
+        "product_name": "JOBE'S ORGANICS HERB GRANULAR PLANT FOOD 4-3-3",
+        "company_info": {
+          "company": "EASY GARDENER INC",
+          "Mailing Address": "1750 17th St",
+          "Post Office Box": null,
+          "City": "Paris",
+          "State": "KY",
+          "Postal Code": "40361",
+          "Telephone Number": "859 984-5389",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 8.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 1.4,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.0000",
+          "Cadmium": "=8.0000",
+          "Cobalt": "=24.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=30.0000",
+          "Nickel": "=200.0000",
+          "Lead": "=15.0000",
+          "Selenium": "=4.0000",
+          "Zinc": "=1500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JOBE'S ORGANICS HERB GRANULAR PLANT FOOD 4-3-3",
+    "brand": "EASY GARDENER INC",
+    "manufacturer": {
+      "name": "EASY GARDENER INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 8.0,
+      "Mg": 0.5,
+      "S": 1.4
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "897EC7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.0,
+            "Cd": 8.0,
+            "Co": 24.0,
+            "Hg": 1.0,
+            "Mo": 30.0,
+            "Ni": 200.0,
+            "Pb": 15.0,
+            "Se": 4.0,
+            "Zn": 1500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.0,
+        "Cd": 8.0,
+        "Co": 24.0,
+        "Hg": 1.0,
+        "Mo": 30.0,
+        "Ni": 200.0,
+        "Pb": 15.0,
+        "Se": 4.0,
+        "Zn": 1500.0
+      }
+    }
+  }
+}

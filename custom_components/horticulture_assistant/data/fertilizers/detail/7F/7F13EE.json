@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7F13EE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4003-0001)",
-    "product_name": "COOP GRO COOP GRO 3-3-4",
-    "company_info": {
-      "company": "COOP GRO LLC",
-      "Mailing Address": "124 White Road",
-      "Post Office Box": null,
-      "City": "Dixie",
-      "State": "GA",
-      "Postal Code": "31629",
-      "Telephone Number": "229 224-5229",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 0.6,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8350",
-      "Cadmium": "=0.2930",
-      "Cobalt": "=0.0200",
-      "Mercury": "=0.0140",
-      "Molybdenum": "=0.0150",
-      "Nickel": "=9.3700",
-      "Lead": "=1.3850",
-      "Selenium": "=4.2640",
-      "Zinc": "=0.0410"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": 0.6,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8350",
-      "Cadmium": "=0.2930",
-      "Cobalt": "=0.0200",
-      "Mercury": "=0.0140",
-      "Molybdenum": "=0.0150",
-      "Nickel": "=9.3700",
-      "Lead": "=1.3850",
-      "Selenium": "=4.2640",
-      "Zinc": "=0.0410"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7F13EE",
   "metadata": {
     "registrant": "COOP GRO LLC",
     "label_name": "COOP GRO COOP GRO 3-3-4",
     "wsda_reg_no": "(#4003-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4003-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4003-0001)",
+        "product_name": "COOP GRO COOP GRO 3-3-4",
+        "company_info": {
+          "company": "COOP GRO LLC",
+          "Mailing Address": "124 White Road",
+          "Post Office Box": null,
+          "City": "Dixie",
+          "State": "GA",
+          "Postal Code": "31629",
+          "Telephone Number": "229 224-5229",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": 0.6,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8350",
+          "Cadmium": "=0.2930",
+          "Cobalt": "=0.0200",
+          "Mercury": "=0.0140",
+          "Molybdenum": "=0.0150",
+          "Nickel": "=9.3700",
+          "Lead": "=1.3850",
+          "Selenium": "=4.2640",
+          "Zinc": "=0.0410"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "COOP GRO COOP GRO 3-3-4",
+    "brand": "COOP GRO LLC",
+    "manufacturer": {
+      "name": "COOP GRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "Mg": 0.6,
+      "S": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7F13EE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.835,
+            "Cd": 0.293,
+            "Co": 0.02,
+            "Hg": 0.014,
+            "Mo": 0.015,
+            "Ni": 9.37,
+            "Pb": 1.385,
+            "Se": 4.264,
+            "Zn": 0.041
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.835,
+        "Cd": 0.293,
+        "Co": 0.02,
+        "Hg": 0.014,
+        "Mo": 0.015,
+        "Ni": 9.37,
+        "Pb": 1.385,
+        "Se": 4.264,
+        "Zn": 0.041
+      }
+    }
   }
 }

@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "73A2FD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0185-0161)",
-    "product_name": "EMERALD ISLE SOLUTIONS NUTRI-RATIONAL TRUE FOLIAR N 19-1-6",
-    "company_info": {
-      "company": "LEBANON SEABOARD CORPORATION",
-      "Mailing Address": "1600 E Cumberland St",
-      "Post Office Box": null,
-      "City": "Lebanon",
-      "State": "PA",
-      "Postal Code": "17042",
-      "Telephone Number": "800 532-0090",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 19.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 1.2,
-      "Manganese (Mn)": 0.18,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.15
-    },
-    "reported_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=6.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=10.0000",
-      "Lead": "=3.0000",
-      "Selenium": "=4.0000",
-      "Zinc": "=3500.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 19.0,
-      "Available Phosphoric Acid (P2O5)": 1.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 1.2,
-      "Manganese (Mn)": 0.18,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.15
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.0000",
-      "Cadmium": "=2.0000",
-      "Cobalt": "=6.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=2.0000",
-      "Nickel": "=10.0000",
-      "Lead": "=3.0000",
-      "Selenium": "=4.0000",
-      "Zinc": "=3500.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "73A2FD",
   "metadata": {
     "registrant": "LEBANON SEABOARD CORPORATION",
     "label_name": "EMERALD ISLE SOLUTIONS NUTRI-RATIONAL TRUE FOLIAR N 19-1-6",
     "wsda_reg_no": "(#0185-0161)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0161)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0161)",
+        "product_name": "EMERALD ISLE SOLUTIONS NUTRI-RATIONAL TRUE FOLIAR N 19-1-6",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 19.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 1.2,
+          "Manganese (Mn)": 0.18,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.15
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "=2.0000",
+          "Cobalt": "=6.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=2.0000",
+          "Nickel": "=10.0000",
+          "Lead": "=3.0000",
+          "Selenium": "=4.0000",
+          "Zinc": "=3500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EMERALD ISLE SOLUTIONS NUTRI-RATIONAL TRUE FOLIAR N 19-1-6",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 19.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 6.0
+    },
+    "micros_pct": {
+      "Fe": 1.2,
+      "Mn": 0.18,
+      "Zn": 0.15,
+      "Cu": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "73A2FD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 2.0,
+            "Co": 6.0,
+            "Hg": 1.0,
+            "Mo": 2.0,
+            "Ni": 10.0,
+            "Pb": 3.0,
+            "Se": 4.0,
+            "Zn": 3500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Cd": 2.0,
+        "Co": 6.0,
+        "Hg": 1.0,
+        "Mo": 2.0,
+        "Ni": 10.0,
+        "Pb": 3.0,
+        "Se": 4.0,
+        "Zn": 3500.0
+      }
+    }
   }
 }

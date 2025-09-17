@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"F1DE0D","source_wsda_record":{"wsda_product_number":"(#2838-0016)","product_name":"WHITNEY FARMS GRANULATED SULFUR 0-0-0","company_info":{"company":"HAWTHORNE GARDENING COMPANY","Mailing Address":"14111 Scottslawn Road","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"837 594-8464","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":90.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4600","Cadmium":"=0.2300","Cobalt":"=0.2300","Mercury":"=0.0195","Molybdenum":"=0.6900","Nickel":"=0.2300","Lead":"=1.1700","Selenium":"=0.6900","Zinc":"=1.6100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":90.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4600","Cadmium":"=0.2300","Cobalt":"=0.2300","Mercury":"=0.0195","Molybdenum":"=0.6900","Nickel":"=0.2300","Lead":"=1.1700","Selenium":"=0.6900","Zinc":"=1.6100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HAWTHORNE GARDENING COMPANY","label_name":"WHITNEY FARMS GRANULATED SULFUR 0-0-0","wsda_reg_no":"(#2838-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F1DE0D",
+  "metadata": {
+    "registrant": "HAWTHORNE GARDENING COMPANY",
+    "label_name": "WHITNEY FARMS GRANULATED SULFUR 0-0-0",
+    "wsda_reg_no": "(#2838-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2838-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2838-0016)",
+        "product_name": "WHITNEY FARMS GRANULATED SULFUR 0-0-0",
+        "company_info": {
+          "company": "HAWTHORNE GARDENING COMPANY",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "837 594-8464",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 90.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4600",
+          "Cadmium": "=0.2300",
+          "Cobalt": "=0.2300",
+          "Mercury": "=0.0195",
+          "Molybdenum": "=0.6900",
+          "Nickel": "=0.2300",
+          "Lead": "=1.1700",
+          "Selenium": "=0.6900",
+          "Zinc": "=1.6100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WHITNEY FARMS GRANULATED SULFUR 0-0-0",
+    "brand": "HAWTHORNE GARDENING COMPANY",
+    "manufacturer": {
+      "name": "HAWTHORNE GARDENING COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 90.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F1DE0D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.46,
+            "Cd": 0.23,
+            "Co": 0.23,
+            "Hg": 0.0195,
+            "Mo": 0.69,
+            "Ni": 0.23,
+            "Pb": 1.17,
+            "Se": 0.69,
+            "Zn": 1.61
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.46,
+        "Cd": 0.23,
+        "Co": 0.23,
+        "Hg": 0.0195,
+        "Mo": 0.69,
+        "Ni": 0.23,
+        "Pb": 1.17,
+        "Se": 0.69,
+        "Zn": 1.61
+      }
+    }
+  }
+}

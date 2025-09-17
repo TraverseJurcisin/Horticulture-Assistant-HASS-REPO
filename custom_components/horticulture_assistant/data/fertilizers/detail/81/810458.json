@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "810458",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1444-0065)",
-    "product_name": "BRANDT MONOPLEX IRON 0-0-0",
-    "company_info": {
-      "company": "BRANDT CONSOLIDATED INC",
-      "Mailing Address": "2935 South Koke Mill Road",
-      "Post Office Box": null,
-      "City": "Springfield",
-      "State": "IL",
-      "Postal Code": "62711-9651",
-      "Telephone Number": "217 547-5867",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=43.6000",
-      "Cadmium": "=7.5000",
-      "Cobalt": "=51.9000",
-      "Mercury": "=0.3000",
-      "Molybdenum": "=7.7000",
-      "Nickel": "=106.0000",
-      "Lead": "=25.4000",
-      "Selenium": "=24.8000",
-      "Zinc": "=2420.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 8.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 10.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=43.6000",
-      "Cadmium": "=7.5000",
-      "Cobalt": "=51.9000",
-      "Mercury": "=0.3000",
-      "Molybdenum": "=7.7000",
-      "Nickel": "=106.0000",
-      "Lead": "=25.4000",
-      "Selenium": "=24.8000",
-      "Zinc": "=2420.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "810458",
   "metadata": {
     "registrant": "BRANDT CONSOLIDATED INC",
     "label_name": "BRANDT MONOPLEX IRON 0-0-0",
     "wsda_reg_no": "(#1444-0065)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1444-0065)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1444-0065)",
+        "product_name": "BRANDT MONOPLEX IRON 0-0-0",
+        "company_info": {
+          "company": "BRANDT CONSOLIDATED INC",
+          "Mailing Address": "2935 South Koke Mill Road",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "IL",
+          "Postal Code": "62711-9651",
+          "Telephone Number": "217 547-5867",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 8.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 10.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=43.6000",
+          "Cadmium": "=7.5000",
+          "Cobalt": "=51.9000",
+          "Mercury": "=0.3000",
+          "Molybdenum": "=7.7000",
+          "Nickel": "=106.0000",
+          "Lead": "=25.4000",
+          "Selenium": "=24.8000",
+          "Zinc": "=2420.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRANDT MONOPLEX IRON 0-0-0",
+    "brand": "BRANDT CONSOLIDATED INC",
+    "manufacturer": {
+      "name": "BRANDT CONSOLIDATED INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 8.0
+    },
+    "micros_pct": {
+      "Fe": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "810458-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 43.6,
+            "Cd": 7.5,
+            "Co": 51.9,
+            "Hg": 0.3,
+            "Mo": 7.7,
+            "Ni": 106.0,
+            "Pb": 25.4,
+            "Se": 24.8,
+            "Zn": 2420.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 43.6,
+        "Cd": 7.5,
+        "Co": 51.9,
+        "Hg": 0.3,
+        "Mo": 7.7,
+        "Ni": 106.0,
+        "Pb": 25.4,
+        "Se": 24.8,
+        "Zn": 2420.0
+      }
+    }
   }
 }

@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"CEA5B1","source_wsda_record":{"wsda_product_number":"(#3916-0001)","product_name":"THE SEED SUPPLY AZOMITE GRANULAR TRACE MINERALS 0-0.2-0","company_info":{"company":"RAW SUPPLY LLC","Mailing Address":"762 S River Rd","Post Office Box":null,"City":"Saint Anthony","State":"ID","Postal Code":"83445","Telephone Number":"208 709-8796","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":null,"Calcium (Ca)":1.8,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":0.1,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=3.8100","Cobalt":"=22.3000","Mercury":"=0.0500","Molybdenum":"=1.8000","Nickel":"=18.5000","Lead":"=8.8000","Selenium":"=5.0000","Zinc":"=92.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":null,"Calcium (Ca)":1.8,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":0.1,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=3.8100","Cobalt":"=22.3000","Mercury":"=0.0500","Molybdenum":"=1.8000","Nickel":"=18.5000","Lead":"=8.8000","Selenium":"=5.0000","Zinc":"=92.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RAW SUPPLY LLC","label_name":"THE SEED SUPPLY AZOMITE GRANULAR TRACE MINERALS 0-0.2-0","wsda_reg_no":"(#3916-0001)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CEA5B1",
+  "metadata": {
+    "registrant": "RAW SUPPLY LLC",
+    "label_name": "THE SEED SUPPLY AZOMITE GRANULAR TRACE MINERALS 0-0.2-0",
+    "wsda_reg_no": "(#3916-0001)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3916-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3916-0001)",
+        "product_name": "THE SEED SUPPLY AZOMITE GRANULAR TRACE MINERALS 0-0.2-0",
+        "company_info": {
+          "company": "RAW SUPPLY LLC",
+          "Mailing Address": "762 S River Rd",
+          "Post Office Box": null,
+          "City": "Saint Anthony",
+          "State": "ID",
+          "Postal Code": "83445",
+          "Telephone Number": "208 709-8796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 0.2,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 1.8,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": 0.1,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=3.8100",
+          "Cobalt": "=22.3000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.8000",
+          "Nickel": "=18.5000",
+          "Lead": "=8.8000",
+          "Selenium": "=5.0000",
+          "Zinc": "=92.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE SEED SUPPLY AZOMITE GRANULAR TRACE MINERALS 0-0.2-0",
+    "brand": "RAW SUPPLY LLC",
+    "manufacturer": {
+      "name": "RAW SUPPLY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 0.2
+    },
+    "macros_pct": {
+      "Ca": 1.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CEA5B1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 3.81,
+            "Co": 22.3,
+            "Hg": 0.05,
+            "Mo": 1.8,
+            "Ni": 18.5,
+            "Pb": 8.8,
+            "Se": 5.0,
+            "Zn": 92.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 3.81,
+        "Co": 22.3,
+        "Hg": 0.05,
+        "Mo": 1.8,
+        "Ni": 18.5,
+        "Pb": 8.8,
+        "Se": 5.0,
+        "Zn": 92.6
+      }
+    }
+  }
+}

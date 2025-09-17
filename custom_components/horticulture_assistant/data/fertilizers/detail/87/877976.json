@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"877976","source_wsda_record":{"wsda_product_number":"(#1909-0033)","product_name":"HYDROGRO HG + MIKROS 20-20-20","company_info":{"company":"HYDROGRO LLC","Mailing Address":"7815 S Hardy Dr Suite 101","Post Office Box":null,"City":"Tempe","State":"AZ","Postal Code":"85284","Telephone Number":"480 248-9336","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"reported_metals":{"Arsenic":"=3.4000","Cadmium":"<0.0100","Cobalt":"=0.1420","Mercury":"=0.0300","Molybdenum":"=10.0000","Nickel":"=0.5191","Lead":"<0.0100","Selenium":"<0.0100","Zinc":"=502.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":20.0,"Soluble Potash (K2O)":20.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.02,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.1,"Manganese (Mn)":0.05,"Molybdenum (Mo)":0.0005,"Sodium (Na)":null,"Zinc (Zn)":0.05},"heavy_metals":{"Arsenic":"=3.4000","Cadmium":"<0.0100","Cobalt":"=0.1420","Mercury":"=0.0300","Molybdenum":"=10.0000","Nickel":"=0.5191","Lead":"<0.0100","Selenium":"<0.0100","Zinc":"=502.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROGRO LLC","label_name":"HYDROGRO HG + MIKROS 20-20-20","wsda_reg_no":"(#1909-0033)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "877976",
+  "metadata": {
+    "registrant": "HYDROGRO LLC",
+    "label_name": "HYDROGRO HG + MIKROS 20-20-20",
+    "wsda_reg_no": "(#1909-0033)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1909-0033)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1909-0033)",
+        "product_name": "HYDROGRO HG + MIKROS 20-20-20",
+        "company_info": {
+          "company": "HYDROGRO LLC",
+          "Mailing Address": "7815 S Hardy Dr Suite 101",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85284",
+          "Telephone Number": "480 248-9336",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 20.0,
+          "Soluble Potash (K2O)": 20.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=3.4000",
+          "Cadmium": "<0.0100",
+          "Cobalt": "=0.1420",
+          "Mercury": "=0.0300",
+          "Molybdenum": "=10.0000",
+          "Nickel": "=0.5191",
+          "Lead": "<0.0100",
+          "Selenium": "<0.0100",
+          "Zinc": "=502.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYDROGRO HG + MIKROS 20-20-20",
+    "brand": "HYDROGRO LLC",
+    "manufacturer": {
+      "name": "HYDROGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 20.0,
+      "K2O_pct": 20.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "877976-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.4,
+            "Cd": 0.01,
+            "Co": 0.142,
+            "Hg": 0.03,
+            "Mo": 10.0,
+            "Ni": 0.5191,
+            "Pb": 0.01,
+            "Se": 0.01,
+            "Zn": 502.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.01,
+            "Pb": 0.01,
+            "Se": 0.01
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.4,
+        "Co": 0.142,
+        "Hg": 0.03,
+        "Mo": 10.0,
+        "Ni": 0.5191,
+        "Zn": 502.0
+      }
+    }
+  }
+}

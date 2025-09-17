@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5E5671",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3054-0001)",
-    "product_name": "AMMONIUM THIOSULFATE 12-0-0",
-    "company_info": {
-      "company": "DIMMITT SULFUR PRODUCTS LTD",
-      "Mailing Address": "PO Box 32428",
-      "Post Office Box": null,
-      "City": "Amarillo",
-      "State": "TX",
-      "Postal Code": "79120",
-      "Telephone Number": "806 352-8485",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 26.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.7000",
-      "Lead": "=1.8000",
-      "Selenium": "<5.0000",
-      "Zinc": "=2.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 12.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 26.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.0000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=1.7000",
-      "Lead": "=1.8000",
-      "Selenium": "<5.0000",
-      "Zinc": "=2.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5E5671",
   "metadata": {
     "registrant": "DIMMITT SULFUR PRODUCTS LTD",
     "label_name": "AMMONIUM THIOSULFATE 12-0-0",
     "wsda_reg_no": "(#3054-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3054-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3054-0001)",
+        "product_name": "AMMONIUM THIOSULFATE 12-0-0",
+        "company_info": {
+          "company": "DIMMITT SULFUR PRODUCTS LTD",
+          "Mailing Address": "PO Box 32428",
+          "Post Office Box": null,
+          "City": "Amarillo",
+          "State": "TX",
+          "Postal Code": "79120",
+          "Telephone Number": "806 352-8485",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 26.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=1.7000",
+          "Lead": "=1.8000",
+          "Selenium": "<5.0000",
+          "Zinc": "=2.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AMMONIUM THIOSULFATE 12-0-0",
+    "brand": "DIMMITT SULFUR PRODUCTS LTD",
+    "manufacturer": {
+      "name": "DIMMITT SULFUR PRODUCTS LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0
+    },
+    "macros_pct": {
+      "S": 26.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5E5671-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.2,
+            "Mo": 1.0,
+            "Ni": 1.7,
+            "Pb": 1.8,
+            "Se": 5.0,
+            "Zn": 2.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.5,
+        "Co": 1.0,
+        "Hg": 0.2,
+        "Mo": 1.0,
+        "Ni": 1.7,
+        "Pb": 1.8,
+        "Zn": 2.0
+      }
+    }
   }
 }

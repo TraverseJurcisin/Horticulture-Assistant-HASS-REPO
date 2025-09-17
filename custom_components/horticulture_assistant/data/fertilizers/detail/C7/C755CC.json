@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"C755CC","source_wsda_record":{"wsda_product_number":"(#0739-0085)","product_name":"GEN-MAX SUPERBLEND 20-10-10","company_info":{"company":"GENESIS AGRI-PRODUCTS INC","Mailing Address":"PO Box 10512","Post Office Box":null,"City":"Yakima","State":"WA","Postal Code":"98909","Telephone Number":"509 575-8382","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":3.98,"Magnesium (Mg)":null,"Sulfur (S)":5.42,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.6900","Cadmium":"=28.2000","Cobalt":"=0.7760","Mercury":"=0.0239","Molybdenum":"=4.1600","Nickel":"=44.2000","Lead":"=0.5570","Selenium":"<0.3650","Zinc":"=1460.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":10.0,"Soluble Potash (K2O)":10.0,"Calcium (Ca)":3.98,"Magnesium (Mg)":null,"Sulfur (S)":5.42,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.6900","Cadmium":"=28.2000","Cobalt":"=0.7760","Mercury":"=0.0239","Molybdenum":"=4.1600","Nickel":"=44.2000","Lead":"=0.5570","Selenium":"<0.3650","Zinc":"=1460.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENESIS AGRI-PRODUCTS INC","label_name":"GEN-MAX SUPERBLEND 20-10-10","wsda_reg_no":"(#0739-0085)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C755CC",
+  "metadata": {
+    "registrant": "GENESIS AGRI-PRODUCTS INC",
+    "label_name": "GEN-MAX SUPERBLEND 20-10-10",
+    "wsda_reg_no": "(#0739-0085)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0739-0085)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0739-0085)",
+        "product_name": "GEN-MAX SUPERBLEND 20-10-10",
+        "company_info": {
+          "company": "GENESIS AGRI-PRODUCTS INC",
+          "Mailing Address": "PO Box 10512",
+          "Post Office Box": null,
+          "City": "Yakima",
+          "State": "WA",
+          "Postal Code": "98909",
+          "Telephone Number": "509 575-8382",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": 3.98,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.42,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.6900",
+          "Cadmium": "=28.2000",
+          "Cobalt": "=0.7760",
+          "Mercury": "=0.0239",
+          "Molybdenum": "=4.1600",
+          "Nickel": "=44.2000",
+          "Lead": "=0.5570",
+          "Selenium": "<0.3650",
+          "Zinc": "=1460.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GEN-MAX SUPERBLEND 20-10-10",
+    "brand": "GENESIS AGRI-PRODUCTS INC",
+    "manufacturer": {
+      "name": "GENESIS AGRI-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 10.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 3.98,
+      "S": 5.42
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C755CC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.69,
+            "Cd": 28.2,
+            "Co": 0.776,
+            "Hg": 0.0239,
+            "Mo": 4.16,
+            "Ni": 44.2,
+            "Pb": 0.557,
+            "Se": 0.365,
+            "Zn": 1460.0
+          },
+          "detection_limits_ppm": {
+            "Se": 0.365
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.69,
+        "Cd": 28.2,
+        "Co": 0.776,
+        "Hg": 0.0239,
+        "Mo": 4.16,
+        "Ni": 44.2,
+        "Pb": 0.557,
+        "Zn": 1460.0
+      }
+    }
+  }
+}

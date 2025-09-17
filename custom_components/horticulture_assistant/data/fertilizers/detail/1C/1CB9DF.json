@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1CB9DF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3391-0027)",
-    "product_name": "CYCO DR REPAIR 3-0-0",
-    "company_info": {
-      "company": "HAWTHORNE HYDROPONICS LLC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "707 284-4701",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 0.8,
-      "Magnesium (Mg)": 0.4,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.6,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<1.2500",
-      "Cadmium": "<0.0250",
-      "Cobalt": "=0.0670",
-      "Mercury": "<0.0095",
-      "Molybdenum": "=0.1180",
-      "Nickel": "=0.2860",
-      "Lead": "<1.2500",
-      "Selenium": "<1.2500",
-      "Zinc": "=224.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 0.8,
-      "Magnesium (Mg)": 0.4,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.6,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<1.2500",
-      "Cadmium": "<0.0250",
-      "Cobalt": "=0.0670",
-      "Mercury": "<0.0095",
-      "Molybdenum": "=0.1180",
-      "Nickel": "=0.2860",
-      "Lead": "<1.2500",
-      "Selenium": "<1.2500",
-      "Zinc": "=224.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1CB9DF",
   "metadata": {
     "registrant": "HAWTHORNE HYDROPONICS LLC",
     "label_name": "CYCO DR REPAIR 3-0-0",
     "wsda_reg_no": "(#3391-0027)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3391-0027)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3391-0027)",
+        "product_name": "CYCO DR REPAIR 3-0-0",
+        "company_info": {
+          "company": "HAWTHORNE HYDROPONICS LLC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "707 284-4701",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 0.8,
+          "Magnesium (Mg)": 0.4,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.6,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.2500",
+          "Cadmium": "<0.0250",
+          "Cobalt": "=0.0670",
+          "Mercury": "<0.0095",
+          "Molybdenum": "=0.1180",
+          "Nickel": "=0.2860",
+          "Lead": "<1.2500",
+          "Selenium": "<1.2500",
+          "Zinc": "=224.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CYCO DR REPAIR 3-0-0",
+    "brand": "HAWTHORNE HYDROPONICS LLC",
+    "manufacturer": {
+      "name": "HAWTHORNE HYDROPONICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 0.8,
+      "Mg": 0.4
+    },
+    "micros_pct": {
+      "Fe": 0.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1CB9DF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.25,
+            "Cd": 0.025,
+            "Co": 0.067,
+            "Hg": 0.0095,
+            "Mo": 0.118,
+            "Ni": 0.286,
+            "Pb": 1.25,
+            "Se": 1.25,
+            "Zn": 224.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.25,
+            "Cd": 0.025,
+            "Hg": 0.0095,
+            "Pb": 1.25,
+            "Se": 1.25
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 0.067,
+        "Mo": 0.118,
+        "Ni": 0.286,
+        "Zn": 224.0
+      }
+    }
   }
 }

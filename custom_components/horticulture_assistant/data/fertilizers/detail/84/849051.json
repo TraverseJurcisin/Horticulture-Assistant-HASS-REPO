@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"849051","source_wsda_record":{"wsda_product_number":"(#3092-0014)","product_name":"QUICK & THICK DOG SPOT REPAIR 0.16-0-0.16","company_info":{"company":"DLF USA INC","Mailing Address":"33080 Red Bridge Rd SE","Post Office Box":null,"City":"Albany","State":"OR","Postal Code":"97322","Telephone Number":"541 369-2251","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.16,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.16,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.3200","Cadmium":"=0.0500","Cobalt":"=1.1500","Mercury":"=0.0040","Molybdenum":"=0.5200","Nickel":"=1.4500","Lead":"=2.4500","Selenium":"=0.3200","Zinc":"=36.8100"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.16,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":0.16,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.3200","Cadmium":"=0.0500","Cobalt":"=1.1500","Mercury":"=0.0040","Molybdenum":"=0.5200","Nickel":"=1.4500","Lead":"=2.4500","Selenium":"=0.3200","Zinc":"=36.8100"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"DLF USA INC","label_name":"QUICK & THICK DOG SPOT REPAIR 0.16-0-0.16","wsda_reg_no":"(#3092-0014)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "849051",
+  "metadata": {
+    "registrant": "DLF USA INC",
+    "label_name": "QUICK & THICK DOG SPOT REPAIR 0.16-0-0.16",
+    "wsda_reg_no": "(#3092-0014)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3092-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3092-0014)",
+        "product_name": "QUICK & THICK DOG SPOT REPAIR 0.16-0-0.16",
+        "company_info": {
+          "company": "DLF USA INC",
+          "Mailing Address": "33080 Red Bridge Rd SE",
+          "Post Office Box": null,
+          "City": "Albany",
+          "State": "OR",
+          "Postal Code": "97322",
+          "Telephone Number": "541 369-2251",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.16,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 0.16,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.3200",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=1.1500",
+          "Mercury": "=0.0040",
+          "Molybdenum": "=0.5200",
+          "Nickel": "=1.4500",
+          "Lead": "=2.4500",
+          "Selenium": "=0.3200",
+          "Zinc": "=36.8100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "QUICK & THICK DOG SPOT REPAIR 0.16-0-0.16",
+    "brand": "DLF USA INC",
+    "manufacturer": {
+      "name": "DLF USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.16,
+      "K2O_pct": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "849051-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.32,
+            "Cd": 0.05,
+            "Co": 1.15,
+            "Hg": 0.004,
+            "Mo": 0.52,
+            "Ni": 1.45,
+            "Pb": 2.45,
+            "Se": 0.32,
+            "Zn": 36.81
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.32,
+        "Cd": 0.05,
+        "Co": 1.15,
+        "Hg": 0.004,
+        "Mo": 0.52,
+        "Ni": 1.45,
+        "Pb": 2.45,
+        "Se": 0.32,
+        "Zn": 36.81
+      }
+    }
+  }
+}

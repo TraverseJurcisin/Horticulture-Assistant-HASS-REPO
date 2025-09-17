@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"D0303C","source_wsda_record":{"wsda_product_number":"(#1909-0032)","product_name":"HYDROGRO FLO-GYP 0-0-0","company_info":{"company":"HYDROGRO LLC","Mailing Address":"7815 S Hardy Dr Suite 101","Post Office Box":null,"City":"Tempe","State":"AZ","Postal Code":"85284","Telephone Number":"480 248-9336","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":13.8,"Magnesium (Mg)":null,"Sulfur (S)":9.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1600","Cadmium":"=0.1300","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=1.1800","Nickel":"=2.2330","Lead":"=0.7900","Selenium":"<0.1000","Zinc":"=7.4200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":13.8,"Magnesium (Mg)":null,"Sulfur (S)":9.8,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1600","Cadmium":"=0.1300","Cobalt":"<1.0000","Mercury":"<0.1000","Molybdenum":"=1.1800","Nickel":"=2.2330","Lead":"=0.7900","Selenium":"<0.1000","Zinc":"=7.4200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"HYDROGRO LLC","label_name":"HYDROGRO FLO-GYP 0-0-0","wsda_reg_no":"(#1909-0032)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D0303C",
+  "metadata": {
+    "registrant": "HYDROGRO LLC",
+    "label_name": "HYDROGRO FLO-GYP 0-0-0",
+    "wsda_reg_no": "(#1909-0032)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1909-0032)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1909-0032)",
+        "product_name": "HYDROGRO FLO-GYP 0-0-0",
+        "company_info": {
+          "company": "HYDROGRO LLC",
+          "Mailing Address": "7815 S Hardy Dr Suite 101",
+          "Post Office Box": null,
+          "City": "Tempe",
+          "State": "AZ",
+          "Postal Code": "85284",
+          "Telephone Number": "480 248-9336",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 13.8,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 9.8,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1600",
+          "Cadmium": "=0.1300",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=1.1800",
+          "Nickel": "=2.2330",
+          "Lead": "=0.7900",
+          "Selenium": "<0.1000",
+          "Zinc": "=7.4200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HYDROGRO FLO-GYP 0-0-0",
+    "brand": "HYDROGRO LLC",
+    "manufacturer": {
+      "name": "HYDROGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 13.8,
+      "S": 9.8
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D0303C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.16,
+            "Cd": 0.13,
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Mo": 1.18,
+            "Ni": 2.233,
+            "Pb": 0.79,
+            "Se": 0.1,
+            "Zn": 7.42
+          },
+          "detection_limits_ppm": {
+            "Co": 1.0,
+            "Hg": 0.1,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.16,
+        "Cd": 0.13,
+        "Mo": 1.18,
+        "Ni": 2.233,
+        "Pb": 0.79,
+        "Zn": 7.42
+      }
+    }
+  }
+}

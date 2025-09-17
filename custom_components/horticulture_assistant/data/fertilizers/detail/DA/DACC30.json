@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"DACC30","source_wsda_record":{"wsda_product_number":"(#0884-0174)","product_name":"JOBE'S ORGANICS TREES SHRUBS & EVERGREENS TREE SPIKES 8-2-2","company_info":{"company":"EASY GARDENER INC","Mailing Address":"1750 17th St","Post Office Box":null,"City":"Paris","State":"KY","Postal Code":"40361","Telephone Number":"859 984-5389","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.2000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"=0.0490","Molybdenum":"<0.4000","Nickel":"=1.7000","Lead":"=1.7000","Selenium":"<0.2900","Zinc":"=59.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":8.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.2000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"=0.0490","Molybdenum":"<0.4000","Nickel":"=1.7000","Lead":"=1.7000","Selenium":"<0.2900","Zinc":"=59.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EASY GARDENER INC","label_name":"JOBE'S ORGANICS TREES SHRUBS & EVERGREENS TREE SPIKES 8-2-2","wsda_reg_no":"(#0884-0174)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DACC30",
+  "metadata": {
+    "registrant": "EASY GARDENER INC",
+    "label_name": "JOBE'S ORGANICS TREES SHRUBS & EVERGREENS TREE SPIKES 8-2-2",
+    "wsda_reg_no": "(#0884-0174)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0884-0174)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0884-0174)",
+        "product_name": "JOBE'S ORGANICS TREES SHRUBS & EVERGREENS TREE SPIKES 8-2-2",
+        "company_info": {
+          "company": "EASY GARDENER INC",
+          "Mailing Address": "1750 17th St",
+          "Post Office Box": null,
+          "City": "Paris",
+          "State": "KY",
+          "Postal Code": "40361",
+          "Telephone Number": "859 984-5389",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0490",
+          "Molybdenum": "<0.4000",
+          "Nickel": "=1.7000",
+          "Lead": "=1.7000",
+          "Selenium": "<0.2900",
+          "Zinc": "=59.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JOBE'S ORGANICS TREES SHRUBS & EVERGREENS TREE SPIKES 8-2-2",
+    "brand": "EASY GARDENER INC",
+    "manufacturer": {
+      "name": "EASY GARDENER INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DACC30-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.2,
+            "Cd": 0.1,
+            "Co": 0.2,
+            "Hg": 0.049,
+            "Mo": 0.4,
+            "Ni": 1.7,
+            "Pb": 1.7,
+            "Se": 0.29,
+            "Zn": 59.0
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.4,
+            "Se": 0.29
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.2,
+        "Cd": 0.1,
+        "Co": 0.2,
+        "Hg": 0.049,
+        "Ni": 1.7,
+        "Pb": 1.7,
+        "Zn": 59.0
+      }
+    }
+  }
+}

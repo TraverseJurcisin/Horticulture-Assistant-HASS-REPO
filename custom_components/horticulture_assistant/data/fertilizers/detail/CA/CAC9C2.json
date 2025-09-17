@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"CAC9C2","source_wsda_record":{"wsda_product_number":"(#2419-0001)","product_name":"AGRICULTURE GYPSUM 0-0-0","company_info":{"company":"BURNINGHAM ENTERPRISES INC","Mailing Address":"PO Box 974","Post Office Box":null,"City":"American Fork","State":"UT","Postal Code":"84003","Telephone Number":"801 756-8138","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":23.0,"Magnesium (Mg)":null,"Sulfur (S)":15.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=10.0000","Cadmium":"=1.4000","Cobalt":"=2.0000","Mercury":"=0.1000","Molybdenum":"=3.1000","Nickel":"=4.6000","Lead":"=4.6000","Selenium":"=8.0000","Zinc":"=50.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"82.0000"},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":23.0,"Magnesium (Mg)":null,"Sulfur (S)":15.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=10.0000","Cadmium":"=1.4000","Cobalt":"=2.0000","Mercury":"=0.1000","Molybdenum":"=3.1000","Nickel":"=4.6000","Lead":"=4.6000","Selenium":"=8.0000","Zinc":"=50.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"BURNINGHAM ENTERPRISES INC","label_name":"AGRICULTURE GYPSUM 0-0-0","wsda_reg_no":"(#2419-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CAC9C2",
+  "metadata": {
+    "registrant": "BURNINGHAM ENTERPRISES INC",
+    "label_name": "AGRICULTURE GYPSUM 0-0-0",
+    "wsda_reg_no": "(#2419-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2419-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2419-0001)",
+        "product_name": "AGRICULTURE GYPSUM 0-0-0",
+        "company_info": {
+          "company": "BURNINGHAM ENTERPRISES INC",
+          "Mailing Address": "PO Box 974",
+          "Post Office Box": null,
+          "City": "American Fork",
+          "State": "UT",
+          "Postal Code": "84003",
+          "Telephone Number": "801 756-8138",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 23.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 15.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=1.4000",
+          "Cobalt": "=2.0000",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=3.1000",
+          "Nickel": "=4.6000",
+          "Lead": "=4.6000",
+          "Selenium": "=8.0000",
+          "Zinc": "=50.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "82.0000"
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGRICULTURE GYPSUM 0-0-0",
+    "brand": "BURNINGHAM ENTERPRISES INC",
+    "manufacturer": {
+      "name": "BURNINGHAM ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 23.0,
+      "S": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CAC9C2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 1.4,
+            "Co": 2.0,
+            "Hg": 0.1,
+            "Mo": 3.1,
+            "Ni": 4.6,
+            "Pb": 4.6,
+            "Se": 8.0,
+            "Zn": 50.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 1.4,
+        "Co": 2.0,
+        "Hg": 0.1,
+        "Mo": 3.1,
+        "Ni": 4.6,
+        "Pb": 4.6,
+        "Se": 8.0,
+        "Zn": 50.0
+      }
+    }
+  }
+}

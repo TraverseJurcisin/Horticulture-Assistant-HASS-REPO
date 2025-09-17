@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"E64E1A","source_wsda_record":{"wsda_product_number":"(#0193-0089)","product_name":"SIGNATURE BRAND FERTILIZER STARPHITE 0-0-5 CALCIUM 0-0-5","company_info":{"company":"LOVELAND PRODUCTS INC","Mailing Address":"PO Box 1286","Post Office Box":null,"City":"Greeley","State":"CO","Postal Code":"80632","Telephone Number":"970 685-3737","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5000","Cadmium":"<3.0000","Cobalt":"<1.0000","Mercury":"<0.0100","Molybdenum":"<10.0000","Nickel":"<1.0000","Lead":"=7.7000","Selenium":"<0.0500","Zinc":"=7.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":5.0,"Calcium (Ca)":8.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5000","Cadmium":"<3.0000","Cobalt":"<1.0000","Mercury":"<0.0100","Molybdenum":"<10.0000","Nickel":"<1.0000","Lead":"=7.7000","Selenium":"<0.0500","Zinc":"=7.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LOVELAND PRODUCTS INC","label_name":"SIGNATURE BRAND FERTILIZER STARPHITE 0-0-5 CALCIUM 0-0-5","wsda_reg_no":"(#0193-0089)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E64E1A",
+  "metadata": {
+    "registrant": "LOVELAND PRODUCTS INC",
+    "label_name": "SIGNATURE BRAND FERTILIZER STARPHITE 0-0-5 CALCIUM 0-0-5",
+    "wsda_reg_no": "(#0193-0089)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0089)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0089)",
+        "product_name": "SIGNATURE BRAND FERTILIZER STARPHITE 0-0-5 CALCIUM 0-0-5",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 8.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "<3.0000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<10.0000",
+          "Nickel": "<1.0000",
+          "Lead": "=7.7000",
+          "Selenium": "<0.0500",
+          "Zinc": "=7.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIGNATURE BRAND FERTILIZER STARPHITE 0-0-5 CALCIUM 0-0-5",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E64E1A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 3.0,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 10.0,
+            "Ni": 1.0,
+            "Pb": 7.7,
+            "Se": 0.05,
+            "Zn": 7.6
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Cd": 3.0,
+            "Co": 1.0,
+            "Hg": 0.01,
+            "Mo": 10.0,
+            "Ni": 1.0,
+            "Se": 0.05
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Pb": 7.7,
+        "Zn": 7.6
+      }
+    }
+  }
+}

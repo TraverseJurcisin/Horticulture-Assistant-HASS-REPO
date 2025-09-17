@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"E2F532","source_wsda_record":{"wsda_product_number":"(#0950-0107)","product_name":"GROW MORE CITRUS GROWER BLEND 1.7-0-0","company_info":{"company":"GROW MORE INC","Mailing Address":"15600 New Century Drive","Post Office Box":null,"City":"Gardena","State":"CA","Postal Code":"90248","Telephone Number":"310 515-1700","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.7,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":2.2,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.1},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.3700","Cobalt":"=2.4000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.1000","Lead":"=1.6000","Selenium":"=0.5000","Zinc":"=12680.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.7,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.1,"Iron (Fe)":2.2,"Manganese (Mn)":1.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":1.1},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.3700","Cobalt":"=2.4000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.1000","Lead":"=1.6000","Selenium":"=0.5000","Zinc":"=12680.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GROW MORE INC","label_name":"GROW MORE CITRUS GROWER BLEND 1.7-0-0","wsda_reg_no":"(#0950-0107)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E2F532",
+  "metadata": {
+    "registrant": "GROW MORE INC",
+    "label_name": "GROW MORE CITRUS GROWER BLEND 1.7-0-0",
+    "wsda_reg_no": "(#0950-0107)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0950-0107)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0950-0107)",
+        "product_name": "GROW MORE CITRUS GROWER BLEND 1.7-0-0",
+        "company_info": {
+          "company": "GROW MORE INC",
+          "Mailing Address": "15600 New Century Drive",
+          "Post Office Box": null,
+          "City": "Gardena",
+          "State": "CA",
+          "Postal Code": "90248",
+          "Telephone Number": "310 515-1700",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.7,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 2.2,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.1
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.3700",
+          "Cobalt": "=2.4000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.1000",
+          "Lead": "=1.6000",
+          "Selenium": "=0.5000",
+          "Zinc": "=12680.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROW MORE CITRUS GROWER BLEND 1.7-0-0",
+    "brand": "GROW MORE INC",
+    "manufacturer": {
+      "name": "GROW MORE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.7
+    },
+    "micros_pct": {
+      "Fe": 2.2,
+      "Mn": 1.0,
+      "Zn": 1.1,
+      "Cu": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E2F532-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.37,
+            "Co": 2.4,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.1,
+            "Pb": 1.6,
+            "Se": 0.5,
+            "Zn": 12680.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.37,
+        "Co": 2.4,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 0.1,
+        "Pb": 1.6,
+        "Se": 0.5,
+        "Zn": 12680.0
+      }
+    }
+  }
+}

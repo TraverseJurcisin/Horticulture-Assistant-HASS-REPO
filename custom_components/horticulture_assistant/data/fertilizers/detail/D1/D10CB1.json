@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"D10CB1","source_wsda_record":{"wsda_product_number":"(#0170-0009)","product_name":"SIMPLOT MONOAMMONIUM PHOSPHATE 11-52-0 (ROCK SPRINGS) 11-52-0","company_info":{"company":"J R SIMPLOT COMPANY - POCATELLO","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-7083","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":52.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=7.4500","Cadmium":"=0.5420","Cobalt":"=2.6300","Mercury":"<0.0500","Molybdenum":"=4.8200","Nickel":"=33.0000","Lead":"<3.0000","Selenium":"<5.0000","Zinc":"=87.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":52.0,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=7.4500","Cadmium":"=0.5420","Cobalt":"=2.6300","Mercury":"<0.0500","Molybdenum":"=4.8200","Nickel":"=33.0000","Lead":"<3.0000","Selenium":"<5.0000","Zinc":"=87.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY - POCATELLO","label_name":"SIMPLOT MONOAMMONIUM PHOSPHATE 11-52-0 (ROCK SPRINGS) 11-52-0","wsda_reg_no":"(#0170-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D10CB1",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY - POCATELLO",
+    "label_name": "SIMPLOT MONOAMMONIUM PHOSPHATE 11-52-0 (ROCK SPRINGS) 11-52-0",
+    "wsda_reg_no": "(#0170-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0170-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0170-0009)",
+        "product_name": "SIMPLOT MONOAMMONIUM PHOSPHATE 11-52-0 (ROCK SPRINGS) 11-52-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY - POCATELLO",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-7083",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 52.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.4500",
+          "Cadmium": "=0.5420",
+          "Cobalt": "=2.6300",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=4.8200",
+          "Nickel": "=33.0000",
+          "Lead": "<3.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=87.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT MONOAMMONIUM PHOSPHATE 11-52-0 (ROCK SPRINGS) 11-52-0",
+    "brand": "J R SIMPLOT COMPANY - POCATELLO",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY - POCATELLO"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 52.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D10CB1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.45,
+            "Cd": 0.542,
+            "Co": 2.63,
+            "Hg": 0.05,
+            "Mo": 4.82,
+            "Ni": 33.0,
+            "Pb": 3.0,
+            "Se": 5.0,
+            "Zn": 87.4
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 3.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.45,
+        "Cd": 0.542,
+        "Co": 2.63,
+        "Mo": 4.82,
+        "Ni": 33.0,
+        "Zn": 87.4
+      }
+    }
+  }
+}

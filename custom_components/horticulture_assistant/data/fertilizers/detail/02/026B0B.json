@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "026B0B",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0764-0043)",
-    "product_name": "NATURE SAFE 7-12-0 FERTILIZER FOR ORGANIC PRODUCTION (PELLETED) 7-12-0",
-    "company_info": {
-      "company": "DARLING INGREDIENTS INC",
-      "Mailing Address": "4221 Alexandria Pk",
-      "Post Office Box": null,
-      "City": "Cold Spring",
-      "State": "KY",
-      "Postal Code": "41076",
-      "Telephone Number": "859 344-2227",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 12.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 10.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.2000",
-      "Cadmium": "=0.4950",
-      "Cobalt": "=0.4310",
-      "Mercury": "=0.0048",
-      "Molybdenum": "=0.5330",
-      "Nickel": "=2.1400",
-      "Lead": "=0.6210",
-      "Selenium": "=1.2200",
-      "Zinc": "=132.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 7.0,
-      "Available Phosphoric Acid (P2O5)": 12.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 10.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.2000",
-      "Cadmium": "=0.4950",
-      "Cobalt": "=0.4310",
-      "Mercury": "=0.0048",
-      "Molybdenum": "=0.5330",
-      "Nickel": "=2.1400",
-      "Lead": "=0.6210",
-      "Selenium": "=1.2200",
-      "Zinc": "=132.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "026B0B",
   "metadata": {
     "registrant": "DARLING INGREDIENTS INC",
     "label_name": "NATURE SAFE 7-12-0 FERTILIZER FOR ORGANIC PRODUCTION (PELLETED) 7-12-0",
     "wsda_reg_no": "(#0764-0043)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0764-0043)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0764-0043)",
+        "product_name": "NATURE SAFE 7-12-0 FERTILIZER FOR ORGANIC PRODUCTION (PELLETED) 7-12-0",
+        "company_info": {
+          "company": "DARLING INGREDIENTS INC",
+          "Mailing Address": "4221 Alexandria Pk",
+          "Post Office Box": null,
+          "City": "Cold Spring",
+          "State": "KY",
+          "Postal Code": "41076",
+          "Telephone Number": "859 344-2227",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 12.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 10.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.2000",
+          "Cadmium": "=0.4950",
+          "Cobalt": "=0.4310",
+          "Mercury": "=0.0048",
+          "Molybdenum": "=0.5330",
+          "Nickel": "=2.1400",
+          "Lead": "=0.6210",
+          "Selenium": "=1.2200",
+          "Zinc": "=132.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NATURE SAFE 7-12-0 FERTILIZER FOR ORGANIC PRODUCTION (PELLETED) 7-12-0",
+    "brand": "DARLING INGREDIENTS INC",
+    "manufacturer": {
+      "name": "DARLING INGREDIENTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 12.0
+    },
+    "macros_pct": {
+      "Ca": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "026B0B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.2,
+            "Cd": 0.495,
+            "Co": 0.431,
+            "Hg": 0.0048,
+            "Mo": 0.533,
+            "Ni": 2.14,
+            "Pb": 0.621,
+            "Se": 1.22,
+            "Zn": 132.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.2,
+        "Cd": 0.495,
+        "Co": 0.431,
+        "Hg": 0.0048,
+        "Mo": 0.533,
+        "Ni": 2.14,
+        "Pb": 0.621,
+        "Se": 1.22,
+        "Zn": 132.0
+      }
+    }
   }
 }

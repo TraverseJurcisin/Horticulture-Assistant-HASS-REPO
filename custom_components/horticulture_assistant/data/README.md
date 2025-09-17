@@ -11,5 +11,5 @@ LABOR
 ...
 
 TODO -
-- integrate the WSDA data set into our data package here
+- integrate the external fertilizer dataset into our data package here
 - sort different like attribute files for better file organization

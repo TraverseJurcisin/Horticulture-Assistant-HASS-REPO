@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"A5F936","source_wsda_record":{"wsda_product_number":"(#0185-0221)","product_name":"TURF NURTURE 15-0-7","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5040","Cadmium":"<0.4920","Cobalt":"<0.4290","Mercury":"<0.0050","Molybdenum":"<0.5300","Nickel":"=0.7060","Lead":"=0.6870","Selenium":"<1.1400","Zinc":"=167.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":7.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5040","Cadmium":"<0.4920","Cobalt":"<0.4290","Mercury":"<0.0050","Molybdenum":"<0.5300","Nickel":"=0.7060","Lead":"=0.6870","Selenium":"<1.1400","Zinc":"=167.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"TURF NURTURE 15-0-7","wsda_reg_no":"(#0185-0221)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A5F936",
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "TURF NURTURE 15-0-7",
+    "wsda_reg_no": "(#0185-0221)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0221)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0221)",
+        "product_name": "TURF NURTURE 15-0-7",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 7.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5040",
+          "Cadmium": "<0.4920",
+          "Cobalt": "<0.4290",
+          "Mercury": "<0.0050",
+          "Molybdenum": "<0.5300",
+          "Nickel": "=0.7060",
+          "Lead": "=0.6870",
+          "Selenium": "<1.1400",
+          "Zinc": "=167.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TURF NURTURE 15-0-7",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "K2O_pct": 7.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "Mg": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A5F936-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.005,
+            "Mo": 0.53,
+            "Ni": 0.706,
+            "Pb": 0.687,
+            "Se": 1.14,
+            "Zn": 167.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.504,
+            "Cd": 0.492,
+            "Co": 0.429,
+            "Hg": 0.005,
+            "Mo": 0.53,
+            "Se": 1.14
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Ni": 0.706,
+        "Pb": 0.687,
+        "Zn": 167.0
+      }
+    }
+  }
+}

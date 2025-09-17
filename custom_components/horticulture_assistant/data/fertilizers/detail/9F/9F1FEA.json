@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"9F1FEA","source_wsda_record":{"wsda_product_number":"(#4280-0001)","product_name":"SHARKEY PRODUCTS BEAT YOUR NEIGHBOR 20-21-19","company_info":{"company":"SHARKEY PRODUCTS LLC","Mailing Address":"PO Box 462","Post Office Box":null,"City":"Crivitz","State":"WI","Postal Code":"54114","Telephone Number":"715 854-2483","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4820","Cadmium":"=0.0200","Cobalt":"=0.0690","Mercury":"<0.0028","Molybdenum":"=26.3000","Nickel":"=0.2880","Lead":"=0.0400","Selenium":"=0.4070","Zinc":"=514.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":20.0,"Available Phosphoric Acid (P2O5)":21.0,"Soluble Potash (K2O)":19.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4820","Cadmium":"=0.0200","Cobalt":"=0.0690","Mercury":"<0.0028","Molybdenum":"=26.3000","Nickel":"=0.2880","Lead":"=0.0400","Selenium":"=0.4070","Zinc":"=514.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SHARKEY PRODUCTS LLC","label_name":"SHARKEY PRODUCTS BEAT YOUR NEIGHBOR 20-21-19","wsda_reg_no":"(#4280-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9F1FEA",
+  "metadata": {
+    "registrant": "SHARKEY PRODUCTS LLC",
+    "label_name": "SHARKEY PRODUCTS BEAT YOUR NEIGHBOR 20-21-19",
+    "wsda_reg_no": "(#4280-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4280-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4280-0001)",
+        "product_name": "SHARKEY PRODUCTS BEAT YOUR NEIGHBOR 20-21-19",
+        "company_info": {
+          "company": "SHARKEY PRODUCTS LLC",
+          "Mailing Address": "PO Box 462",
+          "Post Office Box": null,
+          "City": "Crivitz",
+          "State": "WI",
+          "Postal Code": "54114",
+          "Telephone Number": "715 854-2483",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 20.0,
+          "Available Phosphoric Acid (P2O5)": 21.0,
+          "Soluble Potash (K2O)": 19.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4820",
+          "Cadmium": "=0.0200",
+          "Cobalt": "=0.0690",
+          "Mercury": "<0.0028",
+          "Molybdenum": "=26.3000",
+          "Nickel": "=0.2880",
+          "Lead": "=0.0400",
+          "Selenium": "=0.4070",
+          "Zinc": "=514.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SHARKEY PRODUCTS BEAT YOUR NEIGHBOR 20-21-19",
+    "brand": "SHARKEY PRODUCTS LLC",
+    "manufacturer": {
+      "name": "SHARKEY PRODUCTS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 20.0,
+      "P2O5_pct": 21.0,
+      "K2O_pct": 19.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9F1FEA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.482,
+            "Cd": 0.02,
+            "Co": 0.069,
+            "Hg": 0.0028,
+            "Mo": 26.3,
+            "Ni": 0.288,
+            "Pb": 0.04,
+            "Se": 0.407,
+            "Zn": 514.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0028
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.482,
+        "Cd": 0.02,
+        "Co": 0.069,
+        "Mo": 26.3,
+        "Ni": 0.288,
+        "Pb": 0.04,
+        "Se": 0.407,
+        "Zn": 514.0
+      }
+    }
+  }
+}

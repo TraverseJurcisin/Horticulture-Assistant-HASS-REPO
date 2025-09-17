@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "5B4B86",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2193-0018)",
-    "product_name": "NECTAR FOR THE GODS ONE SHOT GRANULES 3-10-0",
-    "company_info": {
-      "company": "OREGON'S ONLY",
-      "Mailing Address": "PO Box 7312",
-      "Post Office Box": null,
-      "City": "Springfield",
-      "State": "OR",
-      "Postal Code": "97475",
-      "Telephone Number": "541 790-2470",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 15.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.16,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.9400",
-      "Cadmium": "=0.0700",
-      "Cobalt": "=11.2000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.3000",
-      "Nickel": "=11.7000",
-      "Lead": "=1.4000",
-      "Selenium": "<0.5000",
-      "Zinc": "=77.6700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 10.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 15.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.16,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.9400",
-      "Cadmium": "=0.0700",
-      "Cobalt": "=11.2000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.3000",
-      "Nickel": "=11.7000",
-      "Lead": "=1.4000",
-      "Selenium": "<0.5000",
-      "Zinc": "=77.6700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "5B4B86",
   "metadata": {
     "registrant": "OREGON'S ONLY",
     "label_name": "NECTAR FOR THE GODS ONE SHOT GRANULES 3-10-0",
     "wsda_reg_no": "(#2193-0018)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2193-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2193-0018)",
+        "product_name": "NECTAR FOR THE GODS ONE SHOT GRANULES 3-10-0",
+        "company_info": {
+          "company": "OREGON'S ONLY",
+          "Mailing Address": "PO Box 7312",
+          "Post Office Box": null,
+          "City": "Springfield",
+          "State": "OR",
+          "Postal Code": "97475",
+          "Telephone Number": "541 790-2470",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 10.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 15.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.16,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9400",
+          "Cadmium": "=0.0700",
+          "Cobalt": "=11.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.3000",
+          "Nickel": "=11.7000",
+          "Lead": "=1.4000",
+          "Selenium": "<0.5000",
+          "Zinc": "=77.6700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NECTAR FOR THE GODS ONE SHOT GRANULES 3-10-0",
+    "brand": "OREGON'S ONLY",
+    "manufacturer": {
+      "name": "OREGON'S ONLY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 10.0
+    },
+    "macros_pct": {
+      "Ca": 15.0
+    },
+    "micros_pct": {
+      "Fe": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "5B4B86-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.94,
+            "Cd": 0.07,
+            "Co": 11.2,
+            "Hg": 0.05,
+            "Mo": 1.3,
+            "Ni": 11.7,
+            "Pb": 1.4,
+            "Se": 0.5,
+            "Zn": 77.67
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.94,
+        "Cd": 0.07,
+        "Co": 11.2,
+        "Mo": 1.3,
+        "Ni": 11.7,
+        "Pb": 1.4,
+        "Zn": 77.67
+      }
+    }
   }
 }

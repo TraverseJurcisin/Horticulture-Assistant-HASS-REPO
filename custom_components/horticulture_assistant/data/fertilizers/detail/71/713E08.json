@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "713E08",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3330-0035)",
-    "product_name": "ELE-MAX SULFUR LC 10-5-0 WITH 10% SULFUR 10-5-0",
-    "company_info": {
-      "company": "HELENA AGRI-ENTERPRISES LLC",
-      "Mailing Address": "225 Schilling Blvd Ste 300",
-      "Post Office Box": null,
-      "City": "Collierville",
-      "State": "TN",
-      "Postal Code": "38017",
-      "Telephone Number": "901 752-4429",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.04,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0170",
-      "Cadmium": "=0.0430",
-      "Cobalt": "=0.0340",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.3300",
-      "Nickel": "=0.1200",
-      "Lead": "=0.0790",
-      "Selenium": "=0.1800",
-      "Zinc": "=167.2000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 10.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 10.0,
-      "Boron (B)": 0.04,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0170",
-      "Cadmium": "=0.0430",
-      "Cobalt": "=0.0340",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.3300",
-      "Nickel": "=0.1200",
-      "Lead": "=0.0790",
-      "Selenium": "=0.1800",
-      "Zinc": "=167.2000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "713E08",
   "metadata": {
     "registrant": "HELENA AGRI-ENTERPRISES LLC",
     "label_name": "ELE-MAX SULFUR LC 10-5-0 WITH 10% SULFUR 10-5-0",
     "wsda_reg_no": "(#3330-0035)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3330-0035)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3330-0035)",
+        "product_name": "ELE-MAX SULFUR LC 10-5-0 WITH 10% SULFUR 10-5-0",
+        "company_info": {
+          "company": "HELENA AGRI-ENTERPRISES LLC",
+          "Mailing Address": "225 Schilling Blvd Ste 300",
+          "Post Office Box": null,
+          "City": "Collierville",
+          "State": "TN",
+          "Postal Code": "38017",
+          "Telephone Number": "901 752-4429",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 10.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 10.0,
+          "Boron (B)": 0.04,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0170",
+          "Cadmium": "=0.0430",
+          "Cobalt": "=0.0340",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.3300",
+          "Nickel": "=0.1200",
+          "Lead": "=0.0790",
+          "Selenium": "=0.1800",
+          "Zinc": "=167.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ELE-MAX SULFUR LC 10-5-0 WITH 10% SULFUR 10-5-0",
+    "brand": "HELENA AGRI-ENTERPRISES LLC",
+    "manufacturer": {
+      "name": "HELENA AGRI-ENTERPRISES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 10.0,
+      "P2O5_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 10.0
+    },
+    "micros_pct": {
+      "B": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "713E08-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.017,
+            "Cd": 0.043,
+            "Co": 0.034,
+            "Hg": 0.001,
+            "Mo": 0.33,
+            "Ni": 0.12,
+            "Pb": 0.079,
+            "Se": 0.18,
+            "Zn": 167.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.017,
+        "Cd": 0.043,
+        "Co": 0.034,
+        "Hg": 0.001,
+        "Mo": 0.33,
+        "Ni": 0.12,
+        "Pb": 0.079,
+        "Se": 0.18,
+        "Zn": 167.2
+      }
+    }
   }
 }

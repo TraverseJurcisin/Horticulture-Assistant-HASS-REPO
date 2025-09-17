@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0DB469",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0950-0048)",
-    "product_name": "GROW MORE PREMIUM BROMELIAD TILLANDSIA FOOD 17-8-22",
-    "company_info": {
-      "company": "GROW MORE INC",
-      "Mailing Address": "15600 New Century Drive",
-      "Post Office Box": null,
-      "City": "Gardena",
-      "State": "CA",
-      "Postal Code": "90248",
-      "Telephone Number": "310 515-1700",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 17.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 22.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=0.1000",
-      "Lead": "=1.2000",
-      "Selenium": "=5.5000",
-      "Zinc": "=0.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 17.0,
-      "Available Phosphoric Acid (P2O5)": 8.0,
-      "Soluble Potash (K2O)": 22.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.1,
-      "Manganese (Mn)": 0.05,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.05
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.1000",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=1.0000",
-      "Nickel": "=0.1000",
-      "Lead": "=1.2000",
-      "Selenium": "=5.5000",
-      "Zinc": "=0.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0DB469",
   "metadata": {
     "registrant": "GROW MORE INC",
     "label_name": "GROW MORE PREMIUM BROMELIAD TILLANDSIA FOOD 17-8-22",
     "wsda_reg_no": "(#0950-0048)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0950-0048)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0950-0048)",
+        "product_name": "GROW MORE PREMIUM BROMELIAD TILLANDSIA FOOD 17-8-22",
+        "company_info": {
+          "company": "GROW MORE INC",
+          "Mailing Address": "15600 New Century Drive",
+          "Post Office Box": null,
+          "City": "Gardena",
+          "State": "CA",
+          "Postal Code": "90248",
+          "Telephone Number": "310 515-1700",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 17.0,
+          "Available Phosphoric Acid (P2O5)": 8.0,
+          "Soluble Potash (K2O)": 22.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": 0.05,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.05
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=1.0000",
+          "Nickel": "=0.1000",
+          "Lead": "=1.2000",
+          "Selenium": "=5.5000",
+          "Zinc": "=0.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROW MORE PREMIUM BROMELIAD TILLANDSIA FOOD 17-8-22",
+    "brand": "GROW MORE INC",
+    "manufacturer": {
+      "name": "GROW MORE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 17.0,
+      "P2O5_pct": 8.0,
+      "K2O_pct": 22.0
+    },
+    "micros_pct": {
+      "Fe": 0.1,
+      "Mn": 0.05,
+      "Zn": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0DB469-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 0.1,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 0.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.1,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 1.0,
+        "Ni": 0.1,
+        "Pb": 1.2,
+        "Se": 5.5,
+        "Zn": 0.1
+      }
+    }
   }
 }

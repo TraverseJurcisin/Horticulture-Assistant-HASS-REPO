@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7DE55D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3244-0014)",
-    "product_name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
-    "company_info": {
-      "company": "SWANSON BARK AND WOOD PRODUCTS INC",
-      "Mailing Address": "240 Tennant Way",
-      "Post Office Box": null,
-      "City": "Longview",
-      "State": "WA",
-      "Postal Code": "98632",
-      "Telephone Number": "360 414-9663",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.1,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.06,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.7800",
-      "Cadmium": "<0.4200",
-      "Cobalt": "=1.3000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.2000",
-      "Nickel": "=2.6000",
-      "Lead": "<0.6000",
-      "Selenium": "<1.4000",
-      "Zinc": "=23.5000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.1,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.06,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.7800",
-      "Cadmium": "<0.4200",
-      "Cobalt": "=1.3000",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.2000",
-      "Nickel": "=2.6000",
-      "Lead": "<0.6000",
-      "Selenium": "<1.4000",
-      "Zinc": "=23.5000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7DE55D",
   "metadata": {
     "registrant": "SWANSON BARK AND WOOD PRODUCTS INC",
     "label_name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
     "wsda_reg_no": "(#3244-0014)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3244-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3244-0014)",
+        "product_name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
+        "company_info": {
+          "company": "SWANSON BARK AND WOOD PRODUCTS INC",
+          "Mailing Address": "240 Tennant Way",
+          "Post Office Box": null,
+          "City": "Longview",
+          "State": "WA",
+          "Postal Code": "98632",
+          "Telephone Number": "360 414-9663",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.06,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.7800",
+          "Cadmium": "<0.4200",
+          "Cobalt": "=1.3000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=2.6000",
+          "Lead": "<0.6000",
+          "Selenium": "<1.4000",
+          "Zinc": "=23.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
+    "brand": "SWANSON BARK AND WOOD PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWANSON BARK AND WOOD PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.06
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7DE55D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.78,
+            "Cd": 0.42,
+            "Co": 1.3,
+            "Hg": 0.02,
+            "Mo": 0.2,
+            "Ni": 2.6,
+            "Pb": 0.6,
+            "Se": 1.4,
+            "Zn": 23.5
+          },
+          "detection_limits_ppm": {
+            "As": 0.78,
+            "Cd": 0.42,
+            "Pb": 0.6,
+            "Se": 1.4
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.3,
+        "Hg": 0.02,
+        "Mo": 0.2,
+        "Ni": 2.6,
+        "Zn": 23.5
+      }
+    }
   }
 }

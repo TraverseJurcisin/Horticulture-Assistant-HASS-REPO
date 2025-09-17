@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "8062D2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0349-0411)",
-    "product_name": "FOLI-GRO REQUISITE 3-17-17",
-    "company_info": {
-      "company": "WILBUR ELLIS COMPANY LLC",
-      "Mailing Address": "4582 S. Ulster Street Parkway",
-      "Post Office Box": null,
-      "City": "Denver",
-      "State": "CO",
-      "Postal Code": "80237",
-      "Telephone Number": "802 236-3745",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 17.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.15
-    },
-    "reported_metals": {
-      "Arsenic": "=1.1300",
-      "Cadmium": "=0.0020",
-      "Cobalt": "=0.0227",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.0500",
-      "Nickel": "=0.5500",
-      "Lead": "=1.7400",
-      "Selenium": "=3.1200",
-      "Zinc": "=9220.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 17.0,
-      "Soluble Potash (K2O)": 17.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.15
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.1300",
-      "Cadmium": "=0.0020",
-      "Cobalt": "=0.0227",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=0.0500",
-      "Nickel": "=0.5500",
-      "Lead": "=1.7400",
-      "Selenium": "=3.1200",
-      "Zinc": "=9220.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "8062D2",
   "metadata": {
     "registrant": "WILBUR ELLIS COMPANY LLC",
     "label_name": "FOLI-GRO REQUISITE 3-17-17",
     "wsda_reg_no": "(#0349-0411)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0349-0411)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0349-0411)",
+        "product_name": "FOLI-GRO REQUISITE 3-17-17",
+        "company_info": {
+          "company": "WILBUR ELLIS COMPANY LLC",
+          "Mailing Address": "4582 S. Ulster Street Parkway",
+          "Post Office Box": null,
+          "City": "Denver",
+          "State": "CO",
+          "Postal Code": "80237",
+          "Telephone Number": "802 236-3745",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 17.0,
+          "Soluble Potash (K2O)": 17.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.15
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1300",
+          "Cadmium": "=0.0020",
+          "Cobalt": "=0.0227",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=0.0500",
+          "Nickel": "=0.5500",
+          "Lead": "=1.7400",
+          "Selenium": "=3.1200",
+          "Zinc": "=9220.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FOLI-GRO REQUISITE 3-17-17",
+    "brand": "WILBUR ELLIS COMPANY LLC",
+    "manufacturer": {
+      "name": "WILBUR ELLIS COMPANY LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 17.0,
+      "K2O_pct": 17.0
+    },
+    "micros_pct": {
+      "Zn": 0.15,
+      "Cu": 0.05,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8062D2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.13,
+            "Cd": 0.002,
+            "Co": 0.0227,
+            "Hg": 0.02,
+            "Mo": 0.05,
+            "Ni": 0.55,
+            "Pb": 1.74,
+            "Se": 3.12,
+            "Zn": 9220.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.13,
+        "Cd": 0.002,
+        "Co": 0.0227,
+        "Hg": 0.02,
+        "Mo": 0.05,
+        "Ni": 0.55,
+        "Pb": 1.74,
+        "Se": 3.12,
+        "Zn": 9220.0
+      }
+    }
   }
 }

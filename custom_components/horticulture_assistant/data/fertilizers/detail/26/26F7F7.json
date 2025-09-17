@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "26F7F7",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1988-0015)",
-    "product_name": "PRECISION LABORATORIES CASCADE PLUS FERTILIZER 15-0-10",
-    "company_info": {
-      "company": "PRECISION LABORATORIES LLC",
-      "Mailing Address": "c/o Delta Analytical Corporati",
-      "Post Office Box": "12510 Prosperity Dr Suite 160",
-      "City": "Silver Spring",
-      "State": "MD",
-      "Postal Code": "20904",
-      "Telephone Number": "847 282-7280",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.1100",
-      "Cadmium": "<0.2440",
-      "Cobalt": "=0.4730",
-      "Mercury": "<0.0050",
-      "Molybdenum": "=0.9620",
-      "Nickel": "=1.3000",
-      "Lead": "=1.4500",
-      "Selenium": "=0.6320",
-      "Zinc": "=17.8000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.1100",
-      "Cadmium": "<0.2440",
-      "Cobalt": "=0.4730",
-      "Mercury": "<0.0050",
-      "Molybdenum": "=0.9620",
-      "Nickel": "=1.3000",
-      "Lead": "=1.4500",
-      "Selenium": "=0.6320",
-      "Zinc": "=17.8000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "26F7F7",
   "metadata": {
     "registrant": "PRECISION LABORATORIES LLC",
     "label_name": "PRECISION LABORATORIES CASCADE PLUS FERTILIZER 15-0-10",
     "wsda_reg_no": "(#1988-0015)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1988-0015)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1988-0015)",
+        "product_name": "PRECISION LABORATORIES CASCADE PLUS FERTILIZER 15-0-10",
+        "company_info": {
+          "company": "PRECISION LABORATORIES LLC",
+          "Mailing Address": "c/o Delta Analytical Corporati",
+          "Post Office Box": "12510 Prosperity Dr Suite 160",
+          "City": "Silver Spring",
+          "State": "MD",
+          "Postal Code": "20904",
+          "Telephone Number": "847 282-7280",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1100",
+          "Cadmium": "<0.2440",
+          "Cobalt": "=0.4730",
+          "Mercury": "<0.0050",
+          "Molybdenum": "=0.9620",
+          "Nickel": "=1.3000",
+          "Lead": "=1.4500",
+          "Selenium": "=0.6320",
+          "Zinc": "=17.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRECISION LABORATORIES CASCADE PLUS FERTILIZER 15-0-10",
+    "brand": "PRECISION LABORATORIES LLC",
+    "manufacturer": {
+      "name": "PRECISION LABORATORIES LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "26F7F7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.11,
+            "Cd": 0.244,
+            "Co": 0.473,
+            "Hg": 0.005,
+            "Mo": 0.962,
+            "Ni": 1.3,
+            "Pb": 1.45,
+            "Se": 0.632,
+            "Zn": 17.8
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.244,
+            "Hg": 0.005
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.11,
+        "Co": 0.473,
+        "Mo": 0.962,
+        "Ni": 1.3,
+        "Pb": 1.45,
+        "Se": 0.632,
+        "Zn": 17.8
+      }
+    }
   }
 }

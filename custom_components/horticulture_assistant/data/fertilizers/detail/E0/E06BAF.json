@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"E06BAF","source_wsda_record":{"wsda_product_number":"(#0001-0003)","product_name":"KELP MEAL 1-0.15-2","company_info":{"company":"ACADIAN SEAPLANTS LTD","Mailing Address":"30 Brown Ave","Post Office Box":null,"City":"Dartmouth","State":"NS","Postal Code":"B3B1X8","Telephone Number":"902 468-2840","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.15,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=14.5000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=7.1000","Nickel":"=1.0000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=17.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.0,"Available Phosphoric Acid (P2O5)":0.15,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":1.0,"Magnesium (Mg)":0.5,"Sulfur (S)":2.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=14.5000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=7.1000","Nickel":"=1.0000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=17.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ACADIAN SEAPLANTS LTD","label_name":"KELP MEAL 1-0.15-2","wsda_reg_no":"(#0001-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E06BAF",
+  "metadata": {
+    "registrant": "ACADIAN SEAPLANTS LTD",
+    "label_name": "KELP MEAL 1-0.15-2",
+    "wsda_reg_no": "(#0001-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0001-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0001-0003)",
+        "product_name": "KELP MEAL 1-0.15-2",
+        "company_info": {
+          "company": "ACADIAN SEAPLANTS LTD",
+          "Mailing Address": "30 Brown Ave",
+          "Post Office Box": null,
+          "City": "Dartmouth",
+          "State": "NS",
+          "Postal Code": "B3B1X8",
+          "Telephone Number": "902 468-2840",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.0,
+          "Available Phosphoric Acid (P2O5)": 0.15,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 1.0,
+          "Magnesium (Mg)": 0.5,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=14.5000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=7.1000",
+          "Nickel": "=1.0000",
+          "Lead": "<1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=17.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "KELP MEAL 1-0.15-2",
+    "brand": "ACADIAN SEAPLANTS LTD",
+    "manufacturer": {
+      "name": "ACADIAN SEAPLANTS LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.0,
+      "P2O5_pct": 0.15,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 1.0,
+      "Mg": 0.5,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E06BAF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 14.5,
+            "Cd": 0.1,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 7.1,
+            "Ni": 1.0,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 17.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 1.2,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 14.5,
+        "Cd": 0.1,
+        "Co": 0.2,
+        "Mo": 7.1,
+        "Ni": 1.0,
+        "Zn": 17.6
+      }
+    }
+  }
+}

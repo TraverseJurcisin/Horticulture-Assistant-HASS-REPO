@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"D7AB35","source_wsda_record":{"wsda_product_number":"(#0940-0003)","product_name":"AGRICULTURAL LIME 0-0-0","company_info":{"company":"ASH GROVE CEMENT COMPANY","Mailing Address":"13939 N Rivergate Blvd","Post Office Box":null,"City":"Portland","State":"OR","Postal Code":"97203","Telephone Number":"503 286-1677","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.9000","Cadmium":"<0.1000","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<0.4000","Lead":"=2.0000","Selenium":"<5.5000","Zinc":"=5.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"93.0000","Calcium Carbonate Equivalent (CaCO3)":"93.0000","Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.9000","Cadmium":"<0.1000","Cobalt":"<0.1000","Mercury":"<0.0500","Molybdenum":"<1.0000","Nickel":"<0.4000","Lead":"=2.0000","Selenium":"<5.5000","Zinc":"=5.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ASH GROVE CEMENT COMPANY","label_name":"AGRICULTURAL LIME 0-0-0","wsda_reg_no":"(#0940-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D7AB35",
+  "metadata": {
+    "registrant": "ASH GROVE CEMENT COMPANY",
+    "label_name": "AGRICULTURAL LIME 0-0-0",
+    "wsda_reg_no": "(#0940-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0940-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0940-0003)",
+        "product_name": "AGRICULTURAL LIME 0-0-0",
+        "company_info": {
+          "company": "ASH GROVE CEMENT COMPANY",
+          "Mailing Address": "13939 N Rivergate Blvd",
+          "Post Office Box": null,
+          "City": "Portland",
+          "State": "OR",
+          "Postal Code": "97203",
+          "Telephone Number": "503 286-1677",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.9000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "<0.4000",
+          "Lead": "=2.0000",
+          "Selenium": "<5.5000",
+          "Zinc": "=5.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "93.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "93.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AGRICULTURAL LIME 0-0-0",
+    "brand": "ASH GROVE CEMENT COMPANY",
+    "manufacturer": {
+      "name": "ASH GROVE CEMENT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D7AB35-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.9,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 0.4,
+            "Pb": 2.0,
+            "Se": 5.5,
+            "Zn": 5.3
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 0.4,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.9,
+        "Pb": 2.0,
+        "Zn": 5.3
+      }
+    }
+  }
+}

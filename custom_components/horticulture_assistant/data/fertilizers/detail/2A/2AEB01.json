@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2AEB01",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1217-0010)",
-    "product_name": "BRECK'S IRIS LOVER'S ALL-NATURAL IRIS FOOD 4-4-2",
-    "company_info": {
-      "company": "GARDENS ALIVE INC",
-      "Mailing Address": "110 W Elm St",
-      "Post Office Box": null,
-      "City": "Tipp City",
-      "State": "OH",
-      "Postal Code": "45371",
-      "Telephone Number": "937 667-2491",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.6100",
-      "Cadmium": "=0.4300",
-      "Cobalt": "=4.1500",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.7700",
-      "Nickel": "=48.9200",
-      "Lead": "=0.8600",
-      "Selenium": "=1.4800",
-      "Zinc": "=201.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.6100",
-      "Cadmium": "=0.4300",
-      "Cobalt": "=4.1500",
-      "Mercury": "=0.0200",
-      "Molybdenum": "=2.7700",
-      "Nickel": "=48.9200",
-      "Lead": "=0.8600",
-      "Selenium": "=1.4800",
-      "Zinc": "=201.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2AEB01",
   "metadata": {
     "registrant": "GARDENS ALIVE INC",
     "label_name": "BRECK'S IRIS LOVER'S ALL-NATURAL IRIS FOOD 4-4-2",
     "wsda_reg_no": "(#1217-0010)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1217-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1217-0010)",
+        "product_name": "BRECK'S IRIS LOVER'S ALL-NATURAL IRIS FOOD 4-4-2",
+        "company_info": {
+          "company": "GARDENS ALIVE INC",
+          "Mailing Address": "110 W Elm St",
+          "Post Office Box": null,
+          "City": "Tipp City",
+          "State": "OH",
+          "Postal Code": "45371",
+          "Telephone Number": "937 667-2491",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.6100",
+          "Cadmium": "=0.4300",
+          "Cobalt": "=4.1500",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=2.7700",
+          "Nickel": "=48.9200",
+          "Lead": "=0.8600",
+          "Selenium": "=1.4800",
+          "Zinc": "=201.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BRECK'S IRIS LOVER'S ALL-NATURAL IRIS FOOD 4-4-2",
+    "brand": "GARDENS ALIVE INC",
+    "manufacturer": {
+      "name": "GARDENS ALIVE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2AEB01-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.61,
+            "Cd": 0.43,
+            "Co": 4.15,
+            "Hg": 0.02,
+            "Mo": 2.77,
+            "Ni": 48.92,
+            "Pb": 0.86,
+            "Se": 1.48,
+            "Zn": 201.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.61,
+        "Cd": 0.43,
+        "Co": 4.15,
+        "Hg": 0.02,
+        "Mo": 2.77,
+        "Ni": 48.92,
+        "Pb": 0.86,
+        "Se": 1.48,
+        "Zn": 201.0
+      }
+    }
   }
 }

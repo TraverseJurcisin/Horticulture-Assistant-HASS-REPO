@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6070DF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0915-0158)",
-    "product_name": "NUE FLOURISH 4-12-0",
-    "company_info": {
-      "company": "BIO-GRO INC",
-      "Mailing Address": "PO Box 326",
-      "Post Office Box": null,
-      "City": "Mabton",
-      "State": "WA",
-      "Postal Code": "98935",
-      "Telephone Number": "509 894-4110",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 12.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0025,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0025,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.3
-    },
-    "reported_metals": {
-      "Arsenic": "=5.7000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=35.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=29.1000",
-      "Nickel": "=0.8000",
-      "Lead": "=1.8000",
-      "Selenium": "=0.1000",
-      "Zinc": "=1945.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 12.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.0025,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": 0.1,
-      "Molybdenum (Mo)": 0.0025,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.3
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.7000",
-      "Cadmium": "=0.5000",
-      "Cobalt": "=35.3000",
-      "Mercury": "=0.0100",
-      "Molybdenum": "=29.1000",
-      "Nickel": "=0.8000",
-      "Lead": "=1.8000",
-      "Selenium": "=0.1000",
-      "Zinc": "=1945.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6070DF",
   "metadata": {
     "registrant": "BIO-GRO INC",
     "label_name": "NUE FLOURISH 4-12-0",
     "wsda_reg_no": "(#0915-0158)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0158)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0158)",
+        "product_name": "NUE FLOURISH 4-12-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 12.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.0025,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 0.1,
+          "Molybdenum (Mo)": 0.0025,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.3
+        },
+        "reported_metals": {
+          "Arsenic": "=5.7000",
+          "Cadmium": "=0.5000",
+          "Cobalt": "=35.3000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=29.1000",
+          "Nickel": "=0.8000",
+          "Lead": "=1.8000",
+          "Selenium": "=0.1000",
+          "Zinc": "=1945.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUE FLOURISH 4-12-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 12.0
+    },
+    "macros_pct": {
+      "Ca": 5.0
+    },
+    "micros_pct": {
+      "Mn": 0.1,
+      "Zn": 0.3,
+      "Cu": 0.05,
+      "B": 0.5,
+      "Mo": 0.0025
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6070DF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.7,
+            "Cd": 0.5,
+            "Co": 35.3,
+            "Hg": 0.01,
+            "Mo": 29.1,
+            "Ni": 0.8,
+            "Pb": 1.8,
+            "Se": 0.1,
+            "Zn": 1945.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.7,
+        "Cd": 0.5,
+        "Co": 35.3,
+        "Hg": 0.01,
+        "Mo": 29.1,
+        "Ni": 0.8,
+        "Pb": 1.8,
+        "Se": 0.1,
+        "Zn": 1945.0
+      }
+    }
   }
 }

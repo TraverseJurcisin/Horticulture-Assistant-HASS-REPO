@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"94E7AF","source_wsda_record":{"wsda_product_number":"(#0997-0129)","product_name":"BARKYARD GOOD BOY BERMUDAGRASS 9-1-1","company_info":{"company":"SWISS FARM PRODUCTS INC","Mailing Address":"14111 Scottslawn Rd","Post Office Box":null,"City":"Marysville","State":"OH","Postal Code":"43041","Telephone Number":"937 645-2523","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":9.5,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1400","Cadmium":"<0.2210","Cobalt":"<0.4630","Mercury":"<0.0213","Molybdenum":"=1.1200","Nickel":"=2.9100","Lead":"=1.3400","Selenium":"<0.6630","Zinc":"=64.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":9.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":9.5,"Magnesium (Mg)":null,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1400","Cadmium":"<0.2210","Cobalt":"<0.4630","Mercury":"<0.0213","Molybdenum":"=1.1200","Nickel":"=2.9100","Lead":"=1.3400","Selenium":"<0.6630","Zinc":"=64.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWISS FARM PRODUCTS INC","label_name":"BARKYARD GOOD BOY BERMUDAGRASS 9-1-1","wsda_reg_no":"(#0997-0129)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "94E7AF",
+  "metadata": {
+    "registrant": "SWISS FARM PRODUCTS INC",
+    "label_name": "BARKYARD GOOD BOY BERMUDAGRASS 9-1-1",
+    "wsda_reg_no": "(#0997-0129)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0997-0129)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0997-0129)",
+        "product_name": "BARKYARD GOOD BOY BERMUDAGRASS 9-1-1",
+        "company_info": {
+          "company": "SWISS FARM PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Rd",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 645-2523",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 9.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": 9.5,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 9.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1400",
+          "Cadmium": "<0.2210",
+          "Cobalt": "<0.4630",
+          "Mercury": "<0.0213",
+          "Molybdenum": "=1.1200",
+          "Nickel": "=2.9100",
+          "Lead": "=1.3400",
+          "Selenium": "<0.6630",
+          "Zinc": "=64.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BARKYARD GOOD BOY BERMUDAGRASS 9-1-1",
+    "brand": "SWISS FARM PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWISS FARM PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 9.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 1.0
+    },
+    "macros_pct": {
+      "Ca": 9.5,
+      "S": 9.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "94E7AF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.14,
+            "Cd": 0.221,
+            "Co": 0.463,
+            "Hg": 0.0213,
+            "Mo": 1.12,
+            "Ni": 2.91,
+            "Pb": 1.34,
+            "Se": 0.663,
+            "Zn": 64.7
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.221,
+            "Co": 0.463,
+            "Hg": 0.0213,
+            "Se": 0.663
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.14,
+        "Mo": 1.12,
+        "Ni": 2.91,
+        "Pb": 1.34,
+        "Zn": 64.7
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3294FC",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0847-0022)",
-    "product_name": "ACTAGRO CACHE 4-6-10",
-    "company_info": {
-      "company": "ACTAGRO LLC",
-      "Mailing Address": "4516 N Howard",
-      "Post Office Box": null,
-      "City": "Kerman",
-      "State": "CA",
-      "Postal Code": "93630",
-      "Telephone Number": "559 779-6322",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=20.0000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=25.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=20.0000",
-      "Selenium": "=30.0000",
-      "Zinc": "=100.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=20.0000",
-      "Cadmium": "=10.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=25.0000",
-      "Nickel": "=15.0000",
-      "Lead": "=20.0000",
-      "Selenium": "=30.0000",
-      "Zinc": "=100.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3294FC",
   "metadata": {
     "registrant": "ACTAGRO LLC",
     "label_name": "ACTAGRO CACHE 4-6-10",
     "wsda_reg_no": "(#0847-0022)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0847-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0847-0022)",
+        "product_name": "ACTAGRO CACHE 4-6-10",
+        "company_info": {
+          "company": "ACTAGRO LLC",
+          "Mailing Address": "4516 N Howard",
+          "Post Office Box": null,
+          "City": "Kerman",
+          "State": "CA",
+          "Postal Code": "93630",
+          "Telephone Number": "559 779-6322",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "=10.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=25.0000",
+          "Nickel": "=15.0000",
+          "Lead": "=20.0000",
+          "Selenium": "=30.0000",
+          "Zinc": "=100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ACTAGRO CACHE 4-6-10",
+    "brand": "ACTAGRO LLC",
+    "manufacturer": {
+      "name": "ACTAGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 10.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3294FC-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 10.0,
+            "Co": 10.0,
+            "Hg": 1.0,
+            "Mo": 25.0,
+            "Ni": 15.0,
+            "Pb": 20.0,
+            "Se": 30.0,
+            "Zn": 100.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Cd": 10.0,
+        "Co": 10.0,
+        "Hg": 1.0,
+        "Mo": 25.0,
+        "Ni": 15.0,
+        "Pb": 20.0,
+        "Se": 30.0,
+        "Zn": 100.0
+      }
+    }
   }
 }

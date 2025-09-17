@@ -1,1 +1,143 @@
-{"schema_version":"2025-07-v1","product_id":"BF830B","source_wsda_record":{"wsda_product_number":"(#3244-0016)","product_name":"STA-GREEN TREE & SHRUB GARDEN SOIL PLUS FERTILIZER 0.09-0.06-0.05","company_info":{"company":"SWANSON BARK AND WOOD PRODUCTS INC","Mailing Address":"240 Tennant Way","Post Office Box":null,"City":"Longview","State":"WA","Postal Code":"98632","Telephone Number":"360 414-9663","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.06,"Soluble Potash (K2O)":0.05,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.8000","Cadmium":"<0.4200","Cobalt":"=4.5000","Mercury":"=0.0100","Molybdenum":"=0.2000","Nickel":"=4.8000","Lead":"<0.6000","Selenium":"=1.4000","Zinc":"=34.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.09,"Available Phosphoric Acid (P2O5)":0.06,"Soluble Potash (K2O)":0.05,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.8000","Cadmium":"<0.4200","Cobalt":"=4.5000","Mercury":"=0.0100","Molybdenum":"=0.2000","Nickel":"=4.8000","Lead":"<0.6000","Selenium":"=1.4000","Zinc":"=34.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWANSON BARK AND WOOD PRODUCTS INC","label_name":"STA-GREEN TREE & SHRUB GARDEN SOIL PLUS FERTILIZER 0.09-0.06-0.05","wsda_reg_no":"(#3244-0016)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BF830B",
+  "metadata": {
+    "registrant": "SWANSON BARK AND WOOD PRODUCTS INC",
+    "label_name": "STA-GREEN TREE & SHRUB GARDEN SOIL PLUS FERTILIZER 0.09-0.06-0.05",
+    "wsda_reg_no": "(#3244-0016)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3244-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3244-0016)",
+        "product_name": "STA-GREEN TREE & SHRUB GARDEN SOIL PLUS FERTILIZER 0.09-0.06-0.05",
+        "company_info": {
+          "company": "SWANSON BARK AND WOOD PRODUCTS INC",
+          "Mailing Address": "240 Tennant Way",
+          "Post Office Box": null,
+          "City": "Longview",
+          "State": "WA",
+          "Postal Code": "98632",
+          "Telephone Number": "360 414-9663",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.09,
+          "Available Phosphoric Acid (P2O5)": 0.06,
+          "Soluble Potash (K2O)": 0.05,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.8000",
+          "Cadmium": "<0.4200",
+          "Cobalt": "=4.5000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=4.8000",
+          "Lead": "<0.6000",
+          "Selenium": "=1.4000",
+          "Zinc": "=34.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STA-GREEN TREE & SHRUB GARDEN SOIL PLUS FERTILIZER 0.09-0.06-0.05",
+    "brand": "SWANSON BARK AND WOOD PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWANSON BARK AND WOOD PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.09,
+      "P2O5_pct": 0.06,
+      "K2O_pct": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BF830B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.8,
+            "Cd": 0.42,
+            "Co": 4.5,
+            "Hg": 0.01,
+            "Mo": 0.2,
+            "Ni": 4.8,
+            "Pb": 0.6,
+            "Se": 1.4,
+            "Zn": 34.1
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.42,
+            "Pb": 0.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.8,
+        "Co": 4.5,
+        "Hg": 0.01,
+        "Mo": 0.2,
+        "Ni": 4.8,
+        "Se": 1.4,
+        "Zn": 34.1
+      }
+    }
+  }
+}

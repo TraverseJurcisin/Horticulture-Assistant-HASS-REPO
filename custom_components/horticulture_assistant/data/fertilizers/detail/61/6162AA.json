@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6162AA",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3132-0027)",
-    "product_name": "VALLEY AGRONOMICS FERTILIZER 24-5-12 27-5-12",
-    "company_info": {
-      "company": "VALLEY AGRONOMICS LLC",
-      "Mailing Address": "PO Box 365",
-      "Post Office Box": null,
-      "City": "Rupert",
-      "State": "ID",
-      "Postal Code": "83350",
-      "Telephone Number": "503 845-8125",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 27.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.7810",
-      "Cadmium": "=4.1300",
-      "Cobalt": "=1.8100",
-      "Mercury": "=0.0334",
-      "Molybdenum": "=0.5120",
-      "Nickel": "=7.3900",
-      "Lead": "<1.2500",
-      "Selenium": "<0.6250",
-      "Zinc": "=1820.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 27.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 12.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.7810",
-      "Cadmium": "=4.1300",
-      "Cobalt": "=1.8100",
-      "Mercury": "=0.0334",
-      "Molybdenum": "=0.5120",
-      "Nickel": "=7.3900",
-      "Lead": "<1.2500",
-      "Selenium": "<0.6250",
-      "Zinc": "=1820.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6162AA",
   "metadata": {
     "registrant": "VALLEY AGRONOMICS LLC",
     "label_name": "VALLEY AGRONOMICS FERTILIZER 24-5-12 27-5-12",
     "wsda_reg_no": "(#3132-0027)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0027)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0027)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 24-5-12 27-5-12",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 27.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 12.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7810",
+          "Cadmium": "=4.1300",
+          "Cobalt": "=1.8100",
+          "Mercury": "=0.0334",
+          "Molybdenum": "=0.5120",
+          "Nickel": "=7.3900",
+          "Lead": "<1.2500",
+          "Selenium": "<0.6250",
+          "Zinc": "=1820.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 24-5-12 27-5-12",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 27.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 12.0
+    },
+    "macros_pct": {
+      "S": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6162AA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.781,
+            "Cd": 4.13,
+            "Co": 1.81,
+            "Hg": 0.0334,
+            "Mo": 0.512,
+            "Ni": 7.39,
+            "Pb": 1.25,
+            "Se": 0.625,
+            "Zn": 1820.0
+          },
+          "detection_limits_ppm": {
+            "Pb": 1.25,
+            "Se": 0.625
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.781,
+        "Cd": 4.13,
+        "Co": 1.81,
+        "Hg": 0.0334,
+        "Mo": 0.512,
+        "Ni": 7.39,
+        "Zn": 1820.0
+      }
+    }
   }
 }

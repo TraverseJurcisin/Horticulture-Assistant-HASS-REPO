@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"B4AEAE","source_wsda_record":{"wsda_product_number":"(#0335-0117)","product_name":"HI-YIELD MAGNESIUM SULFATE 0-0-0","company_info":{"company":"VOLUNTARY PURCHASING GROUPS INC","Mailing Address":"230 FM 87","Post Office Box":null,"City":"Bonham","State":"TX","Postal Code":"75418-8629","Telephone Number":"903 583-5501","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":9.5,"Sulfur (S)":12.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.2500","Cadmium":"<1.0000","Cobalt":"<5.0000","Mercury":"=0.0400","Molybdenum":"<2.5000","Nickel":"<2.5000","Lead":"<5.0000","Selenium":"<0.5000","Zinc":"<2.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":9.5,"Sulfur (S)":12.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.2500","Cadmium":"<1.0000","Cobalt":"<5.0000","Mercury":"=0.0400","Molybdenum":"<2.5000","Nickel":"<2.5000","Lead":"<5.0000","Selenium":"<0.5000","Zinc":"<2.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VOLUNTARY PURCHASING GROUPS INC","label_name":"HI-YIELD MAGNESIUM SULFATE 0-0-0","wsda_reg_no":"(#0335-0117)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B4AEAE",
+  "metadata": {
+    "registrant": "VOLUNTARY PURCHASING GROUPS INC",
+    "label_name": "HI-YIELD MAGNESIUM SULFATE 0-0-0",
+    "wsda_reg_no": "(#0335-0117)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0335-0117)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0335-0117)",
+        "product_name": "HI-YIELD MAGNESIUM SULFATE 0-0-0",
+        "company_info": {
+          "company": "VOLUNTARY PURCHASING GROUPS INC",
+          "Mailing Address": "230 FM 87",
+          "Post Office Box": null,
+          "City": "Bonham",
+          "State": "TX",
+          "Postal Code": "75418-8629",
+          "Telephone Number": "903 583-5501",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 9.5,
+          "Sulfur (S)": 12.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.2500",
+          "Cadmium": "<1.0000",
+          "Cobalt": "<5.0000",
+          "Mercury": "=0.0400",
+          "Molybdenum": "<2.5000",
+          "Nickel": "<2.5000",
+          "Lead": "<5.0000",
+          "Selenium": "<0.5000",
+          "Zinc": "<2.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "HI-YIELD MAGNESIUM SULFATE 0-0-0",
+    "brand": "VOLUNTARY PURCHASING GROUPS INC",
+    "manufacturer": {
+      "name": "VOLUNTARY PURCHASING GROUPS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 9.5,
+      "S": 12.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B4AEAE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 1.0,
+            "Co": 5.0,
+            "Hg": 0.04,
+            "Mo": 2.5,
+            "Ni": 2.5,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 2.5
+          },
+          "detection_limits_ppm": {
+            "As": 0.25,
+            "Cd": 1.0,
+            "Co": 5.0,
+            "Mo": 2.5,
+            "Ni": 2.5,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 2.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.04
+      }
+    }
+  }
+}

@@ -1,1 +1,145 @@
-{"schema_version":"2025-07-v1","product_id":"8DE2D7","source_wsda_record":{"wsda_product_number":"(#3283-0008)","product_name":"STAGREEN LAWN FERTILIZER PLUS 2% IRON 22-0-4","company_info":{"company":"FERTI TECHNOLGIES CORP","Mailing Address":"PO Box 1019","Post Office Box":null,"City":"Salem","State":"VA","Postal Code":"24153","Telephone Number":"540 375-8826","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.6300","Cadmium":"=0.8640","Cobalt":"=6.0800","Mercury":"=0.0040","Molybdenum":"<0.0150","Nickel":"=113.4800","Lead":"=7.5300","Selenium":"<0.0010","Zinc":"=29.1800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.6300","Cadmium":"=0.8640","Cobalt":"=6.0800","Mercury":"=0.0040","Molybdenum":"<0.0150","Nickel":"=113.4800","Lead":"=7.5300","Selenium":"<0.0010","Zinc":"=29.1800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FERTI TECHNOLGIES CORP","label_name":"STAGREEN LAWN FERTILIZER PLUS 2% IRON 22-0-4","wsda_reg_no":"(#3283-0008)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "8DE2D7",
+  "metadata": {
+    "registrant": "FERTI TECHNOLGIES CORP",
+    "label_name": "STAGREEN LAWN FERTILIZER PLUS 2% IRON 22-0-4",
+    "wsda_reg_no": "(#3283-0008)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3283-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3283-0008)",
+        "product_name": "STAGREEN LAWN FERTILIZER PLUS 2% IRON 22-0-4",
+        "company_info": {
+          "company": "FERTI TECHNOLGIES CORP",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153",
+          "Telephone Number": "540 375-8826",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.6300",
+          "Cadmium": "=0.8640",
+          "Cobalt": "=6.0800",
+          "Mercury": "=0.0040",
+          "Molybdenum": "<0.0150",
+          "Nickel": "=113.4800",
+          "Lead": "=7.5300",
+          "Selenium": "<0.0010",
+          "Zinc": "=29.1800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STAGREEN LAWN FERTILIZER PLUS 2% IRON 22-0-4",
+    "brand": "FERTI TECHNOLGIES CORP",
+    "manufacturer": {
+      "name": "FERTI TECHNOLGIES CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "K2O_pct": 4.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "8DE2D7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.63,
+            "Cd": 0.864,
+            "Co": 6.08,
+            "Hg": 0.004,
+            "Mo": 0.015,
+            "Ni": 113.48,
+            "Pb": 7.53,
+            "Se": 0.001,
+            "Zn": 29.18
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.015,
+            "Se": 0.001
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.63,
+        "Cd": 0.864,
+        "Co": 6.08,
+        "Hg": 0.004,
+        "Ni": 113.48,
+        "Pb": 7.53,
+        "Zn": 29.18
+      }
+    }
+  }
+}

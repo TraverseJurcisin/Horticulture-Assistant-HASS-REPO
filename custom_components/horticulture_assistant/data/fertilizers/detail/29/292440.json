@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "292440",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2626-0008)",
-    "product_name": "PENNINGTON ULTRAGREEN PLANT STARTER WITH VITAMIN B1 0-0-0",
-    "company_info": {
-      "company": "CENTRAL GARDEN & PET DIVISION",
-      "Mailing Address": "PO Box 1019",
-      "Post Office Box": null,
-      "City": "Salem",
-      "State": "VA",
-      "Postal Code": "24153-1019",
-      "Telephone Number": "503 581-7823",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.125,
-      "Manganese (Mn)": 0.125,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.125
-    },
-    "reported_metals": {
-      "Arsenic": "=0.0010",
-      "Cadmium": "=0.0200",
-      "Cobalt": "=0.5130",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.1830",
-      "Nickel": "=0.7630",
-      "Lead": "=2.7300",
-      "Selenium": "=0.0010",
-      "Zinc": "=1025.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.125,
-      "Manganese (Mn)": 0.125,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.125
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.0010",
-      "Cadmium": "=0.0200",
-      "Cobalt": "=0.5130",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=0.1830",
-      "Nickel": "=0.7630",
-      "Lead": "=2.7300",
-      "Selenium": "=0.0010",
-      "Zinc": "=1025.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "292440",
   "metadata": {
     "registrant": "CENTRAL GARDEN & PET DIVISION",
     "label_name": "PENNINGTON ULTRAGREEN PLANT STARTER WITH VITAMIN B1 0-0-0",
     "wsda_reg_no": "(#2626-0008)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2626-0008)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2626-0008)",
+        "product_name": "PENNINGTON ULTRAGREEN PLANT STARTER WITH VITAMIN B1 0-0-0",
+        "company_info": {
+          "company": "CENTRAL GARDEN & PET DIVISION",
+          "Mailing Address": "PO Box 1019",
+          "Post Office Box": null,
+          "City": "Salem",
+          "State": "VA",
+          "Postal Code": "24153-1019",
+          "Telephone Number": "503 581-7823",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.125,
+          "Manganese (Mn)": 0.125,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.125
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0010",
+          "Cadmium": "=0.0200",
+          "Cobalt": "=0.5130",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=0.1830",
+          "Nickel": "=0.7630",
+          "Lead": "=2.7300",
+          "Selenium": "=0.0010",
+          "Zinc": "=1025.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PENNINGTON ULTRAGREEN PLANT STARTER WITH VITAMIN B1 0-0-0",
+    "brand": "CENTRAL GARDEN & PET DIVISION",
+    "manufacturer": {
+      "name": "CENTRAL GARDEN & PET DIVISION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 0.125,
+      "Mn": 0.125,
+      "Zn": 0.125,
+      "B": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "292440-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.001,
+            "Cd": 0.02,
+            "Co": 0.513,
+            "Hg": 0.001,
+            "Mo": 0.183,
+            "Ni": 0.763,
+            "Pb": 2.73,
+            "Se": 0.001,
+            "Zn": 1025.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.001,
+        "Cd": 0.02,
+        "Co": 0.513,
+        "Hg": 0.001,
+        "Mo": 0.183,
+        "Ni": 0.763,
+        "Pb": 2.73,
+        "Se": 0.001,
+        "Zn": 1025.0
+      }
+    }
   }
 }

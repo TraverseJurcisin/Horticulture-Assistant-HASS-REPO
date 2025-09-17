@@ -1,1 +1,155 @@
-{"schema_version":"2025-07-v1","product_id":"887484","source_wsda_record":{"wsda_product_number":"(#3642-0009)","product_name":"NUTRICOTE TOTAL 18-6-8 TYPE 270 18-6-8","company_info":{"company":"SOJITZ CORPORATION OF AMERICA","Mailing Address":"535 Dock Street Ste 211","Post Office Box":null,"City":"Tacoma","State":"WA","Postal Code":"98402","Telephone Number":"253 853-7369","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":4.0,"Boron (B)":0.02,"Chlorine (Cl)":1.0,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.2,"Manganese (Mn)":0.06,"Molybdenum (Mo)":0.02,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.7100","Cadmium":"<2.4460","Cobalt":"<4.8900","Mercury":"<0.0100","Molybdenum":"=293.0000","Nickel":"<4.8900","Lead":"<4.8900","Selenium":"<2.4500","Zinc":"=212.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":18.0,"Available Phosphoric Acid (P2O5)":6.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":1.2,"Sulfur (S)":4.0,"Boron (B)":0.02,"Chlorine (Cl)":1.0,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.2,"Manganese (Mn)":0.06,"Molybdenum (Mo)":0.02,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.7100","Cadmium":"<2.4460","Cobalt":"<4.8900","Mercury":"<0.0100","Molybdenum":"=293.0000","Nickel":"<4.8900","Lead":"<4.8900","Selenium":"<2.4500","Zinc":"=212.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SOJITZ CORPORATION OF AMERICA","label_name":"NUTRICOTE TOTAL 18-6-8 TYPE 270 18-6-8","wsda_reg_no":"(#3642-0009)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "887484",
+  "metadata": {
+    "registrant": "SOJITZ CORPORATION OF AMERICA",
+    "label_name": "NUTRICOTE TOTAL 18-6-8 TYPE 270 18-6-8",
+    "wsda_reg_no": "(#3642-0009)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3642-0009)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3642-0009)",
+        "product_name": "NUTRICOTE TOTAL 18-6-8 TYPE 270 18-6-8",
+        "company_info": {
+          "company": "SOJITZ CORPORATION OF AMERICA",
+          "Mailing Address": "535 Dock Street Ste 211",
+          "Post Office Box": null,
+          "City": "Tacoma",
+          "State": "WA",
+          "Postal Code": "98402",
+          "Telephone Number": "253 853-7369",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 18.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.2,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": 1.0,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.06,
+          "Molybdenum (Mo)": 0.02,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.7100",
+          "Cadmium": "<2.4460",
+          "Cobalt": "<4.8900",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=293.0000",
+          "Nickel": "<4.8900",
+          "Lead": "<4.8900",
+          "Selenium": "<2.4500",
+          "Zinc": "=212.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRICOTE TOTAL 18-6-8 TYPE 270 18-6-8",
+    "brand": "SOJITZ CORPORATION OF AMERICA",
+    "manufacturer": {
+      "name": "SOJITZ CORPORATION OF AMERICA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 18.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Mg": 1.2,
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.06,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.02,
+      "Cl": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "887484-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.71,
+            "Cd": 2.446,
+            "Co": 4.89,
+            "Hg": 0.01,
+            "Mo": 293.0,
+            "Ni": 4.89,
+            "Pb": 4.89,
+            "Se": 2.45,
+            "Zn": 212.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 2.446,
+            "Co": 4.89,
+            "Hg": 0.01,
+            "Ni": 4.89,
+            "Pb": 4.89,
+            "Se": 2.45
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.71,
+        "Mo": 293.0,
+        "Zn": 212.0
+      }
+    }
+  }
+}

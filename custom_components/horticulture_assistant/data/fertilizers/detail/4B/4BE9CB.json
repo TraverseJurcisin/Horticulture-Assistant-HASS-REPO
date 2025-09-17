@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4BE9CB",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2295-0023)",
-    "product_name": "VALAGRO BREXIL MULTI SOLUBLE MICROGRANULES 0-0-0",
-    "company_info": {
-      "company": "VALAGRO USA INC",
-      "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
-      "Post Office Box": null,
-      "City": "Coral Gables",
-      "State": "FL",
-      "Postal Code": "33134",
-      "Telephone Number": "786 719-5842",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 5.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "reported_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=5.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=50.0000",
-      "Nickel": "=20.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=21000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 5.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.5,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 4.0,
-      "Manganese (Mn)": 4.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "heavy_metals": {
-      "Arsenic": "=10.0000",
-      "Cadmium": "=5.0000",
-      "Cobalt": "=10.0000",
-      "Mercury": "=1.0000",
-      "Molybdenum": "=50.0000",
-      "Nickel": "=20.0000",
-      "Lead": "=5.0000",
-      "Selenium": "=10.0000",
-      "Zinc": "=21000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4BE9CB",
   "metadata": {
     "registrant": "VALAGRO USA INC",
     "label_name": "VALAGRO BREXIL MULTI SOLUBLE MICROGRANULES 0-0-0",
     "wsda_reg_no": "(#2295-0023)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2295-0023)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2295-0023)",
+        "product_name": "VALAGRO BREXIL MULTI SOLUBLE MICROGRANULES 0-0-0",
+        "company_info": {
+          "company": "VALAGRO USA INC",
+          "Mailing Address": "2020 Ponce de Leon Blvd Ste 12",
+          "Post Office Box": null,
+          "City": "Coral Gables",
+          "State": "FL",
+          "Postal Code": "33134",
+          "Telephone Number": "786 719-5842",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 5.0,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.5,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 4.0,
+          "Manganese (Mn)": 4.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.5
+        },
+        "reported_metals": {
+          "Arsenic": "=10.0000",
+          "Cadmium": "=5.0000",
+          "Cobalt": "=10.0000",
+          "Mercury": "=1.0000",
+          "Molybdenum": "=50.0000",
+          "Nickel": "=20.0000",
+          "Lead": "=5.0000",
+          "Selenium": "=10.0000",
+          "Zinc": "=21000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALAGRO BREXIL MULTI SOLUBLE MICROGRANULES 0-0-0",
+    "brand": "VALAGRO USA INC",
+    "manufacturer": {
+      "name": "VALAGRO USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 5.0
+    },
+    "micros_pct": {
+      "Fe": 4.0,
+      "Mn": 4.0,
+      "Zn": 1.5,
+      "B": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4BE9CB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 5.0,
+            "Co": 10.0,
+            "Hg": 1.0,
+            "Mo": 50.0,
+            "Ni": 20.0,
+            "Pb": 5.0,
+            "Se": 10.0,
+            "Zn": 21000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 10.0,
+        "Cd": 5.0,
+        "Co": 10.0,
+        "Hg": 1.0,
+        "Mo": 50.0,
+        "Ni": 20.0,
+        "Pb": 5.0,
+        "Se": 10.0,
+        "Zn": 21000.0
+      }
+    }
   }
 }

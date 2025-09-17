@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"96044D","source_wsda_record":{"wsda_product_number":"(#3269-0001)","product_name":"LAFARGE AGRI GYPSUM BROADCAST GRADE 0-0-0","company_info":{"company":"LAFARGE PNW INC","Mailing Address":"5400 W Marginal Way SW","Post Office Box":null,"City":"Seattle","State":"WA","Postal Code":"98106","Telephone Number":"206 491-7878","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.5000","Cadmium":"<0.1000","Cobalt":"=4.7000","Mercury":"<0.1500","Molybdenum":"=1.5000","Nickel":"=0.7000","Lead":"=2.7000","Selenium":"=1.0000","Zinc":"=42.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"92.0000"},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":21.0,"Magnesium (Mg)":null,"Sulfur (S)":17.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.5000","Cadmium":"<0.1000","Cobalt":"=4.7000","Mercury":"<0.1500","Molybdenum":"=1.5000","Nickel":"=0.7000","Lead":"=2.7000","Selenium":"=1.0000","Zinc":"=42.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LAFARGE PNW INC","label_name":"LAFARGE AGRI GYPSUM BROADCAST GRADE 0-0-0","wsda_reg_no":"(#3269-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "96044D",
+  "metadata": {
+    "registrant": "LAFARGE PNW INC",
+    "label_name": "LAFARGE AGRI GYPSUM BROADCAST GRADE 0-0-0",
+    "wsda_reg_no": "(#3269-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3269-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3269-0001)",
+        "product_name": "LAFARGE AGRI GYPSUM BROADCAST GRADE 0-0-0",
+        "company_info": {
+          "company": "LAFARGE PNW INC",
+          "Mailing Address": "5400 W Marginal Way SW",
+          "Post Office Box": null,
+          "City": "Seattle",
+          "State": "WA",
+          "Postal Code": "98106",
+          "Telephone Number": "206 491-7878",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 21.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.5000",
+          "Cadmium": "<0.1000",
+          "Cobalt": "=4.7000",
+          "Mercury": "<0.1500",
+          "Molybdenum": "=1.5000",
+          "Nickel": "=0.7000",
+          "Lead": "=2.7000",
+          "Selenium": "=1.0000",
+          "Zinc": "=42.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "92.0000"
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LAFARGE AGRI GYPSUM BROADCAST GRADE 0-0-0",
+    "brand": "LAFARGE PNW INC",
+    "manufacturer": {
+      "name": "LAFARGE PNW INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 21.0,
+      "S": 17.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "96044D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Co": 4.7,
+            "Hg": 0.15,
+            "Mo": 1.5,
+            "Ni": 0.7,
+            "Pb": 2.7,
+            "Se": 1.0,
+            "Zn": 42.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.5,
+            "Cd": 0.1,
+            "Hg": 0.15
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 4.7,
+        "Mo": 1.5,
+        "Ni": 0.7,
+        "Pb": 2.7,
+        "Se": 1.0,
+        "Zn": 42.0
+      }
+    }
+  }
+}

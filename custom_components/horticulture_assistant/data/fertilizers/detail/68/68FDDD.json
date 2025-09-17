@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "68FDDD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2136-0017)",
-    "product_name": "GREENGRO BIOLOGICALS HOME AND GARDEN ALL PURPOSE FERTILIZER 5-5-5",
-    "company_info": {
-      "company": "GREENGRO LLC",
-      "Mailing Address": "PO Box 976",
-      "Post Office Box": null,
-      "City": "Windsor",
-      "State": "CA",
-      "Postal Code": "95492",
-      "Telephone Number": "707 838-2084",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.9800",
-      "Cadmium": "=0.2300",
-      "Cobalt": "=0.9000",
-      "Mercury": "<0.0800",
-      "Molybdenum": "=5.1400",
-      "Nickel": "=1.7500",
-      "Lead": "=2.0700",
-      "Selenium": "=6.8400",
-      "Zinc": "=67.6900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": 5.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 2.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.9800",
-      "Cadmium": "=0.2300",
-      "Cobalt": "=0.9000",
-      "Mercury": "<0.0800",
-      "Molybdenum": "=5.1400",
-      "Nickel": "=1.7500",
-      "Lead": "=2.0700",
-      "Selenium": "=6.8400",
-      "Zinc": "=67.6900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "68FDDD",
   "metadata": {
     "registrant": "GREENGRO LLC",
     "label_name": "GREENGRO BIOLOGICALS HOME AND GARDEN ALL PURPOSE FERTILIZER 5-5-5",
     "wsda_reg_no": "(#2136-0017)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2136-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2136-0017)",
+        "product_name": "GREENGRO BIOLOGICALS HOME AND GARDEN ALL PURPOSE FERTILIZER 5-5-5",
+        "company_info": {
+          "company": "GREENGRO LLC",
+          "Mailing Address": "PO Box 976",
+          "Post Office Box": null,
+          "City": "Windsor",
+          "State": "CA",
+          "Postal Code": "95492",
+          "Telephone Number": "707 838-2084",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": 5.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9800",
+          "Cadmium": "=0.2300",
+          "Cobalt": "=0.9000",
+          "Mercury": "<0.0800",
+          "Molybdenum": "=5.1400",
+          "Nickel": "=1.7500",
+          "Lead": "=2.0700",
+          "Selenium": "=6.8400",
+          "Zinc": "=67.6900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENGRO BIOLOGICALS HOME AND GARDEN ALL PURPOSE FERTILIZER 5-5-5",
+    "brand": "GREENGRO LLC",
+    "manufacturer": {
+      "name": "GREENGRO LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "Ca": 5.0,
+      "S": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "68FDDD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.98,
+            "Cd": 0.23,
+            "Co": 0.9,
+            "Hg": 0.08,
+            "Mo": 5.14,
+            "Ni": 1.75,
+            "Pb": 2.07,
+            "Se": 6.84,
+            "Zn": 67.69
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.08
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.98,
+        "Cd": 0.23,
+        "Co": 0.9,
+        "Mo": 5.14,
+        "Ni": 1.75,
+        "Pb": 2.07,
+        "Se": 6.84,
+        "Zn": 67.69
+      }
+    }
   }
 }

@@ -1,106 +1,151 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "61B84A",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4044-0001)",
-    "product_name": "INGRAINED 3-0-0",
-    "company_info": {
-      "company": "TRACER MINERALS LLC",
-      "Mailing Address": "18825 24 Road",
-      "Post Office Box": null,
-      "City": "Cimmarron",
-      "State": "KS",
-      "Postal Code": "67835",
-      "Telephone Number": "620 865-2041",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 0.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.5
-    },
-    "reported_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "=2.0800",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=1.3000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=5400.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.5,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 1.0,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 0.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.5
-    },
-    "heavy_metals": {
-      "Arsenic": "<5.0000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "=2.0800",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<1.0000",
-      "Nickel": "=1.3000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=5400.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "61B84A",
   "metadata": {
     "registrant": "TRACER MINERALS LLC",
     "label_name": "INGRAINED 3-0-0",
     "wsda_reg_no": "(#4044-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4044-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4044-0001)",
+        "product_name": "INGRAINED 3-0-0",
+        "company_info": {
+          "company": "TRACER MINERALS LLC",
+          "Mailing Address": "18825 24 Road",
+          "Post Office Box": null,
+          "City": "Cimmarron",
+          "State": "KS",
+          "Postal Code": "67835",
+          "Telephone Number": "620 865-2041",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 0.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.5
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "=2.0800",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=1.3000",
+          "Lead": "<5.0000",
+          "Selenium": "<0.5000",
+          "Zinc": "=5400.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "INGRAINED 3-0-0",
+    "brand": "TRACER MINERALS LLC",
+    "manufacturer": {
+      "name": "TRACER MINERALS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0
+    },
+    "macros_pct": {
+      "Mg": 1.5
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 0.5,
+      "Zn": 0.5,
+      "Cu": 1.0,
+      "B": 0.2
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "61B84A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 2.08,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Ni": 1.3,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 5400.0
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Hg": 0.05,
+            "Mo": 1.0,
+            "Pb": 5.0,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 2.08,
+        "Ni": 1.3,
+        "Zn": 5400.0
+      }
+    }
   }
 }

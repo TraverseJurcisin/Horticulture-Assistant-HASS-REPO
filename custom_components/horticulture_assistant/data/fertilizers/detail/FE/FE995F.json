@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"FE995F","source_wsda_record":{"wsda_product_number":"(#0103-0130)","product_name":"SUNSHINE PROFESSIONAL GROWING MIX RESILIENCE 0.1-0.1-0.1","company_info":{"company":"SUN GRO HORTICULTURE DISTRIBUTION I","Mailing Address":"770 Silver Street","Post Office Box":null,"City":"Agawam","State":"MA","Postal Code":"01001","Telephone Number":"256 592-0135","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.1,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.7600","Cadmium":"=0.1000","Cobalt":"=1.6000","Mercury":"=0.2000","Molybdenum":"=4.4800","Nickel":"=5.6600","Lead":"=2.9600","Selenium":"=0.0500","Zinc":"=25.7900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.1,"Soluble Potash (K2O)":0.1,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.7600","Cadmium":"=0.1000","Cobalt":"=1.6000","Mercury":"=0.2000","Molybdenum":"=4.4800","Nickel":"=5.6600","Lead":"=2.9600","Selenium":"=0.0500","Zinc":"=25.7900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SUN GRO HORTICULTURE DISTRIBUTION I","label_name":"SUNSHINE PROFESSIONAL GROWING MIX RESILIENCE 0.1-0.1-0.1","wsda_reg_no":"(#0103-0130)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FE995F",
+  "metadata": {
+    "registrant": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "label_name": "SUNSHINE PROFESSIONAL GROWING MIX RESILIENCE 0.1-0.1-0.1",
+    "wsda_reg_no": "(#0103-0130)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0103-0130)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0103-0130)",
+        "product_name": "SUNSHINE PROFESSIONAL GROWING MIX RESILIENCE 0.1-0.1-0.1",
+        "company_info": {
+          "company": "SUN GRO HORTICULTURE DISTRIBUTION I",
+          "Mailing Address": "770 Silver Street",
+          "Post Office Box": null,
+          "City": "Agawam",
+          "State": "MA",
+          "Postal Code": "01001",
+          "Telephone Number": "256 592-0135",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.1,
+          "Soluble Potash (K2O)": 0.1,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.7600",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=1.6000",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=4.4800",
+          "Nickel": "=5.6600",
+          "Lead": "=2.9600",
+          "Selenium": "=0.0500",
+          "Zinc": "=25.7900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SUNSHINE PROFESSIONAL GROWING MIX RESILIENCE 0.1-0.1-0.1",
+    "brand": "SUN GRO HORTICULTURE DISTRIBUTION I",
+    "manufacturer": {
+      "name": "SUN GRO HORTICULTURE DISTRIBUTION I"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.1,
+      "K2O_pct": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FE995F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.76,
+            "Cd": 0.1,
+            "Co": 1.6,
+            "Hg": 0.2,
+            "Mo": 4.48,
+            "Ni": 5.66,
+            "Pb": 2.96,
+            "Se": 0.05,
+            "Zn": 25.79
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.76,
+        "Cd": 0.1,
+        "Co": 1.6,
+        "Hg": 0.2,
+        "Mo": 4.48,
+        "Ni": 5.66,
+        "Pb": 2.96,
+        "Se": 0.05,
+        "Zn": 25.79
+      }
+    }
+  }
+}

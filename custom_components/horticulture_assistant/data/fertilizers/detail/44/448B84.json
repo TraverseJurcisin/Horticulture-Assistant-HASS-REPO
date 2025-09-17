@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "448B84",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2882-0010)",
-    "product_name": "QUALITY LIQUID FEEDS L-CBF 5-5-5 PLUS 1%S 5-5-5",
-    "company_info": {
-      "company": "QUALITY LIQUID FEEDS INC",
-      "Mailing Address": "3586 Hwy 23 N",
-      "Post Office Box": null,
-      "City": "Dodgeville",
-      "State": "WI",
-      "Postal Code": "53533",
-      "Telephone Number": "608 935-2345",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.5000",
-      "Cadmium": "=0.3600",
-      "Cobalt": "=1.1600",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=2.6000",
-      "Nickel": "=2.1500",
-      "Lead": "=0.2000",
-      "Selenium": "=2.8200",
-      "Zinc": "=2.3700"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 5.0,
-      "Available Phosphoric Acid (P2O5)": 5.0,
-      "Soluble Potash (K2O)": 5.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.5000",
-      "Cadmium": "=0.3600",
-      "Cobalt": "=1.1600",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=2.6000",
-      "Nickel": "=2.1500",
-      "Lead": "=0.2000",
-      "Selenium": "=2.8200",
-      "Zinc": "=2.3700"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "448B84",
   "metadata": {
     "registrant": "QUALITY LIQUID FEEDS INC",
     "label_name": "QUALITY LIQUID FEEDS L-CBF 5-5-5 PLUS 1%S 5-5-5",
     "wsda_reg_no": "(#2882-0010)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2882-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2882-0010)",
+        "product_name": "QUALITY LIQUID FEEDS L-CBF 5-5-5 PLUS 1%S 5-5-5",
+        "company_info": {
+          "company": "QUALITY LIQUID FEEDS INC",
+          "Mailing Address": "3586 Hwy 23 N",
+          "Post Office Box": null,
+          "City": "Dodgeville",
+          "State": "WI",
+          "Postal Code": "53533",
+          "Telephone Number": "608 935-2345",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 5.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.5000",
+          "Cadmium": "=0.3600",
+          "Cobalt": "=1.1600",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=2.6000",
+          "Nickel": "=2.1500",
+          "Lead": "=0.2000",
+          "Selenium": "=2.8200",
+          "Zinc": "=2.3700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "QUALITY LIQUID FEEDS L-CBF 5-5-5 PLUS 1%S 5-5-5",
+    "brand": "QUALITY LIQUID FEEDS INC",
+    "manufacturer": {
+      "name": "QUALITY LIQUID FEEDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 5.0
+    },
+    "macros_pct": {
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "448B84-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.5,
+            "Cd": 0.36,
+            "Co": 1.16,
+            "Hg": 0.2,
+            "Mo": 2.6,
+            "Ni": 2.15,
+            "Pb": 0.2,
+            "Se": 2.82,
+            "Zn": 2.37
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.5,
+        "Cd": 0.36,
+        "Co": 1.16,
+        "Hg": 0.2,
+        "Mo": 2.6,
+        "Ni": 2.15,
+        "Pb": 0.2,
+        "Se": 2.82,
+        "Zn": 2.37
+      }
+    }
   }
 }

@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3F1797",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0732-0103)",
-    "product_name": "JHB BIOMIN BOOSTER 153 0-0-0",
-    "company_info": {
-      "company": "JH BIOTECH INC",
-      "Mailing Address": "4951 Olivas Park Drive",
-      "Post Office Box": null,
-      "City": "Ventura",
-      "State": "CA",
-      "Postal Code": "93003-7667",
-      "Telephone Number": "805 650-8933",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.8,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.025,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 2.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "reported_metals": {
-      "Arsenic": "<2.4000",
-      "Cadmium": "<2.4000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.2000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<5.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=14800.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 0.8,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.025,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.1,
-      "Iron (Fe)": 0.5,
-      "Manganese (Mn)": 2.5,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.5
-    },
-    "heavy_metals": {
-      "Arsenic": "<2.4000",
-      "Cadmium": "<2.4000",
-      "Cobalt": "<2.0000",
-      "Mercury": "<0.2000",
-      "Molybdenum": "<5.0000",
-      "Nickel": "<5.0000",
-      "Lead": "<5.0000",
-      "Selenium": "<0.5000",
-      "Zinc": "=14800.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3F1797",
   "metadata": {
     "registrant": "JH BIOTECH INC",
     "label_name": "JHB BIOMIN BOOSTER 153 0-0-0",
     "wsda_reg_no": "(#0732-0103)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0732-0103)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0732-0103)",
+        "product_name": "JHB BIOMIN BOOSTER 153 0-0-0",
+        "company_info": {
+          "company": "JH BIOTECH INC",
+          "Mailing Address": "4951 Olivas Park Drive",
+          "Post Office Box": null,
+          "City": "Ventura",
+          "State": "CA",
+          "Postal Code": "93003-7667",
+          "Telephone Number": "805 650-8933",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.8,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.025,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.1,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 2.5,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.5
+        },
+        "reported_metals": {
+          "Arsenic": "<2.4000",
+          "Cadmium": "<2.4000",
+          "Cobalt": "<2.0000",
+          "Mercury": "<0.2000",
+          "Molybdenum": "<5.0000",
+          "Nickel": "<5.0000",
+          "Lead": "<5.0000",
+          "Selenium": "<0.5000",
+          "Zinc": "=14800.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "JHB BIOMIN BOOSTER 153 0-0-0",
+    "brand": "JH BIOTECH INC",
+    "manufacturer": {
+      "name": "JH BIOTECH INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 0.8
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 2.5,
+      "Zn": 1.5,
+      "Cu": 0.1,
+      "B": 0.025
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3F1797-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.4,
+            "Cd": 2.4,
+            "Co": 2.0,
+            "Hg": 0.2,
+            "Mo": 5.0,
+            "Ni": 5.0,
+            "Pb": 5.0,
+            "Se": 0.5,
+            "Zn": 14800.0
+          },
+          "detection_limits_ppm": {
+            "As": 2.4,
+            "Cd": 2.4,
+            "Co": 2.0,
+            "Hg": 0.2,
+            "Mo": 5.0,
+            "Ni": 5.0,
+            "Pb": 5.0,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 14800.0
+      }
+    }
   }
 }

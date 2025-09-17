@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"E4C202","source_wsda_record":{"wsda_product_number":"(#0064-0010)","product_name":"MICRONA EARTH MIX 6 X 10 0-0-0","company_info":{"company":"COLUMBIA RIVER CARBONATES","Mailing Address":"300 N Pekin Rd","Post Office Box":null,"City":"Woodland","State":"WA","Postal Code":"98674","Telephone Number":"360 225-4151","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<2.0000","Cadmium":"<1.0000","Cobalt":"<2.0000","Mercury":"<0.0200","Molybdenum":"<2.0000","Nickel":"<4.0000","Lead":"<2.0000","Selenium":"<4.0000","Zinc":"=16.4000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":"95.0000","Calcium Carbonate Equivalent (CaCO3)":"98.0000","Magnesium Carbonate (MgCO3)":"0.5000","Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<2.0000","Cadmium":"<1.0000","Cobalt":"<2.0000","Mercury":"<0.0200","Molybdenum":"<2.0000","Nickel":"<4.0000","Lead":"<2.0000","Selenium":"<4.0000","Zinc":"=16.4000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"COLUMBIA RIVER CARBONATES","label_name":"MICRONA EARTH MIX 6 X 10 0-0-0","wsda_reg_no":"(#0064-0010)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E4C202",
+  "metadata": {
+    "registrant": "COLUMBIA RIVER CARBONATES",
+    "label_name": "MICRONA EARTH MIX 6 X 10 0-0-0",
+    "wsda_reg_no": "(#0064-0010)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0064-0010)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0064-0010)",
+        "product_name": "MICRONA EARTH MIX 6 X 10 0-0-0",
+        "company_info": {
+          "company": "COLUMBIA RIVER CARBONATES",
+          "Mailing Address": "300 N Pekin Rd",
+          "Post Office Box": null,
+          "City": "Woodland",
+          "State": "WA",
+          "Postal Code": "98674",
+          "Telephone Number": "360 225-4151",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<2.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "<2.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<2.0000",
+          "Nickel": "<4.0000",
+          "Lead": "<2.0000",
+          "Selenium": "<4.0000",
+          "Zinc": "=16.4000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "95.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "98.0000",
+          "Magnesium Carbonate (MgCO3)": "0.5000",
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MICRONA EARTH MIX 6 X 10 0-0-0",
+    "brand": "COLUMBIA RIVER CARBONATES",
+    "manufacturer": {
+      "name": "COLUMBIA RIVER CARBONATES"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E4C202-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 1.0,
+            "Co": 2.0,
+            "Hg": 0.02,
+            "Mo": 2.0,
+            "Ni": 4.0,
+            "Pb": 2.0,
+            "Se": 4.0,
+            "Zn": 16.4
+          },
+          "detection_limits_ppm": {
+            "As": 2.0,
+            "Cd": 1.0,
+            "Co": 2.0,
+            "Hg": 0.02,
+            "Mo": 2.0,
+            "Ni": 4.0,
+            "Pb": 2.0,
+            "Se": 4.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Zn": 16.4
+      }
+    }
+  }
+}

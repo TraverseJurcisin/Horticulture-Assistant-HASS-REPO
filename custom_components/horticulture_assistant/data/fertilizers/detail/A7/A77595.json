@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"A77595","source_wsda_record":{"wsda_product_number":"(#3019-0004)","product_name":"LIQUID FLOWER FUEL 0-3-3","company_info":{"company":"ELEMENT NUTRIENTS","Mailing Address":"2006 196th Street SW","Post Office Box":"Suite 109","City":"Lynnwood","State":"WA","Postal Code":"98036","Telephone Number":"206 494-0028","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.7300","Cadmium":"<0.0510","Cobalt":"<0.1000","Mercury":"<2.8180","Molybdenum":"=0.1190","Nickel":"<0.1000","Lead":"<0.2000","Selenium":"<0.6000","Zinc":"=0.3330"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.7300","Cadmium":"<0.0510","Cobalt":"<0.1000","Mercury":"<2.8180","Molybdenum":"=0.1190","Nickel":"<0.1000","Lead":"<0.2000","Selenium":"<0.6000","Zinc":"=0.3330"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ELEMENT NUTRIENTS","label_name":"LIQUID FLOWER FUEL 0-3-3","wsda_reg_no":"(#3019-0004)","formulation":"Liquid","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A77595",
+  "metadata": {
+    "registrant": "ELEMENT NUTRIENTS",
+    "label_name": "LIQUID FLOWER FUEL 0-3-3",
+    "wsda_reg_no": "(#3019-0004)",
+    "formulation": "Liquid",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3019-0004)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3019-0004)",
+        "product_name": "LIQUID FLOWER FUEL 0-3-3",
+        "company_info": {
+          "company": "ELEMENT NUTRIENTS",
+          "Mailing Address": "2006 196th Street SW",
+          "Post Office Box": "Suite 109",
+          "City": "Lynnwood",
+          "State": "WA",
+          "Postal Code": "98036",
+          "Telephone Number": "206 494-0028",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.7300",
+          "Cadmium": "<0.0510",
+          "Cobalt": "<0.1000",
+          "Mercury": "<2.8180",
+          "Molybdenum": "=0.1190",
+          "Nickel": "<0.1000",
+          "Lead": "<0.2000",
+          "Selenium": "<0.6000",
+          "Zinc": "=0.3330"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "LIQUID FLOWER FUEL 0-3-3",
+    "brand": "ELEMENT NUTRIENTS",
+    "manufacturer": {
+      "name": "ELEMENT NUTRIENTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 3.0,
+      "K2O_pct": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A77595-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.73,
+            "Cd": 0.051,
+            "Co": 0.1,
+            "Hg": 2.818,
+            "Mo": 0.119,
+            "Ni": 0.1,
+            "Pb": 0.2,
+            "Se": 0.6,
+            "Zn": 0.333
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.051,
+            "Co": 0.1,
+            "Hg": 2.818,
+            "Ni": 0.1,
+            "Pb": 0.2,
+            "Se": 0.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.73,
+        "Mo": 0.119,
+        "Zn": 0.333
+      }
+    }
+  }
+}

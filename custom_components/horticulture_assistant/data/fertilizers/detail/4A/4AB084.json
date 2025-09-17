@@ -1,106 +1,146 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4AB084",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0273-0037)",
-    "product_name": "BI-MART PREMIUM LAWN FOOD 26-0-3",
-    "company_info": {
-      "company": "REXIUS FOREST BY-PRODUCTS INC",
-      "Mailing Address": "PO Box 22838",
-      "Post Office Box": null,
-      "City": "Eugene",
-      "State": "OR",
-      "Postal Code": "97402",
-      "Telephone Number": "541 335-8018",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 26.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=1.6000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.3500"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 26.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 3.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 11.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2500",
-      "Cadmium": "=0.0300",
-      "Cobalt": "=0.2000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.3000",
-      "Nickel": "=1.6000",
-      "Lead": "=0.5000",
-      "Selenium": "=0.5000",
-      "Zinc": "=1.3500"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4AB084",
   "metadata": {
     "registrant": "REXIUS FOREST BY-PRODUCTS INC",
     "label_name": "BI-MART PREMIUM LAWN FOOD 26-0-3",
     "wsda_reg_no": "(#0273-0037)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0273-0037)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0273-0037)",
+        "product_name": "BI-MART PREMIUM LAWN FOOD 26-0-3",
+        "company_info": {
+          "company": "REXIUS FOREST BY-PRODUCTS INC",
+          "Mailing Address": "PO Box 22838",
+          "Post Office Box": null,
+          "City": "Eugene",
+          "State": "OR",
+          "Postal Code": "97402",
+          "Telephone Number": "541 335-8018",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 26.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.3000",
+          "Nickel": "=1.6000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.5000",
+          "Zinc": "=1.3500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BI-MART PREMIUM LAWN FOOD 26-0-3",
+    "brand": "REXIUS FOREST BY-PRODUCTS INC",
+    "manufacturer": {
+      "name": "REXIUS FOREST BY-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 26.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "S": 11.0
+    },
+    "micros_pct": {
+      "Fe": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4AB084-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.03,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.3,
+            "Ni": 1.6,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 1.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.03,
+        "Co": 0.2,
+        "Hg": 0.05,
+        "Mo": 0.3,
+        "Ni": 1.6,
+        "Pb": 0.5,
+        "Se": 0.5,
+        "Zn": 1.35
+      }
+    }
   }
 }

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"B22FB2","source_wsda_record":{"wsda_product_number":"(#0185-0216)","product_name":"GREENVIEWE MULTI-PURPOSE & STARTER FERTILIZER 13-13-13","company_info":{"company":"LEBANON SEABOARD CORPORATION","Mailing Address":"1600 E Cumberland St","Post Office Box":null,"City":"Lebanon","State":"PA","Postal Code":"17042","Telephone Number":"800 532-0090","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.2200","Cadmium":"=1.6700","Cobalt":"=1.8400","Mercury":"=0.0100","Molybdenum":"=4.4600","Nickel":"=1.0160","Lead":"=1.5380","Selenium":"=2.2800","Zinc":"=53.8000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":13.0,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.2200","Cadmium":"=1.6700","Cobalt":"=1.8400","Mercury":"=0.0100","Molybdenum":"=4.4600","Nickel":"=1.0160","Lead":"=1.5380","Selenium":"=2.2800","Zinc":"=53.8000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"LEBANON SEABOARD CORPORATION","label_name":"GREENVIEWE MULTI-PURPOSE & STARTER FERTILIZER 13-13-13","wsda_reg_no":"(#0185-0216)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B22FB2",
+  "metadata": {
+    "registrant": "LEBANON SEABOARD CORPORATION",
+    "label_name": "GREENVIEWE MULTI-PURPOSE & STARTER FERTILIZER 13-13-13",
+    "wsda_reg_no": "(#0185-0216)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0216)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0216)",
+        "product_name": "GREENVIEWE MULTI-PURPOSE & STARTER FERTILIZER 13-13-13",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": 13.0,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.2200",
+          "Cadmium": "=1.6700",
+          "Cobalt": "=1.8400",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=4.4600",
+          "Nickel": "=1.0160",
+          "Lead": "=1.5380",
+          "Selenium": "=2.2800",
+          "Zinc": "=53.8000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENVIEWE MULTI-PURPOSE & STARTER FERTILIZER 13-13-13",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "P2O5_pct": 13.0,
+      "K2O_pct": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B22FB2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.22,
+            "Cd": 1.67,
+            "Co": 1.84,
+            "Hg": 0.01,
+            "Mo": 4.46,
+            "Ni": 1.016,
+            "Pb": 1.538,
+            "Se": 2.28,
+            "Zn": 53.8
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.22,
+        "Cd": 1.67,
+        "Co": 1.84,
+        "Hg": 0.01,
+        "Mo": 4.46,
+        "Ni": 1.016,
+        "Pb": 1.538,
+        "Se": 2.28,
+        "Zn": 53.8
+      }
+    }
+  }
+}

@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"CD961D","source_wsda_record":{"wsda_product_number":"(#2789-0001)","product_name":"AKUSA AFRIKELP LG-1 0.3-1.5-0","company_info":{"company":"AKUSA IINC","Mailing Address":"1625 E Shaw Ave Suite 139","Post Office Box":null,"City":"Fresno","State":"CA","Postal Code":"93710","Telephone Number":"559 515-6177","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":1.5,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.0670","Cadmium":"=0.0490","Cobalt":"=0.0430","Mercury":"=0.0030","Molybdenum":"=0.0570","Nickel":"=0.0510","Lead":"=0.0620","Selenium":"=0.1150","Zinc":"=0.8760"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.3,"Available Phosphoric Acid (P2O5)":1.5,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.0670","Cadmium":"=0.0490","Cobalt":"=0.0430","Mercury":"=0.0030","Molybdenum":"=0.0570","Nickel":"=0.0510","Lead":"=0.0620","Selenium":"=0.1150","Zinc":"=0.8760"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AKUSA IINC","label_name":"AKUSA AFRIKELP LG-1 0.3-1.5-0","wsda_reg_no":"(#2789-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CD961D",
+  "metadata": {
+    "registrant": "AKUSA IINC",
+    "label_name": "AKUSA AFRIKELP LG-1 0.3-1.5-0",
+    "wsda_reg_no": "(#2789-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2789-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2789-0001)",
+        "product_name": "AKUSA AFRIKELP LG-1 0.3-1.5-0",
+        "company_info": {
+          "company": "AKUSA IINC",
+          "Mailing Address": "1625 E Shaw Ave Suite 139",
+          "Post Office Box": null,
+          "City": "Fresno",
+          "State": "CA",
+          "Postal Code": "93710",
+          "Telephone Number": "559 515-6177",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.3,
+          "Available Phosphoric Acid (P2O5)": 1.5,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0670",
+          "Cadmium": "=0.0490",
+          "Cobalt": "=0.0430",
+          "Mercury": "=0.0030",
+          "Molybdenum": "=0.0570",
+          "Nickel": "=0.0510",
+          "Lead": "=0.0620",
+          "Selenium": "=0.1150",
+          "Zinc": "=0.8760"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AKUSA AFRIKELP LG-1 0.3-1.5-0",
+    "brand": "AKUSA IINC",
+    "manufacturer": {
+      "name": "AKUSA IINC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.3,
+      "P2O5_pct": 1.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CD961D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.067,
+            "Cd": 0.049,
+            "Co": 0.043,
+            "Hg": 0.003,
+            "Mo": 0.057,
+            "Ni": 0.051,
+            "Pb": 0.062,
+            "Se": 0.115,
+            "Zn": 0.876
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.067,
+        "Cd": 0.049,
+        "Co": 0.043,
+        "Hg": 0.003,
+        "Mo": 0.057,
+        "Ni": 0.051,
+        "Pb": 0.062,
+        "Se": 0.115,
+        "Zn": 0.876
+      }
+    }
+  }
+}

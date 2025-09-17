@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"D5B186","source_wsda_record":{"wsda_product_number":"(#1546-0091)","product_name":"EB STONE ORGANICS HIBISCUS & PALM FOOD 6-5-3","company_info":{"company":"E B STONE & SON INC","Mailing Address":"P O Box 550","Post Office Box":null,"City":"Suisun","State":"CA","Postal Code":"94585","Telephone Number":"707 426-2500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<1.1000","Cadmium":"=0.1920","Cobalt":"=0.9120","Mercury":"<0.0180","Molybdenum":"=0.3120","Nickel":"=1.5100","Lead":"=2.1100","Selenium":"<3.0700","Zinc":"=76.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":6.0,"Available Phosphoric Acid (P2O5)":5.0,"Soluble Potash (K2O)":3.0,"Calcium (Ca)":7.0,"Magnesium (Mg)":null,"Sulfur (S)":1.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<1.1000","Cadmium":"=0.1920","Cobalt":"=0.9120","Mercury":"<0.0180","Molybdenum":"=0.3120","Nickel":"=1.5100","Lead":"=2.1100","Selenium":"<3.0700","Zinc":"=76.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"E B STONE & SON INC","label_name":"EB STONE ORGANICS HIBISCUS & PALM FOOD 6-5-3","wsda_reg_no":"(#1546-0091)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D5B186",
+  "metadata": {
+    "registrant": "E B STONE & SON INC",
+    "label_name": "EB STONE ORGANICS HIBISCUS & PALM FOOD 6-5-3",
+    "wsda_reg_no": "(#1546-0091)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1546-0091)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1546-0091)",
+        "product_name": "EB STONE ORGANICS HIBISCUS & PALM FOOD 6-5-3",
+        "company_info": {
+          "company": "E B STONE & SON INC",
+          "Mailing Address": "P O Box 550",
+          "Post Office Box": null,
+          "City": "Suisun",
+          "State": "CA",
+          "Postal Code": "94585",
+          "Telephone Number": "707 426-2500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 5.0,
+          "Soluble Potash (K2O)": 3.0,
+          "Calcium (Ca)": 7.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<1.1000",
+          "Cadmium": "=0.1920",
+          "Cobalt": "=0.9120",
+          "Mercury": "<0.0180",
+          "Molybdenum": "=0.3120",
+          "Nickel": "=1.5100",
+          "Lead": "=2.1100",
+          "Selenium": "<3.0700",
+          "Zinc": "=76.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EB STONE ORGANICS HIBISCUS & PALM FOOD 6-5-3",
+    "brand": "E B STONE & SON INC",
+    "manufacturer": {
+      "name": "E B STONE & SON INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 5.0,
+      "K2O_pct": 3.0
+    },
+    "macros_pct": {
+      "Ca": 7.0,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D5B186-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.1,
+            "Cd": 0.192,
+            "Co": 0.912,
+            "Hg": 0.018,
+            "Mo": 0.312,
+            "Ni": 1.51,
+            "Pb": 2.11,
+            "Se": 3.07,
+            "Zn": 76.5
+          },
+          "detection_limits_ppm": {
+            "As": 1.1,
+            "Hg": 0.018,
+            "Se": 3.07
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.192,
+        "Co": 0.912,
+        "Mo": 0.312,
+        "Ni": 1.51,
+        "Pb": 2.11,
+        "Zn": 76.5
+      }
+    }
+  }
+}

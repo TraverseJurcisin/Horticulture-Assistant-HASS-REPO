@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "811761",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0108-0016)",
-    "product_name": "FB 46G 0-0-0",
-    "company_info": {
-      "company": "FRIT INDUSTRIES",
-      "Mailing Address": "PO Box 1589",
-      "Post Office Box": null,
-      "City": "Ozark",
-      "State": "AL",
-      "Postal Code": "36361-1589",
-      "Telephone Number": "334 774-2515",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 14.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=38.6000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=6.8000",
-      "Nickel": "=5.6000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=9.7000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 14.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=38.6000",
-      "Cadmium": "<0.5000",
-      "Cobalt": "<1.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=6.8000",
-      "Nickel": "=5.6000",
-      "Lead": "<5.0000",
-      "Selenium": "<5.0000",
-      "Zinc": "=9.7000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "811761",
   "metadata": {
     "registrant": "FRIT INDUSTRIES",
     "label_name": "FB 46G 0-0-0",
     "wsda_reg_no": "(#0108-0016)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0108-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0108-0016)",
+        "product_name": "FB 46G 0-0-0",
+        "company_info": {
+          "company": "FRIT INDUSTRIES",
+          "Mailing Address": "PO Box 1589",
+          "Post Office Box": null,
+          "City": "Ozark",
+          "State": "AL",
+          "Postal Code": "36361-1589",
+          "Telephone Number": "334 774-2515",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 14.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=38.6000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "<1.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=6.8000",
+          "Nickel": "=5.6000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=9.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FB 46G 0-0-0",
+    "brand": "FRIT INDUSTRIES",
+    "manufacturer": {
+      "name": "FRIT INDUSTRIES"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "B": 14.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "811761-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 38.6,
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Mo": 6.8,
+            "Ni": 5.6,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 9.7
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.5,
+            "Co": 1.0,
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 38.6,
+        "Mo": 6.8,
+        "Ni": 5.6,
+        "Zn": 9.7
+      }
+    }
   }
 }

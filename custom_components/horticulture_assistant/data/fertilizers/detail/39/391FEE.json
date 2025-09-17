@@ -1,106 +1,142 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "391FEE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1877-0012)",
-    "product_name": "TRUE 402 4-0-2 LIQUID FERTILIZER 4-0-2",
-    "company_info": {
-      "company": "TRUE ORGANIC PRODUCTS INC",
-      "Mailing Address": "PO Box 7192",
-      "Post Office Box": null,
-      "City": "Spreckels",
-      "State": "CA",
-      "Postal Code": "93962",
-      "Telephone Number": "831 375-4796",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.5900",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=0.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=0.4000",
-      "Nickel": "=2.5000",
-      "Lead": "<0.5000",
-      "Selenium": "=1.3000",
-      "Zinc": "=23.6300"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.5900",
-      "Cadmium": "=0.8000",
-      "Cobalt": "=0.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=0.4000",
-      "Nickel": "=2.5000",
-      "Lead": "<0.5000",
-      "Selenium": "=1.3000",
-      "Zinc": "=23.6300"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "391FEE",
   "metadata": {
     "registrant": "TRUE ORGANIC PRODUCTS INC",
     "label_name": "TRUE 402 4-0-2 LIQUID FERTILIZER 4-0-2",
     "wsda_reg_no": "(#1877-0012)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1877-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1877-0012)",
+        "product_name": "TRUE 402 4-0-2 LIQUID FERTILIZER 4-0-2",
+        "company_info": {
+          "company": "TRUE ORGANIC PRODUCTS INC",
+          "Mailing Address": "PO Box 7192",
+          "Post Office Box": null,
+          "City": "Spreckels",
+          "State": "CA",
+          "Postal Code": "93962",
+          "Telephone Number": "831 375-4796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.5900",
+          "Cadmium": "=0.8000",
+          "Cobalt": "=0.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.4000",
+          "Nickel": "=2.5000",
+          "Lead": "<0.5000",
+          "Selenium": "=1.3000",
+          "Zinc": "=23.6300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRUE 402 4-0-2 LIQUID FERTILIZER 4-0-2",
+    "brand": "TRUE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "TRUE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "391FEE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.59,
+            "Cd": 0.8,
+            "Co": 0.6,
+            "Hg": 0.05,
+            "Mo": 0.4,
+            "Ni": 2.5,
+            "Pb": 0.5,
+            "Se": 1.3,
+            "Zn": 23.63
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.59,
+        "Cd": 0.8,
+        "Co": 0.6,
+        "Mo": 0.4,
+        "Ni": 2.5,
+        "Se": 1.3,
+        "Zn": 23.63
+      }
+    }
   }
 }

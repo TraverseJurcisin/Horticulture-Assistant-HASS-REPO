@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "3383DE",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3900-0059)",
-    "product_name": "ROOTS ORGANICS HP2 0-4-0",
-    "company_info": {
-      "company": "HYDROFARM LLC",
-      "Mailing Address": "2103 Harrison Ave NW",
-      "Post Office Box": "Ste 2 #382",
-      "City": "Olympia",
-      "State": "WA",
-      "Postal Code": "98502",
-      "Telephone Number": "541 359-1580",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<4.7500",
-      "Cadmium": "<2.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=3.5000",
-      "Nickel": "<3.5000",
-      "Lead": "<3.0000",
-      "Selenium": "<2.0000",
-      "Zinc": "<275.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "Y",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<4.7500",
-      "Cadmium": "<2.0000",
-      "Cobalt": "=1.0000",
-      "Mercury": "=0.0010",
-      "Molybdenum": "=3.5000",
-      "Nickel": "<3.5000",
-      "Lead": "<3.0000",
-      "Selenium": "<2.0000",
-      "Zinc": "<275.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "3383DE",
   "metadata": {
     "registrant": "HYDROFARM LLC",
     "label_name": "ROOTS ORGANICS HP2 0-4-0",
     "wsda_reg_no": "(#3900-0059)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3900-0059)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3900-0059)",
+        "product_name": "ROOTS ORGANICS HP2 0-4-0",
+        "company_info": {
+          "company": "HYDROFARM LLC",
+          "Mailing Address": "2103 Harrison Ave NW",
+          "Post Office Box": "Ste 2 #382",
+          "City": "Olympia",
+          "State": "WA",
+          "Postal Code": "98502",
+          "Telephone Number": "541 359-1580",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<4.7500",
+          "Cadmium": "<2.0000",
+          "Cobalt": "=1.0000",
+          "Mercury": "=0.0010",
+          "Molybdenum": "=3.5000",
+          "Nickel": "<3.5000",
+          "Lead": "<3.0000",
+          "Selenium": "<2.0000",
+          "Zinc": "<275.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ROOTS ORGANICS HP2 0-4-0",
+    "brand": "HYDROFARM LLC",
+    "manufacturer": {
+      "name": "HYDROFARM LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "P2O5_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "3383DE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 4.75,
+            "Cd": 2.0,
+            "Co": 1.0,
+            "Hg": 0.001,
+            "Mo": 3.5,
+            "Ni": 3.5,
+            "Pb": 3.0,
+            "Se": 2.0,
+            "Zn": 275.0
+          },
+          "detection_limits_ppm": {
+            "As": 4.75,
+            "Cd": 2.0,
+            "Ni": 3.5,
+            "Pb": 3.0,
+            "Se": 2.0,
+            "Zn": 275.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 1.0,
+        "Hg": 0.001,
+        "Mo": 3.5
+      }
+    }
   }
 }

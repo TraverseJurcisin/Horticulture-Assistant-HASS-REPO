@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"F95D1C","source_wsda_record":{"wsda_product_number":"(#0670-0148)","product_name":"EARTHLINK CUSTOM ENHANCED 12-1-14","company_info":{"company":"TERRALINK HORTICULTURE INC","Mailing Address":"464 Riverside Rd","Post Office Box":null,"City":"Abbotsford","State":"BC","Postal Code":"V2S 7M1","Telephone Number":"800 661-4559","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":1.5,"Sulfur (S)":14.5,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=20.0000","Cadmium":"<1.0000","Cobalt":"=7.8500","Mercury":"=0.3000","Molybdenum":"=11.6000","Nickel":"=81.9200","Lead":"=8.0000","Selenium":"<1.0000","Zinc":"=33.1600"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":12.0,"Available Phosphoric Acid (P2O5)":1.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":3.5,"Magnesium (Mg)":1.5,"Sulfur (S)":14.5,"Boron (B)":0.03,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=20.0000","Cadmium":"<1.0000","Cobalt":"=7.8500","Mercury":"=0.3000","Molybdenum":"=11.6000","Nickel":"=81.9200","Lead":"=8.0000","Selenium":"<1.0000","Zinc":"=33.1600"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRALINK HORTICULTURE INC","label_name":"EARTHLINK CUSTOM ENHANCED 12-1-14","wsda_reg_no":"(#0670-0148)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F95D1C",
+  "metadata": {
+    "registrant": "TERRALINK HORTICULTURE INC",
+    "label_name": "EARTHLINK CUSTOM ENHANCED 12-1-14",
+    "wsda_reg_no": "(#0670-0148)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0148)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0148)",
+        "product_name": "EARTHLINK CUSTOM ENHANCED 12-1-14",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 12.0,
+          "Available Phosphoric Acid (P2O5)": 1.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": 3.5,
+          "Magnesium (Mg)": 1.5,
+          "Sulfur (S)": 14.5,
+          "Boron (B)": 0.03,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=20.0000",
+          "Cadmium": "<1.0000",
+          "Cobalt": "=7.8500",
+          "Mercury": "=0.3000",
+          "Molybdenum": "=11.6000",
+          "Nickel": "=81.9200",
+          "Lead": "=8.0000",
+          "Selenium": "<1.0000",
+          "Zinc": "=33.1600"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTHLINK CUSTOM ENHANCED 12-1-14",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 12.0,
+      "P2O5_pct": 1.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "Ca": 3.5,
+      "Mg": 1.5,
+      "S": 14.5
+    },
+    "micros_pct": {
+      "B": 0.03
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F95D1C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 20.0,
+            "Cd": 1.0,
+            "Co": 7.85,
+            "Hg": 0.3,
+            "Mo": 11.6,
+            "Ni": 81.92,
+            "Pb": 8.0,
+            "Se": 1.0,
+            "Zn": 33.16
+          },
+          "detection_limits_ppm": {
+            "Cd": 1.0,
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 20.0,
+        "Co": 7.85,
+        "Hg": 0.3,
+        "Mo": 11.6,
+        "Ni": 81.92,
+        "Pb": 8.0,
+        "Zn": 33.16
+      }
+    }
+  }
+}

@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"CD5C0D","source_wsda_record":{"wsda_product_number":"(#3244-0013)","product_name":"STA-GREEN LAWN SOIL PLUS FERTILIZER 0.06-0.08-0.04","company_info":{"company":"SWANSON BARK AND WOOD PRODUCTS INC","Mailing Address":"240 Tennant Way","Post Office Box":null,"City":"Longview","State":"WA","Postal Code":"98632","Telephone Number":"360 414-9663","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.06,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.5000","Cadmium":"=0.8000","Cobalt":"=7.0000","Mercury":"=0.5000","Molybdenum":"=0.5000","Nickel":"=10.0000","Lead":"=1.5000","Selenium":"=3.0000","Zinc":"=100.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.06,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.04,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.5000","Cadmium":"=0.8000","Cobalt":"=7.0000","Mercury":"=0.5000","Molybdenum":"=0.5000","Nickel":"=10.0000","Lead":"=1.5000","Selenium":"=3.0000","Zinc":"=100.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SWANSON BARK AND WOOD PRODUCTS INC","label_name":"STA-GREEN LAWN SOIL PLUS FERTILIZER 0.06-0.08-0.04","wsda_reg_no":"(#3244-0013)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CD5C0D",
+  "metadata": {
+    "registrant": "SWANSON BARK AND WOOD PRODUCTS INC",
+    "label_name": "STA-GREEN LAWN SOIL PLUS FERTILIZER 0.06-0.08-0.04",
+    "wsda_reg_no": "(#3244-0013)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3244-0013)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3244-0013)",
+        "product_name": "STA-GREEN LAWN SOIL PLUS FERTILIZER 0.06-0.08-0.04",
+        "company_info": {
+          "company": "SWANSON BARK AND WOOD PRODUCTS INC",
+          "Mailing Address": "240 Tennant Way",
+          "Post Office Box": null,
+          "City": "Longview",
+          "State": "WA",
+          "Postal Code": "98632",
+          "Telephone Number": "360 414-9663",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.06,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.04,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.5000",
+          "Cadmium": "=0.8000",
+          "Cobalt": "=7.0000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=0.5000",
+          "Nickel": "=10.0000",
+          "Lead": "=1.5000",
+          "Selenium": "=3.0000",
+          "Zinc": "=100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STA-GREEN LAWN SOIL PLUS FERTILIZER 0.06-0.08-0.04",
+    "brand": "SWANSON BARK AND WOOD PRODUCTS INC",
+    "manufacturer": {
+      "name": "SWANSON BARK AND WOOD PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.06,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CD5C0D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.5,
+            "Cd": 0.8,
+            "Co": 7.0,
+            "Hg": 0.5,
+            "Mo": 0.5,
+            "Ni": 10.0,
+            "Pb": 1.5,
+            "Se": 3.0,
+            "Zn": 100.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.5,
+        "Cd": 0.8,
+        "Co": 7.0,
+        "Hg": 0.5,
+        "Mo": 0.5,
+        "Ni": 10.0,
+        "Pb": 1.5,
+        "Se": 3.0,
+        "Zn": 100.0
+      }
+    }
+  }
+}

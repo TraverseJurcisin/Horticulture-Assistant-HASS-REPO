@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "0DAB94",
-  "source_wsda_record": {
-    "wsda_product_number": "(#4063-0031)",
-    "product_name": "RHIZO LIFE REGEN+ MG 0-0-0",
-    "company_info": {
-      "company": "AGVENT LLC",
-      "Mailing Address": "1231 E 1420 N",
-      "Post Office Box": null,
-      "City": "Richfield",
-      "State": "ID",
-      "Postal Code": "83349",
-      "Telephone Number": "208 401-6631",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 22.0,
-      "Magnesium (Mg)": 8.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=12.1300",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=0.4200",
-      "Mercury": "=0.0015",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=2.0400",
-      "Lead": "=10.5400",
-      "Selenium": "<0.5000",
-      "Zinc": "=24.7100"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "56.0000",
-      "Calcium Carbonate Equivalent (CaCO3)": "66.0000",
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 22.0,
-      "Magnesium (Mg)": 8.0,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=12.1300",
-      "Cadmium": "=0.7700",
-      "Cobalt": "=0.4200",
-      "Mercury": "=0.0015",
-      "Molybdenum": "<0.1000",
-      "Nickel": "=2.0400",
-      "Lead": "=10.5400",
-      "Selenium": "<0.5000",
-      "Zinc": "=24.7100"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "0DAB94",
   "metadata": {
     "registrant": "AGVENT LLC",
     "label_name": "RHIZO LIFE REGEN+ MG 0-0-0",
     "wsda_reg_no": "(#4063-0031)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4063-0031)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4063-0031)",
+        "product_name": "RHIZO LIFE REGEN+ MG 0-0-0",
+        "company_info": {
+          "company": "AGVENT LLC",
+          "Mailing Address": "1231 E 1420 N",
+          "Post Office Box": null,
+          "City": "Richfield",
+          "State": "ID",
+          "Postal Code": "83349",
+          "Telephone Number": "208 401-6631",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 22.0,
+          "Magnesium (Mg)": 8.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=12.1300",
+          "Cadmium": "=0.7700",
+          "Cobalt": "=0.4200",
+          "Mercury": "=0.0015",
+          "Molybdenum": "<0.1000",
+          "Nickel": "=2.0400",
+          "Lead": "=10.5400",
+          "Selenium": "<0.5000",
+          "Zinc": "=24.7100"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "56.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "66.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RHIZO LIFE REGEN+ MG 0-0-0",
+    "brand": "AGVENT LLC",
+    "manufacturer": {
+      "name": "AGVENT LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 22.0,
+      "Mg": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "0DAB94-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 12.13,
+            "Cd": 0.77,
+            "Co": 0.42,
+            "Hg": 0.0015,
+            "Mo": 0.1,
+            "Ni": 2.04,
+            "Pb": 10.54,
+            "Se": 0.5,
+            "Zn": 24.71
+          },
+          "detection_limits_ppm": {
+            "Mo": 0.1,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 12.13,
+        "Cd": 0.77,
+        "Co": 0.42,
+        "Hg": 0.0015,
+        "Ni": 2.04,
+        "Pb": 10.54,
+        "Zn": 24.71
+      }
+    }
   }
 }

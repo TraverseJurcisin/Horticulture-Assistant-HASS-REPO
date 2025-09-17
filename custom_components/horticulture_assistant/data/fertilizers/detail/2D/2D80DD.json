@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2D80DD",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0915-0114)",
-    "product_name": "BIOGRO RASPBERRY FOLIAR MIX 1.7-0-0",
-    "company_info": {
-      "company": "BIO-GRO INC",
-      "Mailing Address": "PO Box 326",
-      "Post Office Box": null,
-      "City": "Mabton",
-      "State": "WA",
-      "Postal Code": "98935",
-      "Telephone Number": "509 894-4110",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.7,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.24,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.05,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.6,
-      "Manganese (Mn)": 0.3,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.84
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4700",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=520.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=440.0000",
-      "Nickel": "=1.5000",
-      "Lead": "=0.4400",
-      "Selenium": "=0.8000",
-      "Zinc": "=9100.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.7,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.24,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.05,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.6,
-      "Manganese (Mn)": 0.3,
-      "Molybdenum (Mo)": 0.04,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 0.84
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4700",
-      "Cadmium": "=0.1800",
-      "Cobalt": "=520.0000",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=440.0000",
-      "Nickel": "=1.5000",
-      "Lead": "=0.4400",
-      "Selenium": "=0.8000",
-      "Zinc": "=9100.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2D80DD",
   "metadata": {
     "registrant": "BIO-GRO INC",
     "label_name": "BIOGRO RASPBERRY FOLIAR MIX 1.7-0-0",
     "wsda_reg_no": "(#0915-0114)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0915-0114)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0915-0114)",
+        "product_name": "BIOGRO RASPBERRY FOLIAR MIX 1.7-0-0",
+        "company_info": {
+          "company": "BIO-GRO INC",
+          "Mailing Address": "PO Box 326",
+          "Post Office Box": null,
+          "City": "Mabton",
+          "State": "WA",
+          "Postal Code": "98935",
+          "Telephone Number": "509 894-4110",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.7,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.24,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.05,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.6,
+          "Manganese (Mn)": 0.3,
+          "Molybdenum (Mo)": 0.04,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.84
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4700",
+          "Cadmium": "=0.1800",
+          "Cobalt": "=520.0000",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=440.0000",
+          "Nickel": "=1.5000",
+          "Lead": "=0.4400",
+          "Selenium": "=0.8000",
+          "Zinc": "=9100.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGRO RASPBERRY FOLIAR MIX 1.7-0-0",
+    "brand": "BIO-GRO INC",
+    "manufacturer": {
+      "name": "BIO-GRO INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.7
+    },
+    "macros_pct": {
+      "Mg": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.6,
+      "Mn": 0.3,
+      "Zn": 0.84,
+      "B": 0.24,
+      "Mo": 0.04
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2D80DD-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.47,
+            "Cd": 0.18,
+            "Co": 520.0,
+            "Hg": 0.2,
+            "Mo": 440.0,
+            "Ni": 1.5,
+            "Pb": 0.44,
+            "Se": 0.8,
+            "Zn": 9100.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.47,
+        "Cd": 0.18,
+        "Co": 520.0,
+        "Hg": 0.2,
+        "Mo": 440.0,
+        "Ni": 1.5,
+        "Pb": 0.44,
+        "Se": 0.8,
+        "Zn": 9100.0
+      }
+    }
   }
 }

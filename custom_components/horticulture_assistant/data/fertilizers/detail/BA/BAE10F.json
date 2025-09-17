@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"BAE10F","source_wsda_record":{"wsda_product_number":"(#2643-0002)","product_name":"RONGCHENG HONGDE FISH PROTEIN 15 NITROGEN 15-0.5-0.5","company_info":{"company":"RONGCHENG HONGDE MARINE BIOTECH LTD","Mailing Address":"17014 Ave. 296","Post Office Box":null,"City":"Visalia","State":"CA","Postal Code":"93292","Telephone Number":"559 651-2772","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0500","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.5000","Lead":"=0.5000","Selenium":"=3.1000","Zinc":"=17.3500"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":15.0,"Available Phosphoric Acid (P2O5)":0.5,"Soluble Potash (K2O)":0.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.0500","Cobalt":"=0.1000","Mercury":"=0.0500","Molybdenum":"=0.1000","Nickel":"=0.5000","Lead":"=0.5000","Selenium":"=3.1000","Zinc":"=17.3500"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"RONGCHENG HONGDE MARINE BIOTECH LTD","label_name":"RONGCHENG HONGDE FISH PROTEIN 15 NITROGEN 15-0.5-0.5","wsda_reg_no":"(#2643-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "BAE10F",
+  "metadata": {
+    "registrant": "RONGCHENG HONGDE MARINE BIOTECH LTD",
+    "label_name": "RONGCHENG HONGDE FISH PROTEIN 15 NITROGEN 15-0.5-0.5",
+    "wsda_reg_no": "(#2643-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2643-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2643-0002)",
+        "product_name": "RONGCHENG HONGDE FISH PROTEIN 15 NITROGEN 15-0.5-0.5",
+        "company_info": {
+          "company": "RONGCHENG HONGDE MARINE BIOTECH LTD",
+          "Mailing Address": "17014 Ave. 296",
+          "Post Office Box": null,
+          "City": "Visalia",
+          "State": "CA",
+          "Postal Code": "93292",
+          "Telephone Number": "559 651-2772",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 0.5,
+          "Soluble Potash (K2O)": 0.5,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=0.5000",
+          "Lead": "=0.5000",
+          "Selenium": "=3.1000",
+          "Zinc": "=17.3500"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "RONGCHENG HONGDE FISH PROTEIN 15 NITROGEN 15-0.5-0.5",
+    "brand": "RONGCHENG HONGDE MARINE BIOTECH LTD",
+    "manufacturer": {
+      "name": "RONGCHENG HONGDE MARINE BIOTECH LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 0.5,
+      "K2O_pct": 0.5
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "BAE10F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.05,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 0.5,
+            "Pb": 0.5,
+            "Se": 3.1,
+            "Zn": 17.35
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.05,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 0.5,
+        "Pb": 0.5,
+        "Se": 3.1,
+        "Zn": 17.35
+      }
+    }
+  }
+}

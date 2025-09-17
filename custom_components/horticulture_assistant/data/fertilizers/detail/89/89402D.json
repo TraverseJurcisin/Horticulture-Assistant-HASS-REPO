@@ -1,1 +1,154 @@
-{"schema_version":"2025-07-v1","product_id":"89402D","source_wsda_record":{"wsda_product_number":"(#1176-0104)","product_name":"ENTRUST NUTRITION #53200 22-4-8","company_info":{"company":"MARION AG SERVICE INC","Mailing Address":"7746 St Paul Hwy NE","Post Office Box":null,"City":"St Paul","State":"OR","Postal Code":"97137","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.9,"Sulfur (S)":3.9,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.06,"Iron (Fe)":0.8,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.065},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=3.0000","Mercury":"<0.0500","Molybdenum":"=6.8000","Nickel":"=6.9000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=599.3000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":22.0,"Available Phosphoric Acid (P2O5)":4.0,"Soluble Potash (K2O)":8.0,"Calcium (Ca)":null,"Magnesium (Mg)":0.9,"Sulfur (S)":3.9,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.06,"Iron (Fe)":0.8,"Manganese (Mn)":0.07,"Molybdenum (Mo)":0.001,"Sodium (Na)":null,"Zinc (Zn)":0.065},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.5000","Cobalt":"=3.0000","Mercury":"<0.0500","Molybdenum":"=6.8000","Nickel":"=6.9000","Lead":"<5.0000","Selenium":"<5.0000","Zinc":"=599.3000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MARION AG SERVICE INC","label_name":"ENTRUST NUTRITION #53200 22-4-8","wsda_reg_no":"(#1176-0104)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "89402D",
+  "metadata": {
+    "registrant": "MARION AG SERVICE INC",
+    "label_name": "ENTRUST NUTRITION #53200 22-4-8",
+    "wsda_reg_no": "(#1176-0104)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1176-0104)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1176-0104)",
+        "product_name": "ENTRUST NUTRITION #53200 22-4-8",
+        "company_info": {
+          "company": "MARION AG SERVICE INC",
+          "Mailing Address": "7746 St Paul Hwy NE",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "OR",
+          "Postal Code": "97137",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 0.9,
+          "Sulfur (S)": 3.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.06,
+          "Iron (Fe)": 0.8,
+          "Manganese (Mn)": 0.07,
+          "Molybdenum (Mo)": 0.001,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.065
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.5000",
+          "Cobalt": "=3.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=6.8000",
+          "Nickel": "=6.9000",
+          "Lead": "<5.0000",
+          "Selenium": "<5.0000",
+          "Zinc": "=599.3000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ENTRUST NUTRITION #53200 22-4-8",
+    "brand": "MARION AG SERVICE INC",
+    "manufacturer": {
+      "name": "MARION AG SERVICE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 8.0
+    },
+    "macros_pct": {
+      "Mg": 0.9,
+      "S": 3.9
+    },
+    "micros_pct": {
+      "Fe": 0.8,
+      "Mn": 0.07,
+      "Zn": 0.065,
+      "Cu": 0.06,
+      "Mo": 0.001
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "89402D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Co": 3.0,
+            "Hg": 0.05,
+            "Mo": 6.8,
+            "Ni": 6.9,
+            "Pb": 5.0,
+            "Se": 5.0,
+            "Zn": 599.3
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.5,
+            "Hg": 0.05,
+            "Pb": 5.0,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Co": 3.0,
+        "Mo": 6.8,
+        "Ni": 6.9,
+        "Zn": 599.3
+      }
+    }
+  }
+}

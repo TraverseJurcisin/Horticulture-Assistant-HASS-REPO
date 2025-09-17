@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"D6790E","source_wsda_record":{"wsda_product_number":"(#0739-0080)","product_name":"GEN-MAX CAL-12 0-0-0","company_info":{"company":"GENESIS AGRI-PRODUCTS INC","Mailing Address":"PO Box 10512","Post Office Box":null,"City":"Yakima","State":"WA","Postal Code":"98909","Telephone Number":"509 575-8382","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2000","Cadmium":"=0.0200","Cobalt":"=0.3200","Mercury":"=0.0050","Molybdenum":"=1.2300","Nickel":"=0.8200","Lead":"=0.5300","Selenium":"=0.3300","Zinc":"=7.0300"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2000","Cadmium":"=0.0200","Cobalt":"=0.3200","Mercury":"=0.0050","Molybdenum":"=1.2300","Nickel":"=0.8200","Lead":"=0.5300","Selenium":"=0.3300","Zinc":"=7.0300"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENESIS AGRI-PRODUCTS INC","label_name":"GEN-MAX CAL-12 0-0-0","wsda_reg_no":"(#0739-0080)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "D6790E",
+  "metadata": {
+    "registrant": "GENESIS AGRI-PRODUCTS INC",
+    "label_name": "GEN-MAX CAL-12 0-0-0",
+    "wsda_reg_no": "(#0739-0080)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0739-0080)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0739-0080)",
+        "product_name": "GEN-MAX CAL-12 0-0-0",
+        "company_info": {
+          "company": "GENESIS AGRI-PRODUCTS INC",
+          "Mailing Address": "PO Box 10512",
+          "Post Office Box": null,
+          "City": "Yakima",
+          "State": "WA",
+          "Postal Code": "98909",
+          "Telephone Number": "509 575-8382",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 12.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2000",
+          "Cadmium": "=0.0200",
+          "Cobalt": "=0.3200",
+          "Mercury": "=0.0050",
+          "Molybdenum": "=1.2300",
+          "Nickel": "=0.8200",
+          "Lead": "=0.5300",
+          "Selenium": "=0.3300",
+          "Zinc": "=7.0300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GEN-MAX CAL-12 0-0-0",
+    "brand": "GENESIS AGRI-PRODUCTS INC",
+    "manufacturer": {
+      "name": "GENESIS AGRI-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "D6790E-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.2,
+            "Cd": 0.02,
+            "Co": 0.32,
+            "Hg": 0.005,
+            "Mo": 1.23,
+            "Ni": 0.82,
+            "Pb": 0.53,
+            "Se": 0.33,
+            "Zn": 7.03
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.2,
+        "Cd": 0.02,
+        "Co": 0.32,
+        "Hg": 0.005,
+        "Mo": 1.23,
+        "Ni": 0.82,
+        "Pb": 0.53,
+        "Se": 0.33,
+        "Zn": 7.03
+      }
+    }
+  }
+}

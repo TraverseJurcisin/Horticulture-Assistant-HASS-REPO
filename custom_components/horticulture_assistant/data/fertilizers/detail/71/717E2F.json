@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "717E2F",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3413-0002)",
-    "product_name": "MASTER NURSERY BUMPER CROP CITRUS & FRUIT TREE FOOD 8-4-2",
-    "company_info": {
-      "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
-      "Mailing Address": "145 Newbury St",
-      "Post Office Box": null,
-      "City": "Portland",
-      "State": "ME",
-      "Postal Code": "04101",
-      "Telephone Number": "717 786-2146",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 2.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.0900",
-      "Cadmium": "=0.1200",
-      "Cobalt": "=2.2400",
-      "Mercury": "=0.0046",
-      "Molybdenum": "=4.0900",
-      "Nickel": "=26.4000",
-      "Lead": "=6.0900",
-      "Selenium": "=2.8500",
-      "Zinc": "=324.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 8.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 2.0,
-      "Calcium (Ca)": 2.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.0900",
-      "Cadmium": "=0.1200",
-      "Cobalt": "=2.2400",
-      "Mercury": "=0.0046",
-      "Molybdenum": "=4.0900",
-      "Nickel": "=26.4000",
-      "Lead": "=6.0900",
-      "Selenium": "=2.8500",
-      "Zinc": "=324.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "717E2F",
   "metadata": {
     "registrant": "COAST OF MAINE ORGANIC PRODUCTS INC",
     "label_name": "MASTER NURSERY BUMPER CROP CITRUS & FRUIT TREE FOOD 8-4-2",
     "wsda_reg_no": "(#3413-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3413-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3413-0002)",
+        "product_name": "MASTER NURSERY BUMPER CROP CITRUS & FRUIT TREE FOOD 8-4-2",
+        "company_info": {
+          "company": "COAST OF MAINE ORGANIC PRODUCTS INC",
+          "Mailing Address": "145 Newbury St",
+          "Post Office Box": null,
+          "City": "Portland",
+          "State": "ME",
+          "Postal Code": "04101",
+          "Telephone Number": "717 786-2146",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 8.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 2.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0900",
+          "Cadmium": "=0.1200",
+          "Cobalt": "=2.2400",
+          "Mercury": "=0.0046",
+          "Molybdenum": "=4.0900",
+          "Nickel": "=26.4000",
+          "Lead": "=6.0900",
+          "Selenium": "=2.8500",
+          "Zinc": "=324.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MASTER NURSERY BUMPER CROP CITRUS & FRUIT TREE FOOD 8-4-2",
+    "brand": "COAST OF MAINE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "COAST OF MAINE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 8.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "717E2F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.09,
+            "Cd": 0.12,
+            "Co": 2.24,
+            "Hg": 0.0046,
+            "Mo": 4.09,
+            "Ni": 26.4,
+            "Pb": 6.09,
+            "Se": 2.85,
+            "Zn": 324.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.09,
+        "Cd": 0.12,
+        "Co": 2.24,
+        "Hg": 0.0046,
+        "Mo": 4.09,
+        "Ni": 26.4,
+        "Pb": 6.09,
+        "Se": 2.85,
+        "Zn": 324.0
+      }
+    }
   }
 }

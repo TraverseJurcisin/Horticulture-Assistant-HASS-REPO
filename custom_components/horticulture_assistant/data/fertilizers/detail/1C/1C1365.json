@@ -1,106 +1,150 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1C1365",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0030-0002)",
-    "product_name": "ACCESS GROUP INT'L LLC NUTRIPLANT SD 0-0-0",
-    "company_info": {
-      "company": "ACCESS BUSINESS GROUP INT'L LLC",
-      "Mailing Address": "7575 Fulton St East 50-1A",
-      "Post Office Box": null,
-      "City": "Ada",
-      "State": "MI",
-      "Postal Code": "49355",
-      "Telephone Number": "616 787-4331",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.001,
-      "Copper (Cu)": 0.075,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "reported_metals": {
-      "Arsenic": "=0.8300",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=12.5000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.6000",
-      "Nickel": "=13.9000",
-      "Lead": "=8.6800",
-      "Selenium": "=1.0500",
-      "Zinc": "=9900.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 4.0,
-      "Magnesium (Mg)": 2.0,
-      "Sulfur (S)": 4.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.001,
-      "Copper (Cu)": 0.075,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 0.25,
-      "Molybdenum (Mo)": 0.0005,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.8300",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=12.5000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=4.6000",
-      "Nickel": "=13.9000",
-      "Lead": "=8.6800",
-      "Selenium": "=1.0500",
-      "Zinc": "=9900.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1C1365",
   "metadata": {
     "registrant": "ACCESS BUSINESS GROUP INT'L LLC",
     "label_name": "ACCESS GROUP INT'L LLC NUTRIPLANT SD 0-0-0",
     "wsda_reg_no": "(#0030-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0030-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0030-0002)",
+        "product_name": "ACCESS GROUP INT'L LLC NUTRIPLANT SD 0-0-0",
+        "company_info": {
+          "company": "ACCESS BUSINESS GROUP INT'L LLC",
+          "Mailing Address": "7575 Fulton St East 50-1A",
+          "Post Office Box": null,
+          "City": "Ada",
+          "State": "MI",
+          "Postal Code": "49355",
+          "Telephone Number": "616 787-4331",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 4.0,
+          "Magnesium (Mg)": 2.0,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.001,
+          "Copper (Cu)": 0.075,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 0.25,
+          "Molybdenum (Mo)": 0.0005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8300",
+          "Cadmium": "=1.1500",
+          "Cobalt": "=12.5000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=4.6000",
+          "Nickel": "=13.9000",
+          "Lead": "=8.6800",
+          "Selenium": "=1.0500",
+          "Zinc": "=9900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ACCESS GROUP INT'L LLC NUTRIPLANT SD 0-0-0",
+    "brand": "ACCESS BUSINESS GROUP INT'L LLC",
+    "manufacturer": {
+      "name": "ACCESS BUSINESS GROUP INT'L LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 4.0,
+      "Mg": 2.0,
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 0.25,
+      "Zn": 1.0,
+      "Cu": 0.075,
+      "Mo": 0.0005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1C1365-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.83,
+            "Cd": 1.15,
+            "Co": 12.5,
+            "Hg": 0.05,
+            "Mo": 4.6,
+            "Ni": 13.9,
+            "Pb": 8.68,
+            "Se": 1.05,
+            "Zn": 9900.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.83,
+        "Cd": 1.15,
+        "Co": 12.5,
+        "Hg": 0.05,
+        "Mo": 4.6,
+        "Ni": 13.9,
+        "Pb": 8.68,
+        "Se": 1.05,
+        "Zn": 9900.0
+      }
+    }
   }
 }

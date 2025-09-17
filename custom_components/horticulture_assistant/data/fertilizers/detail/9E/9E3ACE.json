@@ -1,1 +1,142 @@
-{"schema_version":"2025-07-v1","product_id":"9E3ACE","source_wsda_record":{"wsda_product_number":"(#3843-0012)","product_name":"ECHNOLOGIES CHE-PLEX COPPER 5% 5-0-0","company_info":{"company":"INNVICTIS BIOSCIENCE PLANT HEALTH T","Mailing Address":"PO Box 9296","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"970 397-0856","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.4000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.2000","Nickel":"=0.2000","Lead":"=1.8000","Selenium":"=1.1000","Zinc":"=317.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":5.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.4000","Cadmium":"=0.1000","Cobalt":"=0.1000","Mercury":"=0.0100","Molybdenum":"=0.2000","Nickel":"=0.2000","Lead":"=1.8000","Selenium":"=1.1000","Zinc":"=317.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"INNVICTIS BIOSCIENCE PLANT HEALTH T","label_name":"ECHNOLOGIES CHE-PLEX COPPER 5% 5-0-0","wsda_reg_no":"(#3843-0012)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9E3ACE",
+  "metadata": {
+    "registrant": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "label_name": "ECHNOLOGIES CHE-PLEX COPPER 5% 5-0-0",
+    "wsda_reg_no": "(#3843-0012)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3843-0012)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3843-0012)",
+        "product_name": "ECHNOLOGIES CHE-PLEX COPPER 5% 5-0-0",
+        "company_info": {
+          "company": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+          "Mailing Address": "PO Box 9296",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "970 397-0856",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 5.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 5.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=0.2000",
+          "Nickel": "=0.2000",
+          "Lead": "=1.8000",
+          "Selenium": "=1.1000",
+          "Zinc": "=317.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECHNOLOGIES CHE-PLEX COPPER 5% 5-0-0",
+    "brand": "INNVICTIS BIOSCIENCE PLANT HEALTH T",
+    "manufacturer": {
+      "name": "INNVICTIS BIOSCIENCE PLANT HEALTH T"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 5.0
+    },
+    "micros_pct": {
+      "Cu": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9E3ACE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.4,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Mo": 0.2,
+            "Ni": 0.2,
+            "Pb": 1.8,
+            "Se": 1.1,
+            "Zn": 317.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.4,
+        "Cd": 0.1,
+        "Co": 0.1,
+        "Hg": 0.01,
+        "Mo": 0.2,
+        "Ni": 0.2,
+        "Pb": 1.8,
+        "Se": 1.1,
+        "Zn": 317.0
+      }
+    }
+  }
+}

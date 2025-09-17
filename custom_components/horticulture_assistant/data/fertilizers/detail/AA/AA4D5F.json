@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"AA4D5F","source_wsda_record":{"wsda_product_number":"(#3037-0017)","product_name":"PRIME NUTRIENTS 21-7-14 BLENDED FERTILIZER 21-7-14","company_info":{"company":"CHS PRIMELAND - CLARKSTON, WA - WIL","Mailing Address":"2950 Wilma Drive","Post Office Box":null,"City":"Clarkston","State":"WA","Postal Code":"99403","Telephone Number":"509 758-6568","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=250.0000","Cadmium":"=50.0000","Cobalt":"=450.0000","Mercury":"=15.0000","Molybdenum":"=50.0000","Nickel":"=550.0000","Lead":"=1500.0000","Selenium":"=40.0000","Zinc":"=5500.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":7.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":9.6,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=250.0000","Cadmium":"=50.0000","Cobalt":"=450.0000","Mercury":"=15.0000","Molybdenum":"=50.0000","Nickel":"=550.0000","Lead":"=1500.0000","Selenium":"=40.0000","Zinc":"=5500.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"CHS PRIMELAND - CLARKSTON, WA - WIL","label_name":"PRIME NUTRIENTS 21-7-14 BLENDED FERTILIZER 21-7-14","wsda_reg_no":"(#3037-0017)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AA4D5F",
+  "metadata": {
+    "registrant": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+    "label_name": "PRIME NUTRIENTS 21-7-14 BLENDED FERTILIZER 21-7-14",
+    "wsda_reg_no": "(#3037-0017)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3037-0017)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3037-0017)",
+        "product_name": "PRIME NUTRIENTS 21-7-14 BLENDED FERTILIZER 21-7-14",
+        "company_info": {
+          "company": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+          "Mailing Address": "2950 Wilma Drive",
+          "Post Office Box": null,
+          "City": "Clarkston",
+          "State": "WA",
+          "Postal Code": "99403",
+          "Telephone Number": "509 758-6568",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": 7.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 9.6,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=250.0000",
+          "Cadmium": "=50.0000",
+          "Cobalt": "=450.0000",
+          "Mercury": "=15.0000",
+          "Molybdenum": "=50.0000",
+          "Nickel": "=550.0000",
+          "Lead": "=1500.0000",
+          "Selenium": "=40.0000",
+          "Zinc": "=5500.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "PRIME NUTRIENTS 21-7-14 BLENDED FERTILIZER 21-7-14",
+    "brand": "CHS PRIMELAND - CLARKSTON, WA - WIL",
+    "manufacturer": {
+      "name": "CHS PRIMELAND - CLARKSTON, WA - WIL"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "P2O5_pct": 7.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "S": 9.6
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AA4D5F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 250.0,
+            "Cd": 50.0,
+            "Co": 450.0,
+            "Hg": 15.0,
+            "Mo": 50.0,
+            "Ni": 550.0,
+            "Pb": 1500.0,
+            "Se": 40.0,
+            "Zn": 5500.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 250.0,
+        "Cd": 50.0,
+        "Co": 450.0,
+        "Hg": 15.0,
+        "Mo": 50.0,
+        "Ni": 550.0,
+        "Pb": 1500.0,
+        "Se": 40.0,
+        "Zn": 5500.0
+      }
+    }
+  }
+}

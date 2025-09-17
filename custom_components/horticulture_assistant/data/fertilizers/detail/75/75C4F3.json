@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "75C4F3",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3202-0003)",
-    "product_name": "TERRA THRIVE 100% ORGANIC VERMICOMPOST 0.35-0.35-0.35",
-    "company_info": {
-      "company": "TERRAVESCO",
-      "Mailing Address": "PO Box 1224",
-      "Post Office Box": null,
-      "City": "Sonoma",
-      "State": "CA",
-      "Postal Code": "95476",
-      "Telephone Number": "707 935-3900",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.35,
-      "Available Phosphoric Acid (P2O5)": 0.35,
-      "Soluble Potash (K2O)": 0.35,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.4090",
-      "Cadmium": "=0.1400",
-      "Cobalt": "=2.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.6000",
-      "Nickel": "=5.3000",
-      "Lead": "=0.7000",
-      "Selenium": "=0.6000",
-      "Zinc": "=243.9000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.35,
-      "Available Phosphoric Acid (P2O5)": 0.35,
-      "Soluble Potash (K2O)": 0.35,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.4090",
-      "Cadmium": "=0.1400",
-      "Cobalt": "=2.4000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=1.6000",
-      "Nickel": "=5.3000",
-      "Lead": "=0.7000",
-      "Selenium": "=0.6000",
-      "Zinc": "=243.9000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "75C4F3",
   "metadata": {
     "registrant": "TERRAVESCO",
     "label_name": "TERRA THRIVE 100% ORGANIC VERMICOMPOST 0.35-0.35-0.35",
     "wsda_reg_no": "(#3202-0003)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3202-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3202-0003)",
+        "product_name": "TERRA THRIVE 100% ORGANIC VERMICOMPOST 0.35-0.35-0.35",
+        "company_info": {
+          "company": "TERRAVESCO",
+          "Mailing Address": "PO Box 1224",
+          "Post Office Box": null,
+          "City": "Sonoma",
+          "State": "CA",
+          "Postal Code": "95476",
+          "Telephone Number": "707 935-3900",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.35,
+          "Available Phosphoric Acid (P2O5)": 0.35,
+          "Soluble Potash (K2O)": 0.35,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.4090",
+          "Cadmium": "=0.1400",
+          "Cobalt": "=2.4000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=1.6000",
+          "Nickel": "=5.3000",
+          "Lead": "=0.7000",
+          "Selenium": "=0.6000",
+          "Zinc": "=243.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TERRA THRIVE 100% ORGANIC VERMICOMPOST 0.35-0.35-0.35",
+    "brand": "TERRAVESCO",
+    "manufacturer": {
+      "name": "TERRAVESCO"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.35,
+      "P2O5_pct": 0.35,
+      "K2O_pct": 0.35
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "75C4F3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.409,
+            "Cd": 0.14,
+            "Co": 2.4,
+            "Hg": 0.05,
+            "Mo": 1.6,
+            "Ni": 5.3,
+            "Pb": 0.7,
+            "Se": 0.6,
+            "Zn": 243.9
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.409,
+        "Cd": 0.14,
+        "Co": 2.4,
+        "Mo": 1.6,
+        "Ni": 5.3,
+        "Pb": 0.7,
+        "Se": 0.6,
+        "Zn": 243.9
+      }
+    }
   }
 }

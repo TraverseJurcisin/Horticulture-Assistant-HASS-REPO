@@ -1,106 +1,143 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "248293",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0698-0229)",
-    "product_name": "MIRACLE-GRO RAISED BED SOIL 0.09-0.08-0.09",
-    "company_info": {
-      "company": "MIRACLE-GRO LAWN PRODUCTS INC",
-      "Mailing Address": "14111 Scottslawn Road",
-      "Post Office Box": null,
-      "City": "Marysville",
-      "State": "OH",
-      "Postal Code": "43041",
-      "Telephone Number": "937 578-1573",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.09,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.09,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=3.2700",
-      "Cadmium": "<0.2620",
-      "Cobalt": "=0.4950",
-      "Mercury": "<0.0185",
-      "Molybdenum": "=1.7300",
-      "Nickel": "=1.8300",
-      "Lead": "=0.7790",
-      "Selenium": "<0.7880",
-      "Zinc": "=83.1000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 0.09,
-      "Available Phosphoric Acid (P2O5)": 0.08,
-      "Soluble Potash (K2O)": 0.09,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=3.2700",
-      "Cadmium": "<0.2620",
-      "Cobalt": "=0.4950",
-      "Mercury": "<0.0185",
-      "Molybdenum": "=1.7300",
-      "Nickel": "=1.8300",
-      "Lead": "=0.7790",
-      "Selenium": "<0.7880",
-      "Zinc": "=83.1000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "248293",
   "metadata": {
     "registrant": "MIRACLE-GRO LAWN PRODUCTS INC",
     "label_name": "MIRACLE-GRO RAISED BED SOIL 0.09-0.08-0.09",
     "wsda_reg_no": "(#0698-0229)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0698-0229)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0698-0229)",
+        "product_name": "MIRACLE-GRO RAISED BED SOIL 0.09-0.08-0.09",
+        "company_info": {
+          "company": "MIRACLE-GRO LAWN PRODUCTS INC",
+          "Mailing Address": "14111 Scottslawn Road",
+          "Post Office Box": null,
+          "City": "Marysville",
+          "State": "OH",
+          "Postal Code": "43041",
+          "Telephone Number": "937 578-1573",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.09,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.09,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.2700",
+          "Cadmium": "<0.2620",
+          "Cobalt": "=0.4950",
+          "Mercury": "<0.0185",
+          "Molybdenum": "=1.7300",
+          "Nickel": "=1.8300",
+          "Lead": "=0.7790",
+          "Selenium": "<0.7880",
+          "Zinc": "=83.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MIRACLE-GRO RAISED BED SOIL 0.09-0.08-0.09",
+    "brand": "MIRACLE-GRO LAWN PRODUCTS INC",
+    "manufacturer": {
+      "name": "MIRACLE-GRO LAWN PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.09,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.09
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "248293-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.27,
+            "Cd": 0.262,
+            "Co": 0.495,
+            "Hg": 0.0185,
+            "Mo": 1.73,
+            "Ni": 1.83,
+            "Pb": 0.779,
+            "Se": 0.788,
+            "Zn": 83.1
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.262,
+            "Hg": 0.0185,
+            "Se": 0.788
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.27,
+        "Co": 0.495,
+        "Mo": 1.73,
+        "Ni": 1.83,
+        "Pb": 0.779,
+        "Zn": 83.1
+      }
+    }
   }
 }

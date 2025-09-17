@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4CC2D2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0185-0249)",
-    "product_name": "GREENVIEW FALL LAWN FOOD 22-0-10",
-    "company_info": {
-      "company": "LEBANON SEABOARD CORPORATION",
-      "Mailing Address": "1600 E Cumberland St",
-      "Post Office Box": null,
-      "City": "Lebanon",
-      "State": "PA",
-      "Postal Code": "17042",
-      "Telephone Number": "800 532-0090",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.2720",
-      "Cadmium": "=0.0260",
-      "Cobalt": "=0.1260",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=0.2350",
-      "Nickel": "=0.6560",
-      "Lead": "=0.8410",
-      "Selenium": "=0.7910",
-      "Zinc": "=7.4300"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 22.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 10.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 3.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.2720",
-      "Cadmium": "=0.0260",
-      "Cobalt": "=0.1260",
-      "Mercury": "<0.0032",
-      "Molybdenum": "=0.2350",
-      "Nickel": "=0.6560",
-      "Lead": "=0.8410",
-      "Selenium": "=0.7910",
-      "Zinc": "=7.4300"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4CC2D2",
   "metadata": {
     "registrant": "LEBANON SEABOARD CORPORATION",
     "label_name": "GREENVIEW FALL LAWN FOOD 22-0-10",
     "wsda_reg_no": "(#0185-0249)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0185-0249)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0185-0249)",
+        "product_name": "GREENVIEW FALL LAWN FOOD 22-0-10",
+        "company_info": {
+          "company": "LEBANON SEABOARD CORPORATION",
+          "Mailing Address": "1600 E Cumberland St",
+          "Post Office Box": null,
+          "City": "Lebanon",
+          "State": "PA",
+          "Postal Code": "17042",
+          "Telephone Number": "800 532-0090",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 22.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 10.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 3.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2720",
+          "Cadmium": "=0.0260",
+          "Cobalt": "=0.1260",
+          "Mercury": "<0.0032",
+          "Molybdenum": "=0.2350",
+          "Nickel": "=0.6560",
+          "Lead": "=0.8410",
+          "Selenium": "=0.7910",
+          "Zinc": "=7.4300"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GREENVIEW FALL LAWN FOOD 22-0-10",
+    "brand": "LEBANON SEABOARD CORPORATION",
+    "manufacturer": {
+      "name": "LEBANON SEABOARD CORPORATION"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 22.0,
+      "K2O_pct": 10.0
+    },
+    "macros_pct": {
+      "S": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4CC2D2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.272,
+            "Cd": 0.026,
+            "Co": 0.126,
+            "Hg": 0.0032,
+            "Mo": 0.235,
+            "Ni": 0.656,
+            "Pb": 0.841,
+            "Se": 0.791,
+            "Zn": 7.43
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.0032
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.272,
+        "Cd": 0.026,
+        "Co": 0.126,
+        "Mo": 0.235,
+        "Ni": 0.656,
+        "Pb": 0.841,
+        "Se": 0.791,
+        "Zn": 7.43
+      }
+    }
   }
 }

@@ -1,106 +1,154 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "2B20D4",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3642-0001)",
-    "product_name": "NUTRICOTE TOTAL 13-11-11 TYPE 100 13-11-11",
-    "company_info": {
-      "company": "SOJITZ CORPORATION OF AMERICA",
-      "Mailing Address": "535 Dock Street Ste 211",
-      "Post Office Box": null,
-      "City": "Tacoma",
-      "State": "WA",
-      "Postal Code": "98402",
-      "Telephone Number": "253 853-7369",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.2,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": 0.06,
-      "Molybdenum (Mo)": 0.02,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=7.2400",
-      "Cadmium": "<2.9200",
-      "Cobalt": "<5.8400",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=259.0000",
-      "Nickel": "<5.8400",
-      "Lead": "<5.8400",
-      "Selenium": "<2.9200",
-      "Zinc": "=217.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 13.0,
-      "Available Phosphoric Acid (P2O5)": 11.0,
-      "Soluble Potash (K2O)": 11.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": 1.2,
-      "Sulfur (S)": 5.0,
-      "Boron (B)": 0.02,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": 0.05,
-      "Iron (Fe)": 0.2,
-      "Manganese (Mn)": 0.06,
-      "Molybdenum (Mo)": 0.02,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=7.2400",
-      "Cadmium": "<2.9200",
-      "Cobalt": "<5.8400",
-      "Mercury": "<0.0100",
-      "Molybdenum": "=259.0000",
-      "Nickel": "<5.8400",
-      "Lead": "<5.8400",
-      "Selenium": "<2.9200",
-      "Zinc": "=217.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "2B20D4",
   "metadata": {
     "registrant": "SOJITZ CORPORATION OF AMERICA",
     "label_name": "NUTRICOTE TOTAL 13-11-11 TYPE 100 13-11-11",
     "wsda_reg_no": "(#3642-0001)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3642-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3642-0001)",
+        "product_name": "NUTRICOTE TOTAL 13-11-11 TYPE 100 13-11-11",
+        "company_info": {
+          "company": "SOJITZ CORPORATION OF AMERICA",
+          "Mailing Address": "535 Dock Street Ste 211",
+          "Post Office Box": null,
+          "City": "Tacoma",
+          "State": "WA",
+          "Postal Code": "98402",
+          "Telephone Number": "253 853-7369",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": 11.0,
+          "Soluble Potash (K2O)": 11.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 1.2,
+          "Sulfur (S)": 5.0,
+          "Boron (B)": 0.02,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.2,
+          "Manganese (Mn)": 0.06,
+          "Molybdenum (Mo)": 0.02,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=7.2400",
+          "Cadmium": "<2.9200",
+          "Cobalt": "<5.8400",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=259.0000",
+          "Nickel": "<5.8400",
+          "Lead": "<5.8400",
+          "Selenium": "<2.9200",
+          "Zinc": "=217.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRICOTE TOTAL 13-11-11 TYPE 100 13-11-11",
+    "brand": "SOJITZ CORPORATION OF AMERICA",
+    "manufacturer": {
+      "name": "SOJITZ CORPORATION OF AMERICA"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0,
+      "P2O5_pct": 11.0,
+      "K2O_pct": 11.0
+    },
+    "macros_pct": {
+      "Mg": 1.2,
+      "S": 5.0
+    },
+    "micros_pct": {
+      "Fe": 0.2,
+      "Mn": 0.06,
+      "Cu": 0.05,
+      "B": 0.02,
+      "Mo": 0.02
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "2B20D4-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 7.24,
+            "Cd": 2.92,
+            "Co": 5.84,
+            "Hg": 0.01,
+            "Mo": 259.0,
+            "Ni": 5.84,
+            "Pb": 5.84,
+            "Se": 2.92,
+            "Zn": 217.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 2.92,
+            "Co": 5.84,
+            "Hg": 0.01,
+            "Ni": 5.84,
+            "Pb": 5.84,
+            "Se": 2.92
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 7.24,
+        "Mo": 259.0,
+        "Zn": 217.0
+      }
+    }
   }
 }

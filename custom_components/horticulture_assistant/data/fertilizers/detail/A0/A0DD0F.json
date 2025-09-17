@@ -1,1 +1,150 @@
-{"schema_version":"2025-07-v1","product_id":"A0DD0F","source_wsda_record":{"wsda_product_number":"(#0310-0111)","product_name":"WHITE LABEL FIELD CROP MIX 0-0-0","company_info":{"company":"STOLLER ENTERPRISES INC","Mailing Address":"9090 Katy Freeway Ste 400","Post Office Box":null,"City":"Houston","State":"TX","Postal Code":"77024","Telephone Number":"713 329-0329","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":0.25,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"reported_metals":{"Arsenic":"<1.0000","Cadmium":"=0.4000","Cobalt":"=3.8000","Mercury":"<0.0100","Molybdenum":"<0.3000","Nickel":"=5.1000","Lead":"<1.0000","Selenium":"=0.7000","Zinc":"=45900.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":4.0,"Boron (B)":0.25,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.0,"Iron (Fe)":0.5,"Manganese (Mn)":2.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":4.0},"heavy_metals":{"Arsenic":"<1.0000","Cadmium":"=0.4000","Cobalt":"=3.8000","Mercury":"<0.0100","Molybdenum":"<0.3000","Nickel":"=5.1000","Lead":"<1.0000","Selenium":"=0.7000","Zinc":"=45900.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"STOLLER ENTERPRISES INC","label_name":"WHITE LABEL FIELD CROP MIX 0-0-0","wsda_reg_no":"(#0310-0111)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A0DD0F",
+  "metadata": {
+    "registrant": "STOLLER ENTERPRISES INC",
+    "label_name": "WHITE LABEL FIELD CROP MIX 0-0-0",
+    "wsda_reg_no": "(#0310-0111)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0310-0111)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0310-0111)",
+        "product_name": "WHITE LABEL FIELD CROP MIX 0-0-0",
+        "company_info": {
+          "company": "STOLLER ENTERPRISES INC",
+          "Mailing Address": "9090 Katy Freeway Ste 400",
+          "Post Office Box": null,
+          "City": "Houston",
+          "State": "TX",
+          "Postal Code": "77024",
+          "Telephone Number": "713 329-0329",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 4.0,
+          "Boron (B)": 0.25,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.0,
+          "Iron (Fe)": 0.5,
+          "Manganese (Mn)": 2.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "<1.0000",
+          "Cadmium": "=0.4000",
+          "Cobalt": "=3.8000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "<0.3000",
+          "Nickel": "=5.1000",
+          "Lead": "<1.0000",
+          "Selenium": "=0.7000",
+          "Zinc": "=45900.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "WHITE LABEL FIELD CROP MIX 0-0-0",
+    "brand": "STOLLER ENTERPRISES INC",
+    "manufacturer": {
+      "name": "STOLLER ENTERPRISES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.5,
+      "Mn": 2.0,
+      "Zn": 4.0,
+      "Cu": 1.0,
+      "B": 0.25
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A0DD0F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.4,
+            "Co": 3.8,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 5.1,
+            "Pb": 1.0,
+            "Se": 0.7,
+            "Zn": 45900.0
+          },
+          "detection_limits_ppm": {
+            "As": 1.0,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.4,
+        "Co": 3.8,
+        "Ni": 5.1,
+        "Se": 0.7,
+        "Zn": 45900.0
+      }
+    }
+  }
+}

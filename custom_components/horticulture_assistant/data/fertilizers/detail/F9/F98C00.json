@@ -1,1 +1,147 @@
-{"schema_version":"2025-07-v1","product_id":"F98C00","source_wsda_record":{"wsda_product_number":"(#3848-0002)","product_name":"NULANDIS QWEMIKELP 7-2-1","company_info":{"company":"NULANDIS (A DIVISION OF AECI LTD)","Mailing Address":"PO Box 628","Post Office Box":null,"City":"Shamrock","State":"TX","Postal Code":"79079","Telephone Number":"970 381-8917","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.113,"Manganese (Mn)":0.056,"Molybdenum (Mo)":0.24,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=240.0000","Nickel":"=1.8000","Lead":"=0.5000","Selenium":"=0.1000","Zinc":"=370.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":1.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.113,"Manganese (Mn)":0.056,"Molybdenum (Mo)":0.24,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1000","Cobalt":"=0.6000","Mercury":"=0.0500","Molybdenum":"=240.0000","Nickel":"=1.8000","Lead":"=0.5000","Selenium":"=0.1000","Zinc":"=370.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"NULANDIS (A DIVISION OF AECI LTD)","label_name":"NULANDIS QWEMIKELP 7-2-1","wsda_reg_no":"(#3848-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F98C00",
+  "metadata": {
+    "registrant": "NULANDIS (A DIVISION OF AECI LTD)",
+    "label_name": "NULANDIS QWEMIKELP 7-2-1",
+    "wsda_reg_no": "(#3848-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3848-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3848-0002)",
+        "product_name": "NULANDIS QWEMIKELP 7-2-1",
+        "company_info": {
+          "company": "NULANDIS (A DIVISION OF AECI LTD)",
+          "Mailing Address": "PO Box 628",
+          "Post Office Box": null,
+          "City": "Shamrock",
+          "State": "TX",
+          "Postal Code": "79079",
+          "Telephone Number": "970 381-8917",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 1.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.15,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.113,
+          "Manganese (Mn)": 0.056,
+          "Molybdenum (Mo)": 0.24,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.6000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=240.0000",
+          "Nickel": "=1.8000",
+          "Lead": "=0.5000",
+          "Selenium": "=0.1000",
+          "Zinc": "=370.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NULANDIS QWEMIKELP 7-2-1",
+    "brand": "NULANDIS (A DIVISION OF AECI LTD)",
+    "manufacturer": {
+      "name": "NULANDIS (A DIVISION OF AECI LTD)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 1.0
+    },
+    "micros_pct": {
+      "Fe": 0.113,
+      "Mn": 0.056,
+      "B": 0.15,
+      "Mo": 0.24
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F98C00-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.1,
+            "Co": 0.6,
+            "Hg": 0.05,
+            "Mo": 240.0,
+            "Ni": 1.8,
+            "Pb": 0.5,
+            "Se": 0.1,
+            "Zn": 370.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.1,
+        "Co": 0.6,
+        "Hg": 0.05,
+        "Mo": 240.0,
+        "Ni": 1.8,
+        "Pb": 0.5,
+        "Se": 0.1,
+        "Zn": 370.0
+      }
+    }
+  }
+}

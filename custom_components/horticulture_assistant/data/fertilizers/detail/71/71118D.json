@@ -1,106 +1,145 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "71118D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0705-0109)",
-    "product_name": "NUTRIAG ENVIRO TRIO 0-0-0",
-    "company_info": {
-      "company": "NUTRIAG LTD",
-      "Mailing Address": "172 Belfield Rd",
-      "Post Office Box": null,
-      "City": "Toronto",
-      "State": "ON",
-      "Postal Code": "M9W 1H1",
-      "Telephone Number": "416 572-1968",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 2.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 4.0
-    },
-    "reported_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.9500",
-      "Cobalt": "=31.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<0.0500",
-      "Nickel": "=18.0000",
-      "Lead": "=0.2000",
-      "Selenium": "<0.1000",
-      "Zinc": "=40000.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "Y"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 1.0,
-      "Manganese (Mn)": 2.0,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 4.0
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.1000",
-      "Cadmium": "=0.9500",
-      "Cobalt": "=31.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "<0.0500",
-      "Nickel": "=18.0000",
-      "Lead": "=0.2000",
-      "Selenium": "<0.1000",
-      "Zinc": "=40000.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "71118D",
   "metadata": {
     "registrant": "NUTRIAG LTD",
     "label_name": "NUTRIAG ENVIRO TRIO 0-0-0",
     "wsda_reg_no": "(#0705-0109)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0705-0109)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0705-0109)",
+        "product_name": "NUTRIAG ENVIRO TRIO 0-0-0",
+        "company_info": {
+          "company": "NUTRIAG LTD",
+          "Mailing Address": "172 Belfield Rd",
+          "Post Office Box": null,
+          "City": "Toronto",
+          "State": "ON",
+          "Postal Code": "M9W 1H1",
+          "Telephone Number": "416 572-1968",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 1.0,
+          "Manganese (Mn)": 2.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 4.0
+        },
+        "reported_metals": {
+          "Arsenic": "<0.1000",
+          "Cadmium": "=0.9500",
+          "Cobalt": "=31.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "<0.0500",
+          "Nickel": "=18.0000",
+          "Lead": "=0.2000",
+          "Selenium": "<0.1000",
+          "Zinc": "=40000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "NUTRIAG ENVIRO TRIO 0-0-0",
+    "brand": "NUTRIAG LTD",
+    "manufacturer": {
+      "name": "NUTRIAG LTD"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Fe": 1.0,
+      "Mn": 2.0,
+      "Zn": 4.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "71118D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.1,
+            "Cd": 0.95,
+            "Co": 31.0,
+            "Hg": 0.05,
+            "Mo": 0.05,
+            "Ni": 18.0,
+            "Pb": 0.2,
+            "Se": 0.1,
+            "Zn": 40000.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.05,
+            "Se": 0.1
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.95,
+        "Co": 31.0,
+        "Ni": 18.0,
+        "Pb": 0.2,
+        "Zn": 40000.0
+      }
+    }
   }
 }

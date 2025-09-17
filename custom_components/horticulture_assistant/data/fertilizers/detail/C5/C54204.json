@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C54204","source_wsda_record":{"wsda_product_number":"(#0169-0422)","product_name":"SIMPLOT SOLUPACK PROFESSIONAL WATER SOLUBLE FERTILIZERS MANGANESE CHELATE 20% MN 0-0-0","company_info":{"company":"J R SIMPLOT COMPANY","Mailing Address":"PO Box 70013","Post Office Box":null,"City":"Boise","State":"ID","Postal Code":"83707","Telephone Number":"208 780-0838","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":20.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=9.6200","Cadmium":"=1.3900","Cobalt":"=1.9200","Mercury":"=0.0490","Molybdenum":"=3.6500","Nickel":"=5.7700","Lead":"=15.6000","Selenium":"=108.0000","Zinc":"=7.6900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":20.0,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=9.6200","Cadmium":"=1.3900","Cobalt":"=1.9200","Mercury":"=0.0490","Molybdenum":"=3.6500","Nickel":"=5.7700","Lead":"=15.6000","Selenium":"=108.0000","Zinc":"=7.6900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"J R SIMPLOT COMPANY","label_name":"SIMPLOT SOLUPACK PROFESSIONAL WATER SOLUBLE FERTILIZERS MANGANESE CHELATE 20% MN 0-0-0","wsda_reg_no":"(#0169-0422)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C54204",
+  "metadata": {
+    "registrant": "J R SIMPLOT COMPANY",
+    "label_name": "SIMPLOT SOLUPACK PROFESSIONAL WATER SOLUBLE FERTILIZERS MANGANESE CHELATE 20% MN 0-0-0",
+    "wsda_reg_no": "(#0169-0422)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0169-0422)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0169-0422)",
+        "product_name": "SIMPLOT SOLUPACK PROFESSIONAL WATER SOLUBLE FERTILIZERS MANGANESE CHELATE 20% MN 0-0-0",
+        "company_info": {
+          "company": "J R SIMPLOT COMPANY",
+          "Mailing Address": "PO Box 70013",
+          "Post Office Box": null,
+          "City": "Boise",
+          "State": "ID",
+          "Postal Code": "83707",
+          "Telephone Number": "208 780-0838",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 12.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": 20.0,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=9.6200",
+          "Cadmium": "=1.3900",
+          "Cobalt": "=1.9200",
+          "Mercury": "=0.0490",
+          "Molybdenum": "=3.6500",
+          "Nickel": "=5.7700",
+          "Lead": "=15.6000",
+          "Selenium": "=108.0000",
+          "Zinc": "=7.6900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SIMPLOT SOLUPACK PROFESSIONAL WATER SOLUBLE FERTILIZERS MANGANESE CHELATE 20% MN 0-0-0",
+    "brand": "J R SIMPLOT COMPANY",
+    "manufacturer": {
+      "name": "J R SIMPLOT COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 12.0
+    },
+    "micros_pct": {
+      "Mn": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C54204-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.62,
+            "Cd": 1.39,
+            "Co": 1.92,
+            "Hg": 0.049,
+            "Mo": 3.65,
+            "Ni": 5.77,
+            "Pb": 15.6,
+            "Se": 108.0,
+            "Zn": 7.69
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.62,
+        "Cd": 1.39,
+        "Co": 1.92,
+        "Hg": 0.049,
+        "Mo": 3.65,
+        "Ni": 5.77,
+        "Pb": 15.6,
+        "Se": 108.0,
+        "Zn": 7.69
+      }
+    }
+  }
+}

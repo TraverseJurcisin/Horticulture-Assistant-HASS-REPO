@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "6FC8B2",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1938-0005)",
-    "product_name": "15-4-9 BIO GREEN 15-4-9",
-    "company_info": {
-      "company": "PLANET TURF",
-      "Mailing Address": "6422 E 2nd Ave",
-      "Post Office Box": null,
-      "City": "Spokane Valley",
-      "State": "WA",
-      "Postal Code": "99212",
-      "Telephone Number": "509 921-5421",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": 1.77,
-      "Magnesium (Mg)": 0.53,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.32,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=5.2200",
-      "Cadmium": "=30.8000",
-      "Cobalt": "=0.8500",
-      "Mercury": "=0.0150",
-      "Molybdenum": "=3.1400",
-      "Nickel": "=52.1000",
-      "Lead": "=0.7400",
-      "Selenium": "=0.1250",
-      "Zinc": "=506.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 15.0,
-      "Available Phosphoric Acid (P2O5)": 4.0,
-      "Soluble Potash (K2O)": 9.0,
-      "Calcium (Ca)": 1.77,
-      "Magnesium (Mg)": 0.53,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.32,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=5.2200",
-      "Cadmium": "=30.8000",
-      "Cobalt": "=0.8500",
-      "Mercury": "=0.0150",
-      "Molybdenum": "=3.1400",
-      "Nickel": "=52.1000",
-      "Lead": "=0.7400",
-      "Selenium": "=0.1250",
-      "Zinc": "=506.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "6FC8B2",
   "metadata": {
     "registrant": "PLANET TURF",
     "label_name": "15-4-9 BIO GREEN 15-4-9",
     "wsda_reg_no": "(#1938-0005)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1938-0005)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1938-0005)",
+        "product_name": "15-4-9 BIO GREEN 15-4-9",
+        "company_info": {
+          "company": "PLANET TURF",
+          "Mailing Address": "6422 E 2nd Ave",
+          "Post Office Box": null,
+          "City": "Spokane Valley",
+          "State": "WA",
+          "Postal Code": "99212",
+          "Telephone Number": "509 921-5421",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 15.0,
+          "Available Phosphoric Acid (P2O5)": 4.0,
+          "Soluble Potash (K2O)": 9.0,
+          "Calcium (Ca)": 1.77,
+          "Magnesium (Mg)": 0.53,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.32,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.2200",
+          "Cadmium": "=30.8000",
+          "Cobalt": "=0.8500",
+          "Mercury": "=0.0150",
+          "Molybdenum": "=3.1400",
+          "Nickel": "=52.1000",
+          "Lead": "=0.7400",
+          "Selenium": "=0.1250",
+          "Zinc": "=506.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "15-4-9 BIO GREEN 15-4-9",
+    "brand": "PLANET TURF",
+    "manufacturer": {
+      "name": "PLANET TURF"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 15.0,
+      "P2O5_pct": 4.0,
+      "K2O_pct": 9.0
+    },
+    "macros_pct": {
+      "Ca": 1.77,
+      "Mg": 0.53
+    },
+    "micros_pct": {
+      "Fe": 0.32
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "6FC8B2-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.22,
+            "Cd": 30.8,
+            "Co": 0.85,
+            "Hg": 0.015,
+            "Mo": 3.14,
+            "Ni": 52.1,
+            "Pb": 0.74,
+            "Se": 0.125,
+            "Zn": 506.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.22,
+        "Cd": 30.8,
+        "Co": 0.85,
+        "Hg": 0.015,
+        "Mo": 3.14,
+        "Ni": 52.1,
+        "Pb": 0.74,
+        "Se": 0.125,
+        "Zn": 506.0
+      }
+    }
   }
 }

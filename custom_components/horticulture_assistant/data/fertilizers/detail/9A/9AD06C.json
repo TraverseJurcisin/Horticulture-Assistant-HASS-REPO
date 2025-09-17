@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"9AD06C","source_wsda_record":{"wsda_product_number":"(#4244-0001)","product_name":"AQUASCAPE ONCE-A-YEAR POND PLANT FERTILIZER CAPSULES 11-3-14","company_info":{"company":"AQUASCAPE INC","Mailing Address":"901 Aqualand Way","Post Office Box":null,"City":"St. Charles","State":"IL","Postal Code":"60174","Telephone Number":"630 659-2036","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.6,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.64,"Manganese (Mn)":null,"Molybdenum (Mo)":0.16,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=3.2000","Cadmium":"=0.3000","Cobalt":"=2.2000","Mercury":"=0.0200","Molybdenum":"=254.0000","Nickel":"=3.7000","Lead":"=3.7000","Selenium":"=1.1000","Zinc":"=215.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":11.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":14.0,"Calcium (Ca)":null,"Magnesium (Mg)":2.6,"Sulfur (S)":9.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.64,"Manganese (Mn)":null,"Molybdenum (Mo)":0.16,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=3.2000","Cadmium":"=0.3000","Cobalt":"=2.2000","Mercury":"=0.0200","Molybdenum":"=254.0000","Nickel":"=3.7000","Lead":"=3.7000","Selenium":"=1.1000","Zinc":"=215.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AQUASCAPE INC","label_name":"AQUASCAPE ONCE-A-YEAR POND PLANT FERTILIZER CAPSULES 11-3-14","wsda_reg_no":"(#4244-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9AD06C",
+  "metadata": {
+    "registrant": "AQUASCAPE INC",
+    "label_name": "AQUASCAPE ONCE-A-YEAR POND PLANT FERTILIZER CAPSULES 11-3-14",
+    "wsda_reg_no": "(#4244-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#4244-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#4244-0001)",
+        "product_name": "AQUASCAPE ONCE-A-YEAR POND PLANT FERTILIZER CAPSULES 11-3-14",
+        "company_info": {
+          "company": "AQUASCAPE INC",
+          "Mailing Address": "901 Aqualand Way",
+          "Post Office Box": null,
+          "City": "St. Charles",
+          "State": "IL",
+          "Postal Code": "60174",
+          "Telephone Number": "630 659-2036",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 11.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 14.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 2.6,
+          "Sulfur (S)": 9.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.64,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.16,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=3.2000",
+          "Cadmium": "=0.3000",
+          "Cobalt": "=2.2000",
+          "Mercury": "=0.0200",
+          "Molybdenum": "=254.0000",
+          "Nickel": "=3.7000",
+          "Lead": "=3.7000",
+          "Selenium": "=1.1000",
+          "Zinc": "=215.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AQUASCAPE ONCE-A-YEAR POND PLANT FERTILIZER CAPSULES 11-3-14",
+    "brand": "AQUASCAPE INC",
+    "manufacturer": {
+      "name": "AQUASCAPE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 11.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 14.0
+    },
+    "macros_pct": {
+      "Mg": 2.6,
+      "S": 9.0
+    },
+    "micros_pct": {
+      "Fe": 0.64,
+      "Mo": 0.16
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9AD06C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 3.2,
+            "Cd": 0.3,
+            "Co": 2.2,
+            "Hg": 0.02,
+            "Mo": 254.0,
+            "Ni": 3.7,
+            "Pb": 3.7,
+            "Se": 1.1,
+            "Zn": 215.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 3.2,
+        "Cd": 0.3,
+        "Co": 2.2,
+        "Hg": 0.02,
+        "Mo": 254.0,
+        "Ni": 3.7,
+        "Pb": 3.7,
+        "Se": 1.1,
+        "Zn": 215.0
+      }
+    }
+  }
+}

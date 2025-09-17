@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"A03494","source_wsda_record":{"wsda_product_number":"(#3566-0001)","product_name":"GYPSUM TO GYPSUM FIBGYP 0-0-0","company_info":{"company":"AMERICAN GYPSUM RECYCLING LLC","Mailing Address":"816 S Kenyon St","Post Office Box":null,"City":"Seattle","State":"WA","Postal Code":"98108","Telephone Number":null,"Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":15.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.4400","Cadmium":"=0.1800","Cobalt":"=0.8900","Mercury":"=0.0820","Molybdenum":"=1.1700","Nickel":"=2.2100","Lead":"<0.8700","Selenium":"=4.2400","Zinc":"<0.7400"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":"87.0000"},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":20.0,"Magnesium (Mg)":null,"Sulfur (S)":15.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.4400","Cadmium":"=0.1800","Cobalt":"=0.8900","Mercury":"=0.0820","Molybdenum":"=1.1700","Nickel":"=2.2100","Lead":"<0.8700","Selenium":"=4.2400","Zinc":"<0.7400"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AMERICAN GYPSUM RECYCLING LLC","label_name":"GYPSUM TO GYPSUM FIBGYP 0-0-0","wsda_reg_no":"(#3566-0001)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A03494",
+  "metadata": {
+    "registrant": "AMERICAN GYPSUM RECYCLING LLC",
+    "label_name": "GYPSUM TO GYPSUM FIBGYP 0-0-0",
+    "wsda_reg_no": "(#3566-0001)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3566-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3566-0001)",
+        "product_name": "GYPSUM TO GYPSUM FIBGYP 0-0-0",
+        "company_info": {
+          "company": "AMERICAN GYPSUM RECYCLING LLC",
+          "Mailing Address": "816 S Kenyon St",
+          "Post Office Box": null,
+          "City": "Seattle",
+          "State": "WA",
+          "Postal Code": "98108",
+          "Telephone Number": null,
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 20.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 15.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.4400",
+          "Cadmium": "=0.1800",
+          "Cobalt": "=0.8900",
+          "Mercury": "=0.0820",
+          "Molybdenum": "=1.1700",
+          "Nickel": "=2.2100",
+          "Lead": "<0.8700",
+          "Selenium": "=4.2400",
+          "Zinc": "<0.7400"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": "87.0000"
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GYPSUM TO GYPSUM FIBGYP 0-0-0",
+    "brand": "AMERICAN GYPSUM RECYCLING LLC",
+    "manufacturer": {
+      "name": "AMERICAN GYPSUM RECYCLING LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 20.0,
+      "S": 15.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A03494-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.44,
+            "Cd": 0.18,
+            "Co": 0.89,
+            "Hg": 0.082,
+            "Mo": 1.17,
+            "Ni": 2.21,
+            "Pb": 0.87,
+            "Se": 4.24,
+            "Zn": 0.74
+          },
+          "detection_limits_ppm": {
+            "As": 0.44,
+            "Pb": 0.87,
+            "Zn": 0.74
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "lt_dl"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.18,
+        "Co": 0.89,
+        "Hg": 0.082,
+        "Mo": 1.17,
+        "Ni": 2.21,
+        "Se": 4.24
+      }
+    }
+  }
+}

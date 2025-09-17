@@ -1,1 +1,148 @@
-{"schema_version":"2025-07-v1","product_id":"DC6B18","source_wsda_record":{"wsda_product_number":"(#2849-0112)","product_name":"TURFGRO 21-0-13 WINTERIZER #39463 21-0-13","company_info":{"company":"MAS","Mailing Address":"PO Box 732","Post Office Box":null,"City":"Newberg","State":"OR","Postal Code":"97132","Telephone Number":"503 633-4562","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1500","Cadmium":"=0.2900","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.1000","Nickel":"=1.8000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=36.1900"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":12.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":2.0,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1500","Cadmium":"=0.2900","Cobalt":"=0.1000","Mercury":"<0.0500","Molybdenum":"=0.1000","Nickel":"=1.8000","Lead":"<0.5000","Selenium":"<0.5000","Zinc":"=36.1900"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MAS","label_name":"TURFGRO 21-0-13 WINTERIZER #39463 21-0-13","wsda_reg_no":"(#2849-0112)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DC6B18",
+  "metadata": {
+    "registrant": "MAS",
+    "label_name": "TURFGRO 21-0-13 WINTERIZER #39463 21-0-13",
+    "wsda_reg_no": "(#2849-0112)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2849-0112)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2849-0112)",
+        "product_name": "TURFGRO 21-0-13 WINTERIZER #39463 21-0-13",
+        "company_info": {
+          "company": "MAS",
+          "Mailing Address": "PO Box 732",
+          "Post Office Box": null,
+          "City": "Newberg",
+          "State": "OR",
+          "Postal Code": "97132",
+          "Telephone Number": "503 633-4562",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 12.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 2.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1500",
+          "Cadmium": "=0.2900",
+          "Cobalt": "=0.1000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=1.8000",
+          "Lead": "<0.5000",
+          "Selenium": "<0.5000",
+          "Zinc": "=36.1900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TURFGRO 21-0-13 WINTERIZER #39463 21-0-13",
+    "brand": "MAS",
+    "manufacturer": {
+      "name": "MAS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "K2O_pct": 13.0
+    },
+    "macros_pct": {
+      "S": 12.0
+    },
+    "micros_pct": {
+      "Fe": 2.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DC6B18-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.15,
+            "Cd": 0.29,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 1.8,
+            "Pb": 0.5,
+            "Se": 0.5,
+            "Zn": 36.19
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 0.5,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.15,
+        "Cd": 0.29,
+        "Co": 0.1,
+        "Mo": 0.1,
+        "Ni": 1.8,
+        "Zn": 36.19
+      }
+    }
+  }
+}

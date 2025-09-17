@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"FD5B03","source_wsda_record":{"wsda_product_number":"(#1762-0057)","product_name":"STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06","company_info":{"company":"KELLOGG GARDEN PRODUCTS","Mailing Address":"350 West Sepulveda","Post Office Box":null,"City":"Carson","State":"CA","Postal Code":"90745","Telephone Number":"951 298-8705","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.06,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1240","Cobalt":"=0.7780","Mercury":"=0.0133","Molybdenum":"=0.5500","Nickel":"=2.0100","Lead":"=4.9600","Selenium":"=1.0000","Zinc":"=49.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":0.1,"Available Phosphoric Acid (P2O5)":0.08,"Soluble Potash (K2O)":0.06,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.0000","Cadmium":"=0.1240","Cobalt":"=0.7780","Mercury":"=0.0133","Molybdenum":"=0.5500","Nickel":"=2.0100","Lead":"=4.9600","Selenium":"=1.0000","Zinc":"=49.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KELLOGG GARDEN PRODUCTS","label_name":"STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06","wsda_reg_no":"(#1762-0057)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FD5B03",
+  "metadata": {
+    "registrant": "KELLOGG GARDEN PRODUCTS",
+    "label_name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
+    "wsda_reg_no": "(#1762-0057)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1762-0057)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1762-0057)",
+        "product_name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
+        "company_info": {
+          "company": "KELLOGG GARDEN PRODUCTS",
+          "Mailing Address": "350 West Sepulveda",
+          "Post Office Box": null,
+          "City": "Carson",
+          "State": "CA",
+          "Postal Code": "90745",
+          "Telephone Number": "951 298-8705",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 0.1,
+          "Available Phosphoric Acid (P2O5)": 0.08,
+          "Soluble Potash (K2O)": 0.06,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.0000",
+          "Cadmium": "=0.1240",
+          "Cobalt": "=0.7780",
+          "Mercury": "=0.0133",
+          "Molybdenum": "=0.5500",
+          "Nickel": "=2.0100",
+          "Lead": "=4.9600",
+          "Selenium": "=1.0000",
+          "Zinc": "=49.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STA-GREEN POTTING MIX PLUS FERTILIZER 0.1-0.08-0.06",
+    "brand": "KELLOGG GARDEN PRODUCTS",
+    "manufacturer": {
+      "name": "KELLOGG GARDEN PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 0.1,
+      "P2O5_pct": 0.08,
+      "K2O_pct": 0.06
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FD5B03-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.0,
+            "Cd": 0.124,
+            "Co": 0.778,
+            "Hg": 0.0133,
+            "Mo": 0.55,
+            "Ni": 2.01,
+            "Pb": 4.96,
+            "Se": 1.0,
+            "Zn": 49.1
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.0,
+        "Cd": 0.124,
+        "Co": 0.778,
+        "Hg": 0.0133,
+        "Mo": 0.55,
+        "Ni": 2.01,
+        "Pb": 4.96,
+        "Se": 1.0,
+        "Zn": 49.1
+      }
+    }
+  }
+}

@@ -1,106 +1,141 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "166BA3",
-  "source_wsda_record": {
-    "wsda_product_number": "(#3817-0001)",
-    "product_name": "CARIBBEAN CORAL POWDER 0-0-0",
-    "company_info": {
-      "company": "SANGO HEALTH LLC",
-      "Mailing Address": "520 Hawthorne Cir.,",
-      "Post Office Box": null,
-      "City": "Lantana",
-      "State": "TX",
-      "Postal Code": "76226",
-      "Telephone Number": "775 298-8707",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 38.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.3900",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=1.3000",
-      "Lead": "=1.2000",
-      "Selenium": "=5.5000",
-      "Zinc": "=2.4900"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": "97.0000",
-      "Calcium Carbonate Equivalent (CaCO3)": "99.0000",
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": null,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": 38.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.3900",
-      "Cobalt": "=0.1000",
-      "Mercury": "=0.0500",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=1.3000",
-      "Lead": "=1.2000",
-      "Selenium": "=5.5000",
-      "Zinc": "=2.4900"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "166BA3",
   "metadata": {
     "registrant": "SANGO HEALTH LLC",
     "label_name": "CARIBBEAN CORAL POWDER 0-0-0",
     "wsda_reg_no": "(#3817-0001)",
     "formulation": "Dry",
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3817-0001)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3817-0001)",
+        "product_name": "CARIBBEAN CORAL POWDER 0-0-0",
+        "company_info": {
+          "company": "SANGO HEALTH LLC",
+          "Mailing Address": "520 Hawthorne Cir.,",
+          "Post Office Box": null,
+          "City": "Lantana",
+          "State": "TX",
+          "Postal Code": "76226",
+          "Telephone Number": "775 298-8707",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": 38.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.3900",
+          "Cobalt": "=0.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=1.3000",
+          "Lead": "=1.2000",
+          "Selenium": "=5.5000",
+          "Zinc": "=2.4900"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": "97.0000",
+          "Calcium Carbonate Equivalent (CaCO3)": "99.0000",
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "CARIBBEAN CORAL POWDER 0-0-0",
+    "brand": "SANGO HEALTH LLC",
+    "manufacturer": {
+      "name": "SANGO HEALTH LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Ca": 38.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "166BA3-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.39,
+            "Co": 0.1,
+            "Hg": 0.05,
+            "Mo": 0.1,
+            "Ni": 1.3,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 2.49
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.39,
+        "Co": 0.1,
+        "Hg": 0.05,
+        "Mo": 0.1,
+        "Ni": 1.3,
+        "Pb": 1.2,
+        "Se": 5.5,
+        "Zn": 2.49
+      }
+    }
   }
 }

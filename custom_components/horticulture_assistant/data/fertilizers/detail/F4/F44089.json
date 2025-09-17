@@ -1,1 +1,151 @@
-{"schema_version":"2025-07-v1","product_id":"F44089","source_wsda_record":{"wsda_product_number":"(#3355-0003)","product_name":"BIOGROW 7-2-4","company_info":{"company":"GREEN HOUSE FEEDING","Mailing Address":"Genesis Regulatory Consulting","Post Office Box":"247 Prospect Ave Ste 4G","City":"Brooklyn","State":"NY","Postal Code":"11215","Telephone Number":"949 419-7000","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":5.9,"Magnesium (Mg)":2.7,"Sulfur (S)":2.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.1600","Cadmium":"=0.0700","Cobalt":"=0.4000","Mercury":"<0.0500","Molybdenum":"=0.4000","Nickel":"=1.4000","Lead":"=2.2000","Selenium":"<0.5000","Zinc":"=57.0700"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":7.0,"Available Phosphoric Acid (P2O5)":2.0,"Soluble Potash (K2O)":4.0,"Calcium (Ca)":5.9,"Magnesium (Mg)":2.7,"Sulfur (S)":2.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.1600","Cadmium":"=0.0700","Cobalt":"=0.4000","Mercury":"<0.0500","Molybdenum":"=0.4000","Nickel":"=1.4000","Lead":"=2.2000","Selenium":"<0.5000","Zinc":"=57.0700"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GREEN HOUSE FEEDING","label_name":"BIOGROW 7-2-4","wsda_reg_no":"(#3355-0003)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "F44089",
+  "metadata": {
+    "registrant": "GREEN HOUSE FEEDING",
+    "label_name": "BIOGROW 7-2-4",
+    "wsda_reg_no": "(#3355-0003)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3355-0003)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3355-0003)",
+        "product_name": "BIOGROW 7-2-4",
+        "company_info": {
+          "company": "GREEN HOUSE FEEDING",
+          "Mailing Address": "Genesis Regulatory Consulting",
+          "Post Office Box": "247 Prospect Ave Ste 4G",
+          "City": "Brooklyn",
+          "State": "NY",
+          "Postal Code": "11215",
+          "Telephone Number": "949 419-7000",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 7.0,
+          "Available Phosphoric Acid (P2O5)": 2.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 5.9,
+          "Magnesium (Mg)": 2.7,
+          "Sulfur (S)": 2.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1600",
+          "Cadmium": "=0.0700",
+          "Cobalt": "=0.4000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.4000",
+          "Nickel": "=1.4000",
+          "Lead": "=2.2000",
+          "Selenium": "<0.5000",
+          "Zinc": "=57.0700"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "BIOGROW 7-2-4",
+    "brand": "GREEN HOUSE FEEDING",
+    "manufacturer": {
+      "name": "GREEN HOUSE FEEDING"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 7.0,
+      "P2O5_pct": 2.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 5.9,
+      "Mg": 2.7,
+      "S": 2.5
+    },
+    "micros_pct": {
+      "Fe": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "F44089-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.16,
+            "Cd": 0.07,
+            "Co": 0.4,
+            "Hg": 0.05,
+            "Mo": 0.4,
+            "Ni": 1.4,
+            "Pb": 2.2,
+            "Se": 0.5,
+            "Zn": 57.07
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.16,
+        "Cd": 0.07,
+        "Co": 0.4,
+        "Mo": 0.4,
+        "Ni": 1.4,
+        "Pb": 2.2,
+        "Zn": 57.07
+      }
+    }
+  }
+}

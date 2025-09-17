@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"DBF0EE","source_wsda_record":{"wsda_product_number":"(#3842-0020)","product_name":"ECOFUSION ZINC SULFATE MONOHYDRATE ZN/35 POWDER 0-0-0","company_info":{"company":"ECOFUSION INC","Mailing Address":"PO Box 251408","Post Office Box":null,"City":"Plano","State":"TX","Postal Code":"75025","Telephone Number":"972 403-7449","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":35.0},"reported_metals":{"Arsenic":"=2.0000","Cadmium":"=4.0000","Cobalt":"=6.3200","Mercury":"=0.0700","Molybdenum":"=7.4000","Nickel":"=6.3200","Lead":"=4.3000","Selenium":"=7.4500","Zinc":"=35000.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":17.5,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":35.0},"heavy_metals":{"Arsenic":"=2.0000","Cadmium":"=4.0000","Cobalt":"=6.3200","Mercury":"=0.0700","Molybdenum":"=7.4000","Nickel":"=6.3200","Lead":"=4.3000","Selenium":"=7.4500","Zinc":"=35000.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ECOFUSION INC","label_name":"ECOFUSION ZINC SULFATE MONOHYDRATE ZN/35 POWDER 0-0-0","wsda_reg_no":"(#3842-0020)","formulation":"Dry","first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "DBF0EE",
+  "metadata": {
+    "registrant": "ECOFUSION INC",
+    "label_name": "ECOFUSION ZINC SULFATE MONOHYDRATE ZN/35 POWDER 0-0-0",
+    "wsda_reg_no": "(#3842-0020)",
+    "formulation": "Dry",
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3842-0020)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3842-0020)",
+        "product_name": "ECOFUSION ZINC SULFATE MONOHYDRATE ZN/35 POWDER 0-0-0",
+        "company_info": {
+          "company": "ECOFUSION INC",
+          "Mailing Address": "PO Box 251408",
+          "Post Office Box": null,
+          "City": "Plano",
+          "State": "TX",
+          "Postal Code": "75025",
+          "Telephone Number": "972 403-7449",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 17.5,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 35.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.0000",
+          "Cadmium": "=4.0000",
+          "Cobalt": "=6.3200",
+          "Mercury": "=0.0700",
+          "Molybdenum": "=7.4000",
+          "Nickel": "=6.3200",
+          "Lead": "=4.3000",
+          "Selenium": "=7.4500",
+          "Zinc": "=35000.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ECOFUSION ZINC SULFATE MONOHYDRATE ZN/35 POWDER 0-0-0",
+    "brand": "ECOFUSION INC",
+    "manufacturer": {
+      "name": "ECOFUSION INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 17.5
+    },
+    "micros_pct": {
+      "Zn": 35.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "DBF0EE-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.0,
+            "Cd": 4.0,
+            "Co": 6.32,
+            "Hg": 0.07,
+            "Mo": 7.4,
+            "Ni": 6.32,
+            "Pb": 4.3,
+            "Se": 7.45,
+            "Zn": 35000.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.0,
+        "Cd": 4.0,
+        "Co": 6.32,
+        "Hg": 0.07,
+        "Mo": 7.4,
+        "Ni": 6.32,
+        "Pb": 4.3,
+        "Se": 7.45,
+        "Zn": 35000.0
+      }
+    }
+  }
+}

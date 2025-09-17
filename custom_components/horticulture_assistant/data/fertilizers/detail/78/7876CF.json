@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7876CF",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1585-0007)",
-    "product_name": "THE SANCTUARY SANCTUARY 3-3-4",
-    "company_info": {
-      "company": "SANCTUARY (THE)",
-      "Mailing Address": "PO Box 2330",
-      "Post Office Box": null,
-      "City": "Lady Lake",
-      "State": "FL",
-      "Postal Code": "32158",
-      "Telephone Number": "970 726-4848",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.9000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=3.7000",
-      "Mercury": "<0.0270",
-      "Molybdenum": "=2.3000",
-      "Nickel": "=6.1000",
-      "Lead": "=0.7600",
-      "Selenium": "=0.9300",
-      "Zinc": "=190.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 3.0,
-      "Available Phosphoric Acid (P2O5)": 3.0,
-      "Soluble Potash (K2O)": 4.0,
-      "Calcium (Ca)": 3.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.0,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.9000",
-      "Cadmium": "<0.3000",
-      "Cobalt": "=3.7000",
-      "Mercury": "<0.0270",
-      "Molybdenum": "=2.3000",
-      "Nickel": "=6.1000",
-      "Lead": "=0.7600",
-      "Selenium": "=0.9300",
-      "Zinc": "=190.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7876CF",
   "metadata": {
     "registrant": "SANCTUARY (THE)",
     "label_name": "THE SANCTUARY SANCTUARY 3-3-4",
     "wsda_reg_no": "(#1585-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1585-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1585-0007)",
+        "product_name": "THE SANCTUARY SANCTUARY 3-3-4",
+        "company_info": {
+          "company": "SANCTUARY (THE)",
+          "Mailing Address": "PO Box 2330",
+          "Post Office Box": null,
+          "City": "Lady Lake",
+          "State": "FL",
+          "Postal Code": "32158",
+          "Telephone Number": "970 726-4848",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 3.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 4.0,
+          "Calcium (Ca)": 3.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.9000",
+          "Cadmium": "<0.3000",
+          "Cobalt": "=3.7000",
+          "Mercury": "<0.0270",
+          "Molybdenum": "=2.3000",
+          "Nickel": "=6.1000",
+          "Lead": "=0.7600",
+          "Selenium": "=0.9300",
+          "Zinc": "=190.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE SANCTUARY SANCTUARY 3-3-4",
+    "brand": "SANCTUARY (THE)",
+    "manufacturer": {
+      "name": "SANCTUARY (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 3.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 4.0
+    },
+    "macros_pct": {
+      "Ca": 3.0,
+      "S": 1.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7876CF-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.9,
+            "Cd": 0.3,
+            "Co": 3.7,
+            "Hg": 0.027,
+            "Mo": 2.3,
+            "Ni": 6.1,
+            "Pb": 0.76,
+            "Se": 0.93,
+            "Zn": 190.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.3,
+            "Hg": 0.027
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.9,
+        "Co": 3.7,
+        "Mo": 2.3,
+        "Ni": 6.1,
+        "Pb": 0.76,
+        "Se": 0.93,
+        "Zn": 190.0
+      }
+    }
   }
 }

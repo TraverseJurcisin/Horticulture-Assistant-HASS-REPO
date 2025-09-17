@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"C71827","source_wsda_record":{"wsda_product_number":"(#3132-0022)","product_name":"VALLEY AGRONOMICS FERTILIZER 21-0-0 AMMONIUM SULFATE 21-0-0","company_info":{"company":"VALLEY AGRONOMICS LLC","Mailing Address":"PO Box 365","Post Office Box":null,"City":"Rupert","State":"ID","Postal Code":"83350","Telephone Number":"503 845-8125","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":24.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<0.6700","Cadmium":"=0.0500","Cobalt":"<0.3340","Mercury":"=0.6180","Molybdenum":"<0.3340","Nickel":"=0.3200","Lead":"=4.3400","Selenium":"<0.3340","Zinc":"=9.1000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":21.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":24.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<0.6700","Cadmium":"=0.0500","Cobalt":"<0.3340","Mercury":"=0.6180","Molybdenum":"<0.3340","Nickel":"=0.3200","Lead":"=4.3400","Selenium":"<0.3340","Zinc":"=9.1000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"VALLEY AGRONOMICS LLC","label_name":"VALLEY AGRONOMICS FERTILIZER 21-0-0 AMMONIUM SULFATE 21-0-0","wsda_reg_no":"(#3132-0022)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C71827",
+  "metadata": {
+    "registrant": "VALLEY AGRONOMICS LLC",
+    "label_name": "VALLEY AGRONOMICS FERTILIZER 21-0-0 AMMONIUM SULFATE 21-0-0",
+    "wsda_reg_no": "(#3132-0022)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3132-0022)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3132-0022)",
+        "product_name": "VALLEY AGRONOMICS FERTILIZER 21-0-0 AMMONIUM SULFATE 21-0-0",
+        "company_info": {
+          "company": "VALLEY AGRONOMICS LLC",
+          "Mailing Address": "PO Box 365",
+          "Post Office Box": null,
+          "City": "Rupert",
+          "State": "ID",
+          "Postal Code": "83350",
+          "Telephone Number": "503 845-8125",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 24.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.6700",
+          "Cadmium": "=0.0500",
+          "Cobalt": "<0.3340",
+          "Mercury": "=0.6180",
+          "Molybdenum": "<0.3340",
+          "Nickel": "=0.3200",
+          "Lead": "=4.3400",
+          "Selenium": "<0.3340",
+          "Zinc": "=9.1000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "VALLEY AGRONOMICS FERTILIZER 21-0-0 AMMONIUM SULFATE 21-0-0",
+    "brand": "VALLEY AGRONOMICS LLC",
+    "manufacturer": {
+      "name": "VALLEY AGRONOMICS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0
+    },
+    "macros_pct": {
+      "S": 24.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C71827-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.67,
+            "Cd": 0.05,
+            "Co": 0.334,
+            "Hg": 0.618,
+            "Mo": 0.334,
+            "Ni": 0.32,
+            "Pb": 4.34,
+            "Se": 0.334,
+            "Zn": 9.1
+          },
+          "detection_limits_ppm": {
+            "As": 0.67,
+            "Co": 0.334,
+            "Mo": 0.334,
+            "Se": 0.334
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 0.05,
+        "Hg": 0.618,
+        "Ni": 0.32,
+        "Pb": 4.34,
+        "Zn": 9.1
+      }
+    }
+  }
+}

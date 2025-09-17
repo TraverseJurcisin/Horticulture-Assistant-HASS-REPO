@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"B05962","source_wsda_record":{"wsda_product_number":"(#0198-0081)","product_name":"THE MCGREGOR COMPANY RPM 0-0-18","company_info":{"company":"MCGREGOR COMPANY, (THE)","Mailing Address":"PO Box 740","Post Office Box":null,"City":"Colfax","State":"WA","Postal Code":"99111-0740","Telephone Number":"509 397-4355","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.005,"Copper (Cu)":0.75,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.75},"reported_metals":{"Arsenic":"=0.0100","Cadmium":"=0.0100","Cobalt":"=95.0000","Mercury":"=0.0100","Molybdenum":"=95.0000","Nickel":"=0.0100","Lead":"=0.0100","Selenium":"=0.0100","Zinc":"=7250.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":18.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":0.005,"Copper (Cu)":0.75,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":0.005,"Sodium (Na)":null,"Zinc (Zn)":0.75},"heavy_metals":{"Arsenic":"=0.0100","Cadmium":"=0.0100","Cobalt":"=95.0000","Mercury":"=0.0100","Molybdenum":"=95.0000","Nickel":"=0.0100","Lead":"=0.0100","Selenium":"=0.0100","Zinc":"=7250.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"MCGREGOR COMPANY, (THE)","label_name":"THE MCGREGOR COMPANY RPM 0-0-18","wsda_reg_no":"(#0198-0081)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "B05962",
+  "metadata": {
+    "registrant": "MCGREGOR COMPANY, (THE)",
+    "label_name": "THE MCGREGOR COMPANY RPM 0-0-18",
+    "wsda_reg_no": "(#0198-0081)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0198-0081)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0198-0081)",
+        "product_name": "THE MCGREGOR COMPANY RPM 0-0-18",
+        "company_info": {
+          "company": "MCGREGOR COMPANY, (THE)",
+          "Mailing Address": "PO Box 740",
+          "Post Office Box": null,
+          "City": "Colfax",
+          "State": "WA",
+          "Postal Code": "99111-0740",
+          "Telephone Number": "509 397-4355",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 18.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.005,
+          "Copper (Cu)": 0.75,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": 0.005,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.75
+        },
+        "reported_metals": {
+          "Arsenic": "=0.0100",
+          "Cadmium": "=0.0100",
+          "Cobalt": "=95.0000",
+          "Mercury": "=0.0100",
+          "Molybdenum": "=95.0000",
+          "Nickel": "=0.0100",
+          "Lead": "=0.0100",
+          "Selenium": "=0.0100",
+          "Zinc": "=7250.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE MCGREGOR COMPANY RPM 0-0-18",
+    "brand": "MCGREGOR COMPANY, (THE)",
+    "manufacturer": {
+      "name": "MCGREGOR COMPANY, (THE)"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 18.0
+    },
+    "micros_pct": {
+      "Zn": 0.75,
+      "Cu": 0.75,
+      "Mo": 0.005
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "B05962-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.01,
+            "Cd": 0.01,
+            "Co": 95.0,
+            "Hg": 0.01,
+            "Mo": 95.0,
+            "Ni": 0.01,
+            "Pb": 0.01,
+            "Se": 0.01,
+            "Zn": 7250.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.01,
+        "Cd": 0.01,
+        "Co": 95.0,
+        "Hg": 0.01,
+        "Mo": 95.0,
+        "Ni": 0.01,
+        "Pb": 0.01,
+        "Se": 0.01,
+        "Zn": 7250.0
+      }
+    }
+  }
+}

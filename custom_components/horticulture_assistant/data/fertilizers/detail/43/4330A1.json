@@ -1,106 +1,147 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "4330A1",
-  "source_wsda_record": {
-    "wsda_product_number": "(#0193-0151)",
-    "product_name": "GROGANIC 6-6-6 ORGANIC 6-6-6",
-    "company_info": {
-      "company": "LOVELAND PRODUCTS INC",
-      "Mailing Address": "PO Box 1286",
-      "Post Office Box": null,
-      "City": "Greeley",
-      "State": "CO",
-      "Postal Code": "80632",
-      "Telephone Number": "970 685-3737",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 9.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=0.3000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=2.5000",
-      "Nickel": "=2.0000",
-      "Lead": "<1.2000",
-      "Selenium": "<5.5000",
-      "Zinc": "=141.6000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 6.0,
-      "Available Phosphoric Acid (P2O5)": 6.0,
-      "Soluble Potash (K2O)": 6.0,
-      "Calcium (Ca)": 9.0,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": 1.9,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=0.5000",
-      "Cadmium": "=0.2000",
-      "Cobalt": "=0.3000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=2.5000",
-      "Nickel": "=2.0000",
-      "Lead": "<1.2000",
-      "Selenium": "<5.5000",
-      "Zinc": "=141.6000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "4330A1",
   "metadata": {
     "registrant": "LOVELAND PRODUCTS INC",
     "label_name": "GROGANIC 6-6-6 ORGANIC 6-6-6",
     "wsda_reg_no": "(#0193-0151)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0193-0151)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0193-0151)",
+        "product_name": "GROGANIC 6-6-6 ORGANIC 6-6-6",
+        "company_info": {
+          "company": "LOVELAND PRODUCTS INC",
+          "Mailing Address": "PO Box 1286",
+          "Post Office Box": null,
+          "City": "Greeley",
+          "State": "CO",
+          "Postal Code": "80632",
+          "Telephone Number": "970 685-3737",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 6.0,
+          "Available Phosphoric Acid (P2O5)": 6.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": 9.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 1.9,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.5000",
+          "Cadmium": "=0.2000",
+          "Cobalt": "=0.3000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=2.5000",
+          "Nickel": "=2.0000",
+          "Lead": "<1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=141.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GROGANIC 6-6-6 ORGANIC 6-6-6",
+    "brand": "LOVELAND PRODUCTS INC",
+    "manufacturer": {
+      "name": "LOVELAND PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 6.0,
+      "P2O5_pct": 6.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Ca": 9.0,
+      "S": 1.9
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "4330A1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.5,
+            "Cd": 0.2,
+            "Co": 0.3,
+            "Hg": 0.05,
+            "Mo": 2.5,
+            "Ni": 2.0,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 141.6
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Pb": 1.2,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.5,
+        "Cd": 0.2,
+        "Co": 0.3,
+        "Mo": 2.5,
+        "Ni": 2.0,
+        "Zn": 141.6
+      }
+    }
   }
 }

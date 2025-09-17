@@ -1,106 +1,140 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "22E1C7",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2839-0007)",
-    "product_name": "AWARD TURF FERTILIZER WITH 0.2% MERIT 21-0-8",
-    "company_info": {
-      "company": "EAU CLAIRE COOP OIL COMPANY",
-      "Mailing Address": "PO Box 837",
-      "Post Office Box": null,
-      "City": "Eau Claire",
-      "State": "WI",
-      "Postal Code": "54702-0837",
-      "Telephone Number": "715 876-6422",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "<0.9900",
-      "Cadmium": "<0.9900",
-      "Cobalt": "<0.9900",
-      "Mercury": "<0.0025",
-      "Molybdenum": "<0.9900",
-      "Nickel": "<4.0000",
-      "Lead": "<2.0000",
-      "Selenium": "<4.0000",
-      "Zinc": "<20.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 21.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": 8.0,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "<0.9900",
-      "Cadmium": "<0.9900",
-      "Cobalt": "<0.9900",
-      "Mercury": "<0.0025",
-      "Molybdenum": "<0.9900",
-      "Nickel": "<4.0000",
-      "Lead": "<2.0000",
-      "Selenium": "<4.0000",
-      "Zinc": "<20.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "22E1C7",
   "metadata": {
     "registrant": "EAU CLAIRE COOP OIL COMPANY",
     "label_name": "AWARD TURF FERTILIZER WITH 0.2% MERIT 21-0-8",
     "wsda_reg_no": "(#2839-0007)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2839-0007)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2839-0007)",
+        "product_name": "AWARD TURF FERTILIZER WITH 0.2% MERIT 21-0-8",
+        "company_info": {
+          "company": "EAU CLAIRE COOP OIL COMPANY",
+          "Mailing Address": "PO Box 837",
+          "Post Office Box": null,
+          "City": "Eau Claire",
+          "State": "WI",
+          "Postal Code": "54702-0837",
+          "Telephone Number": "715 876-6422",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 21.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 8.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<0.9900",
+          "Cadmium": "<0.9900",
+          "Cobalt": "<0.9900",
+          "Mercury": "<0.0025",
+          "Molybdenum": "<0.9900",
+          "Nickel": "<4.0000",
+          "Lead": "<2.0000",
+          "Selenium": "<4.0000",
+          "Zinc": "<20.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "AWARD TURF FERTILIZER WITH 0.2% MERIT 21-0-8",
+    "brand": "EAU CLAIRE COOP OIL COMPANY",
+    "manufacturer": {
+      "name": "EAU CLAIRE COOP OIL COMPANY"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 21.0,
+      "K2O_pct": 8.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "22E1C7-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.99,
+            "Cd": 0.99,
+            "Co": 0.99,
+            "Hg": 0.0025,
+            "Mo": 0.99,
+            "Ni": 4.0,
+            "Pb": 2.0,
+            "Se": 4.0,
+            "Zn": 20.0
+          },
+          "detection_limits_ppm": {
+            "As": 0.99,
+            "Cd": 0.99,
+            "Co": 0.99,
+            "Hg": 0.0025,
+            "Mo": 0.99,
+            "Ni": 4.0,
+            "Pb": 2.0,
+            "Se": 4.0,
+            "Zn": 20.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "lt_dl"
+          }
+        }
+      ]
+    }
   }
 }

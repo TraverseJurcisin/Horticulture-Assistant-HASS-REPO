@@ -1,106 +1,149 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "7C3238",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2882-0016)",
-    "product_name": "QLF POWER AID 4-0-0",
-    "company_info": {
-      "company": "QUALITY LIQUID FEEDS INC",
-      "Mailing Address": "3586 Hwy 23 N",
-      "Post Office Box": null,
-      "City": "Dodgeville",
-      "State": "WI",
-      "Postal Code": "53533",
-      "Telephone Number": "608 935-2345",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 3.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": 0.25,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "reported_metals": {
-      "Arsenic": "=2.5200",
-      "Cadmium": "=0.6100",
-      "Cobalt": "=20.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=43.9000",
-      "Nickel": "=1.9700",
-      "Lead": "=2.3400",
-      "Selenium": "<1.5000",
-      "Zinc": "=9280.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 4.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 3.0,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": 0.002,
-      "Copper (Cu)": 0.5,
-      "Iron (Fe)": 0.25,
-      "Manganese (Mn)": 1.0,
-      "Molybdenum (Mo)": 0.008,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 1.0
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.5200",
-      "Cadmium": "=0.6100",
-      "Cobalt": "=20.6000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=43.9000",
-      "Nickel": "=1.9700",
-      "Lead": "=2.3400",
-      "Selenium": "<1.5000",
-      "Zinc": "=9280.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "7C3238",
   "metadata": {
     "registrant": "QUALITY LIQUID FEEDS INC",
     "label_name": "QLF POWER AID 4-0-0",
     "wsda_reg_no": "(#2882-0016)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2882-0016)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2882-0016)",
+        "product_name": "QLF POWER AID 4-0-0",
+        "company_info": {
+          "company": "QUALITY LIQUID FEEDS INC",
+          "Mailing Address": "3586 Hwy 23 N",
+          "Post Office Box": null,
+          "City": "Dodgeville",
+          "State": "WI",
+          "Postal Code": "53533",
+          "Telephone Number": "608 935-2345",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 4.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 3.0,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.002,
+          "Copper (Cu)": 0.5,
+          "Iron (Fe)": 0.25,
+          "Manganese (Mn)": 1.0,
+          "Molybdenum (Mo)": 0.008,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.0
+        },
+        "reported_metals": {
+          "Arsenic": "=2.5200",
+          "Cadmium": "=0.6100",
+          "Cobalt": "=20.6000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=43.9000",
+          "Nickel": "=1.9700",
+          "Lead": "=2.3400",
+          "Selenium": "<1.5000",
+          "Zinc": "=9280.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "QLF POWER AID 4-0-0",
+    "brand": "QUALITY LIQUID FEEDS INC",
+    "manufacturer": {
+      "name": "QUALITY LIQUID FEEDS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 4.0
+    },
+    "micros_pct": {
+      "Fe": 0.25,
+      "Mn": 1.0,
+      "Zn": 1.0,
+      "Cu": 0.5,
+      "B": 3.0,
+      "Mo": 0.008
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "7C3238-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.52,
+            "Cd": 0.61,
+            "Co": 20.6,
+            "Hg": 0.05,
+            "Mo": 43.9,
+            "Ni": 1.97,
+            "Pb": 2.34,
+            "Se": 1.5,
+            "Zn": 9280.0
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 1.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.52,
+        "Cd": 0.61,
+        "Co": 20.6,
+        "Mo": 43.9,
+        "Ni": 1.97,
+        "Pb": 2.34,
+        "Zn": 9280.0
+      }
+    }
   }
 }

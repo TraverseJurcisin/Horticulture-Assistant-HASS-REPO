@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"AD928F","source_wsda_record":{"wsda_product_number":"(#1168-0070)","product_name":"EARTH JUICE RAINBOW MIX PRO BLOOM 2-14-2","company_info":{"company":"OGM","Mailing Address":"PO Box 3442","Post Office Box":null,"City":"Chico","State":"CA","Postal Code":"95973","Telephone Number":"530 961-4659","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.9200","Cadmium":"=0.1500","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.7000","Nickel":"=1.0000","Lead":"=3.3000","Selenium":"<0.5000","Zinc":"=95.7800"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":2.0,"Calcium (Ca)":12.0,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.9200","Cadmium":"=0.1500","Cobalt":"=0.2000","Mercury":"<0.0500","Molybdenum":"=0.7000","Nickel":"=1.0000","Lead":"=3.3000","Selenium":"<0.5000","Zinc":"=95.7800"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"OGM","label_name":"EARTH JUICE RAINBOW MIX PRO BLOOM 2-14-2","wsda_reg_no":"(#1168-0070)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "AD928F",
+  "metadata": {
+    "registrant": "OGM",
+    "label_name": "EARTH JUICE RAINBOW MIX PRO BLOOM 2-14-2",
+    "wsda_reg_no": "(#1168-0070)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1168-0070)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1168-0070)",
+        "product_name": "EARTH JUICE RAINBOW MIX PRO BLOOM 2-14-2",
+        "company_info": {
+          "company": "OGM",
+          "Mailing Address": "PO Box 3442",
+          "Post Office Box": null,
+          "City": "Chico",
+          "State": "CA",
+          "Postal Code": "95973",
+          "Telephone Number": "530 961-4659",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": 2.0,
+          "Calcium (Ca)": 12.0,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.9200",
+          "Cadmium": "=0.1500",
+          "Cobalt": "=0.2000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=0.7000",
+          "Nickel": "=1.0000",
+          "Lead": "=3.3000",
+          "Selenium": "<0.5000",
+          "Zinc": "=95.7800"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "EARTH JUICE RAINBOW MIX PRO BLOOM 2-14-2",
+    "brand": "OGM",
+    "manufacturer": {
+      "name": "OGM"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 14.0,
+      "K2O_pct": 2.0
+    },
+    "macros_pct": {
+      "Ca": 12.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "AD928F-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.92,
+            "Cd": 0.15,
+            "Co": 0.2,
+            "Hg": 0.05,
+            "Mo": 0.7,
+            "Ni": 1.0,
+            "Pb": 3.3,
+            "Se": 0.5,
+            "Zn": 95.78
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.05,
+            "Se": 0.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.92,
+        "Cd": 0.15,
+        "Co": 0.2,
+        "Mo": 0.7,
+        "Ni": 1.0,
+        "Pb": 3.3,
+        "Zn": 95.78
+      }
+    }
+  }
+}

@@ -1,1 +1,153 @@
-{"schema_version":"2025-07-v1","product_id":"E708DA","source_wsda_record":{"wsda_product_number":"(#2319-0205)","product_name":"OSMOCOTE BLEND 17-3-6 4-6M NITROGEN 17-3-6","company_info":{"company":"EVERRIS NA INC","Mailing Address":"PO Box 3310","Post Office Box":null,"City":"Dublin","State":"OH","Postal Code":"43016","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":4.8,"Sulfur (S)":17.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.93,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"reported_metals":{"Arsenic":"=1.1300","Cadmium":"<0.2250","Cobalt":"=2.8000","Mercury":"=0.0234","Molybdenum":"=3.3200","Nickel":"=29.5000","Lead":"=1.4300","Selenium":"<0.6760","Zinc":"=521.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":17.0,"Available Phosphoric Acid (P2O5)":3.0,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":4.8,"Sulfur (S)":17.2,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":0.05,"Iron (Fe)":0.93,"Manganese (Mn)":0.3,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":0.1},"heavy_metals":{"Arsenic":"=1.1300","Cadmium":"<0.2250","Cobalt":"=2.8000","Mercury":"=0.0234","Molybdenum":"=3.3200","Nickel":"=29.5000","Lead":"=1.4300","Selenium":"<0.6760","Zinc":"=521.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"EVERRIS NA INC","label_name":"OSMOCOTE BLEND 17-3-6 4-6M NITROGEN 17-3-6","wsda_reg_no":"(#2319-0205)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E708DA",
+  "metadata": {
+    "registrant": "EVERRIS NA INC",
+    "label_name": "OSMOCOTE BLEND 17-3-6 4-6M NITROGEN 17-3-6",
+    "wsda_reg_no": "(#2319-0205)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2319-0205)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2319-0205)",
+        "product_name": "OSMOCOTE BLEND 17-3-6 4-6M NITROGEN 17-3-6",
+        "company_info": {
+          "company": "EVERRIS NA INC",
+          "Mailing Address": "PO Box 3310",
+          "Post Office Box": null,
+          "City": "Dublin",
+          "State": "OH",
+          "Postal Code": "43016",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 17.0,
+          "Available Phosphoric Acid (P2O5)": 3.0,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 4.8,
+          "Sulfur (S)": 17.2,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 0.05,
+          "Iron (Fe)": 0.93,
+          "Manganese (Mn)": 0.3,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 0.1
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1300",
+          "Cadmium": "<0.2250",
+          "Cobalt": "=2.8000",
+          "Mercury": "=0.0234",
+          "Molybdenum": "=3.3200",
+          "Nickel": "=29.5000",
+          "Lead": "=1.4300",
+          "Selenium": "<0.6760",
+          "Zinc": "=521.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "OSMOCOTE BLEND 17-3-6 4-6M NITROGEN 17-3-6",
+    "brand": "EVERRIS NA INC",
+    "manufacturer": {
+      "name": "EVERRIS NA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 17.0,
+      "P2O5_pct": 3.0,
+      "K2O_pct": 6.0
+    },
+    "macros_pct": {
+      "Mg": 4.8,
+      "S": 17.2
+    },
+    "micros_pct": {
+      "Fe": 0.93,
+      "Mn": 0.3,
+      "Zn": 0.1,
+      "Cu": 0.05
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E708DA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.13,
+            "Cd": 0.225,
+            "Co": 2.8,
+            "Hg": 0.0234,
+            "Mo": 3.32,
+            "Ni": 29.5,
+            "Pb": 1.43,
+            "Se": 0.676,
+            "Zn": 521.0
+          },
+          "detection_limits_ppm": {
+            "Cd": 0.225,
+            "Se": 0.676
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "lt_dl",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.13,
+        "Co": 2.8,
+        "Hg": 0.0234,
+        "Mo": 3.32,
+        "Ni": 29.5,
+        "Pb": 1.43,
+        "Zn": 521.0
+      }
+    }
+  }
+}

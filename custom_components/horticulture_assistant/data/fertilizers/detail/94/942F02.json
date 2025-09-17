@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"942F02","source_wsda_record":{"wsda_product_number":"(#1877-0018)","product_name":"TRUE 13-0-0 PELLETED FERTILIZER 13-0-0","company_info":{"company":"TRUE ORGANIC PRODUCTS INC","Mailing Address":"PO Box 7192","Post Office Box":null,"City":"Spreckels","State":"CA","Postal Code":"93962","Telephone Number":"831 375-4796","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.8000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"<1.2000","Molybdenum":"<1.0000","Nickel":"=2.9000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=91.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":13.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.8000","Cadmium":"=0.1000","Cobalt":"=0.2000","Mercury":"<1.2000","Molybdenum":"<1.0000","Nickel":"=2.9000","Lead":"<1.2000","Selenium":"<5.5000","Zinc":"=91.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TRUE ORGANIC PRODUCTS INC","label_name":"TRUE 13-0-0 PELLETED FERTILIZER 13-0-0","wsda_reg_no":"(#1877-0018)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "942F02",
+  "metadata": {
+    "registrant": "TRUE ORGANIC PRODUCTS INC",
+    "label_name": "TRUE 13-0-0 PELLETED FERTILIZER 13-0-0",
+    "wsda_reg_no": "(#1877-0018)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1877-0018)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1877-0018)",
+        "product_name": "TRUE 13-0-0 PELLETED FERTILIZER 13-0-0",
+        "company_info": {
+          "company": "TRUE ORGANIC PRODUCTS INC",
+          "Mailing Address": "PO Box 7192",
+          "Post Office Box": null,
+          "City": "Spreckels",
+          "State": "CA",
+          "Postal Code": "93962",
+          "Telephone Number": "831 375-4796",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 13.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.8000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "=0.2000",
+          "Mercury": "<1.2000",
+          "Molybdenum": "<1.0000",
+          "Nickel": "=2.9000",
+          "Lead": "<1.2000",
+          "Selenium": "<5.5000",
+          "Zinc": "=91.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TRUE 13-0-0 PELLETED FERTILIZER 13-0-0",
+    "brand": "TRUE ORGANIC PRODUCTS INC",
+    "manufacturer": {
+      "name": "TRUE ORGANIC PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 13.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "942F02-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.8,
+            "Cd": 0.1,
+            "Co": 0.2,
+            "Hg": 1.2,
+            "Mo": 1.0,
+            "Ni": 2.9,
+            "Pb": 1.2,
+            "Se": 5.5,
+            "Zn": 91.5
+          },
+          "detection_limits_ppm": {
+            "Hg": 1.2,
+            "Mo": 1.0,
+            "Pb": 1.2,
+            "Se": 5.5
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.8,
+        "Cd": 0.1,
+        "Co": 0.2,
+        "Ni": 2.9,
+        "Zn": 91.5
+      }
+    }
+  }
+}

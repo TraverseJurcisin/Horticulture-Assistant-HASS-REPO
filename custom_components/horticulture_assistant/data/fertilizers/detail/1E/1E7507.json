@@ -1,106 +1,148 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1E7507",
-  "source_wsda_record": {
-    "wsda_product_number": "(#1886-0253)",
-    "product_name": "MAX-IN FOR BEANS 2-0-0",
-    "company_info": {
-      "company": "WINFIELD SOLUTIONS LLC",
-      "Mailing Address": "PO Box 64589",
-      "Post Office Box": null,
-      "City": "St Paul",
-      "State": "MN",
-      "Postal Code": "55164",
-      "Telephone Number": "651 375-7228",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 3.2,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.1
-    },
-    "reported_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=74.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=46.1000",
-      "Nickel": "=20.2000",
-      "Lead": "=7.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=22060.0000"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 2.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": 0.2,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 0.3,
-      "Manganese (Mn)": 3.2,
-      "Molybdenum (Mo)": 0.01,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": 2.1
-    },
-    "heavy_metals": {
-      "Arsenic": "<10.0000",
-      "Cadmium": "=1.1500",
-      "Cobalt": "=74.0000",
-      "Mercury": "<0.0500",
-      "Molybdenum": "=46.1000",
-      "Nickel": "=20.2000",
-      "Lead": "=7.0000",
-      "Selenium": "<10.0000",
-      "Zinc": "=22060.0000"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1E7507",
   "metadata": {
     "registrant": "WINFIELD SOLUTIONS LLC",
     "label_name": "MAX-IN FOR BEANS 2-0-0",
     "wsda_reg_no": "(#1886-0253)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1886-0253)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1886-0253)",
+        "product_name": "MAX-IN FOR BEANS 2-0-0",
+        "company_info": {
+          "company": "WINFIELD SOLUTIONS LLC",
+          "Mailing Address": "PO Box 64589",
+          "Post Office Box": null,
+          "City": "St Paul",
+          "State": "MN",
+          "Postal Code": "55164",
+          "Telephone Number": "651 375-7228",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.2,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.3,
+          "Manganese (Mn)": 3.2,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 2.1
+        },
+        "reported_metals": {
+          "Arsenic": "<10.0000",
+          "Cadmium": "=1.1500",
+          "Cobalt": "=74.0000",
+          "Mercury": "<0.0500",
+          "Molybdenum": "=46.1000",
+          "Nickel": "=20.2000",
+          "Lead": "=7.0000",
+          "Selenium": "<10.0000",
+          "Zinc": "=22060.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "MAX-IN FOR BEANS 2-0-0",
+    "brand": "WINFIELD SOLUTIONS LLC",
+    "manufacturer": {
+      "name": "WINFIELD SOLUTIONS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0
+    },
+    "micros_pct": {
+      "Fe": 0.3,
+      "Mn": 3.2,
+      "Zn": 2.1,
+      "B": 0.2,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1E7507-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 10.0,
+            "Cd": 1.15,
+            "Co": 74.0,
+            "Hg": 0.05,
+            "Mo": 46.1,
+            "Ni": 20.2,
+            "Pb": 7.0,
+            "Se": 10.0,
+            "Zn": 22060.0
+          },
+          "detection_limits_ppm": {
+            "As": 10.0,
+            "Hg": 0.05,
+            "Se": 10.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Cd": 1.15,
+        "Co": 74.0,
+        "Mo": 46.1,
+        "Ni": 20.2,
+        "Pb": 7.0,
+        "Zn": 22060.0
+      }
+    }
   }
 }

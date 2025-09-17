@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"87B4CB","source_wsda_record":{"wsda_product_number":"(#1031-0019)","product_name":"SQM ULTRASOL MOP MURIATE OF POTASH 0-0-60","company_info":{"company":"SQM NORTH AMERICA CORP","Mailing Address":"2727 Paces Ferry Rd Bldg 2 Ste","Post Office Box":null,"City":"Atlanta","State":"GA","Postal Code":"30339","Telephone Number":"770 916-9400","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":60.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2900","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"<0.0200","Molybdenum":"<0.2000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=1.0000","Zinc":"=2.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":60.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2900","Cadmium":"=1.0000","Cobalt":"=5.0000","Mercury":"<0.0200","Molybdenum":"<0.2000","Nickel":"=2.5000","Lead":"=5.0000","Selenium":"=1.0000","Zinc":"=2.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"SQM NORTH AMERICA CORP","label_name":"SQM ULTRASOL MOP MURIATE OF POTASH 0-0-60","wsda_reg_no":"(#1031-0019)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "87B4CB",
+  "metadata": {
+    "registrant": "SQM NORTH AMERICA CORP",
+    "label_name": "SQM ULTRASOL MOP MURIATE OF POTASH 0-0-60",
+    "wsda_reg_no": "(#1031-0019)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1031-0019)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1031-0019)",
+        "product_name": "SQM ULTRASOL MOP MURIATE OF POTASH 0-0-60",
+        "company_info": {
+          "company": "SQM NORTH AMERICA CORP",
+          "Mailing Address": "2727 Paces Ferry Rd Bldg 2 Ste",
+          "Post Office Box": null,
+          "City": "Atlanta",
+          "State": "GA",
+          "Postal Code": "30339",
+          "Telephone Number": "770 916-9400",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 60.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2900",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=5.0000",
+          "Mercury": "<0.0200",
+          "Molybdenum": "<0.2000",
+          "Nickel": "=2.5000",
+          "Lead": "=5.0000",
+          "Selenium": "=1.0000",
+          "Zinc": "=2.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "SQM ULTRASOL MOP MURIATE OF POTASH 0-0-60",
+    "brand": "SQM NORTH AMERICA CORP",
+    "manufacturer": {
+      "name": "SQM NORTH AMERICA CORP"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 60.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "87B4CB-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.29,
+            "Cd": 1.0,
+            "Co": 5.0,
+            "Hg": 0.02,
+            "Mo": 0.2,
+            "Ni": 2.5,
+            "Pb": 5.0,
+            "Se": 1.0,
+            "Zn": 2.5
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.02,
+            "Mo": 0.2
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.29,
+        "Cd": 1.0,
+        "Co": 5.0,
+        "Ni": 2.5,
+        "Pb": 5.0,
+        "Se": 1.0,
+        "Zn": 2.5
+      }
+    }
+  }
+}

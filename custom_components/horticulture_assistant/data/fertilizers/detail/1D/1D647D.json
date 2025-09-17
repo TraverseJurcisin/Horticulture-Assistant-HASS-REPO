@@ -1,106 +1,139 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "1D647D",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2264-0002)",
-    "product_name": "STARK BRO'S ORCHARD FERTILIZER 45-0-0",
-    "company_info": {
-      "company": "STARK BRO'S NURSERIES & ORCHARDS",
-      "Mailing Address": "PO Box1800",
-      "Post Office Box": null,
-      "City": "Louisiana",
-      "State": "MO",
-      "Postal Code": "63353",
-      "Telephone Number": "757 754-8824",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 45.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=1.1900",
-      "Cadmium": "=21.0000",
-      "Cobalt": "=0.1800",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=2.0900",
-      "Lead": "=0.7700",
-      "Selenium": "=4.5300",
-      "Zinc": "=0.3200"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 45.0,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": null,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=1.1900",
-      "Cadmium": "=21.0000",
-      "Cobalt": "=0.1800",
-      "Mercury": "=0.2000",
-      "Molybdenum": "=0.1000",
-      "Nickel": "=2.0900",
-      "Lead": "=0.7700",
-      "Selenium": "=4.5300",
-      "Zinc": "=0.3200"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "1D647D",
   "metadata": {
     "registrant": "STARK BRO'S NURSERIES & ORCHARDS",
     "label_name": "STARK BRO'S ORCHARD FERTILIZER 45-0-0",
     "wsda_reg_no": "(#2264-0002)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2264-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2264-0002)",
+        "product_name": "STARK BRO'S ORCHARD FERTILIZER 45-0-0",
+        "company_info": {
+          "company": "STARK BRO'S NURSERIES & ORCHARDS",
+          "Mailing Address": "PO Box1800",
+          "Post Office Box": null,
+          "City": "Louisiana",
+          "State": "MO",
+          "Postal Code": "63353",
+          "Telephone Number": "757 754-8824",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 45.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.1900",
+          "Cadmium": "=21.0000",
+          "Cobalt": "=0.1800",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=0.1000",
+          "Nickel": "=2.0900",
+          "Lead": "=0.7700",
+          "Selenium": "=4.5300",
+          "Zinc": "=0.3200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "STARK BRO'S ORCHARD FERTILIZER 45-0-0",
+    "brand": "STARK BRO'S NURSERIES & ORCHARDS",
+    "manufacturer": {
+      "name": "STARK BRO'S NURSERIES & ORCHARDS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 45.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "1D647D-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.19,
+            "Cd": 21.0,
+            "Co": 0.18,
+            "Hg": 0.2,
+            "Mo": 0.1,
+            "Ni": 2.09,
+            "Pb": 0.77,
+            "Se": 4.53,
+            "Zn": 0.32
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.19,
+        "Cd": 21.0,
+        "Co": 0.18,
+        "Hg": 0.2,
+        "Mo": 0.1,
+        "Ni": 2.09,
+        "Pb": 0.77,
+        "Se": 4.53,
+        "Zn": 0.32
+      }
+    }
   }
 }

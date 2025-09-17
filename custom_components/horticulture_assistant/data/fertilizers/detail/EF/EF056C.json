@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"EF056C","source_wsda_record":{"wsda_product_number":"(#1075-0138)","product_name":"REDOX TURFRX MG 0-0-0","company_info":{"company":"REDOX CHEMICALS LLC","Mailing Address":"PO Box 129","Post Office Box":null,"City":"Burley","State":"ID","Postal Code":"83318","Telephone Number":"208 678-2610","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":20.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1600","Cadmium":"=0.0500","Cobalt":"=0.0100","Mercury":"=0.2000","Molybdenum":"=3.1300","Nickel":"=1.5000","Lead":"=3.1300","Selenium":"=0.2200","Zinc":"=1.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":20.0,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1600","Cadmium":"=0.0500","Cobalt":"=0.0100","Mercury":"=0.2000","Molybdenum":"=3.1300","Nickel":"=1.5000","Lead":"=3.1300","Selenium":"=0.2200","Zinc":"=1.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"REDOX CHEMICALS LLC","label_name":"REDOX TURFRX MG 0-0-0","wsda_reg_no":"(#1075-0138)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "EF056C",
+  "metadata": {
+    "registrant": "REDOX CHEMICALS LLC",
+    "label_name": "REDOX TURFRX MG 0-0-0",
+    "wsda_reg_no": "(#1075-0138)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1075-0138)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1075-0138)",
+        "product_name": "REDOX TURFRX MG 0-0-0",
+        "company_info": {
+          "company": "REDOX CHEMICALS LLC",
+          "Mailing Address": "PO Box 129",
+          "Post Office Box": null,
+          "City": "Burley",
+          "State": "ID",
+          "Postal Code": "83318",
+          "Telephone Number": "208 678-2610",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": 20.0,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1600",
+          "Cadmium": "=0.0500",
+          "Cobalt": "=0.0100",
+          "Mercury": "=0.2000",
+          "Molybdenum": "=3.1300",
+          "Nickel": "=1.5000",
+          "Lead": "=3.1300",
+          "Selenium": "=0.2200",
+          "Zinc": "=1.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "REDOX TURFRX MG 0-0-0",
+    "brand": "REDOX CHEMICALS LLC",
+    "manufacturer": {
+      "name": "REDOX CHEMICALS LLC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "Mg": 20.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "EF056C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.16,
+            "Cd": 0.05,
+            "Co": 0.01,
+            "Hg": 0.2,
+            "Mo": 3.13,
+            "Ni": 1.5,
+            "Pb": 3.13,
+            "Se": 0.22,
+            "Zn": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.16,
+        "Cd": 0.05,
+        "Co": 0.01,
+        "Hg": 0.2,
+        "Mo": 3.13,
+        "Ni": 1.5,
+        "Pb": 3.13,
+        "Se": 0.22,
+        "Zn": 1.0
+      }
+    }
+  }
+}

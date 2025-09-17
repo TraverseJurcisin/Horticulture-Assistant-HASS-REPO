@@ -1,1 +1,139 @@
-{"schema_version":"2025-07-v1","product_id":"906931","source_wsda_record":{"wsda_product_number":"(#2625-0006)","product_name":"ALGACELL NITROGEN 16-0-0","company_info":{"company":"AGROPLASMA FERTICELL SA DE CV","Mailing Address":"Blvd. Adolfo lopez mateos #281","Post Office Box":"Miguel hidalgo, CP81210","City":"Los machis Sinaloa","State":"Me","Postal Code":"CP 81210","Telephone Number":"480 361-1300","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=5.0000","Cadmium":"=1.0000","Cobalt":"=2.0000","Mercury":"=0.5000","Molybdenum":"=3.0000","Nickel":"=3.0000","Lead":"=4.0000","Selenium":"=4.0000","Zinc":"=40.0000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":16.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=5.0000","Cadmium":"=1.0000","Cobalt":"=2.0000","Mercury":"=0.5000","Molybdenum":"=3.0000","Nickel":"=3.0000","Lead":"=4.0000","Selenium":"=4.0000","Zinc":"=40.0000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"AGROPLASMA FERTICELL SA DE CV","label_name":"ALGACELL NITROGEN 16-0-0","wsda_reg_no":"(#2625-0006)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "906931",
+  "metadata": {
+    "registrant": "AGROPLASMA FERTICELL SA DE CV",
+    "label_name": "ALGACELL NITROGEN 16-0-0",
+    "wsda_reg_no": "(#2625-0006)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2625-0006)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2625-0006)",
+        "product_name": "ALGACELL NITROGEN 16-0-0",
+        "company_info": {
+          "company": "AGROPLASMA FERTICELL SA DE CV",
+          "Mailing Address": "Blvd. Adolfo lopez mateos #281",
+          "Post Office Box": "Miguel hidalgo, CP81210",
+          "City": "Los machis Sinaloa",
+          "State": "Me",
+          "Postal Code": "CP 81210",
+          "Telephone Number": "480 361-1300",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 16.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=5.0000",
+          "Cadmium": "=1.0000",
+          "Cobalt": "=2.0000",
+          "Mercury": "=0.5000",
+          "Molybdenum": "=3.0000",
+          "Nickel": "=3.0000",
+          "Lead": "=4.0000",
+          "Selenium": "=4.0000",
+          "Zinc": "=40.0000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALGACELL NITROGEN 16-0-0",
+    "brand": "AGROPLASMA FERTICELL SA DE CV",
+    "manufacturer": {
+      "name": "AGROPLASMA FERTICELL SA DE CV"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 16.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "906931-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 1.0,
+            "Co": 2.0,
+            "Hg": 0.5,
+            "Mo": 3.0,
+            "Ni": 3.0,
+            "Pb": 4.0,
+            "Se": 4.0,
+            "Zn": 40.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 5.0,
+        "Cd": 1.0,
+        "Co": 2.0,
+        "Hg": 0.5,
+        "Mo": 3.0,
+        "Ni": 3.0,
+        "Pb": 4.0,
+        "Se": 4.0,
+        "Zn": 40.0
+      }
+    }
+  }
+}

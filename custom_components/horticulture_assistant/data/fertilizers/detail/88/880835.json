@@ -1,1 +1,141 @@
-{"schema_version":"2025-07-v1","product_id":"880835","source_wsda_record":{"wsda_product_number":"(#0951-0021)","product_name":"ALLTECH CROP SCIENCE LIQUI-PLEX CU 0-0-0","company_info":{"company":"IMPROCROP USA INC","Mailing Address":"3031 Catnip Hill Rd","Post Office Box":null,"City":"Nicholasville","State":"KY","Postal Code":"40356","Telephone Number":"859 881-2257","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.1500","Cadmium":"=0.0150","Cobalt":"=0.2000","Mercury":"=0.0080","Molybdenum":"=0.2500","Nickel":"=0.9700","Lead":"=23.7200","Selenium":"=0.0640","Zinc":"=199.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"Y"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":5.0,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.1500","Cadmium":"=0.0150","Cobalt":"=0.2000","Mercury":"=0.0080","Molybdenum":"=0.2500","Nickel":"=0.9700","Lead":"=23.7200","Selenium":"=0.0640","Zinc":"=199.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"IMPROCROP USA INC","label_name":"ALLTECH CROP SCIENCE LIQUI-PLEX CU 0-0-0","wsda_reg_no":"(#0951-0021)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "880835",
+  "metadata": {
+    "registrant": "IMPROCROP USA INC",
+    "label_name": "ALLTECH CROP SCIENCE LIQUI-PLEX CU 0-0-0",
+    "wsda_reg_no": "(#0951-0021)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0951-0021)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0951-0021)",
+        "product_name": "ALLTECH CROP SCIENCE LIQUI-PLEX CU 0-0-0",
+        "company_info": {
+          "company": "IMPROCROP USA INC",
+          "Mailing Address": "3031 Catnip Hill Rd",
+          "Post Office Box": null,
+          "City": "Nicholasville",
+          "State": "KY",
+          "Postal Code": "40356",
+          "Telephone Number": "859 881-2257",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 5.0,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.1500",
+          "Cadmium": "=0.0150",
+          "Cobalt": "=0.2000",
+          "Mercury": "=0.0080",
+          "Molybdenum": "=0.2500",
+          "Nickel": "=0.9700",
+          "Lead": "=23.7200",
+          "Selenium": "=0.0640",
+          "Zinc": "=199.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "Y"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "Y",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ALLTECH CROP SCIENCE LIQUI-PLEX CU 0-0-0",
+    "brand": "IMPROCROP USA INC",
+    "manufacturer": {
+      "name": "IMPROCROP USA INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "micros_pct": {
+      "Cu": 5.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "880835-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.15,
+            "Cd": 0.015,
+            "Co": 0.2,
+            "Hg": 0.008,
+            "Mo": 0.25,
+            "Ni": 0.97,
+            "Pb": 23.72,
+            "Se": 0.064,
+            "Zn": 199.7
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.15,
+        "Cd": 0.015,
+        "Co": 0.2,
+        "Hg": 0.008,
+        "Mo": 0.25,
+        "Ni": 0.97,
+        "Pb": 23.72,
+        "Se": 0.064,
+        "Zn": 199.7
+      }
+    }
+  }
+}

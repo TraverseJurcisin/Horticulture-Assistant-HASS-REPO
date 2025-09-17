@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"FCA662","source_wsda_record":{"wsda_product_number":"(#1762-0091)","product_name":"G&B ORGANICS COMPOSTED CHICKEN MANURE 1.5-0.2-1.5","company_info":{"company":"KELLOGG GARDEN PRODUCTS","Mailing Address":"350 West Sepulveda","Post Office Box":null,"City":"Carson","State":"CA","Postal Code":"90745","Telephone Number":"951 298-8705","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":1.5,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":1.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=1.3200","Cadmium":"=0.1010","Cobalt":"=0.6580","Mercury":"=0.0167","Molybdenum":"=0.5790","Nickel":"=2.8000","Lead":"=5.9200","Selenium":"<1.0000","Zinc":"=60.2000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"Y","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":1.5,"Available Phosphoric Acid (P2O5)":0.2,"Soluble Potash (K2O)":1.5,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":0.1,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=1.3200","Cadmium":"=0.1010","Cobalt":"=0.6580","Mercury":"=0.0167","Molybdenum":"=0.5790","Nickel":"=2.8000","Lead":"=5.9200","Selenium":"<1.0000","Zinc":"=60.2000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"KELLOGG GARDEN PRODUCTS","label_name":"G&B ORGANICS COMPOSTED CHICKEN MANURE 1.5-0.2-1.5","wsda_reg_no":"(#1762-0091)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "FCA662",
+  "metadata": {
+    "registrant": "KELLOGG GARDEN PRODUCTS",
+    "label_name": "G&B ORGANICS COMPOSTED CHICKEN MANURE 1.5-0.2-1.5",
+    "wsda_reg_no": "(#1762-0091)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1762-0091)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1762-0091)",
+        "product_name": "G&B ORGANICS COMPOSTED CHICKEN MANURE 1.5-0.2-1.5",
+        "company_info": {
+          "company": "KELLOGG GARDEN PRODUCTS",
+          "Mailing Address": "350 West Sepulveda",
+          "Post Office Box": null,
+          "City": "Carson",
+          "State": "CA",
+          "Postal Code": "90745",
+          "Telephone Number": "951 298-8705",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.5,
+          "Available Phosphoric Acid (P2O5)": 0.2,
+          "Soluble Potash (K2O)": 1.5,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 0.1,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=1.3200",
+          "Cadmium": "=0.1010",
+          "Cobalt": "=0.6580",
+          "Mercury": "=0.0167",
+          "Molybdenum": "=0.5790",
+          "Nickel": "=2.8000",
+          "Lead": "=5.9200",
+          "Selenium": "<1.0000",
+          "Zinc": "=60.2000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "Y",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "Y",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "G&B ORGANICS COMPOSTED CHICKEN MANURE 1.5-0.2-1.5",
+    "brand": "KELLOGG GARDEN PRODUCTS",
+    "manufacturer": {
+      "name": "KELLOGG GARDEN PRODUCTS"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.5,
+      "P2O5_pct": 0.2,
+      "K2O_pct": 1.5
+    },
+    "micros_pct": {
+      "Fe": 0.1
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "FCA662-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 1.32,
+            "Cd": 0.101,
+            "Co": 0.658,
+            "Hg": 0.0167,
+            "Mo": 0.579,
+            "Ni": 2.8,
+            "Pb": 5.92,
+            "Se": 1.0,
+            "Zn": 60.2
+          },
+          "detection_limits_ppm": {
+            "Se": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 1.32,
+        "Cd": 0.101,
+        "Co": 0.658,
+        "Hg": 0.0167,
+        "Mo": 0.579,
+        "Ni": 2.8,
+        "Pb": 5.92,
+        "Zn": 60.2
+      }
+    }
+  }
+}

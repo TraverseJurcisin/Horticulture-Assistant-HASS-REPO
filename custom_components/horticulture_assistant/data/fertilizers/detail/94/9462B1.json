@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"9462B1","source_wsda_record":{"wsda_product_number":"(#0739-0048)","product_name":"GENESIS AGRI-PRODUCTS CALIPER 2-14-15","company_info":{"company":"GENESIS AGRI-PRODUCTS INC","Mailing Address":"PO Box 10512","Post Office Box":null,"City":"Yakima","State":"WA","Postal Code":"98909","Telephone Number":"509 575-8382","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":15.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.9,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.1,"Iron (Fe)":3.0,"Manganese (Mn)":2.9,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":3.0},"reported_metals":{"Arsenic":"=9.6850","Cadmium":"=9.3900","Cobalt":"=123.2400","Mercury":"=0.1000","Molybdenum":"=32.7900","Nickel":"=30.2720","Lead":"=20.9200","Selenium":"=6.6250","Zinc":"=20559.6000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":2.0,"Available Phosphoric Acid (P2O5)":14.0,"Soluble Potash (K2O)":15.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":0.9,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":1.1,"Iron (Fe)":3.0,"Manganese (Mn)":2.9,"Molybdenum (Mo)":0.01,"Sodium (Na)":null,"Zinc (Zn)":3.0},"heavy_metals":{"Arsenic":"=9.6850","Cadmium":"=9.3900","Cobalt":"=123.2400","Mercury":"=0.1000","Molybdenum":"=32.7900","Nickel":"=30.2720","Lead":"=20.9200","Selenium":"=6.6250","Zinc":"=20559.6000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"GENESIS AGRI-PRODUCTS INC","label_name":"GENESIS AGRI-PRODUCTS CALIPER 2-14-15","wsda_reg_no":"(#0739-0048)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "9462B1",
+  "metadata": {
+    "registrant": "GENESIS AGRI-PRODUCTS INC",
+    "label_name": "GENESIS AGRI-PRODUCTS CALIPER 2-14-15",
+    "wsda_reg_no": "(#0739-0048)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0739-0048)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0739-0048)",
+        "product_name": "GENESIS AGRI-PRODUCTS CALIPER 2-14-15",
+        "company_info": {
+          "company": "GENESIS AGRI-PRODUCTS INC",
+          "Mailing Address": "PO Box 10512",
+          "Post Office Box": null,
+          "City": "Yakima",
+          "State": "WA",
+          "Postal Code": "98909",
+          "Telephone Number": "509 575-8382",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 2.0,
+          "Available Phosphoric Acid (P2O5)": 14.0,
+          "Soluble Potash (K2O)": 15.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": 0.9,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": 1.1,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": 2.9,
+          "Molybdenum (Mo)": 0.01,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 3.0
+        },
+        "reported_metals": {
+          "Arsenic": "=9.6850",
+          "Cadmium": "=9.3900",
+          "Cobalt": "=123.2400",
+          "Mercury": "=0.1000",
+          "Molybdenum": "=32.7900",
+          "Nickel": "=30.2720",
+          "Lead": "=20.9200",
+          "Selenium": "=6.6250",
+          "Zinc": "=20559.6000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "GENESIS AGRI-PRODUCTS CALIPER 2-14-15",
+    "brand": "GENESIS AGRI-PRODUCTS INC",
+    "manufacturer": {
+      "name": "GENESIS AGRI-PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 2.0,
+      "P2O5_pct": 14.0,
+      "K2O_pct": 15.0
+    },
+    "micros_pct": {
+      "Fe": 3.0,
+      "Mn": 2.9,
+      "Zn": 3.0,
+      "Cu": 1.1,
+      "B": 0.9,
+      "Mo": 0.01
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "9462B1-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 9.685,
+            "Cd": 9.39,
+            "Co": 123.24,
+            "Hg": 0.1,
+            "Mo": 32.79,
+            "Ni": 30.272,
+            "Pb": 20.92,
+            "Se": 6.625,
+            "Zn": 20559.6
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 9.685,
+        "Cd": 9.39,
+        "Co": 123.24,
+        "Hg": 0.1,
+        "Mo": 32.79,
+        "Ni": 30.272,
+        "Pb": 20.92,
+        "Se": 6.625,
+        "Zn": 20559.6
+      }
+    }
+  }
+}

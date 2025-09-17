@@ -1,1 +1,146 @@
-{"schema_version":"2025-07-v1","product_id":"E1FEEA","source_wsda_record":{"wsda_product_number":"(#3289-0002)","product_name":"ICL POLYSULPHATE STANDARD 0-0-13 WITH 11.4CA 3.3MG 18.0S 0-0-13","company_info":{"company":"ICL SPECIALTY PRODUCTS INC","Mailing Address":"622 Emerson Rd Ste 500","Post Office Box":null,"City":"St Louis","State":"MO","Postal Code":"63141","Telephone Number":"314 983-7500","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":11.4,"Magnesium (Mg)":3.3,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=2.4000","Cadmium":"=0.1000","Cobalt":"<0.1000","Mercury":"<0.0100","Molybdenum":"=0.3000","Nickel":"<0.1000","Lead":"<1.0000","Selenium":"=0.6000","Zinc":"=0.7000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":13.0,"Calcium (Ca)":11.4,"Magnesium (Mg)":3.3,"Sulfur (S)":18.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=2.4000","Cadmium":"=0.1000","Cobalt":"<0.1000","Mercury":"<0.0100","Molybdenum":"=0.3000","Nickel":"<0.1000","Lead":"<1.0000","Selenium":"=0.6000","Zinc":"=0.7000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"ICL SPECIALTY PRODUCTS INC","label_name":"ICL POLYSULPHATE STANDARD 0-0-13 WITH 11.4CA 3.3MG 18.0S 0-0-13","wsda_reg_no":"(#3289-0002)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "E1FEEA",
+  "metadata": {
+    "registrant": "ICL SPECIALTY PRODUCTS INC",
+    "label_name": "ICL POLYSULPHATE STANDARD 0-0-13 WITH 11.4CA 3.3MG 18.0S 0-0-13",
+    "wsda_reg_no": "(#3289-0002)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#3289-0002)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#3289-0002)",
+        "product_name": "ICL POLYSULPHATE STANDARD 0-0-13 WITH 11.4CA 3.3MG 18.0S 0-0-13",
+        "company_info": {
+          "company": "ICL SPECIALTY PRODUCTS INC",
+          "Mailing Address": "622 Emerson Rd Ste 500",
+          "Post Office Box": null,
+          "City": "St Louis",
+          "State": "MO",
+          "Postal Code": "63141",
+          "Telephone Number": "314 983-7500",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 13.0,
+          "Calcium (Ca)": 11.4,
+          "Magnesium (Mg)": 3.3,
+          "Sulfur (S)": 18.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4000",
+          "Cadmium": "=0.1000",
+          "Cobalt": "<0.1000",
+          "Mercury": "<0.0100",
+          "Molybdenum": "=0.3000",
+          "Nickel": "<0.1000",
+          "Lead": "<1.0000",
+          "Selenium": "=0.6000",
+          "Zinc": "=0.7000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "ICL POLYSULPHATE STANDARD 0-0-13 WITH 11.4CA 3.3MG 18.0S 0-0-13",
+    "brand": "ICL SPECIALTY PRODUCTS INC",
+    "manufacturer": {
+      "name": "ICL SPECIALTY PRODUCTS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "K2O_pct": 13.0
+    },
+    "macros_pct": {
+      "Ca": 11.4,
+      "Mg": 3.3,
+      "S": 18.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "E1FEEA-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.4,
+            "Cd": 0.1,
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Mo": 0.3,
+            "Ni": 0.1,
+            "Pb": 1.0,
+            "Se": 0.6,
+            "Zn": 0.7
+          },
+          "detection_limits_ppm": {
+            "Co": 0.1,
+            "Hg": 0.01,
+            "Ni": 0.1,
+            "Pb": 1.0
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "lt_dl",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "lt_dl",
+            "Pb": "lt_dl",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.4,
+        "Cd": 0.1,
+        "Mo": 0.3,
+        "Se": 0.6,
+        "Zn": 0.7
+      }
+    }
+  }
+}

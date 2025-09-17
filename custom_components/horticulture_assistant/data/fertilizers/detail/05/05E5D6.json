@@ -1,106 +1,144 @@
 {
-  "schema_version": "2025-07-v1",
-  "product_id": "05E5D6",
-  "source_wsda_record": {
-    "wsda_product_number": "(#2997-0014)",
-    "product_name": "IRONFORCE-H3 1.5-0-0",
-    "company_info": {
-      "company": "AGROPLANTAE INC",
-      "Mailing Address": "1865 Herndon Ave Ste K321",
-      "Post Office Box": null,
-      "City": "Clovis",
-      "State": "CA",
-      "Postal Code": "93611",
-      "Telephone Number": "559 498-0388",
-      "Fax Number": null
-    },
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.5,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "reported_metals": {
-      "Arsenic": "=2.4570",
-      "Cadmium": "=2.7370",
-      "Cobalt": "=1.1870",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=4.8210",
-      "Nickel": "=18.8000",
-      "Lead": "<0.4200",
-      "Selenium": "<0.7500",
-      "Zinc": "=5.3150"
-    },
-    "GYPSUM & LIMING MATERIALS": {
-      "Calcium Carbonate (CaCO3)": null,
-      "Calcium Carbonate Equivalent (CaCO3)": null,
-      "Magnesium Carbonate (MgCO3)": null,
-      "Calcium Sulfate (CaSO42H2O)": null
-    },
-    "waste_derived_fertilizer": "N",
-    "micronutrient_fertilizer": "N"
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
   },
-  "composition": {
-    "guaranteed_analysis": {
-      "Total Nitrogen (N)": 1.5,
-      "Available Phosphoric Acid (P2O5)": null,
-      "Soluble Potash (K2O)": null,
-      "Calcium (Ca)": null,
-      "Magnesium (Mg)": null,
-      "Sulfur (S)": null,
-      "Boron (B)": null,
-      "Chlorine (Cl)": null,
-      "Cobalt (Co)": null,
-      "Copper (Cu)": null,
-      "Iron (Fe)": 3.0,
-      "Manganese (Mn)": null,
-      "Molybdenum (Mo)": null,
-      "Sodium (Na)": null,
-      "Zinc (Zn)": null
-    },
-    "heavy_metals": {
-      "Arsenic": "=2.4570",
-      "Cadmium": "=2.7370",
-      "Cobalt": "=1.1870",
-      "Mercury": "<0.1000",
-      "Molybdenum": "=4.8210",
-      "Nickel": "=18.8000",
-      "Lead": "<0.4200",
-      "Selenium": "<0.7500",
-      "Zinc": "=5.3150"
-    },
-    "derived_from_raw": null,
-    "derived_from_tokens": null
-  },
-  "physicochemical": {
-    "density_kg_per_l": null,
-    "ph": {
-      "min": null,
-      "max": null
-    },
-    "ec_ms_cm": null
-  },
-  "commerce": {
-    "sku_list": [],
-    "price_history": []
-  },
+  "id": "05E5D6",
   "metadata": {
     "registrant": "AGROPLANTAE INC",
     "label_name": "IRONFORCE-H3 1.5-0-0",
     "wsda_reg_no": "(#2997-0014)",
     "formulation": null,
     "first_seen": "2025-07-25",
-    "detail_updated_at": "2025-07-25T11:15:37Z"
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#2997-0014)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#2997-0014)",
+        "product_name": "IRONFORCE-H3 1.5-0-0",
+        "company_info": {
+          "company": "AGROPLANTAE INC",
+          "Mailing Address": "1865 Herndon Ave Ste K321",
+          "Post Office Box": null,
+          "City": "Clovis",
+          "State": "CA",
+          "Postal Code": "93611",
+          "Telephone Number": "559 498-0388",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 1.5,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": 3.0,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=2.4570",
+          "Cadmium": "=2.7370",
+          "Cobalt": "=1.1870",
+          "Mercury": "<0.1000",
+          "Molybdenum": "=4.8210",
+          "Nickel": "=18.8000",
+          "Lead": "<0.4200",
+          "Selenium": "<0.7500",
+          "Zinc": "=5.3150"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "IRONFORCE-H3 1.5-0-0",
+    "brand": "AGROPLANTAE INC",
+    "manufacturer": {
+      "name": "AGROPLANTAE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 1.5
+    },
+    "micros_pct": {
+      "Fe": 3.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "05E5D6-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 2.457,
+            "Cd": 2.737,
+            "Co": 1.187,
+            "Hg": 0.1,
+            "Mo": 4.821,
+            "Ni": 18.8,
+            "Pb": 0.42,
+            "Se": 0.75,
+            "Zn": 5.315
+          },
+          "detection_limits_ppm": {
+            "Hg": 0.1,
+            "Pb": 0.42,
+            "Se": 0.75
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "lt_dl",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 2.457,
+        "Cd": 2.737,
+        "Co": 1.187,
+        "Mo": 4.821,
+        "Ni": 18.8,
+        "Zn": 5.315
+      }
+    }
   }
 }

@@ -1,1 +1,149 @@
-{"schema_version":"2025-07-v1","product_id":"A8AA4C","source_wsda_record":{"wsda_product_number":"(#1837-0021)","product_name":"FAUST BIO-AGRICULTURAL SERVICES FUL-POWER M-PACK 0-0-0","company_info":{"company":"FAUST BIO-AGRICULTURAL SERVICES INC","Mailing Address":"6080 Wigrich Rd","Post Office Box":null,"City":"Independence","State":"OR","Postal Code":"97351","Telephone Number":"503 838-2467","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.75,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":0.03,"Copper (Cu)":0.11,"Iron (Fe)":1.8,"Manganese (Mn)":0.2,"Molybdenum (Mo)":0.08,"Sodium (Na)":null,"Zinc (Zn)":1.25},"reported_metals":{"Arsenic":"=8.9400","Cadmium":"=0.0300","Cobalt":"=300.1000","Mercury":"=0.0500","Molybdenum":"=821.2000","Nickel":"=8.1200","Lead":"=0.5500","Selenium":"=9.1900","Zinc":"=1387.9200"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":null,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":2.75,"Boron (B)":0.15,"Chlorine (Cl)":null,"Cobalt (Co)":0.03,"Copper (Cu)":0.11,"Iron (Fe)":1.8,"Manganese (Mn)":0.2,"Molybdenum (Mo)":0.08,"Sodium (Na)":null,"Zinc (Zn)":1.25},"heavy_metals":{"Arsenic":"=8.9400","Cadmium":"=0.0300","Cobalt":"=300.1000","Mercury":"=0.0500","Molybdenum":"=821.2000","Nickel":"=8.1200","Lead":"=0.5500","Selenium":"=9.1900","Zinc":"=1387.9200"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"FAUST BIO-AGRICULTURAL SERVICES INC","label_name":"FAUST BIO-AGRICULTURAL SERVICES FUL-POWER M-PACK 0-0-0","wsda_reg_no":"(#1837-0021)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "A8AA4C",
+  "metadata": {
+    "registrant": "FAUST BIO-AGRICULTURAL SERVICES INC",
+    "label_name": "FAUST BIO-AGRICULTURAL SERVICES FUL-POWER M-PACK 0-0-0",
+    "wsda_reg_no": "(#1837-0021)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1837-0021)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1837-0021)",
+        "product_name": "FAUST BIO-AGRICULTURAL SERVICES FUL-POWER M-PACK 0-0-0",
+        "company_info": {
+          "company": "FAUST BIO-AGRICULTURAL SERVICES INC",
+          "Mailing Address": "6080 Wigrich Rd",
+          "Post Office Box": null,
+          "City": "Independence",
+          "State": "OR",
+          "Postal Code": "97351",
+          "Telephone Number": "503 838-2467",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": null,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 2.75,
+          "Boron (B)": 0.15,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": 0.03,
+          "Copper (Cu)": 0.11,
+          "Iron (Fe)": 1.8,
+          "Manganese (Mn)": 0.2,
+          "Molybdenum (Mo)": 0.08,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": 1.25
+        },
+        "reported_metals": {
+          "Arsenic": "=8.9400",
+          "Cadmium": "=0.0300",
+          "Cobalt": "=300.1000",
+          "Mercury": "=0.0500",
+          "Molybdenum": "=821.2000",
+          "Nickel": "=8.1200",
+          "Lead": "=0.5500",
+          "Selenium": "=9.1900",
+          "Zinc": "=1387.9200"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "FAUST BIO-AGRICULTURAL SERVICES FUL-POWER M-PACK 0-0-0",
+    "brand": "FAUST BIO-AGRICULTURAL SERVICES INC",
+    "manufacturer": {
+      "name": "FAUST BIO-AGRICULTURAL SERVICES INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide"
+    },
+    "macros_pct": {
+      "S": 2.75
+    },
+    "micros_pct": {
+      "Fe": 1.8,
+      "Mn": 0.2,
+      "Zn": 1.25,
+      "Cu": 0.11,
+      "B": 0.15,
+      "Mo": 0.08
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "A8AA4C-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 8.94,
+            "Cd": 0.03,
+            "Co": 300.1,
+            "Hg": 0.05,
+            "Mo": 821.2,
+            "Ni": 8.12,
+            "Pb": 0.55,
+            "Se": 9.19,
+            "Zn": 1387.92
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 8.94,
+        "Cd": 0.03,
+        "Co": 300.1,
+        "Hg": 0.05,
+        "Mo": 821.2,
+        "Ni": 8.12,
+        "Pb": 0.55,
+        "Se": 9.19,
+        "Zn": 1387.92
+      }
+    }
+  }
+}

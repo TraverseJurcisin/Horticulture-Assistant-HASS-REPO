@@ -1,1 +1,140 @@
-{"schema_version":"2025-07-v1","product_id":"C2B49A","source_wsda_record":{"wsda_product_number":"(#1161-0373)","product_name":"THE ANDERSONS PET SAFE LAWN FERTILIZER 24-0-6","company_info":{"company":"THE ANDERSONS INC","Mailing Address":"PO Box 119","Post Office Box":null,"City":"Maumee","State":"OH","Postal Code":"43537","Telephone Number":"419 891-6633","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2500","Cobalt":"=0.2500","Mercury":"=0.0250","Molybdenum":"=0.7900","Nickel":"=5.3100","Lead":"=2.0200","Selenium":"=0.2500","Zinc":"=13.9000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":24.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":6.0,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":null,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"=0.2500","Cadmium":"=0.2500","Cobalt":"=0.2500","Mercury":"=0.0250","Molybdenum":"=0.7900","Nickel":"=5.3100","Lead":"=2.0200","Selenium":"=0.2500","Zinc":"=13.9000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"THE ANDERSONS INC","label_name":"THE ANDERSONS PET SAFE LAWN FERTILIZER 24-0-6","wsda_reg_no":"(#1161-0373)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "C2B49A",
+  "metadata": {
+    "registrant": "THE ANDERSONS INC",
+    "label_name": "THE ANDERSONS PET SAFE LAWN FERTILIZER 24-0-6",
+    "wsda_reg_no": "(#1161-0373)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#1161-0373)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#1161-0373)",
+        "product_name": "THE ANDERSONS PET SAFE LAWN FERTILIZER 24-0-6",
+        "company_info": {
+          "company": "THE ANDERSONS INC",
+          "Mailing Address": "PO Box 119",
+          "Post Office Box": null,
+          "City": "Maumee",
+          "State": "OH",
+          "Postal Code": "43537",
+          "Telephone Number": "419 891-6633",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 24.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": 6.0,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": null,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "=0.2500",
+          "Cadmium": "=0.2500",
+          "Cobalt": "=0.2500",
+          "Mercury": "=0.0250",
+          "Molybdenum": "=0.7900",
+          "Nickel": "=5.3100",
+          "Lead": "=2.0200",
+          "Selenium": "=0.2500",
+          "Zinc": "=13.9000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "THE ANDERSONS PET SAFE LAWN FERTILIZER 24-0-6",
+    "brand": "THE ANDERSONS INC",
+    "manufacturer": {
+      "name": "THE ANDERSONS INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 24.0,
+      "K2O_pct": 6.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "C2B49A-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 0.25,
+            "Cd": 0.25,
+            "Co": 0.25,
+            "Hg": 0.025,
+            "Mo": 0.79,
+            "Ni": 5.31,
+            "Pb": 2.02,
+            "Se": 0.25,
+            "Zn": 13.9
+          },
+          "qualifiers": {
+            "As": "eq",
+            "Cd": "eq",
+            "Co": "eq",
+            "Hg": "eq",
+            "Mo": "eq",
+            "Ni": "eq",
+            "Pb": "eq",
+            "Se": "eq",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "As": 0.25,
+        "Cd": 0.25,
+        "Co": 0.25,
+        "Hg": 0.025,
+        "Mo": 0.79,
+        "Ni": 5.31,
+        "Pb": 2.02,
+        "Se": 0.25,
+        "Zn": 13.9
+      }
+    }
+  }
+}

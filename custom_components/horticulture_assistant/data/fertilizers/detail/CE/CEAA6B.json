@@ -1,1 +1,144 @@
-{"schema_version":"2025-07-v1","product_id":"CEAA6B","source_wsda_record":{"wsda_product_number":"(#0670-0034)","product_name":"TERRALINK 34-0-0 WITH 11% S 34-0-0","company_info":{"company":"TERRALINK HORTICULTURE INC","Mailing Address":"464 Riverside Rd","Post Office Box":null,"City":"Abbotsford","State":"BC","Postal Code":"V2S 7M1","Telephone Number":"800 661-4559","Fax Number":null},"guaranteed_analysis":{"Total Nitrogen (N)":34.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"reported_metals":{"Arsenic":"<5.0000","Cadmium":"<0.2140","Cobalt":"<0.3480","Mercury":"=0.1080","Molybdenum":"<0.7950","Nickel":"=1.2200","Lead":"<2.5000","Selenium":"<5.0000","Zinc":"=24.5000"},"GYPSUM & LIMING MATERIALS":{"Calcium Carbonate (CaCO3)":null,"Calcium Carbonate Equivalent (CaCO3)":null,"Magnesium Carbonate (MgCO3)":null,"Calcium Sulfate (CaSO42H2O)":null},"waste_derived_fertilizer":"N","micronutrient_fertilizer":"N"},"composition":{"guaranteed_analysis":{"Total Nitrogen (N)":34.0,"Available Phosphoric Acid (P2O5)":null,"Soluble Potash (K2O)":null,"Calcium (Ca)":null,"Magnesium (Mg)":null,"Sulfur (S)":11.0,"Boron (B)":null,"Chlorine (Cl)":null,"Cobalt (Co)":null,"Copper (Cu)":null,"Iron (Fe)":null,"Manganese (Mn)":null,"Molybdenum (Mo)":null,"Sodium (Na)":null,"Zinc (Zn)":null},"heavy_metals":{"Arsenic":"<5.0000","Cadmium":"<0.2140","Cobalt":"<0.3480","Mercury":"=0.1080","Molybdenum":"<0.7950","Nickel":"=1.2200","Lead":"<2.5000","Selenium":"<5.0000","Zinc":"=24.5000"},"derived_from_raw":null,"derived_from_tokens":null},"physicochemical":{"density_kg_per_l":null,"ph":{"min":null,"max":null},"ec_ms_cm":null},"commerce":{"sku_list":[],"price_history":[]},"metadata":{"registrant":"TERRALINK HORTICULTURE INC","label_name":"TERRALINK 34-0-0 WITH 11% S 34-0-0","wsda_reg_no":"(#0670-0034)","formulation":null,"first_seen":"2025-07-25","detail_updated_at":"2025-07-25T11:15:37Z"}}
+{
+  "schema": {
+    "id": "fertilizer",
+    "version": "2025-09-V3e"
+  },
+  "id": "CEAA6B",
+  "metadata": {
+    "registrant": "TERRALINK HORTICULTURE INC",
+    "label_name": "TERRALINK 34-0-0 WITH 11% S 34-0-0",
+    "wsda_reg_no": "(#0670-0034)",
+    "formulation": null,
+    "first_seen": "2025-07-25",
+    "detail_updated_at": "2025-07-25T11:15:37Z",
+    "wsda_product_number": "(#0670-0034)",
+    "legacy": {
+      "schema_version": "2025-07-v1",
+      "wsda_record": {
+        "wsda_product_number": "(#0670-0034)",
+        "product_name": "TERRALINK 34-0-0 WITH 11% S 34-0-0",
+        "company_info": {
+          "company": "TERRALINK HORTICULTURE INC",
+          "Mailing Address": "464 Riverside Rd",
+          "Post Office Box": null,
+          "City": "Abbotsford",
+          "State": "BC",
+          "Postal Code": "V2S 7M1",
+          "Telephone Number": "800 661-4559",
+          "Fax Number": null
+        },
+        "guaranteed_analysis": {
+          "Total Nitrogen (N)": 34.0,
+          "Available Phosphoric Acid (P2O5)": null,
+          "Soluble Potash (K2O)": null,
+          "Calcium (Ca)": null,
+          "Magnesium (Mg)": null,
+          "Sulfur (S)": 11.0,
+          "Boron (B)": null,
+          "Chlorine (Cl)": null,
+          "Cobalt (Co)": null,
+          "Copper (Cu)": null,
+          "Iron (Fe)": null,
+          "Manganese (Mn)": null,
+          "Molybdenum (Mo)": null,
+          "Sodium (Na)": null,
+          "Zinc (Zn)": null
+        },
+        "reported_metals": {
+          "Arsenic": "<5.0000",
+          "Cadmium": "<0.2140",
+          "Cobalt": "<0.3480",
+          "Mercury": "=0.1080",
+          "Molybdenum": "<0.7950",
+          "Nickel": "=1.2200",
+          "Lead": "<2.5000",
+          "Selenium": "<5.0000",
+          "Zinc": "=24.5000"
+        },
+        "GYPSUM & LIMING MATERIALS": {
+          "Calcium Carbonate (CaCO3)": null,
+          "Calcium Carbonate Equivalent (CaCO3)": null,
+          "Magnesium Carbonate (MgCO3)": null,
+          "Calcium Sulfate (CaSO42H2O)": null
+        },
+        "waste_derived_fertilizer": "N",
+        "micronutrient_fertilizer": "N"
+      },
+      "waste_derived_fertilizer": "N",
+      "micronutrient_fertilizer": "N",
+      "physicochemical": {
+        "density_kg_per_l": null,
+        "ph": {
+          "min": null,
+          "max": null
+        },
+        "ec_ms_cm": null
+      },
+      "commerce": {
+        "sku_list": [],
+        "price_history": []
+      }
+    }
+  },
+  "product": {
+    "name": "TERRALINK 34-0-0 WITH 11% S 34-0-0",
+    "brand": "TERRALINK HORTICULTURE INC",
+    "manufacturer": {
+      "name": "TERRALINK HORTICULTURE INC"
+    }
+  },
+  "composition": {
+    "npk": {
+      "basis": "oxide",
+      "N_pct": 34.0
+    },
+    "macros_pct": {
+      "S": 11.0
+    },
+    "heavy_metals": {
+      "basis": "as_sold",
+      "samples": [
+        {
+          "sample_id": "CEAA6B-wsda",
+          "date_utc": "2025-07-25T11:15:37Z",
+          "basis": "as_sold",
+          "results_ppm": {
+            "As": 5.0,
+            "Cd": 0.214,
+            "Co": 0.348,
+            "Hg": 0.108,
+            "Mo": 0.795,
+            "Ni": 1.22,
+            "Pb": 2.5,
+            "Se": 5.0,
+            "Zn": 24.5
+          },
+          "detection_limits_ppm": {
+            "As": 5.0,
+            "Cd": 0.214,
+            "Co": 0.348,
+            "Mo": 0.795,
+            "Pb": 2.5,
+            "Se": 5.0
+          },
+          "qualifiers": {
+            "As": "lt_dl",
+            "Cd": "lt_dl",
+            "Co": "lt_dl",
+            "Hg": "eq",
+            "Mo": "lt_dl",
+            "Ni": "eq",
+            "Pb": "lt_dl",
+            "Se": "lt_dl",
+            "Zn": "eq"
+          }
+        }
+      ],
+      "typical_ppm": {
+        "Hg": 0.108,
+        "Ni": 1.22,
+        "Zn": 24.5
+      }
+    }
+  }
+}
