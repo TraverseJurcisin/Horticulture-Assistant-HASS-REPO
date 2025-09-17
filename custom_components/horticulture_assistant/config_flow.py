@@ -5,7 +5,12 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
-from aiohttp import ClientError
+
+try:
+    from aiohttp import ClientError
+except ModuleNotFoundError:  # pragma: no cover - test fallback
+    class ClientError(Exception):
+        """Fallback ClientError when aiohttp is not available."""
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel

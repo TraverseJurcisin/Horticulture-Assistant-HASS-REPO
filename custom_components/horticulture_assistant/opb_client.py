@@ -1,9 +1,12 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
+import asyncio
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 import aiohttp
+
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 BASE_URL = "https://api.openplantbook.org"
 _SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}
@@ -31,7 +34,7 @@ class OpenPlantbookClient:
                     return await r.json()
                 except aiohttp.ContentTypeError as err:
                     raise OpenPlantbookError("invalid response") from err
-        except (TimeoutError, aiohttp.ClientError) as err:
+        except (asyncio.TimeoutError, TimeoutError, aiohttp.ClientError) as err:  # noqa: UP041
             raise OpenPlantbookError(str(err)) from err
 
     async def species_details(self, slug: str) -> dict[str, Any]:

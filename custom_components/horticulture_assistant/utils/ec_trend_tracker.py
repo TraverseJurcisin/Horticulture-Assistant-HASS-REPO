@@ -12,13 +12,15 @@ Any detected alerts are logged and recorded in a JSON file (`data/ec_alerts.json
 import json
 import logging
 import os
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     plants_path,
 )
+
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:
@@ -51,7 +53,8 @@ class ECTrendTracker:
         """
         Initialize the ECTrendTracker.
         Loads existing EC alert logs from the specified JSON file, or creates a new structure if file is absent.
-        :param data_file: Path to the EC alert log JSON file. Defaults to 'data/ec_alerts.json' in Home Assistant config.
+        :param data_file: Path to the EC alert log JSON file.
+        Defaults to 'data/ec_alerts.json' in Home Assistant config.
         :param hass: HomeAssistant instance (optional) for sensor data access and path resolution.
         """
         # Determine the data file path
@@ -274,7 +277,8 @@ class ECTrendTracker:
                 }
                 new_alerts.append(alert_entry)
                 _LOGGER.warning(
-                    "Sustained high EC for plant %s: EC has been above %.2f mS/cm for at least %d hours (minimum %.2f).",
+                    "Sustained high EC for plant %s: EC has been above %.2f mS/cm "
+                    "for at least %d hours (minimum %.2f).",
                     plant_id,
                     plant_threshold,
                     SUSTAINED_HIGH_WINDOW_HOURS,

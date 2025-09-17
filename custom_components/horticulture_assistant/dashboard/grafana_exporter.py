@@ -1,8 +1,10 @@
 import logging
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from ..utils.json_io import load_json, save_json
+
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 _LOGGER = logging.getLogger(__name__)
 

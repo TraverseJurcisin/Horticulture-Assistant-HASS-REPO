@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -9,6 +9,7 @@ from homeassistant.core import HomeAssistant
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.schema import VariableValue
 
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 @dataclass
 class ResolveResult:

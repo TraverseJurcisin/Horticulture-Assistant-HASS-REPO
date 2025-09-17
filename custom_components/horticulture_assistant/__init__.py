@@ -34,19 +34,15 @@ except ModuleNotFoundError:  # pragma: no cover - test fallback
 
 from . import services as ha_services
 from .api import ChatApi
-with contextlib.suppress(ModuleNotFoundError):
+
+try:
     from .calibration import services as calibration_services
-else:  # pragma: no cover - optional dependency missing
+except ModuleNotFoundError:  # pragma: no cover - optional dependency missing
     calibration_services = None
 from .const import (
-    CONF_API_KEY,
     CONF_BASE_URL,
-    CONF_CO2_SENSOR,
-    CONF_EC_SENSOR,
     CONF_KEEP_STALE,
     CONF_MODEL,
-    CONF_MOISTURE_SENSOR,
-    CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
     DEFAULT_KEEP_STALE,
@@ -61,7 +57,6 @@ from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
-from .utils.entry_helpers import store_entry_data
 from .utils.paths import ensure_local_data_paths
 
 __all__ = [
