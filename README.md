@@ -1,128 +1,49 @@
-# Horticulture Assistant for Home Assistant
+﻿# Horticulture Assistant for Home Assistant
 
-> Build data-driven digital twins of every plant you care for and let Home Assistant keep an eye on light, climate, irrigation, and nutrition – with optional AI helpers when you need a second opinion.
+Horticulture Assistant is a local-first companion for growers who want to coordinate plant monitoring, nutrition, and irrigation inside Home Assistant without relying on cloud APIs. The project ships opinionated defaults, extensive reference data, and optional AI/automation hooks while remaining fully usable offline.
 
-## Highlights
-- **Per-plant profiles** with stage-aware thresholds, derived metrics, and historical context stored locally as JSON.
-- **Sensor linking** for temperature, humidity, CO2, PAR/DLI, soil moisture, EC, irrigation flow, and more.
-- **Derived horticulture analytics** including VPD, DLI, dew point, mold risk index, nutrient balance, and irrigation summaries.
-- **Optional AI workflows** to suggest setpoints, irrigation plans, and recommendations that you can approve before applying.
-- **Automation hooks** that push run-times to external schedulers (OpenSprinkler, Irrigation Unlimited) or custom automations.
-- **Diagnostics and export tools** for quick support snapshots, profile backups, and reproducible experiments.
+## Vision at a Glance
 
-## Requirements
-- Home Assistant 2023.12 or newer.
-- Local or remote sensors that expose the data you want to track (temperature, RH, light, moisture, etc.).
-- [HACS](https://hacs.xyz/) is strongly recommended for painless updates (manual install is also supported).
-- Optional: API keys for your AI provider or search service if you plan to use the AI modules.
+- **One integration, many growing styles.** Manage greenhouse crops, container gardens, or hydroponic systems by creating per-plant (or per-zone) profiles that live on disk as JSON.
+- **Local-first datasets.** Everything from fertilizer registries to stage-based light targets is bundled under `custom_components/horticulture_assistant/data/`. You can version control these files or replace them with your own.
+- **Composable services.** Optional AI helpers, irrigation planners, and data exporters sit behind Home Assistant services so you can opt-in incrementally.
+- **Friendly to dashboards.** Exposes card-ready sensor metrics (dew point, VPD, DLI) and binary environment checks so you can build rich Lovelace views or drive automations.
 
-## Installation
-### Install via HACS (recommended)
-1. In Home Assistant open **HACS ? Integrations ? Three-dot menu ? Custom repositories**.
-2. Add `https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO` and select **Integration**.
-3. Search for **Horticulture Assistant** in HACS and install.
-4. Restart Home Assistant when prompted.
+## How the Repository is Organized
 
-### Manual install
-1. Download the latest release archive from GitHub.
-2. Copy `custom_components/horticulture_assistant/` into your Home Assistant config directory (`config/custom_components/`).
-3. Restart Home Assistant to load the integration.
+| Area | Purpose | Where to learn more |
+|------|---------|---------------------|
+| Integration code | Coordinator, config/option flows, entities, services | [Component internals](custom_components/horticulture_assistant/README.md) |
+| Data catalogue | Fertilizer/product schemas, crop targets, irrigation tables | [Data README](custom_components/horticulture_assistant/data/README.md) |
+| Fertilizer dataset | Detail/index shards, schema history, validation workflow | [Fertilizer dataset](custom_components/horticulture_assistant/data/fertilizers/README.md) |
+| Local working data | User profiles, overrides, cached assets | [Local data](custom_components/horticulture_assistant/data/local/README.md) |
+| Scripts | Validation and migration helpers | [Scripts overview](scripts/README.md) *(create your own notes here)* |
 
-## First-run checklist
-1. Navigate to **Settings ? Devices & Services ? Add Integration ? Horticulture Assistant**.
-2. Create your first profile by naming the plant and (optionally) choosing a template species.
-3. Link existing sensors (temperature, humidity, illuminance/PAR, soil moisture, EC, CO2, etc.).
-4. Confirm or adjust thresholds for each variable; clone from another profile if you already dialed one in.
-5. Enable optional modules:
-   - **AI recommendations** by supplying an API key and model in the options flow.
-   - **Irrigation planner** by pointing to your automation service or irrigation controller.
-6. Entities will appear under the new device for quick access in dashboards or automations.
+## High-Level Architecture
 
-## Entities and data model
-Each profile exposes a consistent set of helpers so dashboards, blueprints, and scripts remain portable.
+1. **Profile store** – a simple JSON-backed directory that holds your plant profiles (`profile_store.py`).
+2. **Coordinators & entities** – DataUpdateCoordinators read linked sensors, compute metrics, and expose sensor/binary/number entities under each profile device.
+3. **Options flow** – Use Home Assistant’s “Configure” action to add profiles, clone thresholds, or wire sensors without editing YAML.
+4. **Reference datasets** – Fertilizer, pest, environment, and irrigation tables power future automation hooks. These live alongside schemas so CI can validate contributions.
+5. **Services & automation hooks** – Advisory number entities, service stubs, and exporters let you bolt on irrigation schedulers or AI setpoint generators when needed.
 
-| Type | Example entity | Purpose |
-|------|----------------|---------|
-| Sensor | `sensor.tomato_vpd` | Stage-aware vapor pressure deficit in kPa. |
-| Sensor | `sensor.tomato_dli` | Daily light integral in mol·m?²·day?¹. |
-| Sensor | `sensor.tomato_dew_point` | Dew point temperature for mold risk checks. |
-| Binary sensor | `binary_sensor.tomato_environment_ok` | Aggregated state covering light, temperature, humidity, and airflow thresholds. |
-| Binary sensor | `binary_sensor.tomato_moisture_ok` | Indicates whether measured soil/EC stays within the target band. |
-| Number | `number.tomato_irrigation_runtime_minutes` | Suggested irrigation runtime for the next cycle. |
-| Diagnostic sensor | `sensor.tomato_ai_confidence` | Confidence score attached to latest AI recommendation. |
+## Getting Started (Very Short Version)
 
-Entities share attributes describing source sensor IDs, configured thresholds, last refresh timestamps, and any pending recommendations.
+1. Copy the repository into your Home Assistant configuration under `custom_components/horticulture_assistant/`.
+2. Restart Home Assistant and add “Horticulture Assistant” via **Settings → Devices & Services → Add Integration**.
+3. From the integration card, open **Configure → Options → Add profile** to create your first plant or zone.
+4. Link sensors, explore the generated device, and customize profile thresholds by editing the JSON in `custom_components/horticulture_assistant/data/local/profiles/`.
 
-## Services
-All services are discoverable in **Developer Tools ? Services** once the integration is loaded. Highlights include:
+For detailed guidance on data structures, file formats, or extending the integration, follow the Readmes linked above.
 
-- `horticulture_assistant.create_profile`
-- `horticulture_assistant.duplicate_profile`
-- `horticulture_assistant.delete_profile`
-- `horticulture_assistant.update_sensors`
-- `horticulture_assistant.generate_profile` (AI/species/template clone)
-- `horticulture_assistant.apply_irrigation_plan`
-- `horticulture_assistant.export_profile`
-- `horticulture_assistant.import_profiles`
+## Developing & Contributing
 
-The complete schema lives in `services.yaml` if you need payload details for automations.
+- Install dev dependencies: `pip install -r requirements.txt -r requirements_test.txt`
+- Run tooling: `pre-commit run --all-files`, `ruff check .`, `hassfest`, `pytest -q`
+- Keep fertilizer detail files aligned with the V3e schema using `python scripts/validate_fertilizers_v3e.py`
 
-## Optional modules
-### AI copilots
-Provide an API key and model name to unlock:
-- AI-generated setpoints and nutrient guidelines.
-- Summaries of web research (if a search API is configured).
-- A manual approval queue so you remain in control of any automatic change.
+Pull requests are welcome—especially improvements to the bundled datasets or additional profile automation helpers.
 
-### Irrigation integration
-Use the built-in planners to:
-- Calculate runtime suggestions based on ET, crop coefficients, or stage-based thresholds.
-- Push schedules directly to controllers via services, or just expose advisory entities to your own automations.
+## Licensing & Attribution
 
-### Dashboards & reports
-The `dashboard/` helpers export Grafana and Lovelace-ready JSON so you can ship pre-built dashboards alongside profiles.
-
-## Data storage
-Everything is local-first and human-readable:
-
-```
-config/
-+-- custom_components/horticulture_assistant/
-    +-- data/
-    ¦   +-- local/               # Your profiles, analytics snapshots, cached datasets
-    ¦   +-- fertilizers/         # Fertilizer product index & heavy metal compliance data
-    ¦   +-- light/               # Spectrum and crop-stage targets
-    +-- analytics/               # Export scripts and utilities
-```
-
-Version these files with Git or copy them between Home Assistant instances to replicate a greenhouse configuration.
-
-## Upgrading
-1. Update via HACS or copy the latest release files over the existing component.
-2. Restart Home Assistant.
-3. Visit **Settings ? Devices & Services ? Horticulture Assistant ? Configure** to review any new options.
-
-## Troubleshooting
-- Use the **Diagnostics** button on the device page to export a redacted snapshot for support.
-- Validate data files with `python -m scripts.validate_profiles` before committing.
-- Run `python -m pytest` and `python -m ruff check --fix .` to verify changes locally.
-- Enable debug logging by adding the snippet below to `configuration.yaml`:
-
-  ```yaml
-  logger:
-    default: info
-    logs:
-      custom_components.horticulture_assistant: debug
-  ```
-
-## Development
-- Clone the repository and install dependencies with `pip install -r requirements.txt`.
-- Run `pre-commit install` then `pre-commit run --all-files` before opening a PR.
-- Tests live under `tests/`; run them with `python -m pytest`.
-- Typed checks rely on Python 3.11+ features; keep files UTF-8 encoded for CI.
-
-## Contributing & support
-Issues and feature requests are tracked at the [GitHub issue tracker](https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues). Pull requests are welcome—please include tests or sample data when adding features.
-
-## License
-Released under the MIT License. See [`LICENSE`](LICENSE) for details.
+Horticulture Assistant is released under the MIT License. Inspiration for the thresholds and card-friendly entities comes from community projects like `homeassistant-plant`, OpenPlantbook, and the Flower Card; documentation links are provided in the component README.

@@ -1,16 +1,41 @@
-# Light guidelines
+﻿# Light Targets by Growth Stage
 
-Files in this folder describe how much light a crop wants during each growth stage. Typical keys include:
+Each JSON file in this folder describes light expectations for a species across growth stages. These values inform DLI/VPD dashboards and help advisory logic detect when a plant is under- or over-exposed.
 
-- `ppfd_umol_m2_s` – Instantaneous photosynthetic photon flux density targets.
-- `dli_mol_m2_day` – Daily light integral band (min/target/max).
-- `spectrum` – Desired spectral mix or correlated color temperature.
-- `photoperiod_hours` – Light/dark schedule recommendations.
-- `annotations` – Notes on light response, shading sensitivity, or acclimation advice.
+## Schema
 
-Each JSON document is named after the crop/species slug (e.g. `solanum_lycopersicum.json`). Stage definitions mirror those used throughout the integration (`propagation`, `vegetative`, `flowering`, `fruiting`, etc.).
+```json
+{
+  "species": "solanum_lycopersicum",
+  "stages": {
+    "propagation": {
+      "ppfd_umol_m2_s": [150, 250],
+      "dli_mol_m2_day": [8, 12],
+      "photoperiod_hours": [16, 18],
+      "spectrum": "full-spectrum, 5000K"
+    },
+    "vegetative": {
+      "ppfd_umol_m2_s": [300, 450],
+      "dli_mol_m2_day": [18, 24],
+      "notes": "Increase blue fraction for compact growth"
+    }
+  },
+  "sources": ["Extension bulletin XYZ", "Grower case study 2024"]
+}
+```
 
-When contributing data:
-1. Keep units explicit.
-2. Include citations or source notes in the `annotations` section.
-3. Validate with `python -m scripts.validate_profiles` before committing.
+### Field Notes
+
+- `ppfd_umol_m2_s` – Instantaneous photon flux density ranges.
+- `dli_mol_m2_day` – Daily light integral bands; coordinators compare actual DLI to this range.
+- `photoperiod_hours` – Optional; specify light/dark cycles if plants require strict photoperiods.
+- `spectrum` – Preferred spectral mix or correlated color temperature.
+
+## Adding New Species
+
+1. Name the file using the species slug (e.g., `persea_americana.json`).
+2. Populate stages relevant to the crop (`propagation`, `vegetative`, `flowering`, etc.).
+3. Include notes for acclimation, shading tolerance, or any cultivar-specific nuances.
+4. Add at least one citation in `sources`.
+
+Remember to run `pre-commit run --all-files` after editing to keep formatting consistent.

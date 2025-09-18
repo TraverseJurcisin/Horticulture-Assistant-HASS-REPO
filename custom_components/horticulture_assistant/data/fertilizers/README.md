@@ -1,52 +1,52 @@
-# Fertilizer, substrate, and additive index
+﻿# Fertilizer Dataset
 
-This dataset powers product lookups for fertilizers, growth media, biostimulants, and crop-protection inputs. It is split into lightweight index shards for fast search and richer detail records for downstream analytics.
+This dataset powers product lookups and nutrient analytics. It mirrors real-world fertilizer registries while allowing local additions for proprietary products.
+
+## Directory Overview
 
 ```
 fertilizers/
-+-- fertilizer_application_methods.json     # Standard practice lookups (broadcast, fertigate, foliar, etc.)
-+-- fertilizer_application_rates.json       # Reference dose ranges per crop class
-+-- index_sharded/                          # JSONL search shards (~5k records each)
-+-- detail/                                 # Full product dossiers grouped by leading ID bytes
-+-- schema/2025-09-V3e.schema.json           # Canonical JSON Schema for detail records
+├── detail/           # One JSON per product (sharded by prefix)
+├── index_sharded/    # Search-friendly JSONL shards summarizing each product
+├── schema/           # JSON Schema versions (current: 2025-09-V3e)
+├── fertilizer_application_methods.json
+├── fertilizer_application_rates.json
+└── README.md
 ```
 
-## Record structure (detail JSON)
-Each detail file stores exactly one product record with the following high-level keys:
+- **detail/** – Rich product dossiers including guaranteed analysis, carrier, density, heavy-metal compliance, application notes, and citations.
+- **index_sharded/** – Lightweight JSON Lines files used for fuzzy search; each row contains product id, name, nutrient summary, tags, and provenance.
+- **schema/** – Formal schemas; V3e is validated in CI via `scripts/validate_fertilizers_v3e.py`.
+- **application_*.json** – Lookup tables for application methods, rates, and best practices.
 
-| Key | Description |
-|-----|-------------|
-| `id` | Deterministic 6-character identifier (hex) used across index/detail datasets. |
-| `name`, `brand`, `manufacturer` | Human-readable product metadata. |
-| `analysis` | Guaranteed, derived, and minimum nutrient percentages (NPK + micros). |
-| `formulation` | Product form (liquid, granular, soluble), carrier, density, pH, EC, solubility. |
-| `application` | Supported methods, dilution ratios, compatible injection systems, re-entry intervals. |
-| `regulatory` | Organic status, OMRI/WSDA equivalence, restricted-use flags, heavy metal compliance. |
-| `safety` | PPE requirements, hazard statements, storage notes. |
-| `notes.sources` | Bibliography or dataset provenance entries. |
+## Product Record Schema (V3e)
 
-Refer to the schema file for the complete nested structure, data types, and optional fields.
+Key sections inside each detail JSON:
 
-## Editing workflow
-1. Pick an ID for the new product (preferably the next available hexadecimal shard).
-2. Add the full record under `detail/XY/XYZ123.json` where `XY` are the first two characters of the ID.
-3. Append a summary row to the appropriate shard in `index_sharded/` with the minimal search payload:
-   ```json
-   {
-     "id": "XYZ123",
-     "name": "Example 8-3-9",
-     "type": "fertilizer",
-     "guaranteed_nutrients": {"N": 8, "P2O5": 3, "K2O": 9},
-     "tags": ["veg", "organic"],
-     "source": "Manufacturer bulletin 2024"
-   }
-   ```
-4. Run the migration helpers if you changed the schema: `python scripts/migrate_fertilizer_schema.py`.
-5. Validate with `python -m scripts.validate_profiles` and commit.
+| Field | Description |
+|-------|-------------|
+| `product.product_id` | Deterministic hex identifier used across detail and index shards. |
+| `analysis.guaranteed` | NPK + secondary/micronutrient guarantees (percent by weight). |
+| `formulation` | Physical form, carrier, density, pH, EC, solubility info. |
+| `application` | Supported methods (broadcast, fertigation, foliar), dilution ratios, pre-harvest intervals. |
+| `regulatory` | Organic status, heavy metal test results, restricted-use notes. |
+| `safety` | PPE requirements, hazard statements, storage guidance. |
+| `notes.sources` | Citations or dataset sources for auditability. |
 
-## Provenance & quality
-- Original records were blended from state fertilizer registries and vendor SDS/labels.
-- Newer entries add greenhouse/media performance data contributed by growers and agronomists.
-- Heavy metal screens follow state banding rules; see `heavy_metals` within each record for thresholds.
+Refer to the schema file for precise data types and optional fields.
 
-Keep contributions well-sourced so the audit trail remains trustworthy.
+## Workflow for Adding Products
+
+1. Choose an ID (e.g., `A1B2C3`) and place the detail file under `detail/A1/A1B2C3.json`.
+2. Populate the record using the V3e schema.
+3. Append a minimal row to the appropriate JSONL shard in `index_sharded/` to keep CLI search fast.
+4. Run `python scripts/validate_fertilizers_v3e.py` and ensure no errors are reported.
+5. Document sources in the `notes.sources` array.
+
+## Quality Assurance
+
+- CI runs the V3e validator on every pull request.
+- Pre-commit enforces JSON formatting (`pretty-format-json`) and newline discipline.
+- Large dataset updates should include a changelog in your PR description for reviewers.
+
+If you need to keep private products local, store them under `data/local/products/` instead—those files are merged at runtime but skipped by CI.

@@ -1,31 +1,36 @@
-# Data catalogue
+﻿# Data Catalogue
 
-This directory packages the horticulture knowledge base that powers the integration. Each subfolder focuses on a single theme (e.g. light, irrigation, pests, harvest logistics) so profiles can compose just the pieces they need.
+The `data/` tree ships with reference material that powers derived metrics, profile templates, and fertilizer validation. Everything is stored as human-readable JSON so you can audit or replace individual datasets.
 
-Most datasets follow three principles:
+## Layout
 
-1. **Human readable** – JSON/JSONL files that can be inspected and versioned in Git.
-2. **Schema backed** – companion files inside `schema/` document the structure for automated validation.
-3. **Stable identifiers** – every record gets a deterministic ID so profiles can reference data safely across releases.
+```
+data/
+├── fertilizers/           # Product catalogue, schema, and search indexes
+├── local/                 # User-specific working data (profiles, zones, overrides)
+├── ...                    # Agronomy reference tables (environment, pests, irrigation, etc.)
+```
 
-## Key folders
-- `fertilizers/` – indexed catalogue of nutrient products, carriers, analysis data, and compliance flags.
-- `light/` – spectral targets, crop-specific PPFD/DLI bands, and lighting technology lookup tables.
-- `temperature/`, `humidity/`, `co2/` – environment setpoints arranged by growth stage.
-- `nutrients/`, `solution/`, `soil/` – macro/micronutrient ranges, stock solution recipes, and substrate properties.
-- `pests/`, `diseases/`, `fungicides/`, `pesticides/` – risk profiles, scouting notes, and mitigation playbooks.
-- `local/` – site-specific data created on the fly (profiles, zone registry, cache files). See the README within for details.
+Each subdirectory has its own README with full descriptions. Highlighted areas:
 
-The remaining folders follow the same pattern—stage-specific agronomy, operational checklists, and supporting coefficients.
+- [Fertilizers](fertilizers/README.md) – sharded product listings, detail schema, and the CI validator.
+- [Local working data](local/README.md) – where Home Assistant writes profiles and zone registries.
+- [Plants/light](local/plants/light/README.md) – stage-based light targets for template profiles.
+- [Plants/temperature](local/plants/temperature/README.md) – air/root temperature guidelines used by coordinators.
+- [Products](local/products/README.md) – private catalogues for fertilizers, pesticides, or additives that should stay local.
 
-## Adding or updating data
-1. Create or edit the JSON/JSONL file in the relevant folder.
-2. Update or add a schema file if the structure changed.
-3. Run the validation helpers before committing:
-   ```bash
-   python -m scripts.validate_profiles
-   ```
-4. Describe the source in the PR so changes remain auditable.
+## Editing Guidelines
 
-## Versioning
-Dataset versions are encoded in filenames (e.g. `2025-09-V3e.schema.json`). When bumping versions, include a changelog line in the PR body and keep earlier revisions for reproducibility unless data privacy requires removal.
+1. **UTF-8 and newline** – Pre-commit enforces one trailing newline and LF line endings.
+2. **Naming** – Use lowercase snake_case filenames (`nutrient_guidelines.json`).
+3. **Schemas** – Schema files live alongside data (e.g., `fertilizers/schema/2025-09-V3e.schema.json`). Update schemas when fields change and bump validators.
+4. **Validation** – Run `pre-commit run --all-files` and `python scripts/validate_fertilizers_v3e.py` before committing.
+
+## Contributing New Datasets
+
+- Drop the JSON in the appropriate subdirectory.
+- Document the schema assumptions in that folder’s README.
+- Provide source attribution where possible (e.g., extension bulletins, research papers).
+- If the dataset is large or proprietary, consider storing only metadata here and referencing your private location in `local/`.
+
+For details about specific themes (environment, irrigation, pests, etc.) open the corresponding README in this directory.

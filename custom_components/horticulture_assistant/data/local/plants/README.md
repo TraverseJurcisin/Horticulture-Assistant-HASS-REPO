@@ -1,9 +1,30 @@
-# Local plant knowledge
+﻿# Plant Template Overview
 
-The files in this folder capture curated reference material that ships with the integration and can be extended by end users. They are distinct from the per-profile records stored in the `profiles/` folder—think of them as templates, reference tables, and guardrails.
+The `plants/` directory holds template data that can be cloned into new profiles. Each file captures stage-based guidance gathered from agronomy references.
 
-Current categories:
-- `light/` – Stage-based PPFD, DLI, photoperiod, and spectrum recommendations for supported crops.
-- `temperature/` – Baseline targets for day/night air temperature, substrate temperature, and root-zone differentials.
+```
+plants/
+├── README.md
+├── light/
+│   └── README.md
+├── temperature/
+│   └── README.md
+└── ... (future folders: humidity, nutrient baselines, etc.)
+```
 
-Add your own folders if you have localized guidance (e.g. humidity bands, CO2 ramps); the integration will happily read additional JSON as long as you follow the schemas used in other datasets.
+## Usage
+
+- Options flow “Clone thresholds from” pulls defaults from these templates.
+- Coordinators reference the data when generating advisory metrics (e.g., comparing actual DLI to target DLI).
+- You can add additional categories (humidity, CO₂, etc.) by creating matching folders and documenting them here.
+
+## Contribution Guidelines
+
+1. Keep units explicit (e.g., `dli_target_mol_m2_day`).
+2. Provide `sources` arrays whenever data is derived from research or extension bulletins.
+3. Avoid including per-location microclimate data—store that in `data/local/` instead.
+
+See the subdirectories for detailed formats:
+
+- [Light targets](light/README.md)
+- [Temperature targets](temperature/README.md)
