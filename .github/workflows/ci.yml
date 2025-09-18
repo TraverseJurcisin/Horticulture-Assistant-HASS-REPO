@@ -26,7 +26,7 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
           python -m pip install -r requirements_test.txt
-          python -m pip install ruff==0.6.8 mypy==1.11.2
+          python -m pip install hassfest ruff==0.6.8 mypy==1.11.2
 
       - name: Pre-commit (format & JSON checks)
         run: |
@@ -41,7 +41,7 @@ jobs:
         run: ruff check .
 
       - name: Mypy (static type check)
-        run: python -m mypy --config-file mypy.ini custom_components
+        run: python -m mypy --config-file mypy.ini custom_components/horticulture_assistant
 
       - name: Python bytecode compile
         run: python -m compileall custom_components scripts tests
@@ -57,3 +57,4 @@ jobs:
           if [ -f scripts/validate_fertilizers_v3e.py ]; then
             python scripts/validate_fertilizers_v3e.py
           fi
+
