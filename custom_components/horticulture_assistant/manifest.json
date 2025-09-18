@@ -1,7 +1,7 @@
 {
   "domain": "horticulture_assistant",
   "name": "Horticulture Assistant",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "config_flow": true,
   "documentation": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO#readme",
   "issue_tracker": "https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues",
