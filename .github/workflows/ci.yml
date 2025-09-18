@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -37,8 +37,7 @@ jobs:
         continue-on-error: true
         run: hassfest
 
-      - name: Ruff (lint)
-        run: ruff check .
+      - name: Ruff (lint)\r\n        run: ruff check .\r\n\n      - name: Mypy (static type check)\r\n        run: python -m mypy --config-file mypy.ini custom_components\r\n\n      - name: Python bytecode compile\r\n        run: python -m compileall custom_components scripts tests
 
       - name: Pytest
         run: pytest -q
@@ -51,3 +50,4 @@ jobs:
           if [ -f scripts/validate_fertilizers_v3e.py ]; then
             python scripts/validate_fertilizers_v3e.py
           fi
+
