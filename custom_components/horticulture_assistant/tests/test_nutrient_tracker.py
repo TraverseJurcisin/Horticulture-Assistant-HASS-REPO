@@ -86,9 +86,7 @@ def test_calculate_remaining_requirements():
     tracker = NutrientTracker()
     now = datetime.now()
     # requirements for citrus: N 150, P 50, K 150 per day
-    tracker.delivery_log.append(
-        NutrientDeliveryRecord("c1", "b1", now - timedelta(days=1), {"N": 100, "K": 50}, 1.0)
-    )
+    tracker.delivery_log.append(NutrientDeliveryRecord("c1", "b1", now - timedelta(days=1), {"N": 100, "K": 50}, 1.0))
 
     deficits = tracker.calculate_remaining_requirements("citrus", 2, "c1", now=now)
     assert deficits["N"] == 200

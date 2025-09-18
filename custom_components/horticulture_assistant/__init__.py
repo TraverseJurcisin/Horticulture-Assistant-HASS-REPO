@@ -11,11 +11,13 @@ except ModuleNotFoundError:  # pragma: no cover - test fallback
 try:
     from aiohttp import ClientError, ClientResponseError
 except ModuleNotFoundError:  # pragma: no cover - test fallback
+
     class ClientError(Exception):
         """Fallback ClientError used when aiohttp is unavailable."""
 
     class ClientResponseError(ClientError):
         """Fallback ClientResponseError used when aiohttp is unavailable."""
+
 
 try:
     from homeassistant.config_entries import ConfigEntry

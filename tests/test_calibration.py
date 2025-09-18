@@ -162,9 +162,7 @@ async def test_services_session_flow(hass):
     )
     session_id = res["session_id"]
     for _ in range(5):
-        await calib_services._handle_add_point(
-            hass, SimpleNamespace(data={"session_id": session_id})
-        )
+        await calib_services._handle_add_point(hass, SimpleNamespace(data={"session_id": session_id}))
     await calib_services._handle_finish(hass, SimpleNamespace(data={"session_id": session_id}))
     rec = await async_get_for_entity(hass, "sensor.lux")
     assert rec is not None

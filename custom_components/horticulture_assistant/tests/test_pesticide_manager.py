@@ -219,9 +219,7 @@ def test_estimate_rotation_plan_cost():
 
     start = datetime.date(2024, 1, 1)
     plan = suggest_rotation_plan(["spinosad", "neem_oil"], start)
-    expected = estimate_application_cost("spinosad", 2.0) + estimate_application_cost(
-        "neem_oil", 2.0
-    )
+    expected = estimate_application_cost("spinosad", 2.0) + estimate_application_cost("neem_oil", 2.0)
     cost = estimate_rotation_plan_cost(plan, 2.0)
     assert cost == expected
 

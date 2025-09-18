@@ -6,6 +6,7 @@ from .schema import Citation
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
+
 def utcnow_iso() -> str:
     return datetime.now(UTC).isoformat()
 

@@ -8,9 +8,7 @@ def setup_data(tmp_path):
     yield_dir = tmp_path / "yield"
     nutrient_dir.mkdir()
     yield_dir.mkdir()
-    nutrient_log = {
-        "records": [{"nutrients_mg": {"N": 1000, "K": 500}}, {"nutrients_mg": {"N": 500}}]
-    }
+    nutrient_log = {"records": [{"nutrients_mg": {"N": 1000, "K": 500}}, {"nutrients_mg": {"N": 500}}]}
     (nutrient_dir / "plant.json").write_text(json.dumps(nutrient_log))
     yield_data = {"harvests": [{"yield_grams": 2000}]}
     (yield_dir / "plant.json").write_text(json.dumps(yield_data))

@@ -1,5 +1,20 @@
 {
-  "coco": {"ph_min": 5.5, "ph_max": 6.5, "water_retention_pct": 65, "aeration_pct": 25},
-  "peat": {"ph_min": 5.8, "ph_max": 6.2, "water_retention_pct": 70, "aeration_pct": 20},
-  "rockwool": {"ph_min": 5.8, "ph_max": 6.3, "water_retention_pct": 85, "aeration_pct": 10}
+  "coco": {
+    "ph_min": 5.5,
+    "ph_max": 6.5,
+    "water_retention_pct": 65,
+    "aeration_pct": 25
+  },
+  "peat": {
+    "ph_min": 5.8,
+    "ph_max": 6.2,
+    "water_retention_pct": 70,
+    "aeration_pct": 20
+  },
+  "rockwool": {
+    "ph_min": 5.8,
+    "ph_max": 6.3,
+    "water_retention_pct": 85,
+    "aeration_pct": 10
+  }
 }

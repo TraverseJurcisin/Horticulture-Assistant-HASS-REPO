@@ -27,9 +27,7 @@ sys.modules.setdefault(
     "homeassistant.helpers.entity_registry",
     types.ModuleType("homeassistant.helpers.entity_registry"),
 )
-sys.modules.setdefault(
-    "homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event")
-)
+sys.modules.setdefault("homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event"))
 update_coordinator = types.ModuleType("homeassistant.helpers.update_coordinator")
 
 
@@ -57,9 +55,7 @@ def make_hass():
 
     return types.SimpleNamespace(
         config_entries=types.SimpleNamespace(async_update_entry=update_entry),
-        helpers=types.SimpleNamespace(
-            aiohttp_client=types.SimpleNamespace(async_get_clientsession=AsyncMock())
-        ),
+        helpers=types.SimpleNamespace(aiohttp_client=types.SimpleNamespace(async_get_clientsession=AsyncMock())),
     )
 
 

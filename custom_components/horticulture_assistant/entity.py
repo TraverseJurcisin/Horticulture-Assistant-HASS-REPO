@@ -13,9 +13,7 @@ class HorticultureEntity(CoordinatorEntity[HorticultureCoordinator]):
 
     _attr_has_entity_name = True
 
-    def __init__(
-        self, coordinator: HorticultureCoordinator, profile_id: str, profile_name: str
-    ) -> None:
+    def __init__(self, coordinator: HorticultureCoordinator, profile_id: str, profile_name: str) -> None:
         super().__init__(coordinator)
         self._profile_id = profile_id
         self._profile_name = profile_name

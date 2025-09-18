@@ -135,9 +135,7 @@ def load_logs(plant_dir: Path) -> dict[str, list]:
     }
 
 
-def build_root_zone_info(
-    general: Mapping[str, object], sensor_avg: Mapping[str, float]
-) -> dict[str, object]:
+def build_root_zone_info(general: Mapping[str, object], sensor_avg: Mapping[str, float]) -> dict[str, object]:
     """Return root zone metrics calculated from profile and sensors."""
 
     try:

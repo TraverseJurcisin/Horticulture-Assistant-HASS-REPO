@@ -12,9 +12,7 @@ from custom_components.horticulture_assistant.utils.path_utils import plants_pat
 _LOGGER = logging.getLogger(__name__)
 
 
-def irrigation_trigger(
-    plant_id: str, base_path: str | None = None, sensor_data: dict | None = None
-) -> bool:
+def irrigation_trigger(plant_id: str, base_path: str | None = None, sensor_data: dict | None = None) -> bool:
     """
     Determine whether to trigger irrigation for a given plant based on soil moisture.
     Args:
@@ -50,8 +48,7 @@ def irrigation_trigger(
         not irrigation_enabled
         or profile_data.get("irrigation_enabled") is False
         or (
-            isinstance(profile_data.get("general"), dict)
-            and profile_data["general"].get("irrigation_enabled") is False
+            isinstance(profile_data.get("general"), dict) and profile_data["general"].get("irrigation_enabled") is False
         )
     ):
         _LOGGER.info(
@@ -108,9 +105,7 @@ def irrigation_trigger(
     try:
         # If threshold is a list or tuple (range), use the first value as the minimum threshold
         threshold_val = (
-            float(threshold_value[0])
-            if isinstance(threshold_value, list | tuple)
-            else float(threshold_value)
+            float(threshold_value[0]) if isinstance(threshold_value, list | tuple) else float(threshold_value)
         )
     except (TypeError, ValueError):
         _LOGGER.error(

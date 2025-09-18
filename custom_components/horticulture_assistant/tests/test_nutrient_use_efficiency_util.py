@@ -11,9 +11,7 @@ def test_nutrient_efficiency_basic(tmp_path, monkeypatch):
     (data_dir / "nutrient_use.json").write_text(
         json.dumps({"plant1": [{"date": "2025-01-01", "nutrients": {"N": 100}, "stage": "veg"}]})
     )
-    (data_dir / "yield_logs.json").write_text(
-        json.dumps({"plant1": [{"date": "2025-01-05", "weight": 500}]})
-    )
+    (data_dir / "yield_logs.json").write_text(json.dumps({"plant1": [{"date": "2025-01-05", "weight": 500}]}))
     monkeypatch.chdir(tmp_path)
     nue = NutrientUseEfficiency()
     eff = nue.compute_efficiency("plant1")
@@ -43,15 +41,11 @@ def test_compare_to_expected(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
     (data_dir / "nutrient_use.json").write_text(
-        json.dumps(
-            {"p1": [{"date": "2025-01-01", "nutrients": {"N": 150, "P": 60}, "stage": "veg"}]}
-        )
+        json.dumps({"p1": [{"date": "2025-01-01", "nutrients": {"N": 150, "P": 60}, "stage": "veg"}]})
     )
     (data_dir / "yield_logs.json").write_text("{}")
     (data_dir / "nutrients").mkdir()
-    (data_dir / "nutrients" / "nutrient_uptake.json").write_text(
-        json.dumps({"tomato": {"veg": {"N": 100, "P": 40}}})
-    )
+    (data_dir / "nutrients" / "nutrient_uptake.json").write_text(json.dumps({"tomato": {"veg": {"N": 100, "P": 40}}}))
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     import importlib

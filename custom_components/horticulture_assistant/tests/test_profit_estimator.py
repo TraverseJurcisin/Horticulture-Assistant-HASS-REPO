@@ -12,9 +12,7 @@ def test_estimate_profit(tmp_path):
     plant_id = "profitplant"
     yield_manager.YIELD_DIR = str(tmp_path)
     yield_manager.record_harvest(plant_id, grams=1000)
-    profit = profit_estimator.estimate_profit(
-        plant_id, "lettuce", {"water": 0.5, "fertilizer": 0.3}
-    )
+    profit = profit_estimator.estimate_profit(plant_id, "lettuce", {"water": 0.5, "fertilizer": 0.3})
     # revenue = 1kg * $3 = 3.0, cost=0.8, profit=2.2
     assert profit == 2.2
 

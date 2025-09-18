@@ -45,9 +45,7 @@ def test_store_and_remove_entry_data(tmp_path):
     assert get_entry_data(hass, entry) is stored
     assert get_entry_data_by_plant_id(hass, "e1") is stored
     remove_entry_data(hass, "e1")
-    assert (
-        "horticulture_assistant" not in hass.data or "e1" not in hass.data["horticulture_assistant"]
-    )
+    assert "horticulture_assistant" not in hass.data or "e1" not in hass.data["horticulture_assistant"]
     assert get_entry_data(hass, "e1") is None
     assert get_entry_data_by_plant_id(hass, "e1") is None
 

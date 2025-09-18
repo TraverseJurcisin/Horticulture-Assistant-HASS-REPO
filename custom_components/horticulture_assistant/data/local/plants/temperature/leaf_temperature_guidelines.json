@@ -1,10 +1,22 @@
 {
   "citrus": {
-    "optimal": [24, 30],
-    "germination": [26, 32]
+    "optimal": [
+      24,
+      30
+    ],
+    "germination": [
+      26,
+      32
+    ]
   },
   "lettuce": {
-    "optimal": [18, 24],
-    "germination": [20, 24]
+    "optimal": [
+      18,
+      24
+    ],
+    "germination": [
+      20,
+      24
+    ]
   }
 }

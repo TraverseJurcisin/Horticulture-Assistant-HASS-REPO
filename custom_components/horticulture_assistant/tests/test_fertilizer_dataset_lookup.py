@@ -25,9 +25,7 @@ def _ensure_package(name: str, path: Path) -> None:
 _ensure_package("custom_components", ROOT.parent)
 _ensure_package("custom_components.horticulture_assistant", ROOT)
 _ensure_package("custom_components.horticulture_assistant.engine", ROOT / "engine")
-_ensure_package(
-    "custom_components.horticulture_assistant.engine.plant_engine", PACKAGE_DIR
-)
+_ensure_package("custom_components.horticulture_assistant.engine.plant_engine", PACKAGE_DIR)
 
 
 def _load_module(module_name: str, file: Path):

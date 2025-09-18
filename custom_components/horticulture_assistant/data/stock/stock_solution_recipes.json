@@ -1,8 +1,14 @@
 {
   "tomato": {
-    "vegetative": {"stock_a": 2.0, "stock_b": 1.0}
+    "vegetative": {
+      "stock_a": 2.0,
+      "stock_b": 1.0
+    }
   },
   "lettuce": {
-    "seedling": {"stock_a": 1.0, "stock_b": 0.5}
+    "seedling": {
+      "stock_a": 1.0,
+      "stock_b": 0.5
+    }
   }
 }

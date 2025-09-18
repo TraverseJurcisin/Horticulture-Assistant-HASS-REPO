@@ -1,35 +1,98 @@
 {
   "lettuce": {
-    "vegetative": {"N": 60, "P": 20, "K": 80},
-    "harvest": {"N": 50, "P": 15, "K": 70}
+    "vegetative": {
+      "N": 60,
+      "P": 20,
+      "K": 80
+    },
+    "harvest": {
+      "N": 50,
+      "P": 15,
+      "K": 70
+    }
   },
   "tomato": {
-    "vegetative": {"N": 80, "P": 25, "K": 90},
-    "fruiting": {"N": 100, "P": 30, "K": 120}
-  }
-  ,
+    "vegetative": {
+      "N": 80,
+      "P": 25,
+      "K": 90
+    },
+    "fruiting": {
+      "N": 100,
+      "P": 30,
+      "K": 120
+    }
+  },
   "citrus": {
-    "vegetative": {"N": 50, "P": 15, "K": 60},
-    "fruiting": {"N": 70, "P": 20, "K": 90}
+    "vegetative": {
+      "N": 50,
+      "P": 15,
+      "K": 60
+    },
+    "fruiting": {
+      "N": 70,
+      "P": 20,
+      "K": 90
+    }
   },
   "cucumber": {
-    "vegetative": {"N": 60, "P": 20, "K": 80},
-    "fruiting": {"N": 70, "P": 25, "K": 110}
+    "vegetative": {
+      "N": 60,
+      "P": 20,
+      "K": 80
+    },
+    "fruiting": {
+      "N": 70,
+      "P": 25,
+      "K": 110
+    }
   },
   "pepper": {
-    "vegetative": {"N": 60, "P": 20, "K": 70},
-    "fruiting": {"N": 80, "P": 30, "K": 100}
+    "vegetative": {
+      "N": 60,
+      "P": 20,
+      "K": 70
+    },
+    "fruiting": {
+      "N": 80,
+      "P": 30,
+      "K": 100
+    }
   },
   "strawberry": {
-    "vegetative": {"N": 40, "P": 20, "K": 50},
-    "fruiting": {"N": 50, "P": 30, "K": 80}
+    "vegetative": {
+      "N": 40,
+      "P": 20,
+      "K": 50
+    },
+    "fruiting": {
+      "N": 50,
+      "P": 30,
+      "K": 80
+    }
   },
   "blueberry": {
-    "vegetative": {"N": 30, "P": 10, "K": 40},
-    "fruiting": {"N": 20, "P": 15, "K": 60}
+    "vegetative": {
+      "N": 30,
+      "P": 10,
+      "K": 40
+    },
+    "fruiting": {
+      "N": 20,
+      "P": 15,
+      "K": 60
+    }
   },
   "kale": {
-    "vegetative": {"N": 55, "P": 25, "K": 75},
-    "harvest": {"N": 50, "P": 20, "K": 70}
+    "vegetative": {
+      "N": 55,
+      "P": 25,
+      "K": 75
+    },
+    "harvest": {
+      "N": 50,
+      "P": 20,
+      "K": 70
+    }
   }
 }

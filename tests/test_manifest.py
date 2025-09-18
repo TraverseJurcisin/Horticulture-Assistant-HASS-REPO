@@ -1,11 +1,11 @@
 import json
-import pathlib
+from pathlib import Path
 
 
 def test_manifest_metadata():
-    manifest_path = pathlib.Path(__file__).parents[1] / "custom_components" / "horticulture_assistant" / "manifest.json"
-    manifest = json.loads(manifest_path.read_text())
-    assert manifest["domain"] == "horticulture_assistant"
-    assert manifest.get("after_dependencies") == ["recorder"]
-    assert manifest.get("loggers") == ["custom_components.horticulture_assistant"]
-    assert manifest.get("version")
+    manifest_path = Path("custom_components/horticulture_assistant/manifest.json")
+    data = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert data["domain"] == "horticulture_assistant"
+    assert isinstance(data.get("name"), str) and data["name"].strip()
+    assert data.get("loggers") == ["custom_components.horticulture_assistant"]
+    assert data.get("integration_type") == "hub"

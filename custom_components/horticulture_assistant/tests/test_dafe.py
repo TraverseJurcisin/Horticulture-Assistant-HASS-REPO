@@ -36,14 +36,10 @@ def test_generate_pulse_schedule():
     assert schedule
     assert all("time" in p and "volume" in p and "mass_mg" in p for p in schedule)
 
-    high_ec_schedule = generate_pulse_schedule(
-        wc, 3.0, D_eff, species, media, nutrient_params={"D_base": 1e-5}
-    )
+    high_ec_schedule = generate_pulse_schedule(wc, 3.0, D_eff, species, media, nutrient_params={"D_base": 1e-5})
     assert all(p["volume"] <= base_volume for p in high_ec_schedule)
 
-    low_ec_schedule = generate_pulse_schedule(
-        wc, 1.0, D_eff, species, media, nutrient_params={"D_base": 1e-5}
-    )
+    low_ec_schedule = generate_pulse_schedule(wc, 1.0, D_eff, species, media, nutrient_params={"D_base": 1e-5})
     assert all(p["volume"] >= base_volume for p in low_ec_schedule)
 
 
@@ -129,9 +125,7 @@ def test_profile_data_files(tmp_path, monkeypatch):
         ' "ec_low": 1.0, "ec_high": 2.0}}'
     )
     media_file = data_dir / "dafe_media_profiles.json"
-    media_file.write_text(
-        '{"rockwool": {"porosity": 0.9, "fc": 0.7, "pwp": 0.1, "tortuosity": 1.5}}'
-    )
+    media_file.write_text('{"rockwool": {"porosity": 0.9, "fc": 0.7, "pwp": 0.1, "tortuosity": 1.5}}')
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(tmp_path))
 

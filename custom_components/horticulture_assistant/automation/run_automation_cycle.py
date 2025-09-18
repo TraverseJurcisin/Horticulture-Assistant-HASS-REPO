@@ -84,9 +84,7 @@ def run_automation_cycle(base_path: str | None = None) -> None:
     """
     # Global override check
     if not ENABLE_AUTOMATION:
-        _LOGGER.info(
-            "Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping automation cycle."
-        )
+        _LOGGER.info("Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping automation cycle.")
         return
 
     if base_path is None:

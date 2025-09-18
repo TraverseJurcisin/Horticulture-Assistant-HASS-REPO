@@ -75,8 +75,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 {
                     "role": "user",
                     "content": (
-                        f"Profile: {profile}\nGuidelines: {json.dumps(summary)}\n"
-                        "Provide a concise recommendation."
+                        f"Profile: {profile}\nGuidelines: {json.dumps(summary)}\n" "Provide a concise recommendation."
                     ),
                 },
             ]

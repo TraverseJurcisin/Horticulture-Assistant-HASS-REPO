@@ -6,7 +6,7 @@
   "id": "B42656",
   "metadata": {
     "registrant": "DIAMOND K GYPSUM INC",
-    "label_name": "DIAMOND K PREMIUM 95\u2122 SOLUTION GRADE HA 0-0-0",
+    "label_name": "DIAMOND K PREMIUM 95™ SOLUTION GRADE HA 0-0-0",
     "wsda_reg_no": "(#1276-0010)",
     "formulation": "Liquid",
     "first_seen": "2025-07-25",
@@ -16,7 +16,7 @@
       "schema_version": "2025-07-v1",
       "wsda_record": {
         "wsda_product_number": "(#1276-0010)",
-        "product_name": "DIAMOND K PREMIUM 95\u2122 SOLUTION GRADE HA 0-0-0",
+        "product_name": "DIAMOND K PREMIUM 95™ SOLUTION GRADE HA 0-0-0",
         "company_info": {
           "company": "DIAMOND K GYPSUM INC",
           "Mailing Address": "1720 South Red Hills Dr",
@@ -81,7 +81,7 @@
     }
   },
   "product": {
-    "name": "DIAMOND K PREMIUM 95\u2122 SOLUTION GRADE HA 0-0-0",
+    "name": "DIAMOND K PREMIUM 95™ SOLUTION GRADE HA 0-0-0",
     "brand": "DIAMOND K GYPSUM INC",
     "manufacturer": {
       "name": "DIAMOND K GYPSUM INC"

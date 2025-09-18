@@ -27,9 +27,7 @@ THRESHOLD_SPECS = [
 ]
 
 
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-) -> None:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     plant_id: str = stored["plant_id"]
     plant_name: str = stored["plant_name"]

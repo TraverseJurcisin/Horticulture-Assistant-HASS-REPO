@@ -63,9 +63,7 @@ def test_search_datasets():
     results = search_datasets("irrigation")
     assert "irrigation/irrigation_guidelines.json" in results
     assert "irrigation/irrigation_intervals.json" in results
-    assert all(
-        "irrigation" in name or "irrigation" in desc.lower() for name, desc in results.items()
-    )
+    assert all("irrigation" in name or "irrigation" in desc.lower() for name, desc in results.items())
 
     empty = search_datasets("does-not-exist")
     assert empty == {}

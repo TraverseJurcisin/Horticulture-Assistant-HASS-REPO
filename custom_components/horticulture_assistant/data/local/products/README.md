@@ -8,4 +8,4 @@ Use this directory to stash private catalogues—products that should not live i
 
 File format is identical to the global fertilizer/product schema. Drop JSON files here with unique IDs (e.g. prefix private IDs with `L` to avoid collisions). The integration merges these with the main catalogue at runtime, preferring local entries when IDs clash.
 
-Remember to back up this folder; nothing here ships with the component.
+Remember to back up this folder; nothing here ships with the component.

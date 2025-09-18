@@ -49,9 +49,7 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
     _attr_native_unit_of_measurement = "s"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(
-        self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
         super().__init__(plant_name, plant_id)
         self.hass = hass
         self._entry = entry
@@ -66,9 +64,7 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
         if self._src:
-            self.async_on_remove(
-                async_track_state_change_event(self.hass, [self._src], self._on_state)
-            )
+            self.async_on_remove(async_track_state_change_event(self.hass, [self._src], self._on_state))
             # prime value
             self._on_state(None)
 

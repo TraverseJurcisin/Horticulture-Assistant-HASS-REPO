@@ -14,9 +14,7 @@ module = importlib.util.module_from_spec(spec)
 assert spec and spec.loader
 spec.loader.exec_module(module)
 validate_all_profiles = module.validate_all_profiles
-schema = (
-    ROOT / "custom_components" / "horticulture_assistant" / "schemas" / "plant_profile.schema.json"
-)
+schema = ROOT / "custom_components" / "horticulture_assistant" / "schemas" / "plant_profile.schema.json"
 
 dirs = [
     ROOT / "plants",

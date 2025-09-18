@@ -1,20 +1,38 @@
 {
   "tomato": {
     "seed": {
-      "temperature_c": [21, 27],
-      "humidity_pct": [70, 90],
+      "temperature_c": [
+        21,
+        27
+      ],
+      "humidity_pct": [
+        70,
+        90
+      ],
       "notes": "Keep medium moist until germination."
     },
     "cutting": {
-      "temperature_c": [22, 28],
-      "humidity_pct": [75, 95],
+      "temperature_c": [
+        22,
+        28
+      ],
+      "humidity_pct": [
+        75,
+        95
+      ],
       "notes": "Use rooting hormone for faster callus formation."
     }
   },
   "lettuce": {
     "seed": {
-      "temperature_c": [16, 22],
-      "humidity_pct": [60, 80],
+      "temperature_c": [
+        16,
+        22
+      ],
+      "humidity_pct": [
+        60,
+        80
+      ],
       "notes": "Avoid high temperatures to prevent bolting."
     }
   }

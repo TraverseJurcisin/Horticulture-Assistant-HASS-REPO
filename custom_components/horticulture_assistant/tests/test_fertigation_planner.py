@@ -6,8 +6,7 @@ import pytest
 
 PACKAGE = "custom_components.horticulture_assistant.utils"
 MODULE_PATH = (
-    Path(__file__).resolve().parents[3]
-    / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
+    Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/fertigation_planner.py"
 )
 spec = importlib.util.spec_from_file_location(f"{PACKAGE}.fertigation_planner", MODULE_PATH)
 fertigation_planner = importlib.util.module_from_spec(spec)
@@ -35,9 +34,7 @@ def _hass_for(base: Path):
 
 def test_plan_fertigation_from_profile(tmp_path):
     (tmp_path / "plants").mkdir()
-    (tmp_path / "plants/test.json").write_text(
-        '{"general": {"plant_type": "citrus", "stage": "vegetative"}}'
-    )
+    (tmp_path / "plants/test.json").write_text('{"general": {"plant_type": "citrus", "stage": "vegetative"}}')
     hass = _hass_for(tmp_path)
     plan = plan_fertigation_from_profile("test", 5.0, hass)
     assert isinstance(plan, FertigationPlan)
@@ -55,9 +52,7 @@ def test_plan_fertigation_missing_profile(tmp_path):
 def test_plan_fertigation_synergy(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "lettuce.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
     plan_basic = plan_fertigation_from_profile("lettuce", 1.0, hass)
     plan_syn = plan_fertigation_from_profile("lettuce", 1.0, hass, use_synergy=True)
@@ -67,9 +62,7 @@ def test_plan_fertigation_synergy(tmp_path):
 def test_plan_fertigation_default_volume(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "tom.json").write_text(
-        '{"general": {"plant_type": "tomato", "stage": "vegetative"}}'
-    )
+    (plant_dir / "tom.json").write_text('{"general": {"plant_type": "tomato", "stage": "vegetative"}}')
     hass = _hass_for(tmp_path)
     plan = plan_fertigation_from_profile("tom", hass=hass)
     assert plan.schedule
@@ -77,9 +70,7 @@ def test_plan_fertigation_default_volume(tmp_path):
 
 def test_plan_fertigation_negative_volume(tmp_path):
     (tmp_path / "plants").mkdir()
-    (tmp_path / "plants/test.json").write_text(
-        '{"general": {"plant_type": "citrus", "stage": "vegetative"}}'
-    )
+    (tmp_path / "plants/test.json").write_text('{"general": {"plant_type": "citrus", "stage": "vegetative"}}')
     hass = _hass_for(tmp_path)
     with pytest.raises(ValueError):
         plan_fertigation_from_profile("test", -1.0, hass)

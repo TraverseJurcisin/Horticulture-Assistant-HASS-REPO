@@ -3,9 +3,7 @@ import json
 
 
 def _import_cycle():
-    module = importlib.import_module(
-        "custom_components.horticulture_assistant.engine.run_daily_cycle"
-    )
+    module = importlib.import_module("custom_components.horticulture_assistant.engine.run_daily_cycle")
     importlib.reload(module)
     return module.run_daily_cycle
 
@@ -22,9 +20,7 @@ def test_run_daily_cycle_remaining_yield(tmp_path, monkeypatch):
 
     yield_dir = tmp_path / "yield"
     yield_dir.mkdir()
-    (yield_dir / "p.json").write_text(
-        json.dumps({"harvests": [{"date": "2024-01-01", "yield_grams": 300}]})
-    )
+    (yield_dir / "p.json").write_text(json.dumps({"harvests": [{"date": "2024-01-01", "yield_grams": 300}]}))
 
     monkeypatch.setenv("HORTICULTURE_YIELD_DIR", str(yield_dir))
     import plant_engine.yield_manager as ym

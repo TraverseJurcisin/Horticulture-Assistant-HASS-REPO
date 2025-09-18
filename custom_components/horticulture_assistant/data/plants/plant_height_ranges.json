@@ -1,13 +1,34 @@
 {
   "tomato": {
-    "seedling": [5, 15],
-    "vegetative": [20, 60],
-    "flowering": [60, 120],
-    "fruiting": [80, 150]
+    "seedling": [
+      5,
+      15
+    ],
+    "vegetative": [
+      20,
+      60
+    ],
+    "flowering": [
+      60,
+      120
+    ],
+    "fruiting": [
+      80,
+      150
+    ]
   },
   "lettuce": {
-    "seedling": [2, 5],
-    "vegetative": [10, 25],
-    "harvest": [20, 30]
+    "seedling": [
+      2,
+      5
+    ],
+    "vegetative": [
+      10,
+      25
+    ],
+    "harvest": [
+      20,
+      30
+    ]
   }
 }

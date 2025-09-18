@@ -1,5 +1,17 @@
 {
-  "default": {"chilling_hours": 0, "drought_days": 0, "photoperiod_hours": 0},
-  "iris": {"chilling_hours": 800, "drought_days": 0, "photoperiod_hours": 11},
-  "citrus": {"chilling_hours": 300, "drought_days": 0, "photoperiod_hours": 10}
+  "default": {
+    "chilling_hours": 0,
+    "drought_days": 0,
+    "photoperiod_hours": 0
+  },
+  "iris": {
+    "chilling_hours": 800,
+    "drought_days": 0,
+    "photoperiod_hours": 11
+  },
+  "citrus": {
+    "chilling_hours": 300,
+    "drought_days": 0,
+    "photoperiod_hours": 10
+  }
 }

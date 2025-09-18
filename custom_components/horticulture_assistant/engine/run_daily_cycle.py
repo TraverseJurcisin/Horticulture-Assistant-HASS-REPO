@@ -172,12 +172,8 @@ def run_daily_cycle(
     report.nutrient_summary = nutrient_totals
 
     try:
-        report.nutrient_analysis = analyze_nutrient_profile(
-            nutrient_totals, plant_type, stage_name or ""
-        ).as_dict()
-        report.deficiency_actions = diagnose_deficiency_actions(
-            nutrient_totals, plant_type, stage_name or ""
-        )
+        report.nutrient_analysis = analyze_nutrient_profile(nutrient_totals, plant_type, stage_name or "").as_dict()
+        report.deficiency_actions = diagnose_deficiency_actions(nutrient_totals, plant_type, stage_name or "")
     except Exception:  # noqa: BLE001 -- analysis failure shouldn't halt cycle
         _LOGGER.debug("Failed to analyze nutrient profile", exc_info=True)
 
@@ -229,9 +225,7 @@ def run_daily_cycle(
     if last_scout and "timestamp" in last_scout:
         try:
             last_date = datetime.fromisoformat(last_scout["timestamp"]).date()
-            interval = pest_monitor.risk_adjusted_monitor_interval(
-                plant_type, stage_name, current_env
-            )
+            interval = pest_monitor.risk_adjusted_monitor_interval(plant_type, stage_name, current_env)
             if interval is not None:
                 next_date = last_date + timedelta(days=interval)
             else:

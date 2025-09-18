@@ -25,9 +25,7 @@ sys.modules.setdefault(
     "homeassistant.helpers.entity_registry",
     types.ModuleType("homeassistant.helpers.entity_registry"),
 )
-sys.modules.setdefault(
-    "homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event")
-)
+sys.modules.setdefault("homeassistant.helpers.event", types.ModuleType("homeassistant.helpers.event"))
 sys.modules.setdefault(
     "homeassistant.helpers.update_coordinator",
     types.ModuleType("homeassistant.helpers.update_coordinator"),
@@ -39,9 +37,7 @@ sys.modules.setdefault("homeassistant.util", util)
 
 @pytest.mark.asyncio
 async def test_resolve_manual(hass):
-    res = await resolve_variable_from_source(
-        hass, plant_id="p1", key="temp", source="manual", manual_value=21
-    )
+    res = await resolve_variable_from_source(hass, plant_id="p1", key="temp", source="manual", manual_value=21)
     assert res.value == 21
     assert res.source == "manual"
     assert res.citations[0].source == "manual"

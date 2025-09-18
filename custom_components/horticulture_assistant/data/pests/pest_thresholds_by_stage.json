@@ -1,14 +1,32 @@
 {
   "citrus": {
-    "vegetative": {"aphids": 5, "scale": 2},
-    "fruiting": {"aphids": 5, "scale": 2}
+    "vegetative": {
+      "aphids": 5,
+      "scale": 2
+    },
+    "fruiting": {
+      "aphids": 5,
+      "scale": 2
+    }
   },
   "tomato": {
-    "seedling": {"aphids": 5, "blight": 0},
-    "vegetative": {"aphids": 10, "blight": 1},
-    "fruiting": {"aphids": 12, "blight": 1}
+    "seedling": {
+      "aphids": 5,
+      "blight": 0
+    },
+    "vegetative": {
+      "aphids": 10,
+      "blight": 1
+    },
+    "fruiting": {
+      "aphids": 12,
+      "blight": 1
+    }
   },
   "lettuce": {
-    "vegetative": {"aphids": 8, "leafminers": 4}
+    "vegetative": {
+      "aphids": 8,
+      "leafminers": 4
+    }
   }
 }

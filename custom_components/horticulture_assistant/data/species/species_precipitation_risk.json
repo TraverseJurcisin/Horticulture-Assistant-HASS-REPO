@@ -1,14 +1,20 @@
 {
   "iris": [
     {
-      "nutrients": ["Fe", "P"],
+      "nutrients": [
+        "Fe",
+        "P"
+      ],
       "ph_threshold": 6.4,
       "message": "FePO4 precipitation risk; use FeEDDHA instead of FeEDTA"
     }
   ],
   "citrus": [
     {
-      "nutrients": ["Fe", "Ca"],
+      "nutrients": [
+        "Fe",
+        "Ca"
+      ],
       "ph_threshold": 6.5,
       "message": "Fe precipitates with Ca at high pH"
     }

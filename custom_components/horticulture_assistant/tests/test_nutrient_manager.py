@@ -357,9 +357,7 @@ def test_calculate_deficiency_index_environment_adjusted():
         get_environment_adjusted_levels,
     )
 
-    guidelines = get_environment_adjusted_levels(
-        "tomato", "fruiting", ph=6.2, root_temp_c=18, synergy=True
-    )
+    guidelines = get_environment_adjusted_levels("tomato", "fruiting", ph=6.2, root_temp_c=18, synergy=True)
     current = dict.fromkeys(guidelines, 0)
     idx = calculate_deficiency_index_environment_adjusted(
         current,

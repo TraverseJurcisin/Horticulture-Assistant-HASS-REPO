@@ -41,9 +41,7 @@ def convert_guaranteed_analysis(ga: dict) -> dict:
     return result
 
 
-def calculate_fertilizer_nutrients(
-    plant_id: str, fertilizer_id: str, volume_ml: float
-) -> dict[str, object]:
+def calculate_fertilizer_nutrients(plant_id: str, fertilizer_id: str, volume_ml: float) -> dict[str, object]:
     """Return nutrient mass (mg) for ``volume_ml`` of a fertilizer."""
     if volume_ml <= 0:
         raise ValueError("volume_ml must be positive")
@@ -679,9 +677,7 @@ def recommend_fertigation_mix(plant_type: str, stage: str, volume_l: float) -> d
     return schedule
 
 
-def recommend_fertigation_plan(
-    plant_type: str, stage: str, volume_l: float, num_plants: int = 1
-) -> dict[str, object]:
+def recommend_fertigation_plan(plant_type: str, stage: str, volume_l: float, num_plants: int = 1) -> dict[str, object]:
     """Return fertigation mix with ppm and cost information.
 
     Parameters

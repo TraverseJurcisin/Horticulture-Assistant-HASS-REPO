@@ -1,5 +1,13 @@
 {
-  "citrus": {"aphids": 3, "scale": 2},
-  "tomato": {"aphids": 2, "whiteflies": 4},
-  "lettuce": {"aphids": 3}
+  "citrus": {
+    "aphids": 3,
+    "scale": 2
+  },
+  "tomato": {
+    "aphids": 2,
+    "whiteflies": 4
+  },
+  "lettuce": {
+    "aphids": 3
+  }
 }

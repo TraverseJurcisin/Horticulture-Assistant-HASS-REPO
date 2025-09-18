@@ -7,9 +7,7 @@ from custom_components.horticulture_assistant.utils import (
 
 
 def _make_hass(tmp_path):
-    return types.SimpleNamespace(
-        config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts)))
-    )
+    return types.SimpleNamespace(config=types.SimpleNamespace(path=lambda *parts: str(tmp_path.joinpath(*parts))))
 
 
 def test_generate_profile_caches(tmp_path, monkeypatch):

@@ -1,6 +1,18 @@
 {
-  "aphids": ["neem oil", "insecticidal soap"],
-  "whiteflies": ["horticultural oil", "yellow sticky traps"],
-  "powdery mildew": ["sulfur-based fungicide", "potassium bicarbonate"],
-  "scale": ["horticultural oil", "prune infested branches"]
+  "aphids": [
+    "neem oil",
+    "insecticidal soap"
+  ],
+  "whiteflies": [
+    "horticultural oil",
+    "yellow sticky traps"
+  ],
+  "powdery mildew": [
+    "sulfur-based fungicide",
+    "potassium bicarbonate"
+  ],
+  "scale": [
+    "horticultural oil",
+    "prune infested branches"
+  ]
 }

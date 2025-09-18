@@ -13,6 +13,8 @@
     "soil_moisture_pct": 30
   },
   "stages": {
-    "vegetative": {"stage_duration": 30}
+    "vegetative": {
+      "stage_duration": 30
+    }
   }
 }

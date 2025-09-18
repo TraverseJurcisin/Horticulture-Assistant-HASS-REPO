@@ -1,6 +1,19 @@
 {
-  "aphids": ["neonicotinoid", "pyrethroid", "spinosyn"],
-  "thrips": ["spinosyn", "pyrethroid"],
-  "caterpillars": ["spinosyn", "pyrethroid"],
-  "whiteflies": ["neonicotinoid", "pyrethroid"]
+  "aphids": [
+    "neonicotinoid",
+    "pyrethroid",
+    "spinosyn"
+  ],
+  "thrips": [
+    "spinosyn",
+    "pyrethroid"
+  ],
+  "caterpillars": [
+    "spinosyn",
+    "pyrethroid"
+  ],
+  "whiteflies": [
+    "neonicotinoid",
+    "pyrethroid"
+  ]
 }

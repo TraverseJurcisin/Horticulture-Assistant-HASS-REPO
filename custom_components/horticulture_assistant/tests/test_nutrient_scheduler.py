@@ -9,8 +9,7 @@ import plant_engine.utils as utils
 import pytest
 
 MODULE_PATH = (
-    Path(__file__).resolve().parents[3]
-    / "custom_components/horticulture_assistant/utils/nutrient_scheduler.py"
+    Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/nutrient_scheduler.py"
 )
 spec = importlib.util.spec_from_file_location("nutrient_scheduler", MODULE_PATH)
 nutrient_scheduler = importlib.util.module_from_spec(spec)
@@ -87,9 +86,7 @@ def _hass_for(tmp_path: Path) -> object:
 def test_stage_synonym_resolution(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "test.json").write_text(
-        '{"general": {"plant_type": "strawberry", "stage": "veg"}}'
-    )
+    (plant_dir / "test.json").write_text('{"general": {"plant_type": "strawberry", "stage": "veg"}}')
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("test", hass=hass).as_dict()
     assert result["N"] == 93.33
@@ -110,9 +107,7 @@ def test_dataset_override(tmp_path, monkeypatch):
     overlay = tmp_path / "overlay"
     overlay.mkdir()
     (overlay / "nutrients").mkdir()
-    (overlay / "nutrients" / "nutrient_tag_modifiers.json").write_text(
-        json.dumps({"test-tag": {"N": 1.5}})
-    )
+    (overlay / "nutrients" / "nutrient_tag_modifiers.json").write_text(json.dumps({"test-tag": {"N": 1.5}}))
     assert (overlay / "nutrients" / "nutrient_tag_modifiers.json").exists()
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
@@ -138,9 +133,7 @@ def test_dataset_override(tmp_path, monkeypatch):
 def test_include_micro_guidelines(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "micro.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "micro.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("micro", hass=hass, include_micro=True).as_dict()
     assert result["Fe"] > 0
@@ -149,30 +142,22 @@ def test_include_micro_guidelines(tmp_path):
 def test_schedule_nutrient_corrections(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "corr.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "corr.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
     from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
 
-    adjustments = ns.schedule_nutrient_corrections(
-        "corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass
-    ).as_dict()
+    adjustments = ns.schedule_nutrient_corrections("corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass).as_dict()
     assert adjustments["N"] > 0
 
 
 def test_schedule_nutrient_corrections_synergy(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "syn.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "syn.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
     from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
 
-    base = ns.schedule_nutrient_corrections(
-        "syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass
-    ).as_dict()
+    base = ns.schedule_nutrient_corrections("syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass).as_dict()
     syn = ns.schedule_nutrient_corrections(
         "syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass, use_synergy=True
     ).as_dict()
@@ -183,9 +168,7 @@ def test_schedule_nutrient_corrections_synergy(tmp_path):
 def test_schedule_nutrients_bulk(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "p1.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "p1.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     (plant_dir / "p2.json").write_text('{"general": {"plant_type": "lettuce", "stage": "harvest"}}')
     hass = _hass_for(tmp_path)
     from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
@@ -199,9 +182,7 @@ def test_absorption_rates_applied(tmp_path):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
     # lettuce seedling profile with no explicit nutrients
-    (plant_dir / "lettuce.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "lettuce.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
     result = schedule_nutrients("lettuce", hass=hass).as_dict()
     # guideline N=80 with stage multiplier 0.5 => 40 then adjusted by absorption 1/0.6
@@ -211,9 +192,7 @@ def test_absorption_rates_applied(tmp_path):
 def test_profile_load_caching(tmp_path, monkeypatch):
     plant_dir = tmp_path / "plants"
     plant_dir.mkdir()
-    (plant_dir / "cache.json").write_text(
-        '{"general": {"plant_type": "lettuce", "stage": "seedling"}}'
-    )
+    (plant_dir / "cache.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
 
     hass = _hass_for(tmp_path)
     from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns

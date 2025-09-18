@@ -333,9 +333,7 @@ def test_recommend_fertigation_plan():
 
 
 def test_recommend_advanced_fertigation_plan():
-    plan = fert_mod.recommend_advanced_fertigation_plan(
-        "citrus", "vegetative", 1, ph=6.5, use_synergy=True
-    )
+    plan = fert_mod.recommend_advanced_fertigation_plan("citrus", "vegetative", 1, ph=6.5, use_synergy=True)
     assert plan["mix"]
     assert plan["ppm"]
     with pytest.raises(ValueError):
@@ -346,9 +344,7 @@ def test_deficiency_correction_helpers():
     current = {"N": 40, "P": 10, "K": 30}
     mix = fert_mod.recommend_deficiency_correction_mix(current, "citrus", "vegetative", 1)
     assert mix
-    plan = fert_mod.recommend_deficiency_correction_plan(
-        current, "citrus", "vegetative", 1, num_plants=2
-    )
+    plan = fert_mod.recommend_deficiency_correction_plan(current, "citrus", "vegetative", 1, num_plants=2)
     assert plan["mix"] == mix
     assert plan["cost_total"] >= 0
     assert plan["cost_per_plant"] == round(plan["cost_total"] / 2, 4)

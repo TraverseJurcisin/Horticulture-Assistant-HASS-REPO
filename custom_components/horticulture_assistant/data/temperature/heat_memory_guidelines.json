@@ -1,5 +1,20 @@
 {
-  "default": {"lag_days": 3, "tolerance_delta_c": 0, "ec_adjustment_pct": 0, "foliar_ca_days": 0},
-  "citrus": {"lag_days": 3, "tolerance_delta_c": 2, "ec_adjustment_pct": -15, "foliar_ca_days": 5},
-  "lettuce": {"lag_days": 5, "tolerance_delta_c": -2, "ec_adjustment_pct": 0, "foliar_ca_days": 0}
+  "default": {
+    "lag_days": 3,
+    "tolerance_delta_c": 0,
+    "ec_adjustment_pct": 0,
+    "foliar_ca_days": 0
+  },
+  "citrus": {
+    "lag_days": 3,
+    "tolerance_delta_c": 2,
+    "ec_adjustment_pct": -15,
+    "foliar_ca_days": 5
+  },
+  "lettuce": {
+    "lag_days": 5,
+    "tolerance_delta_c": -2,
+    "ec_adjustment_pct": 0,
+    "foliar_ca_days": 0
+  }
 }

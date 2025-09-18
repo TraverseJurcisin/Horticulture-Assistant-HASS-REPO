@@ -9,8 +9,11 @@ import voluptuous as vol
 try:
     from aiohttp import ClientError
 except ModuleNotFoundError:  # pragma: no cover - test fallback
+
     class ClientError(Exception):
         """Fallback ClientError when aiohttp is not available."""
+
+
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel

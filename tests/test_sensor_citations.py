@@ -31,13 +31,9 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
             },
         },
     }
-    coord = DataUpdateCoordinator(
-        hass, logging.getLogger(__name__), name="ai", update_interval=None
-    )
+    coord = DataUpdateCoordinator(hass, logging.getLogger(__name__), name="ai", update_interval=None)
     coord.async_set_updated_data({"ok": True})
-    local = DataUpdateCoordinator(
-        hass, logging.getLogger(__name__), name="local", update_interval=None
-    )
+    local = DataUpdateCoordinator(hass, logging.getLogger(__name__), name="local", update_interval=None)
 
     with patch(
         "custom_components.horticulture_assistant.profile.store.async_load_all",

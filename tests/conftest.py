@@ -15,9 +15,7 @@ core = types.ModuleType("homeassistant.core")
 
 class HomeAssistant:  # pragma: no cover - simple stub
     def __init__(self) -> None:
-        self.config = types.SimpleNamespace(
-            components=set(), path=lambda *p: str(Path("/tmp").joinpath(*p))
-        )
+        self.config = types.SimpleNamespace(components=set(), path=lambda *p: str(Path("/tmp").joinpath(*p)))
         self.data: dict[str, object] = {"integrations": {}}
         self.auth = types.SimpleNamespace(_store=types.SimpleNamespace())
         self.states = _States()
@@ -158,9 +156,7 @@ sys.modules["homeassistant.util.logging"] = util_logging
 util.logging = util_logging
 
 const = types.ModuleType("homeassistant.const")
-const.Platform = types.SimpleNamespace(
-    SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number"
-)
+const.Platform = types.SimpleNamespace(SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number")
 const.UnitOfTemperature = types.SimpleNamespace(CELSIUS="°C", FAHRENHEIT="°F")
 sys.modules["homeassistant.const"] = const
 

@@ -101,9 +101,7 @@ async def test_request_invalid_json():
 async def test_fetch_field_converts_to_float():
     dummy_hass = SimpleNamespace(
         helpers=SimpleNamespace(
-            aiohttp_client=SimpleNamespace(
-                async_get_clientsession=MagicMock(return_value=MagicMock())
-            )
+            aiohttp_client=SimpleNamespace(async_get_clientsession=MagicMock(return_value=MagicMock()))
         )
     )
     with patch.object(
@@ -122,9 +120,7 @@ async def test_fetch_field_uses_cache():
     opb_module.clear_opb_cache()
     dummy_hass = SimpleNamespace(
         helpers=SimpleNamespace(
-            aiohttp_client=SimpleNamespace(
-                async_get_clientsession=MagicMock(return_value=MagicMock())
-            )
+            aiohttp_client=SimpleNamespace(async_get_clientsession=MagicMock(return_value=MagicMock()))
         )
     )
     with patch.object(
@@ -144,9 +140,7 @@ async def test_search_uses_cache():
     opb_module.clear_opb_cache()
     session = MagicMock()
     client = OpenPlantbookClient(session, None)
-    with patch.object(
-        OpenPlantbookClient, "_get", AsyncMock(return_value=[{"pid": "p"}])
-    ) as mock_get:
+    with patch.object(OpenPlantbookClient, "_get", AsyncMock(return_value=[{"pid": "p"}])) as mock_get:
         data1 = await client.search("foo")
         data2 = await client.search("foo")
     assert data1 == data2 == [{"pid": "p"}]
@@ -158,9 +152,7 @@ async def test_fetch_field_cache_expires():
     opb_module.clear_opb_cache()
     dummy_hass = SimpleNamespace(
         helpers=SimpleNamespace(
-            aiohttp_client=SimpleNamespace(
-                async_get_clientsession=MagicMock(return_value=MagicMock())
-            )
+            aiohttp_client=SimpleNamespace(async_get_clientsession=MagicMock(return_value=MagicMock()))
         )
     )
     now = datetime(2024, 1, 1, tzinfo=UTC)

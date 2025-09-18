@@ -1,13 +1,34 @@
 {
   "tomato": {
-    "seedling": ["Transplant seedlings to larger pots", "Provide 16h of light"],
-    "vegetative": ["Prune side shoots", "Apply balanced fertilizer"],
-    "flowering": ["Reduce nitrogen levels", "Increase phosphorus"],
-    "fruiting": ["Support heavy clusters", "Maintain high potassium"]
+    "seedling": [
+      "Transplant seedlings to larger pots",
+      "Provide 16h of light"
+    ],
+    "vegetative": [
+      "Prune side shoots",
+      "Apply balanced fertilizer"
+    ],
+    "flowering": [
+      "Reduce nitrogen levels",
+      "Increase phosphorus"
+    ],
+    "fruiting": [
+      "Support heavy clusters",
+      "Maintain high potassium"
+    ]
   },
   "lettuce": {
-    "seedling": ["Thin seedlings", "Keep soil evenly moist"],
-    "vegetative": ["Apply nitrogen source", "Monitor for pests"],
-    "harvest": ["Harvest outer leaves", "Watch for bolting"]
+    "seedling": [
+      "Thin seedlings",
+      "Keep soil evenly moist"
+    ],
+    "vegetative": [
+      "Apply nitrogen source",
+      "Monitor for pests"
+    ],
+    "harvest": [
+      "Harvest outer leaves",
+      "Watch for bolting"
+    ]
   }
 }

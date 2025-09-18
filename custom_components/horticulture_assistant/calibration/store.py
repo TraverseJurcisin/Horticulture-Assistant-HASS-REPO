@@ -31,9 +31,7 @@ async def async_load_all(hass: HomeAssistant) -> dict[str, Any]:
     return await _store(hass).async_load() or {}
 
 
-async def async_save_for_entity(
-    hass: HomeAssistant, lux_entity_id: str, record: dict[str, Any]
-) -> None:
+async def async_save_for_entity(hass: HomeAssistant, lux_entity_id: str, record: dict[str, Any]) -> None:
     data = await async_load_all(hass)
     data[lux_entity_id] = record
     await _store(hass).async_save(data)

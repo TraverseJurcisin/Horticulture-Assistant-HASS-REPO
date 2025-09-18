@@ -4,15 +4,11 @@ import sys
 import types
 from pathlib import Path
 
-MODULE_PATH = (
-    Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/__init__.py"
-)
+MODULE_PATH = Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/__init__.py"
 PACKAGE = "custom_components.horticulture_assistant"
 if PACKAGE not in sys.modules:
     pkg = types.ModuleType(PACKAGE)
-    pkg.__path__ = [
-        str(Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant")
-    ]
+    pkg.__path__ = [str(Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant")]
     sys.modules[PACKAGE] = pkg
 spec = importlib.util.spec_from_file_location(f"{PACKAGE}.__init__", MODULE_PATH)
 module = importlib.util.module_from_spec(spec)

@@ -19,4 +19,4 @@ Stage-aware temperature bands live here. Each JSON file follows the pattern:
 
 Include separate ranges for day/night when relevant, plus optional `humidity_target`, `ventilation_trigger`, or `frost_warning` keys if the crop demands them.
 
-Add citations in a `sources` array so we can audit agronomic recommendations. As always, validate with `python -m scripts.validate_profiles` before committing.
+Add citations in a `sources` array so we can audit agronomic recommendations. As always, validate with `python -m scripts.validate_profiles` before committing.

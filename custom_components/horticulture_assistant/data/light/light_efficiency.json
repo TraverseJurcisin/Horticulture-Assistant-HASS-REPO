@@ -1,6 +1,14 @@
 {
-  "led": {"umol_per_j": 2.5},
-  "hps": {"umol_per_j": 1.7},
-  "fluorescent": {"umol_per_j": 1.2},
-  "default": {"umol_per_j": 2.0}
+  "led": {
+    "umol_per_j": 2.5
+  },
+  "hps": {
+    "umol_per_j": 1.7
+  },
+  "fluorescent": {
+    "umol_per_j": 1.2
+  },
+  "default": {
+    "umol_per_j": 2.0
+  }
 }

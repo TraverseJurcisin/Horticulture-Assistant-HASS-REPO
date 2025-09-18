@@ -30,9 +30,7 @@ def test_zone_registry_roundtrip(tmp_path, monkeypatch):
         fake_data_path,
     )
 
-    zones = {
-        zid: ZoneConfig(zid, info["solenoids"], info["plant_ids"]) for zid, info in data.items()
-    }
+    zones = {zid: ZoneConfig(zid, info["solenoids"], info["plant_ids"]) for zid, info in data.items()}
     assert save_zones(zones)
     loaded = load_zones()
     assert set(loaded.keys()) == {"1", "2"}

@@ -125,4 +125,4 @@ Version these files with Git or copy them between Home Assistant instances to re
 Issues and feature requests are tracked at the [GitHub issue tracker](https://github.com/TraverseJurcisin/Horticulture-Assistant-HASS-REPO/issues). Pull requests are welcome—please include tests or sample data when adding features.
 
 ## License
-Released under the MIT License. See [`LICENSE`](LICENSE) for details.
+Released under the MIT License. See [`LICENSE`](LICENSE) for details.

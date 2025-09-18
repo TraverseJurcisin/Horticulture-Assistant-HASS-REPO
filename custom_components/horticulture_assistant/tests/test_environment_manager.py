@@ -243,9 +243,7 @@ def test_calculate_heat_index_invalid():
 def test_calculate_heat_index_series():
     temps = [30, 32, 28]
     humidity = [70, 65, 80]
-    expected = sum(calculate_heat_index(t, h) for t, h in zip(temps, humidity, strict=False)) / len(
-        temps
-    )
+    expected = sum(calculate_heat_index(t, h) for t, h in zip(temps, humidity, strict=False)) / len(temps)
     assert calculate_heat_index_series(temps, humidity) == round(expected, 2)
 
     with pytest.raises(ValueError):
@@ -270,9 +268,7 @@ def test_optimize_environment():
     assert round(result["vpd"], 3) == calculate_vpd(18, 90)
     assert round(result["dew_point_c"], 1) == round(calculate_dew_point(18, 90), 1)
     assert round(result["heat_index_c"], 1) == round(calculate_heat_index(18, 90), 1)
-    assert round(result["absolute_humidity_g_m3"], 1) == round(
-        calculate_absolute_humidity(18, 90), 1
-    )
+    assert round(result["absolute_humidity_g_m3"], 1) == round(calculate_absolute_humidity(18, 90), 1)
     assert result["target_vpd"] == (0.6, 0.8)
     assert result["ph_setpoint"] == 6.0
     assert result["ph_action"] is None
@@ -353,8 +349,7 @@ def test_calculate_environment_metrics():
     assert metrics.transpiration_ml_day is None
     empty = calculate_environment_metrics(None, None)
     assert all(
-        getattr(empty, field) is None
-        for field in ["vpd", "dew_point_c", "heat_index_c", "absolute_humidity_g_m3"]
+        getattr(empty, field) is None for field in ["vpd", "dew_point_c", "heat_index_c", "absolute_humidity_g_m3"]
     )
 
 
@@ -824,9 +819,7 @@ def test_calculate_environment_variance_empty():
 
 
 def test_summarize_environment():
-    summary = summarize_environment(
-        {"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True
-    )
+    summary = summarize_environment({"temperature": 18, "humidity": 90}, "citrus", "seedling", include_targets=True)
     assert summary["quality"] == "poor"
     assert summary["adjustments"]["temperature"].startswith("Increase heating")
     assert summary["adjustments"]["humidity"].startswith("Ventilate")
@@ -990,9 +983,7 @@ def test_evaluate_stress_conditions():
     assert stress.soil_temp == "cold"
     assert stress.leaf_temp == "hot"
 
-    stress_none = evaluate_stress_conditions(
-        None, None, None, None, None, None, None, "citrus", soil_ph=None
-    )
+    stress_none = evaluate_stress_conditions(None, None, None, None, None, None, None, "citrus", soil_ph=None)
     assert stress_none.heat is None
     assert stress_none.humidity is None
     assert stress_none.soil_temp is None
@@ -1027,9 +1018,7 @@ def test_calculate_vpd_series_generator():
     def hums():
         yield from [70, 65, 60]
 
-    expected = (
-        sum(calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60], strict=False)) / 3
-    )
+    expected = sum(calculate_vpd(t, h) for t, h in zip([20, 22, 24], [70, 65, 60], strict=False)) / 3
     assert calculate_vpd_series(temps(), hums()) == round(expected, 3)
 
 

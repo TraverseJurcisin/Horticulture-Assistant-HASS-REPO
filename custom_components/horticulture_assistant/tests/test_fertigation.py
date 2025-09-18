@@ -476,9 +476,7 @@ def test_recommend_loss_adjusted_fertigation():
         "K": "intrepid_granular_potash_0_0_60",
     }
 
-    schedule, *_ = recommend_loss_adjusted_fertigation(
-        "citrus", "vegetative", 1.0, fertilizers=fert_map
-    )
+    schedule, *_ = recommend_loss_adjusted_fertigation("citrus", "vegetative", 1.0, fertilizers=fert_map)
 
     assert schedule["foxfarm_grow_big"] > 0
     assert schedule["intrepid_granular_potash_0_0_60"] > 0

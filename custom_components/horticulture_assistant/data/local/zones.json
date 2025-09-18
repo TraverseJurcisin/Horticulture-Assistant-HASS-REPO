@@ -1,10 +1,15 @@
 {
   "1": {
-    "solenoids": ["switch.zone1_valve_a", "switch.zone1_valve_b"],
+    "solenoids": [
+      "switch.zone1_valve_a",
+      "switch.zone1_valve_b"
+    ],
     "plant_ids": []
   },
   "2": {
-    "solenoids": ["switch.zone2_valve"],
+    "solenoids": [
+      "switch.zone2_valve"
+    ],
     "plant_ids": []
   }
 }

@@ -1,9 +1,30 @@
 {
-  "lettuce": {"tolerance": "low", "max_dry_days": 1},
-  "citrus": {"tolerance": "moderate", "max_dry_days": 3},
-  "basil": {"tolerance": "low", "max_dry_days": 1},
-  "cucumber": {"tolerance": "moderate", "max_dry_days": 2},
-  "pepper": {"tolerance": "high", "max_dry_days": 4},
-  "strawberry": {"tolerance": "low", "max_dry_days": 2},
-  "blueberry": {"tolerance": "moderate", "max_dry_days": 3}
+  "lettuce": {
+    "tolerance": "low",
+    "max_dry_days": 1
+  },
+  "citrus": {
+    "tolerance": "moderate",
+    "max_dry_days": 3
+  },
+  "basil": {
+    "tolerance": "low",
+    "max_dry_days": 1
+  },
+  "cucumber": {
+    "tolerance": "moderate",
+    "max_dry_days": 2
+  },
+  "pepper": {
+    "tolerance": "high",
+    "max_dry_days": 4
+  },
+  "strawberry": {
+    "tolerance": "low",
+    "max_dry_days": 2
+  },
+  "blueberry": {
+    "tolerance": "moderate",
+    "max_dry_days": 3
+  }
 }

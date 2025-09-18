@@ -1,9 +1,30 @@
 {
-  "sand": {"field_capacity": 0.10, "mad_fraction": 0.5},
-  "loamy_sand": {"field_capacity": 0.12, "mad_fraction": 0.5},
-  "sandy_loam": {"field_capacity": 0.15, "mad_fraction": 0.45},
-  "loam": {"field_capacity": 0.25, "mad_fraction": 0.45},
-  "silt_loam": {"field_capacity": 0.30, "mad_fraction": 0.40},
-  "clay_loam": {"field_capacity": 0.35, "mad_fraction": 0.35},
-  "clay": {"field_capacity": 0.40, "mad_fraction": 0.30}
+  "sand": {
+    "field_capacity": 0.1,
+    "mad_fraction": 0.5
+  },
+  "loamy_sand": {
+    "field_capacity": 0.12,
+    "mad_fraction": 0.5
+  },
+  "sandy_loam": {
+    "field_capacity": 0.15,
+    "mad_fraction": 0.45
+  },
+  "loam": {
+    "field_capacity": 0.25,
+    "mad_fraction": 0.45
+  },
+  "silt_loam": {
+    "field_capacity": 0.3,
+    "mad_fraction": 0.4
+  },
+  "clay_loam": {
+    "field_capacity": 0.35,
+    "mad_fraction": 0.35
+  },
+  "clay": {
+    "field_capacity": 0.4,
+    "mad_fraction": 0.3
+  }
 }

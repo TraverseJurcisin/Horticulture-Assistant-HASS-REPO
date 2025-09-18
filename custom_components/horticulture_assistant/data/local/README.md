@@ -13,4 +13,4 @@ The integration never writes outside of this tree. Sync it with Git or your back
 ### Tips
 - Use `profiles/*.json` to share templates with friends or other sites.
 - `zones.json` is safe to edit manually, but run `python -m scripts.validate_profiles` afterwards.
-- Anything under `local/` is ignored by upgrades, so your data survives component updates.
+- Anything under `local/` is ignored by upgrades, so your data survives component updates.

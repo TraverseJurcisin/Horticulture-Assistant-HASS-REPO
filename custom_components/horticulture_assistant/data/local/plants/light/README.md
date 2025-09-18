@@ -13,4 +13,4 @@ Each JSON document is named after the crop/species slug (e.g. `solanum_lycopersi
 When contributing data:
 1. Keep units explicit.
 2. Include citations or source notes in the `annotations` section.
-3. Validate with `python -m scripts.validate_profiles` before committing.
+3. Validate with `python -m scripts.validate_profiles` before committing.

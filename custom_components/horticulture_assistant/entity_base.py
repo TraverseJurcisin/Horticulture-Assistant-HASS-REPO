@@ -11,9 +11,7 @@ from .utils.entry_helpers import get_entry_data_by_plant_id
 class HorticultureBaseEntity(Entity):
     """Common device information for sensors, binary sensors and switches."""
 
-    def __init__(
-        self, plant_name: str, plant_id: str, *, model: str = "AI Monitored Plant"
-    ) -> None:
+    def __init__(self, plant_name: str, plant_id: str, *, model: str = "AI Monitored Plant") -> None:
         self._plant_name = plant_name
         self._plant_id = plant_id
         self._model = model

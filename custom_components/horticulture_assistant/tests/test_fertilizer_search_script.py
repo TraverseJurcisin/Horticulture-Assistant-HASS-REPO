@@ -1,11 +1,12 @@
-import pytest
-
-pytest.importorskip("aiohttp", reason="requires Home Assistant runtime")
-pytest.importorskip("homeassistant.helpers", reason="requires Home Assistant runtime")
 import os
 import subprocess
 import sys
 from pathlib import Path
+
+import pytest
+
+pytest.importorskip("aiohttp", reason="requires Home Assistant runtime")
+pytest.importorskip("homeassistant.helpers", reason="requires Home Assistant runtime")
 
 ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("FERTILIZER_DATASET_INDEX_DIR", str(ROOT / "feature/fertilizer_dataset_sharded/index_sharded"))

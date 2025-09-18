@@ -1,6 +1,21 @@
 {
-  "citrus": {"seedling": 100, "vegetative": 250, "fruiting": 300},
-  "lettuce": {"seedling": 50, "vegetative": 150, "harvest": 120},
-  "strawberry": {"vegetative": 200, "fruiting": 300},
-  "blueberry": {"vegetative": 200, "flowering": 250, "fruiting": 300}
+  "citrus": {
+    "seedling": 100,
+    "vegetative": 250,
+    "fruiting": 300
+  },
+  "lettuce": {
+    "seedling": 50,
+    "vegetative": 150,
+    "harvest": 120
+  },
+  "strawberry": {
+    "vegetative": 200,
+    "fruiting": 300
+  },
+  "blueberry": {
+    "vegetative": 200,
+    "flowering": 250,
+    "fruiting": 300
+  }
 }

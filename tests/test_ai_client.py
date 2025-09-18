@@ -8,10 +8,7 @@ import pytest
 
 spec = importlib.util.spec_from_file_location(
     "ai_utils",
-    Path(__file__).resolve().parent.parent
-    / "custom_components"
-    / "horticulture_assistant"
-    / "ai_utils.py",
+    Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant" / "ai_utils.py",
 )
 ai_utils = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ai_utils)
@@ -21,9 +18,7 @@ extract_numbers = ai_utils.extract_numbers
 root_pkg = types.ModuleType("custom_components")
 root_pkg.__path__ = []
 pkg = types.ModuleType("custom_components.horticulture_assistant")
-pkg.__path__ = [
-    str(Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant")
-]
+pkg.__path__ = [str(Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant")]
 root_pkg.horticulture_assistant = pkg
 sys.modules["custom_components"] = root_pkg
 sys.modules["custom_components.horticulture_assistant"] = pkg
@@ -31,10 +26,7 @@ sys.modules["custom_components.horticulture_assistant.ai_utils"] = ai_utils
 
 ai_spec = importlib.util.spec_from_file_location(
     "ai_client",
-    Path(__file__).resolve().parent.parent
-    / "custom_components"
-    / "horticulture_assistant"
-    / "ai_client.py",
+    Path(__file__).resolve().parent.parent / "custom_components" / "horticulture_assistant" / "ai_client.py",
 )
 ai_client_mod = importlib.util.module_from_spec(ai_spec)
 ai_client_mod.__package__ = "custom_components.horticulture_assistant"

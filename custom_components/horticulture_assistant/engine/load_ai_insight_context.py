@@ -82,9 +82,7 @@ def load_ai_insight_context(
     if thresholds is None:
         thresholds = {}
     elif not isinstance(thresholds, dict):
-        _LOGGER.warning(
-            "Unexpected thresholds format in profile %s; defaulting to empty dict.", plant_id
-        )
+        _LOGGER.warning("Unexpected thresholds format in profile %s; defaulting to empty dict.", plant_id)
         thresholds = {}
     context["current_thresholds"] = thresholds
 
@@ -95,13 +93,9 @@ def load_ai_insight_context(
         if isinstance(data, list):
             series = data
         else:
-            _LOGGER.warning(
-                "Growth/yield data for plant %s is not a list; ignoring content.", plant_id
-            )
+            _LOGGER.warning("Growth/yield data for plant %s is not a list; ignoring content.", plant_id)
     except FileNotFoundError:
-        _LOGGER.warning(
-            "Growth/yield data file not found for plant %s at %s", plant_id, analytics_file
-        )
+        _LOGGER.warning("Growth/yield data file not found for plant %s at %s", plant_id, analytics_file)
     except Exception as e:
         _LOGGER.error("Failed to read growth/yield data for plant '%s': %s", plant_id, e)
 
@@ -119,9 +113,7 @@ def load_ai_insight_context(
             context["yield_cumulative"] = 0.0
         # Collect the last up to 7 growth metric values
         growth_entries = [
-            entry
-            for entry in series
-            if isinstance(entry, dict) and entry.get("growth_metric") is not None
+            entry for entry in series if isinstance(entry, dict) and entry.get("growth_metric") is not None
         ]
         context["growth_trend"] = (
             [entry.get("growth_metric") for entry in growth_entries[-7:]] if growth_entries else []

@@ -11,9 +11,7 @@ from plant_engine.utils import get_pending_dir, load_json
 _LOGGER = logging.getLogger(__name__)
 
 
-def push_to_approval_queue(
-    plant_id: str, proposed_thresholds: dict, base_path: str | Path = "."
-) -> dict:
+def push_to_approval_queue(plant_id: str, proposed_thresholds: dict, base_path: str | Path = ".") -> dict:
     """Queue proposed threshold changes for manual approval.
 
     Parameters

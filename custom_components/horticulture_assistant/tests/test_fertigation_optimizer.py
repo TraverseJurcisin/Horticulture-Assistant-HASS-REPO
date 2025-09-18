@@ -8,9 +8,7 @@ def test_generate_fertigation_plan_basic(monkeypatch):
     def fake_interval(pt, st):
         return 1
 
-    monkeypatch.setattr(
-        fertigation_optimizer, "recommend_loss_adjusted_fertigation", fake_recommend
-    )
+    monkeypatch.setattr(fertigation_optimizer, "recommend_loss_adjusted_fertigation", fake_recommend)
     monkeypatch.setattr(fertigation_optimizer, "get_fertigation_interval", fake_interval)
 
     plan = fertigation_optimizer.generate_fertigation_plan("lettuce", "seedling", 10)

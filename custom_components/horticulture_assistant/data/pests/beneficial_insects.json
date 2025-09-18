@@ -1,7 +1,18 @@
 {
-  "aphids": ["ladybugs", "lacewings"],
-  "whiteflies": ["encarsia formosa"],
-  "spider mites": ["predatory mites"],
-  "scale": ["parasitic wasps"],
-  "leafminers": ["diglyphus isaea"]
+  "aphids": [
+    "ladybugs",
+    "lacewings"
+  ],
+  "whiteflies": [
+    "encarsia formosa"
+  ],
+  "spider mites": [
+    "predatory mites"
+  ],
+  "scale": [
+    "parasitic wasps"
+  ],
+  "leafminers": [
+    "diglyphus isaea"
+  ]
 }

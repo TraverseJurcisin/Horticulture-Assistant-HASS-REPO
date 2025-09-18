@@ -3,7 +3,13 @@
   "display_name": "Avocado",
   "species": "Persea americana",
   "variables": {
-    "min_moisture": {"value": 25, "source": "manual"},
-    "max_moisture": {"value": 55, "source": "manual"}
+    "min_moisture": {
+      "value": 25,
+      "source": "manual"
+    },
+    "max_moisture": {
+      "value": 55,
+      "source": "manual"
+    }
   }
 }

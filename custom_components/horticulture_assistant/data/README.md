@@ -28,4 +28,4 @@ The remaining folders follow the same pattern—stage-specific agronomy, operati
 4. Describe the source in the PR so changes remain auditable.
 
 ## Versioning
-Dataset versions are encoded in filenames (e.g. `2025-09-V3e.schema.json`). When bumping versions, include a changelog line in the PR body and keep earlier revisions for reproducibility unless data privacy requires removal.
+Dataset versions are encoded in filenames (e.g. `2025-09-V3e.schema.json`). When bumping versions, include a changelog line in the PR body and keep earlier revisions for reproducibility unless data privacy requires removal.

@@ -1,5 +1,14 @@
 {
-  "citrus": {"min_zone": "9", "max_zone": "11"},
-  "lettuce": {"min_zone": "4", "max_zone": "8"},
-  "tomato": {"min_zone": "5", "max_zone": "10"}
+  "citrus": {
+    "min_zone": "9",
+    "max_zone": "11"
+  },
+  "lettuce": {
+    "min_zone": "4",
+    "max_zone": "8"
+  },
+  "tomato": {
+    "min_zone": "5",
+    "max_zone": "10"
+  }
 }

@@ -5,6 +5,7 @@ from custom_components.horticulture_assistant.engine.run_daily_cycle import _loa
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
+
 def test_load_recent_entries(tmp_path):
     log = tmp_path / "log.json"
     now = datetime.now(UTC)

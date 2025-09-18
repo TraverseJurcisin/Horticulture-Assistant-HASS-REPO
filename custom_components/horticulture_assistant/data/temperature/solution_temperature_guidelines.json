@@ -1,5 +1,14 @@
 {
-  "default": {"min": 18, "max": 22},
-  "lettuce": {"min": 16, "max": 20},
-  "tomato": {"min": 20, "max": 24}
+  "default": {
+    "min": 18,
+    "max": 22
+  },
+  "lettuce": {
+    "min": 16,
+    "max": 20
+  },
+  "tomato": {
+    "min": 20,
+    "max": 24
+  }
 }

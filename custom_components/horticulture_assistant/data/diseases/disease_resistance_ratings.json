@@ -1,5 +1,12 @@
 {
-  "citrus": {"greasy_spot": 4, "powdery_mildew": 3},
-  "tomato": {"blight": 2},
-  "lettuce": {"downy_mildew": 2}
+  "citrus": {
+    "greasy_spot": 4,
+    "powdery_mildew": 3
+  },
+  "tomato": {
+    "blight": 2
+  },
+  "lettuce": {
+    "downy_mildew": 2
+  }
 }

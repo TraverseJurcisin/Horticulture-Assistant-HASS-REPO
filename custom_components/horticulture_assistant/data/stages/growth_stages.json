@@ -112,18 +112,45 @@
     }
   },
   "arugula": {
-    "germination": {"duration_days": 7, "notes": "Keep moist until emergence."},
-    "vegetative": {"duration_days": 25, "notes": "Rapid leaf growth."},
-    "harvest": {"duration_days": 15, "notes": "Harvest young leaves for best flavor."}
+    "germination": {
+      "duration_days": 7,
+      "notes": "Keep moist until emergence."
+    },
+    "vegetative": {
+      "duration_days": 25,
+      "notes": "Rapid leaf growth."
+    },
+    "harvest": {
+      "duration_days": 15,
+      "notes": "Harvest young leaves for best flavor."
+    }
   },
   "blueberry": {
-    "vegetative": {"duration_days": 60, "notes": "Focus on cane development."},
-    "flowering": {"duration_days": 20, "notes": "Monitor for frost damage."},
-    "fruiting": {"duration_days": 40, "notes": "Maintain soil acidity."}
+    "vegetative": {
+      "duration_days": 60,
+      "notes": "Focus on cane development."
+    },
+    "flowering": {
+      "duration_days": 20,
+      "notes": "Monitor for frost damage."
+    },
+    "fruiting": {
+      "duration_days": 40,
+      "notes": "Maintain soil acidity."
+    }
   },
   "kale": {
-    "seedling": {"duration_days": 20, "notes": "Keep evenly moist."},
-    "vegetative": {"duration_days": 40, "notes": "Provide regular nitrogen."},
-    "harvest": {"duration_days": 30, "notes": "Harvest outer leaves first."}
+    "seedling": {
+      "duration_days": 20,
+      "notes": "Keep evenly moist."
+    },
+    "vegetative": {
+      "duration_days": 40,
+      "notes": "Provide regular nitrogen."
+    },
+    "harvest": {
+      "duration_days": 30,
+      "notes": "Harvest outer leaves first."
+    }
   }
 }

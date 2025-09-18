@@ -137,9 +137,7 @@ def test_recommend_irrigation_from_environment():
     )
     result = recommend_irrigation_from_environment(profile, env, zone, 120.0)
     metrics = compute_transpiration(profile, env)
-    expected = recommend_irrigation_volume(
-        zone, available_ml=120.0, expected_et_ml=metrics["transpiration_ml_day"]
-    )
+    expected = recommend_irrigation_volume(zone, available_ml=120.0, expected_et_ml=metrics["transpiration_ml_day"])
     assert result["volume_ml"] == expected
     assert result["metrics"] == metrics
 
@@ -215,9 +213,7 @@ def test_generate_env_irrigation_schedule():
 
     m1 = compute_transpiration(profile, env)
     vol1 = recommend_irrigation_volume(zone, 150.0, m1["transpiration_ml_day"])
-    remaining = calculate_remaining_water(
-        zone, 150.0, irrigation_ml=vol1, et_ml=m1["transpiration_ml_day"]
-    )
+    remaining = calculate_remaining_water(zone, 150.0, irrigation_ml=vol1, et_ml=m1["transpiration_ml_day"])
     m2 = compute_transpiration(profile, env)
     vol2 = recommend_irrigation_volume(zone, remaining, m2["transpiration_ml_day"])
 

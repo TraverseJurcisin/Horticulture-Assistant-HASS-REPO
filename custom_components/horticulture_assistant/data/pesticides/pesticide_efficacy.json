@@ -1,5 +1,14 @@
 {
-  "imidacloprid": {"aphids": 5, "whiteflies": 4},
-  "spinosad": {"thrips": 5, "caterpillars": 4},
-  "pyrethrin": {"aphids": 3, "spider mites": 2}
+  "imidacloprid": {
+    "aphids": 5,
+    "whiteflies": 4
+  },
+  "spinosad": {
+    "thrips": 5,
+    "caterpillars": 4
+  },
+  "pyrethrin": {
+    "aphids": 3,
+    "spider mites": 2
+  }
 }

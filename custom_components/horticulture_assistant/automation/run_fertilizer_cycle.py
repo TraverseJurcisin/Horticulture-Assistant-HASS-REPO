@@ -24,9 +24,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
     """
     # Global override check
     if not ENABLE_AUTOMATION:
-        _LOGGER.info(
-            "Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping fertilization cycle."
-        )
+        _LOGGER.info("Automation is globally disabled (ENABLE_AUTOMATION=False). Skipping fertilization cycle.")
         return
 
     if base_path is None:
@@ -75,12 +73,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
                 # Skip thresholds for moisture, temperature, light, or known contaminants/heavy metals
                 if "moisture" in k_lower or "temp" in k_lower or "light" in k_lower:
                     continue
-                if (
-                    "arsenic" in k_lower
-                    or "cadmium" in k_lower
-                    or "lead" in k_lower
-                    or "mercury" in k_lower
-                ):
+                if "arsenic" in k_lower or "cadmium" in k_lower or "lead" in k_lower or "mercury" in k_lower:
                     continue
                 if k_lower == "ph":
                     continue
@@ -103,9 +96,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
                     alt_key = thresh_key[:-4]  # remove "_ppm"
                     if alt_key in sensor_data:
                         current_reading = sensor_data[alt_key]
-                if current_reading is None and (
-                    thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"
-                ):
+                if current_reading is None and (thresh_key.lower() == "ec" or thresh_key.lower() == "ec_min"):
                     # Check for EC (case-insensitive) in sensor_data keys
                     if "ec" in sensor_data:
                         current_reading = sensor_data["ec"]
@@ -133,9 +124,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
             # Convert threshold to float (if list or tuple, use first element as minimum threshold)
             try:
                 threshold_val = (
-                    float(thresh_value[0])
-                    if isinstance(thresh_value, list | tuple)
-                    else float(thresh_value)
+                    float(thresh_value[0]) if isinstance(thresh_value, list | tuple) else float(thresh_value)
                 )
             except (TypeError, ValueError):
                 _LOGGER.error(

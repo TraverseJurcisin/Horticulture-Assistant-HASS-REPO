@@ -1,5 +1,14 @@
 {
-  "K_Mg": {"max_ratio": 3, "message": "High K relative to Mg can induce magnesium deficiency"},
-  "Ca_Mg": {"max_ratio": 10, "message": "Excessive Ca can inhibit Mg uptake"},
-  "N_P": {"max_ratio": 8, "message": "Very high N to P ratio can reduce flowering"}
+  "K_Mg": {
+    "max_ratio": 3,
+    "message": "High K relative to Mg can induce magnesium deficiency"
+  },
+  "Ca_Mg": {
+    "max_ratio": 10,
+    "message": "Excessive Ca can inhibit Mg uptake"
+  },
+  "N_P": {
+    "max_ratio": 8,
+    "message": "Very high N to P ratio can reduce flowering"
+  }
 }

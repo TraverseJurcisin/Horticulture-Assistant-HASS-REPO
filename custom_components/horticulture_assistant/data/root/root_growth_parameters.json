@@ -1,5 +1,14 @@
 {
-  "default": {"midpoint": 60, "k": 0.08},
-  "tomato": {"midpoint": 55, "k": 0.1},
-  "lettuce": {"midpoint": 30, "k": 0.12}
+  "default": {
+    "midpoint": 60,
+    "k": 0.08
+  },
+  "tomato": {
+    "midpoint": 55,
+    "k": 0.1
+  },
+  "lettuce": {
+    "midpoint": 30,
+    "k": 0.12
+  }
 }

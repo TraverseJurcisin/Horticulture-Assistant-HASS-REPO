@@ -1,17 +1,44 @@
 {
   "citrus": {
-    "seedling": [30, 50],
-    "fruiting": [25, 40],
-    "optimal": [30, 50]
+    "seedling": [
+      30,
+      50
+    ],
+    "fruiting": [
+      25,
+      40
+    ],
+    "optimal": [
+      30,
+      50
+    ]
   },
   "lettuce": {
-    "seedling": [40, 60],
-    "harvest": [40, 60],
-    "optimal": [40, 60]
+    "seedling": [
+      40,
+      60
+    ],
+    "harvest": [
+      40,
+      60
+    ],
+    "optimal": [
+      40,
+      60
+    ]
   },
   "tomato": {
-    "seedling": [60, 80],
-    "fruiting": [50, 70],
-    "optimal": [60, 80]
+    "seedling": [
+      60,
+      80
+    ],
+    "fruiting": [
+      50,
+      70
+    ],
+    "optimal": [
+      60,
+      80
+    ]
   }
 }

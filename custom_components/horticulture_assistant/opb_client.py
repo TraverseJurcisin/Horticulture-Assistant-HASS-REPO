@@ -52,9 +52,7 @@ class OpenPlantbookClient:
         return results
 
 
-async def async_fetch_field(
-    hass, species: str, field: str, token: str | None = None
-) -> tuple[float | None, str]:
+async def async_fetch_field(hass, species: str, field: str, token: str | None = None) -> tuple[float | None, str]:
     """Fetch a numeric field for a species from OpenPlantbook.
 
     Returns a `(value, url)` tuple where ``value`` is coerced to ``float`` when

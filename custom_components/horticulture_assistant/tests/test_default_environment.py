@@ -9,9 +9,7 @@ def test_default_environment_loaded(tmp_path, monkeypatch):
     data_dir = tmp_path / "data"
     data_dir.mkdir()
     (data_dir / "environment").mkdir()
-    (data_dir / "environment" / "default_environment.json").write_text(
-        json.dumps({"temp_c": 20, "rh_pct": 55})
-    )
+    (data_dir / "environment" / "default_environment.json").write_text(json.dumps({"temp_c": 20, "rh_pct": 55}))
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     importlib.reload(utils)

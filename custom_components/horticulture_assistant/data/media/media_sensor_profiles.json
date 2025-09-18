@@ -1,6 +1,22 @@
 {
-  "Peat Moss": {"retention": 0.9, "dryback": 0.2, "ec_buffer": 0.9},
-  "Coco Coir": {"retention": 0.8, "dryback": 0.3, "ec_buffer": 0.8},
-  "Rockwool": {"retention": 0.7, "dryback": 0.7, "ec_buffer": 0.1},
-  "Perlite Blend": {"retention": 0.5, "dryback": 0.9, "ec_buffer": 0.4}
+  "Peat Moss": {
+    "retention": 0.9,
+    "dryback": 0.2,
+    "ec_buffer": 0.9
+  },
+  "Coco Coir": {
+    "retention": 0.8,
+    "dryback": 0.3,
+    "ec_buffer": 0.8
+  },
+  "Rockwool": {
+    "retention": 0.7,
+    "dryback": 0.7,
+    "ec_buffer": 0.1
+  },
+  "Perlite Blend": {
+    "retention": 0.5,
+    "dryback": 0.9,
+    "ec_buffer": 0.4
+  }
 }

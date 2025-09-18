@@ -1,5 +1,8 @@
-{
+﻿{
+  "name": "Horticulture Assistant",
+  "domains": ["horticulture_assistant"],
+  "country": "US",
+  "render_readme": true,
   "content_in_root": false,
-  "homeassistant": "2024.7.0",
-  "name": "Horticulture Assistant"
+  "homeassistant": "2024.7.0"
 }

@@ -1,4 +1,4 @@
-aiohttp>=3.9,<3.12
+﻿aiohttp>=3.9,<3.12
 homeassistant>=2024.12,<2025.2
 pytest>=8,<9
 pytest-asyncio>=0.23,<2
@@ -9,5 +9,5 @@ numpy>=1.25
 pandas>=2.3
 types-PyYAML
 voluptuous>=0.13.1
-jsonschema>=4.0
+jsonschema>=4.21
 requests_mock>=1.11.0

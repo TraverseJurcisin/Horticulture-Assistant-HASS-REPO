@@ -1,6 +1,18 @@
 {
-  "blight": ["copper fungicide", "bacillus subtilis"],
-  "powdery mildew": ["sulfur spray", "potassium bicarbonate"],
-  "downy mildew": ["phosphorous acid", "copper fungicide"],
-  "botrytis": ["bacillus subtilis", "copper fungicide"]
+  "blight": [
+    "copper fungicide",
+    "bacillus subtilis"
+  ],
+  "powdery mildew": [
+    "sulfur spray",
+    "potassium bicarbonate"
+  ],
+  "downy mildew": [
+    "phosphorous acid",
+    "copper fungicide"
+  ],
+  "botrytis": [
+    "bacillus subtilis",
+    "copper fungicide"
+  ]
 }

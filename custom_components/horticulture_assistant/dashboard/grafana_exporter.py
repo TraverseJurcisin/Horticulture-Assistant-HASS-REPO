@@ -9,9 +9,7 @@ UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # no
 _LOGGER = logging.getLogger(__name__)
 
 
-def export_grafana_data(
-    plant_id: str, base_path: str = "plants", output_path: str = "dashboard"
-) -> dict:
+def export_grafana_data(plant_id: str, base_path: str = "plants", output_path: str = "dashboard") -> dict:
     """
     Compile plant data into a JSON object for Grafana dashboards and write to file.
     Loads the plant profile and the last 7 days of logs, then produces a summary of
@@ -43,9 +41,7 @@ def export_grafana_data(
     thresholds = {}
     if isinstance(profile.get("thresholds"), dict):
         thresholds = profile["thresholds"]
-    elif isinstance(profile.get("profile_data"), dict) and isinstance(
-        profile["profile_data"].get("thresholds"), dict
-    ):
+    elif isinstance(profile.get("profile_data"), dict) and isinstance(profile["profile_data"].get("thresholds"), dict):
         thresholds = profile["profile_data"]["thresholds"]
     data["threshold_summary"] = thresholds
 

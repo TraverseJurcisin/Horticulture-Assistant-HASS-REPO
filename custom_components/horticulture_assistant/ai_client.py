@@ -37,9 +37,7 @@ class AIClient:
         self.provider = provider
         self.model = model
 
-    async def generate_setpoint(
-        self, context: dict[str, Any]
-    ) -> tuple[float, float, str, list[str]]:
+    async def generate_setpoint(self, context: dict[str, Any]) -> tuple[float, float, str, list[str]]:
         """Return (value, confidence, summary, links)."""
         session = async_get_clientsession(self.hass)
         key = context.get("key")
@@ -127,9 +125,7 @@ class AIClient:
         return None
 
 
-async def async_recommend_variable(
-    hass, key: str, plant_id: str, ttl_hours: int = 720, **kwargs
-) -> dict[str, Any]:
+async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int = 720, **kwargs) -> dict[str, Any]:
     """Return AI recommendation for a variable with simple caching."""
     cache_key = (plant_id, key)
     now = datetime.now(UTC)
@@ -140,9 +136,7 @@ async def async_recommend_variable(
     provider = kwargs.get("provider", "openai")
     model = kwargs.get("model", "gpt-4o-mini")
     client = AIClient(hass, provider, model)
-    val, conf, summary, links = await client.generate_setpoint(
-        {"key": key, "plant_id": plant_id, **kwargs}
-    )
+    val, conf, summary, links = await client.generate_setpoint({"key": key, "plant_id": plant_id, **kwargs})
     result = {"value": val, "confidence": conf, "summary": summary, "links": links}
     _AI_CACHE[cache_key] = (result, now + timedelta(hours=ttl_hours))
     return result

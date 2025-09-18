@@ -1,5 +1,16 @@
 {
-  "lettuce": {"seedling": 60, "vegetative": 180, "harvest": 140},
-  "tomato": {"seedling": 80, "vegetative": 220, "fruiting": 320},
-  "basil": {"vegetative": 120, "harvest": 100}
+  "lettuce": {
+    "seedling": 60,
+    "vegetative": 180,
+    "harvest": 140
+  },
+  "tomato": {
+    "seedling": 80,
+    "vegetative": 220,
+    "fruiting": 320
+  },
+  "basil": {
+    "vegetative": 120,
+    "harvest": 100
+  }
 }

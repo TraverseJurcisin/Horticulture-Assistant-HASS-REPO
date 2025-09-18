@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
+
 @dataclass
 class LivePoint:
     lux: float
