@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import json
@@ -15,15 +15,18 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "custom_components" / "horticulture_assistant" / "data" / "fertilizers"
 SCHEMA_PATH = DATA_DIR / "schema" / "2025-09-V3e.schema.json"
 
+
 def iter_detail_files():
     detail_dir = DATA_DIR / "detail"
     if not detail_dir.exists():
         return []
     return sorted(detail_dir.rglob("*.json"))
 
+
 def load_json(path: Path):
     with path.open("r", encoding="utf-8") as file:
         return json.load(file)
+
 
 def main() -> int:
     if not SCHEMA_PATH.exists():
@@ -51,6 +54,7 @@ def main() -> int:
 
     print("All fertilizer JSON files conform to the 2025-09-V3e schema.")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
