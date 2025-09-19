@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import logging
+import voluptuous as vol
 
 try:
     import homeassistant.helpers.config_validation as cv
@@ -70,6 +71,12 @@ __all__ = [
 ]
 
 _LOGGER = logging.getLogger(__name__)
+
+
+if cv is not None:
+    CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+else:
+    CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema({})}, extra=vol.ALLOW_EXTRA)
 
 
 async def async_setup(_hass: HomeAssistant, _config: dict) -> bool:

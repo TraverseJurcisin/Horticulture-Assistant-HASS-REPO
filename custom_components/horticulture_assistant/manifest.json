@@ -8,6 +8,7 @@
   "codeowners": ["@TraverseJurcisin"],
   "iot_class": "local_polling",
   "integration_type": "hub",
+  "dependencies": ["recorder"],
   "loggers": ["custom_components.horticulture_assistant"],
   "requirements": []
 }
