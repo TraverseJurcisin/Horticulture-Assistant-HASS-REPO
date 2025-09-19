@@ -27,6 +27,7 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -r requirements_test.txt
           python -m pip install ruff==0.6.8 mypy==1.11.2
+          python -m pip install hassfest
 
       - name: Pre-commit (format & JSON checks)
         run: |
@@ -41,7 +42,7 @@ jobs:
         run: ruff check .
 
       - name: Mypy (static type check)
-        run: python -m mypy --explicit-package-bases --config-file mypy.ini custom_components/horticulture_assistant
+        run: python -m mypy --explicit-package-bases --config-file mypy.ini custom_components
 
       - name: Python bytecode compile
         run: python -m compileall custom_components scripts tests
