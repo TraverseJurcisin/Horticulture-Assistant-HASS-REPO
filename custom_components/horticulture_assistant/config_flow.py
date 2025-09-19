@@ -5,15 +5,6 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
-
-try:
-    from aiohttp import ClientError
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-
-    class ClientError(Exception):
-        """Fallback ClientError when aiohttp is not available."""
-
-
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
@@ -21,7 +12,6 @@ from homeassistant.helpers import selector as sel
 if TYPE_CHECKING:
     from homeassistant.data_entry_flow import FlowResult
 
-from .api import ChatApi
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -48,14 +38,7 @@ from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
 
-DATA_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_API_KEY): str,
-        vol.Optional(CONF_MODEL, default=DEFAULT_MODEL): str,
-        vol.Optional(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
-        vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_MINUTES): vol.All(int, vol.Range(min=1)),
-    }
-)
+DATA_SCHEMA = vol.Schema({})
 
 PROFILE_SCHEMA = vol.Schema(
     {
@@ -79,26 +62,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._image_url: str | None = None
 
     async def async_step_user(self, user_input=None):
-        errors = {}
         if user_input is not None:
-            api = ChatApi(
-                self.hass,
-                user_input.get(CONF_API_KEY, ""),
-                user_input.get(CONF_BASE_URL, DEFAULT_BASE_URL),
-                user_input.get(CONF_MODEL, DEFAULT_MODEL),
-            )
-            try:
-                await api.validate_api_key()
-            except (TimeoutError, ClientError) as err:
-                errors["base"] = "cannot_connect"
-                _LOGGER.error("API key validation failed: %s", err)
-            except Exception as err:  # pragma: no cover - unexpected
-                errors["base"] = "cannot_connect"
-                _LOGGER.exception("Unexpected error validating API key: %s", err)
-            if not errors:
-                self._config = user_input
-                return await self.async_step_profile()
-        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
+            # No configuration fields at setup time; options flow handles AI settings.
+            self._config = {}
+            return await self.async_step_profile()
+        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
 
     async def async_step_profile(self, user_input=None):
         errors = {}
@@ -385,19 +353,19 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         return self.async_show_menu(
             step_id="init",
-            menu_options=["basic", "add_profile"],
+            menu_options=["basic", "add_profile", "configure_ai"],
         )
 
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
-            CONF_MODEL: self._entry.data.get(CONF_MODEL, DEFAULT_MODEL),
-            CONF_BASE_URL: self._entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
-            CONF_UPDATE_INTERVAL: self._entry.options.get(
-                CONF_UPDATE_INTERVAL,
-                self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+            CONF_KEEP_STALE: self._entry.options.get(
+                CONF_KEEP_STALE,
+                self._entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
             ),
-            CONF_KEEP_STALE: self._entry.options.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
-            "species_display": self._entry.options.get("species_display", self._entry.data.get(CONF_PLANT_TYPE, "")),
+            "species_display": self._entry.options.get(
+                "species_display",
+                self._entry.data.get(CONF_PLANT_TYPE, ""),
+            ),
             "opb_auto_download_images": self._entry.options.get("opb_auto_download_images", True),
             "opb_download_dir": self._entry.options.get(
                 "opb_download_dir",
@@ -454,8 +422,6 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         errors = {}
         if user_input is not None:
-            if user_input.get(CONF_UPDATE_INTERVAL, 1) < 1:
-                errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
             for key in (
                 CONF_MOISTURE_SENSOR,
                 CONF_TEMPERATURE_SENSOR,
@@ -600,6 +566,42 @@ class OptionsFlow(config_entries.OptionsFlow):
             }
         )
         return self.async_show_form(step_id="add_profile", data_schema=schema)
+
+    async def async_step_configure_ai(self, user_input: dict[str, Any] | None = None):
+        opts = dict(self._entry.options)
+        defaults = {
+            CONF_API_KEY: opts.get(CONF_API_KEY, self._entry.data.get(CONF_API_KEY, "")),
+            CONF_MODEL: opts.get(CONF_MODEL, self._entry.data.get(CONF_MODEL, DEFAULT_MODEL)),
+            CONF_BASE_URL: opts.get(CONF_BASE_URL, self._entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL)),
+            CONF_UPDATE_INTERVAL: opts.get(
+                CONF_UPDATE_INTERVAL,
+                self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+            ),
+        }
+
+        schema = vol.Schema(
+            {
+                vol.Optional(CONF_API_KEY, default=defaults[CONF_API_KEY]): sel.TextSelector(
+                    sel.TextSelectorConfig(type="password")
+                ),
+                vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
+                vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
+                vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): vol.All(
+                    int, vol.Range(min=1, max=60)
+                ),
+            }
+        )
+
+        if user_input is not None:
+            new_options = {**opts}
+            for key, value in user_input.items():
+                if value in (None, ""):
+                    new_options.pop(key, None)
+                else:
+                    new_options[key] = value
+            return self.async_create_entry(title="AI settings updated", data=new_options)
+
+        return self.async_show_form(step_id="configure_ai", data_schema=schema)
 
     async def async_step_attach_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry

@@ -42,6 +42,7 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - optional dependency missing
     calibration_services = None
 from .const import (
+    CONF_API_KEY,
     CONF_BASE_URL,
     CONF_KEEP_STALE,
     CONF_MODEL,
@@ -82,8 +83,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a ConfigEntry."""
 
     ensure_local_data_paths()
+    base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
+    api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
+    model = entry.options.get(CONF_MODEL, entry.data.get(CONF_MODEL, DEFAULT_MODEL))
+    keep_stale = entry.options.get(CONF_KEEP_STALE, entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE))
+    update_minutes = entry.options.get(
+        CONF_UPDATE_INTERVAL,
+        entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+    )
 
-    api = ChatApi(hass, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
+    api = ChatApi(hass, api_key, base_url, model)
 
     profile_registry = ProfileRegistry(hass, LocalStore(hass, entry))
     await profile_registry.async_initialize()
@@ -95,7 +104,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass,
         api,
         profile_registry,
-        entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
+        keep_stale,
     )
     await coordinator.async_config_entry_first_refresh()
 
@@ -103,12 +112,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass,
         api,
         profile_registry,
-        entry.data.get(CONF_MODEL, DEFAULT_MODEL),
+        model,
     )
     local_coordinator = HortiLocalCoordinator(
         hass,
         profile_registry,
-        entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+        update_minutes,
     )
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {

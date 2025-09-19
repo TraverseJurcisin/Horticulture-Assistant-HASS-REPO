@@ -1,4 +1,4 @@
-{
+﻿{
   "title": "Horticulture Assistant",
   "config": {
     "step": {
@@ -18,6 +18,7 @@
         "menu_options": {
           "basic": "General settings",
           "add_profile": "Add profile",
+          "configure_ai": "Configure AI",
           "manage_profiles": "Manage profiles",
           "export_profiles": "Export profiles",
           "import_profiles": "Import profiles"
@@ -38,6 +39,16 @@
           "humidity": "Humidity sensor",
           "illuminance": "Light sensor",
           "moisture": "Moisture sensor"
+        }
+      },
+      "configure_ai": {
+        "title": "Configure AI",
+        "description": "Set API and model parameters for the assistant.",
+        "data": {
+          "api_key": "API key",
+          "model": "Model",
+          "base_url": "Base URL",
+          "update_interval": "Update interval (minutes)"
         }
       }
     }

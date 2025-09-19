@@ -5,10 +5,10 @@ from typing import Any
 from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.core import HomeAssistant
 
-from .const import DOMAIN
+from .const import CONF_API_KEY, DOMAIN
 from .profile_registry import ProfileRegistry
 
-TO_REDACT: set[str] = set()
+TO_REDACT = {CONF_API_KEY}
 
 
 async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict[str, Any]:
@@ -19,7 +19,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         "entry": {
             "title": entry.title,
             "data": dict(entry.data),
-            "options": dict(entry.options),
+            "options": {key: ("***" if key == CONF_API_KEY else value) for key, value in entry.options.items()},
         },
         "profile_count": 0,
         "profiles": [],
