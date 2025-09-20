@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
 
@@ -33,7 +32,6 @@ from .const import (
     DOMAIN,
 )
 from .opb_client import OpenPlantbookClient
-from .profile_store import ProfileStore
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
@@ -44,10 +42,6 @@ CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
 
 
 DATA_SCHEMA = vol.Schema({vol.Optional(CONF_CREATE_INITIAL_PROFILE, default=False): bool})
-
-CONF_PROFILE_NAME = "profile_name"
-CONF_CLONE_FROM = "clone_from"
-CONF_SENSORS = "sensors"
 
 PROFILE_SCHEMA = vol.Schema(
     {
@@ -113,15 +107,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         return self.async_show_form(step_id="profile", data_schema=PROFILE_SCHEMA, errors=errors)
 
     async def async_step_threshold_source(self, user_input=None):
-        if self._config is None or self._profile is None:
-            return self.async_abort(reason="unknown")
+        if self._profile is None:
+            _LOGGER.debug("Profile metadata missing when selecting threshold source; returning to profile step.")
+            if self._config is None:
+                self._config = {}
+            return await self.async_step_profile()
         if user_input is not None:
             method = user_input["method"]
             if method == "openplantbook":
                 return await self.async_step_opb_credentials()
             if method == "skip":
                 self._thresholds = {}
-                return await self.async_step_sensors()
+                self._species_display = None
+                self._species_pid = None
+                self._image_url = None
+                return await self._complete_profile({})
             return await self.async_step_thresholds()
         schema = vol.Schema(
             {
@@ -230,8 +230,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         return self.async_show_form(step_id="opb_species_select", data_schema=schema)
 
     async def async_step_thresholds(self, user_input=None):
-        if self._config is None or self._profile is None:
-            return self.async_abort(reason="unknown")
+        if self._profile is None:
+            _LOGGER.debug("Profile metadata missing at thresholds step; returning to profile form.")
+            if self._config is None:
+                self._config = {}
+            return await self.async_step_profile()
 
         defaults = self._thresholds
         schema = vol.Schema(
@@ -254,8 +257,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         return self.async_show_form(step_id="thresholds", data_schema=schema)
 
     async def async_step_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
-        if self._config is None or self._profile is None:
-            return self.async_abort(reason="unknown")
+        if self._profile is None:
+            _LOGGER.debug("Profile metadata missing at sensors step; returning to profile form.")
+            if self._config is None:
+                self._config = {}
+            return await self.async_step_profile()
 
         schema = vol.Schema(
             {
@@ -291,65 +297,74 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     errors[key] = "not_found"
             if errors:
                 return self.async_show_form(step_id="sensors", data_schema=schema, errors=errors)
-            sensor_map = {}
-            if moisture := user_input.get(CONF_MOISTURE_SENSOR):
-                sensor_map["moisture_sensors"] = [moisture]
-            if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
-                sensor_map["temperature_sensors"] = [temperature]
-            if ec := user_input.get(CONF_EC_SENSOR):
-                sensor_map["ec_sensors"] = [ec]
-            if co2 := user_input.get(CONF_CO2_SENSOR):
-                sensor_map["co2_sensors"] = [co2]
-            if sensor_map:
-                plant_id = self._profile[CONF_PLANT_ID]
-
-                def _save_sensors():
-                    path = self.hass.config.path("plants", plant_id, "general.json")
-                    try:
-                        data = load_json(path)
-                    except Exception:
-                        data = {}
-                    container = data.setdefault("sensor_entities", {})
-                    for key, value in sensor_map.items():
-                        container[key] = value
-                    save_json(path, data)
-
-                await self.hass.async_add_executor_job(_save_sensors)
-            plant_id = self._profile[CONF_PLANT_ID]
-            await self.hass.async_add_executor_job(
-                register_plant,
-                plant_id,
-                {
-                    "display_name": self._profile[CONF_PLANT_NAME],
-                    "profile_path": f"plants/{plant_id}/general.json",
-                    **({"plant_type": self._profile[CONF_PLANT_TYPE]} if self._profile.get(CONF_PLANT_TYPE) else {}),
-                },
-                self.hass,
-            )
-            mapped: dict[str, str] = {}
-            if moisture := user_input.get(CONF_MOISTURE_SENSOR):
-                mapped["moisture"] = moisture
-            if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
-                mapped["temperature"] = temperature
-            if ec := user_input.get(CONF_EC_SENSOR):
-                mapped["conductivity"] = ec
-            if co2 := user_input.get(CONF_CO2_SENSOR):
-                mapped["co2"] = co2
-            data = {**self._config, **self._profile}
-            options = dict(user_input)
-            options["sensors"] = mapped
-            options["thresholds"] = self._thresholds
-            if self._species_display:
-                options["species_display"] = self._species_display
-            if self._species_pid:
-                options["species_pid"] = self._species_pid
-            if self._image_url:
-                options["image_url"] = self._image_url
-            if self._opb_credentials:
-                options["opb_credentials"] = self._opb_credentials
-            return self.async_create_entry(title=self._profile[CONF_PLANT_NAME], data=data, options=options)
+            return await self._complete_profile(user_input)
 
         return self.async_show_form(step_id="sensors", data_schema=schema)
+
+    async def _complete_profile(self, user_input: dict[str, Any]) -> FlowResult:
+        if self._profile is None:
+            _LOGGER.debug("Attempted to complete profile without metadata; restarting profile step.")
+            if self._config is None:
+                self._config = {}
+            return await self.async_step_profile()
+
+        sensor_map: dict[str, list[str]] = {}
+        if moisture := user_input.get(CONF_MOISTURE_SENSOR):
+            sensor_map["moisture_sensors"] = [moisture]
+        if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
+            sensor_map["temperature_sensors"] = [temperature]
+        if ec := user_input.get(CONF_EC_SENSOR):
+            sensor_map["ec_sensors"] = [ec]
+        if co2 := user_input.get(CONF_CO2_SENSOR):
+            sensor_map["co2_sensors"] = [co2]
+        if sensor_map:
+            plant_id = self._profile[CONF_PLANT_ID]
+
+            def _save_sensors():
+                path = self.hass.config.path("plants", plant_id, "general.json")
+                try:
+                    data = load_json(path)
+                except Exception:
+                    data = {}
+                container = data.setdefault("sensor_entities", {})
+                for key, value in sensor_map.items():
+                    container[key] = value
+                save_json(path, data)
+
+            await self.hass.async_add_executor_job(_save_sensors)
+        plant_id = self._profile[CONF_PLANT_ID]
+        await self.hass.async_add_executor_job(
+            register_plant,
+            plant_id,
+            {
+                "display_name": self._profile[CONF_PLANT_NAME],
+                "profile_path": f"plants/{plant_id}/general.json",
+                **({"plant_type": self._profile[CONF_PLANT_TYPE]} if self._profile.get(CONF_PLANT_TYPE) else {}),
+            },
+            self.hass,
+        )
+        mapped: dict[str, str] = {}
+        if moisture := user_input.get(CONF_MOISTURE_SENSOR):
+            mapped["moisture"] = moisture
+        if temperature := user_input.get(CONF_TEMPERATURE_SENSOR):
+            mapped["temperature"] = temperature
+        if ec := user_input.get(CONF_EC_SENSOR):
+            mapped["conductivity"] = ec
+        if co2 := user_input.get(CONF_CO2_SENSOR):
+            mapped["co2"] = co2
+        data = {**(self._config or {}), **self._profile}
+        options = dict(user_input)
+        options["sensors"] = mapped
+        options["thresholds"] = self._thresholds
+        if self._species_display:
+            options["species_display"] = self._species_display
+        if self._species_pid:
+            options["species_pid"] = self._species_pid
+        if self._image_url:
+            options["image_url"] = self._image_url
+        if self._opb_credentials:
+            options["opb_credentials"] = self._opb_credentials
+        return self.async_create_entry(title=self._profile[CONF_PLANT_NAME], data=data, options=options)
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -544,38 +559,43 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         return self.async_show_form(step_id="basic", data_schema=schema)
 
-    async def async_step_add_profile(self, user_input=None):
-        """Create a profile without requiring any preferences."""
-        hass: HomeAssistant = self.hass
-        store = ProfileStore(hass)
-        await store.async_init()
+    async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        from .profile_registry import ProfileRegistry
 
-        profiles = await store.async_list_profiles()
-        clone_choices = {name: name for name in profiles} if profiles else {}
+        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
+        if user_input is not None:
+            copy_from = user_input.get("copy_from")
+            pid = await registry.async_add_profile(user_input["name"], copy_from)
 
+            entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
+            store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
+            if store is not None:
+                new_profile = registry.get_profile(pid)
+                if new_profile is not None:
+                    profile_json = new_profile.to_json()
+                    sensors = profile_json.get("general", {}).get("sensors", {})
+                    thresholds = {
+                        key: (value.get("value") if isinstance(value, dict) else value)
+                        for key, value in profile_json.get("variables", {}).items()
+                    }
+                    clone_payload = {
+                        "thresholds": thresholds,
+                        "template": profile_json.get("species"),
+                    }
+                    await store.async_create_profile(
+                        name=profile_json.get("display_name", user_input["name"]),
+                        sensors=sensors,
+                        clone_from=clone_payload,
+                    )
+            self._new_profile_id = pid
+            return await self.async_step_attach_sensors()
+        profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
         schema = vol.Schema(
             {
-                vol.Required(CONF_PROFILE_NAME): str,
-                vol.Optional(CONF_CLONE_FROM, default=None): vol.In([None] + list(clone_choices)),
-                vol.Optional(CONF_SENSORS, default={}): dict,
+                vol.Required("name"): str,
+                vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
             }
         )
-
-        if user_input is not None:
-            name = user_input[CONF_PROFILE_NAME].strip()
-            clone = user_input.get(CONF_CLONE_FROM) or None
-            sensors = user_input.get(CONF_SENSORS) or {}
-
-            # Create the profile with empty thresholds by default (handled by store)
-            await store.async_create_profile(name=name, clone_from=clone, sensors=sensors)
-
-            # Nudge HA to reload platforms by updating options
-            new_options = dict(self.config_entry.options)
-            created = list(new_options.get("created_profiles", []))
-            created.append(name)
-            new_options["created_profiles"] = created
-            return self.async_create_entry(title="Profile added", data=new_options)
-
         return self.async_show_form(step_id="add_profile", data_schema=schema)
 
     async def async_step_configure_ai(self, user_input: dict[str, Any] | None = None):
