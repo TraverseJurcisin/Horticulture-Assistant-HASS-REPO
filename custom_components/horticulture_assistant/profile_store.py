@@ -42,6 +42,9 @@ class ProfileStore:
     async def async_list(self) -> list[str]:
         return sorted(path.stem for path in self._base.glob("*.json"))
 
+    async def async_list_profiles(self) -> list[str]:
+        return await self.async_list()
+
     async def async_get(self, name: str) -> dict[str, Any] | None:
         path = self._path_for(name)
         if not path.exists():
@@ -57,11 +60,19 @@ class ProfileStore:
         sensors: dict[str, str] | None = None,
         clone_from: dict[str, Any] | None = None,
     ) -> None:
+        clone_payload: dict[str, Any] | None
+        if isinstance(clone_from, str) and clone_from:
+            clone_payload = await self.async_get(clone_from)
+        elif isinstance(clone_from, dict):
+            clone_payload = clone_from
+        else:
+            clone_payload = None
+
         data = StoredProfile(
             name=name,
             sensors=sensors or {},
-            thresholds=clone_from.get("thresholds", {}) if clone_from else {},
-            template=clone_from.get("template") if clone_from else None,
+            thresholds=clone_payload.get("thresholds", {}) if clone_payload else {},
+            template=clone_payload.get("template") if clone_payload else None,
         )
         await self.async_save(data)
 
