@@ -49,6 +49,8 @@ from .const import (
     CONF_KEEP_STALE,
     CONF_MODEL,
     CONF_UPDATE_INTERVAL,
+    CONF_PLANT_ID,
+    CONF_PROFILES,
     DEFAULT_BASE_URL,
     DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
@@ -90,7 +92,7 @@ async def async_setup(_hass: HomeAssistant, _config: dict) -> bool:
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a ConfigEntry."""
 
-    ensure_local_data_paths()
+    await ensure_local_data_paths(hass)
     base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
     model = entry.options.get(CONF_MODEL, entry.data.get(CONF_MODEL, DEFAULT_MODEL))
@@ -138,12 +140,36 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         "local": local_coordinator,
     }
 
-    await ensure_entities_exist(
-        hass,
-        coordinator,
-        entry.options,
-        entry.data,
-    )
+    sensors = entry.options.get("sensors")
+    if isinstance(sensors, dict) and sensors:
+        sensor_ids = [value for value in sensors.values() if isinstance(value, str)]
+        if sensor_ids:
+            ensure_entities_exist(
+                hass,
+                entry.data.get(CONF_PLANT_ID, entry.entry_id),
+                sensor_ids,
+            )
+
+    profile_options = entry.options.get(CONF_PROFILES, {})
+    if isinstance(profile_options, dict):
+        for profile_id, profile_data in profile_options.items():
+            profile_sensors = []
+            if isinstance(profile_data, dict):
+                sensor_map = profile_data.get("sensors", {})
+                if isinstance(sensor_map, dict):
+                    profile_sensors = [value for value in sensor_map.values() if isinstance(value, str)]
+            if profile_sensors:
+                ensure_entities_exist(
+                    hass,
+                    profile_id,
+                    profile_sensors,
+                    placeholders={
+                        "plant_id": profile_id,
+                        "profile_name": profile_data.get("name", profile_id)
+                        if isinstance(profile_data, dict)
+                        else profile_id,
+                    },
+                )
 
     ha_services.async_setup_services(hass)
     if calibration_services is not None:

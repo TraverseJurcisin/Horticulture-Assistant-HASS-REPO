@@ -72,11 +72,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
     async def async_step_user(self, user_input=None):
         if user_input is not None:
-            if user_input.get(CONF_CREATE_INITIAL_PROFILE):
-                # Allow the legacy profile-wizard path when explicitly requested.
-                self._config = {}
+            self._config = {}
+            if user_input.get(CONF_CREATE_INITIAL_PROFILE, True):
+                # Run the legacy profile wizard when explicitly requested.
                 return await self.async_step_profile()
-            return self.async_create_entry(title="Horticulture Assistant", data={}, options={})
+            return self.async_create_entry(title="Horticulture Assistant", data=self._config, options={})
         return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
 
     async def async_step_profile(self, user_input=None):
