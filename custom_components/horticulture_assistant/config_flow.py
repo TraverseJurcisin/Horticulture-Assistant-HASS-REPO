@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from homeassistant import config_entries
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
 
@@ -32,6 +33,7 @@ from .const import (
     DOMAIN,
 )
 from .opb_client import OpenPlantbookClient
+from .profile_store import ProfileStore
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
@@ -39,6 +41,10 @@ from .utils.plant_registry import register_plant
 _LOGGER = logging.getLogger(__name__)
 
 DATA_SCHEMA = vol.Schema({})
+
+CONF_PROFILE_NAME = "profile_name"
+CONF_CLONE_FROM = "clone_from"
+CONF_SENSORS = "sensors"
 
 PROFILE_SCHEMA = vol.Schema(
     {
@@ -344,6 +350,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 class OptionsFlow(config_entries.OptionsFlow):
     def __init__(self, entry: config_entries.ConfigEntry) -> None:
         self._entry = entry
+        self.config_entry = entry
         self._pid: str | None = None
         self._var: str | None = None
         self._mode: str | None = None
@@ -528,43 +535,38 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         return self.async_show_form(step_id="basic", data_schema=schema)
 
-    async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
-        from .profile_registry import ProfileRegistry
+    async def async_step_add_profile(self, user_input=None):
+        """Create a profile without requiring any preferences."""
+        hass: HomeAssistant = self.hass
+        store = ProfileStore(hass)
+        await store.async_init()
 
-        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
-        if user_input is not None:
-            copy_from = user_input.get("copy_from")
-            pid = await registry.async_add_profile(user_input["name"], copy_from)
+        profiles = await store.async_list_profiles()
+        clone_choices = {name: name for name in profiles} if profiles else {}
 
-            entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
-            store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
-            if store is not None:
-                new_profile = registry.get_profile(pid)
-                if new_profile is not None:
-                    profile_json = new_profile.to_json()
-                    sensors = profile_json.get("general", {}).get("sensors", {})
-                    thresholds = {
-                        key: (value.get("value") if isinstance(value, dict) else value)
-                        for key, value in profile_json.get("variables", {}).items()
-                    }
-                    clone_payload = {
-                        "thresholds": thresholds,
-                        "template": profile_json.get("species"),
-                    }
-                    await store.async_create_profile(
-                        name=profile_json.get("display_name", user_input["name"]),
-                        sensors=sensors,
-                        clone_from=clone_payload,
-                    )
-            self._new_profile_id = pid
-            return await self.async_step_attach_sensors()
-        profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
         schema = vol.Schema(
             {
-                vol.Required("name"): str,
-                vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
+                vol.Required(CONF_PROFILE_NAME): str,
+                vol.Optional(CONF_CLONE_FROM, default=None): vol.In([None] + list(clone_choices)),
+                vol.Optional(CONF_SENSORS, default={}): dict,
             }
         )
+
+        if user_input is not None:
+            name = user_input[CONF_PROFILE_NAME].strip()
+            clone = user_input.get(CONF_CLONE_FROM) or None
+            sensors = user_input.get(CONF_SENSORS) or {}
+
+            # Create the profile with empty thresholds by default (handled by store)
+            await store.async_create_profile(name=name, clone_from=clone, sensors=sensors)
+
+            # Nudge HA to reload platforms by updating options
+            new_options = dict(self.config_entry.options)
+            created = list(new_options.get("created_profiles", []))
+            created.append(name)
+            new_options["created_profiles"] = created
+            return self.async_create_entry(title="Profile added", data=new_options)
+
         return self.async_show_form(step_id="add_profile", data_schema=schema)
 
     async def async_step_configure_ai(self, user_input: dict[str, Any] | None = None):

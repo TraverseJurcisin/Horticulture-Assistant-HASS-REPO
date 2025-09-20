@@ -27,8 +27,9 @@
       "add_profile": {
         "title": "Add profile",
         "data": {
-          "name": "Profile name",
-          "copy_from": "Clone thresholds from (optional)"
+          "profile_name": "Profile name",
+          "clone_from": "Clone thresholds from (optional)",
+          "sensors": "Sensors (key:value map)"
         }
       },
       "attach_sensors": {
