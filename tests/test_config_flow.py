@@ -41,6 +41,7 @@ reg_spec.loader.exec_module(reg)
 ConfigFlow = cfg.ConfigFlow
 OptionsFlow = cfg.OptionsFlow
 ProfileRegistry = reg.ProfileRegistry
+CONF_CREATE_INITIAL_PROFILE = cfg.CONF_CREATE_INITIAL_PROFILE
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -66,19 +67,30 @@ def _mock_socket():
             yield
 
 
+async def test_config_flow_user_skip_profile(hass):
+    """Finishing setup without creating a profile should create an empty entry."""
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+
+    result2 = await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: False})
+    assert result2["type"] == "create_entry"
+    assert result2["title"] == "Horticulture Assistant"
+    assert result2["data"] == {}
+    assert result2.get("options", {}) == {}
+
+
 async def test_config_flow_user(hass):
     """Test user config flow."""
     flow = ConfigFlow()
     flow.hass = hass
-    result = await flow.async_step_user()
+    result = await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
     assert result["type"] == "form"
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        result2 = await flow.async_step_user({CONF_API_KEY: "abc"})
-    assert result2["type"] == "form"
-    assert result2["step_id"] == "profile"
+    assert result["step_id"] == "profile"
 
     async def _run(func, *args):
         return func(*args)
@@ -132,29 +144,10 @@ async def test_config_flow_user(hass):
     assert registry["mint"]["plant_type"] == "Herb"
 
 
-async def test_config_flow_invalid_key(hass):
-    """Test config flow handles invalid API key."""
-    flow = ConfigFlow()
-    flow.hass = hass
-    result = await flow.async_step_user()
-    assert result["type"] == "form"
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        side_effect=Exception,
-    ):
-        result2 = await flow.async_step_user({CONF_API_KEY: "bad"})
-    assert result2["type"] == "form"
-    assert result2["errors"] == {"base": "cannot_connect"}
-
-
 async def test_config_flow_profile_error(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args):
         return ""
@@ -173,11 +166,7 @@ async def test_config_flow_profile_error(hass):
 async def test_config_flow_profile_requires_name(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
     result = await flow.async_step_profile(
         {
             CONF_PLANT_NAME: "",
@@ -191,11 +180,7 @@ async def test_config_flow_profile_requires_name(hass):
 async def test_config_flow_sensor_not_found(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args):
         return func(*args)
@@ -224,19 +209,14 @@ async def test_config_flow_without_sensors(hass):
     """Profiles can be created without attaching sensors."""
     flow = ConfigFlow()
     flow.hass = hass
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args):
         return func(*args)
 
     with patch.object(hass, "async_add_executor_job", side_effect=_run):
         await flow.async_step_profile({CONF_PLANT_NAME: "Rose"})
-        await flow.async_step_threshold_source({"method": "manual"})
-        result_th = await flow.async_step_thresholds({})
+        result_th = await flow.async_step_threshold_source({"method": "skip"})
         assert result_th["type"] == "form" and result_th["step_id"] == "sensors"
         result = await flow.async_step_sensors({})
     assert result["type"] == "create_entry"
@@ -451,12 +431,7 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
 async def test_config_flow_openplantbook_prefill(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -516,12 +491,7 @@ async def test_config_flow_openplantbook_prefill(hass):
 async def test_config_flow_openplantbook_no_auto_download(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -563,12 +533,7 @@ async def test_config_flow_openplantbook_no_auto_download(hass):
 async def test_config_flow_opb_missing_sdk(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -594,12 +559,7 @@ async def test_config_flow_opb_missing_sdk(hass):
 async def test_config_flow_opb_search_failure_falls_back(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
-    with patch(
-        "custom_components.horticulture_assistant.config_flow.ChatApi.validate_api_key",
-        return_value=None,
-    ):
-        await flow.async_step_user({CONF_API_KEY: "abc"})
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)

@@ -6,7 +6,7 @@
         "title": "Set up Horticulture Assistant",
         "description": "Create the integration entry. Use Options to add plant profiles.",
         "data": {
-          "create_initial_profile": "Create an initial plant profile"
+          "create_initial_profile": "Start the profile wizard now (optional)"
         }
       }
     }

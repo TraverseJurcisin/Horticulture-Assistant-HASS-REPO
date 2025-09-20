@@ -38,7 +38,10 @@ from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
 
-DATA_SCHEMA = vol.Schema({})
+CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
+
+
+DATA_SCHEMA = vol.Schema({vol.Optional(CONF_CREATE_INITIAL_PROFILE, default=False): bool})
 
 PROFILE_SCHEMA = vol.Schema(
     {
@@ -63,9 +66,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
     async def async_step_user(self, user_input=None):
         if user_input is not None:
-            # No configuration fields at setup time; options flow handles AI settings.
-            self._config = {}
-            return await self.async_step_profile()
+            if user_input.get(CONF_CREATE_INITIAL_PROFILE):
+                # Allow the legacy profile-wizard path when explicitly requested.
+                self._config = {}
+                return await self.async_step_profile()
+            return self.async_create_entry(title="Horticulture Assistant", data={}, options={})
         return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
 
     async def async_step_profile(self, user_input=None):
@@ -108,6 +113,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             method = user_input["method"]
             if method == "openplantbook":
                 return await self.async_step_opb_credentials()
+            if method == "skip":
+                self._thresholds = {}
+                return await self.async_step_sensors()
             return await self.async_step_thresholds()
         schema = vol.Schema(
             {
@@ -116,6 +124,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                         options=[
                             {"value": "openplantbook", "label": "From OpenPlantbook"},
                             {"value": "manual", "label": "Manual entry"},
+                            {"value": "skip", "label": "Skip for now"},
                         ]
                     )
                 )
