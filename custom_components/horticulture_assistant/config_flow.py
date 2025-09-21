@@ -51,6 +51,17 @@ PROFILE_SCOPE_SELECTOR_OPTIONS = [
     {"value": value, "label": PROFILE_SCOPE_LABELS[value]} for value in PROFILE_SCOPE_CHOICES
 ]
 
+MANUAL_THRESHOLD_FIELDS = (
+    "temperature_min",
+    "temperature_max",
+    "humidity_min",
+    "humidity_max",
+    "illuminance_min",
+    "illuminance_max",
+    "conductivity_min",
+    "conductivity_max",
+)
+
 
 CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
 
@@ -251,21 +262,17 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             return await self.async_step_profile()
 
         defaults = self._thresholds
-        schema = vol.Schema(
-            {
-                vol.Optional("temperature_min", default=defaults.get("temperature_min")): vol.Coerce(float),
-                vol.Optional("temperature_max", default=defaults.get("temperature_max")): vol.Coerce(float),
-                vol.Optional("humidity_min", default=defaults.get("humidity_min")): vol.Coerce(float),
-                vol.Optional("humidity_max", default=defaults.get("humidity_max")): vol.Coerce(float),
-                vol.Optional("illuminance_min", default=defaults.get("illuminance_min")): vol.Coerce(float),
-                vol.Optional("illuminance_max", default=defaults.get("illuminance_max")): vol.Coerce(float),
-                vol.Optional("conductivity_min", default=defaults.get("conductivity_min")): vol.Coerce(float),
-                vol.Optional("conductivity_max", default=defaults.get("conductivity_max")): vol.Coerce(float),
-            }
-        )
+        schema_fields: dict[Any, Any] = {}
+        for key in MANUAL_THRESHOLD_FIELDS:
+            default = defaults.get(key)
+            option = vol.Optional(key) if default is None else vol.Optional(key, default=default)
+            schema_fields[option] = vol.Coerce(float)
+        schema = vol.Schema(schema_fields, extra=vol.ALLOW_EXTRA)
 
         if user_input is not None:
-            self._thresholds = {k: v for k, v in user_input.items() if v is not None}
+            self._thresholds = {
+                key: value for key, value in user_input.items() if key in MANUAL_THRESHOLD_FIELDS and value is not None
+            }
             return await self.async_step_sensors()
 
         return self.async_show_form(step_id="thresholds", data_schema=schema)

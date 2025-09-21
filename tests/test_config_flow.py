@@ -146,6 +146,49 @@ async def test_config_flow_user(hass):
     assert registry["mint"]["plant_type"] == "Herb"
 
 
+async def test_config_flow_manual_threshold_values(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        result = await flow.async_step_thresholds(
+            {
+                "temperature_min": "1",
+                "temperature_max": "2",
+                "humidity_min": "3",
+                "humidity_max": "4",
+                "illuminance_min": "5",
+                "illuminance_max": "6",
+                "conductivity_min": "7",
+                "conductivity_max": "8",
+            }
+        )
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    assert flow._thresholds == {
+        "temperature_min": 1.0,
+        "temperature_max": 2.0,
+        "humidity_min": 3.0,
+        "humidity_max": 4.0,
+        "illuminance_min": 5.0,
+        "illuminance_max": 6.0,
+        "conductivity_min": 7.0,
+        "conductivity_max": 8.0,
+    }
+
+
 async def test_config_flow_profile_error(hass):
     flow = ConfigFlow()
     flow.hass = hass
