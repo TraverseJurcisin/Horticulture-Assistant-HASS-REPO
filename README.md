@@ -1,5 +1,3 @@
-![Horticulture Assistant logo](custom_components/horticulture_assistant/logo.jpg)
-
 # Horticulture Assistant for Home Assistant
 
 Horticulture Assistant is a local-first companion for growers who want to coordinate plant monitoring, nutrition, and irrigation inside Home Assistant without relying on cloud APIs. The project ships opinionated defaults, extensive reference data, and optional AI/automation hooks while remaining fully usable offline.
