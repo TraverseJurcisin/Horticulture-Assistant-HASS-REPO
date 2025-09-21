@@ -9,6 +9,9 @@
           "create_initial_profile": "Create an initial plant profile during setup"
         }
       }
+    },
+    "error": {
+      "invalid_float": "Enter a number"
     }
   },
   "options": {
@@ -53,6 +56,11 @@
           "update_interval": "Update interval (minutes)"
         }
       }
+    }
+  },
+  "config_entry": {
+    "state": {
+      "message": "Profiles live inside this configuration entry. Use the buttons above to add or manage plants."
     }
   }
 }

@@ -265,14 +265,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         schema_fields: dict[Any, Any] = {}
         for key in MANUAL_THRESHOLD_FIELDS:
             default = defaults.get(key)
-            option = vol.Optional(key) if default is None else vol.Optional(key, default=default)
-            schema_fields[option] = vol.Coerce(float)
+            option = vol.Optional(key) if default is None else vol.Optional(key, default=str(default))
+            schema_fields[option] = cv.string
         schema = vol.Schema(schema_fields, extra=vol.ALLOW_EXTRA)
 
         if user_input is not None:
-            self._thresholds = {
-                key: value for key, value in user_input.items() if key in MANUAL_THRESHOLD_FIELDS and value is not None
-            }
+            errors: dict[str, str] = {}
+            cleaned: dict[str, float] = {}
+            for key in MANUAL_THRESHOLD_FIELDS:
+                raw = user_input.get(key)
+                if raw in (None, ""):
+                    continue
+                try:
+                    cleaned[key] = float(raw)
+                except (TypeError, ValueError):
+                    errors[key] = "invalid_float"
+            if errors:
+                return self.async_show_form(step_id="thresholds", data_schema=schema, errors=errors)
+            self._thresholds = cleaned
             return await self.async_step_sensors()
 
         return self.async_show_form(step_id="thresholds", data_schema=schema)
@@ -595,14 +605,20 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
-        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
+        domain_data = self.hass.data.setdefault(DOMAIN, {})
+        registry: ProfileRegistry | None = domain_data.get("registry")
+        if registry is None:
+            registry = ProfileRegistry(self.hass, self._entry)
+            await registry.async_load()
+            domain_data["registry"] = registry
+
         if user_input is not None:
             scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
             pid = await registry.async_add_profile(user_input["name"], copy_from, scope=scope)
 
-            entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
-            store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
+            entry_records = domain_data.setdefault(self._entry.entry_id, {})
+            store = entry_records.get("profile_store") if isinstance(entry_records, dict) else None
             if store is not None:
                 new_profile = registry.get_profile(pid)
                 if new_profile is not None:
