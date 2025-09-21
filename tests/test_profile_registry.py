@@ -251,7 +251,6 @@ async def test_add_profile_copy_from(hass):
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
 
 
-
 async def test_add_profile_custom_scope(hass):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)

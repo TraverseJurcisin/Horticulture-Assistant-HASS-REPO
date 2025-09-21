@@ -48,8 +48,7 @@ PROFILE_SCOPE_LABELS = {
     "grow_zone": "Grow zone or environment",
 }
 PROFILE_SCOPE_SELECTOR_OPTIONS = [
-    {"value": value, "label": PROFILE_SCOPE_LABELS[value]}
-    for value in PROFILE_SCOPE_CHOICES
+    {"value": value, "label": PROFILE_SCOPE_LABELS[value]} for value in PROFILE_SCOPE_CHOICES
 ]
 
 
@@ -593,9 +592,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
-            pid = await registry.async_add_profile(
-                user_input["name"], copy_from, scope=scope
-            )
+            pid = await registry.async_add_profile(user_input["name"], copy_from, scope=scope)
 
             entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
             store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
@@ -622,9 +619,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             self._new_profile_id = pid
             return await self.async_step_attach_sensors()
         profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
-        scope_selector = sel.SelectSelector(
-            sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS)
-        )
+        scope_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS))
         schema = vol.Schema(
             {
                 vol.Required("name"): str,
