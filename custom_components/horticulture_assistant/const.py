@@ -24,6 +24,16 @@ CONF_PLANT_ID = "plant_id"
 CONF_PLANT_TYPE = "plant_type"
 CONF_PROFILES = "profiles"
 
+CONF_PROFILE_SCOPE = "profile_scope"
+
+PROFILE_SCOPE_DEFAULT = "individual"
+PROFILE_SCOPE_CHOICES = (
+    "individual",
+    "species_template",
+    "crop_batch",
+    "grow_zone",
+)
+
 # Variables (keys) we support in thresholds (can extend safely)
 VARIABLE_SPECS = [
     # key, unit, step, min, max

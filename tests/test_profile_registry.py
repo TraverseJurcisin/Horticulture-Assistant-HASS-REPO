@@ -4,7 +4,12 @@ from unittest.mock import patch
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.horticulture_assistant.const import CONF_PROFILES, DOMAIN
+from custom_components.horticulture_assistant.const import (
+    CONF_PROFILE_SCOPE,
+    CONF_PROFILES,
+    DOMAIN,
+    PROFILE_SCOPE_DEFAULT,
+)
 from custom_components.horticulture_assistant.profile import store as profile_store
 from custom_components.horticulture_assistant.profile.schema import (
     PlantProfile,
@@ -243,6 +248,21 @@ async def test_add_profile_copy_from(hass):
     assert sensors["temperature"] == "sensor.t"
     prof = reg.get(pid)
     assert prof.general["sensors"]["temperature"] == "sensor.t"
+    assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
+
+
+
+async def test_add_profile_custom_scope(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("North Bay", scope="grow_zone")
+
+    assert entry.options[CONF_PROFILES][pid][CONF_PROFILE_SCOPE] == "grow_zone"
+    prof = reg.get(pid)
+    assert prof is not None
+    assert prof.general[CONF_PROFILE_SCOPE] == "grow_zone"
 
 
 async def test_import_template_creates_profile(hass):

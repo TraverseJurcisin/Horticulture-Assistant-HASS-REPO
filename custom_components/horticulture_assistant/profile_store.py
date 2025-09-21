@@ -9,6 +9,8 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.util import slugify
 
+from .const import CONF_PROFILE_SCOPE
+
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
 
@@ -19,6 +21,7 @@ class StoredProfile:
     sensors: dict[str, str]
     thresholds: dict[str, Any]
     template: str | None = None
+    scope: str | None = None
 
     def to_json(self) -> dict[str, Any]:
         return asdict(self)
@@ -59,6 +62,7 @@ class ProfileStore:
         name: str,
         sensors: dict[str, str] | None = None,
         clone_from: dict[str, Any] | None = None,
+        scope: str | None = None,
     ) -> None:
         clone_payload: dict[str, Any] | None
         if isinstance(clone_from, str) and clone_from:
@@ -68,11 +72,17 @@ class ProfileStore:
         else:
             clone_payload = None
 
+        resolved_scope = scope
+        if clone_payload:
+            resolved_scope = resolved_scope or clone_payload.get(CONF_PROFILE_SCOPE)
+            resolved_scope = resolved_scope or clone_payload.get("scope")
+
         data = StoredProfile(
             name=name,
             sensors=sensors or {},
             thresholds=clone_payload.get("thresholds", {}) if clone_payload else {},
             template=clone_payload.get("template") if clone_payload else None,
+            scope=resolved_scope,
         )
         await self.async_save(data)
 

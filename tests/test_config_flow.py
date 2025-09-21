@@ -27,6 +27,8 @@ const_spec.loader.exec_module(const)
 CONF_PLANT_NAME = const.CONF_PLANT_NAME
 CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
+CONF_PROFILE_SCOPE = const.CONF_PROFILE_SCOPE
+PROFILE_SCOPE_DEFAULT = const.PROFILE_SCOPE_DEFAULT
 
 cfg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py")
 cfg = importlib.util.module_from_spec(cfg_spec)
@@ -594,11 +596,12 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
-    result = await flow.async_step_add_profile({"name": "Basil"})
+    result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
     assert result["type"] == "form" and result["step_id"] == "attach_sensors"
     hass.states.async_set("sensor.temp", 20, {"device_class": "temperature"})
     result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
     assert result2["type"] == "create_entry"
     prof = registry.get_profile("basil")
     assert prof is not None
+    assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"

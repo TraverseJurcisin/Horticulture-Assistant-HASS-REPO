@@ -26,10 +26,11 @@
       },
       "add_profile": {
         "title": "Add profile",
+        "description": "Pick what the profile represents so dashboards and automations stay organised.",
         "data": {
-          "profile_name": "Profile name",
-          "clone_from": "Clone thresholds from (optional)",
-          "sensors": "Sensors (key:value map)"
+          "name": "Profile name",
+          "profile_scope": "What does this profile represent?",
+          "copy_from": "Clone thresholds from (optional)"
         }
       },
       "attach_sensors": {

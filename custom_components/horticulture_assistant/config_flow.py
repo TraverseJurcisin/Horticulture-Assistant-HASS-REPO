@@ -23,6 +23,7 @@ from .const import (
     CONF_PLANT_ID,
     CONF_PLANT_NAME,
     CONF_PLANT_TYPE,
+    CONF_PROFILE_SCOPE,
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
@@ -30,6 +31,8 @@ from .const import (
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DOMAIN,
+    PROFILE_SCOPE_CHOICES,
+    PROFILE_SCOPE_DEFAULT,
 )
 from .opb_client import OpenPlantbookClient
 from .utils import profile_generator
@@ -37,6 +40,18 @@ from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
+
+PROFILE_SCOPE_LABELS = {
+    "individual": "Individual plant (single specimen)",
+    "species_template": "Species template (reusable baseline)",
+    "crop_batch": "Crop batch or bed (shared conditions)",
+    "grow_zone": "Grow zone or environment",
+}
+PROFILE_SCOPE_SELECTOR_OPTIONS = [
+    {"value": value, "label": PROFILE_SCOPE_LABELS[value]}
+    for value in PROFILE_SCOPE_CHOICES
+]
+
 
 CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
 
@@ -389,6 +404,18 @@ class OptionsFlow(config_entries.OptionsFlow):
 
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
+            CONF_MODEL: self._entry.options.get(
+                CONF_MODEL,
+                self._entry.data.get(CONF_MODEL, DEFAULT_MODEL),
+            ),
+            CONF_BASE_URL: self._entry.options.get(
+                CONF_BASE_URL,
+                self._entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL),
+            ),
+            CONF_UPDATE_INTERVAL: self._entry.options.get(
+                CONF_UPDATE_INTERVAL,
+                self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+            ),
             CONF_KEEP_STALE: self._entry.options.get(
                 CONF_KEEP_STALE,
                 self._entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE),
@@ -564,8 +591,11 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         if user_input is not None:
+            scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
-            pid = await registry.async_add_profile(user_input["name"], copy_from)
+            pid = await registry.async_add_profile(
+                user_input["name"], copy_from, scope=scope
+            )
 
             entry_data = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id, {})
             store = entry_data.get("profile_store") if isinstance(entry_data, dict) else None
@@ -581,18 +611,24 @@ class OptionsFlow(config_entries.OptionsFlow):
                     clone_payload = {
                         "thresholds": thresholds,
                         "template": profile_json.get("species"),
+                        CONF_PROFILE_SCOPE: scope,
                     }
                     await store.async_create_profile(
                         name=profile_json.get("display_name", user_input["name"]),
                         sensors=sensors,
                         clone_from=clone_payload,
+                        scope=scope,
                     )
             self._new_profile_id = pid
             return await self.async_step_attach_sensors()
         profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
+        scope_selector = sel.SelectSelector(
+            sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS)
+        )
         schema = vol.Schema(
             {
                 vol.Required("name"): str,
+                vol.Required(CONF_PROFILE_SCOPE, default=PROFILE_SCOPE_DEFAULT): scope_selector,
                 vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
             }
         )

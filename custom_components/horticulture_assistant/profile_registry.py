@@ -20,7 +20,12 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 from homeassistant.util import slugify
 
-from .const import CONF_PROFILES
+from .const import (
+    CONF_PROFILE_SCOPE,
+    CONF_PROFILES,
+    PROFILE_SCOPE_CHOICES,
+    PROFILE_SCOPE_DEFAULT,
+)
 from .profile.schema import PlantProfile
 
 STORAGE_VERSION = 2
@@ -55,16 +60,29 @@ class ProfileRegistry:
         # Merge in any profiles referenced only in config entry options.
         for pid, data in self.entry.options.get(CONF_PROFILES, {}).items():
             prof = self._profiles.get(pid)
+            scope = data.get(CONF_PROFILE_SCOPE, data.get("scope"))
             if prof:
                 prof.display_name = data.get("name", prof.display_name)
                 if sensors := data.get("sensors"):
                     prof.general.setdefault("sensors", sensors)
+                if scope:
+                    prof.general[CONF_PROFILE_SCOPE] = scope
+                elif CONF_PROFILE_SCOPE not in prof.general:
+                    prof.general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
                 continue
-            self._profiles[pid] = PlantProfile(
+            prof_obj = PlantProfile(
                 plant_id=pid,
                 display_name=data.get("name", pid),
                 species=data.get("species"),
             )
+            if sensors := data.get("sensors"):
+                prof_obj.general.setdefault("sensors", sensors)
+            if scope:
+                prof_obj.general[CONF_PROFILE_SCOPE] = scope
+            self._profiles[pid] = prof_obj
+
+        for profile in self._profiles.values():
+            profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
 
     async def async_save(self) -> None:
         await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
@@ -143,9 +161,12 @@ class ProfileRegistry:
             json.dump(data, fp, indent=2)
         return p
 
-    async def async_add_profile(self, name: str, base_id: str | None = None) -> str:
-        """Create a new profile and optionally clone from ``base_id``."""
-
+    async def async_add_profile(
+        self,
+        name: str,
+        base_id: str | None = None,
+        scope: str | None = None,
+    ) -> str:
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
         base = slugify(name) or "profile"
         candidate = base
@@ -161,6 +182,14 @@ class ProfileRegistry:
                 raise ValueError(f"unknown profile {base_id}")
             new_profile = deepcopy(source)
             new_profile["name"] = name
+            if scope is None:
+                scope = source.get(CONF_PROFILE_SCOPE, source.get("scope"))
+
+        resolved_scope = scope or PROFILE_SCOPE_DEFAULT
+        if resolved_scope not in PROFILE_SCOPE_CHOICES:
+            raise ValueError(f"invalid scope {resolved_scope}")
+        new_profile[CONF_PROFILE_SCOPE] = resolved_scope
+        new_profile.pop("scope", None)
 
         profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
@@ -173,7 +202,9 @@ class ProfileRegistry:
             display_name=name,
             species=new_profile.get("species"),
         )
-        prof_obj.general.setdefault("sensors", new_profile.get("sensors", {}))
+        if sensors := new_profile.get("sensors"):
+            prof_obj.general.setdefault("sensors", sensors)
+        prof_obj.general[CONF_PROFILE_SCOPE] = resolved_scope
         self._profiles[candidate] = prof_obj
         await self.async_save()
         return candidate
@@ -231,11 +262,13 @@ class ProfileRegistry:
         text = template_path.read_text(encoding="utf-8")
         data = json.loads(text)
         prof = PlantProfile.from_json(data)
-        pid = await self.async_add_profile(name or prof.display_name)
+        scope = (prof.general or {}).get(CONF_PROFILE_SCOPE)
+        pid = await self.async_add_profile(name or prof.display_name, scope=scope)
         new_prof = self._profiles[pid]
         new_prof.species = prof.species
         new_prof.variables = prof.variables
         new_prof.general.update(prof.general)
+        new_prof.general.setdefault(CONF_PROFILE_SCOPE, scope or PROFILE_SCOPE_DEFAULT)
         new_prof.citations = prof.citations
         await self.async_save()
         return pid
