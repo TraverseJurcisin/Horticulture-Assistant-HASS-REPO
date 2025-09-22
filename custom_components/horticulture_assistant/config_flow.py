@@ -264,25 +264,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         defaults = self._thresholds
         schema_fields: dict[Any, Any] = {}
         for key in MANUAL_THRESHOLD_FIELDS:
-            default = defaults.get(key)
-            option = vol.Optional(key) if default is None else vol.Optional(key, default=str(default))
-            schema_fields[option] = cv.string
+            option = vol.Optional(key, default=defaults.get(key))
+            schema_fields[option] = vol.Coerce(float)
         schema = vol.Schema(schema_fields, extra=vol.ALLOW_EXTRA)
 
         if user_input is not None:
-            errors: dict[str, str] = {}
-            cleaned: dict[str, float] = {}
-            for key in MANUAL_THRESHOLD_FIELDS:
-                raw = user_input.get(key)
-                if raw in (None, ""):
-                    continue
-                try:
-                    cleaned[key] = float(raw)
-                except (TypeError, ValueError):
-                    errors[key] = "invalid_float"
-            if errors:
+            try:
+                validated = schema(dict(user_input))
+            except vol.Invalid as err:
+                errors: dict[str, str] = {}
+                if err.path:
+                    errors[str(err.path[0])] = "invalid_float"
+                else:
+                    errors["base"] = "invalid_float"
                 return self.async_show_form(step_id="thresholds", data_schema=schema, errors=errors)
-            self._thresholds = cleaned
+            self._thresholds = {key: value for key, value in validated.items() if value is not None}
             return await self.async_step_sensors()
 
         return self.async_show_form(step_id="thresholds", data_schema=schema)
