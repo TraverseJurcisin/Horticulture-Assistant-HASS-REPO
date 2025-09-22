@@ -65,6 +65,7 @@ from .entity_utils import ensure_entities_exist
 from .profile_registry import ProfileRegistry
 from .profile_store import ProfileStore
 from .storage import LocalStore
+from .utils.entry_helpers import remove_entry_data, store_entry_data
 from .utils.paths import ensure_local_data_paths
 
 __all__ = [
@@ -104,41 +105,55 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     api = ChatApi(hass, api_key, base_url, model)
 
-    profile_registry = ProfileRegistry(hass, LocalStore(hass, entry))
+    profile_registry = ProfileRegistry(hass, entry)
     await profile_registry.async_initialize()
+
+    local_store = LocalStore(hass)
+    await local_store.load()
 
     profile_store = ProfileStore(hass)
     await profile_store.async_init()
 
     coordinator = HorticultureCoordinator(
         hass,
-        api,
-        profile_registry,
-        keep_stale,
+        entry.entry_id,
+        {
+            CONF_PROFILES: entry.options.get(CONF_PROFILES, {}),
+        },
     )
     await coordinator.async_config_entry_first_refresh()
 
     ai_coordinator = HortiAICoordinator(
         hass,
         api,
-        profile_registry,
-        model,
+        local_store,
+        update_minutes,
+        (local_store.data or {}).get("recommendation") if local_store.data else None,
     )
     local_coordinator = HortiLocalCoordinator(
         hass,
-        profile_registry,
+        local_store,
         update_minutes,
     )
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
-        "api": api,
-        "profiles": profile_registry,
-        "registry": profile_registry,
-        "profile_store": profile_store,
-        "coordinator": coordinator,
-        "ai": ai_coordinator,
-        "local": local_coordinator,
-    }
+    entry_data = store_entry_data(hass, entry)
+    entry_data.update(
+        {
+            "api": api,
+            "profile_store": profile_store,
+            "profile_registry": profile_registry,
+            "profiles": profile_registry,
+            "registry": profile_registry,
+            "local_store": local_store,
+            "coordinator": coordinator,
+            "coordinator_ai": ai_coordinator,
+            "coordinator_local": local_coordinator,
+            "keep_stale": keep_stale,
+        }
+    )
+
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    domain_data["registry"] = profile_registry
 
     sensors = entry.options.get("sensors")
     if isinstance(sensors, dict) and sensors:
@@ -188,6 +203,9 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         data = hass.data.get(DOMAIN, {})
         info = data.pop(entry.entry_id, None)
         if info:
-            with contextlib.suppress(Exception):
-                await info["profiles"].async_unload()
+            profiles = info.get("profiles")
+            if profiles and hasattr(profiles, "async_unload"):
+                with contextlib.suppress(Exception):
+                    await profiles.async_unload()
+        remove_entry_data(hass, entry.entry_id)
     return unload_ok
