@@ -17,7 +17,5 @@
   ],
   "requirements": [],
   "version": "0.8.5",
-  "diagnostics": true,
-  "logo": "custom_components/horticulture_assistant/logo.png",
-  "icon": "custom_components/horticulture_assistant/icon.png"
+  "diagnostics": true
 }
