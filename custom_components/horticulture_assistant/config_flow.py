@@ -266,7 +266,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         for key in MANUAL_THRESHOLD_FIELDS:
             default = defaults.get(key)
             option = vol.Optional(key, default=str(default) if default is not None else "")
-            schema_fields[option] = str
+            schema_fields[option] = vol.Any(str, int, float)
         schema = vol.Schema(schema_fields, extra=vol.ALLOW_EXTRA)
 
         if user_input is not None:
