@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.schema import VariableValue
@@ -89,7 +90,10 @@ class PreferenceResolver:
             if species and field:
                 from .opb_client import OpenPlantbookClient
 
-                session = self.hass.helpers.aiohttp_client.async_get_clientsession()
+                try:
+                    session = self.hass.helpers.aiohttp_client.async_get_clientsession()
+                except AttributeError:
+                    session = async_get_clientsession(self.hass)
                 token = await self._get_opb_token(entry)
                 client = OpenPlantbookClient(session, token)
                 detail = await client.species_details(species)
