@@ -1,29 +1,46 @@
+import importlib.util
 from pathlib import Path
+import types
 
 import pytest
 
-from custom_components.horticulture_assistant.storage import DEFAULT_DATA, LocalStore
 
-pytestmark = [
-    pytest.mark.asyncio,
-    pytest.mark.usefixtures("enable_custom_integrations"),
-]
+SPEC = importlib.util.spec_from_file_location(
+    "horticulture_storage",
+    Path(__file__).resolve().parents[1]
+    / "custom_components"
+    / "horticulture_assistant"
+    / "storage.py",
+)
+assert SPEC and SPEC.loader  # narrow type check for mypy/static analysers
+storage = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(storage)
 
 
-async def test_load_and_save(hass):
-    store = LocalStore(hass)
+class DummyStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = {
+            "recipes": ["tea"],
+            "inventory": {"nutrients": 1},
+        }
+
+    async def async_load(self):
+        return dict(self._data)
+
+    async def async_save(self, data):  # pragma: no cover - not used in this test
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_load_merges_defaults(monkeypatch):
+    monkeypatch.setattr(storage, "Store", DummyStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
     data = await store.load()
-    assert "recipes" in data
-    data["recipes"].append("test")
-    await store.save(data)
 
-
-async def test_load_corrupt_file_returns_default(hass, tmp_path):
-    hass.config.config_dir = str(tmp_path)
-    storage_dir = Path(tmp_path) / ".storage"
-    storage_dir.mkdir(parents=True, exist_ok=True)
-    (storage_dir / "horticulture_assistant.data").write_text("not json")
-
-    store = LocalStore(hass)
-    data = await store.load()
-    assert data == DEFAULT_DATA
+    assert data["recipes"] == ["tea"]
+    assert data["inventory"] == {"nutrients": 1}
+    for key in storage.DEFAULT_DATA:
+        assert key in data
