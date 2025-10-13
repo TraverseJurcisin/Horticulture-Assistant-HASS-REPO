@@ -10,7 +10,7 @@ needing to parse config entry options or storage files individually.
 from __future__ import annotations
 
 import json
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -64,7 +64,15 @@ class ProfileRegistry:
             if prof:
                 prof.display_name = data.get("name", prof.display_name)
                 if sensors := data.get("sensors"):
-                    prof.general.setdefault("sensors", sensors)
+                    if isinstance(sensors, Mapping):
+                        merged: dict[str, Any] = {}
+                        existing = prof.general.get("sensors")
+                        if isinstance(existing, Mapping):
+                            merged.update(existing)
+                        merged.update(dict(sensors))
+                        prof.general["sensors"] = merged
+                    elif "sensors" not in prof.general:
+                        prof.general["sensors"] = sensors
                 if scope:
                     prof.general[CONF_PROFILE_SCOPE] = scope
                 elif CONF_PROFILE_SCOPE not in prof.general:
@@ -76,7 +84,10 @@ class ProfileRegistry:
                 species=data.get("species"),
             )
             if sensors := data.get("sensors"):
-                prof_obj.general.setdefault("sensors", sensors)
+                if isinstance(sensors, Mapping):
+                    prof_obj.general["sensors"] = dict(sensors)
+                else:
+                    prof_obj.general["sensors"] = sensors
             if scope:
                 prof_obj.general[CONF_PROFILE_SCOPE] = scope
             self._profiles[pid] = prof_obj
