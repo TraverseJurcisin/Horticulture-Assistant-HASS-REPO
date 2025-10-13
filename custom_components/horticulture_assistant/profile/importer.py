@@ -20,11 +20,20 @@ async def async_import_profiles(hass: HomeAssistant, path: str | Path) -> int:
     in_path = Path(hass.config.path(str(path)))
     text = in_path.read_text(encoding="utf-8")
     try:
-        data: dict[str, Any] = json.loads(text)
+        data = json.loads(text)
     except json.JSONDecodeError as err:  # pragma: no cover - edge case
         raise ValueError(f"Invalid profile JSON: {err}") from err
+    if isinstance(data, dict):
+        profiles = list(data.values())
+    elif isinstance(data, list):
+        profiles = data
+    else:
+        raise ValueError("Invalid profile JSON: expected object or list")
+
     count = 0
-    for profile in data.values():
+    for profile in profiles:
+        if not isinstance(profile, dict):
+            raise ValueError("Invalid profile entry: expected mapping")
         await async_save_profile(hass, profile)
         count += 1
     return count
