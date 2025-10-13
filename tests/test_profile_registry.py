@@ -52,6 +52,37 @@ async def test_async_load_migrates_list_format(hass):
     assert prof and prof.display_name == "Legacy"
 
 
+async def test_async_load_merges_option_sensors_overrides_storage(hass):
+    """Sensors from config entry options override stored mappings."""
+
+    stored = PlantProfile(plant_id="p1", display_name="Stored")
+    stored.general["sensors"] = {"temperature": "sensor.old", "moisture": "sensor.m"}
+    await profile_store.async_save_profile(hass, stored)
+
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Stored",
+                    "sensors": {"temperature": "sensor.new", "humidity": "sensor.h"},
+                }
+            }
+        },
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    prof = reg.get("p1")
+    assert prof is not None
+    assert prof.general["sensors"] == {
+        "temperature": "sensor.new",
+        "moisture": "sensor.m",
+        "humidity": "sensor.h",
+    }
+    assert prof.general["sensors"] is not entry.options[CONF_PROFILES]["p1"]["sensors"]
+
+
 async def test_replace_sensor_updates_entry_and_registry(hass):
     """Replacing a sensor updates both entry options and registry state."""
 
