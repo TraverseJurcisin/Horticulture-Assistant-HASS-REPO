@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from copy import deepcopy
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -77,10 +78,22 @@ class ProfileStore:
             resolved_scope = resolved_scope or clone_payload.get(CONF_PROFILE_SCOPE)
             resolved_scope = resolved_scope or clone_payload.get("scope")
 
+        if sensors is not None:
+            sensors_data = dict(sensors)
+        elif clone_payload:
+            source_sensors = clone_payload.get("sensors")
+            sensors_data = dict(source_sensors) if isinstance(source_sensors, dict) else {}
+        else:
+            sensors_data = {}
+
+        thresholds = (
+            deepcopy(clone_payload.get("thresholds", {})) if clone_payload else {}
+        )
+
         data = StoredProfile(
             name=name,
-            sensors=sensors or {},
-            thresholds=clone_payload.get("thresholds", {}) if clone_payload else {},
+            sensors=sensors_data,
+            thresholds=thresholds,
             template=clone_payload.get("template") if clone_payload else None,
             scope=resolved_scope,
         )
