@@ -6,10 +6,7 @@ import pytest
 
 SPEC = importlib.util.spec_from_file_location(
     "horticulture_storage",
-    Path(__file__).resolve().parents[1]
-    / "custom_components"
-    / "horticulture_assistant"
-    / "storage.py",
+    Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant" / "storage.py",
 )
 assert SPEC and SPEC.loader  # narrow type check for mypy/static analysers
 storage = importlib.util.module_from_spec(SPEC)
