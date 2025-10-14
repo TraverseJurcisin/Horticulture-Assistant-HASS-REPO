@@ -1,9 +1,8 @@
 import importlib.util
-from pathlib import Path
 import types
+from pathlib import Path
 
 import pytest
-
 
 SPEC = importlib.util.spec_from_file_location(
     "horticulture_storage",
