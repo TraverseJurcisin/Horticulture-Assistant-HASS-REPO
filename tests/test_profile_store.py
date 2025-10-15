@@ -51,3 +51,29 @@ async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_p
     assert clone is not None
     assert clone["sensors"] == {"ec": "sensor.clone"}
     assert clone["thresholds"] == {"ec": {"min": 1.2}}
+
+
+@pytest.mark.asyncio
+async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
+    """Listing profiles should return stored display names when available."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save(
+        StoredProfile(
+            name="Fancy Basil",
+            sensors={},
+            thresholds={},
+        )
+    )
+
+    # Write a malformed profile file to ensure we gracefully fall back to the slug.
+    broken_path = store._path_for("Broken Plant")
+    broken_path.write_text("{not-json", encoding="utf-8")
+
+    names = await store.async_list()
+
+    assert "Fancy Basil" in names
+    assert broken_path.stem in names

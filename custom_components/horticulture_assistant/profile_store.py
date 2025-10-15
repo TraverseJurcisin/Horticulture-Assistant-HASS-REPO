@@ -44,7 +44,21 @@ class ProfileStore:
         self._base.mkdir(parents=True, exist_ok=True)
 
     async def async_list(self) -> list[str]:
-        return sorted(path.stem for path in self._base.glob("*.json"))
+        names: list[str] = []
+        for path in self._base.glob("*.json"):
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                names.append(path.stem)
+                continue
+
+            name = data.get("name")
+            if isinstance(name, str) and name.strip():
+                names.append(name)
+            else:
+                names.append(path.stem)
+
+        return sorted(names, key=str.casefold)
 
     async def async_list_profiles(self) -> list[str]:
         return await self.async_list()
