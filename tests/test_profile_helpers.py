@@ -1,16 +1,18 @@
 from __future__ import annotations
 
+import importlib.util
 import logging
 import sys
 import types
+from pathlib import Path
+
+import custom_components  # noqa: F401  # ensure base package is registered
 
 # The integration's ``__init__`` imports ``homeassistant.components.sensor``
 # which is not available in tests. Provide a lightweight stand-in so the module
 # can be imported without Home Assistant installed.
 if "homeassistant.components" not in sys.modules:
-    sys.modules["homeassistant.components"] = types.ModuleType(
-        "homeassistant.components"
-    )
+    sys.modules["homeassistant.components"] = types.ModuleType("homeassistant.components")
 
 if "homeassistant.components.sensor" not in sys.modules:
     sensor_module = types.ModuleType("homeassistant.components.sensor")
@@ -27,25 +29,17 @@ if "homeassistant.components.sensor" not in sys.modules:
 
     sensor_module.SensorDeviceClass = SensorDeviceClass
     sensor_module.SensorEntity = type("SensorEntity", (), {})
-    sensor_module.SensorStateClass = type(
-        "SensorStateClass", (), {"MEASUREMENT": "measurement"}
-    )
+    sensor_module.SensorStateClass = type("SensorStateClass", (), {"MEASUREMENT": "measurement"})
     sys.modules["homeassistant.components.sensor"] = sensor_module
 
-core_module = sys.modules.setdefault(
-    "homeassistant.core", types.ModuleType("homeassistant.core")
-)
+core_module = sys.modules.setdefault("homeassistant.core", types.ModuleType("homeassistant.core"))
 
 if not hasattr(core_module, "callback"):
+
     def callback(func):
         return func
 
     core_module.callback = callback
-
-import importlib.util
-from pathlib import Path
-
-import custom_components  # noqa: F401  # ensure base package is registered
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant"
 
@@ -89,9 +83,7 @@ def test_write_profile_sections_overwrite_logging(tmp_path, caplog):
         overwrite=True,
     )
     assert result == "plant-1"
-    assert any(
-        message.startswith("Created file:") for message in caplog.messages
-    ), caplog.messages
+    assert any(message.startswith("Created file:") for message in caplog.messages), caplog.messages
 
     caplog.clear()
 
@@ -102,7 +94,4 @@ def test_write_profile_sections_overwrite_logging(tmp_path, caplog):
         overwrite=True,
     )
     assert result == "plant-1"
-    assert any(
-        message.startswith("Overwrote existing file:")
-        for message in caplog.messages
-    ), caplog.messages
+    assert any(message.startswith("Overwrote existing file:") for message in caplog.messages), caplog.messages
