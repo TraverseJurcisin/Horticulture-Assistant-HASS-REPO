@@ -22,9 +22,9 @@ _AI_CACHE: dict[CacheKey, tuple[dict[str, Any], datetime]] = {}
 def _normalise_cache_value(value: Any) -> Hashable:
     """Return a hashable representation for caching purposes."""
 
-    if isinstance(value, (str, int, float, bool, type(None))):
+    if isinstance(value, str | int | float | bool | type(None)):
         return value
-    if isinstance(value, (list, tuple, set, frozenset)):
+    if isinstance(value, list | tuple | set | frozenset):
         return tuple(_normalise_cache_value(v) for v in value)
     if isinstance(value, dict):
         return tuple(
