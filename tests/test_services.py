@@ -29,6 +29,8 @@ if MockConfigEntry is None:
         HUMIDITY = "humidity"
         ILLUMINANCE = "illuminance"
         MOISTURE = "moisture"
+        CO2 = "co2"
+        PH = "ph"
 
     sensor.SensorDeviceClass = SensorDeviceClass
     sys.modules.setdefault("homeassistant.components", comps)

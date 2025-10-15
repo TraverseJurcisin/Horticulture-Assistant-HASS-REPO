@@ -26,6 +26,8 @@ if "homeassistant.components.sensor" not in sys.modules:
         HUMIDITY = _SensorClass("humidity")
         ILLUMINANCE = _SensorClass("illuminance")
         MOISTURE = _SensorClass("moisture")
+        CO2 = _SensorClass("co2")
+        PH = _SensorClass("ph")
 
     sensor_module.SensorDeviceClass = SensorDeviceClass
     sensor_module.SensorEntity = type("SensorEntity", (), {})
