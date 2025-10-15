@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import re
+from collections.abc import Hashable
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -13,7 +14,36 @@ from .ai_utils import extract_numbers
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
-_AI_CACHE: dict[tuple[str, str], tuple[dict[str, Any], datetime]] = {}
+CacheKey = tuple[str, str, tuple[tuple[str, Hashable], ...]]
+
+_AI_CACHE: dict[CacheKey, tuple[dict[str, Any], datetime]] = {}
+
+
+def _normalise_cache_value(value: Any) -> Hashable:
+    """Return a hashable representation for caching purposes."""
+
+    if isinstance(value, str | int | float | bool | type(None)):
+        return value
+    if isinstance(value, list | tuple | set | frozenset):
+        return tuple(_normalise_cache_value(v) for v in value)
+    if isinstance(value, dict):
+        return tuple(
+            (str(k), _normalise_cache_value(v)) for k, v in sorted(value.items(), key=lambda item: str(item[0]))
+        )
+    return repr(value)
+
+
+def _make_cache_key(plant_id: str, key: str, context: dict[str, Any]) -> CacheKey:
+    """Create a cache key that includes contextual parameters."""
+
+    items: tuple[tuple[str, Hashable], ...]
+    if context:
+        items = tuple(
+            (str(k), _normalise_cache_value(v)) for k, v in sorted(context.items(), key=lambda item: str(item[0]))
+        )
+    else:
+        items = ()
+    return (plant_id, key, items)
 
 
 async def _fetch_text(session, url: str) -> str:
@@ -127,16 +157,21 @@ class AIClient:
 
 async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int = 720, **kwargs) -> dict[str, Any]:
     """Return AI recommendation for a variable with simple caching."""
-    cache_key = (plant_id, key)
+    provider = kwargs.get("provider", "openai")
+    model = kwargs.get("model", "gpt-4o-mini")
+
+    cache_context = dict(kwargs)
+    cache_context.setdefault("provider", provider)
+    cache_context.setdefault("model", model)
+    cache_key = _make_cache_key(plant_id, key, cache_context)
     now = datetime.now(UTC)
     cached = _AI_CACHE.get(cache_key)
     if cached and now < cached[1]:
         return cached[0]
 
-    provider = kwargs.get("provider", "openai")
-    model = kwargs.get("model", "gpt-4o-mini")
     client = AIClient(hass, provider, model)
-    val, conf, summary, links = await client.generate_setpoint({"key": key, "plant_id": plant_id, **kwargs})
+    context = {"key": key, "plant_id": plant_id, **cache_context}
+    val, conf, summary, links = await client.generate_setpoint(context)
     result = {"value": val, "confidence": conf, "summary": summary, "links": links}
     _AI_CACHE[cache_key] = (result, now + timedelta(hours=ttl_hours))
     return result

@@ -50,3 +50,29 @@ async def test_async_recommend_variable_caches_result(monkeypatch, hass):
     second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
     assert first == second
     assert mock.call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, hass):
+    _AI_CACHE.clear()
+    mock = AsyncMock(side_effect=[(1.0, 0.5, "openai", []), (2.0, 0.6, "anthropic", [])])
+    monkeypatch.setattr(AIClient, "generate_setpoint", mock)
+
+    await async_recommend_variable(
+        hass,
+        key="temp",
+        plant_id="p1",
+        ttl_hours=1,
+        provider="openai",
+        model="gpt-4o-mini",
+    )
+    await async_recommend_variable(
+        hass,
+        key="temp",
+        plant_id="p1",
+        ttl_hours=1,
+        provider="anthropic",
+        model="claude-3-sonnet",
+    )
+
+    assert mock.call_count == 2
