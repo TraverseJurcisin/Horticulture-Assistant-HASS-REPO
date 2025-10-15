@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import contextlib
 import logging
+import types
 from typing import TYPE_CHECKING, Any, Final
 
 import voluptuous as vol
@@ -17,19 +18,34 @@ from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.exceptions import HomeAssistantError
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover - imported for type checkers only
     from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
     from homeassistant.helpers import config_validation as cv
     from homeassistant.helpers import entity_registry as er
     from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-else:  # pragma: no cover - fallback for tests without Home Assistant
-    HomeAssistant = Any
-    ServiceCall = Any
-    ServiceResponse = Any
-    er = Any
-    DataUpdateCoordinator = Any
-    UpdateFailed = Any
-    cv = Any
+else:
+    try:  # pragma: no cover - exercised during runtime
+        from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
+    except Exception:  # pragma: no cover - fallback when Home Assistant not installed
+        HomeAssistant = Any  # type: ignore[assignment]
+        ServiceCall = Any  # type: ignore[assignment]
+        ServiceResponse = Any  # type: ignore[assignment]
+
+    try:  # pragma: no cover - exercised during runtime
+        from homeassistant.helpers import config_validation as cv  # type: ignore[assignment]
+    except Exception:  # pragma: no cover - fallback for standalone tests
+        cv = types.SimpleNamespace(entity_id=lambda value: value)  # type: ignore[assignment]
+
+    try:  # pragma: no cover - exercised during runtime
+        from homeassistant.helpers import entity_registry as er  # type: ignore[assignment]
+    except Exception:  # pragma: no cover - fallback for standalone tests
+        er = types.SimpleNamespace()
+
+    try:  # pragma: no cover - exercised during runtime
+        from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+    except Exception:  # pragma: no cover - fallback for standalone tests
+        DataUpdateCoordinator = Any  # type: ignore[assignment]
+        UpdateFailed = Any  # type: ignore[assignment]
 
 from .const import CONF_PROFILES, DOMAIN
 from .irrigation_bridge import async_apply_irrigation
