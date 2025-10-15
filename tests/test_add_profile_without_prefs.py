@@ -22,8 +22,7 @@ async def test_create_profile_without_prefs(hass, tmp_path: Path):
 
     await store.async_create_profile("Test Plant")
     names = await store.async_list_profiles()
-    normalized = {name.lower().replace(" ", "").replace("-", "").replace("_", "") for name in names}
-    assert "testplant" in normalized
+    assert "Test Plant" in names
 
     # Verify thresholds present but empty
     profiles_dir = store._base
