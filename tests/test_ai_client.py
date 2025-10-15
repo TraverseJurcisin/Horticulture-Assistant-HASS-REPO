@@ -86,3 +86,21 @@ async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, 
     )
 
     assert mock.call_count == 2
+
+
+def test_get_openai_key_prefers_hass_secrets(hass):
+    hass.secrets = {"OPENAI_API_KEY": "attr-secret"}
+    hass.data.setdefault("secrets", {})["OPENAI_API_KEY"] = "data-secret"
+
+    client = AIClient(hass, provider="openai", model="gpt-4o")
+
+    assert client._get_openai_key() == "attr-secret"
+
+
+def test_get_openai_key_falls_back_to_hass_data(hass):
+    hass.secrets = None
+    hass.data.setdefault("secrets", {})["OPENAI_API_KEY"] = "data-secret"
+
+    client = AIClient(hass, provider="openai", model="gpt-4o")
+
+    assert client._get_openai_key() == "data-secret"
