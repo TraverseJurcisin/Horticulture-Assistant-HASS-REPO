@@ -143,11 +143,10 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
-        actual = None
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
-        if expected and (reg_entry is None or actual != expected.value):
-            raise HomeAssistantError("device class mismatch")
+            if expected and actual != expected.value:
+                raise HomeAssistantError("device class mismatch")
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:
@@ -168,11 +167,10 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
-        actual = None
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
-        if expected and (reg_entry is None or actual != expected.value):
-            raise HomeAssistantError("device class mismatch")
+            if expected and actual != expected.value:
+                raise HomeAssistantError("device class mismatch")
 
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
