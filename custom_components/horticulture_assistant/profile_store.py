@@ -86,9 +86,7 @@ class ProfileStore:
         else:
             sensors_data = {}
 
-        thresholds = (
-            deepcopy(clone_payload.get("thresholds", {})) if clone_payload else {}
-        )
+        thresholds = deepcopy(clone_payload.get("thresholds", {})) if clone_payload else {}
 
         data = StoredProfile(
             name=name,

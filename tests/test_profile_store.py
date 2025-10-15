@@ -7,14 +7,10 @@ from custom_components.horticulture_assistant.profile_store import (
 
 
 @pytest.mark.asyncio
-async def test_async_create_profile_inherits_sensors_from_existing_profile(
-    hass, tmp_path, monkeypatch
-) -> None:
+async def test_async_create_profile_inherits_sensors_from_existing_profile(hass, tmp_path, monkeypatch) -> None:
     """Profiles cloned from storage should inherit sensor bindings."""
 
-    monkeypatch.setattr(
-        hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts))
-    )
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
     store = ProfileStore(hass)
     await store.async_init()
 
@@ -33,14 +29,10 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(
 
 
 @pytest.mark.asyncio
-async def test_async_create_profile_clones_sensors_from_dict_payload(
-    hass, tmp_path, monkeypatch
-) -> None:
+async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_path, monkeypatch) -> None:
     """Cloning from a raw payload must copy sensor and threshold data."""
 
-    monkeypatch.setattr(
-        hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts))
-    )
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
     store = ProfileStore(hass)
     await store.async_init()
 
