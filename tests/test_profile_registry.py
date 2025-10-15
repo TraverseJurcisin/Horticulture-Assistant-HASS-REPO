@@ -282,6 +282,22 @@ async def test_add_profile_copy_from(hass):
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
 
 
+async def test_add_profile_generates_sequential_suffixes(hass):
+    """New profiles receive sequentially numbered identifiers."""
+
+    entry = await _make_entry(hass, {CONF_PROFILES: {"tomato": {"name": "Tomato"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    first = await reg.async_add_profile("Tomato")
+    assert first == "tomato_1"
+
+    entry.options[CONF_PROFILES]["tomato_1"] = {"name": "Tomato #1"}
+
+    second = await reg.async_add_profile("Tomato")
+    assert second == "tomato_2"
+
+
 async def test_add_profile_custom_scope(hass):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
