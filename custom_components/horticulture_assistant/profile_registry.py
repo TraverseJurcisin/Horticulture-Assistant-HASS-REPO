@@ -183,8 +183,8 @@ class ProfileRegistry:
         candidate = base
         idx = 1
         while candidate in profiles or candidate in self._profiles:
-            idx += 1
             candidate = f"{base}_{idx}"
+            idx += 1
 
         new_profile: dict[str, Any] = {"name": name}
         if base_id:
