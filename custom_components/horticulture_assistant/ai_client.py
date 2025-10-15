@@ -149,9 +149,19 @@ class AIClient:
         return float(value), confidence, summary, links[:5]
 
     def _get_openai_key(self) -> str | None:
-        secrets = self.hass.data.get("secrets", {})
-        if isinstance(secrets, dict):
-            return secrets.get("OPENAI_API_KEY")
+        """Return the OpenAI API key from Home Assistant secrets."""
+
+        # ``HomeAssistant.secrets`` contains the loaded secrets.yaml data when
+        # running inside Home Assistant.  Some tests (and older integrations)
+        # still stuff the same data under ``hass.data['secrets']`` so we fall
+        # back to that for compatibility.
+        secrets_obj = getattr(self.hass, "secrets", None)
+        if isinstance(secrets_obj, dict) and secrets_obj.get("OPENAI_API_KEY"):
+            return secrets_obj["OPENAI_API_KEY"]
+
+        secrets_data = self.hass.data.get("secrets")
+        if isinstance(secrets_data, dict):
+            return secrets_data.get("OPENAI_API_KEY")
         return None
 
 
