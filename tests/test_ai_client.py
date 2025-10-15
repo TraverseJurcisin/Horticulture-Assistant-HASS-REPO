@@ -34,11 +34,21 @@ ai_spec.loader.exec_module(ai_client_mod)
 AIClient = ai_client_mod.AIClient
 async_recommend_variable = ai_client_mod.async_recommend_variable
 _AI_CACHE = ai_client_mod._AI_CACHE
+_normalise_cache_value = ai_client_mod._normalise_cache_value
 
 
 def test_extract_numbers_filters_duplicates_and_range():
     text = "Values 20C, 30C, 20, 5000, -400, 25"
     assert extract_numbers(text) == [20.0, 25.0, 30.0]
+
+
+def test_normalise_cache_value_handles_nested_structures():
+    data = {"a": [1, 2, {"b": {"c": 3}}], "d": {1, 2}}
+    normalised = _normalise_cache_value(data)
+
+    # The normalised form should be hashable and stable across invocations.
+    assert isinstance(normalised, tuple)
+    assert normalised == _normalise_cache_value(data)
 
 
 @pytest.mark.asyncio
