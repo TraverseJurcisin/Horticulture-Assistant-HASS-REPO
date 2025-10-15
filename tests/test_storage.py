@@ -40,3 +40,32 @@ async def test_local_store_load_merges_defaults(monkeypatch):
     assert data["inventory"] == {"nutrients": 1}
     for key in storage.DEFAULT_DATA:
         assert key in data
+
+
+class EmptyStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = None
+
+    async def async_load(self):
+        return self._data
+
+    async def async_save(self, data):  # pragma: no cover - not needed here
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_defaults_are_isolated(monkeypatch):
+    monkeypatch.setattr(storage, "Store", EmptyStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
+    data = await store.load()
+    data["inventory"]["foo"] = 42
+
+    assert storage.DEFAULT_DATA["inventory"] == {}
+
+    store_again = storage.LocalStore(hass)
+    data_again = await store_again.load()
+
+    assert data_again["inventory"] == {}

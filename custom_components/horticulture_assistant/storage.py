@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from copy import deepcopy
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -29,7 +30,7 @@ class LocalStore:
     async def load(self) -> dict[str, Any]:
         data = await self._store.async_load()
         if not data:
-            data = DEFAULT_DATA.copy()
+            data = deepcopy(DEFAULT_DATA)
         else:
             for key, value in DEFAULT_DATA.items():
                 data.setdefault(
@@ -43,6 +44,6 @@ class LocalStore:
         if data is not None:
             self.data = data
         elif self.data is None:
-            self.data = DEFAULT_DATA.copy()
+            self.data = deepcopy(DEFAULT_DATA)
         async with _LOCK:
             await self._store.async_save(self.data)
