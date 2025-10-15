@@ -33,10 +33,11 @@ class LocalStore:
             data = deepcopy(DEFAULT_DATA)
         else:
             for key, value in DEFAULT_DATA.items():
-                data.setdefault(
-                    key,
-                    value.copy() if isinstance(value, (dict, list)) else value,
-                )
+                if key in data:
+                    continue
+
+                default_value = value.copy() if isinstance(value, dict | list) else value
+                data[key] = default_value
         self.data = data
         return data
 
