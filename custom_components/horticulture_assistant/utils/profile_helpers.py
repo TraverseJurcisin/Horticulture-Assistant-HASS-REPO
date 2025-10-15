@@ -49,12 +49,13 @@ def write_profile_sections(
 
     for filename, data in sections.items():
         file_path = plant_dir / filename
-        if file_path.exists() and not overwrite:
+        existed = file_path.exists()
+        if existed and not overwrite:
             _LOGGER.info("File %s already exists. Skipping write.", file_path)
             continue
         try:
             save_json(file_path, data)
-            if overwrite and file_path.exists():
+            if overwrite and existed:
                 _LOGGER.info("Overwrote existing file: %s", file_path)
             else:
                 _LOGGER.info("Created file: %s", file_path)
