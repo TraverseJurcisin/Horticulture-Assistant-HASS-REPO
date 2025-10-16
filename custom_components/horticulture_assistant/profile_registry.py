@@ -246,15 +246,22 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
+        updates = dict(sensors)
+        existing = profile.get("sensors")
+        if isinstance(existing, Mapping):
+            merged: dict[str, Any] = dict(existing)
+            merged.update(updates)
+        else:
+            merged = updates
         prof = dict(profile)
-        prof["sensors"] = sensors
+        prof["sensors"] = merged
         profiles[profile_id] = prof
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
         if prof_obj := self._profiles.get(profile_id):
-            prof_obj.general["sensors"] = sensors
+            prof_obj.general["sensors"] = dict(merged)
         await self.async_save()
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:
