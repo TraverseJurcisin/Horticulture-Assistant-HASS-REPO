@@ -51,6 +51,27 @@ def test_normalise_cache_value_handles_nested_structures():
     assert normalised == _normalise_cache_value(data)
 
 
+def test_normalise_cache_value_stabilises_sets_with_varying_iteration():
+    class FlakySet(set):
+        """Set subclass that flips iteration order on each call."""
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self._toggle = False
+
+        def __iter__(self):
+            self._toggle = not self._toggle
+            items = list(super().__iter__())
+            if self._toggle:
+                items.reverse()
+            return iter(items)
+
+    flaky = FlakySet({"a", "b", "c"})
+    first = _normalise_cache_value(flaky)
+    second = _normalise_cache_value(flaky)
+    assert first == second
+
+
 @pytest.mark.asyncio
 async def test_async_recommend_variable_caches_result(monkeypatch, hass):
     _AI_CACHE.clear()
