@@ -486,6 +486,54 @@ async def test_update_sensors_service(hass):
         )
 
 
+async def test_update_sensors_service_merges_existing(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "Plant 1",
+                    "sensors": {
+                        "temperature": "sensor.old_temp",
+                        "humidity": "sensor.humidity",
+                    },
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    import custom_components.horticulture_assistant as hca
+
+    hca.PLATFORMS = []
+    with (
+        patch.object(hca, "HortiAICoordinator") as mock_ai,
+        patch.object(hca, "HortiLocalCoordinator") as mock_local,
+    ):
+        mock_ai.return_value.async_config_entry_first_refresh = AsyncMock()
+        mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
+        await hca.async_setup_entry(hass, entry)
+    await hass.async_block_till_done()
+
+    hass.states.async_set("sensor.humidity", 50)
+    hass.states.async_set("sensor.new_temp", 22)
+
+    await hass.services.async_call(
+        DOMAIN,
+        "update_sensors",
+        {"profile_id": "p1", "temperature": "sensor.new_temp"},
+        blocking=True,
+    )
+
+    sensors = entry.options["profiles"]["p1"]["sensors"]
+    assert sensors == {"temperature": "sensor.new_temp", "humidity": "sensor.humidity"}
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get_profile("p1")
+    assert profile is not None
+    assert profile.general.get("sensors", {}) == sensors
+
+
 async def test_export_profiles_service(hass, tmp_path):
     entry = MockConfigEntry(
         domain=DOMAIN,
