@@ -574,6 +574,7 @@ async def async_register_all(
         profiles[profile_id] = {
             "name": entry.title or profile_id,
             "sensors": dict(entry.options.get("sensors")),
+            "plant_id": profile_id,
         }
         new_opts = dict(entry.options)
         new_opts[CONF_PROFILES] = profiles
