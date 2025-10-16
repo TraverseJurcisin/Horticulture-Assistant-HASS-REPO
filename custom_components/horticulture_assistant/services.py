@@ -11,6 +11,7 @@ from __future__ import annotations
 import contextlib
 import logging
 import types
+from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, Final
 
 import voluptuous as vol
@@ -53,6 +54,7 @@ from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 
 _LOGGER = logging.getLogger(__name__)
+_MISSING: Final = object()
 
 # Mapping of measurement names to expected device classes.  These roughly
 # correspond to the roles supported by :mod:`update_sensors`.
@@ -310,12 +312,27 @@ async def async_register_all(
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise HomeAssistantError(f"unknown plant {plant_id}")
-        prev = ai_coord.data.get("recommendation") if ai_coord else None
+        prev = _MISSING
+        if ai_coord and isinstance(ai_coord.data, Mapping):
+            prev = ai_coord.data.get("recommendation", _MISSING)
         if ai_coord:
             with contextlib.suppress(UpdateFailed):
                 await ai_coord.async_request_refresh()
         if call.data.get("approve") and ai_coord:
-            plants.setdefault(plant_id, {})["recommendation"] = ai_coord.data.get("recommendation", prev)
+            plant = plants.setdefault(plant_id, {})
+            data = ai_coord.data if isinstance(ai_coord.data, Mapping) else None
+            recommendation = _MISSING
+            if data and "recommendation" in data:
+                recommendation = data["recommendation"]
+            elif prev is not _MISSING:
+                recommendation = prev
+            elif "recommendation" in plant:
+                recommendation = plant["recommendation"]
+
+            if recommendation is _MISSING:
+                recommendation = None
+
+            plant["recommendation"] = recommendation
             await store.save()
 
     async def _srv_apply_irrigation(call) -> None:
