@@ -179,14 +179,16 @@ async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int
     cache_key = _make_cache_key(plant_id, key, cache_context)
     now = datetime.now(UTC)
     cached = _AI_CACHE.get(cache_key)
-    if cached and now < cached[1]:
-        return cached[0]
+    if cached:
+        cached_result, created_at = cached
+        if now - created_at < timedelta(hours=ttl_hours):
+            return cached_result
 
     client = AIClient(hass, provider, model)
     context = {"key": key, "plant_id": plant_id, **cache_context}
     val, conf, summary, links = await client.generate_setpoint(context)
     result = {"value": val, "confidence": conf, "summary": summary, "links": links}
-    _AI_CACHE[cache_key] = (result, now + timedelta(hours=ttl_hours))
+    _AI_CACHE[cache_key] = (result, now)
     return result
 
 
