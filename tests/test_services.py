@@ -221,6 +221,56 @@ async def test_recalculate_and_run_recommendation_services(hass):
     assert store.data["plants"]["p1"]["recommendation"] == "water"
 
 
+async def test_run_recommendation_handles_missing_data(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    store = hass.data[DOMAIN][entry.entry_id]["store"]
+    ai = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
+
+    store.data.setdefault("plants", {})["p1"] = {}
+    ai.data = None
+    ai.async_request_refresh = AsyncMock(wraps=ai.async_request_refresh)
+
+    await hass.services.async_call(
+        DOMAIN,
+        "run_recommendation",
+        {"plant_id": "p1", "approve": True},
+        blocking=True,
+    )
+
+    assert ai.async_request_refresh.called
+    assert "recommendation" in store.data["plants"]["p1"]
+    assert store.data["plants"]["p1"]["recommendation"] is None
+
+
+async def test_run_recommendation_missing_data_preserves_existing(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    store = hass.data[DOMAIN][entry.entry_id]["store"]
+    ai = hass.data[DOMAIN][entry.entry_id]["coordinator_ai"]
+
+    plant = store.data.setdefault("plants", {}).setdefault("p1", {})
+    plant["recommendation"] = "keep"
+    ai.data = None
+    ai.async_request_refresh = AsyncMock(wraps=ai.async_request_refresh)
+
+    await hass.services.async_call(
+        DOMAIN,
+        "run_recommendation",
+        {"plant_id": "p1", "approve": True},
+        blocking=True,
+    )
+
+    assert ai.async_request_refresh.called
+    assert store.data["plants"]["p1"]["recommendation"] == "keep"
+
+
 @pytest.mark.parametrize("expected_lingering_timers", [True])
 async def test_recompute_service(hass, expected_lingering_timers):
     """Ensure recompute service validates profile id and triggers refresh."""
