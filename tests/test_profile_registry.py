@@ -282,6 +282,31 @@ async def test_add_profile_copy_from(hass):
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
 
 
+async def test_add_profile_sets_new_plant_id_in_options(hass):
+    """New profiles store their own plant_id in config entry options."""
+
+    entry = await _make_entry(hass, {CONF_PROFILES: {"base": {"name": "Base", "plant_id": "base"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone", base_id="base")
+
+    assert pid != "base"
+    assert entry.options[CONF_PROFILES][pid]["plant_id"] == pid
+
+
+async def test_add_profile_sets_plant_id_for_new_entries(hass):
+    """Profiles created from scratch include plant_id metadata."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Rosemary")
+
+    assert entry.options[CONF_PROFILES][pid]["plant_id"] == pid
+
+
 async def test_add_profile_generates_sequential_suffixes(hass):
     """New profiles receive sequentially numbered identifiers."""
 

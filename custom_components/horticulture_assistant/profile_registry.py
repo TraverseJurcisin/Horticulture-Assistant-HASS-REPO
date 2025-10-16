@@ -202,6 +202,7 @@ class ProfileRegistry:
         new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile.pop("scope", None)
 
+        new_profile["plant_id"] = candidate
         profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
