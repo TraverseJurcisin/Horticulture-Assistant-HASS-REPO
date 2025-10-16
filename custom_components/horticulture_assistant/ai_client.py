@@ -24,8 +24,11 @@ def _normalise_cache_value(value: Any) -> Hashable:
 
     if isinstance(value, str | int | float | bool | type(None)):
         return value
-    if isinstance(value, list | tuple | set | frozenset):
+    if isinstance(value, list | tuple):
         return tuple(_normalise_cache_value(v) for v in value)
+    if isinstance(value, set | frozenset):
+        normalised = [_normalise_cache_value(v) for v in value]
+        return tuple(sorted(normalised, key=repr))
     if isinstance(value, dict):
         return tuple(
             (str(k), _normalise_cache_value(v)) for k, v in sorted(value.items(), key=lambda item: str(item[0]))
