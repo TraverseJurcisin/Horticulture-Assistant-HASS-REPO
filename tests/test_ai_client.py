@@ -1,6 +1,8 @@
 import importlib.util
 import sys
 import types
+from datetime import datetime as dt
+from datetime import timedelta
 from pathlib import Path
 from unittest.mock import AsyncMock
 
@@ -106,6 +108,43 @@ async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, 
         model="claude-3-sonnet",
     )
 
+    assert mock.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_async_recommend_variable_honours_per_call_ttl(monkeypatch, hass):
+    _AI_CACHE.clear()
+
+    class FixedDateTime(dt):
+        current = dt(2024, 1, 1, tzinfo=ai_client_mod.UTC)
+
+        @classmethod
+        def now(cls, tz=None):
+            if tz is not None:
+                return cls.current.astimezone(tz)
+            return cls.current
+
+        @classmethod
+        def advance(cls, **kwargs):
+            cls.current = cls.current + timedelta(**kwargs)
+
+    monkeypatch.setattr(ai_client_mod, "datetime", FixedDateTime)
+
+    mock = AsyncMock(side_effect=[(1.0, 0.5, "first", []), (2.0, 0.6, "second", [])])
+    monkeypatch.setattr(AIClient, "generate_setpoint", mock)
+
+    first = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
+    assert first["value"] == 1.0
+    assert mock.call_count == 1
+
+    FixedDateTime.advance(minutes=30)
+    second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
+    assert second is first
+    assert mock.call_count == 1
+
+    FixedDateTime.advance(hours=2)
+    third = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
+    assert third["value"] == 2.0
     assert mock.call_count == 2
 
 
