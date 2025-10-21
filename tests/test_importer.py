@@ -14,7 +14,7 @@ async def test_async_import_profiles_overwrites(tmp_path, monkeypatch, hass):
         "p1": {
             "plant_id": "p1",
             "display_name": "Old",
-            "variables": {},
+            "resolved_targets": {},
         }
     }
 
@@ -30,7 +30,7 @@ async def test_async_import_profiles_overwrites(tmp_path, monkeypatch, hass):
         "p1": {
             "plant_id": "p1",
             "display_name": "New Name",
-            "variables": {},
+            "resolved_targets": {},
         }
     }
     path = tmp_path / "profiles.json"
@@ -58,12 +58,12 @@ async def test_async_import_profiles_supports_list(tmp_path, monkeypatch, hass):
         {
             "plant_id": "p1",
             "display_name": "Plant 1",
-            "variables": {},
+            "resolved_targets": {},
         },
         {
             "plant_id": "p2",
             "display_name": "Plant 2",
-            "variables": {},
+            "resolved_targets": {},
         },
     ]
     path = tmp_path / "profiles_list.json"

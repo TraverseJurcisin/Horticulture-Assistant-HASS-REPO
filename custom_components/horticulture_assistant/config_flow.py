@@ -624,10 +624,20 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if new_profile is not None:
                     profile_json = new_profile.to_json()
                     sensors = profile_json.get("general", {}).get("sensors", {})
-                    thresholds = {
-                        key: (value.get("value") if isinstance(value, dict) else value)
-                        for key, value in profile_json.get("variables", {}).items()
-                    }
+                    resolved = profile_json.get("resolved_targets") or {}
+                    thresholds: dict[str, Any] = {}
+                    if isinstance(resolved, dict):
+                        for key, value in resolved.items():
+                            if isinstance(value, dict):
+                                thresholds[key] = value.get("value")
+                            else:
+                                thresholds[key] = value
+                    else:
+                        for key, value in (profile_json.get("variables") or {}).items():
+                            if isinstance(value, dict):
+                                thresholds[key] = value.get("value")
+                            else:
+                                thresholds[key] = value
                     clone_payload = {
                         "thresholds": thresholds,
                         "template": profile_json.get("species"),

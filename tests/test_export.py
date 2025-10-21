@@ -18,7 +18,13 @@ async def test_async_export_profiles(tmp_path, monkeypatch, hass):
             "p1": {
                 "plant_id": "p1",
                 "display_name": "Plant 1",
-                "variables": {"temp": {"value": 20, "source": "manual", "citations": []}},
+                "resolved_targets": {
+                    "temp": {
+                        "value": 20,
+                        "annotation": {"source_type": "manual"},
+                        "citations": [],
+                    }
+                },
             }
         }
 
@@ -29,7 +35,7 @@ async def test_async_export_profiles(tmp_path, monkeypatch, hass):
     path = await async_export_profiles(hass, "profiles.json")
     assert Path(path) == tmp_path / "profiles.json"
     data = json.loads(Path(path).read_text())
-    assert data["p1"]["variables"]["temp"]["value"] == 20
+    assert data["p1"]["resolved_targets"]["temp"]["value"] == 20
 
 
 @pytest.mark.asyncio
@@ -41,7 +47,13 @@ async def test_async_export_profile(tmp_path, monkeypatch, hass):
             return {
                 "plant_id": "p1",
                 "display_name": "Plant 1",
-                "variables": {"temp": {"value": 20, "source": "manual", "citations": []}},
+                "resolved_targets": {
+                    "temp": {
+                        "value": 20,
+                        "annotation": {"source_type": "manual"},
+                        "citations": [],
+                    }
+                },
             }
         return None
 

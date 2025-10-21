@@ -50,7 +50,13 @@ async def test_resolve_clone(hass, monkeypatch):
         return {
             "plant_id": "src",
             "display_name": "src",
-            "variables": {"temp": {"value": 10, "source": "manual", "citations": []}},
+            "resolved_targets": {
+                "temp": {
+                    "value": 10,
+                    "annotation": {"source_type": "manual"},
+                    "citations": [],
+                }
+            },
         }
 
     monkeypatch.setattr(

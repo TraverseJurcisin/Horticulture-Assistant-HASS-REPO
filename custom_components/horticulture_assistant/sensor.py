@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -176,20 +177,50 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         links: list[str] = []
         link_set: set[str] = set()
         latest: datetime | None = None
+
+        def _extract_citations(payload: dict[str, Any]) -> list[dict[str, Any]]:
+            citations = payload.get("citations") or []
+            if isinstance(citations, list):
+                return [c for c in citations if isinstance(c, dict)]
+            return []
+
         for prof in profiles.values():
-            for key, data in (prof.get("variables") or {}).items():
-                cits = data.get("citations") or []
-                if not cits:
-                    continue
-                total += len(cits)
-                summary[key] = summary.get(key, 0) + len(cits)
-                for cit in cits:
-                    if len(links) >= 3:
-                        break
-                    url = cit.get("url")
-                    if url and url not in link_set:
-                        links.append(url)
-                        link_set.add(url)
+            resolved = prof.get("resolved_targets") or {}
+            if isinstance(resolved, dict):
+                for key, data in resolved.items():
+                    if not isinstance(data, dict):
+                        continue
+                    citations = _extract_citations(data)
+                    if not citations:
+                        continue
+                    total += len(citations)
+                    summary[str(key)] = summary.get(str(key), 0) + len(citations)
+                    for cit in citations:
+                        if len(links) >= 3:
+                            break
+                        url = cit.get("url")
+                        if url and url not in link_set:
+                            links.append(url)
+                            link_set.add(url)
+
+            legacy = prof.get("variables") or {}
+            if isinstance(legacy, dict):
+                for key, data in legacy.items():
+                    if not isinstance(data, dict):
+                        continue
+                    citations = _extract_citations(data)
+                    if not citations:
+                        continue
+                    total += len(citations)
+                    summary[str(key)] = summary.get(str(key), 0) + len(citations)
+                    for cit in citations:
+                        if len(links) >= 3:
+                            break
+                        url = cit.get("url")
+                        if url and url not in link_set:
+                            links.append(url)
+                            link_set.add(url)
+
             lr = prof.get("last_resolved")
             if lr:
                 ts = datetime.fromisoformat(lr.replace("Z", "+00:00"))
