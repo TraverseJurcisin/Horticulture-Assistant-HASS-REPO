@@ -16,6 +16,11 @@ if TYPE_CHECKING:
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
+    CONF_CLOUD_BASE_URL,
+    CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_SYNC_ENABLED,
+    CONF_CLOUD_SYNC_INTERVAL,
+    CONF_CLOUD_TENANT_ID,
     CONF_CO2_SENSOR,
     CONF_EC_SENSOR,
     CONF_KEEP_STALE,
@@ -28,6 +33,7 @@ from .const import (
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
+    DEFAULT_CLOUD_SYNC_INTERVAL,
     DEFAULT_KEEP_STALE,
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
@@ -37,6 +43,7 @@ from .const import (
 )
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
+from .profile.utils import determine_species_slug, ensure_sections
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
@@ -421,7 +428,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         return self.async_show_menu(
             step_id="init",
-            menu_options=["basic", "add_profile", "configure_ai"],
+            menu_options=["basic", "cloud_sync", "add_profile", "configure_ai"],
         )
 
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
@@ -607,6 +614,63 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=opts)
 
         return self.async_show_form(step_id="basic", data_schema=schema)
+
+    async def async_step_cloud_sync(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        defaults = {
+            CONF_CLOUD_SYNC_ENABLED: bool(self._entry.options.get(CONF_CLOUD_SYNC_ENABLED, False)),
+            CONF_CLOUD_BASE_URL: self._entry.options.get(CONF_CLOUD_BASE_URL, ""),
+            CONF_CLOUD_TENANT_ID: self._entry.options.get(CONF_CLOUD_TENANT_ID, ""),
+            CONF_CLOUD_DEVICE_TOKEN: self._entry.options.get(CONF_CLOUD_DEVICE_TOKEN, ""),
+            CONF_CLOUD_SYNC_INTERVAL: self._entry.options.get(CONF_CLOUD_SYNC_INTERVAL, DEFAULT_CLOUD_SYNC_INTERVAL),
+        }
+
+        schema = vol.Schema(
+            {
+                vol.Required(CONF_CLOUD_SYNC_ENABLED, default=defaults[CONF_CLOUD_SYNC_ENABLED]): bool,
+                vol.Optional(CONF_CLOUD_BASE_URL, default=defaults[CONF_CLOUD_BASE_URL]): str,
+                vol.Optional(CONF_CLOUD_TENANT_ID, default=defaults[CONF_CLOUD_TENANT_ID]): str,
+                vol.Optional(CONF_CLOUD_DEVICE_TOKEN, default=defaults[CONF_CLOUD_DEVICE_TOKEN]): str,
+                vol.Optional(CONF_CLOUD_SYNC_INTERVAL, default=defaults[CONF_CLOUD_SYNC_INTERVAL]): int,
+            }
+        )
+
+        if user_input is not None:
+            opts = dict(self._entry.options)
+            enabled = bool(user_input.get(CONF_CLOUD_SYNC_ENABLED, False))
+            opts[CONF_CLOUD_SYNC_ENABLED] = enabled
+
+            base_url = str(user_input.get(CONF_CLOUD_BASE_URL, "")).strip()
+            tenant_id = str(user_input.get(CONF_CLOUD_TENANT_ID, "")).strip()
+            device_token = str(user_input.get(CONF_CLOUD_DEVICE_TOKEN, "")).strip()
+
+            if base_url:
+                opts[CONF_CLOUD_BASE_URL] = base_url
+            else:
+                opts.pop(CONF_CLOUD_BASE_URL, None)
+
+            if tenant_id:
+                opts[CONF_CLOUD_TENANT_ID] = tenant_id
+            else:
+                opts.pop(CONF_CLOUD_TENANT_ID, None)
+
+            if enabled and device_token:
+                opts[CONF_CLOUD_DEVICE_TOKEN] = device_token
+            else:
+                opts.pop(CONF_CLOUD_DEVICE_TOKEN, None)
+
+            interval_value = user_input.get(CONF_CLOUD_SYNC_INTERVAL)
+            try:
+                interval = max(15, int(interval_value)) if interval_value is not None else None
+            except (TypeError, ValueError):
+                interval = DEFAULT_CLOUD_SYNC_INTERVAL
+            if interval is not None:
+                opts[CONF_CLOUD_SYNC_INTERVAL] = interval
+            else:
+                opts.pop(CONF_CLOUD_SYNC_INTERVAL, None)
+
+            return self.async_create_entry(title="", data=opts)
+
+        return self.async_show_form(step_id="cloud_sync", data_schema=schema)
 
     async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
@@ -924,11 +988,17 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
 
     def _profiles(self):
-        return dict(self._entry.options.get("profiles", {}))
+        profiles: dict[str, dict[str, Any]] = {}
+        for pid, payload in (self._entry.options.get("profiles", {}) or {}).items():
+            copy = dict(payload)
+            ensure_sections(copy, plant_id=pid, display_name=copy.get("name") or pid)
+            profiles[pid] = copy
+        return profiles
 
     def _set_source(self, src: dict):
         opts = dict(self._entry.options)
         prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        ensure_sections(prof, plant_id=self._pid, display_name=prof.get("name") or self._pid)
         sources = dict(prof.get("sources", {}))
         sources[self._var] = src
         prof["sources"] = sources
@@ -943,13 +1013,26 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         opts = dict(self._entry.options)
         prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        library_section, local_section = ensure_sections(
+            prof,
+            plant_id=self._pid,
+            display_name=prof.get("name") or self._pid,
+        )
         sources = dict(prof.get("sources", {}))
-        species = prof.get("species")
-        slug = species.get("slug") if isinstance(species, dict) else species
+        slug = determine_species_slug(
+            library=library_section,
+            local=local_section,
+            raw=prof.get("species"),
+        )
         if mode == "clone":
             if not source_profile_id:
                 raise ValueError("source_profile_id required for clone")
-            other = opts.get("profiles", {}).get(source_profile_id, {})
+            other = dict(opts.get("profiles", {}).get(source_profile_id, {}))
+            ensure_sections(
+                other,
+                plant_id=source_profile_id,
+                display_name=other.get("name") or source_profile_id,
+            )
             prof["thresholds"] = dict(other.get("thresholds", {}))
             if isinstance(other.get("resolved_targets"), dict):
                 prof["resolved_targets"] = deepcopy(other.get("resolved_targets"))

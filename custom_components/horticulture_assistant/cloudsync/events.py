@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import json
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-import json
-from typing import Any, Iterable
+from typing import Any
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # Py312 compat fallback
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 
 
 @dataclass(slots=True)
@@ -15,10 +19,10 @@ class VectorClock:
     device: str
     counter: int
 
-    def increment(self) -> "VectorClock":
+    def increment(self) -> VectorClock:
         return VectorClock(device=self.device, counter=self.counter + 1)
 
-    def compare(self, other: "VectorClock") -> int:
+    def compare(self, other: VectorClock) -> int:
         """Return 1 if self dominates, -1 if other dominates, 0 if concurrent."""
 
         if self.device == other.device:
@@ -34,7 +38,7 @@ class VectorClock:
         return {"device": self.device, "counter": self.counter}
 
     @classmethod
-    def from_dict(cls, payload: dict[str, Any]) -> "VectorClock":
+    def from_dict(cls, payload: dict[str, Any]) -> VectorClock:
         return cls(device=payload["device"], counter=int(payload["counter"]))
 
 
@@ -84,12 +88,9 @@ class SyncEvent:
         return json.dumps(self.to_dict(), separators=(",", ":"))
 
     @classmethod
-    def from_dict(cls, payload: dict[str, Any]) -> "SyncEvent":
+    def from_dict(cls, payload: dict[str, Any]) -> SyncEvent:
         ts_raw = payload.get("ts")
-        if isinstance(ts_raw, str):
-            ts = datetime.fromisoformat(ts_raw.replace("Z", "+00:00"))
-        else:
-            ts = datetime.now(tz=UTC)
+        ts = datetime.fromisoformat(ts_raw.replace("Z", "+00:00")) if isinstance(ts_raw, str) else datetime.now(tz=UTC)
         vector = None
         if isinstance(payload.get("vector"), dict):
             vector = VectorClock.from_dict(payload["vector"])
@@ -110,7 +111,7 @@ class SyncEvent:
         )
 
     @classmethod
-    def from_json_line(cls, line: str) -> "SyncEvent":
+    def from_json_line(cls, line: str) -> SyncEvent:
         return cls.from_dict(json.loads(line))
 
 

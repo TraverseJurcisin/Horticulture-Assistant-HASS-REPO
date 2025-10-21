@@ -1,13 +1,45 @@
 {
-  "general": {
-    "plant_type": "basil",
-    "cultivar": "generic",
-    "auto_lifecycle_mode": false,
-    "auto_approve_all": false,
-    "sensor_entities": {
-      "moisture_sensors": [],
-      "temperature_sensors": []
+  "plant_id": "global_basil",
+  "display_name": "Global Basil",
+  "species": "Ocimum basilicum",
+  "library": {
+    "profile_id": "global_basil",
+    "profile_type": "species",
+    "identity": {
+      "common_name": "Basil"
+    },
+    "taxonomy": {
+      "species": "Ocimum basilicum"
+    },
+    "curated_targets": {
+      "soil_moisture_pct": 25
+    },
+    "lifecycle": {
+      "stages": {
+        "vegetative": {
+          "stage_duration": 20
+        }
+      }
+    },
+    "metadata": {
+      "source": "global"
     }
+  },
+  "local": {
+    "species": "Ocimum basilicum",
+    "general": {
+      "plant_type": "basil",
+      "cultivar": "generic",
+      "auto_lifecycle_mode": false,
+      "auto_approve_all": false,
+      "sensor_entities": {
+        "moisture_sensors": [],
+        "temperature_sensors": []
+      }
+    },
+    "local_overrides": {},
+    "resolver_state": {},
+    "citations": []
   },
   "resolved_targets": {
     "soil_moisture_pct": {
@@ -32,10 +64,5 @@
   },
   "thresholds": {
     "soil_moisture_pct": 25
-  },
-  "stages": {
-    "vegetative": {
-      "stage_duration": 20
-    }
   }
 }

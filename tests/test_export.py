@@ -36,6 +36,8 @@ async def test_async_export_profiles(tmp_path, monkeypatch, hass):
     assert Path(path) == tmp_path / "profiles.json"
     data = json.loads(Path(path).read_text())
     assert data["p1"]["resolved_targets"]["temp"]["value"] == 20
+    assert data["p1"]["library"]["profile_id"] == "p1"
+    assert data["p1"]["local"]["general"] == {}
 
 
 @pytest.mark.asyncio
@@ -66,6 +68,8 @@ async def test_async_export_profile(tmp_path, monkeypatch, hass):
     assert Path(path) == tmp_path / "one.json"
     data = json.loads(Path(path).read_text())
     assert data["plant_id"] == "p1"
+    assert data["library"]["profile_id"] == "p1"
+    assert data["local"]["general"] == {}
 
     with pytest.raises(ValueError):
         await async_export_profile(hass, "missing", "missing.json")

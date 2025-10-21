@@ -1,13 +1,45 @@
 {
-  "general": {
-    "plant_type": "tomato",
-    "cultivar": "generic",
-    "auto_lifecycle_mode": false,
-    "auto_approve_all": false,
-    "sensor_entities": {
-      "moisture_sensors": [],
-      "temperature_sensors": []
+  "plant_id": "global_tomato",
+  "display_name": "Global Tomato",
+  "species": "Solanum lycopersicum",
+  "library": {
+    "profile_id": "global_tomato",
+    "profile_type": "species",
+    "identity": {
+      "common_name": "Tomato"
+    },
+    "taxonomy": {
+      "species": "Solanum lycopersicum"
+    },
+    "curated_targets": {
+      "soil_moisture_pct": 30
+    },
+    "lifecycle": {
+      "stages": {
+        "vegetative": {
+          "stage_duration": 30
+        }
+      }
+    },
+    "metadata": {
+      "source": "global"
     }
+  },
+  "local": {
+    "species": "Solanum lycopersicum",
+    "general": {
+      "plant_type": "tomato",
+      "cultivar": "generic",
+      "auto_lifecycle_mode": false,
+      "auto_approve_all": false,
+      "sensor_entities": {
+        "moisture_sensors": [],
+        "temperature_sensors": []
+      }
+    },
+    "local_overrides": {},
+    "resolver_state": {},
+    "citations": []
   },
   "resolved_targets": {
     "soil_moisture_pct": {
@@ -32,10 +64,5 @@
   },
   "thresholds": {
     "soil_moisture_pct": 30
-  },
-  "stages": {
-    "vegetative": {
-      "stage_duration": 30
-    }
   }
 }

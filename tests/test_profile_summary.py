@@ -11,6 +11,9 @@ def _make_profile():
         plant_id="p1",
         display_name="Plant",
         species="Avocado",
+        library_metadata={"curation": "expert"},
+        library_created_at="2024-01-01T00:00:00Z",
+        library_updated_at="2024-01-02T00:00:00Z",
         resolved_targets={
             "temp": ResolvedTarget(
                 value=20,
@@ -22,6 +25,7 @@ def _make_profile():
             ),
         },
         general={"note": "test"},
+        local_metadata={"note": "local"},
         citations=[Citation(source="manual", title="none")],
     )
 
@@ -82,6 +86,10 @@ def test_to_json_includes_legacy_views():
     assert payload["thresholds"] == {"temp": 20, "rh": 50}
     assert payload["variables"]["temp"]["value"] == 20
     assert payload["variables"]["temp"]["source"] == "manual"
+    assert payload["library"]["profile_id"] == "p1"
+    assert payload["library"]["metadata"]["curation"] == "expert"
+    assert payload["local"]["general"]["note"] == "test"
+    assert payload["local"]["metadata"]["note"] == "local"
 
 
 def test_from_json_thresholds_fallback():
@@ -93,3 +101,14 @@ def test_from_json_thresholds_fallback():
     prof = PlantProfile.from_json(data)
     assert prof.resolved_targets["temp"].value == 12.5
     assert prof.resolved_targets["temp"].annotation.source_type == "unknown"
+
+
+def test_roundtrip_structured_sections():
+    prof = _make_profile()
+    payload = prof.to_json()
+    reconstructed = PlantProfile.from_json(payload)
+    assert reconstructed.library_metadata == {"curation": "expert"}
+    assert reconstructed.library_created_at == "2024-01-01T00:00:00Z"
+    assert reconstructed.library_updated_at == "2024-01-02T00:00:00Z"
+    assert reconstructed.local_metadata == {"note": "local"}
+    assert reconstructed.general["note"] == "test"

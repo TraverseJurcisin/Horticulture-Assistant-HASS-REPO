@@ -1,106 +1,136 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "Plant Profile",
   "additionalProperties": true,
+  "required": [
+    "plant_id",
+    "display_name",
+    "library",
+    "local"
+  ],
   "properties": {
-    "id": {
-      "minLength": 1,
+    "plant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_type": {
       "type": "string"
     },
-    "name": {
-      "minLength": 1,
-      "type": "string"
-    },
-    "sensors": {
-      "additionalProperties": false,
-      "properties": {
-        "co2_entities": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "ec_entities": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "moisture_entities": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "temperature_entities": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "targets": {
+    "library": {
+      "type": "object",
+      "required": ["profile_id", "profile_type"],
       "additionalProperties": true,
       "properties": {
-        "rh_pct": {
-          "properties": {
-            "max": {
-              "type": "number"
-            },
-            "min": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ],
-          "type": "object"
+        "profile_id": {"type": "string", "minLength": 1},
+        "profile_type": {"type": "string", "minLength": 1},
+        "tenant_id": {"type": ["string", "null"]},
+        "identity": {"type": "object", "additionalProperties": true},
+        "taxonomy": {"type": "object", "additionalProperties": true},
+        "parents": {
+          "type": "array",
+          "items": {"type": "string"}
         },
-        "temp_f": {
-          "properties": {
-            "max": {
-              "type": "number"
-            },
-            "min": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ],
-          "type": "object"
+        "curated_targets": {"type": "object", "additionalProperties": true},
+        "diffs_vs_parent": {"type": "object", "additionalProperties": true},
+        "policies": {"type": "object", "additionalProperties": true},
+        "stable_knowledge": {"type": "object", "additionalProperties": true},
+        "lifecycle": {"type": "object", "additionalProperties": true},
+        "traits": {"type": "object", "additionalProperties": true},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
         },
-        "vpd_kpa": {
-          "properties": {
-            "max": {
-              "type": "number"
-            },
-            "min": {
-              "type": "number"
-            }
-          },
-          "required": [
-            "min",
-            "max"
-          ],
-          "type": "object"
-        }
-      },
-      "type": "object"
+        "metadata": {"type": "object", "additionalProperties": true},
+        "created_at": {"type": ["string", "null"]},
+        "updated_at": {"type": ["string", "null"]}
+      }
     },
-    "zone_id": {
-      "type": "string"
-    }
-  },
-  "required": [
-    "id",
-    "name",
-    "sensors",
-    "targets"
-  ],
-  "title": "Plant Profile",
-  "type": "object"
+    "local": {
+      "type": "object",
+      "required": ["general", "local_overrides", "resolver_state"],
+      "additionalProperties": true,
+      "properties": {
+        "species": {"type": ["string", "null"]},
+        "general": {"type": "object", "additionalProperties": true},
+        "local_overrides": {"type": "object", "additionalProperties": true},
+        "resolver_state": {"type": "object", "additionalProperties": true},
+        "citations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "metadata": {"type": "object", "additionalProperties": true},
+        "last_resolved": {"type": ["string", "null"]},
+        "created_at": {"type": ["string", "null"]},
+        "updated_at": {"type": ["string", "null"]}
+      }
+    },
+    "resolved_targets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value", "annotation"],
+        "additionalProperties": true,
+        "properties": {
+          "value": {},
+          "annotation": {
+            "type": "object",
+            "required": ["source_type"],
+            "additionalProperties": true,
+            "properties": {
+              "source_type": {"type": "string"},
+              "source_ref": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "method": {"type": ["string", "null"]},
+              "confidence": {"type": ["number", "null"]},
+              "staleness_days": {"type": ["number", "null"]},
+              "is_stale": {"type": "boolean"},
+              "overlay": {},
+              "overlay_provenance": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "overlay_source_type": {"type": ["string", "null"]},
+              "overlay_source_ref": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "overlay_method": {"type": ["string", "null"]},
+              "extras": {"type": "object", "additionalProperties": true}
+            }
+          },
+          "citations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "computed_stats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "general": {"type": "object", "additionalProperties": true},
+    "citations": {
+      "type": "array",
+      "items": {"type": "object", "additionalProperties": true}
+    },
+    "thresholds": {"type": "object", "additionalProperties": true},
+    "variables": {"type": "object", "additionalProperties": true}
+  }
 }

@@ -43,6 +43,7 @@ try:
     from .calibration import services as calibration_services
 except ModuleNotFoundError:  # pragma: no cover - optional dependency missing
     calibration_services = None
+from .cloudsync.manager import CloudSyncManager
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -136,6 +137,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_minutes,
     )
 
+    cloud_sync_manager = CloudSyncManager(hass, entry)
+
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
         {
@@ -149,8 +152,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "coordinator_ai": ai_coordinator,
             "coordinator_local": local_coordinator,
             "keep_stale": keep_stale,
+            "cloud_sync_manager": cloud_sync_manager,
+            "cloud_sync_status": cloud_sync_manager.status(),
         }
     )
+
+    await cloud_sync_manager.async_start()
+    entry_data["cloud_sync_status"] = cloud_sync_manager.status()
 
     domain_data = hass.data.setdefault(DOMAIN, {})
     domain_data["registry"] = profile_registry
@@ -203,6 +211,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         data = hass.data.get(DOMAIN, {})
         info = data.pop(entry.entry_id, None)
         if info:
+            manager = info.get("cloud_sync_manager")
+            if manager and hasattr(manager, "async_stop"):
+                with contextlib.suppress(Exception):
+                    await manager.async_stop()
             profiles = info.get("profiles")
             if profiles and hasattr(profiles, "async_unload"):
                 with contextlib.suppress(Exception):

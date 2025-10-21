@@ -29,6 +29,12 @@ CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
 CONF_PROFILE_SCOPE = const.CONF_PROFILE_SCOPE
 PROFILE_SCOPE_DEFAULT = const.PROFILE_SCOPE_DEFAULT
+CONF_CLOUD_SYNC_ENABLED = const.CONF_CLOUD_SYNC_ENABLED
+CONF_CLOUD_BASE_URL = const.CONF_CLOUD_BASE_URL
+CONF_CLOUD_TENANT_ID = const.CONF_CLOUD_TENANT_ID
+CONF_CLOUD_DEVICE_TOKEN = const.CONF_CLOUD_DEVICE_TOKEN
+CONF_CLOUD_SYNC_INTERVAL = const.CONF_CLOUD_SYNC_INTERVAL
+DEFAULT_CLOUD_SYNC_INTERVAL = const.DEFAULT_CLOUD_SYNC_INTERVAL
 
 cfg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py")
 cfg = importlib.util.module_from_spec(cfg_spec)
@@ -286,6 +292,54 @@ async def test_options_flow(hass, hass_admin_user):
     assert result["type"] == "form"
     result2 = await flow.async_step_basic({})
     assert result2["type"] == "create_entry"
+
+
+async def test_options_flow_cloud_sync(hass, hass_admin_user):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, title="title")
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    form = await flow.async_step_cloud_sync()
+    assert form["type"] == "form"
+    result = await flow.async_step_cloud_sync(
+        {
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "token",
+            CONF_CLOUD_SYNC_INTERVAL: 120,
+        }
+    )
+    assert result["type"] == "create_entry"
+    data = result["data"]
+    assert data[CONF_CLOUD_SYNC_ENABLED] is True
+    assert data[CONF_CLOUD_BASE_URL] == "https://cloud.example"
+    assert data[CONF_CLOUD_TENANT_ID] == "tenant-1"
+    assert data[CONF_CLOUD_DEVICE_TOKEN] == "token"
+    assert data[CONF_CLOUD_SYNC_INTERVAL] == 120
+
+
+async def test_options_flow_cloud_sync_disable(hass, hass_admin_user):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        title="title",
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "token",
+            CONF_CLOUD_SYNC_INTERVAL: 120,
+        },
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    await flow.async_step_cloud_sync()
+    result = await flow.async_step_cloud_sync({CONF_CLOUD_SYNC_ENABLED: False})
+    data = result["data"]
+    assert data[CONF_CLOUD_SYNC_ENABLED] is False
+    assert CONF_CLOUD_DEVICE_TOKEN not in data
 
 
 async def test_options_flow_preserves_thresholds(hass, hass_admin_user):

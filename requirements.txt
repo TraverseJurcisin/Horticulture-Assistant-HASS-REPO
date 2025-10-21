@@ -1,8 +1,10 @@
 aiohttp>=3.9
+fastapi>=0.110
 josepy>=1.13.0,<2.0.0
 numpy>=1.25
 pandas>=2.3
 PyYAML>=6.0.1
 pytest-asyncio>=0.23
+uvicorn>=0.24
 types-PyYAML
 voluptuous>=0.13.1

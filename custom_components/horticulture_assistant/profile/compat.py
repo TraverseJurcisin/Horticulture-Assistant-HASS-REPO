@@ -16,9 +16,7 @@ def _coerce_dict(value: Any) -> dict[str, Any]:
     return {}
 
 
-def ensure_profile_sections(
-    profile: MutableMapping[str, Any]
-) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+def ensure_profile_sections(profile: MutableMapping[str, Any]) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     """Ensure ``profile`` contains mutable threshold, resolved, and variable maps."""
 
     thresholds = _coerce_dict(profile.get("thresholds"))
@@ -121,10 +119,7 @@ def get_resolved_target(profile: Mapping[str, Any] | Any, key: str) -> ResolvedT
     else:
         target_map = getattr(profile, "resolved_targets", None)
 
-    if isinstance(target_map, Mapping):
-        value = target_map.get(key)
-    else:
-        value = None
+    value = target_map.get(key) if isinstance(target_map, Mapping) else None
 
     if isinstance(value, ResolvedTarget):
         return value

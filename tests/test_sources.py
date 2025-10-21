@@ -65,6 +65,10 @@ async def test_manual_source_applies_immediately():
     target = entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_min"]
     assert target["value"] == 1.0
     assert target["annotation"]["source_type"] == "manual"
+    local = entry.options["profiles"]["p1"]["local"]
+    assert local["resolver_state"]["resolved_keys"] == ["temp_c_min"]
+    assert local["citations"][0]["source"] == "manual"
+    assert local["metadata"]["citation_map"]["temp_c_min"]["mode"] == "manual"
 
 
 @pytest.mark.asyncio
@@ -81,6 +85,9 @@ async def test_clone_source_copies_from_other_profile():
     await PreferenceResolver(hass).resolve_profile(entry, "b")
     assert entry.options["profiles"]["b"]["thresholds"]["temp_c_min"] == 2.0
     assert entry.options["profiles"]["b"]["resolved_targets"]["temp_c_min"]["value"] == 2.0
+    local = entry.options["profiles"]["b"]["local"]
+    assert "temp_c_min" in local["metadata"]["citation_map"]
+    assert local["citations"][0]["source"] == "clone"
 
 
 @pytest.mark.asyncio
@@ -107,7 +114,11 @@ async def test_opb_source_maps_field():
     ):
         await PreferenceResolver(hass).resolve_profile(entry, "p1")
     assert entry.options["profiles"]["p1"]["thresholds"]["temp_c_min"] == 3
-    assert entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_min"]["annotation"]["source_type"] == "openplantbook"
+    annotation = entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_min"]["annotation"]
+    assert annotation["source_type"] == "openplantbook"
+    local = entry.options["profiles"]["p1"]["local"]
+    assert local["citations"][0]["source"] == "openplantbook"
+    assert local["resolver_state"]["sources"]["temp_c_min"]["mode"] == "opb"
 
 
 @pytest.mark.asyncio
@@ -125,6 +136,9 @@ async def test_ai_source_respects_ttl_and_caches():
     assert mock.call_count == 1
     assert entry.options["profiles"]["p1"]["thresholds"]["temp_c_max"] == 4.0
     assert entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_max"]["value"] == 4.0
+    local = entry.options["profiles"]["p1"]["local"]
+    assert local["citations"][0]["source"] == "ai"
+    assert "temp_c_max" in local["metadata"]["citation_map"]
 
 
 @pytest.mark.asyncio
@@ -141,6 +155,8 @@ async def test_generate_profile_ai_sets_sources_and_citations():
     assert prof["thresholds"]["temp_c_min"] == 5.0
     assert prof["citations"]["temp_c_min"]["mode"] == "ai"
     assert prof["resolved_targets"]["temp_c_min"]["annotation"]["source_type"] == "ai"
+    local = prof["local"]
+    assert any(cit["source"] == "ai" for cit in local["citations"])
 
 
 @pytest.mark.asyncio
@@ -158,6 +174,8 @@ async def test_generate_profile_opb_sets_sources_and_citations():
     assert prof["thresholds"]["temp_c_min"] == 7.0
     assert prof["citations"]["temp_c_min"]["mode"] == "openplantbook"
     assert prof["resolved_targets"]["temp_c_min"]["annotation"]["source_type"] == "openplantbook"
+    local = prof["local"]
+    assert local["resolver_state"]["sources"]["temp_c_min"]["mode"] == "opb"
 
 
 @pytest.mark.asyncio
@@ -175,7 +193,9 @@ async def test_options_flow_per_variable_steps():
     await flow.async_step_src_manual({"value": 2.0})
     await flow.async_step_apply({"resolve_now": False})
     assert entry.options["profiles"]["p1"]["sources"]["temp_c_min"]["mode"] == "manual"
-    assert "resolved_targets" not in entry.options["profiles"]["p1"] or "temp_c_min" not in entry.options["profiles"]["p1"].get("resolved_targets", {})
+    profile_options = entry.options["profiles"]["p1"]
+    resolved_targets = profile_options.get("resolved_targets", {})
+    assert "resolved_targets" not in profile_options or "temp_c_min" not in resolved_targets
 
 
 @pytest.mark.asyncio

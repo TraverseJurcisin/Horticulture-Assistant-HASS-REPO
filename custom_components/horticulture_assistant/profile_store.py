@@ -11,6 +11,7 @@ from homeassistant.util import slugify
 
 from .const import CONF_PROFILE_SCOPE
 from .profile.schema import PlantProfile
+from .profile.utils import normalise_profile_payload
 
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
@@ -63,7 +64,9 @@ class ProfileStore:
             payload = self._profile_to_payload(profile_obj)
             target_name = name or profile_obj.display_name or profile_obj.plant_id
         else:
-            fallback = name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
+            fallback = (
+                name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
+            )
             payload = self._normalise_payload(profile, fallback_name=fallback)
             target_name = fallback
         await self._atomic_write(self._path_for(target_name), payload)
@@ -114,12 +117,16 @@ class ProfileStore:
                 tags=list(clone_profile.tags),
                 curated_targets=dict(clone_profile.curated_targets),
                 diffs_vs_parent=dict(clone_profile.diffs_vs_parent),
+                library_metadata=dict(clone_profile.library_metadata),
+                library_created_at=clone_profile.library_created_at,
+                library_updated_at=clone_profile.library_updated_at,
                 local_overrides=dict(clone_profile.local_overrides),
                 resolver_state=dict(clone_profile.resolver_state),
                 resolved_targets={k: deepcopy(v) for k, v in clone_profile.resolved_targets.items()},
                 computed_stats=[deepcopy(stat) for stat in clone_profile.computed_stats],
                 general=deepcopy(clone_profile.general),
                 citations=[deepcopy(cit) for cit in clone_profile.citations],
+                local_metadata=dict(clone_profile.local_metadata),
                 last_resolved=clone_profile.last_resolved,
                 created_at=clone_profile.created_at,
                 updated_at=clone_profile.updated_at,
@@ -150,34 +157,18 @@ class ProfileStore:
         return self._base / f"{slug}.json"
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: str) -> dict[str, Any]:
-        profile = self._as_profile(payload, fallback_name=fallback_name)
-        data = self._profile_to_payload(profile)
-        return data
+        slug = slugify(fallback_name) or fallback_name or "profile"
+        normalised = normalise_profile_payload(payload, fallback_id=str(slug), display_name=fallback_name)
+        profile = PlantProfile.from_json(normalised)
+        return self._profile_to_payload(profile)
 
     def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> PlantProfile:
         data = deepcopy(payload)
         display_name = data.get("display_name") or data.get("name") or fallback_name
         slug = data.get("plant_id") or slugify(display_name) or slugify(fallback_name) or "profile"
-        general = data.get("general") if isinstance(data.get("general"), dict) else {}
-
-        sensors = data.get("sensors") if isinstance(data.get("sensors"), dict) else None
-        if sensors:
-            general.setdefault("sensors", dict(sensors))
-
-        scope = data.get(CONF_PROFILE_SCOPE) or data.get("scope")
-        if scope is not None:
-            general.setdefault(CONF_PROFILE_SCOPE, scope)
-
-        template = data.get("template")
-        if template is not None:
-            general.setdefault("template", template)
-
-        data["display_name"] = display_name
-        data["name"] = display_name
-        data["plant_id"] = slug
-        data["general"] = general
-
-        return PlantProfile.from_json(data)
+        normalised = normalise_profile_payload(data, fallback_id=str(slug), display_name=display_name)
+        normalised.setdefault("name", normalised.get("display_name"))
+        return PlantProfile.from_json(normalised)
 
     def _profile_to_payload(self, profile: PlantProfile) -> dict[str, Any]:
         data = profile.to_json()

@@ -2,6 +2,26 @@
   "plant_id": "basil",
   "display_name": "Basil",
   "species": "Ocimum basilicum",
+  "library": {
+    "profile_id": "basil",
+    "profile_type": "line",
+    "identity": {
+      "common_name": "Basil"
+    },
+    "taxonomy": {
+      "species": "Ocimum basilicum"
+    },
+    "metadata": {
+      "template": "basil"
+    }
+  },
+  "local": {
+    "species": "Ocimum basilicum",
+    "general": {},
+    "local_overrides": {},
+    "resolver_state": {},
+    "citations": []
+  },
   "resolved_targets": {
     "min_moisture": {
       "value": 30,

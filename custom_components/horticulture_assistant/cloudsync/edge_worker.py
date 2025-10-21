@@ -13,7 +13,10 @@ from .conflict import ConflictPolicy, ConflictResolver
 from .edge_store import EdgeSyncStore
 from .events import SyncEvent, encode_ndjson
 
-UTC = getattr(datetime, "UTC", timezone.utc)
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 LOGGER = logging.getLogger(__name__)
 
 
@@ -151,7 +154,9 @@ class EdgeSyncWorker:
             return [str(item) for item in acked]
         return []
 
-    def _parse_down_response(self, body: bytes, content_type: str, headers: Mapping[str, str]) -> tuple[str, str | None]:
+    def _parse_down_response(
+        self, body: bytes, content_type: str, headers: Mapping[str, str]
+    ) -> tuple[str, str | None]:
         if content_type.startswith("application/json"):
             payload = json.loads(body.decode())
             ndjson_payload = payload.get("events", "")
@@ -165,4 +170,3 @@ class EdgeSyncWorker:
         merged = self.conflicts.apply(current, event)
         merged.pop("__meta__", None)
         self.store.update_cloud_cache(event.entity_type, event.entity_id, event.tenant_id, merged)
-

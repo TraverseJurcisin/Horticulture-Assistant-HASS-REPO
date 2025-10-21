@@ -5,6 +5,7 @@ import pytest
 from custom_components.horticulture_assistant.profile.importer import (
     async_import_profiles,
 )
+from custom_components.horticulture_assistant.profile.schema import PlantProfile
 
 
 @pytest.mark.asyncio
@@ -19,7 +20,8 @@ async def test_async_import_profiles_overwrites(tmp_path, monkeypatch, hass):
     }
 
     async def fake_save_profile(_hass, profile):
-        saved[profile["plant_id"]] = profile
+        payload = profile.to_json() if isinstance(profile, PlantProfile) else profile
+        saved[payload["plant_id"]] = payload
 
     monkeypatch.setattr(
         "custom_components.horticulture_assistant.profile.importer.async_save_profile",
@@ -39,6 +41,8 @@ async def test_async_import_profiles_overwrites(tmp_path, monkeypatch, hass):
     count = await async_import_profiles(hass, "profiles.json")
     assert count == 1
     assert saved["p1"]["display_name"] == "New Name"
+    assert saved["p1"]["library"]["profile_id"] == "p1"
+    assert saved["p1"]["local"]["general"] == {}
 
 
 @pytest.mark.asyncio
@@ -47,7 +51,8 @@ async def test_async_import_profiles_supports_list(tmp_path, monkeypatch, hass):
     saved: list[dict] = []
 
     async def fake_save_profile(_hass, profile):
-        saved.append(profile)
+        payload = profile.to_json() if isinstance(profile, PlantProfile) else profile
+        saved.append(payload)
 
     monkeypatch.setattr(
         "custom_components.horticulture_assistant.profile.importer.async_save_profile",
@@ -72,6 +77,7 @@ async def test_async_import_profiles_supports_list(tmp_path, monkeypatch, hass):
     count = await async_import_profiles(hass, "profiles_list.json")
     assert count == 2
     assert {p["plant_id"] for p in saved} == {"p1", "p2"}
+    assert all("library" in p and "local" in p for p in saved)
 
 
 @pytest.mark.asyncio

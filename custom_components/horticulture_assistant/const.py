@@ -13,6 +13,11 @@ PLATFORMS: list[Platform] = [
 CONF_API_KEY = "api_key"
 CONF_MODEL = "model"
 CONF_BASE_URL = "base_url"
+CONF_CLOUD_SYNC_ENABLED = "cloud_sync_enabled"
+CONF_CLOUD_BASE_URL = "cloud_base_url"
+CONF_CLOUD_TENANT_ID = "cloud_tenant_id"
+CONF_CLOUD_DEVICE_TOKEN = "cloud_device_token"
+CONF_CLOUD_SYNC_INTERVAL = "cloud_sync_interval"
 CONF_UPDATE_INTERVAL = "update_interval"
 CONF_MOISTURE_SENSOR = "moisture_sensor"
 CONF_TEMPERATURE_SENSOR = "temperature_sensor"
@@ -74,6 +79,7 @@ DEFAULT_BASE_URL = "https://api.openai.com/v1"
 DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it
 DEFAULT_UPDATE_MINUTES = 5
 DEFAULT_KEEP_STALE = True
+DEFAULT_CLOUD_SYNC_INTERVAL = 300
 
 # Entity categories
 CATEGORY_DIAGNOSTIC = EntityCategory.DIAGNOSTIC
